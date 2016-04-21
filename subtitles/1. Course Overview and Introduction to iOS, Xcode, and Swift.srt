@@ -4001,62 +4001,77 @@ it shows me all the methods that start with title.
 1001
 00:49:43,348 --> 00:49:48,617
 All the methods that include title in the name. See?
+所有名字里包含了title的方法，看见了吗？
 
 1002
 00:49:48,753 --> 00:49:54,156
 And all the methods that have T-I-T-L-E in the order. Okay,
+还有所有含有T-I-T-L-E这个字母顺序的方法
 
 1003
 00:49:54,158 --> 00:49:57,093
 and it gives it to you in the order you might expect right?
+这会按照你期望的顺序呈现
 
 1004
 00:49:57,095 --> 00:50:00,363
 Title first and then. So this is kinda helping,
+含有title这个词的优先，别的在后面，这提供了一种帮助
 
 1005
 00:50:00,365 --> 00:50:00,997
 you can search basically.
+你可以这么搜索
 
 1006
 00:50:00,999 --> 00:50:03,599
 And when you do this you would quickly see current title,
+当你这么做的时候，你快速浏览到currenttitle
 
 1007
 00:50:03,601 --> 00:50:06,769
 that looks like what I want. And you can double click here,
+这看起来像是我想要的。你就在这双击
 
 1008
 00:50:06,771 --> 00:50:09,138
 actually, and it will put in there. Okay? So
+这样就会出现在这里。
 
 1009
 00:50:09,140 --> 00:50:12,942
 there's our current title. Now instead of printing touch
+这就是我们要的currenttitle。
 
 1010
 00:50:12,944 --> 00:50:17,313
 digit we basically wanna print which one, which digit was,
+现在我们想打印具体按到的某个数字，而不是“touchDigit”
 
 1011
 00:50:17,315 --> 00:50:22,485
 touched here. So I'm gonna say touched, we could say percent,
+所以这里要换成
 
 1012
 00:50:22,487 --> 00:50:25,254
 s digit. Comma digit.
+“touched %s digit”, digit
 
 1013
 00:50:25,256 --> 00:50:27,790
 This is what it would look like in C. For example,
+这就看起来像是C语音
 
 1014
 00:50:27,792 --> 00:50:31,327
 is everyone familiar with this print F like format?
+所以你们对printf熟悉吗
 
 1015
 00:50:31,329 --> 00:50:33,696
 Okay good, cuz you can't do it in Swift.
+很好，但你不能在Swift里这样做
 
 1016
 00:50:33,698 --> 00:50:34,096
@@ -4065,410 +4080,511 @@ Okay. >> [LAUGH]
 1017
 00:50:34,098 --> 00:50:35,164
 >> We don't do that in Swift.
+我们在Swift里不这么做
 
 1018
 00:50:35,166 --> 00:50:37,633
 Instead, we do backslash, open parentheses,
+我们用反斜杠、括号代替
 
 1019
 00:50:37,635 --> 00:50:40,903
 close parentheses. And then we can put anything we want in
+然后里面放任何我们想放的
 
 1020
 00:50:40,905 --> 00:50:43,806
 here. Okay clean digit. And we don't need this out here on
+删掉digit，引号外不需要它
 
 1021
 00:50:43,808 --> 00:50:47,510
 the side. Okay, so this will be invaluated converted to
+所以这会被转换成string类型
 
 1022
 00:50:47,512 --> 00:50:50,279
 a string. Some things can't be converted to strings but
+有的不能被转换，但大多数可以
 
 1023
 00:50:50,281 --> 00:50:53,215
 most things can, so you put that in there. Okay,
+所以你可以把它放在里面
 
 1024
 00:50:53,217 --> 00:50:56,652
 if you can't you'll get a warning, okay? All right, so
+如果不可以，你会被警告
 
 1025
 00:50:56,654 --> 00:50:58,054
 that's how we do that. So, let's go ahead and
+所以我们就这么做了
 
 1026
 00:50:58,056 --> 00:51:01,357
 see what's going on. But now maybe we should start paying
+继续看看接下来会发生什么
 
 1027
 00:51:01,359 --> 00:51:02,024
 attention to our warnings.
+我想现在应该开始注意一下这个警告了
 
 1028
 00:51:02,026 --> 00:51:05,428
 Okay, when you submit your homework, no warnings please.
+当你们交作业的时候，不准有警告
 
 1029
 00:51:05,430 --> 00:51:07,463
 Okay, no warnings. And certainly no errors,
+没有警告，当然也不能有错误
 
 1030
 00:51:07,465 --> 00:51:10,433
 those are red things those won't build, no warnings. So
+有错误的时候就不能build
 
 1031
 00:51:10,435 --> 00:51:12,535
 what is this warning, let's take a look at this warning.
+这个警告是什么呢？我们来看看
 
 1032
 00:51:12,537 --> 00:51:14,170
 You look at a warning by clicking on it.
+我们通过点击来看一个警告
 
 1033
 00:51:14,172 --> 00:51:16,572
 So I'm gonna click on it, and it says here,
+我点击他，这里是这么写的
 
 1034
 00:51:16,574 --> 00:51:21,644
 variable digit with never mutated, consider changing to
+digit这个变量没有被改变过
 
 1035
 00:51:21,646 --> 00:51:26,082
 let constant. Okay, what does that mean?
+是不是考虑把他变成let型常量。这是什么意思呢？
 
 1036
 00:51:26,084 --> 00:51:31,020
 That means that instead of var here, it wants us to put let.
+这里的意思是，希望我们用let而不是var
 
 1037
 00:51:31,022 --> 00:51:34,623
 And in fact, you should always do that. Anytime you declare
+事实上我们应该这么做
 
 1038
 00:51:34,625 --> 00:51:37,793
 a local variable, okay, or even a property that is
+任何时候申明一个本地变量，或者一个属性
 
 1039
 00:51:37,795 --> 00:51:40,629
 initialized at the beginning and never changes, in other
+在初始化后就一直没被改变，换句话说，
 
 1040
 00:51:40,631 --> 00:51:43,599
 words, it's a constant, use let instead of var.
+就是个常量，我们就应该用let而不是var
 
 1041
 00:51:43,601 --> 00:51:46,268
 Now why do you want to do that? Two reasons really, one,
+那么我们现在为什么要这么做？两个理由
 
 1042
 00:51:46,270 --> 00:51:48,804
 it helps people reading your code realize this thing's
+一、这帮助别人读你的代码的时候意识到
 
 1043
 00:51:48,806 --> 00:51:51,040
 never going to change, I don't have to worry about it,
+这个一直不会变，不需要去担心它
 
 1044
 00:51:51,042 --> 00:51:54,243
 it's just like a constant. And two, if that thing were for
+这只是个常量。二、如果那个东西，
 
 1045
 00:51:54,245 --> 00:51:57,613
 example, an array, or a dictionary, and you use let,
+比如说是一个数组或者字典，你用了let
 
 1046
 00:51:57,615 --> 00:52:00,883
 that means nothing can be put into that dictionary or
+这就意味着没有什么可以放进字典或从字典拿出
 
 1047
 00:52:00,885 --> 00:52:04,553
 taken out. Or into the array or taken out okay. So
+也可以放进数组或从数组拿出
 
 1048
 00:52:04,555 --> 00:52:08,023
-it's how you can create read only arrays in dictionaries
+it's how you can create read only arrays and dictionaries
+这就是你如何创建只读的数组或者是字典
 
 1049
 00:52:08,025 --> 00:52:12,628
 okay. So, always use let when you are doing a constant.
+所以申明常量的时候一定记得用let
 
 1050
 00:52:12,630 --> 00:52:14,563
 And in fact notice that XCode is saying,
+注意Xcode这里说的
 
 1051
 00:52:14,565 --> 00:52:17,733
 hey if you click here I'll fix it for you. Okay,
+如果你点这里，我会为你修复这个问题
 
 1052
 00:52:17,735 --> 00:52:21,904
 see how it says fix it replays var with let. Sure. Okay, and
+看一下它如何用let代替var修正这个问题
 
 1053
 00:52:21,906 --> 00:52:24,773
 it did it and now the warnings gone. Okay, so
+所以它做到了，警告没了
 
 1054
 00:52:24,775 --> 00:52:29,678
 let's run, see if this is working. We're crossing our
+来跑一下，看看是不是能行
 
 1055
 00:52:29,680 --> 00:52:32,915
 fingers about that whole string question mark thing.
+我们越过我们的手指关于整串问号的事情
 
 1056
 00:52:32,917 --> 00:52:35,518
 All right, so here we go, let's press 5.
+好了，来按下5
 
 1057
 00:52:36,921 --> 00:52:40,189
 The heck is going on down there? Okay, touched
+这下面就会显示数字
 
 1058
 00:52:40,191 --> 00:52:45,294
 optional 5 digit? Okay so what is this optional business.
+touched optional("5") digit？这里的optional是什么
 
 1059
 00:52:45,296 --> 00:52:47,163
 Here you all wanna take a deep breath,
+所以这里你们得深呼吸
 
 1060
 00:52:47,165 --> 00:52:50,332
 clear your minds, and pay close attention okay. Because
+清空你们的脑袋，集中全部注意力
 
 1061
 00:52:50,334 --> 00:52:52,935
 this is a very important thing in Swift, it's ubiquitous
+因为这是Swift里非常非常重要的东西
 
 1062
 00:52:52,937 --> 00:52:57,740
 throughout the entire iOS API okay. Very cool feature, but
+这在iOS API里无处不在，一个非常酷的特性
 
 1063
 00:52:57,742 --> 00:53:00,442
 it requires a little bit of getting used to in terms of
+但是需要一段时间来熟悉这个语法
 
 1064
 00:53:00,444 --> 00:53:05,381
 its syntax okay? This is the feature of optionals. Okay?
+这是一个叫optional的特性
 
 1065
 00:53:05,383 --> 00:53:09,818
 In Swift, there is a type called optional.
+在Swift里，有一种类型叫optional
 
 1066
 00:53:09,820 --> 00:53:12,388
-It's a type like int or blue or anything else,
+It's a type like int or boolean or anything else,
+这是一种类似于int或bool的类型
 
 1067
 00:53:12,390 --> 00:53:14,323
 string, it's dictionary, array,
+或者是string、dictionary、array这样的
 
 1068
 00:53:14,325 --> 00:53:18,360
 optional. Optional is just a type. This type can only have
+optional只是一个类型，这个类型只有两个值
 
 1069
 00:53:18,362 --> 00:53:23,699
 two values. One value is not set. Okay?
+一个值是没有被赋值
 
 1070
 00:53:23,701 --> 00:53:28,070
 That's expressed in Swift with the key word nil, N-I-L.
+在Swift里表示它的关键字是nil
 
 1071
 00:53:28,072 --> 00:53:31,473
 Nil only means, this optional is not set.
+nil只表示optional没有被赋值
 
 1072
 00:53:31,475 --> 00:53:33,709
 That's all it means in Swift. It doesn't mean zero.
+这就是他在Swift里全部的含义，这不代表它为零
 
 1073
 00:53:33,711 --> 00:53:36,245
 It doesn't mean a pointer that doesn't point anywhere, like
+这不像别的语言，它不代表一个不指向任何地方的指针
 
 1074
 00:53:36,247 --> 00:53:39,882
 in other languages. Nil means an optional that's not set.
+nil代表一个optional没有被赋值
 
 1075
 00:53:39,884 --> 00:53:45,120
-The other state that an optional can be in is set,
+The other state that an optional can be is set,
+另一个状态就是一个optional被赋值了
 
 1076
 00:53:45,122 --> 00:53:48,691
 okay? Now, if it's in the set state, it can have
+如果它在被赋值状态
 
 1077
 00:53:48,693 --> 00:53:52,995
 an associated value, okay? An associated value,
+他就可以有一个关联值
 
 1078
 00:53:52,997 --> 00:53:55,698
 which can be of any other type, okay? Actually it also
+一个可以是其他任何类型的关联值
 
 1079
 00:53:55,700 --> 00:53:57,199
 could also be an optional. You can have an optional,
+实际上，它还可以是一个optional。你可以有一个optional(optional)
 
 1080
 00:53:57,201 --> 00:54:00,970
 optional, but that associated value is just associated with
+但是关联值只和它赋值的状态关联
 
 1081
 00:54:00,972 --> 00:54:03,405
 this set state, okay? In the not set state,
+在未赋值状态
 
 1082
 00:54:03,407 --> 00:54:06,375
 there is no associated value cuz it's not set. Okay?
+它就没有关联值，因为它没有被赋值
 
 1083
 00:54:06,377 --> 00:54:09,011
 Now what does it look like to declare it optional? Well,
+那么把它申明为optional看起来是什么样呢？
 
 1084
 00:54:09,013 --> 00:54:12,615
 let's go back with our option key and take a look at current
+让我们回过头看一下我们的option key看一下currentTitle
 
 1085
 00:54:12,617 --> 00:54:15,017
 title. Okay, you remember this from the documentation?
+还记得这段文档吗？
 
 1086
 00:54:15,019 --> 00:54:20,289
 It says var currentTitle string? That means this is
+这里写到var currentTitle: string?
 
 1087
 00:54:20,291 --> 00:54:25,694
 an optional whose associated value is a string. Okay?
+这里的意思是这是个关联值为string的optional
 
 1088
 00:54:25,696 --> 00:54:28,063
 So if someone looks at this property and
+所以如果有人看到这个属性
 
 1089
 00:54:28,065 --> 00:54:29,198
 says, what type is that property?
+当他问这个是什么类型的时候
 
 1090
 00:54:29,200 --> 00:54:32,701
 And they say, it's a string but it's optional no, no.
+他可能会说，这是个string，但是是optional。不！
 
 1091
 00:54:32,703 --> 00:54:37,973
 This is an optional and it's associated values of string,
+这是个optional，他的关联值是string
 
 1092
 00:54:37,975 --> 00:54:42,311
 okay? Get used to saying, this type is optional, okay? So
+要习惯于说这个类型是optional
 
 1093
 00:54:42,313 --> 00:54:45,114
 this is an optional string, that's what would say.
+这是个optional string，这才是正确的
 
 1094
 00:54:45,116 --> 00:54:47,516
 It's an optional string, okay? But primarily,
+这是个optional string。主要是个optional
 
 1095
 00:54:47,518 --> 00:54:51,053
 it's an optional. Okay, it's associated value is a string.
+关联值是string
 
 1096
 00:54:51,055 --> 00:54:53,922
 So this currentTitle, why is it an optional? Well,
+所以这个currentTitle为什么是个optional？
 
 1097
 00:54:53,924 --> 00:54:58,560
 because we might have a button here that has no title set.
+这是因为一个按钮的标题可能不会被赋值
 
 1098
 00:54:58,562 --> 00:55:02,064
 Not set. Okay, so the title needs to be an optional,
+没有赋值，所以它应该是个optional
 
 1099
 00:55:02,066 --> 00:55:05,367
 so it can represent the case where it's not set. Now,
+所以它就可以表示没有被赋值的情况
 
 1100
 00:55:05,369 --> 00:55:08,304
 anything can be an optional. Not just pointers, or objects.
+所以任何东西都可以是optional。不只是指针或对象
 
 1101
 00:55:08,306 --> 00:55:11,440
 Ints could be optional. You could have an optional int,
+int可以是optional，你可以有一个optional int
 
 1102
 00:55:11,442 --> 00:55:15,077
 okay? But here we are representing the title,
+但这里我们代表了一个标题
 
 1103
 00:55:15,079 --> 00:55:18,414
 the button, which is the string and it might be not set
+这个按钮的标题是个string，这可能不会被赋值
 
 1104
 00:55:18,416 --> 00:55:20,382
 okay? So we need that to be an optional.
+我们需要这个是个optional
 
 1105
 00:55:20,384 --> 00:55:23,519
 So how do I get the string, because I don't want
+所以我怎么得到这个string
 
 1106
 00:55:23,521 --> 00:55:27,690
 this digit, which currently is also an optional string?
+我不希望这个digit，现在还是个optional string
 
 1107
 00:55:27,692 --> 00:55:30,559
 Isn't it kinda weird here when I said let digit equal,
-
+当这里是let digit ＝ 的时候不是很奇怪吗
 1108
 00:55:30,561 --> 00:55:34,029
 nobody said how come you didn't say colon string?
+没人觉得你为什么不加上:string呢？
 
 1109
 00:55:34,031 --> 00:55:37,900
 Okay? I didn't say the type. I declared a local variable.
+我没有说类型，我申明一个本地变量
 
 1110
 00:55:37,902 --> 00:55:41,170
 It didn't even have a type. How was that possible?
+我甚至都没有一个类型，这怎么可能？
 
 1111
 00:55:41,172 --> 00:55:46,742
 In Swift, Swift will infer the type all the time, okay? If
+在Swift里，Swift会一直推断类型
 
 1112
 00:55:46,744 --> 00:55:49,411
 it's possible for it to know the type it will infer it.
+如果它可以在这里知道他的类型，那么就会推断这个类型
 
 1113
 00:55:49,413 --> 00:55:54,183
 And in fact it's wrong really bad coding style to put that
+实际上，这里写上类型是个非常差的编程风格
 
 1114
 00:55:54,185 --> 00:55:58,220
 type in there. It's better to just say let digit equal and
+这里最好就这么写
 
 1115
 00:55:58,222 --> 00:56:01,190
 let swift infer it. And here Swift has inferred.
+让Swift来推断他的类型。这里Swift也做到了
 
 1116
 00:56:01,192 --> 00:56:03,325
 The digit must be of type string question mark,
+这里的digit一定会是个string?类型
 
 1117
 00:56:03,327 --> 00:56:06,228
 that's because this is of type string question mark.
+因为后面的也是个string?类型
 
 1118
 00:56:06,230 --> 00:56:09,365
 So of course digit has to be that. You see what's happening
+所以digit当然也应该是那个类型。你看到那了吗？
 
 1119
 00:56:09,367 --> 00:56:12,668
