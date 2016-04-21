@@ -1,4 +1,4 @@
-# Developing iOS 9 Apps with Swift 字幕简体中文翻译项目
+Developing iOS 9 Apps with Swift 字幕简体中文翻译项目
 ---
 
 iTunes U 课程地址：[iTunes U/Developing iOS 9 Apps Swift](https://itunes.apple.com/cn/course/developing-ios-9-apps-swift/id1104579961)
