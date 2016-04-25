@@ -2001,438 +2001,547 @@ And I'm gonna do something interesting here, instead of
 501
 00:24:43,683 --> 00:24:47,384
 just having this be a public var that could be set and got.
+我不会让这个公有变量同时实现 get 和 set 方法
 
 502
 00:24:47,386 --> 00:24:49,953
 Because the setting of this doesn't really make sense for
+因为对于使用 CalculatorBrain 的人来说
 
 503
 00:24:49,955 --> 00:24:51,854
 anyone using my CalculatorBrain to set this.
+get 方法没有什么意义
 
 504
 00:24:51,856 --> 00:24:55,558
 I set it internally, okay, because of performOperation.
+因为 performOperation，我可以在内部 set 它
 
 505
 00:24:55,560 --> 00:24:58,494
 So I'm actually gonna make this computed and
+所以我只会
 
 506
 00:24:58,496 --> 00:25:01,229
 only implement the get side of it, okay?
+实现它的 get 方法
 
 507
 00:25:01,231 --> 00:25:02,864
 I'm not gonna implement this set, so
+我不会实现它的 set 方法
 
 508
 00:25:02,866 --> 00:25:05,833
 now this becomes a read-only property. Do you, do you all
+所以它现在是一个只读属性
 
 509
 00:25:05,835 --> 00:25:09,637
 remember another a read-only property we used last time?
+还记得上一个只读属性吗？
 
 510
 00:25:09,639 --> 00:25:12,940
 Current title in button, okay? So current title in button is
+button 的 currentTitle
 
 511
 00:25:12,942 --> 00:25:16,476
 a computed read-only property in button. That title, that
+它是 button 中的一个可计算的只读属性
 
 512
 00:25:16,478 --> 00:25:18,545
 current title, is probably gotten from a UI label or
+currentTitle 是从
 
 513
 00:25:18,547 --> 00:25:21,080
 something that the button is using to draw its title, okay?
+button 使用来绘制它 title（也许是一个 UILabel）中的一个变量
 
 514
 00:25:21,082 --> 00:25:24,150
 It comes from somewhere else, that's why it's computed,
+它是其它地方获取到的，所以它是一个可计算的属性
 
 515
 00:25:24,152 --> 00:25:27,019
 okay? So I'm gonna do the same thing here. So this is how you
+我在这里也做了相同的事情
 
 516
 00:25:27,021 --> 00:25:29,321
 can make a property be read-only to the callers,
+你们也可以使用类似的方法来把属性设置成只读的
 
 517
 00:25:29,323 --> 00:25:33,692
 okay? Yeah. >> So can we use the get for
+[学生提问]
 
 518
 00:25:33,694 --> 00:25:35,893
 comparison, not just for assignments,
+[学生提问]
 
 519
 00:25:35,895 --> 00:25:37,795
 like with equal equal sign? >> Okay, so
+[学生提问]
 
 520
 00:25:37,797 --> 00:25:40,998
 the question is, is the get used for comparison?
+问题是，在做比较的时候，会调用 get 方法吗？
 
 521
 00:25:41,000 --> 00:25:45,135
 Well, comparison is actually quite interesting in Swift.
+Swift 中的比较还是挺有趣的
 
 522
 00:25:45,137 --> 00:25:48,038
 The equals equals operator is like a function, and
+== 运算符像一个函数
 
 523
 00:25:48,040 --> 00:25:50,139
 it takes those two sides as arguments.
+它把两边的东西当作参数
 
 524
 00:25:50,141 --> 00:25:53,342
 And those two sides have to implement certain methods
+如果两边的东西想要被比较
 
 525
 00:25:53,344 --> 00:25:54,843
 if they wanna be comparable, okay?
+就需要实现某个待定的方法
 
 526
 00:25:54,845 --> 00:25:57,979
 Now, we're not, we're not far enough along in terms of our
+现在我们还没有学习的那么深
 
 527
 00:25:57,981 --> 00:26:01,282
 understanding of Swift to see exactly how that works. But
+还没有理解到那种程度
 
 528
 00:26:01,284 --> 00:26:03,518
 the answer to your question succinctly is no,
+简而言之，你问题的答案是，不正确
 
 529
 00:26:03,520 --> 00:26:06,053
 the get really doesn't have anything to do with equality.
+get 方法与比较（==）无关
 
 530
 00:26:06,055 --> 00:26:09,590
 Equality is just a function that is different,
+比较是一个方法，这两者是不同的
 
 531
 00:26:09,592 --> 00:26:14,594
 okay? All right, so, I'm gonna return 0 for
+这里先 return 0
 
 532
 00:26:14,596 --> 00:26:18,832
 right now, okay? Just to get rid of my little, error there.
+先把这个错误提示给躲掉
 
 533
 00:26:18,834 --> 00:26:21,934
 But eventually, we're gonna have to implement this,
+不过最终我们还是得实现这里
 
 534
 00:26:21,936 --> 00:26:22,735
 internally and make it work.
+让它正确工作
 
 535
 00:26:22,737 --> 00:26:26,972
 Now, I wanna talk a little bit about APIs right here, okay?
+我想再谈论一些有关 API 的东西
 
 536
 00:26:26,974 --> 00:26:29,675
 So far, every method and property we've done
+到目前为止，这个类中的每个方法和属性
 
 537
 00:26:29,677 --> 00:26:33,078
 in this whole class has been essentially public. Meaning,
+都是 public（公有） 的
 
 538
 00:26:33,080 --> 00:26:36,447
 any class can call any of the methods in any of the classes
+我们类中的所有方法都可以被调用
 
 539
 00:26:36,449 --> 00:26:40,484
 we created. For example, all of our controller vars,
+举个例子，controller 中的所有变量
 
 540
 00:26:40,486 --> 00:26:44,722
 okay, and functions could all be called by some other class.
+还有函数，都可以被其它类调用
 
 541
 00:26:44,724 --> 00:26:46,723
 Now, that's bad, okay, that's bad.
+这样处理不是太好
 
 542
 00:26:46,725 --> 00:26:47,891
 For example, displayValue,
+例如 displayValue
 
 543
 00:26:47,893 --> 00:26:50,760
 we wouldn't want some other class setting the displayValue
+我们不想让应用中的其它类通过这个 controller
 
 544
 00:26:50,762 --> 00:26:53,429
 in the calculators through this controller. Because we
+来修改 displayValue 的值
 
 545
 00:26:53,431 --> 00:26:56,832
 managed that displayValue by what our model calculates,
+因为我们通过 model 计算的值来管理 displayValue
 
 546
 00:26:56,834 --> 00:26:59,067
 right? So this is internal implementation.
+所以这是内部的实现
 
 547
 00:26:59,069 --> 00:27:01,770
 In fact, all of this is internal implementation or
+实际所有这些都是内部实现和控制
 
 548
 00:27:01,772 --> 00:27:05,506
 control. We do not want other classes to be able to call it,
+我们不想让其它类调用它
 
 549
 00:27:05,508 --> 00:27:09,944
 unlike these three, which are external, okay? They're, they,
+不像这里的三个，是外部的
 
 550
 00:27:09,946 --> 00:27:12,146
 we want people calling these in CalculatorBrain.
+我们希望其它人的 CalculatorBrain 中调用它们
 
 551
 00:27:12,148 --> 00:27:13,747
 That's how our CalculatorBrain works.
+因为 CalculatorBrain 就是这么工作的
 
 552
 00:27:13,749 --> 00:27:14,481
 If people couldn't call this,
+如果不调用这几个方法
 
 553
 00:27:14,483 --> 00:27:16,315
 they couldn't even use the CalculatorBrain.
+CalculatorBrain 就一点用都没有了
 
 554
 00:27:16,317 --> 00:27:19,051
 So how do we specify that difference between something
+所以我们怎么来控制其他人
 
 555
 00:27:19,053 --> 00:27:21,887
 that should be called by other people or not? We do that with
+能不能调用指定的方法呢？
 
 556
 00:27:21,889 --> 00:27:26,091
 the private keyword. So I'm gonna add private, okay,
+可以通过 private（私有的）关键字
 
 557
 00:27:26,093 --> 00:27:28,193
 this private keyword right here,
+就是这个 private
 
 558
 00:27:28,195 --> 00:27:31,329
 to all of my functions and methods over here.
+把所有的方法都标记为 private 的
 
 559
 00:27:31,331 --> 00:27:33,564
 I don't, this is not really part of Swift again,
+这不是 Swift 中的关键字
 
 560
 00:27:33,566 --> 00:27:34,865
 this is kind of an Xcode thing, so
+这是 Xcode 相关的东西
 
 561
 00:27:34,867 --> 00:27:36,533
 I put it after that. But otherwise,
+所以要放到它的后面
 
 562
 00:27:36,535 --> 00:27:38,568
 you put it there, and we're gonna put it for all of these.
+把它们都标记成 private 的
 
 563
 00:27:38,570 --> 00:27:40,403
 We're gonna make all of these be private.
+它们都是
 
 564
 00:27:40,405 --> 00:27:43,305
 And as you program, okay, you're gonna see that one of
+当你写程序的时候
 
 565
 00:27:43,307 --> 00:27:45,908
 the evaluation criteria on your homework is that you
+你们可能会使用这种判断标准
 
 566
 00:27:45,910 --> 00:27:48,610
 properly make things private when they should be private.
+当它们应该是 private 的时候，才把它们设置成 private 的
 
 567
 00:27:48,612 --> 00:27:51,680
 And I generally would err on the side of making it private.
+我不建议使用这种策略
 
 568
 00:27:51,682 --> 00:27:53,881
 It's a lot easier to make something private and
+我还是建议你们先把东西设置成 private 的
 
 569
 00:27:53,883 --> 00:27:53,981
 decide to make it public, than to use something public,
+当你决定它们可以成为 private 的时候
 
 570
 00:27:53,983 --> 00:27:56,083
 go back later and
+再调整为 public 的
 
 571
 00:27:56,085 --> 00:27:57,851
 have a whole bunch of coders start using it, and
+如果你反过来做，当一堆人使用你开发类的时候
 
 572
 00:27:57,853 --> 00:27:59,853
 then decide, no, no, I want that to be private.
+你决定把某个方法变成 private 的
 
 573
 00:27:59,855 --> 00:28:02,789
 Then you break all those other people. So err on the side of
+那么其他人的程序就会产生问题
 
 574
 00:28:02,791 --> 00:28:06,125
 private first, and then making things public, okay?
+所以还是先把方法设置为 private 的，需要的时候再改成 public
 
 575
 00:28:06,127 --> 00:28:10,129
 Now, it's actually possible to look at something and see what
+现在可以通过
 
 576
 00:28:10,131 --> 00:28:13,699
 its public interface is by going up here to the top and
+点击上方的这里，选择 Generated Interface
 
 577
 00:28:13,701 --> 00:28:16,568
 picking Generated Interface. This will show you the public
+来看所有的公共接口
 
 578
 00:28:16,570 --> 00:28:20,438
 API of the class in the main window on the left there.
+它会显示左边窗口的所有 public API
 
 579
 00:28:20,440 --> 00:28:23,341
 So we're gonna look at the public API of CalculatorBrain.
+看看 CalculatorBrain 的 public API
 
 580
 00:28:23,343 --> 00:28:25,676
 You can see that it has that setOperand, performOperation,
+可以看到有 setOperand, performOperation 的 reslt
 
 581
 00:28:25,678 --> 00:28:28,211
 and result. Notice this looks just like current title,
+这个 result 看起来和 currentTitle 一样
 
 582
 00:28:28,213 --> 00:28:30,914
 right, where it's saying this is a read-only thing.
+这表明它是一个只读的
 
 583
 00:28:30,916 --> 00:28:32,715
 We don't see any implementation here,
+在这里看不到实现
 
 584
 00:28:32,717 --> 00:28:35,918
 this is purely the API, okay? So
+只能看到 API，看不到实现
 
 585
 00:28:35,920 --> 00:28:38,787
 no implementation here. Also notice this says internal,
+注意这里的 internal
 
 586
 00:28:38,789 --> 00:28:41,490
 you would think this might say public, okay? But there's
+你可能会认为这里是 public
 
 587
 00:28:41,492 --> 00:28:44,392
 actually a slight difference between internal and public.
+但是 public 和 internal 还是有点区别的
 
 588
 00:28:44,394 --> 00:28:47,695
 Internal means it's public within your module.
+internal 代表，它只在你的 module 中是 public 的
 
 589
 00:28:47,697 --> 00:28:51,565
 Public would mean it's public to everyone in other modules,
+public 代表它在其它的 module 中也是 public 的（全局 public）
 
 590
 00:28:51,567 --> 00:28:52,199
 so consider UIkit.
+想想 UIKit
 
 591
 00:28:52,201 --> 00:28:55,736
 UIkit has hundreds of public methods that we can call.
+UIKit 有许多我们可以调用的公有方法
 
 592
 00:28:55,738 --> 00:28:58,271
 But it also has hundreds, if not thousands of internal
+但还有许多方法
 
 593
 00:28:58,273 --> 00:29:01,007
 methods that only other UIkit classes can call between
+是只有在 UIKit 中的类才可以互相调用的
 
 594
 00:29:01,009 --> 00:29:05,111
 themselves. We don't even know what they are, okay? So, but
+我们连它们是什么叫什么都不知道
 
 595
 00:29:05,113 --> 00:29:05,244
 for your purposes,
+但对于你来说
 
 596
 00:29:05,246 --> 00:29:07,145
 since you're always gonna be working in the module,
+你的 App 就是一个 module
 
 597
 00:29:07,147 --> 00:29:09,781
 which is your app, internal means public,
+所以 internal 就代表着 public
 
 598
 00:29:09,783 --> 00:29:13,117
 basically. Let's go look at our controller now, and
+看一眼 controller
 
 599
 00:29:13,119 --> 00:29:16,554
 let's look at its public API, okay? So here I selected it,
+看看它的 public API
 
 600
 00:29:16,556 --> 00:29:19,423
 look over here. And it says, there's only one public thing,
+它只有一个东西是 public 的
 
 601
 00:29:19,425 --> 00:29:22,526
 userIsInTheMiddleOfTyping. I didn't mean that to be public.
+userIsInTheMiddleOfTyping，我不想让它是 public 的
 
 602
 00:29:22,528 --> 00:29:24,661
 I wanted that to be private, too, I just forgot to put
+我想让它变成 private 的
 
 603
 00:29:24,663 --> 00:29:26,996
 the private on there. So if I go back over here and
+我只是忘加了关键字
 
 604
 00:29:26,998 --> 00:29:30,966
 say private, okay, then you'll see it goes away. So now we
+回到这里，加上，会发现它已经不在这里了
 
 605
 00:29:30,968 --> 00:29:35,204
 have no public API here. Now, it's still completely usable,
+现在它已经没有 public API 了，但它仍然可以使用
 
 606
 00:29:35,206 --> 00:29:38,707
 because in Interface Builder, we can wire up to this
+因为在 Interface Builder 中，可以给这个 controller 连线
 
 607
 00:29:38,709 --> 00:29:40,775
 controller and make it appear in a tab bar controller,
+让它出现在一个 tab bar controller 中
 
 608
 00:29:40,777 --> 00:29:43,778
 all those things. We can do all that without having any of
+我们可以不把 internal 改成 public 
 
 609
 00:29:43,780 --> 00:29:45,246
 the internal methods here be public.
+就可以实现这些
 
 610
 00:29:45,248 --> 00:29:49,383
