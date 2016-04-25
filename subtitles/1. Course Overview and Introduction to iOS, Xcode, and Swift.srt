@@ -1,4 +1,4 @@
-﻿1
+1
 00:00:00,001 --> 00:00:08,207
 [SOUND] Stanford University. >> All right well welcome
 斯坦福大学
@@ -435,7 +435,7 @@ come back. All right. So, what's in iOS?
 
 88
 00:04:08,182 --> 00:04:10,749
-You all know what's in IOS from a user standpoint.
+You all know what's in iOS from a user standpoint.
 从一个用户的角度，你们应该都知道 iOS 是什么
 
 89
@@ -481,12 +481,12 @@ but I'm gonna summarize it by dividing it into four layers
 97
 00:04:36,710 --> 00:04:40,445
 okay? The core OS which is kind of near the hardware
-核心的操作系统很接近硬件
+Core OS 层很接近硬件
 
 98
 00:04:40,447 --> 00:04:44,216
 all the way up to Cocoa Touch which is near the user, okay?
-Cocoa Touch 框架很接近手记
+Cocoa Touch 层很接近用户
 
 99
 00:04:44,218 --> 00:04:46,318
@@ -601,7 +601,7 @@ So this is kind of an object oriented layer on top of
 121
 00:05:54,321 --> 00:05:57,589
 the core services. Okay but there is no UI in this layer.
-在这一层是没有用户界面的
+在这一层是没有 UI(用户界面) 的
 
 122
 00:05:57,591 --> 00:06:01,126
@@ -731,7 +731,7 @@ level. Like there are objects that basically let you put
 147
 00:07:12,266 --> 00:07:16,701
 an entire Safari browser in a rectangle inside your app.
-把整个 Safari 浏览器放进你 App 的一个方块中
+把整个 Safari 浏览器放进你 App 的一块区域中
 
 148
 00:07:16,703 --> 00:07:18,336
@@ -926,7 +926,7 @@ like foundation and UI kit which is the kinda that base
 186
 00:09:06,813 --> 00:09:09,247
 core services stuff and the UI stuff, but
-分别是核心和 UI 之类的服务
+它们分别是核心服务和 UI 之类的东西
 
 187
 00:09:09,249 --> 00:09:12,551
@@ -936,7 +936,7 @@ there's also core data and core motion and map kit for
 188
 00:09:12,553 --> 00:09:16,087
 all these things like the gyro and the accelerometer and
-分别是对象数据库、陀螺仪和加速计
+它们分别是对象数据库、陀螺仪和加速计
 
 189
 00:09:16,089 --> 00:09:19,724
@@ -956,7 +956,7 @@ really just as important of all these things,
 192
 00:09:24,231 --> 00:09:28,667
 there's a design strategy or design methodology, okay, for
-就是设计 iOS 应用的一种策略或设计方式
+就是设计 iOS 应用的一种设计策略或设计方式
 
 193
 00:09:28,669 --> 00:09:31,970
@@ -990,7 +990,7 @@ the start of the lecture, explaining MVC. Okay, how,
 
 199
 00:09:44,484 --> 00:09:49,454
-what MVC is, how it applies in IOS development. But it's very
+what MVC is, how it applies in iOS development. But it's very
 什么是 MVC，在 iOS 开发中如何运用
 
 200
@@ -1146,7 +1146,7 @@ Before lecture the next Wednesday. On Friday we
 230
 00:11:25,485 --> 00:11:29,087
 have an optional section, room and time to be determined.
-会有个可选的部分，时间和地点有待讨论
+会有个可选的部分，时间和地点有待确定
 
 231
 00:11:29,089 --> 00:11:32,023
@@ -1385,12 +1385,12 @@ then these three choices are the three ways to kinda
 
 278
 00:13:35,749 --> 00:13:38,416
-get into Xcode 1. Here, playground,
-1 playground
+get into Xcode. 1, Here, playground,
+第一个选项 playground
 
 279
 00:13:38,418 --> 00:13:42,921
-that's basically, it gives you the ability to write IOS apps,
+that's basically, it gives you the ability to write iOS apps,
 它给了你写 iOS App 的能力
 
 280
@@ -1405,7 +1405,7 @@ So you can call APIs, put things on screen, draw things,
 
 282
 00:13:49,196 --> 00:13:52,330
-etc. It's kind of a playground for playing around with IOS.
+etc. It's kind of a playground for playing around with iOS.
 它就像一个学习开发 iOS 应用的小训练场
 
 283
@@ -1440,7 +1440,7 @@ the bottom here you can check out an existing Xcode,
 
 289
 00:14:06,913 --> 00:14:11,716
-project, IOS project, that is in Source Code, management.
+project, iOS project, that is in Source Code, management.
 源码管理的 Xcode 项目
 
 290
@@ -1551,7 +1551,7 @@ we wanna build an iOS application. So make sure you
 311
 00:15:04,905 --> 00:15:09,974
 click iOS Application here, not watch app, or AppleTV app,
-所以确认你点击了 iOS Aoolication，而不是其它的
+所以确认你点击了 iOS Application，而不是其它的
 
 312
 00:15:09,976 --> 00:15:12,610
@@ -2022,7 +2022,7 @@ don't have anything selected, so it's not showing anything.
 405
 00:19:35,675 --> 00:19:38,676
 And this bottom is essentially like a palette. Okay,
-这下面的部分就像一个色板
+这下面的部分就像一个调色板
 
 406
 00:19:38,678 --> 00:19:41,979
@@ -2047,12 +2047,12 @@ you're gonna be finding them all,
 410
 00:19:48,955 --> 00:19:51,122
 and pulling them all out of here. So it's your palette,
-然后可以从这里把它们拖出来，所以这就是你的色板
+然后可以从这里把它们拖出来，所以这就是你的调色板
 
 411
 00:19:51,124 --> 00:19:54,825
 your artist palette, as you build things. Okay? You can
-你艺术家的色板，懂了吧？
+你的艺术调色板，用来创造东西
 
 412
 00:19:54,827 --> 00:19:57,361
