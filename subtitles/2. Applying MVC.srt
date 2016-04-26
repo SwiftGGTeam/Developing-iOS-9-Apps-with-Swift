@@ -2546,386 +2546,482 @@ the internal methods here be public.
 610
 00:29:45,248 --> 00:29:49,383
 Okay, so we're gonna go back to my, oops, sorry.
+返回我们的
 
 611
 00:29:49,385 --> 00:29:54,588
 I'll go back to my brain over here, it's got my controller
+CalculatorBrain
 
 612
 00:29:54,590 --> 00:29:59,259
 over here. All right, so we've got brain and
+这里放 CalculatorViewController
 
 613
 00:29:59,261 --> 00:30:02,195
 controller. So let's think about how we're can use this
+现在来想想怎么使用这个 model
 
 614
 00:30:02,197 --> 00:30:06,132
 model over here, okay? We haven't implemented this yet,
+我们还没有实现这个
 
 615
 00:30:06,134 --> 00:30:07,700
 but we've defined its public API. So
+但已经完成了它的 public API
 
 616
 00:30:07,702 --> 00:30:11,136
 how can we use that over here? Well, we really wanna replace
+所以我们怎么在这里使用呢？
 
 617
 00:30:11,138 --> 00:30:14,673
 all of this business with using our model, right? Cuz
+把这里的业务逻辑都用 model 来完成
 
 618
 00:30:14,675 --> 00:30:18,376
 this is where we were doing model things, calculations.
+mode 是我们完成计算的地方
 
 619
 00:30:18,378 --> 00:30:20,411
 So we don't want that, okay? We wanna get rid of that, and
+把这里删掉
 
 620
 00:30:20,413 --> 00:30:23,113
 we want to start using our model here. Well, to have
+开始使用我们的 model
 
 621
 00:30:23,115 --> 00:30:26,550
 a model in our controller, we need to be able to talk to it,
+为了在 controller 中使用 model
 
 622
 00:30:26,552 --> 00:30:28,051
 that big green arrow, okay?
+需要有一个 model 的实例
 
 623
 00:30:28,053 --> 00:30:32,922
 So we need a private var, which I'll call brain,
+所以创建一个 private 的 var，起名为 brain
 
 624
 00:30:32,924 --> 00:30:36,625
 which is gonna be a CalculatorBrain, okay?
+它的类型是 CalculatorBrain
 
 625
 00:30:36,627 --> 00:30:38,961
 And this is the var that we're, it's gonna create our,
+所以我们创建了一个
 
 626
 00:30:38,963 --> 00:30:40,195
 we're gonna create our CalculatorBrain.
+CalculatorBrain 的实例
 
 627
 00:30:40,197 --> 00:30:43,365
 And we're gonna talk to it to do all the calculations, okay?
+然后可以通过它来实现所有的计算
 
 628
 00:30:43,367 --> 00:30:46,501
 So this is just that big green arrow I showed you on that,
+这就是我在之前幻灯片里给你们展示过的
 
 629
 00:30:46,503 --> 00:30:49,804
 those previous slides, where the controller talks through
+大的绿色我箭头
 
 630
 00:30:49,806 --> 00:30:54,375
 this to get to the model. Now, how about creating this thing?
+controller 可以通过它来调用 model
 
 631
 00:30:54,377 --> 00:30:55,175
 Where do we create this?
+什么时候把它初始化呢？
 
 632
 00:30:55,177 --> 00:30:58,011
 Well, you can see that we have an error up here,
+这里有一个错误
 
 633
 00:30:58,013 --> 00:30:59,645
 no initializers again.
+没有被初始化
 
 634
 00:30:59,647 --> 00:31:00,446
 That's because this var,
+因为这个 var 跟其它的一样
 
 635
 00:31:00,448 --> 00:31:02,981
 like any other, has to be initialized. And
+需要被初始化
 
 636
 00:31:02,983 --> 00:31:06,218
 I'm gonna create a CalculatorBrain here. And
+我在这里创建 CalculatorBrain
 
 637
 00:31:06,220 --> 00:31:11,389
 to do that, I have to call one of its initializers. And every
+调用它的初始化函数之一
 
 638
 00:31:11,391 --> 00:31:15,360
 time you create a new class, you get one free initializer,
+每一个你新创建的类都会一个自带的初始化函数
 
 639
 00:31:15,362 --> 00:31:19,897
 which is an initializer that takes no arguments, okay,
+就是没有参数的那个
 
 640
 00:31:19,899 --> 00:31:21,532
 kinda the basic initializer. So
+最基本的初始化函数
 
 641
 00:31:21,534 --> 00:31:25,268
 I'm using that CalculatorBrain initializer, it came for free.
+我用那个自带的初始化函数
 
 642
 00:31:25,270 --> 00:31:27,937
 I don't have anything that I need to initialize anyway.
+我不需要在初始化它的时候初始化其它东西
 
 643
 00:31:27,939 --> 00:31:33,109
 So, that's perfectly fine, okay, so I've created it. Now,
+所以这么做是没问题的
 
 644
 00:31:33,111 --> 00:31:38,180
 notice that this right here, do we need this?
+我们需要右边的这个吗？
 
 645
 00:31:38,182 --> 00:31:40,382
 No, because Swift can infer that
+不，因为 Swift 可以推倒出来
 
 646
 00:31:40,384 --> 00:31:45,087
 brain is a CalculatorBrain from that = right there, okay?
+它的类型可以从右边被推倒出来
 
 647
 00:31:45,089 --> 00:31:49,724
 So we do not wanna put colon CalculatorBrain. All right, so
+所以不用在这里放 :CalculatorBrain
 
 648
 00:31:49,726 --> 00:31:53,227
 now that we have this brain, kay, and it's created here, we
+现在已经创建了 brain 
 
 649
 00:31:53,229 --> 00:31:56,530
 can use it to public API right here, to make things work.
+我们就可以调用它的 public API 了
 
 650
 00:31:56,532 --> 00:31:59,166
 Well, one thing we know is that when the mathematical
+当数学符号进到这里的时候
 
 651
 00:31:59,168 --> 00:32:02,636
 symbol comes through here, we wanna ask the brain to perform
+我们想让 brain 来执行对应的操作
 
 652
 00:32:02,638 --> 00:32:05,805
 that operation. Okay, so we're gonna pass that mathematical
+所以要把这个数学符号
 
 653
 00:32:05,807 --> 00:32:08,241
 symbol as the operation, we know that. We also
+当作参数传进来
 
 654
 00:32:08,243 --> 00:32:11,544
 probably know that after it's done performing the operation,
+当它执行完操作的时候
 
 655
 00:32:11,546 --> 00:32:15,247
 we probably wanna put in the display the result,
+要把 result 放到 displayValue 中显示
 
 656
 00:32:15,249 --> 00:32:19,818
 the brain's result, this thing right here. Right? And
+这里的它
 
 657
 00:32:19,820 --> 00:32:22,620
 also at the beginning of the perform operation,
+在 performOperation 之前
 
 658
 00:32:22,622 --> 00:32:24,789
 if we're in the middle of typing a number,
+如果我们正在输入数字
 
 659
 00:32:24,791 --> 00:32:27,191
 we better set that number at the operand for
+最好把这个数字设置为 brain 的 operand
 
 660
 00:32:27,193 --> 00:32:30,561
 the calculator to work on it. If we go 235 square root,
+如果我们计算根号 235
 
 661
 00:32:30,563 --> 00:32:34,464
 we got to put that 235 in as the operand for the brain.
+要把 235 设置为 brain 的 operand
 
 662
 00:32:34,466 --> 00:32:37,233
 So we better say if the user is in the middle of typing
+if userIsInTheMiddleOfTyping
 
 663
 00:32:37,235 --> 00:32:41,804
 a number then brain.set operand to be whatever's
+把显示的数字设置为
 
 664
 00:32:41,806 --> 00:32:45,508
 in the display. You can see even here, having this display
+brain.operand
 
 665
 00:32:45,510 --> 00:32:49,378
 value thing makes our code read really beautifully.
+即使这里有 displayValue，代码的可读性也是非常高的
 
 666
 00:32:49,380 --> 00:32:52,914
 Okay. We can probably put this inside this if, because
+可以把它放进这个 if 里
 
 667
 00:32:52,916 --> 00:32:57,886
 no need to set it false if it's already true. Okay, so
+如果它是 已经是 false 了，就没有把它设置成 false 的必要了（这里 Paul 口误了）
 
 668
 00:32:57,888 --> 00:33:01,589
 that's it! That's all we need to do to hook our model up
+好了，这样就把 model 和 controller 连接起来了
 
 669
 00:33:01,591 --> 00:33:04,759
 to our controller. Okay. And we've removed everything
+把实际计算的代码都已
 
 670
 00:33:04,761 --> 00:33:07,027
 in our controller that has to do with actually calculating.
+移出了 controller
 
 671
 00:33:07,029 --> 00:33:12,833
 We've basically given it all off to the model to do.
+已经让 model 来做这件事了
 
 672
 00:33:13,068 --> 00:33:14,367
 So now we have to implement this, okay?
+现在得实现这个
 
 673
 00:33:14,369 --> 00:33:16,168
 We've gotta implement this brain over here.
+实现 brain 的逻辑
 
 674
 00:33:16,170 --> 00:33:19,638
 I'm gonna make that be the main window here.
+让它占用整个窗口
 
 675
 00:33:19,640 --> 00:33:20,172
 And how are we gonna do that?
+怎么实现呢？
 
 676
 00:33:20,174 --> 00:33:24,743
 Well, I'm gonna have a data structure here for my brain
+先创建一个变量
 
 677
 00:33:24,745 --> 00:33:27,311
 which makes pretty much sense, which is gonna be private,
+当然要是 private 的
 
 678
 00:33:27,313 --> 00:33:30,114
 which is gonna be called accumulator. It's gonna be
+起名为 accumulator，类型是 double
 
 679
 00:33:30,116 --> 00:33:34,318
 a double and it's going to accumulate the results, okay.
+用它来存结果
 
 680
 00:33:34,320 --> 00:33:37,521
 As operations are performed, it's accumulating the result.
+计算完毕后，把结果存起来
 
 681
 00:33:37,523 --> 00:33:40,090
 Okay, anyone who knows how calculator's built,
+知道怎么实现计算器的人
 
 682
 00:33:40,092 --> 00:33:43,226
 it has internal calc, accumulator. So,
+都应该知道它有个内部的存储器
 
 683
 00:33:43,228 --> 00:33:45,594
 this is our accumulator. Notice that I,
+这就是 accumulator
 
 684
 00:33:45,596 --> 00:33:47,696
 as soon as I put this in here I get this error.
+看这里，写完了以后，就出现了一个错误
 
 685
 00:33:47,698 --> 00:33:51,233
 Again, calculator brain has no initializers, that's because
+同样地 calculatorBrain 没有初始化函数
 
 686
 00:33:51,235 --> 00:33:54,402
 I don't initialize this. So, I'm gonna say this equals 0.0.
+我还没有初始化这个，把它设置为 0.0
 
 687
 00:33:54,404 --> 00:33:59,874
 Once I do that I do not need this because 0.0,
+不过不需要这里的 double
 
 688
 00:33:59,876 --> 00:34:04,311
 Swift always infers that. Or any something dot something,
+因为 Swift 可以从 0.0 推倒出它是 double 类型的
 
 689
 00:34:04,313 --> 00:34:07,548
 it always infers it to be a double, okay. So that makes
+它可以推倒出来
 
 690
 00:34:07,550 --> 00:34:12,019
 this be a double. You see? If I made this no dots just zero,
+所以它就是一个 double 类型的
 
 691
 00:34:12,021 --> 00:34:14,888
 then it's gonna infer this as an int, okay.
+如果这里没有 .，Swift 就会认为它是 int 类型的
 
 692
 00:34:14,890 --> 00:34:19,092
 So, good thing to know there. So now that I have my
+了解这一点还是不错的
 
 693
 00:34:19,094 --> 00:34:22,628
 accumulator, the result is always just the current state
+现在已经有了 accumulator
 
 694
 00:34:22,630 --> 00:34:25,798
 of my accumulator. So that's easy, open my result. And
+result 返回的一直是 accumulator 当前的值
 
 695
 00:34:25,800 --> 00:34:28,433
 same thing when someone says the operand, that kinda
+如果有人调用了 setOperand
 
 696
 00:34:28,435 --> 00:34:33,271
 resets my accumulator to be whatever that operand is.
+就会改变我 accumulator 的值
 
 697
 00:34:33,840 --> 00:34:37,241
 Okay. So those are all easy to implement. So that just leaves
+实现这些很容易
 
 698
 00:34:37,243 --> 00:34:40,844
 this guy, perform operation. That's the heart of my model.
+还剩下 performOperation，这是这个 model 的核心
 
 699
 00:34:40,846 --> 00:34:44,014
 That's the thing that's really gonna do some calculation.
+它是做计算的地方
 
 700
 00:34:44,016 --> 00:34:47,450
 Now I could right here go back to what I was doing in my
+这里可以像之前在 controller 里实现的那样
 
 701
 00:34:47,452 --> 00:34:51,387
 controller which is to have some, if there is an essence
+执行一些 if else 操作
 
 702
 00:34:51,389 --> 00:34:55,725
 is here, well actually I'm gonna use switch. So
+但在这里我用一下 switch
 
 703
 00:34:55,727 --> 00:34:57,993
 switch is the same as another language but
+switch 和其它语言的功能类似
 
 704
 00:34:57,995 --> 00:34:59,661
 much more powerful in Swift and
+但是在 Swift 中更加强大
 
 705
 00:34:59,663 --> 00:35:02,764
 also much more important in Swift as you will see. Okay.
+你们也会看到，它在 Swift 中更重要
 
 706
 00:35:02,766 --> 00:35:04,799
