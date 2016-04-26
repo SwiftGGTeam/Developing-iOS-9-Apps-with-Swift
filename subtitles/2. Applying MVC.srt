@@ -3026,382 +3026,477 @@ also much more important in Swift as you will see. Okay.
 706
 00:35:02,766 --> 00:35:04,799
 Switch It's very important thing is Swift.
+switch 在 Swift 中非常重要
 
 707
 00:35:04,801 --> 00:35:07,134
 So, I can switch on this symbol that's legal.
+我可以对这个符号做 switch 操作
 
 708
 00:35:07,136 --> 00:35:10,637
 The switch on a string. Okay. And I just put the cases that
+是对 string 进行的 switch 操作
 
 709
 00:35:10,639 --> 00:35:15,542
 I wanna try. So, we have for example pi. And if pi happens,
+首先把 pi 当作其中的一个 case
 
 710
 00:35:15,544 --> 00:35:19,779
 I wanna set my accumulator equal to pi,
+把 accumulator 设置为 pi
 
 711
 00:35:19,781 --> 00:35:24,017
 okay. If it was for example, square root,
+如果是 pi
 
 712
 00:35:24,019 --> 00:35:28,354
 let's go do that. My square root symbol back, here it is.
+把根号调出来
 
 713
 00:35:28,356 --> 00:35:31,790
 So if we get square root, then I'm just gonna say that my
+如果它是根号
 
 714
 00:35:31,792 --> 00:35:36,461
 accumulator equals the square root of the accumulator. Okay?
+accumulator 就等于 根号 accumulator
 
 715
 00:35:36,463 --> 00:35:40,331
 So, this is basically getting us back to exactly where we
+这和之前做的事情一样
 
 716
 00:35:40,333 --> 00:35:43,067
 were before but now we have a model.
+只不过我们是在 model 内做
 
 717
 00:35:43,069 --> 00:35:43,968
 Notice we have an error here.
+注意，这里有个 error
 
 718
 00:35:43,970 --> 00:35:47,171
 That's because one thing about switch, you must consider
+这是由 switch 引发的
 
 719
 00:35:47,173 --> 00:35:51,241
 every possible value of this thing you're switching on.
+你必须考虑你要 switch 东西的所有情形
 
 720
 00:35:51,243 --> 00:35:55,011
 Now, this is a string, so it has infinite possibilities,
+它的类型是 string
 
 721
 00:35:55,013 --> 00:35:59,682
 okay? Now, we could spend the next few years saying case A,
+我们可以花几天的时间 switch 所有的条件
 
 722
 00:35:59,684 --> 00:36:02,184
 no, we don't wanna do that. Instead, we're gonna put
+但我们不会这么做
 
 723
 00:36:02,186 --> 00:36:06,155
 default break, so default means, if you can't match any
+写上 default break 就可以了
 
 724
 00:36:06,157 --> 00:36:10,392
 of these other ones than just break out of this, okay? Now
+这句话的意思是，如果一个 case 都匹配不上，就跳出这个 switch
 
 725
 00:36:10,394 --> 00:36:13,528
 notice my indentations gotten a little wonky here, I'm gonna
+这里的缩进有一些问题
 
 726
 00:36:13,530 --> 00:36:16,931
 teach you something fun. If you select a curly braced
+教你们一个小技巧吧
 
 727
 00:36:16,933 --> 00:36:20,968
 region including your whole file, and hit Ctrl+I.
+选中一段文件中的花括号部分
 
 728
 00:36:20,970 --> 00:36:23,637
 It'll reformat it, okay? Re-lay it out. And
+输入 Ctrl+I 快捷键，这部分的缩进就会回归正确的状态
 
 729
 00:36:23,639 --> 00:36:26,540
 I strongly recommend that when you turn your homework in,
+当你们在交作业之前，我强烈建议你们这么做
 
 730
 00:36:26,542 --> 00:36:29,142
 you select all and do Ctrl+I. Okay?
+全选，然后 Ctrl+I
 
 731
 00:36:29,144 --> 00:36:32,211
 That way you'll be using the default indentation, even if
+这样就会把代码变成默认缩进的格式
 
 732
 00:36:32,213 --> 00:36:35,681
 you prefer something else, use the default one because people
+即使你偏好其它类型的缩进
 
 733
 00:36:35,683 --> 00:36:38,017
 reading your code are gonna be able to understand it better.
+默认缩进会让其它人更好地理解你的代码
 
 734
 00:36:38,019 --> 00:36:41,720
 Okay. And believe me, you'll adjust to whatever indentaki,
+相信我，你应当适应
 
 735
 00:36:41,722 --> 00:36:44,522
 indentation style this thing enforces on you, okay?
+Xcode 为你调节的这种缩进方式
 
 736
 00:36:44,524 --> 00:36:46,891
 If you start getting, if you are a computer scientist and
+如果你是一个计算机科学家
 
 737
 00:36:46,893 --> 00:36:49,794
 you start getting religious about things like indentation,
+如果你在类似于缩进的事情上有了某些信仰
 
 738
 00:36:49,796 --> 00:36:51,328
 you're heading down a pretty rocky road,
+那你前行的道路可能就很崎岖了
 
 739
 00:36:51,330 --> 00:36:53,930
 okay. Because when you wanna work in the real world you're
+当你在真实的环境中工作
 
 740
 00:36:53,932 --> 00:36:56,966
 gonna have companies that say this is the way we do it,
+你的公司可能会使用你不偏好的那种缩进风格
 
 741
 00:36:56,968 --> 00:36:57,033
-And if you sit there whining I don't like to do it that way,
+get used to it.
+并且让你适应这种风格
 
 742
 00:36:57,035 --> 00:36:59,135
-get used to it.
+And if you sit there whining I don't like to do it that way,
+如果你坐在那抱怨：我不想用那种风格
 
 743
 00:36:59,137 --> 00:37:02,104
 well, you'll probably get fired. Okay? So don't do that.
+你可能会被开除的，所以还是适应吧
 
 744
 00:37:02,106 --> 00:37:05,340
 So here we're just gonna let the Xcode do our indentation
+这里我们让 Xcode 来调整缩进
 
 745
 00:37:05,342 --> 00:37:08,843
 for us. So this is all we need to do right here, okay.
+目前为止要做的已经完成了
 
 746
 00:37:08,845 --> 00:37:10,812
 This is full implementation. We can go back and
+这是完整的实现了
 
 747
 00:37:10,814 --> 00:37:13,781
 run our app and it's exactly the way it was before,
+运行一下 app，和以前还是一样
 
 748
 00:37:13,783 --> 00:37:17,985
 but now we're using a model. Okay. So
+但是现在，我们有了 model
 
 749
 00:37:17,987 --> 00:37:21,321
 here we go, let's try 4-5, that's working square root.
+试试 45，根号
 
 750
 00:37:21,323 --> 00:37:24,090
 That looks like it's working. We'll just be sure by picking
+看起来代码起作用了
 
 751
 00:37:24,092 --> 00:37:26,626
 a number we know the square root of, pi seems to work,
+根号 9 的值是 3，也没问题
 
 752
 00:37:26,628 --> 00:37:28,728
 square root. Okay, so we're back to where we were,
+pi，根号 pi 都没问题，又回到了当时的状态
 
 753
 00:37:28,730 --> 00:37:33,132
 that's nice. Now, they'll, thing about this now is I'm
+还不错
 
 754
 00:37:33,134 --> 00:37:37,336
 about to go add a whole bunch more operations here. And
+不过还要添加好多其它的操作符在这里
 
 755
 00:37:37,338 --> 00:37:42,273
 if for every single one I have to do the math, do the math,
+对于每一个操作符，我都要做计算
 
 756
 00:37:42,275 --> 00:37:43,341
 do the math each one,
+每一个都要做计算
 
 757
 00:37:43,343 --> 00:37:45,176
 this is gonna be a lot of duplicated code
+这里重复的代码会比较多
 
 758
 00:37:45,178 --> 00:37:47,978
 in here. Because every time I have a unary operation like
+当它是一元操作符的时候，类似于根号
 
 759
 00:37:47,980 --> 00:37:51,281
 square root, it's exactly the same. If I have cosign or
+它们的操作都是相同的
 
 760
 00:37:51,283 --> 00:37:53,049
 square root or anything it's exactly the same.
+如果这里是 cos 或者根号，这里的操作都是想同的
 
 761
 00:37:53,051 --> 00:37:56,786
 The only difference is these four characters. Square root,
+唯一的区别是这四个字母
 
 762
 00:37:56,788 --> 00:38:00,423
 or cosign or whatever. Same thing for these constants,
+sqrt 还是 cos。这里的常量也是类似的
 
 763
 00:38:00,425 --> 00:38:02,558
 only this part will be different on every line,
+唯一的区别是这一点地方
 
 764
 00:38:02,560 --> 00:38:05,193
 even for binary, like multiplier, whatever.
+对于二元操作符也是一样的
 
 765
 00:38:05,195 --> 00:38:06,561
 It's probably only the function that does
+唯一的区别是
 
 766
 00:38:06,563 --> 00:38:08,563
 the calculation that's gonna be different. So I'm gonna
+进行计算的函数
 
 767
 00:38:08,565 --> 00:38:12,733
 factor this stuff out, so that all of these things,
+所以我要重构这部分代码
 
 768
 00:38:12,735 --> 00:38:17,805
 like pi and square root and multiply are in a table, okay?
+pi，根号，乘号之类的符号都放进一个表中
 
 769
 00:38:17,807 --> 00:38:21,441
 And I'm just going to have this only be doing the generic
+然后在这里只需要进行通用的计算
 
 770
 00:38:21,443 --> 00:38:22,742
 calculations, generic constants,
+通用和常量
 
 771
 00:38:22,744 --> 00:38:25,611
 generic numeral operations, generic binary operations.
+还有通用的二元操作
 
 772
 00:38:25,613 --> 00:38:28,447
 And it's gonna look in the table to find out what to do.
+它就会上表中查找，应该做些什么
 
 773
 00:38:28,449 --> 00:38:30,115
 Doesn't that seem like a much better design,
+不觉得这是一种更好的设计吗？
 
 774
 00:38:30,117 --> 00:38:31,483
 more extensible, less code, etc? So
+更少的代码，更好的扩展性
 
 775
 00:38:31,485 --> 00:38:35,053
 that's what were gonna do. So let's create that table, okay?
+先创建这张表
 
 776
 00:38:35,055 --> 00:38:37,488
 And were gonna call that table operations. And
+起名为 operations
 
 777
 00:38:37,490 --> 00:38:40,524
 it's going to be the class, it's actually not a class.
+它的类是 Dictionary，实际上 Dictionary 不是一个类
 
 778
 00:38:40,526 --> 00:38:44,228
 Dictionary, okay, so dictionary is a Swift thing.
+它是一个 Swift 中的东西
 
 779
 00:38:44,230 --> 00:38:48,331
 It is a generic type. You're probably used to that in Java.
+它是一个通用的类型，你可能在 Java 中用过
 
 780
 00:38:48,333 --> 00:38:51,601
 So you specify right here when you're declaring this
+你得在这里声明它
 
 781
 00:38:51,603 --> 00:38:55,038
 what the keys and values are, what type? And so I want one,
+key 和 value 的类型
 
 782
 00:38:55,040 --> 00:38:57,039
 I'm gonna start out just doing the constants.
+先从常量开始
 
 783
 00:38:57,041 --> 00:38:59,108
 Let's have this table only do constants, okay,
+先让这个表只放 pi 之类的常量
 
 784
 00:38:59,110 --> 00:39:02,377
 like pi. Okay? So I'm gonna have my keys be string.
+key 的类型是 string
 
 785
 00:39:02,379 --> 00:39:06,281
 That'll be the name of the constant, like the pie
+key 是常量的名字，例如 pi
 
 786
 00:39:06,283 --> 00:39:09,350
 character or whatever. And the value's gonna be a double.
+value 的类型是 double
 
 787
 00:39:09,352 --> 00:39:14,055
 So that'll be like M under bar pie or whatever. Okay? So,
+它就是 pi 的值 M_PI 之类的东西
 
 788
 00:39:14,057 --> 00:39:16,690
 I've declared it here. Now I'm actually gonna initialize
+我在这里声明了它，也在这里初始化它
 
 789
 00:39:16,692 --> 00:39:19,026
-it because remember I have to initialize all my bars.
+it because remember I have to initialize all my vars.
+因为必须要初始化所有 var
 
 790
 00:39:19,028 --> 00:39:21,895
 You can initialize a dictionary right on the fly
+你可以在创建一个 dictionary 的时候就初始化它
 
 791
 00:39:21,897 --> 00:39:25,898
 just by using the open square bracket. Notation and
+使用方括号
 
 792
 00:39:25,900 --> 00:39:26,732
 you just put like for
+你可以放
 
 793
 00:39:26,734 --> 00:39:32,971
 example pi cuz key colon m under bar pi the value.
+"pi" : M_PI
 
 794
 00:39:32,973 --> 00:39:36,174
 Okay so I'm basically filling up the dictionary here.
+现在我是在填充这个字典
 
 795
 00:39:36,176 --> 00:39:39,210
 Let's do another constant how about E that's M under bar e
+继续添加另一个常量，"e" : M_E
 
 796
 00:39:39,212 --> 00:39:42,714
 everyone know what e is 2.71 or whatever it is. Okay?
+大家都知道 e 是 2.71
 
 797
 00:39:42,716 --> 00:39:45,983
 So, we could add a whole bunch more of these things into our
+还可以向这张表中添加其它的东西
 
 798
 00:39:45,985 --> 00:39:47,885
 table. Again, we're only doing constants right now,
+现在只添加常量
 
 799
 00:39:47,887 --> 00:39:50,420
 we're not doing square root and those kinds of things.
+先不添加根号之类的东西
 
 800
 00:39:50,422 --> 00:39:52,122
 So, that changes my code over here.
+所以这里的代码就得改了
 
 801
 00:39:52,124 --> 00:39:54,657
