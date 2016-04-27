@@ -3501,402 +3501,502 @@ So, that changes my code over here.
 801
 00:39:52,124 --> 00:39:54,657
 Instead of having all that stuff right there,
+把这些删掉
 
 802
 00:39:54,659 --> 00:40:01,364
 I'm just going to let Constant equal Operations sub symbol.
+换成 let constant = operation[symbol]
 
 803
 00:40:01,366 --> 00:40:05,701
 So,this is how you look something up in a dictionary.
+这就是从 dictionary 中查东西的方式
 
 804
 00:40:05,703 --> 00:40:08,603
 Okay? Here's the name of the dictionary, right here, and
+这是 dictionary 的名字
 
 805
 00:40:08,605 --> 00:40:11,272
 you look it up with square brackets and the thing to look
+通过 [] 来查询
 
 806
 00:40:11,274 --> 00:40:14,575
 up. Okay? And now, I could just say my accumulator equals
+然后把 constant 赋值给 constant
 
 807
 00:40:14,577 --> 00:40:19,380
 that constant. Okay? But, this is not gonna work. Why? Let's
+但这不会有效的
 
 808
 00:40:19,382 --> 00:40:24,084
 find out. Error, it says, value of optional double?
+有错误，值是一个 optional 的 double
 
 809
 00:40:24,086 --> 00:40:27,120
 not unwrapped. Uh-oh, it's optionals again.
+还没有解包，又是 optional
 
 810
 00:40:27,122 --> 00:40:30,590
 Okay, what's happening here? It wants to unwrap constant.
+发生了什么？
 
 811
 00:40:30,592 --> 00:40:33,993
 In other words, it's saying this is an optional double.
+它说这是个 optional 的 double
 
 812
 00:40:33,995 --> 00:40:34,760
 Why would the thing,
+为什么会这样呢？
 
 813
 00:40:34,762 --> 00:40:37,463
 this dictionary does not contain optional doubles,
+这个 dictionary 包含的是 double
 
 814
 00:40:37,465 --> 00:40:41,033
 it contains doubles? So, why would looking this symbol up
+而不是 optional double 啊
 
 815
 00:40:41,035 --> 00:40:43,068
 in that dictionary return an optional double?
+为什么从中查询数据的时候它就返回了个 optioal 了呢？
 
 816
 00:40:43,070 --> 00:40:46,371
 Anybody have an idea? Someone besides you, cuz you got it
+有人有什么想法吗？
 
 817
 00:40:46,373 --> 00:40:48,572
 right before. [INAUDIBLE]. >> Yeah?
+那个同学
 
 818
 00:40:48,574 --> 00:40:49,373
->> I think their scenarios
+>> I think their dictionary
+字典里可能没有那个 key
 
 819
 00:40:49,375 --> 00:40:50,707
 might not have that key? >> Correct!
+正确
 
 820
 00:40:50,709 --> 00:40:53,043
 Exactly the same thing as before, okay? This dictionary
+和之前一样对吧？
 
 821
 00:40:53,045 --> 00:40:57,013
 might not contain that key that we're looking up. So,
+dictionary 中没有我们查询的那个 key
 
 822
 00:40:57,015 --> 00:40:59,882
 it's gonna return nil to say I couldn't find it.
+没找到，它就会返回 nil
 
 823
 00:40:59,884 --> 00:41:04,086
 So, we simply need to unwrap it. Now, this is dangerous,
+如果只是简单地把它 unwrap，是很危险的
 
 824
 00:41:04,088 --> 00:41:06,221
 because maybe somebody's using my API, and
+如果有人调用了我的 API
 
 825
 00:41:06,223 --> 00:41:08,623
 they perform an operation that I don't understand,
+performOperation 的参数在这里没有的话
 
 826
 00:41:08,625 --> 00:41:11,359
 now I'm gonna crash. That's not very friendly. So,
+程序就会崩溃，这非常不友好
 
 827
 00:41:11,361 --> 00:41:16,764
 here I'm gonna use if, the if let and set my accumulator,
+这里我会使用 if let
 
 828
 00:41:16,766 --> 00:41:20,134
 and I'm just gonna ignore any operation that I don't
+如果没有的话，就直接忽略这次操作
 
 829
 00:41:20,136 --> 00:41:21,968
 understand. I'm not going to affect my accumulator.
+我不会修改 accumulator 的值
 
 830
 00:41:21,970 --> 00:41:26,840
 Just leave it. Okay? All right, so let's run, make sure
+运行一个程序，确定还有效果
 
 831
 00:41:26,842 --> 00:41:33,346
 this works. All right. So, the square root's not gonna work,
+根号已经不好用了
 
 832
 00:41:33,348 --> 00:41:35,715
 cuz we don't have square roots in our table here,
+因为表中没有根号
 
 833
 00:41:35,717 --> 00:41:36,315
 we only have constants.
+只有常量
 
 834
 00:41:36,317 --> 00:41:38,183
 But, we have these are still working, and
+这些还有效
 
 835
 00:41:38,185 --> 00:41:41,219
 pi is still working. Okay. So that's good. So
+pi 也是，还不错
 
 836
 00:41:41,221 --> 00:41:43,755
 we didn't break pi, at least. And if we had an e key,
+至少 pi 还有用
 
 837
 00:41:43,757 --> 00:41:47,992
 then the e key would work as well. All right. Now,
+如果有 e 的 key 值，那它也会起作用的
 
 838
 00:41:47,994 --> 00:41:52,229
 we want to extend this to do square root. Okay.
+现在我们来扩展，实现根号计算
 
 839
 00:41:52,231 --> 00:41:52,729
 How the heck we going to do that?
+应该怎么实现呢？
 
 840
 00:41:52,731 --> 00:41:55,865
 I mean, really, all we want to do is just say square roots,
+我们想做的只是根号
 
 841
 00:41:55,867 --> 00:41:58,368
 whoops, I shouldn't have done that. Square roots,
+不小心打错了
 
 842
 00:41:58,370 --> 00:42:01,103
 lets get our friendly neighborhood symbol for
+把根号调出来
 
 843
 00:42:01,105 --> 00:42:06,342
 square root here. Okay? Square root we really want to
+我们想把 sqrt 这个函数
 
 844
 00:42:06,344 --> 00:42:08,577
 put square root [LAUGH] right here.
+放到这里
 
 845
 00:42:08,579 --> 00:42:10,011
 Okay? The square root function.
+sqrt 这个函数
 
 846
 00:42:10,013 --> 00:42:11,479
 That's really what I want, what I want to do.
+我就想这么做
 
 847
 00:42:11,481 --> 00:42:14,849
 And, like, If I had cosine I'd really want to put the cosine
+如果有 cos，那我也想把 cos 函数放到这里
 
 848
 00:42:14,851 --> 00:42:18,919
 function here. Okay? Now this is obviously not a double.
+它显然不是一个 double
 
 849
 00:42:18,921 --> 00:42:20,320
 [LAUGH] That's not going to work.
+它不会起作用的
 
 850
 00:42:20,322 --> 00:42:24,357
 So, this can't be a double. This has to be something else.
+它不是 double，它应该是别的类型的
 
 851
 00:42:24,359 --> 00:42:27,694
 Okay? It has to be something that would work for a double,
+它应该对于 double 和 function 类型
 
 852
 00:42:27,696 --> 00:42:31,630
 and would also work for a function. Okay? How are we
+同时起作用
 
 853
 00:42:31,632 --> 00:42:35,567
 gonna do that? Well, we're gonna implement a new type,
+该怎么做呢？我们要实现一种新的类型 enum（枚举）
 
 854
 00:42:35,569 --> 00:42:41,406
 okay, and it's similar to class. It's called enum. Okay?
+它与 class 很相似
 
 855
 00:42:41,408 --> 00:42:44,642
 I'm gonna call this enum operation, and
+把它起名为 Operation
 
 856
 00:42:44,644 --> 00:42:47,445
 inside this enum, I'm gonna have all the different kinds
+在 enum 中，有不同的计算方式
 
 857
 00:42:47,447 --> 00:42:50,214
 of operations I know how to do. Now, you're probably used
+你们可能在其它语言中
 
 858
 00:42:50,216 --> 00:42:52,683
 to enum in other languages. What is enum in
+使用过 enum
 
 859
 00:42:52,685 --> 00:42:56,286
 In most languages it is a discrete set of values, right?
+在大多数语言中，它把集合中的值进行分类
 
 860
 00:42:56,288 --> 00:42:59,322
 An enum has to have discrete values. Same thing in Swift.
+Swift 中也是这样做的
 
 861
 00:42:59,324 --> 00:43:02,258
 It has a discrete value. So, for example, it might
+它把值进行分类
 
 862
 00:43:02,260 --> 00:43:06,262
 be a constant, or maybe it's a unary operation. Or it might
+它可能是常量，一元操作
 
 863
 00:43:06,264 --> 00:43:10,466
 be a binary operation, or many it's equals, the equal sign,
+二元操作，也许是等号
 
 864
 00:43:10,468 --> 00:43:12,367
 which is kind of a special operation, okay.
+等号是一种特殊的操作
 
 865
 00:43:12,369 --> 00:43:15,970
 So, enums are the same. What's different about enums in Swift
+Swift 与其它语言不同的地方
 
 866
 00:43:15,972 --> 00:43:20,074
 is that they're like classes in that they can have methods.
+是它可以像 class 一样，拥有方法
 
 867
 00:43:20,076 --> 00:43:22,610
 Okay? So, I can go down here and say funk,
+我可以在这里
 
 868
 00:43:22,612 --> 00:43:25,679
 you know, something, take some arguments, return something.
+定义函数，设置参数或返回值
 
 869
 00:43:25,681 --> 00:43:29,916
 I can do that down here. Okay? Enums are allowed to have
+在 Swift 中，enum 有函数是合法的
 
 870
 00:43:29,918 --> 00:43:34,454
 methods. Now, they can't have any vars. Okay? They can have
+它不能有 var，但是它可以有 computed var（可计算的变量）
 
 871
 00:43:34,456 --> 00:43:37,290
 computed vars, but they can't have any storage vars because
+但是它不能存储变量
 
 872
 00:43:37,292 --> 00:43:39,125
 this is essentially their storage. Okay? The enum.
+因为这些本质是它们的空间
 
 873
 00:43:39,127 --> 00:43:44,363
 The other thing about them is they can not have inheritance,
+enum 也不能继承
 
 874
 00:43:44,365 --> 00:43:46,431
 so you can't have an enum that inherits
+一个 enum 不能继承于另一个 enum
 
 875
 00:43:46,433 --> 00:43:49,100
 from another enum, which probably would be weird
+这看起来很奇怪
 
 876
 00:43:49,102 --> 00:43:51,903
 anyway. So that is not much of a restriction. Okay?
+其实这些约束也没什么的
 
 877
 00:43:51,905 --> 00:43:54,372
 The other thing about enums is they're pass by
+enum 是通过值传递的
 
 878
 00:43:54,374 --> 00:43:57,107
 value and I am just going to post while I talk about that
+之后我会给你们介绍 struct
 
 879
 00:43:57,109 --> 00:43:59,876
 until I show you struct, which is another pass by value
+它也是通过值传递的数据结构
 
 880
 00:43:59,878 --> 00:44:03,513
 data structure, in a moment. Okay? So, here is operation,
+这是是 Operation 枚举
 
 881
 00:44:03,515 --> 00:44:07,150
 that's great. So, now I can change pi, that's an operation
+现在可以把 pi 改成 Operation.Constant
 
 882
 00:44:07,152 --> 00:44:12,555
 dot constant. Okay? Comment that out for a second.
+先把这里注释
 
 883
 00:44:12,557 --> 00:44:17,226
 This is also an operation of constant. This is
+这里也是 Operation.Constant
 
 884
 00:44:17,228 --> 00:44:21,797
 an operation dot unary operation. Okay?
+Operation.UnaryOperation
 
 885
 00:44:21,799 --> 00:44:26,634
 And this is also an operation dot uniary operation. Okay,
+这也是 Operation.UnaryOperation
 
 886
 00:44:26,636 --> 00:44:31,839
 cool. So, we can now change this double to the type
+现在可以把 double 改成 Operation 了
 
 887
 00:44:31,841 --> 00:44:37,311
 operation. Okay? And errors go away. These are all operations
+没有错误了
 
 888
 00:44:37,313 --> 00:44:40,848
 and it all works. Now, small problem here is that,
+有点小问题
 
 889
 00:44:40,850 --> 00:44:45,452
 we've lost track of the actual constants and, functions, and
+我们现在丢掉了真正的 constant 和 function
 
 890
 00:44:45,454 --> 00:44:49,322
 we've commented them out. They're not even involved
+我们把它注释起来了，它们没有参与其中
 
 891
 00:44:49,324 --> 00:44:51,691
 here. So, this obviously had not solved the problem.
+这显然没有解决问题
 
 892
 00:44:51,693 --> 00:44:53,793
 It's a step on the way to solving the problem, but
+这只是解决问题中的一步
 
 893
 00:44:53,795 --> 00:44:57,496
 it has not solved the problem. All right, the other thing is,
+问题还在
 
 894
 00:44:57,498 --> 00:45:01,767
 obviously down here, looking up constants like this and
+在这里，查询 constant
 
 895
 00:45:01,769 --> 00:45:02,834
 making the cumulative, this doesn't work,
+给 accumulator 赋值，都没用了
 
 896
 00:45:02,836 --> 00:45:05,636
 this only works for constants, so we're not gonna do that.
+它只对 constant 有效，我们就不这么做了
 
 897
 00:45:05,638 --> 00:45:08,472
 So, how do we look things up now for operations?
+所以我们怎样查找 operatio 呢？
 
 898
 00:45:08,474 --> 00:45:11,241
 Well, we're gonna do a similar thing here, okay,
+这里我们做件相似的事情
 
 899
 00:45:11,243 --> 00:45:13,643
 we're gonna say. Let, we can if,
+对 operations[symbol]
 
 900
 00:45:13,645 --> 00:45:17,414
 if let operation equal operations sub-symbol.
+进行 if let 操作
 
 901
 00:45:17,416 --> 00:45:21,250
