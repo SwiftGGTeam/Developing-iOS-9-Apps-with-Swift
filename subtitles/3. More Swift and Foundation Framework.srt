@@ -1,190 +1,239 @@
-﻿1
+1
 00:00:00,001 --> 00:00:03,068
 Stanford University. >> Okay,
+斯坦福大学
 
 2
 00:00:03,070 --> 00:00:07,740
 well welcome to lecture number three of Stanford CS193P.
+欢迎来到斯坦福 CS193P 课程第三讲
 
 3
 00:00:07,742 --> 00:00:11,410
 This is spring quarter 2016. And today we
+这是 2016 年春季
 
 4
 00:00:11,412 --> 00:00:16,148
 are going to mostly talk about the layer under the UI.
+今天我们主要会讨论UI层 <review>
 
 5
 00:00:16,150 --> 00:00:18,450
 Okay, so we're gonna talk about Swift the language.
+我们会讨论 Swift 这门语言
 
 6
 00:00:18,452 --> 00:00:20,953
 We're gonna talk about this foundation framework that
+我们将会讨论位于核心服务层顶部的 foundation 框架
 
 7
 00:00:20,955 --> 00:00:23,555
 lives on top of Core services. So we're not going to be
+所以我们不会一整天讨论非常多关于 UI 的内容
 
 8
 00:00:23,557 --> 00:00:26,925
 talking about the UI very much at all today. I do have a demo
+我有一个演示作为结束 <review>
 
 9
 00:00:26,927 --> 00:00:30,496
 towards the end. So I will finish off the slides and
+我会完成这些幻灯片然后我们把这个演示做完
 
 10
 00:00:30,498 --> 00:00:34,099
 then we'll do the demo to finish. Okay, all right, so
+好的
 
 11
 00:00:34,101 --> 00:00:37,202
 first thing I want to talk about is optional's,
+首先我想介绍的是 optional
 
 12
 00:00:37,204 --> 00:00:40,039
 by the way, everything I am talking about today is
+顺便说下 我今天介绍的所有东西
 
 13
 00:00:40,041 --> 00:00:43,342
 in your reading assignments. Okay, I'm just, the things I
+都在你们的阅读作业里。好的
 
 14
 00:00:43,344 --> 00:00:46,045
 am talking about today I want to emphasize. I mean these
+我想强调我今天介绍的东西
 
 15
 00:00:46,047 --> 00:00:48,280
 are things that you really really want to understand.
+我的意思是这些东西你们真的真的需要理解
 
 16
 00:00:48,282 --> 00:00:50,883
 So if you see me mention it today and then you're reading
+如果你在你的阅读作业里读到我今天提到的东西
 
 17
 00:00:50,885 --> 00:00:53,952
 it in the reading assignment, be sure to pay close attention
+确保密切关注好吗？
 
 18
 00:00:53,954 --> 00:00:56,922
 all right? So as we learned in the last lecture,
+那在我们上节课学的内容中
 
 19
 00:00:56,924 --> 00:01:01,026
 optional is just an enum, okay? It's a generic type kind
+optional 就是一个 enum 是吧？它是一个有点像数组的泛型
 
 20
 00:01:01,028 --> 00:01:03,195
 of like array. It's got this little angle bracket T,
+它有这个小尖括号 T <review>
 
 21
 00:01:03,197 --> 00:01:05,531
 which just means an Optional can be an Optional of any
+这意味着 Optional 可以选择任何类型
 
 22
 00:01:05,533 --> 00:01:08,000
 type. And we know that to be the case. We can have
+并且我们知道的情况
 
 23
 00:01:08,002 --> 00:01:11,003
 Optional strings or Optional even Optional optionals.
+我们可以有可选字符串或者任何可选类型 <review>
 
 24
 00:01:11,005 --> 00:01:13,539
 We can have any kind of Optional we want. And so
+我们可以选择任何我们想要的 Optional
 
 25
 00:01:13,541 --> 00:01:16,408
 it's an enum with two cases. The None case which is the not
+所以这是一个有两种情况的 enum。
 
 26
 00:01:16,410 --> 00:01:19,711
 set case and then the Some case, which is the set case.
+<review>
 
 27
 00:01:19,713 --> 00:01:21,780
 And in the Some case it has an associated value. And you
+在一些情况下它有相关的值
 
 28
 00:01:21,782 --> 00:01:25,451
 learned all about enums last time. So this, syntax should
+你们最近学过的关于枚举的内容
 
 29
 00:01:25,453 --> 00:01:31,223
 look completely, familiar to you. So let's look at some
+所以这个语法对你们来说应该是完全熟悉的
 
 30
 00:01:31,225 --> 00:01:34,259
 of the little question mark, exclamation point stuff. And
+让我们来看看这些小问号，惊叹号
 
 31
 00:01:34,261 --> 00:01:37,062
 what that means in terms of optional behind the scenes. So
+在这些场景背后它们和 optional 的关系是什么
 
 32
 00:01:37,064 --> 00:01:41,066
 if you had a constant x which was of type optional string,
+如果你有一个常量 x 它的类型是 optionl 字符串
 
 33
 00:01:41,068 --> 00:01:42,468
 right, string question mark.
+对，字符串问号
 
 34
 00:01:42,470 --> 00:01:47,339
 And I set it to nil, then that's the same as saying that
+然后我把它设置为 nil ，这等同于是说 x = Optional<s>.None
 
 35
 00:01:47,341 --> 00:01:52,311
 x = Optional<s>.None, right? Obviously, and same</s>
+对吗？显然，</s> 的情况一样
 
 36
 00:01:52,313 --> 00:01:54,947
 thing if I had an optional string that was set to hello,
+如果我有一个可选字符串设置成 hello
+
 
 37
 00:01:54,949 --> 00:01:58,884
 that'd be the same as x=Optional<s>.Some</s>
+那就等于 x=Optional<s>.Some</s>
 
 38
 00:01:58,886 --> 00:02:01,153
 with the associated value, hello. Okay,
+关联的值是 hello。 好的
 
 39
 00:02:01,155 --> 00:02:04,690
 everybody cool with that? And similarly, if I unwrap,
+大家都觉得这很酷吧？类似的，假如我拆包
 
 40
 00:02:04,692 --> 00:02:09,128
 if I said, var y=x unwrapped, that just means switch x,
+如果我说，var y=x 拆包，那就意味着开关 x
 
 41
 00:02:09,130 --> 00:02:11,396
 because we know that the way we unwrap Optionals and
+因为我们知道我们那样子拆包 Optionals
 
 42
 00:02:11,398 --> 00:02:13,565
 get their associated value is with switch, so
+所以我会打开 x 并用开关得到相关的值
 
 43
 00:02:13,567 --> 00:02:16,401
 I'm gonna switch on x. And in the case of Some, I'm gonna
+在一些情况下，我会用 let 值
+
 
 44
 00:02:16,403 --> 00:02:19,671
 do that let value thing so I can grab the associated value.
+因为这样我可以抓取相关的值
 
 45
 00:02:19,673 --> 00:02:22,474
 And then I'm just gonna set y equal to that value.
+然后我要设置 y 等于那个值
 
 46
 00:02:22,476 --> 00:02:24,109
 In the case None, I'm gonna crash.
+在空的情况下，我的程序会 crash
 
 47
 00:02:24,111 --> 00:02:26,745
 I'm gonna raise an exception, okay, because that's what
+我要提出一个列外，因为
 
 48
 00:02:26,747 --> 00:02:29,548
