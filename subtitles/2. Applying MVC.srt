@@ -156,7 +156,7 @@ little Y in the middle. It's kinda like road signs, okay?
 
 40
 00:02:08,116 --> 00:02:10,916
-It's like double yellow at the bottom there is don't cross.
+It's like Double yellow at the bottom there is don't cross.
 
 41
 00:02:10,918 --> 00:02:13,752
@@ -312,7 +312,7 @@ these two to talk to each other. So that fire, that's
 
 79
 00:03:55,410 --> 00:03:58,911
-double yellow line, don't ever do that in this class, okay?
+Double yellow line, don't ever do that in this class, okay?
 
 80
 00:03:58,913 --> 00:04:02,014
@@ -1252,7 +1252,7 @@ String and pi, right? Where when the pi button gets
 
 314
 00:15:12,375 --> 00:15:15,909
-pressed, we have to convert pi to a double which is a string.
+pressed, we have to convert pi to a Double which is a String.
 
 315
 00:15:15,911 --> 00:15:18,879
@@ -1260,11 +1260,11 @@ Well if I think ahead about all the operations I'm gonna
 
 316
 00:15:18,881 --> 00:15:21,915
-wanna add to my calculator there all doubles,
+wanna add to my calculator there all Doubles,
 
 317
 00:15:21,917 --> 00:15:24,217
-everything is doubles, not strings, okay?
+everything is Doubles, not Strings, okay?
 
 318
 00:15:24,219 --> 00:15:26,585
@@ -1272,11 +1272,11 @@ So am I really gonna have for all these operations,
 
 319
 00:15:26,587 --> 00:15:29,054
-all kinds of converting back and forth between strings and
+all kinds of converting back and forth between Strings and
 
 320
 00:15:29,056 --> 00:15:32,457
-doubles as I try to put the results into the display or
+Doubles as I try to put the results into the display or
 
 321
 00:15:32,459 --> 00:15:34,259
@@ -1300,7 +1300,7 @@ Wouldn't it be cool if I had a var called Display Value which
 
 326
 00:15:45,170 --> 00:15:50,073
-was a double, and this bar automatically tracked what was
+was a Double, and this bar automatically tracked what was
 
 327
 00:15:50,075 --> 00:15:52,608
@@ -1312,7 +1312,7 @@ the value of this, it would be the value of the display
 
 329
 00:15:55,179 --> 00:15:57,746
-as a double. And if I ever set the value of this, it would
+as a Double. And if I ever set the value of this, it would
 
 330
 00:15:57,748 --> 00:16:00,649
@@ -1324,11 +1324,11 @@ make all the rest of my code a lot easier because I would
 
 332
 00:16:02,953 --> 00:16:03,718
-be all in double land and
+be all in Double land and
 
 333
 00:16:03,720 --> 00:16:05,653
-Is not having to be doing this string version?
+Is not having to be doing this String version?
 
 334
 00:16:05,655 --> 00:16:08,188
@@ -1400,19 +1400,19 @@ I'm just going to return the display's text. Okay?
 
 351
 00:16:58,736 --> 00:17:03,938
-Unwrapped, but of course, this is a string. Right? Okay? And
+Unwrapped, but of course, this is a String. Right? Okay? And
 
 352
 00:17:03,940 --> 00:17:06,307
-this is supposed to be returning a double. So,
+this is supposed to be returning a Double. So,
 
 353
 00:17:06,309 --> 00:17:09,210
-I need to convert this string to a double. So, I'm gonna say
+I need to convert this String to a Double. So, I'm gonna say
 
 354
 00:17:09,212 --> 00:17:15,416
-double. That, okay, now this is still not gonna work,
+Double. That, okay, now this is still not gonna work,
 
 355
 00:17:15,418 --> 00:17:18,218
@@ -1420,7 +1420,7 @@ okay? Why is that? Let's look at our error. It says
 
 356
 00:17:18,220 --> 00:17:21,087
-the value of optional double is not unwrapped. Look it's
+the value of optional Double is not unwrapped. Look it's
 
 357
 00:17:21,089 --> 00:17:24,691
@@ -1428,7 +1428,7 @@ trying to unwrap this. Okay, that's really weird. See it's
 
 358
 00:17:24,693 --> 00:17:27,426
-pointing an exclamation point at the end of this double.
+pointing an exclamation point at the end of this Double.
 
 359
 00:17:27,428 --> 00:17:28,560
@@ -1436,23 +1436,23 @@ I didn't have to do that down here.
 
 360
 00:17:28,562 --> 00:17:31,697
-When I converted from this Double to a string, I didn't
+When I converted from this Double to a String, I didn't
 
 361
 00:17:31,699 --> 00:17:36,134
-unwrap it. Why is this? I'm trying to create a double
+unwrap it. Why is this? I'm trying to create a Double
 
 362
 00:17:36,136 --> 00:17:37,168
-here using this string.
+here using this String.
 
 363
 00:17:37,170 --> 00:17:40,037
-Why do you think this is returning an optional double
+Why do you think this is returning an optional Double
 
 364
 00:17:40,039 --> 00:17:44,641
-instead of a double? >> Because it might not be
+instead of a Double? >> Because it might not be
 
 365
 00:17:44,643 --> 00:17:45,275
@@ -1464,7 +1464,7 @@ It might not be convertible. Right? If I press hello in
 
 367
 00:17:48,880 --> 00:17:54,951
-there as the string. Double of hello, eh, I don't know. Okay,
+there as the String. Double of hello, eh, I don't know. Okay,
 
 368
 00:17:54,953 --> 00:17:57,086
@@ -1536,7 +1536,7 @@ And the answer is there's a special key word called new
 
 385
 00:18:47,500 --> 00:18:51,635
-value. Okay? This new value is going to be the double that
+value. Okay? This new value is going to be the Double that
 
 386
 00:18:51,637 --> 00:18:56,973
@@ -1548,7 +1548,7 @@ I want to put this in display text, but, of course,
 
 388
 00:18:58,843 --> 00:19:03,145
-this what type is this right here? The double, right?
+this what type is this right here? The Double, right?
 
 389
 00:19:03,147 --> 00:19:05,047
@@ -1556,15 +1556,15 @@ Because they said display value equals something and
 
 390
 00:19:05,049 --> 00:19:07,315
-it's a double. And this has got to be a string. So
+it's a Double. And this has got to be a String. So
 
 391
 00:19:07,317 --> 00:19:11,986
-I've got to convert this to a string. Just like I did below.
+I've got to convert this to a String. Just like I did below.
 
 392
 00:19:11,988 --> 00:19:15,223
-That, okay, can always convert a double to a string so
+That, okay, can always convert a Double to a String so
 
 393
 00:19:15,225 --> 00:19:17,324
@@ -1580,7 +1580,7 @@ that is calculated. And every time I ask for
 
 396
 00:19:25,067 --> 00:19:26,966
-its value I'm gonna get what's in the display's double.
+its value I'm gonna get what's in the display's Double.
 
 397
 00:19:26,968 --> 00:19:30,169
@@ -1692,11 +1692,11 @@ If I didn't have that I would have had to get the display
 
 424
 00:20:57,249 --> 00:21:00,950
-text, convert it to a double, do the square root, convert it
+text, convert it to a Double, do the square root, convert it
 
 425
 00:21:00,952 --> 00:21:03,786
-back to a string, and put it back into display text.
+back to a String, and put it back into display text.
 
 426
 00:21:03,788 --> 00:21:05,287
@@ -1812,7 +1812,7 @@ we would go here. But if we're going to create just a model
 
 454
 00:22:27,396 --> 00:22:29,896
-class, we go here. So I'm going to double-click.
+class, we go here. So I'm going to Double-click.
 
 455
 00:22:29,898 --> 00:22:31,764
@@ -2886,11 +2886,11 @@ which makes pretty much sense, which is gonna be private,
 678
 00:33:27,313 --> 00:33:30,114
 which is gonna be called accumulator. It's gonna be
-起名为 accumulator，类型是 double
+起名为 accumulator，类型是 Double
 
 679
 00:33:30,116 --> 00:33:34,318
-a double and it's going to accumulate the results, okay.
+a Double and it's going to accumulate the results, okay.
 用它来存结果
 
 680
@@ -2931,22 +2931,22 @@ I don't initialize this. So, I'm gonna say this equals 0.0.
 687
 00:33:54,404 --> 00:33:59,874
 Once I do that I do not need this because 0.0,
-不过不需要这里的 double
+不过不需要这里的 Double
 
 688
 00:33:59,876 --> 00:34:04,311
 Swift always infers that. Or any something dot something,
-因为 Swift 可以从 0.0 推倒出它是 double 类型的
+因为 Swift 可以从 0.0 推倒出它是 Double 类型的
 
 689
 00:34:04,313 --> 00:34:07,548
-it always infers it to be a double, okay. So that makes
+it always infers it to be a Double, okay. So that makes
 它可以推倒出来
 
 690
 00:34:07,550 --> 00:34:12,019
-this be a double. You see? If I made this no dots just zero,
-所以它就是一个 double 类型的
+this be a Double. You see? If I made this no dots just zero,
+所以它就是一个 Double 类型的
 
 691
 00:34:12,021 --> 00:34:14,888
@@ -3035,8 +3035,8 @@ So, I can switch on this symbol that's legal.
 
 708
 00:35:07,136 --> 00:35:10,637
-The switch on a string. Okay. And I just put the cases that
-是对 string 进行的 switch 操作
+The switch on a String. Okay. And I just put the cases that
+是对 String 进行的 switch 操作
 
 709
 00:35:10,639 --> 00:35:15,542
@@ -3095,8 +3095,8 @@ every possible value of this thing you're switching on.
 
 720
 00:35:51,243 --> 00:35:55,011
-Now, this is a string, so it has infinite possibilities,
-它的类型是 string
+Now, this is a String, so it has infinite possibilities,
+它的类型是 String
 
 721
 00:35:55,013 --> 00:35:59,682
@@ -3385,7 +3385,7 @@ it's going to be the class, it's actually not a class.
 
 778
 00:38:40,526 --> 00:38:44,228
-Dictionary, okay, so dictionary is a Swift thing.
+Dictionary, okay, so Dictionary is a Swift thing.
 它是一个 Swift 中的东西
 
 779
@@ -3415,8 +3415,8 @@ Let's have this table only do constants, okay,
 
 784
 00:38:59,110 --> 00:39:02,377
-like pi. Okay? So I'm gonna have my keys be string.
-key 的类型是 string
+like pi. Okay? So I'm gonna have my keys be String.
+key 的类型是 String
 
 785
 00:39:02,379 --> 00:39:06,281
@@ -3425,8 +3425,8 @@ key 是常量的名字，例如 pi
 
 786
 00:39:06,283 --> 00:39:09,350
-character or whatever. And the value's gonna be a double.
-value 的类型是 double
+character or whatever. And the value's gonna be a Double.
+value 的类型是 Double
 
 787
 00:39:09,352 --> 00:39:14,055
@@ -3445,8 +3445,8 @@ it because remember I have to initialize all my vars.
 
 790
 00:39:19,028 --> 00:39:21,895
-You can initialize a dictionary right on the fly
-你可以在创建一个 dictionary 的时候就初始化它
+You can initialize a Dictionary right on the fly
+你可以在创建一个 Dictionary 的时候就初始化它
 
 791
 00:39:21,897 --> 00:39:25,898
@@ -3465,7 +3465,7 @@ example pi cuz key colon m under bar pi the value.
 
 794
 00:39:32,973 --> 00:39:36,174
-Okay so I'm basically filling up the dictionary here.
+Okay so I'm basically filling up the Dictionary here.
 现在我是在填充这个字典
 
 795
@@ -3510,13 +3510,13 @@ I'm just going to let Constant equal Operations sub symbol.
 
 803
 00:40:01,366 --> 00:40:05,701
-So,this is how you look something up in a dictionary.
-这就是从 dictionary 中查东西的方式
+So,this is how you look something up in a Dictionary.
+这就是从 Dictionary 中查东西的方式
 
 804
 00:40:05,703 --> 00:40:08,603
-Okay? Here's the name of the dictionary, right here, and
-这是 dictionary 的名字
+Okay? Here's the name of the Dictionary, right here, and
+这是 Dictionary 的名字
 
 805
 00:40:08,605 --> 00:40:11,272
@@ -3535,8 +3535,8 @@ that constant. Okay? But, this is not gonna work. Why? Let's
 
 808
 00:40:19,382 --> 00:40:24,084
-find out. Error, it says, value of optional double?
-有错误，值是一个 optional 的 double
+find out. Error, it says, value of optional Double?
+有错误，值是一个 optional 的 Double
 
 809
 00:40:24,086 --> 00:40:27,120
@@ -3550,8 +3550,8 @@ Okay, what's happening here? It wants to unwrap constant.
 
 811
 00:40:30,592 --> 00:40:33,993
-In other words, it's saying this is an optional double.
-它说这是个 optional 的 double
+In other words, it's saying this is an optional Double.
+它说这是个 optional 的 Double
 
 812
 00:40:33,995 --> 00:40:34,760
@@ -3560,17 +3560,17 @@ Why would the thing,
 
 813
 00:40:34,762 --> 00:40:37,463
-this dictionary does not contain optional doubles,
-这个 dictionary 包含的是 double
+this Dictionary does not contain optional Doubles,
+这个 Dictionary 包含的是 Double
 
 814
 00:40:37,465 --> 00:40:41,033
-it contains doubles? So, why would looking this symbol up
-而不是 optional double 啊
+it contains Doubles? So, why would looking this symbol up
+而不是 optional Double 啊
 
 815
 00:40:41,035 --> 00:40:43,068
-in that dictionary return an optional double?
+in that Dictionary return an optional Double?
 为什么从中查询数据的时候它就返回了个 optioal 了呢？
 
 816
@@ -3585,7 +3585,7 @@ right before. [INAUDIBLE]. >> Yeah?
 
 818
 00:40:48,574 --> 00:40:49,373
->> I think their dictionary
+>> I think their Dictionary
 字典里可能没有那个 key
 
 819
@@ -3595,13 +3595,13 @@ might not have that key? >> Correct!
 
 820
 00:40:50,709 --> 00:40:53,043
-Exactly the same thing as before, okay? This dictionary
+Exactly the same thing as before, okay? This Dictionary
 和之前一样对吧？
 
 821
 00:40:53,045 --> 00:40:57,013
 might not contain that key that we're looking up. So,
-dictionary 中没有我们查询的那个 key
+Dictionary 中没有我们查询的那个 key
 
 822
 00:40:57,015 --> 00:40:59,882
@@ -3735,8 +3735,8 @@ And, like, If I had cosine I'd really want to put the cosine
 
 848
 00:42:14,851 --> 00:42:18,919
-function here. Okay? Now this is obviously not a double.
-它显然不是一个 double
+function here. Okay? Now this is obviously not a Double.
+它显然不是一个 Double
 
 849
 00:42:18,921 --> 00:42:20,320
@@ -3745,13 +3745,13 @@ function here. Okay? Now this is obviously not a double.
 
 850
 00:42:20,322 --> 00:42:24,357
-So, this can't be a double. This has to be something else.
-它不是 double，它应该是别的类型的
+So, this can't be a Double. This has to be something else.
+它不是 Double，它应该是别的类型的
 
 851
 00:42:24,359 --> 00:42:27,694
-Okay? It has to be something that would work for a double,
-它应该对于 double 和 function 类型
+Okay? It has to be something that would work for a Double,
+它应该对于 Double 和 function 类型
 
 852
 00:42:27,696 --> 00:42:31,630
@@ -3925,8 +3925,8 @@ And this is also an operation dot uniary operation. Okay,
 
 886
 00:44:26,636 --> 00:44:31,839
-cool. So, we can now change this double to the type
-现在可以把 double 改成 Operation 了
+cool. So, we can now change this Double to the type
+现在可以把 Double 改成 Operation 了
 
 887
 00:44:31,841 --> 00:44:37,311
@@ -4001,402 +4001,502 @@ if let operation equal operations sub-symbol.
 901
 00:45:17,416 --> 00:45:21,250
 Okay? But, now this operation is going to be one of these.
+但是现在这个操作，将要变成这其中之一
 
 902
 00:45:21,252 --> 00:45:23,252
 Okay? It's going to be one of these enums, right?
+变成这些 enum 中的一个
 
 903
 00:45:23,254 --> 00:45:23,385
 If I click on it,
+如果我点击它
 
 904
 00:45:23,387 --> 00:45:25,587
 you see, it's a calculator brain dot operation.
+它是 CalculatorBrain.Operation 类型的
 
 905
 00:45:25,589 --> 00:45:29,824
 Yeah, notice also I defined this enum inside this class so
+注意到，我把这个 enum 定义在了类中
 
 906
 00:45:29,826 --> 00:45:33,828
 its full name is calculator brain dot operation.
+所以它的全称是 CalculatorBrain.Operation
 
 907
 00:45:33,830 --> 00:45:35,196
 You can nest these things.
+你可以嵌套这些东西
 
 908
 00:45:35,198 --> 00:45:38,132
 You can even put classes inside classes if you want and
+你可以在一个类中内置另一个类
 
 909
 00:45:38,134 --> 00:45:40,000
 they'll just, it's just a namespace thing right?
+只是命名空间的区别
 
 910
 00:45:40,002 --> 00:45:44,838
 The names will be whatever dot whatever dot whatever. Okay?
+它的名字可能是 XXX.XXX.XXX
 
 911
 00:45:44,840 --> 00:45:45,805
 So, I've got the operation there.
+所以我有了这些操作
 
 912
 00:45:45,807 --> 00:45:48,507
 Now, I'm going to switch on this operation, and
+对它们进行 switch 操作
 
 913
 00:45:48,509 --> 00:45:52,211
 I know that the cases can be constant. Okay?
+我知道这些 case 是常量
 
 914
 00:45:52,213 --> 00:45:54,713
 And, I'll just break on all these for now. So,
+我先在这里加一个 break
 
 915
 00:45:54,715 --> 00:45:59,484
 it could be a constant. It could be a unary operation.
+它也可能是一元操作
 
 916
 00:45:59,953 --> 00:46:05,356
 It could be a binary operation. Or
+也可能是二元操作
 
 917
 00:46:05,358 --> 00:46:08,559
 it could be equals. Okay?
+也可能是等号操作
 
 918
 00:46:08,561 --> 00:46:12,029
 And remembering switch I have to define every single option,
+还记得我得为每一种可能的情况写 case 吗？
 
 919
 00:46:12,031 --> 00:46:14,664
 but I don't need default here because there are only
+但这里我不需要写 default
 
 920
 00:46:14,666 --> 00:46:17,767
 four possible things that an operation could be. So,
+因为这里只有四种可能
 
 921
 00:46:17,769 --> 00:46:21,671
 I've got a case for all of them in my switch.
+我已经在 switch 中都处理了
 
 922
 00:46:21,673 --> 00:46:23,305
 Question? >> Two things.
+有问题吗？
 
 923
 00:46:23,307 --> 00:46:26,141
 Why is operation, are we not referring to the same
+为什么是 operation
 
 924
 00:46:26,143 --> 00:46:28,543
 operation as the enum operation method?
+我们为什么不用跟 enum 中相同的 Operation
 
 925
 00:46:28,545 --> 00:46:32,313
 Because it's not capitalized. >> Yeah,
+因为它没有大写
 
 926
 00:46:32,315 --> 00:46:33,247
 this operation? >> Yeah.
+这个 operation?
 
 927
 00:46:33,249 --> 00:46:34,014
 >> Not capitalized makes it
+因为它是一个局部变量，所以不需要大写
 
 928
 00:46:34,016 --> 00:46:36,450
 a local variable, we're making it a local variable here yeah.
+它是个局部变量
 
 929
 00:46:36,452 --> 00:46:38,251
 And, actually, that's a really good opportunity for
+正好是个机会给你们讲讲
 
 930
 00:46:38,253 --> 00:46:41,054
 me to talk about how you capitalize okay?
+什么时候需要大写
 
 931
 00:46:41,056 --> 00:46:45,257
-All types you want to be capitalized, like calculator,
+All types you want to be capitalized, like Calculator,
+所有的类型都要大写
 
 932
 00:46:45,259 --> 00:46:47,459
-brain, dictionary, operation, string, double.
+Brain, Dictionary, Operation, String, Double.
+Calculator, Brain, Dictionary, Operation, String, Double.
 
 933
 00:46:47,461 --> 00:46:49,094
 Do you notice they all are capitalized?
+注意到它们都是大写了的吗？
 
 934
 00:46:49,096 --> 00:46:51,663
 Operate, everything, okay, is capitalized.
+类型都是大写的
 
 935
 00:46:51,665 --> 00:46:55,767
 All local variables and vars are lowercase first letter and
+局部变量第一个字母都是小写的
 
 936
 00:46:55,769 --> 00:47:00,104
 then capital letter for all the subsequent words in there.
+后面每一个开头的子单词开头都要大写
 
 937
 00:47:00,106 --> 00:47:01,672
 So it's called Camel Case, you guys know of,
+这种方式叫作驼峰式命名法
 
 938
 00:47:01,674 --> 00:47:05,909
 have heard of that before? So, that's how you want to do
+也许你们之前听说过
 
 939
 00:47:05,911 --> 00:47:06,943
 all your naming. If you don't do that,
+你们最好都这么命名
 
 940
 00:47:06,945 --> 00:47:09,479
 you're going to get in trouble with me. Okay? So, I know some
+但如果你不这么做，我可能就会找你麻烦了
 
 941
 00:47:09,481 --> 00:47:11,947
 people like to use lower case for class names, forget it.
+我知道有些同学喜欢用小写命名类的名字，以后不要这么做了
 
 942
 00:47:11,949 --> 00:47:13,582
 You can't do it in Swift. Just don't do it, okay.
+你不能在 Swift 中这么做
 
 943
 00:47:13,584 --> 00:47:15,517
 It'll be allowed, but you'll get in trouble, so
+你可以不用这种方式，但你会遇到麻烦的
 
 944
 00:47:15,519 --> 00:47:17,519
 don't do it. Okay? Well,
+所以不要这么做
 
 945
 00:47:17,521 --> 00:47:21,155
 you had a second question? >> Yeah.
+还有第二个问题？
 
 946
 00:47:21,157 --> 00:47:21,722
 >> Why are we using the dot in
+为什么在 constants 中使用 . 语法
 
 947
 00:47:21,724 --> 00:47:23,991
 constants? Are we referring to operation dot,
+我们是在引用 Operation.xx 吗？
 
 948
 00:47:23,993 --> 00:47:26,960
 okay that's my confusion. >> So, why did I say dot
+这是我的问题
 
 949
 00:47:26,962 --> 00:47:30,096
 constant here instead of just saying constant?
+为什么要在 Constant 前面加 . 呢？
 
 950
 00:47:30,098 --> 00:47:33,499
 And the answer is yeah, really we're doing operation dot
+其实我们做的事情是 Operation.Constant
 
 951
 00:47:33,501 --> 00:47:36,969
 constant, but Swift can infer that it must be operation
+只不过 Swift 可以推导出来它是 Operation 类型的
 
 952
 00:47:36,971 --> 00:47:40,606
 because it knows this is an operation. Okay?
+因为它知道它就是个 Operation
 
 953
 00:47:44,845 --> 00:47:47,946
-Is that because it's within the operation's dictionary?
+Is that because it's within the operation's Dictionary?
+- 是因为它在一个 Operation 的字典中吗？
 
 954
 00:47:47,948 --> 00:47:48,846
 >> Its part of the enum for
+- 它是 Operation 中的一部分
 
 955
 00:47:48,848 --> 00:47:51,615
 operation, you see, operation is not really,
+Operation 不......
 
 956
 00:47:51,617 --> 00:47:53,584
-we're not inside the dictionary here. We pulled it
+we're not inside the Dictionary here. We pulled it
+我们现在不在一个字典中
 
 957
 00:47:53,586 --> 00:47:56,853
-already out of the dictionary. >> So, how does it know,
+already out of the Dictionary. >> So, how does it know,
+我们把它从字典中取了出来。
 
 958
 00:47:56,855 --> 00:47:59,222
-is it intelligent enough to distinguish even though you
+is it intelligent enough Oo distinguish even though you
+所以它智能到可以识别出它是 Operation 类型的
 
 959
 00:47:59,224 --> 00:48:00,590
 computed a lower pace operation,
+即使你给它取名为小写的 operation
 
 960
 00:48:00,592 --> 00:48:02,458
-that it's referring to the email with
+that it's referring to the enum with
+它俩之间
 
 961
 00:48:02,460 --> 00:48:03,325
 the uppercase operation? >> Okay.
+还可以建立关联吗？
 
 962
 00:48:03,327 --> 00:48:06,828
 It knows that this lowercase operation is a capital
+Swift 知道这个小写的 operation 是 大写的 Operation 类型的
 
 963
 00:48:06,830 --> 00:48:10,231
-operation because I pulled it out of this dictionary, and
+operation because I pulled it out of this Dictionary, and
+是因为我把它从一个字典中取了出来
 
 964
 00:48:10,233 --> 00:48:13,634
-it knows that that dictionary has operations as its value.
+it knows that that Dictionary has operations as its value.
+它知道这个字典是以 Operation 作为 value 的
 
 965
 00:48:13,636 --> 00:48:15,302
 So, when I pulled out its value, it knew it.
+所以当我取值出来的时候，它知道它的类型
 
 966
 00:48:15,304 --> 00:48:19,907
 Okay? There you go. All right. So this is all going good
+懂了吧？
 
 967
 00:48:19,909 --> 00:48:23,310
 except for, again, we don't have the pi and the e and
+代码很好，只还过我们还没有把
 
 968
 00:48:23,312 --> 00:48:24,411
 the square root and the cosine in here.
+pi, e, 根号，cos 放进来
 
 969
 00:48:24,413 --> 00:48:26,979
 So how are we gonna get those things in there? And
+我们怎么才能把它们放进来呢？
 
 970
 00:48:26,981 --> 00:48:29,215
 the answer is, you actually already know it.
+答案是，你们其实已经知道了
 
 971
 00:48:29,217 --> 00:48:34,186
 You've heard it before. Associated values. Okay?
+Associated values（关联值）
 
 972
 00:48:34,188 --> 00:48:37,322
 Remember optional has that associated value. All
+还记得 Optional 也有关联值吗？
 
 973
 00:48:37,324 --> 00:48:41,226
 enums have associated value. In fact, optional is an enum.
+enum 也可以有，实际上 optional 就是个 enum
 
 974
 00:48:41,228 --> 00:48:45,930
 Okay? This is what optional looks like if you were to look
+Optional 长这个样子
 
 975
 00:48:45,932 --> 00:48:51,902
 at it. Enum Optional, case None, that's the nil case,
+这是 nil 的情况
 
 976
 00:48:51,904 --> 00:48:56,173
 case Some with associated value, T. And then,
+这是有值的情况
 
 977
 00:48:56,175 --> 00:48:59,576
-the optional is generic type. Just like dictionary,
+the optional is generic type. Just like Dictionary,
+Optional 支持泛型，就像 Dictionary 一样
 
 978
 00:48:59,578 --> 00:49:03,246
 it has this generic type. So this T could be any type, and
+它也有泛型，T 可以是任何类型的
 
 979
 00:49:03,248 --> 00:49:05,782
 that's how optional works. Okay?
+这就是 Optional 的原理
 
 980
 00:49:05,784 --> 00:49:08,551
 So, we can do the same thing down here, we could associate,
+我们也可以在这里做相同的事情
 
 981
 00:49:08,553 --> 00:49:12,521
-for example, a double with constants. Okay?
+for example, a Double with constants. Okay?
+我们可以把 Double 和 constants 关联起来
 
 982
 00:49:12,523 --> 00:49:14,189
-Because constants need a double, M under broad pi,
+Because constants need a Double, M under broad pi,
+因为 Constants 需要 Double
 
 983
 00:49:14,191 --> 00:49:17,459
 we need that thing. Okay? And so, we're doing the same thing
+在这里和 Optional 做相同的事情
 
 984
 00:49:17,461 --> 00:49:20,828
 that optional does. Associating a value
+把 Constants 关联上一个值
 
 985
 00:49:20,830 --> 00:49:24,065
-with our constants. So, we have this constant double,
+with our constants. So, we have this constant Double,
+所以我们已经关联上了
 
 986
 00:49:24,067 --> 00:49:27,067
 then here, when we declare the constant we have to provide
+在这里，声明的时候
 
 987
 00:49:27,069 --> 00:49:29,236
 the associated value which is m under bar pi.
+把这个值提供出来
 
 988
 00:49:29,238 --> 00:49:32,872
 Okay? Now we can get rid of our comment there.
+现在可以把注释删去了
 
 989
 00:49:32,874 --> 00:49:35,942
 Same thing here, we can take this M under bar E, and
+这也是一样
 
 990
 00:49:35,944 --> 00:49:41,814
 associate it with this constant, oops. Okay,
+把 M_E 关联起来
 
 991
 00:49:41,816 --> 00:49:44,883
 see how we're doing that association? Now,
+这就是关联的方式
 
 992
 00:49:44,885 --> 00:49:48,453
 how do we get this associated value out when we're
+但是我们怎么把这个关联的值给取出来呢？
 
 993
 00:49:48,455 --> 00:49:51,756
 looking at a constant down here? Right, here we switched
+在 switch 这里
 
 994
 00:49:51,758 --> 00:49:54,959
 on the operation, we know that this is a Constant, right?
+我们已经知道它是一个 Constant 了
 
 995
 00:49:54,961 --> 00:49:57,561
 We looked it up in the operations Dictionary.
+我们从字典中取到了它
 
 996
 00:49:57,563 --> 00:49:59,163
 And we found that it's a constant,
+发现它是一个 constant
 
 997
 00:49:59,165 --> 00:50:01,298
 let's say, like this one. How do we get it?
+我们怎样获取它的值呢？
 
 998
 00:50:01,300 --> 00:50:07,237
 You do that by right here saying, let associated,
+你可以在这里，通过 let
 
 999
 00:50:07,239 --> 00:50:10,206
 you know, constant, value, or whatever you want to call this
+随便起一个名字
 
 1000
 00:50:10,208 --> 00:50:12,708
 is, this is just a local variable, but you can call it
+它只不过是一个局部变量
 
 1001
 00:50:12,710 --> 00:50:17,212
@@ -4492,7 +4592,7 @@ no differences in Swift's mind between a function type and
 
 1024
 00:51:38,955 --> 00:51:42,223
-a double. Exactly the same. It can be used in all the same
+a Double. Exactly the same. It can be used in all the same
 
 1025
 00:51:42,225 --> 00:51:45,526
@@ -4520,11 +4620,11 @@ How do you say that that's a type here? You just type it.
 
 1031
 00:52:00,074 --> 00:52:04,009
-So, this is a function that takes a double and
+So, this is a function that takes a Double and
 
 1032
 00:52:04,011 --> 00:52:05,810
-returns a double. Okay?
+returns a Double. Okay?
 
 1033
 00:52:05,812 --> 00:52:08,579
@@ -4536,7 +4636,7 @@ It's a function. So, here when we want to associate a value,
 
 1035
 00:52:12,518 --> 00:52:16,487
-we have to put In here, just like we put a double here for
+we have to put In here, just like we put a Double here for
 
 1036
 00:52:16,489 --> 00:52:20,323
@@ -4544,7 +4644,7 @@ this one. All right? Here we have to put a function that
 
 1037
 00:52:20,325 --> 00:52:24,561
-takes a double and returns a double like, I don't know,
+takes a Double and returns a Double like, I don't know,
 
 1038
 00:52:24,563 --> 00:52:30,266
@@ -4576,7 +4676,7 @@ Now I have this is a local variable of type function that
 
 1045
 00:52:54,323 --> 00:52:57,524
-takes a double and returns a double. That's its type. Okay?
+takes a Double and returns a Double. That's its type. Okay?
 
 1046
 00:52:57,526 --> 00:52:59,225
@@ -4588,7 +4688,7 @@ I'll click on it. Look at it's type. It's a function that
 
 1048
 00:53:04,966 --> 00:53:11,103
-takes a double and returns a double.
+takes a Double and returns a Double.
 
 1049
 00:53:11,105 --> 00:53:15,207
@@ -4616,7 +4716,7 @@ it happens to be, its type is a function that takes
 
 1055
 00:53:29,288 --> 00:53:32,356
-a double, returns a double. All right. Everybody cool with
+a Double, returns a Double. All right. Everybody cool with
 
 1056
 00:53:32,358 --> 00:53:36,760
@@ -4660,7 +4760,7 @@ in, operation does not require [INAUDIBLE] because your
 
 1066
 00:54:11,993 --> 00:54:15,928
-dictionary could potentially just pull anything,
+Dictionary could potentially just pull anything,
 
 1067
 00:54:15,930 --> 00:54:18,197
@@ -4668,7 +4768,7 @@ any kind of- >> [COUGH]
 
 1068
 00:54:18,199 --> 00:54:18,564
->> We know that dictionary can
+>> We know that Dictionary can
 
 1069
 00:54:18,566 --> 00:54:21,400
@@ -4768,7 +4868,7 @@ What do you think that looks like? Another function,
 
 1093
 00:55:32,898 --> 00:55:38,435
-right, that takes two doubles and returns a double. Okay?
+right, that takes two Doubles and returns a Double. Okay?
 
 1094
 00:55:38,437 --> 00:55:39,235
@@ -4944,7 +5044,7 @@ to do. What's the type of this? Something that
 
 1137
 00:57:55,126 --> 00:57:58,794
-takes two doubles and returns a double, that's it's type.
+takes two Doubles and returns a Double, that's it's type.
 
 1138
 00:57:58,796 --> 00:58:00,095
@@ -5084,11 +5184,11 @@ So if you have a, let's say an array, which is a struct,
 
 1172
 00:59:38,818 --> 00:59:42,453
-okay? A double is a struct, it turns out. An int is a struct.
+okay? A Double is a struct, it turns out. An int is a struct.
 
 1173
 00:59:42,455 --> 00:59:45,188
-A string is a struct. These are all structs, okay?
+A String is a struct. These are all structs, okay?
 
 1174
 00:59:45,190 --> 00:59:48,525
@@ -5764,23 +5864,23 @@ this look a lot better. Now, remember that SWF knows that
 
 1342
 01:09:27,415 --> 01:09:30,883
-this binary operation takes a double, two doubles, and
+this binary operation takes a Double, two Doubles, and
 
 1343
 01:09:30,885 --> 01:09:36,388
-returns a double. So this is all redundant, okay?
+returns a Double. So this is all redundant, okay?
 
 1344
 01:09:36,390 --> 01:09:39,991
-SWF can infer that that's a double.
+SWF can infer that that's a Double.
 
 1345
 01:09:39,993 --> 01:09:40,658
-It can infer that's a double.
+It can infer that's a Double.
 
 1346
 01:09:40,660 --> 01:09:43,728
-And it can infer that it re-returns a double. So
+And it can infer that it re-returns a Double. So
 
 1347
 01:09:43,730 --> 01:09:47,131
@@ -5828,11 +5928,11 @@ And if you do this, then you don't even need that. Okay?
 
 1358
 01:10:21,030 --> 01:10:26,200
-If you use the $0 and $1, and since this is a double, and
+If you use the $0 and $1, and since this is a Double, and
 
 1359
 01:10:26,202 --> 01:10:29,469
-SWF can infer that this return's a double, you don't
+SWF can infer that this return's a Double, you don't
 
 1360
 01:10:29,471 --> 01:10:33,106
@@ -5916,7 +6016,7 @@ I could say change sign is Operation.constant, or
 
 1380
 01:11:39,501 --> 01:11:43,503
-I need a function that takes a double returns a double,
+I need a function that takes a Double returns a Double,
 
 1381
 01:11:43,505 --> 01:11:48,574
@@ -5932,11 +6032,11 @@ has one argument. And that it is returning that argument and
 
 1384
 01:11:58,552 --> 01:12:00,752
-that unary operation is double double, so
+that unary operation is Double Double, so
 
 1385
 01:12:00,754 --> 01:12:05,790
-it knows that this must be a double. It'll even infer that.
+it knows that this must be a Double. It'll even infer that.
 
 1386
 01:12:05,792 --> 01:12:09,326
@@ -6476,7 +6576,7 @@ This constant saying how far it is.
 
 1520
 01:19:04,032 --> 01:19:06,832
-I can also double-click on this I-beam. And
+I can also Double-click on this I-beam. And
 
 1521
 01:19:06,834 --> 01:19:09,735
@@ -6500,7 +6600,7 @@ then I'm gonna put it 0 points away. Bam. Okay?
 
 1526
 01:19:22,415 --> 01:19:25,582
-Same thing I can do down here. Let's double-click this one.
+Same thing I can do down here. Let's Double-click this one.
 
 1527
 01:19:25,584 --> 01:19:27,817
