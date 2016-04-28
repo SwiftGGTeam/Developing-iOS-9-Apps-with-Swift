@@ -2001,7 +2001,7 @@ things like that. And then there's the controller,
 501
 00:24:20,393 --> 00:24:23,461
 the controller is the glue between the model and
-controller是model与view之间的粘合剂
+controller 是 model 与 view 之间的粘合剂
 
 502
 00:24:23,463 --> 00:24:26,130
@@ -2011,47 +2011,47 @@ the view. Okay, it's the thing that listens to what's
 503
 00:24:26,132 --> 00:24:30,267
 happening in the UI, makes decisions, updates the model,
-做出决定，传达给model，让model更新
+做出决定，传达给 model，让 model 更新
 
 504
 00:24:30,269 --> 00:24:30,901
 something changes in the model,
-model里的一些东西就会发生改变
+model 里的一些东西就会发生改变
 
 505
 00:24:30,903 --> 00:24:34,438
 maybe it changes the UI. Okay, back and forth is really where
-可能会改变UI。好的，说来说去
+可能会改变UI，好的，说来说去
 
 506
 00:24:34,440 --> 00:24:37,608
 the interface, the logic of our entire app really
-我们app的整套逻辑生存在controller里
+我们 app 的整套逻辑生存在 controller 里
 
 507
 00:24:37,610 --> 00:24:41,879
 lives in our controller, okay? So, this file right here,
-okay?所以，这有一个文件
+okay? 所以，这有一个文件
 
 508
 00:24:41,881 --> 00:24:45,950
 ViewController.swift, that is our controller, okay?
-ViewController.swift,这就是我们的controller,okay?
+ViewController.swift，这就是我们的 controller，okay?
 
 509
 00:24:45,952 --> 00:24:51,355
 Our app only has one MVC, okay? Which is the calculator,
-我们的app仅有一个MVC, okay? 就是这个计算器
+我们的app仅有一个 MVC，okay? 就是这个计算器
 
 510
 00:24:51,357 --> 00:24:54,024
 MVC and this is it's controller, okay,
-MVC和它是这个app的controller,okay?
+MVC和它是这个app的 controller，okay?
 
 511
 00:24:54,026 --> 00:24:59,296
 the C of MVC. Now, here is your first look at Swift. E,
-MVC中的C,现在，这里是你看到的第一个swift程序
+MVC中的 C，现在，这里是你看到的第一个 swift 程序
 
 512
 00:24:59,298 --> 00:25:00,598
@@ -2061,7 +2061,7 @@ we're gonna, I'm gonna explain this little,
 513
 00:25:00,600 --> 00:25:04,168
 real briefly. You can see that Xcode has thrown in a couple
-非常简单，你可以看到Xcode里有一些方法
+非常简单，你可以看到 Xcode 里有一些方法
 
 514
 00:25:04,170 --> 00:25:07,571
@@ -2071,7 +2071,7 @@ of methods for me. Everyone knows what a method is.
 515
 00:25:07,573 --> 00:25:09,874
 They're so exciting that I'm gonna delete them, okay?
-我要删除掉它们，它们显得非常exciting! okay?
+我要删除掉它们，它们显得非常 exciting! okay?
 
 516
 00:25:09,876 --> 00:25:12,910
@@ -2095,7 +2095,7 @@ we will be using those methods later in the course.
 520
 00:25:19,785 --> 00:25:21,318
 Those are part of what's called the view-controller
-这些就是所说的view-controller的一部分
+这些就是所说的 view-controller 的一部分
 
 521
 00:25:21,320 --> 00:25:25,189
@@ -2110,17 +2110,17 @@ let's look at what we have left here.
 523
 00:25:26,359 --> 00:25:30,461
 This import is kind of like an include in other languages or
-这个import就像其它语言里的include一样
+这个 import 就像其它语言里的 include 一样
 
 524
 00:25:30,463 --> 00:25:33,864
 import in other languages. But this is not a file,
-或是其它语言里的import，但这不是一个文件
+或是其它语言里的 import，但这不是一个文件
 
 525
 00:25:33,866 --> 00:25:37,368
 this is a module. And in Swift, you can group a whole
-它是一个模块，在swift中，你可以把一堆类打包在一起
+它是一个模块，在 swift 中，你可以把一堆类打包在一起
 
 526
 00:25:37,370 --> 00:25:42,306
@@ -2135,22 +2135,22 @@ when you import a module all those classes will be visible,
 528
 00:25:45,978 --> 00:25:49,947
 if they're public classes, to whatever is using it. So here,
-当然如果它们是public类的话，不管谁用都如此
+当然如果它们是 public 类的话，不管谁用都如此
 
 529
 00:25:49,949 --> 00:25:53,751
 UI kit has all these interface things, buttons, text fields,
-所以这个UIkit里有所有的的界面，按钮，文本框
+所以这个 UIkit 里有所有的的界面，按钮，文本框
 
 530
 00:25:53,753 --> 00:25:56,620
 all that stuff is in there. And so since we're building
-所有的东西都在这个模块里，因为我们要做一个UI app
+所有的东西都在这个模块里，因为我们要做一个 UI app
 
 531
 00:25:56,622 --> 00:25:59,924
 a UI app here, a calculator, we're gonna import UIkit, and
-一个计算器，我们我们要导入UIkit
+一个计算器，我们我们要导入 UIkit
 
 532
 00:25:59,926 --> 00:26:02,059
@@ -2160,17 +2160,17 @@ you're almost always gonna import UIkit,
 533
 00:26:02,061 --> 00:26:04,828
 okay? Now in our model, where it's UI independent,
-现在在我们的model中，UI是独立的
+现在在我们的 model 中，UI是独立的
 
 534
 00:26:04,830 --> 00:26:07,298
 we're gonna probably be importing foundation.
-我们也许需要导入foundation框架
+我们也许需要导入 foundation 框架
 
 535
 00:26:07,300 --> 00:26:09,967
 Foundation is that core services thing, okay?
-Foundation是一个核心框架，okay？
+Foundation 是一个核心框架，okay？
 
 536
 00:26:09,969 --> 00:26:11,268
@@ -2190,37 +2190,37 @@ stuff. So those are the two main things you import, okay.
 539
 00:26:17,376 --> 00:26:21,078
 Here is the definition, declaration really,
-这里是swift里对一个类进行定义时看起来的样子
+这里是 swift 里对一个类进行定义时看起来的样子
 
 540
 00:26:21,080 --> 00:26:24,248
 of a class in Swift is what it looks like.
-这里是swift里对一个类进行定义时看起来的样子
+这里是 swift 里对一个类进行定义时看起来的样子
 
 541
 00:26:24,250 --> 00:26:28,052
 You've got the class keyword. This is the name of the class,
-你需要用到class关键字，这是这个类的名字
+你需要用到 class 关键字，这是这个类的名字
 
 542
 00:26:28,054 --> 00:26:30,020
 ViewController. Now this is a pretty bad name,
-ViewController, 一个很差劲的名字
+ViewController，一个很差劲的名字
 
 543
 00:26:30,022 --> 00:26:33,190
 okay, because its very generic, ViewController
-因为ViewController这个名字不够具体
+因为 ViewController 这个名字不够具体
 
 544
 00:26:33,192 --> 00:26:36,160
 probably be better called calculator controller, or
-我们最好叫它计算器controller
+我们最好叫它计算器 controller
 
 545
 00:26:36,162 --> 00:26:37,394
 calculator view controller.
-或者计算器view controller之类的名字
+或者计算器 view controller 之类的名字
 
 546
 00:26:37,396 --> 00:26:39,363
@@ -2230,17 +2230,17 @@ I'm not gonna show you how to rename that now.
 547
 00:26:39,365 --> 00:26:42,766
 But I will show you next week. But this is the name of our
-在下周我会展示给你看，这是我们controller类的名字
+在下周我会展示给你看，这是我们 controller 类的名字
 
 548
 00:26:42,768 --> 00:26:46,937
 controller class. This colon UIViewController, means that
-这个UIViewController意味着
+这个 UIViewController 意味着
 
 549
 00:26:46,939 --> 00:26:50,808
 UIViewController is the class our controller inherits from.
-我们的类继承于UIViewController类
+我们的类继承于 UIViewController 类
 
 550
 00:26:50,810 --> 00:26:53,277
@@ -2250,22 +2250,22 @@ This is object oriented program, we have inheritance.
 551
 00:26:53,279 --> 00:26:56,914
 This is the inheritance. Single inheritance in Swift.
-这就是一个swift里单继承的例子
+这就是一个 swift 里单继承的例子
 
 552
 00:26:56,916 --> 00:27:01,485
 All controllers, all MVC controllers must inherit from
-所有的controller, 所有的MVC controller都必须
+所有的 controller，所有的 MVC controller 都必须
 
 553
 00:27:01,487 --> 00:27:04,521
 UIViewController either directly or indirectly from
-直接或间接地继承于UIViewController
+直接或间接地继承于 UIViewController
 
 554
 00:27:04,523 --> 00:27:08,125
 UIViewController. Okay, then we have a curly brace here,
-Okay,这里我们有了大括号
+Okay，这里我们有了大括号
 
 555
 00:27:08,127 --> 00:27:11,695
@@ -2285,12 +2285,12 @@ Everyone knows what an instance variable is,
 558
 00:27:15,301 --> 00:27:18,636
 right? So our property, we call them properties in Swift.
-在swift中我们称property是属性
+在 swift 中我们称 property 是属性
 
 559
 00:27:18,638 --> 00:27:21,438
 They're very powerful in Swift, the instance variables.
-实例变量在swift里面非常有用
+实例变量在 swift 里面非常有用
 
 560
 00:27:21,440 --> 00:27:23,007
@@ -2305,17 +2305,17 @@ things like that. But all that goes inside these curly
 562
 00:27:26,545 --> 00:27:30,247
 braces, okay? So that's your intro to Swift.
-好吗？ 所以这就是对swift的简短介绍
+好吗？ 所以这就是对 swift 的简短介绍
 
 563
 00:27:30,249 --> 00:27:33,350
 What about this other file over here? Main.storyboard,
-这个Main,storyboard文件又是怎么回事？
+这个 Main.storyboard 文件又是怎么回事？
 
 564
 00:27:33,352 --> 00:27:39,089
 what's that? That's the V for view of our NVC. That's
-它是什么呢？就是MVC里面的V
+它是什么呢？就是 MVC 里面的 V
 
 565
 00:27:39,091 --> 00:27:42,559
@@ -2489,7 +2489,7 @@ So let's start with a button.
 599
 00:29:27,466 --> 00:29:30,834
 I told you that in this utilities window at the bottom
-我告诉过你们在utilities窗口
+我告诉过你们在 utilities 窗口
 
 600
 00:29:30,836 --> 00:29:34,037
@@ -2689,7 +2689,7 @@ about this button I don't do directly.
 639
 00:31:23,482 --> 00:31:27,517
 I need to use this top half of the utilities window here,
-我需要用到utilities窗口的上半部分
+我需要用到 utilities 窗口的上半部分
 
 640
 00:31:27,519 --> 00:31:30,721
@@ -2759,7 +2759,7 @@ here I can set the attributes of a button because that's
 653
 00:32:06,625 --> 00:32:10,027
 what's selected here. And also I can set the attributes of
-同样我也能设置这个controls属性
+同样我也能设置这个 controls 属性
 
 654
 00:32:10,029 --> 00:32:13,830
@@ -2769,7 +2769,7 @@ a control, which is buttons super class, and
 655
 00:32:13,832 --> 00:32:17,634
 then attributes of view, which is controls super class.
-再设置view里面的属性，它是controls的父类
+再设置 view 里面的属性，它是 controls 的父类
 
 656
 00:32:17,636 --> 00:32:20,537
@@ -2829,7 +2829,7 @@ go down that turns out to be something that button inherits
 667
 00:32:52,805 --> 00:32:55,205
 from view, right here background.
-继承于view，就在这里
+继承于 view，就在这里
 668
 00:32:55,207 --> 00:32:59,042
 So I can set it by, you know, using crayons,
@@ -2883,7 +2883,7 @@ messages to this button to set the way it is and
 678
 00:33:29,174 --> 00:33:33,610
 then the Xcode has a way to essentially freeze dry
-接着Xcode就有办法完成你的请求
+接着 Xcode 就有办法完成你的请求
 
 679
 00:33:33,612 --> 00:33:35,545
@@ -2893,7 +2893,7 @@ all the attributes, and it's object oriented.
 680
 00:33:35,547 --> 00:33:37,147
 In other words, the objects are participating and
-换言之，Xcode能够把这些操作
+换言之，Xcode 能够把这些操作
 
 681
 00:33:37,149 --> 00:33:42,419
@@ -2903,7 +2903,7 @@ freeze drying themselves. And in fact, the whole mechanism
 682
 00:33:42,421 --> 00:33:45,856
 of this part of Xcode which we call interface builder,
-Xcode的这套机制被我们叫做”interface builder”
+Xcode 的这套机制被我们叫做 ”interface builder”
 
 683
 00:33:45,858 --> 00:33:48,925
@@ -2918,7 +2918,7 @@ you can put your own objects in here, okay.
 685
 00:33:51,497 --> 00:33:53,563
 Your own things they draw, custom drawing or whatever.
-
+UI上所画的一切你都可以自己控制
 
 686
 00:33:53,565 --> 00:33:56,633
@@ -2943,7 +2943,7 @@ So how do I run this application? You
 690
 00:34:03,675 --> 00:34:07,544
 go up here to the top, you see where it says iPhone 6s Plus.
-看上来，在顶栏这，你能看到这上面写着“iPhone 6s Plus”
+看上来，在顶栏这，你能看到这上面写着 “iPhone 6s Plus”
 
 691
 00:34:07,546 --> 00:34:10,914
@@ -2973,12 +2973,12 @@ I didn't connect a device so
 696
 00:34:23,462 --> 00:34:25,529
 I'm going to run it on an iPhone 6. Okay, so
-所以我打算在iPhone 6模拟器上运行它
+所以我打算在 iPhone 6 模拟器上运行它
 
 697
 00:34:25,531 --> 00:34:30,000
 I just pick iPhone 6 and then I just press Play right here,
-我只需要选择iPhone 6 接着按下这个运行键
+我只需要选择 iPhone 6 接着按下这个运行键
 
 698
 00:34:30,002 --> 00:34:32,969
@@ -3013,7 +3013,7 @@ This is actually a full simulator of the iPhone.
 704
 00:34:45,651 --> 00:34:48,485
 And in fact, if I go Hardware, Home, that's
-实际上，我点击这个“Hardware”, “Home”
+实际上，我点击这个 “Hardware”,，“Home”
 
 705
 00:34:48,487 --> 00:34:51,221
@@ -3023,7 +3023,7 @@ just like pressing the Home button. You know the little
 706
 00:34:51,223 --> 00:34:55,058
 Home button on your iPhone? Watch this. Press Home, and
-按你iPhone上的home键，看，点击home
+按你iPhone上的 home 键，看，点击home
 
 707
 00:34:55,060 --> 00:34:57,227
@@ -3073,7 +3073,7 @@ let's go do that. Now how are we gonna do that?
 716
 00:35:26,091 --> 00:35:28,959
 Remember I told you that the V, the view here is kind of
-记得我告诉过你们的, MVC里的V
+记得我告诉过你们的, MVC 里的 V
 
 717
 00:35:28,961 --> 00:35:31,761
@@ -3083,22 +3083,22 @@ generic UI buttons and sliders and that there's a model which
 718
 00:35:31,763 --> 00:35:34,931
 we don't have yet okay? And then there's the controller.
-一个model来控制它，okay？这是我们的controller
+一个 model 来控制它，okay？这是我们的 controller
 
 719
 00:35:34,933 --> 00:35:37,968
 So the way that touching on buttons causes anything to
-按下按按键发生的所有事情都是这个controller来完成的
+按下按按键发生的所有事情都是这个 controller 来完成的
 
 720
 00:35:37,970 --> 00:35:42,038
 happen is via the controller. So somehow we have to connect
-所以我们得把按钮和controller连接起来
+所以我们得把按钮和 controller 连接起来
 
 721
 00:35:42,040 --> 00:35:45,542
 this button up to our controller. In fact,
-所以我们得把按钮和controller连接起来
+所以我们得把按钮和 controller 连接起来
 
 722
 00:35:45,544 --> 00:35:47,544
@@ -3108,8 +3108,8 @@ what we wanna do is, when we touch this button,
 723
 00:35:47,546 --> 00:35:51,882
 we wanna invoke a method in our controller object, right?
-我们想调用controller中的一个方法，好吗？
-
+我们想调用 controller 中的一个方法，好吗？
+ 
 724
 00:35:51,884 --> 00:35:53,183
 Sounds nice and object oriented.
@@ -3123,7 +3123,7 @@ That's what we wanna do. So how do we set that up, okay?
 726
 00:35:56,288 --> 00:35:59,489
 We're gonna set that up by getting the controller and
-我们需要把controller和view放在
+我们需要把 controller 和 view 放在
 
 727
 00:35:59,491 --> 00:36:02,592
@@ -3153,7 +3153,7 @@ little round circle the assistant editor. This brings
 732
 00:36:12,471 --> 00:36:17,207
 up the controller and the view on screen at the same time
-把controller和view放在同一个屏幕上
+把 controller 和 view 放在同一个屏幕上
 
 733
 00:36:17,209 --> 00:36:20,277
@@ -3178,7 +3178,7 @@ we have plenty of room for our code.
 737
 00:36:28,253 --> 00:36:32,589
 And here's our controller. So, now this is gonna seem wacky,
-这是我们的controller，这可能看起来会有一点怪异
+这是我们的 controller，这可能看起来会有一点怪异
 
 738
 00:36:32,591 --> 00:36:34,591
@@ -3188,17 +3188,17 @@ but it's actually really, really cool. Okay.
 739
 00:36:34,593 --> 00:36:37,694
 The way that we hook up that button, to call a method in
-我们现在把按钮和controller里的方法连接起来
+我们现在把按钮和 controller 里的方法连接起来
 
 740
 00:36:37,696 --> 00:36:41,932
 our controller, is by holding down the control key, okay.
-只需要按住control键
+只需要按住 control 键
 
 741
 00:36:41,934 --> 00:36:43,066
 I'm gonna hold down the control key.
-好，我现在按住了control键
+好，我现在按住了 control 键
 
 742
 00:36:43,068 --> 00:36:47,938
@@ -3223,7 +3223,7 @@ when I let go, it's gonna say okay, what kind of connection
 746
 00:36:57,516 --> 00:37:00,817
 do you wanna make between this user interface object and
-比如我们UI对象和controller之间
+比如我们UI对象和 controller 之间
 
 747
 00:37:00,819 --> 00:37:03,086
@@ -3233,27 +3233,27 @@ your controller? And there's really two choices,
 748
 00:37:03,088 --> 00:37:04,521
 one is called an outlet which I'm gonna talk
-一个是调用“outlet”，这个我稍后再讲
+一个是调用 “outlet”，这个我稍后再讲
 
 749
 00:37:04,523 --> 00:37:07,290
 about in a moment and the other one is called an action.
-另一个叫做“action”
+另一个叫做 “action”
 
 750
 00:37:07,292 --> 00:37:10,493
 So an action is when you want something that happens in UI
-“action”就是当UI中发生了一些事件后，
+“action” 就是当UI中发生了一些事件后，
 
 751
 00:37:10,495 --> 00:37:12,762
 to invoke a method in your controller. Okay?
-controller里的方法将被调用，okay？
+controller 里的方法将被调用，okay？
 
 752
 00:37:12,764 --> 00:37:15,999
 Exactly what we want here, that's what an action is. So
-这就是我们想要的，这就是“action”的作用
+这就是我们想要的，这就是 “action” 的作用
 
 753
 00:37:16,001 --> 00:37:18,702
@@ -3268,12 +3268,12 @@ of the method. So here I'm touching a digit button,
 755
 00:37:22,241 --> 00:37:24,908
 so I'm gonna call this touchDigit. Okay.
-所以我这在输入“touchDigit”，okay？
+所以我这在输入 “touchDigit”，okay？
 
 756
 00:37:24,910 --> 00:37:26,910
 So this is just the name of the method that,
-这就是在我的controller里
+这就是在我的 controller 里
 
 00:37:26,912 --> 00:37:29,479
 is gonna be created in my controller.
@@ -3287,7 +3287,7 @@ Notice that my method can have arguments.
 759
 00:37:31,516 --> 00:37:32,882
 You see down here where it says arguments?
-你看下面，这里写着”Arguments”
+你看下面，这里写着 ”Arguments”
 
 760
 00:37:32,884 --> 00:37:37,053
@@ -3302,7 +3302,7 @@ I don't want an argument, that'd be fine.
 762
 00:37:38,624 --> 00:37:42,225
 It can have one argument which is the sender, in other words,
-也可以有一个参数，叫做sender，换言之
+也可以有一个参数，叫做 sender，换言之
 
 763
 00:37:42,227 --> 00:37:44,728
@@ -3343,7 +3343,7 @@ this method is great. The only problem is if you see this
 770
 00:37:59,845 --> 00:38:03,246
 type right here any object. That's going to be the type
-你看见这里有一个“any object”，它的类型就是一个object
+你看见这里有一个 “any object”，它的类型就是一个 object
 
 771
 00:38:03,248 --> 00:38:05,982
@@ -3363,12 +3363,12 @@ So when you're doing your homework don't miss this step.
 774
 00:38:12,524 --> 00:38:17,527
 Okay? Change this from any object to UI button.
-okay？把它从“any object”改成“UIButton”
+okay？把它从 “any object” 改成 “UIButton”
 
 775
 00:38:17,529 --> 00:38:20,630
 Because of course the thing sending us this message is UI
-因为发送给我们消息的显然是一个UIbutton
+因为发送给我们消息的显然是一个 UIbutton
 
 776
 00:38:20,632 --> 00:38:23,833
@@ -3378,7 +3378,7 @@ button. It's unfortunate that this is not the default but
 777
 00:38:23,835 --> 00:38:27,304
 you must do this. Okay? So, this I wanna click Connect,
-所以你必须自己搞定，okay？现在，我来点击“Connect”
+所以你必须自己搞定，okay？现在，我来点击 “Connect”
 
 778
 00:38:27,306 --> 00:38:30,440
@@ -3401,22 +3401,22 @@ it's gonna write the code for a method.
 782
 00:38:37,616 --> 00:38:40,917
 You're gonna see your first Swift method here we go. Okay?
-你会在这里看到第一个swift方法，okay？
+你会在这里看到第一个 swift 方法，okay？
 
 783
 00:38:40,919 --> 00:38:44,354
 This is your first Swift method. Now this is actually
-这是你的第一个swift方法
+这是你的第一个 swift 方法
 
 784
 00:38:44,356 --> 00:38:46,923
 not part of Swift. Okay, it's not part of this method.
-这里不是swift的一部分，okay？它不是方法的一部分
+这里不是 swift 的一部分，okay？它不是方法的一部分
 
 785
 00:38:46,925 --> 00:38:49,659
 This is something Xcode puts in here. So that this little
-这是Xcode放在这里的东西
+这是 Xcode 放在这里的东西
 
 786
 00:38:49,661 --> 00:38:52,996
@@ -3439,17 +3439,17 @@ to this method you see? Okay so that's what this is so
 790
 00:39:02,074 --> 00:39:06,242
 that's really not part of the Swift method. Okay so this is
-它不是swift方法的一部分
+它不是 swift 方法的一部分
 
 791
 00:39:06,244 --> 00:39:10,547
 all the Swift method. Okay so what is Swift method syntax?
-这才是swift里的方法，okay？swift的方法语法是怎样的呢？
+这才是 swift 里的方法，okay？swift 的方法语法是怎样的呢？
 
 792
 00:39:10,549 --> 00:39:14,184
 Func, okay, func means this is a function on a class,
-先是一个func,func代表的是这个类里的一个函数
+先是一个func，func 代表的是这个类里的一个函数
 
 793
 00:39:14,186 --> 00:39:17,420
@@ -3464,12 +3464,12 @@ I suppose this could be called Method. Like the breaking bad
 795
 00:39:21,860 --> 00:39:25,261
 version of what you'll call meth maybe. But func is good,
-和《绝命毒师》里的冰毒发音类似，但是func是好的
+和《绝命毒师》里的冰毒发音类似，但是 func 是好的
 
 796
 00:39:25,263 --> 00:39:28,631
 func is good because you can have global funcs also.
-func还好在你还可以写全局函数
+func 还好在你还可以写全局函数
 
 797
 00:39:28,633 --> 00:39:32,335
@@ -3509,12 +3509,12 @@ that's the key words just like class is the key word for
 804
 00:39:44,750 --> 00:39:47,684
 creating a class. Func is the key word for adding a method.
-“func”是添加一个方法的关键字
+“func” 是添加一个方法的关键字
 
 805
 00:39:47,686 --> 00:39:52,155
 Touch digit is the name, obviously of this method.
-“touchDight”是它的名字，显然它是一个方法
+“touchDight” 是它的名字，显然它是一个方法
 
 806
 00:39:52,157 --> 00:39:54,691
@@ -3524,12 +3524,12 @@ Parentheses has the arguments, okay?
 807
 00:39:54,693 --> 00:39:58,561
 We only have one argument called sender of type
-我们只有一个叫做“sender”的参数
+我们只有一个叫做 “sender” 的参数
 
 808
 00:39:58,563 --> 00:40:02,599
 UIButton, so that's what : UIButton means.
-类型是UIButton, 这就是UIButton的意思
+类型是 UIButton， 这就是 UIButton 的意思
 
 809
 00:40:02,601 --> 00:40:06,102
@@ -3559,12 +3559,12 @@ Colon and the type, okay? Now if we had more arguments,
 814
 00:40:15,814 --> 00:40:20,617
 they would just be separated by comma, like otherArgument
-它们应该被逗号分隔开，如同这个otherArgument
+它们应该被逗号分隔开，如同这个 otherArgument
 
 815
 00:40:20,619 --> 00:40:24,654
 might be an Int, okay, so I put an Int there.
-它可以是一个Int, okay？所以我写一个Int在这
+它可以是一个Int， okay？所以我写一个 Int 在这
 
 816
 00:40:24,656 --> 00:40:26,990
@@ -3584,17 +3584,17 @@ a key word, which describes, what they are. If this had
 819
 00:40:34,032 --> 00:40:39,068
 a return value, it looks like this. Returns String. Okay, or
-如果这个方法有返回值，就这样写，返回一个String
+如果这个方法有返回值，就这样写，返回一个 String
 
 820
 00:40:39,070 --> 00:40:41,938
 returns Double. Okay, something like that.
-或者返回一个Double, okay?就像这样
+或者返回一个 Double, okay?就像这样
 
 821
 00:40:41,940 --> 00:40:45,809
 That's how a return looks like, okay. Now I'm gonna
-return就这样写，okay？
+return 就这样写，okay？
 
 822
 00:40:45,811 --> 00:40:48,445
@@ -3634,7 +3634,7 @@ So if I want to send something to myself.
 829
 00:41:02,327 --> 00:41:05,495
 I use the key word self, and then to send a message it's
-我用关键字“self”，然后发送信息
+我用关键字 “self”，然后发送信息
 
 830
 00:41:05,497 --> 00:41:08,298
@@ -3669,12 +3669,12 @@ the method that you wanna access in that object.
 836
 00:41:20,045 --> 00:41:22,645
 So here I want to do touchDigit and you're going
-在这我想调用touchDigit
+在这我想调用 touchDigit
 
 837
 00:41:22,647 --> 00:41:25,014
 to notice here that Xcode is helping me a lot as I type,
-你会发现Xcode会帮助我输入
+你会发现 Xcode 会帮助我输入
 
 838
 00:41:25,016 --> 00:41:27,817
@@ -3704,12 +3704,12 @@ this is the only one in my class and in fact if I just
 843
 00:41:38,864 --> 00:41:41,531
 press Tab, it starts filling it out. I'm not even,
-如果我按下Tab,它会自动补全，不需要全部手打
+如果我按下 Tab，它会自动补全，不需要全部手打
 
 844
 00:41:41,533 --> 00:41:44,167
 I don't even have to type it okay, cuz it knows that's what
-因为Xcode知道我们想要什么
+因为 Xcode 知道我们想要什么
 
 845
 00:41:44,169 --> 00:41:48,771
@@ -3719,17 +3719,17 @@ I want. Now, it takes two argument. The first argument
 846
 00:41:48,773 --> 00:41:51,508
 you just put it in. So the first argument was a button so
-这里的第一个参数是一个button, 所以
+这里的第一个参数是一个 button， 所以
 
 847
 00:41:51,510 --> 00:41:55,078
 maybe, you know, some button or something like that. Okay,
-我输入someButton之类的东西，okay
+我输入 someButton 之类的东西，okay
 
 848
 00:41:55,080 --> 00:41:56,446
 some variable that would have to be a button.
-某些变量会是一个button
+某些变量会是一个 button
 
 849
 00:41:56,448 --> 00:41:59,115
@@ -3744,7 +3744,7 @@ The second argument here, okay, and
 851
 00:42:00,785 --> 00:42:03,753
 I'm just hitting Tab to go to each argument, is an Int,
-我按了Tab键来跳到每个参数，它是一个Int
+我按了 Tab 键来跳到每个参数，它是一个 Int
 
 852
 00:42:03,755 --> 00:42:06,256
@@ -3769,12 +3769,12 @@ in other languages this would look like this. All right?
 856
 00:42:15,534 --> 00:42:17,934
 You would just have the two arguments, sender and
-你只需要两个参数，sender和
+你只需要两个参数，sender 和 argument
 
 857
 00:42:17,936 --> 00:42:22,272
 argument, but here in Swift, sorry, in Swift,
-但是在swift里
+但是在 swift 里
 
 858
 00:42:22,274 --> 00:42:27,844
@@ -3794,7 +3794,7 @@ okay？不要写第一个参数的参数名
 861
 00:42:35,153 --> 00:42:37,620
 That's because usually the first one is implicit in
-因为swift里通常都这样做
+因为 swift 里通常都这样做
 
 862
 00:42:37,622 --> 00:42:41,758
@@ -3809,7 +3809,7 @@ make it so you have to do the first one, for but generally
 864
 00:42:44,396 --> 00:42:46,729
 we don't. In other words we don't type sender this.
-换言之不要把sender写出来
+换言之不要把 sender 写出来
 
 865
 00:42:46,731 --> 00:42:48,598
@@ -3849,7 +3849,7 @@ okay，删掉这些我们加上的东西
 872
 00:43:04,449 --> 00:43:08,084
 here's our touchDigit. let's just have touchDigit
-这是我们的touchDigit，现在让它
+这是我们的 touchDigit，现在让它
 
 873
 00:43:08,086 --> 00:43:10,587
@@ -3859,7 +3859,7 @@ print something out to the console. Okay?
 874
 00:43:10,589 --> 00:43:11,621
 Great thing to know for debugging, and
-这是debug的好方法，什么的
+这是 debug 的好方法，什么的
 
 875
 00:43:11,623 --> 00:43:14,958
@@ -3869,12 +3869,12 @@ stuff like that. You do that with the method print. And
 876
 00:43:14,960 --> 00:43:17,026
 I'm just going to say, print touchDigit.
-我打印一个“touchDigit”
+我打印一个 “touchDigit”
 
 877
 00:43:17,028 --> 00:43:19,562
 So it's gonna print touchDigit after the console.
-它会在控制台里打印一个“touchDigit”出来
+它会在控制台里打印一个 “touchDigit” 出来
 
 878
 00:43:19,564 --> 00:43:22,899
@@ -3884,7 +3884,7 @@ Notice no semicolons on the end of lines or anything like
 879
 00:43:22,901 --> 00:43:27,270
 that. In Swift the carriage return is the end of line.
-swift里，回车表示这一行的结束
+swift 里，回车表示这一行的结束
 
 880
 00:43:27,272 --> 00:43:29,072
@@ -3904,7 +3904,7 @@ generally the carriage return is the end of line, okay? So
 883
 00:43:34,079 --> 00:43:37,046
 we print touch digit here. Let's go ahead and run and
-所以把print语句写在这
+所以把 print 语句写在这
 
 884
 00:43:37,048 --> 00:43:45,188
@@ -3949,7 +3949,7 @@ around. This bottom area has the console on the right,
 892
 00:44:04,509 --> 00:44:07,944
 and your debugger output on the left. This is where when
-左边是调试器，debug的时候你会用到
+左边是调试器，debug 的时候你会用到
 
 893
 00:44:07,946 --> 00:44:09,712
@@ -4054,12 +4054,12 @@ now we can run. And we'll notice
 913
 00:45:20,585 --> 00:45:24,287
 that all of these buttons are sending touch digit. You see?
-注意所有的按键都会发送信息给touchDigit
+注意所有的按键都会发送信息给 touchDigit
 
 914
 00:45:24,289 --> 00:45:26,055
 Okay, so they're all sending touch digit.
-他们都会发送信息给touchDigit
+他们都会发送信息给 touchDigit
 
 915
 00:45:26,057 --> 00:45:28,991
@@ -4089,7 +4089,7 @@ But, we really wanna know which one is sending it. Okay.
 920
 00:45:40,171 --> 00:45:42,472
 So we're gonna have to look at this sender argument,
-所以我们需要看看这个sender参数
+所以我们需要看看这个 sender 参数
 
 921
 00:45:42,474 --> 00:45:45,775
@@ -4109,7 +4109,7 @@ This is how you create a local variable, var. The name,
 924
 00:45:51,716 --> 00:45:55,451
 which I'm gonna call digit. And I'm gonna set it equal to,
-我打算叫它digit，我打算把它设置成
+我打算叫它 digit，我打算把它设置成
 
 925
 00:45:55,453 --> 00:45:59,522
@@ -4129,7 +4129,7 @@ send a message to something by doing the object, right,
 928
 00:46:06,231 --> 00:46:11,434
 sender and a dot, okay? Unfortunately, button has, mm,
-sender然后一个“.”，okay？不幸的是
+sender 然后一个“.”，okay？不幸的是
 929
 00:46:11,436 --> 00:46:15,471
 quite a few methods, okay? I mean probably hundreds, okay?
@@ -4138,7 +4138,7 @@ quite a few methods, okay? I mean probably hundreds, okay?
 930
 00:46:15,473 --> 00:46:18,808
 Because it's inheriting things from control and view and
-因为它继承于control，view
+因为它继承于 control，view
 
 931
 00:46:18,810 --> 00:46:18,875
@@ -4163,22 +4163,22 @@ We need some help, okay. So the way to do that
 935
 00:46:28,186 --> 00:46:30,219
 is you're gonna hold down the option key, okay.
-按下你的键盘上的option键，okay？
+按下你的键盘上的 option 键，okay？
 
 936
 00:46:30,221 --> 00:46:32,321
 I already showed you Control is an important key for
-我已经告诉你了Control键很重要
+我已经告诉你了 control 键很重要
 
 937
 00:46:32,323 --> 00:46:35,792
 dragging between your view and your thing. Now Option is
-特别是对UI拖拽来说，现在Option键
+特别是对UI拖拽来说，现在 option 键
 
 938
 00:46:35,794 --> 00:46:38,194
 an important key. And when you hold down Option,
-也非常重要，当你按下Option键
+也非常重要，当你按下 option 键
 
 939
 00:46:38,196 --> 00:46:40,029
@@ -4193,7 +4193,7 @@ They get this dash blue underline going. And what that
 941
 00:46:43,902 --> 00:46:46,536
 means is if you click on them Xcode's gonna tell you
-如果你点击了它们，Xcode会告诉你
+如果你点击了它们，Xcode 会告诉你
 
 942
 00:46:46,538 --> 00:46:49,705
@@ -4202,11 +4202,11 @@ as much as it can about that thing. So let's click on
 943
 00:46:49,707 --> 00:46:53,309
 UIButton and when we do we get this little window that
-UIButton这点击，我们得到了一个小窗口
+UIButton 这点击，我们得到了一个小窗口
 944
 00:46:53,311 --> 00:46:57,547
 has a complete description of UIButton in here. And really
-它拥有关于UIButton完整信息，非常重要的是
+它拥有关于 UIButton 完整信息，非常重要的是
 
 945
 00:46:57,549 --> 00:47:01,150
@@ -4221,7 +4221,7 @@ See this reference link? And if I click this, this is gonna
 947
 00:47:03,688 --> 00:47:07,757
 take me to the documentation for UIButton. So there we go.
-它会把我带到UIButton的文档里，所以我们点击它
+它会把我带到 UIButton 的文档里，所以我们点击它
 
 948
 00:47:07,759 --> 00:47:10,226
@@ -4246,7 +4246,7 @@ the methods and how they work, okay.
 952
 00:47:22,173 --> 00:47:26,375
 Now, I need to find something about the title so
-现在，我要找出关于”title”(标题)的一些信息
+现在，我要找出关于 ”title”(标题) 的一些信息
 
 953
 00:47:26,377 --> 00:47:29,846
@@ -4256,17 +4256,17 @@ I could search here by just doing Cmd+f to search, and
 954
 00:47:29,848 --> 00:47:32,982
 I could search for title but unfortunately the title
-我可以搜索一下“title”，不幸的是
+我可以搜索一下 “title”，不幸的是
 
 955
 00:47:32,984 --> 00:47:37,286
 is mentioned a lot, see? So that's no good. So
-“title”在文档里被提及的太多了，很不好
+“title” 在文档里被提及的太多了，很不好
 
 956
 00:47:37,288 --> 00:47:39,522
 I can go over here to the summary of all the methods and
-然后我可以看下summary这里，它有所有的方法和属性
+然后我可以看下 summary 这里，它有所有的方法和属性
 
 957
 00:47:39,524 --> 00:47:42,792
@@ -4320,12 +4320,12 @@ you're gonna see that there is a Swift explanation
 967
 00:48:06,117 --> 00:48:08,918
 of it, and and objective C explanation. So we're always
-或者关于Objective C的解释
+或者关于 Objective C 的解释
 
 968
 00:48:08,920 --> 00:48:12,021
 going to be looking at the Swift version in this class.
-我们看看这个类的解释的swift版本
+我们看看这个类的解释的 swift 版本
 
 969
 00:48:12,357 --> 00:48:13,322
@@ -4335,17 +4335,17 @@ So what is this thing, okay?
 970
 00:48:13,324 --> 00:48:16,926
 This is not a method because it would say func right here.
-它不是一个方法，因为方法前面有一个“func”
+它不是一个方法，因为方法前面有一个 “func”
 
 971
 00:48:16,928 --> 00:48:19,595
 If this were a method on UIButton you would have func.
-如果它是UIButton里的方法，你会看到一个”func”
+如果它是 UIButton 里的方法，你会看到一个 ”func”
 
 972
 00:48:19,597 --> 00:48:22,265
 Instead it has var, that means it's a property.
-但这有一个“var”，意味着它是一个属性
+但这有一个 “var”，意味着它是一个属性
 
 973
 00:48:22,267 --> 00:48:25,034
@@ -4375,7 +4375,7 @@ Turns out that's because there's another method up here
 978
 00:48:37,415 --> 00:48:40,750
 called setTitle forState for setting the button's title.
-叫“setTitle forState“来设置按键的名称
+叫 “setTitle forState“ 来设置按键的名称
 979
 00:48:40,752 --> 00:48:41,884
 Because when you set the button's title,
@@ -4394,7 +4394,7 @@ highlighted, disabled, whatever. But luckily there's
 982
 00:48:46,591 --> 00:48:50,493
 a current title here that just gets you the current title.
-幸运的是这里有一个“current title”让你获取当前按键名称
+幸运的是这里有一个 “current title” 让你获取当前按键名称
 
 983
 00:48:50,862 --> 00:48:52,995
@@ -4404,7 +4404,7 @@ In whatever state the button is currently in.
 984
 00:48:52,997 --> 00:48:55,998
 So, here is, so that's why it says var instead of func.
-这就是这为什么是var而不是func
+这就是这为什么是 var 而不是 func
 
 985
 00:48:56,000 --> 00:48:59,635
@@ -4424,7 +4424,7 @@ I promised you that it was always colon and type. Now,
 988
 00:49:03,908 --> 00:49:09,011
 the type of this is string? >> [LAUGH]
-现在这个类型是String??
+现在这个类型是 String??
 
 989
 00:49:09,013 --> 00:49:11,614
@@ -4439,7 +4439,7 @@ gonna suspend our disbelief here because that question
 991
 00:49:14,986 --> 00:49:18,721
 mark actually means something. We're gonna kinda hope that
-意味着些什么，我们希望这是一个string
+意味着些什么，我们希望这是一个 string
 
 992
 00:49:18,723 --> 00:49:22,158
@@ -4484,7 +4484,7 @@ in fact there isn't. But as soon as I started typing title
 1000
 00:49:40,845 --> 00:49:43,346
 it shows me all the methods that start with title.
-它会告诉我所有以“title”开头的方法的名字
+它会告诉我所有以 “title” 开头的方法的名字
 
 1001
 00:49:43,348 --> 00:49:48,617
