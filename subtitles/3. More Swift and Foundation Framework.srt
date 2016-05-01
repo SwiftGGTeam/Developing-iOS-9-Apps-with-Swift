@@ -16,7 +16,7 @@ This is spring quarter 2016. And today we
 4
 00:00:11,412 --> 00:00:16,148
 are going to mostly talk about the layer under the UI.
-今天我们主要会讨论UI层 <review>
+今天我们主要会介绍UI层 
 
 5
 00:00:16,150 --> 00:00:18,450
@@ -31,12 +31,12 @@ We're gonna talk about this foundation framework that
 7
 00:00:20,955 --> 00:00:23,555
 lives on top of Core services. So we're not going to be
-所以我们不会一整天讨论非常多关于 UI 的内容
+所以我们不会讨论一整天非常多关于 UI 的内容
 
 8
 00:00:23,557 --> 00:00:26,925
 talking about the UI very much at all today. I do have a demo
-我有一个演示作为结束 <review>
+我有一个用演示作为结束
 
 9
 00:00:26,927 --> 00:00:30,496
@@ -96,7 +96,7 @@ optional 就是一个 enum 是吧？它是一个有点像数组的泛型
 20
 00:01:01,028 --> 00:01:03,195
 of like array. It's got this little angle bracket T,
-它有这个小尖括号 T <review>
+它有个小尖括号 <T> 
 
 21
 00:01:03,197 --> 00:01:05,531
@@ -111,7 +111,7 @@ type. And we know that to be the case. We can have
 23
 00:01:08,002 --> 00:01:11,003
 Optional strings or Optional even Optional optionals.
-我们可以有可选字符串或者任何可选类型 <review>
+我们可以有可选字符串或者任何可选类型
 
 24
 00:01:11,005 --> 00:01:13,539
@@ -126,7 +126,7 @@ it's an enum with two cases. The None case which is the not
 26
 00:01:16,410 --> 00:01:19,711
 set case and then the Some case, which is the set case.
-<review>
+None 情况是没有设置东西，其它情况是设置了一些东西的
 
 27
 00:01:19,713 --> 00:01:21,780
@@ -233,319 +233,397 @@ In the case None, I'm gonna crash.
 47
 00:02:24,111 --> 00:02:26,745
 I'm gonna raise an exception, okay, because that's what
-我要提出一个列外，因为
+我要提出一个列外
 
 48
 00:02:26,747 --> 00:02:29,548
 unwrapping an Optional that's not said is supposed to do,
+因为拆包一个 Optional 不意味着它应该这么做
 
 49
 00:02:29,550 --> 00:02:34,453
 it's supposed to crash, okay? And of course, in the case
+它应该让程序奔溃。
 
 50
 00:02:34,455 --> 00:02:38,423
 where I'm doing if let, then I'm just gonna switch on x,
+如果我用 let 这么做，然后我去 switch x
 
 51
 00:02:38,425 --> 00:02:41,193
 and I'm, the case of .Some, I'm gonna grab that y, and
+在 .Some 情况下我用 y 拿出 x 的值
 
 52
 00:02:41,195 --> 00:02:43,729
 then I'm just gonna put some code, whatever my code is in
-
+然后就会执行我放在下面的代码
 53
 00:02:43,731 --> 00:02:46,899
 there, and if let to happen there. And in the case None,
+然而在 None 的情况下
 
 54
 00:02:46,901 --> 00:02:48,667
 I just break out of the switch, I do nothing.
+我会直接跳出 switch 什么都不做
 
 55
 00:02:48,669 --> 00:02:53,705
 Okay, sound good? All right, so that's Optionals.
+听起来不错？ 这就是 Optionals
 
 56
 00:02:53,707 --> 00:02:55,374
 Hopefully Optional now should start feeling very,
+希望现在开始对 Optional 的感觉好点了
 
 57
 00:02:55,376 --> 00:02:57,342
 very comfortable to you cuz, as you found out,
+在这些 API 里面
+
 
 58
 00:02:57,344 --> 00:03:01,647
 it's everywhere in these, in the API. Now Optionals have
+你会发现到处都有舒服的提示
 
 59
 00:03:01,649 --> 00:03:04,716
 some more syntax, okay. That question mark and exclamation
+现在 Optionl 有更多的语法了。你看见的那些问号和感叹号
 
 60
 00:03:04,718 --> 00:03:07,886
 point stuff, as you're seeing, is just syntactic sugar.
+都是语法糖
 
 61
 00:03:07,888 --> 00:03:10,722
 It's just to make the, your typing it in easier and
+这是为了让你写起来更舒服并且更好看
 
 62
 00:03:10,724 --> 00:03:14,593
 look nicer. It has a little bit more syntactic sugar.
+它还有更多的语法糖
 
 63
 00:03:14,595 --> 00:03:18,664
 One thing is that Optionals can be chained. Okay, so
+比如 OPtional 可以是链式的
 
 64
 00:03:18,666 --> 00:03:20,465
 this is the case where, for example,
+如同这个例子的情况
 
 65
 00:03:20,467 --> 00:03:23,535
 in our calculator, we have the display, and
+在我吗的计算器例子里，我们有显示，
 
 66
 00:03:23,537 --> 00:03:28,340
 lets say we want to get the text out of the display. And
+让我们把一些想要得到的文本显示出来
 
 67
 00:03:28,342 --> 00:03:32,077
 then we want to send another message like hash value which,
+然后我们想传递一些信息，比如哈希值，
 
 68
 00:03:32,079 --> 00:03:34,112
 strings understand this message hash value,
+这些消息哈希后的字符串
 
 69
 00:03:34,114 --> 00:03:37,382
 how would we do that? Well of course we would say,
+我们该如何做呢？
 
 70
 00:03:37,384 --> 00:03:41,186
 if let label equal display to unwrap the display. And
+我们会这样，如果让 label 等于 display 这样去拆包 display
 
 71
 00:03:41,188 --> 00:03:44,022
 they we would say if let text equal the labels text,
+然后我们会让 text 等于 label 的 text
 
 72
 00:03:44,024 --> 00:03:48,026
 and unwrap that. Then we would say let x equal the text hash
+拆包之后，我们在让 x 等于 text 哈希后的值
 
 73
 00:03:48,028 --> 00:03:50,829
 value, okay? So that is how we would unwrap it.
+所以，这就是我们如何去拆包这些信息
 
 74
 00:03:50,831 --> 00:03:53,732
 Well there is a lot easy way to do it which is this,
+当然还有很多更容的方法来做
 
 75
 00:03:53,734 --> 00:03:56,702
 you just say display?.text?.hashvalue,
+你可以这样 display?.text?.hashvalue
 
 76
 00:03:56,704 --> 00:04:02,541
 okay? So if you use question marks when you're, not when
+如果你在这个时候用 ？ 而不是在声明 optional 类型时使用 
 
 77
 00:04:02,543 --> 00:04:05,644
 you're declaring the optional but when you're actually using
+这基本上意味着
 
 78
 00:04:05,646 --> 00:04:08,847
 it, that basically means, try and unwrap this and
+尝试去把它们拆包
 
 79
 00:04:08,849 --> 00:04:12,384
 if you can then use that value to go to the next thing.
+拆包后的值是否可以让你去到下一部分
 
 80
 00:04:12,386 --> 00:04:15,654
 If you can't, just return nil from this whole expression.
+如果不行，整个表达是就返回 nil
 
 81
 00:04:15,656 --> 00:04:17,155
 Okay, this whole display question mark,
+这个 dispaly 后面所有的问号，
 
 82
 00:04:17,157 --> 00:04:18,590
 that typed question mark, that hash value,
+那个 哈希 值
 
 83
 00:04:18,592 --> 00:04:21,793
 that whole expression will return nil if at any point
+如果它们当中有任何一点在拆包的时候返回了 nil
 
 84
 00:04:21,795 --> 00:04:25,631
 any of these things that were changing unwrap turns out to
+这整个表达式就会返回 nil
 
 85
 00:04:25,633 --> 00:04:29,001
 be nil. So, if the display is nil or if the display's text
+所以，如果 display 是空的，或者 display 的 text 是空的
 
 86
 00:04:29,003 --> 00:04:31,470
 is nil then this whole thing is gonna be nil.
+那这整个就会变成 nil
 
 87
 00:04:31,472 --> 00:04:35,874
 So you see let x equal up there? What type do you think
+所以你看见让 x 等于它们 
 
 88
 00:04:35,876 --> 00:04:40,979
 x is right there? >> [INAUDIBLE].
+这里的 x 是什么类型的 [讨论] 
 
 89
 00:04:40,981 --> 00:04:42,781
 >> Int, almost.
+[大概是 Int]
 
 90
 00:04:42,783 --> 00:04:45,784
 Optional int, exactly. It has to be optional int, because
+对，可选 int 类型
 
 91
 00:04:45,786 --> 00:04:48,520
 any of those things could fail and it would return nil.
+因为任何其它东西都可能失败并返回 nil
 
 92
 00:04:48,522 --> 00:04:49,521
 So it has to be able to take nil. So
+所以它可以是 nil 值
 
 93
 00:04:49,523 --> 00:04:53,325
 that would be an optional int, cuz hash value returns an int,
+因为它可以返回一个 int 的哈希值，所以它是一个可选 int
 
 94
 00:04:53,327 --> 00:04:57,129
 okay. So you're definitely gonna wanna use this,
+你肯定会想用这种链条一样的方式去编程
 
 95
 00:04:57,131 --> 00:04:59,998
 chaining, it really makes your code read beautifully, okay.
+它真的让你的代码看起来漂亮了
 
 96
 00:05:00,000 --> 00:05:03,001
 And the starts make Optionals make a lot of sense why we use
+当我们开始使用可选类型的时候会有很多场景去使用它们
 
 97
 00:05:03,003 --> 00:05:05,637
 them so much. Okay, but there's more.
+好的，但是还有别的用法
 
 98
 00:05:05,639 --> 00:05:08,640
 Here's another Optional syntaxtiture which is ??
+这里是 Optional 的另一种用法叫做 ？？
 
 99
 00:05:08,642 --> 00:05:12,978
 Okay, and this is basically providing a default value
+它基本上是在 case 为 nil 的时候提供一个默认的值
 
 100
 00:05:12,980 --> 00:05:16,648
 in case something is nil. Okay, so let's add an optional
+来添加一个可选字符串 s
 
 101
 00:05:16,650 --> 00:05:21,386
 string here s, okay. I could say if s is not nil,
+我可以说，如果 s 不是空
 
 102
 00:05:21,388 --> 00:05:24,122
 then I'm gonna set my display to be s, okay.
+然后我会把我的 display 设置成 s
 
 103
 00:05:24,124 --> 00:05:26,925
 So let's say I'm setting the display in my calculator, and
+这意味我在我的计算器上设置了显示
 
 104
 00:05:26,927 --> 00:05:30,062
 I never want it to be nil. At worst, I want it to be just
+而且我不想让它是空的，最差也得是个空格字符
 
 105
 00:05:30,064 --> 00:05:32,698
 a space character. Because you might have noticed,
+因为你可能注意到了
 
 106
 00:05:32,700 --> 00:05:34,499
 some of you when you're doing your homework,
+当你在做你的一些作业的时候
 
 107
 00:05:34,501 --> 00:05:37,002
 that if you put nil into a label,
+如果你往 label 里面放了 nil
 
 108
 00:05:37,004 --> 00:05:39,671
 its size will go to zero. Okay,
+它的尺寸会变成0
 
 109
 00:05:39,673 --> 00:05:44,076
 cuz there's no text in there to have a natural size for. So
+因为没有文本它就不会有一个天生的尺寸
 
 110
 00:05:44,078 --> 00:05:46,878
 sometimes you might want to have a code like this where if
+所以有时候你可能想要一些这样的代码
 
 111
 00:05:46,880 --> 00:05:48,313
 you want to put nothing in the display,
+如果你往 display 里面放了空的东西
 
 112
 00:05:48,315 --> 00:05:51,083
 you put a space character, so at least there's something in
+你就放一个空格字符，因为这样至少这里有东西让 label 有高度
 
 113
 00:05:51,085 --> 00:05:54,920
 there for it to have a height, okay? Otherwise your display
+否则你设置成 nil 的话
 
 114
 00:05:54,922 --> 00:05:57,989
 would keep disappearing if you kept setting it to nil. So
+你的 display 可能会消失
 
 115
 00:05:57,991 --> 00:06:00,892
 we can do this, if s does not equal nil then display equals
+那么我们可以这样，如果 s 不等于 nil 就让 display 等于 s
 
 116
 00:06:00,894 --> 00:06:03,462
 s, that should be s exclamation point right there,
+用 != 表示不等于
 
 117
 00:06:03,464 --> 00:06:06,264
 otherwise display equals a space. Okay, well,
+否则就 display 就等于一个空格
 
 118
 00:06:06,266 --> 00:06:09,000
 a much simpler way to put that is with this,
+有一个更简单的方法
 
 119
 00:06:09,002 --> 00:06:13,438
 defaulting operator, which is to say the display.text
+让 display.text = s
 
 120
 00:06:13,440 --> 00:06:18,176
 = s Okay? And that means if s is not nil then unwrap it and
+这表示如果 s 不为空，就把它拆包
 
 121
 00:06:18,178 --> 00:06:21,680
 use that value, otherwise use space.
+然后就使用拆包后的值，否则就使用空格
 
 122
 00:06:22,716 --> 00:06:25,851
 Got that? Everyone understand? I don't see any nodding heads
+懂了吗？每个人都懂了吗？我没有看就有人点头
 
 123
 00:06:25,853 --> 00:06:28,687
 on that one. Make sense, okay? So this is, again, just
+理解它，好吗？ 在说一遍
 
 124
 00:06:28,689 --> 00:06:32,924
 a simple way to have a default value in case an optional is
+这是让 optional 在 nil 的情况下有一个默认值的简单的方法
 
 125
 00:06:32,926 --> 00:06:37,496
 nil. All right so let's talk about another thing, tuples.
+继续介绍另一东西，元祖。
 
 126
 00:06:37,498 --> 00:06:41,967
