@@ -4990,12 +4990,12 @@ it shows me all the methods that start with title.
 1001
 00:49:43,348 --> 00:49:48,617
 All the methods that include title in the name. See?
-所有名字里包含了title的方法，看见了吗？
+所有名字里包含了title 的方法，看见了吗？
 
 1002
 00:49:48,753 --> 00:49:54,156
 And all the methods that have T-I-T-L-E in the order. Okay,
-还有所有含有T-I-T-L-E这个字母顺序的方法
+还有所有含有T-I-T-L-E 这个字母顺序的方法
 
 1003
 00:49:54,158 --> 00:49:57,093
@@ -5005,7 +5005,7 @@ and it gives it to you in the order you might expect right?
 1004
 00:49:57,095 --> 00:50:00,363
 Title first and then. So this is kinda helping,
-含有title这个词的优先，别的在后面，这提供了一种帮助
+含有title 这个词的优先，别的在后面，这提供了一种帮助
 
 1005
 00:50:00,365 --> 00:50:00,997
@@ -5055,12 +5055,12 @@ This is what it would look like in C. For example,
 1014
 00:50:27,792 --> 00:50:31,327
 is everyone familiar with this print F like format?
-所以你们对printf熟悉吗
+所以你们对printf 熟悉吗
 
 1015
 00:50:31,329 --> 00:50:33,696
 Okay good, cuz you can't do it in Swift.
-很好，但你不能在Swift里这样做
+很好，但你不能在Swift 里这样做
 
 1016
 00:50:33,698 --> 00:50:34,096
@@ -5069,7 +5069,7 @@ Okay. >> [LAUGH]
 1017
 00:50:34,098 --> 00:50:35,164
 >> We don't do that in Swift.
-我们在Swift里不这么做
+我们在Swift 里不这么做
 
 1018
 00:50:35,166 --> 00:50:37,633
@@ -5089,7 +5089,7 @@ here. Okay clean digit. And we don't need this out here on
 1021
 00:50:43,808 --> 00:50:47,510
 the side. Okay, so this will be invaluated converted to
-所以这会被转换成string类型
+所以这会被转换成string 类型
 
 1022
 00:50:47,512 --> 00:50:50,279
@@ -5184,7 +5184,7 @@ initialized at the beginning and never changes, in other
 1040
 00:51:40,631 --> 00:51:43,599
 words, it's a constant, use let instead of var.
-就是个常量，我们就应该用let而不是var
+就是个常量，我们就应该用let 而不是var
 
 1041
 00:51:43,601 --> 00:51:46,268
@@ -5234,7 +5234,7 @@ okay. So, always use let when you are doing a constant.
 1050
 00:52:12,630 --> 00:52:14,563
 And in fact notice that XCode is saying,
-注意Xcode这里说的
+注意Xcode 这里说的
 
 1051
 00:52:14,565 --> 00:52:17,733
@@ -5244,7 +5244,7 @@ hey if you click here I'll fix it for you. Okay,
 1052
 00:52:17,735 --> 00:52:21,904
 see how it says fix it replays var with let. Sure. Okay, and
-看一下它如何用let代替var修正这个问题
+看一下它如何用let 代替var 修正这个问题
 
 1053
 00:52:21,906 --> 00:52:24,773
@@ -5274,7 +5274,7 @@ The heck is going on down there? Okay, touched
 1058
 00:52:40,191 --> 00:52:45,294
 optional 5 digit? Okay so what is this optional business.
-touched optional("5") digit？这里的optional是什么
+touched optional("5") digit？这里的optional 是什么
 
 1059
 00:52:45,296 --> 00:52:47,163
@@ -5289,12 +5289,12 @@ clear your minds, and pay close attention okay. Because
 1061
 00:52:50,334 --> 00:52:52,935
 this is a very important thing in Swift, it's ubiquitous
-因为这是Swift里非常非常重要的东西
+因为这是Swift 里非常非常重要的东西
 
 1062
 00:52:52,937 --> 00:52:57,740
 throughout the entire iOS API okay. Very cool feature, but
-这在iOS API里无处不在，一个非常酷的特性
+这在iOS API 里无处不在，一个非常酷的特性
 
 1063
 00:52:57,742 --> 00:53:00,442
@@ -5304,7 +5304,7 @@ it requires a little bit of getting used to in terms of
 1064
 00:53:00,444 --> 00:53:05,381
 its syntax okay? This is the feature of optionals. Okay?
-这是一个叫optional的特性
+这是一个叫optional 的特性
 
 1065
 00:53:05,383 --> 00:53:09,818
@@ -5314,17 +5314,17 @@ In Swift, there is a type called optional.
 1066
 00:53:09,820 --> 00:53:12,388
 It's a type like int or boolean or anything else,
-这是一种类似于int或bool的类型
+这是一种类似于int 或bool 的类型
 
 1067
 00:53:12,390 --> 00:53:14,323
 string, it's dictionary, array,
-或者是string、dictionary、array这样的
+或者是string、dictionary、array 这样的
 
 1068
 00:53:14,325 --> 00:53:18,360
 optional. Optional is just a type. This type can only have
-optional只是一个类型，这个类型只有两个值
+optional 只是一个类型，这个类型只有两个值
 
 1069
 00:53:18,362 --> 00:53:23,699
@@ -5339,12 +5339,12 @@ That's expressed in Swift with the key word nil, N-I-L.
 1071
 00:53:28,072 --> 00:53:31,473
 Nil only means, this optional is not set.
-nil只表示optional没有被赋值
+nil 只表示optional 没有被赋值
 
 1072
 00:53:31,475 --> 00:53:33,709
 That's all it means in Swift. It doesn't mean zero.
-这就是他在Swift里全部的含义，这不代表它为零
+这就是他在Swift 里全部的含义，这不代表它为零
 
 1073
 00:53:33,711 --> 00:53:36,245
@@ -5354,12 +5354,12 @@ It doesn't mean a pointer that doesn't point anywhere, like
 1074
 00:53:36,247 --> 00:53:39,882
 in other languages. Nil means an optional that's not set.
-nil代表一个optional没有被赋值
+nil 代表一个optional 没有被赋值
 
 1075
 00:53:39,884 --> 00:53:45,120
 The other state that an optional can be is set,
-另一个状态就是一个optional被赋值了
+另一个状态就是一个optional 被赋值了
 
 1076
 00:53:45,122 --> 00:53:48,691
@@ -5399,12 +5399,12 @@ there is no associated value cuz it's not set. Okay?
 1083
 00:54:06,377 --> 00:54:09,011
 Now what does it look like to declare it optional? Well,
-那么把它申明为optional看起来是什么样呢？
+那么把它申明为optional 看起来是什么样呢？
 
 1084
 00:54:09,013 --> 00:54:12,615
 let's go back with our option key and take a look at current
-让我们回过头看一下我们的option key看一下currentTitle
+让我们回过头看一下我们的option key 看一下currentTitle
 
 1085
 00:54:12,617 --> 00:54:15,017
@@ -5419,7 +5419,7 @@ It says var currentTitle string? That means this is
 1087
 00:54:20,291 --> 00:54:25,694
 an optional whose associated value is a string. Okay?
-这里的意思是这是个关联值为string的optional
+这里的意思是这是个关联值为string 的optional
 
 1088
 00:54:25,696 --> 00:54:28,063
@@ -5464,7 +5464,7 @@ it's an optional. Okay, it's associated value is a string.
 1096
 00:54:51,055 --> 00:54:53,922
 So this currentTitle, why is it an optional? Well,
-所以这个currentTitle为什么是个optional？
+所以这个currentTitle 为什么是个optional？
 
 1097
 00:54:53,924 --> 00:54:58,560
@@ -5538,7 +5538,7 @@ It didn't even have a type. How was that possible?
 1111
 00:55:41,172 --> 00:55:46,742
 In Swift, Swift will infer the type all the time, okay? If
-在Swift里，Swift会一直推断类型
+在Swift 里，Swift 会一直推断类型
 
 1112
 00:55:46,744 --> 00:55:49,411
@@ -5558,27 +5558,27 @@ type in there. It's better to just say let digit equal and
 1115
 00:55:58,222 --> 00:56:01,190
 let swift infer it. And here Swift has inferred.
-让Swift来推断他的类型。这里Swift也做到了
+让Swift 来推断他的类型。这里Swift 也做到了
 
 1116
 00:56:01,192 --> 00:56:03,325
 The digit must be of type string question mark,
-这里的digit一定会是个string?类型
+这里的digit 一定会是个string? 类型
 
 1117
 00:56:03,327 --> 00:56:06,228
 that's because this is of type string question mark.
-因为后面的也是个string?类型
+因为后面的也是个string? 类型
 
 1118
 00:56:06,230 --> 00:56:09,365
 So of course digit has to be that. You see what's happening
-所以digit当然也应该是那个类型。你看到那发生什么了吗？
+所以digit 当然也应该是那个类型。你看到那发生什么了吗？
 
 1119
 00:56:09,367 --> 00:56:12,668
 there? So you're going to see type inference all the time in
-Swift里你会时时看到类型推断的结果
+Swift 里你会时时看到类型推断的结果
 
 1120
 00:56:12,670 --> 00:56:14,203
@@ -5593,7 +5593,7 @@ a lot less repeated stuff, is that a question in the back?
 1122
 00:56:18,376 --> 00:56:19,875
 >> Yeah, is that the same for
-这对var是一样的吗？
+这对var 是一样的吗？
 
 1123
 00:56:19,877 --> 00:56:20,209
@@ -5603,12 +5603,12 @@ var too. >> Is the question is
 1124
 00:56:20,211 --> 00:56:22,277
 that same for var too, absolutely it's the same for
-这对var是一样的吗？
+这对var 是一样的吗？
 
 1125
 00:56:22,279 --> 00:56:26,382
 var, okay? So, how do I get that string though?
-完全一样。所以我怎么获得那个string呢？
+完全一样。所以我怎么获得那个string 呢？
 
 1126
 00:56:26,384 --> 00:56:28,951
@@ -5618,7 +5618,7 @@ If this button title is set, how do I get that
 1127
 00:56:28,953 --> 00:56:32,721
 associated value thing, okay, out of this optional?
-从这个optional里面获取这个关联值？
+从这个optional 里面获取这个关联值？
 
 1128
 00:56:32,723 --> 00:56:36,525
@@ -5628,7 +5628,7 @@ And the answer is you put an exclamation point in the end,
 1129
 00:56:36,527 --> 00:56:39,328
 okay. Now, optional is question mark on the end of
-optional在定义的末尾有个问号
+optional 在定义的末尾有个问号
 
 1130
 00:56:39,330 --> 00:56:42,831
@@ -5666,12 +5666,12 @@ an empty string? >> Okay, so the question is,
 1137
 00:56:59,116 --> 00:57:02,384
 why does Swift have this optional thing instead of just
-为什么Swift不直接用空字符
+为什么Swift 不直接用空字符
 
 1138
 00:57:02,386 --> 00:57:05,120
 doing empty string to mean a button without a title?
-而是用optional来表示一个没有标题的button？
+而是用optional 来表示一个没有标题的button？
 
 1139
 00:57:05,122 --> 00:57:10,492
@@ -5686,7 +5686,7 @@ Or maybe for an int minus 1. I don't know. Or for a point or
 1141
 00:57:14,465 --> 00:57:18,100
 that is for example, pointers to objects in Swift, you don't
-这主要的原因是，Swift里的指针
+这主要的原因是，Swift 里的指针
 
 1142
 00:57:18,102 --> 00:57:21,703
@@ -5711,7 +5711,7 @@ For an int, if you wanted an optional int, is it minus 1 or
 1146
 00:57:31,282 --> 00:57:34,817
 So Swift is trying to be consistent across all things.
-所以Swift想涵盖所有情况
+所以Swift 想涵盖所有情况
 
 1147
 00:57:34,819 --> 00:57:38,854
@@ -5726,7 +5726,7 @@ we can tell which ones are not set. Okay, so
 1149
 00:57:40,458 --> 00:57:42,591
 that's the thought behind it. It's really great actually,
-这就是optional背后的思考，非常棒
+这就是optional 背后的思考，非常棒
 
 1150
 00:57:42,593 --> 00:57:46,094
@@ -5741,7 +5741,7 @@ we unwrap it with this exclamation point.
 1152
 00:57:47,832 --> 00:57:51,767
 Now what would happen if that current title value was
-如果这里的currentTitle没有被赋值，会发生什么？
+如果这里的currentTitle 没有被赋值，会发生什么？
 
 1153
 00:57:51,769 --> 00:57:54,903
@@ -5771,7 +5771,7 @@ It would crash my app, okay? So
 1158
 00:58:02,646 --> 00:58:05,247
 exclamation point crashes your app if you tried to
-如果你试着unwarp一个没有被赋值的optional
+如果你试着unwarp 一个没有被赋值的optional
 
 1159
 00:58:05,249 --> 00:58:08,750
@@ -5816,7 +5816,7 @@ point isn't, and it crashes your app, and
 1167
 00:58:28,739 --> 00:58:31,206
 you find it before it goes out to your customer. And some
-你在app发布给你的用户之前就找到这个bug
+你在app 发布给你的用户之前就找到这个bug
 
 1168
 00:58:31,208 --> 00:58:33,842
@@ -5831,7 +5831,7 @@ Now, I'm gonna show you a little later how you can
 1170
 00:58:36,313 --> 00:58:38,046
 unwrap the optional and get the associated value
-如何不让应用崩溃的情况下unwarp optional并获取关联值
+如何不让应用崩溃的情况下unwarp optional 并获取关联值
 
 1171
 00:58:38,048 --> 00:58:41,250
@@ -5846,7 +5846,7 @@ do it, okay? So I'm gonna show you that in a little bit.
 1173
 00:58:44,421 --> 00:58:45,954
 All right, so we've unwrapped this, optional.
-我们已经unwarp了这个optional
+我们已经unwarp 了这个optional
 
 1174
 00:58:45,956 --> 00:58:49,224
@@ -5856,7 +5856,7 @@ We're gonna crash if it's not set, that's fine. And so
 1175
 00:58:49,226 --> 00:58:52,661
 now, notice when I do the option click on digit,
-注意我按住option然后点这个digit
+注意我按住option 然后点这个digit
 
 1176
 00:58:52,663 --> 00:58:57,299
@@ -5866,17 +5866,17 @@ what's the type? String, not optional string,
 1177
 00:58:57,301 --> 00:59:00,569
 string, that's good because we unwrapped it. So now when we
-就是string，这很棒，因为我们unwarp了
+就是string，这很棒，因为我们unwarp 了
 
 1178
 00:59:00,571 --> 00:59:05,240
 run, instead of saying touched optional 6 digit down there,
-现在跑一下，就不会说touched optional 6 digit了
+现在跑一下，就不会说touched optional 6 digit 了
 
 1179
 00:59:05,242 --> 00:59:10,579
 it's going to say touch the 6 digit, touch 2, touch 4, 8, 9,
-而是说touch the 6 digit或者2、4、8、9
+而是说touch the 6 digit 或者2、4、8、9
 
 1180
 00:59:10,581 --> 00:59:17,019
@@ -5896,7 +5896,7 @@ We want our calculator to have a display and
 1183
 00:59:23,727 --> 00:59:26,762
 we want the digits we typed to go in the display, right. So
-我们希望我们按下的digits能显示出来
+我们希望我们按下的digits 能显示出来
 
 1184
 00:59:26,764 --> 00:59:29,665
@@ -5941,7 +5941,7 @@ instead of grabbing a button, I'm gonna grab one of these,
 1192
 00:59:48,619 --> 00:59:52,921
 a label. So a label is Read only text,
-一个label，label是一个只读的文字
+一个label，label 是一个只读的文字
 
 1193
 00:59:52,923 --> 00:59:55,691
@@ -5976,7 +5976,7 @@ I can change the font over here. Let's make this one
 1199
 01:00:11,275 --> 01:00:15,978
 really big, how about 40 point. I can even make it
-差不多40pt吧。我还可以让它右对齐
+差不多40pt 吧。我还可以让它右对齐
 
 1200
 01:00:15,980 --> 01:00:18,747
@@ -5986,7 +5986,7 @@ right aligned, you know how in calculators usually
 1201
 01:00:18,749 --> 01:00:21,316
 the text is on the right so there's an alignment thing for
-这里有个label对齐选项
+这里有个label 对齐选项
 
 1202
 01:00:21,318 --> 01:00:23,952
@@ -6036,7 +6036,7 @@ I could do it. All right, so now, how about connecting this
 1211
 01:00:51,782 --> 01:00:55,050
 to our controller? This is a little different because this
-那么如何把这个label跟controller联系起来？
+那么如何把这个label 跟controller 联系起来？
 
 1212
 01:00:55,052 --> 01:00:58,220
@@ -6061,17 +6061,17 @@ Okay, I wanna put things in the display.
 1216
 01:01:04,361 --> 01:01:07,863
 So this is communication coming from the controller to
-这是一个从controller到显示的通信
+这是一个从controller 到显示的通信
 
 1217
 01:01:07,865 --> 01:01:11,500
 the display instead of from a button to the controller. So
-而不是一个按钮到controller的通信
+而不是一个按钮到controller 的通信
 
 1218
 01:01:11,502 --> 01:01:15,771
 we still connect them up in the same way using control and
-我们还是一样用按住control拖拽的方式
+我们还是一样用按住control 拖拽的方式
 
 1219
 01:01:15,773 --> 01:01:20,275
@@ -6081,7 +6081,7 @@ drag, okay, to put something into our controller. But
 1220
 01:01:20,277 --> 01:01:24,179
 this time instead of action up here we're going to do outlet.
-但这次我们选outlet而不是action
+但这次我们选outlet 而不是action
 
 1221
 01:01:24,181 --> 01:01:27,149
@@ -6096,7 +6096,7 @@ create a property. Right? An instance variable,
 1223
 01:01:30,287 --> 01:01:32,721
 just like currentTitle is an instance variable, or
-就像currentTitle是一个实例变量
+就像currentTitle 是一个实例变量
 
 1224
 01:01:32,723 --> 01:01:34,256
@@ -6131,7 +6131,7 @@ objects. It's good, it knows it was a UI label. And don't
 1230
 01:01:50,340 --> 01:01:52,974
 worry about this storage, weak or strong, we'll talk about
-也不用担心这个storage是strong或是weak
+也不用担心这个storage 是strong 或是weak
 
 1231
 01:01:52,976 --> 01:01:55,043
@@ -6151,7 +6151,7 @@ instead of creating a method here, it created a property.
 1234
 01:02:02,252 --> 01:02:06,722
 Now again, this IB outlet is just something that Xcode puts,
-再一次，这个IBOutlet只是Xcode放这的。
+再一次，这个IBOutlet 只是Xcode 放这的。
 
 1235
 01:02:06,724 --> 01:02:07,989
@@ -6166,7 +6166,7 @@ we can see what it's connected to, so you can ignore that.
 1237
 01:02:11,161 --> 01:02:12,060
 I told you to ignore weak and
-我说了可以忽略weak和strong
+我说了可以忽略weak 和strong
 
 1238
 01:02:12,062 --> 01:02:14,730
@@ -6181,7 +6181,7 @@ this is familiar to you, it looks like current title, var.
 1240
 01:02:18,535 --> 01:02:21,636
 This is a property on our controller. Okay,
-这是你controller里的一个属性
+这是你controller 里的一个属性
 
 1241
 01:02:21,638 --> 01:02:24,005
@@ -6201,7 +6201,7 @@ Okay, now what the heck is that, exclamation point? Okay,
 1244
 01:02:33,650 --> 01:02:35,784
 I thought exclamation point was unwrapping optionals,
-我认为感叹号是用来unwrapping optional的
+我认为感叹号是用来unwrapping optional 的
 
 1245
 01:02:35,786 --> 01:02:38,153
@@ -6221,7 +6221,7 @@ exclamation point also means optional.
 1248
 01:02:44,862 --> 01:02:47,329
 It means the same kinda optional as question mark.
-这跟问号表示的optional是一个意思
+这跟问号表示的optional 是一个意思
 
 1249
 01:02:47,331 --> 01:02:48,830
@@ -6266,7 +6266,7 @@ When numbers get touched here, I want to, basically, append
 1257
 01:03:06,517 --> 01:03:09,684
 these digits onto whatever's already in the display,
-不管显示了什么都把digit加到display上
+不管显示了什么都把digit 加到display 上
 
 1258
 01:03:09,686 --> 01:03:12,287
@@ -6291,17 +6291,17 @@ another local variable which is also gonna be a constant,
 1262
 01:03:19,296 --> 01:03:24,366
 so it's let. I'm gonna call it textCurrentlyInDisplay, okay?
-所以是let。我叫它textCurrentlyInDisplay
+所以是let 。我叫它textCurrentlyInDisplay
 
 1263
 01:03:24,368 --> 01:03:28,904
 So I wanna get the text that's in this display currently. So
-我想获得现在display里的字符
+我想获得现在display 里的字符
 
 1264
 01:03:28,906 --> 01:03:33,241
 I'm going to send a message to display here, right? Display.
-我要在这给display发一个消息
+我要在这给display 发一个消息
 
 1265
 01:03:33,243 --> 01:03:35,377
@@ -6316,7 +6316,7 @@ But the message that I want to send is text. Okay?
 1267
 01:03:37,915 --> 01:03:41,416
 That gives me the text in the display. This is a UI label
-这会给我display里的文字。这是个UILabel方法
+这会给我display 里的文字。这是个UILabel 方法
 
 1268
 01:03:41,418 --> 01:03:45,453
@@ -6331,12 +6331,12 @@ the error that it's giving me here is that I haven't
 1270
 01:03:48,692 --> 01:03:51,927
 unwrapped display. You see that display is an optional
-你看display是个optional label
+你看display 是个optional label
 
 1271
 01:03:51,929 --> 01:03:55,730
 label. You can't send text to the type optional Okay, and
-你不能把一个text赋给一个optional
+你不能把一个text 赋给一个optional
 
 1272
 01:03:55,732 --> 01:03:58,633
@@ -6346,7 +6346,7 @@ optional 不理解什么是文字
 1273
 01:03:58,635 --> 01:04:02,003
 UILabel does. So, we need to get that associated value
-但UILabel知道。所以我们要获得display的label的关联值
+但UILabel 知道。所以我们要获得display 的label 的关联值
 
 1274
 01:04:02,005 --> 01:04:05,207
@@ -6386,32 +6386,32 @@ and I'm sending it the message text,
 1281
 01:04:22,626 --> 01:04:24,626
 actually text is a property, just like currentTitle
-实际上text是个属性， 就像currentTitle
+实际上text 是个属性， 就像currentTitle
 
 1282
 01:04:24,628 --> 01:04:29,030
 is a property on button, text is a property on UILabel. And,
-是一个button的属性，text是UILabel的一个属性
+是一个button 的属性，text 是UILabel 的一个属性
 
 1283
 01:04:29,032 --> 01:04:33,001
 in fact, if I option+click on it, you'll see var text is an
-如果我按住option点它，你可以看见var text
+如果我按住option 点它，你可以看见var text
 
 1284
 01:04:33,003 --> 01:04:37,806
 optional string. Why? Because UILabel might be not set.
-是一个optional string。为什么？因为UILabel可能没有被赋值
+是一个optional string。为什么？因为UILabel 可能没有被赋值
 
 1285
 01:04:37,808 --> 01:04:40,275
 The text in it might not be set. So it also is an option,
-它里面的text可能没有被赋值，所以这也是个optional
+它里面的text 可能没有被赋值，所以这也是个optional
 
 1286
 01:04:40,277 --> 01:04:45,647
 just like currentTitle. So I need to unwrap that as well.
-就像currentTitle一样，我需要同样需要unwarp
+就像currentTitle 一样，我需要同样需要unwarp
 
 1287
 01:04:46,316 --> 01:04:48,950
@@ -6441,7 +6441,7 @@ Some in a second here, so not to worry.
 1292
 01:04:56,360 --> 01:04:58,693
 Anyway, I have this text currently in display.
-不管怎样，我现在在display里拿到了这个文字
+不管怎样，我现在在display 里拿到了这个文字
 
 1293
 01:04:58,695 --> 01:05:02,697
@@ -6456,7 +6456,7 @@ unwarp它 text ＝ textCurrentlyInDisplay
 1295
 01:05:07,004 --> 01:05:11,706
 just hitting tab here, okay, + the digit that was pressed.
-我在这慵懒tab键，＋ digit
+我在这慵懒tab 键，＋ digit
 
 1296
 01:05:11,708 --> 01:05:14,809
@@ -6471,7 +6471,7 @@ That's really fun. Okay, some language allow that, some not.
 1298
 01:05:17,915 --> 01:05:21,816
 So it does. Notice also that when I'm setting the value of
-Swift可以。同时注意我在给optional赋值的时候
+Swift 可以。同时注意我在给optional 赋值的时候
 
 1299
 01:05:21,818 --> 01:05:25,120
@@ -6486,7 +6486,7 @@ I can set it to be a string, and that means,
 1301
 01:05:28,125 --> 01:05:32,294
 by definition, set this optional to set and
-根据定义，是赋值给optional来设定
+根据定义，是赋值给optional 来设定
 
 1302
 01:05:32,296 --> 01:05:37,332
@@ -6726,7 +6726,7 @@ well the reason you're getting that error is cuz in Swift,
 1349
 01:07:51,368 --> 01:07:55,336
 all properties, every single one, have to have an initial
-在Swift里，所以的属性，每一个，都必须有一个初始化的值
+在Swift 里，所以的属性，每一个，都必须有一个初始化的值
 
 1350
 01:07:55,338 --> 01:07:59,340
@@ -6906,7 +6906,7 @@ then we're gonna set the displays text
 1385
 01:09:43,380 --> 01:09:46,481
 equal to the digit we just typed. Okay, the five, or
-等于digit的数字，5，或者别的什么
+等于digit 的数字，5，或者别的什么
 
 1386
 01:09:46,483 --> 01:09:49,417
@@ -7101,7 +7101,7 @@ if I put the exclamation point,
 1424
 01:11:31,721 --> 01:11:33,821
 now I'm in implicitly unwrapping it everywhere.
-这样我就一次性的把他在所有地方unwarp了
+这样我就一次性的把他在所有地方unwarp 了
 
 1425
 01:11:33,823 --> 01:11:36,658
@@ -7641,7 +7641,7 @@ Okay, whenever we perform an operation,
 1532
 01:17:16,366 --> 01:17:19,767
 it's gonna wipe out what's in my display so I'm obviously
-就会去掉之前display上的东西
+就会去掉之前display 上的东西
 
 1533
 01:17:19,769 --> 01:17:22,703
