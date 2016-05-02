@@ -2815,7 +2815,7 @@ What about this other file over here? Main.storyboard,
 
 564
 00:27:33,352 --> 00:27:39,089
-what's that? That's the V for view of our NVC. That's
+what's that? That's the V for view of our MVC. That's
 它是什么呢？就是 MVC 里面的 V
 
 565
