@@ -4990,62 +4990,77 @@ it shows me all the methods that start with title.
 1001
 00:49:43,348 --> 00:49:48,617
 All the methods that include title in the name. See?
+所有名字里包含了title 的方法，看见了吗？
 
 1002
 00:49:48,753 --> 00:49:54,156
 And all the methods that have T-I-T-L-E in the order. Okay,
+还有所有含有T-I-T-L-E 这个字母顺序的方法
 
 1003
 00:49:54,158 --> 00:49:57,093
 and it gives it to you in the order you might expect right?
+这会按照你期望的顺序呈现
 
 1004
 00:49:57,095 --> 00:50:00,363
 Title first and then. So this is kinda helping,
+含有title 这个词的优先，别的在后面，这提供了一种帮助
 
 1005
 00:50:00,365 --> 00:50:00,997
 you can search basically.
+你可以这么搜索
 
 1006
 00:50:00,999 --> 00:50:03,599
 And when you do this you would quickly see current title,
+当你这么做的时候，你快速浏览到currenttitle
 
 1007
 00:50:03,601 --> 00:50:06,769
 that looks like what I want. And you can double click here,
+这看起来像是我想要的。你就在这双击
 
 1008
 00:50:06,771 --> 00:50:09,138
 actually, and it will put in there. Okay? So
+这样就会出现在这里。
 
 1009
 00:50:09,140 --> 00:50:12,942
 there's our current title. Now instead of printing touch
+这就是我们要的currenttitle。
 
 1010
 00:50:12,944 --> 00:50:17,313
 digit we basically wanna print which one, which digit was,
+现在我们想打印具体按到的某个数字，而不是“touchDigit”
 
 1011
 00:50:17,315 --> 00:50:22,485
 touched here. So I'm gonna say touched, we could say percent,
+所以这里要换成
 
 1012
 00:50:22,487 --> 00:50:25,254
 s digit. Comma digit.
+“touched %s digit”, digit
 
 1013
 00:50:25,256 --> 00:50:27,790
 This is what it would look like in C. For example,
+这就看起来像是C语音
 
 1014
 00:50:27,792 --> 00:50:31,327
 is everyone familiar with this print F like format?
+所以你们对printf 熟悉吗
 
 1015
 00:50:31,329 --> 00:50:33,696
 Okay good, cuz you can't do it in Swift.
+很好，但你不能在Swift 里这样做
 
 1016
 00:50:33,698 --> 00:50:34,096
@@ -5054,470 +5069,586 @@ Okay. >> [LAUGH]
 1017
 00:50:34,098 --> 00:50:35,164
 >> We don't do that in Swift.
+我们在Swift 里不这么做
 
 1018
 00:50:35,166 --> 00:50:37,633
 Instead, we do backslash, open parentheses,
+我们用反斜杠、括号代替
 
 1019
 00:50:37,635 --> 00:50:40,903
 close parentheses. And then we can put anything we want in
+然后里面放任何我们想放的
 
 1020
 00:50:40,905 --> 00:50:43,806
 here. Okay clean digit. And we don't need this out here on
+删掉digit，引号外不需要它
 
 1021
 00:50:43,808 --> 00:50:47,510
 the side. Okay, so this will be invaluated converted to
+所以这会被转换成string 类型
 
 1022
 00:50:47,512 --> 00:50:50,279
 a string. Some things can't be converted to strings but
+有的不能被转换，但大多数可以
 
 1023
 00:50:50,281 --> 00:50:53,215
 most things can, so you put that in there. Okay,
+所以你可以把它放在里面
 
 1024
 00:50:53,217 --> 00:50:56,652
 if you can't you'll get a warning, okay? All right, so
+如果不可以，你会被警告
 
 1025
 00:50:56,654 --> 00:50:58,054
 that's how we do that. So, let's go ahead and
+所以我们就这么做了
 
 1026
 00:50:58,056 --> 00:51:01,357
 see what's going on. But now maybe we should start paying
+继续看看接下来会发生什么
 
 1027
 00:51:01,359 --> 00:51:02,024
 attention to our warnings.
+我想现在应该开始注意一下这个警告了
 
 1028
 00:51:02,026 --> 00:51:05,428
 Okay, when you submit your homework, no warnings please.
+当你们交作业的时候，不准有警告
 
 1029
 00:51:05,430 --> 00:51:07,463
 Okay, no warnings. And certainly no errors,
+没有警告，当然也不能有错误
 
 1030
 00:51:07,465 --> 00:51:10,433
 those are red things those won't build, no warnings. So
+有错误的时候就不能build
 
 1031
 00:51:10,435 --> 00:51:12,535
 what is this warning, let's take a look at this warning.
+这个警告是什么呢？我们来看看
 
 1032
 00:51:12,537 --> 00:51:14,170
 You look at a warning by clicking on it.
+我们通过点击来看一个警告
 
 1033
 00:51:14,172 --> 00:51:16,572
 So I'm gonna click on it, and it says here,
+我点击他，这里是这么写的
 
 1034
 00:51:16,574 --> 00:51:21,644
 variable digit with never mutated, consider changing to
+digit这个变量没有被改变过
 
 1035
 00:51:21,646 --> 00:51:26,082
 let constant. Okay, what does that mean?
+是不是考虑把他变成let型常量。这是什么意思呢？
 
 1036
 00:51:26,084 --> 00:51:31,020
 That means that instead of var here, it wants us to put let.
+这里的意思是，希望我们用let而不是var
 
 1037
 00:51:31,022 --> 00:51:34,623
 And in fact, you should always do that. Anytime you declare
+事实上我们应该这么做
 
 1038
 00:51:34,625 --> 00:51:37,793
 a local variable, okay, or even a property that is
+任何时候申明一个本地变量，或者一个属性
 
 1039
 00:51:37,795 --> 00:51:40,629
 initialized at the beginning and never changes, in other
+在初始化后就一直没被改变，换句话说，
 
 1040
 00:51:40,631 --> 00:51:43,599
 words, it's a constant, use let instead of var.
+就是个常量，我们就应该用let 而不是var
 
 1041
 00:51:43,601 --> 00:51:46,268
 Now why do you want to do that? Two reasons really, one,
+那么我们现在为什么要这么做？两个理由
 
 1042
 00:51:46,270 --> 00:51:48,804
 it helps people reading your code realize this thing's
+一、这帮助别人读你的代码的时候意识到
 
 1043
 00:51:48,806 --> 00:51:51,040
 never going to change, I don't have to worry about it,
+这个一直不会变，不需要去担心它
 
 1044
 00:51:51,042 --> 00:51:54,243
 it's just like a constant. And two, if that thing were for
+这只是个常量。二、如果那个东西，
 
 1045
 00:51:54,245 --> 00:51:57,613
 example, an array, or a dictionary, and you use let,
+比如说是一个数组或者字典，你用了let
 
 1046
 00:51:57,615 --> 00:52:00,883
 that means nothing can be put into that dictionary or
+这就意味着没有什么可以放进字典或从字典拿出
 
 1047
 00:52:00,885 --> 00:52:04,553
 taken out. Or into the array or taken out okay. So
+也可以放进数组或从数组拿出
 
 1048
 00:52:04,555 --> 00:52:08,023
-it's how you can create read only arrays in dictionaries
+it's how you can create read only arrays and dictionaries
+这就是你如何创建只读的数组或者是字典
 
 1049
 00:52:08,025 --> 00:52:12,628
 okay. So, always use let when you are doing a constant.
+所以申明常量的时候一定记得用let
 
 1050
 00:52:12,630 --> 00:52:14,563
 And in fact notice that XCode is saying,
+注意Xcode 这里说的
 
 1051
 00:52:14,565 --> 00:52:17,733
 hey if you click here I'll fix it for you. Okay,
+如果你点这里，我会为你修复这个问题
 
 1052
 00:52:17,735 --> 00:52:21,904
 see how it says fix it replays var with let. Sure. Okay, and
+看一下它如何用let 代替var 修正这个问题
 
 1053
 00:52:21,906 --> 00:52:24,773
 it did it and now the warnings gone. Okay, so
+所以它做到了，警告没了
 
 1054
 00:52:24,775 --> 00:52:29,678
 let's run, see if this is working. We're crossing our
+来跑一下，看看是不是能行
 
 1055
 00:52:29,680 --> 00:52:32,915
 fingers about that whole string question mark thing.
+我们越过我们的手指关于整串问号的事情
 
 1056
 00:52:32,917 --> 00:52:35,518
 All right, so here we go, let's press 5.
+好了，来按下5
 
 1057
 00:52:36,921 --> 00:52:40,189
 The heck is going on down there? Okay, touched
+这下面就会显示数字
 
 1058
 00:52:40,191 --> 00:52:45,294
 optional 5 digit? Okay so what is this optional business.
+touched optional("5") digit？这里的optional 是什么
 
 1059
 00:52:45,296 --> 00:52:47,163
 Here you all wanna take a deep breath,
+所以这里你们得深呼吸
 
 1060
 00:52:47,165 --> 00:52:50,332
 clear your minds, and pay close attention okay. Because
+清空你们的脑袋，集中全部注意力
 
 1061
 00:52:50,334 --> 00:52:52,935
 this is a very important thing in Swift, it's ubiquitous
+因为这是Swift 里非常非常重要的东西
 
 1062
 00:52:52,937 --> 00:52:57,740
 throughout the entire iOS API okay. Very cool feature, but
+这在iOS API 里无处不在，一个非常酷的特性
 
 1063
 00:52:57,742 --> 00:53:00,442
 it requires a little bit of getting used to in terms of
+但是需要一段时间来熟悉这个语法
 
 1064
 00:53:00,444 --> 00:53:05,381
 its syntax okay? This is the feature of optionals. Okay?
+这是一个叫optional 的特性
 
 1065
 00:53:05,383 --> 00:53:09,818
 In Swift, there is a type called optional.
+在Swift里，有一种类型叫optional
 
 1066
 00:53:09,820 --> 00:53:12,388
-It's a type like int or blue or anything else,
+It's a type like int or boolean or anything else,
+这是一种类似于int 或bool 的类型
 
 1067
 00:53:12,390 --> 00:53:14,323
 string, it's dictionary, array,
+或者是string、dictionary、array 这样的
 
 1068
 00:53:14,325 --> 00:53:18,360
 optional. Optional is just a type. This type can only have
+optional 只是一个类型，这个类型只有两个值
 
 1069
 00:53:18,362 --> 00:53:23,699
 two values. One value is not set. Okay?
+一个值是没有被赋值
 
 1070
 00:53:23,701 --> 00:53:28,070
 That's expressed in Swift with the key word nil, N-I-L.
+在Swift里表示它的关键字是nil
 
 1071
 00:53:28,072 --> 00:53:31,473
 Nil only means, this optional is not set.
+nil 只表示optional 没有被赋值
 
 1072
 00:53:31,475 --> 00:53:33,709
 That's all it means in Swift. It doesn't mean zero.
+这就是他在Swift 里全部的含义，这不代表它为零
 
 1073
 00:53:33,711 --> 00:53:36,245
 It doesn't mean a pointer that doesn't point anywhere, like
+这不像别的语言，它不代表一个不指向任何地方的指针
 
 1074
 00:53:36,247 --> 00:53:39,882
 in other languages. Nil means an optional that's not set.
+nil 代表一个optional 没有被赋值
 
 1075
 00:53:39,884 --> 00:53:45,120
-The other state that an optional can be in is set,
+The other state that an optional can be is set,
+另一个状态就是一个optional 被赋值了
 
 1076
 00:53:45,122 --> 00:53:48,691
 okay? Now, if it's in the set state, it can have
+如果它在被赋值状态
 
 1077
 00:53:48,693 --> 00:53:52,995
 an associated value, okay? An associated value,
+他就可以有一个关联值
 
 1078
 00:53:52,997 --> 00:53:55,698
 which can be of any other type, okay? Actually it also
+一个可以是其他任何类型的关联值
 
 1079
 00:53:55,700 --> 00:53:57,199
 could also be an optional. You can have an optional,
+实际上，它还可以是一个optional。你可以有一个optional(optional)
 
 1080
 00:53:57,201 --> 00:54:00,970
 optional, but that associated value is just associated with
+但是关联值只和它赋值的状态关联
 
 1081
 00:54:00,972 --> 00:54:03,405
 this set state, okay? In the not set state,
+在未赋值状态
 
 1082
 00:54:03,407 --> 00:54:06,375
 there is no associated value cuz it's not set. Okay?
+它就没有关联值，因为它没有被赋值
 
 1083
 00:54:06,377 --> 00:54:09,011
 Now what does it look like to declare it optional? Well,
+那么把它申明为optional 看起来是什么样呢？
 
 1084
 00:54:09,013 --> 00:54:12,615
 let's go back with our option key and take a look at current
+让我们回过头看一下我们的option key 看一下currentTitle
 
 1085
 00:54:12,617 --> 00:54:15,017
 title. Okay, you remember this from the documentation?
+还记得这段文档吗？
 
 1086
 00:54:15,019 --> 00:54:20,289
 It says var currentTitle string? That means this is
+这里写到var currentTitle: string?
 
 1087
 00:54:20,291 --> 00:54:25,694
 an optional whose associated value is a string. Okay?
+这里的意思是这是个关联值为string 的optional
 
 1088
 00:54:25,696 --> 00:54:28,063
 So if someone looks at this property and
+所以如果有人看到这个属性
 
 1089
 00:54:28,065 --> 00:54:29,198
 says, what type is that property?
+当他问这个是什么类型的时候
 
 1090
 00:54:29,200 --> 00:54:32,701
 And they say, it's a string but it's optional no, no.
+他可能会说，这是个string，但是是optional。不！
 
 1091
 00:54:32,703 --> 00:54:37,973
 This is an optional and it's associated values of string,
+这是个optional，他的关联值是string
 
 1092
 00:54:37,975 --> 00:54:42,311
 okay? Get used to saying, this type is optional, okay? So
+要习惯于说这个类型是optional
 
 1093
 00:54:42,313 --> 00:54:45,114
 this is an optional string, that's what would say.
+这是个optional string，这才是正确的
 
 1094
 00:54:45,116 --> 00:54:47,516
 It's an optional string, okay? But primarily,
+这是个optional string。主要是个optional
 
 1095
 00:54:47,518 --> 00:54:51,053
 it's an optional. Okay, it's associated value is a string.
+关联值是string
 
 1096
 00:54:51,055 --> 00:54:53,922
 So this currentTitle, why is it an optional? Well,
+所以这个currentTitle 为什么是个optional？
 
 1097
 00:54:53,924 --> 00:54:58,560
 because we might have a button here that has no title set.
+这是因为一个按钮的标题可能不会被赋值
 
 1098
 00:54:58,562 --> 00:55:02,064
 Not set. Okay, so the title needs to be an optional,
+没有赋值，所以它应该是个optional
 
 1099
 00:55:02,066 --> 00:55:05,367
 so it can represent the case where it's not set. Now,
+所以它就可以表示没有被赋值的情况
 
 1100
 00:55:05,369 --> 00:55:08,304
 anything can be an optional. Not just pointers, or objects.
+所以任何东西都可以是optional。不只是指针或对象
 
 1101
 00:55:08,306 --> 00:55:11,440
 Ints could be optional. You could have an optional int,
+int可以是optional，你可以有一个optional int
 
 1102
 00:55:11,442 --> 00:55:15,077
 okay? But here we are representing the title,
+但这里我们代表了一个标题
 
 1103
 00:55:15,079 --> 00:55:18,414
 the button, which is the string and it might be not set
+这个按钮的标题是个string，这可能不会被赋值
 
 1104
 00:55:18,416 --> 00:55:20,382
 okay? So we need that to be an optional.
+我们需要这个是个optional
 
 1105
 00:55:20,384 --> 00:55:23,519
 So how do I get the string, because I don't want
+所以我怎么得到这个string
 
 1106
 00:55:23,521 --> 00:55:27,690
 this digit, which currently is also an optional string?
+我不希望这个digit，现在还是个optional string
 
 1107
 00:55:27,692 --> 00:55:30,559
 Isn't it kinda weird here when I said let digit equal,
-
+当这里是let digit ＝ 的时候不是很奇怪吗
 1108
 00:55:30,561 --> 00:55:34,029
 nobody said how come you didn't say colon string?
+没人觉得你为什么不加上:string呢？
 
 1109
 00:55:34,031 --> 00:55:37,900
 Okay? I didn't say the type. I declared a local variable.
+我没有说类型，我申明一个本地变量
 
 1110
 00:55:37,902 --> 00:55:41,170
 It didn't even have a type. How was that possible?
+我甚至都没有一个类型，这怎么可能？
 
 1111
 00:55:41,172 --> 00:55:46,742
 In Swift, Swift will infer the type all the time, okay? If
+在Swift 里，Swift 会一直推断类型
 
 1112
 00:55:46,744 --> 00:55:49,411
 it's possible for it to know the type it will infer it.
+如果它可以在这里知道他的类型，那么就会推断这个类型
 
 1113
 00:55:49,413 --> 00:55:54,183
 And in fact it's wrong really bad coding style to put that
+实际上，这里写上类型是个非常差的编程风格
 
 1114
 00:55:54,185 --> 00:55:58,220
 type in there. It's better to just say let digit equal and
+这里最好就这么写
 
 1115
 00:55:58,222 --> 00:56:01,190
 let swift infer it. And here Swift has inferred.
+让Swift 来推断他的类型。这里Swift 也做到了
 
 1116
 00:56:01,192 --> 00:56:03,325
 The digit must be of type string question mark,
+这里的digit 一定会是个string? 类型
 
 1117
 00:56:03,327 --> 00:56:06,228
 that's because this is of type string question mark.
+因为后面的也是个string? 类型
 
 1118
 00:56:06,230 --> 00:56:09,365
 So of course digit has to be that. You see what's happening
+所以digit 当然也应该是那个类型。你看到那发生什么了吗？
 
 1119
 00:56:09,367 --> 00:56:12,668
 there? So you're going to see type inference all the time in
+Swift 里你会时时看到类型推断的结果
 
 1120
 00:56:12,670 --> 00:56:14,203
 Swift, it makes your code much more compact,
+这让你代码更加简洁
 
 1121
 00:56:14,205 --> 00:56:18,374
 a lot less repeated stuff, is that a question in the back?
+很多更少重复的工作，那边的同学有问题吗？
 
 1122
 00:56:18,376 --> 00:56:19,875
 >> Yeah, is that the same for
+这对var 是一样的吗？
 
 1123
 00:56:19,877 --> 00:56:20,209
 var too. >> Is the question is
+问题是：
 
 1124
 00:56:20,211 --> 00:56:22,277
 that same for var too, absolutely it's the same for
+这对var 是一样的吗？
 
 1125
 00:56:22,279 --> 00:56:26,382
 var, okay? So, how do I get that string though?
+完全一样。所以我怎么获得那个string 呢？
 
 1126
 00:56:26,384 --> 00:56:28,951
 If this button title is set, how do I get that
+如果这个按钮的标题已经有了，那我如何
 
 1127
 00:56:28,953 --> 00:56:32,721
 associated value thing, okay, out of this optional?
+从这个optional 里面获取这个关联值？
 
 1128
 00:56:32,723 --> 00:56:36,525
 And the answer is you put an exclamation point in the end,
+方法是你在最后放一个感叹号
 
 1129
 00:56:36,527 --> 00:56:39,328
 okay. Now, optional is question mark on the end of
+optional 在定义的末尾有个问号
 
 1130
 00:56:39,330 --> 00:56:42,831
 a declaration. Exclamation point is unwrap this thing and
+感叹号是用来unwarp（解包）这个optional
 
 1131
 00:56:42,833 --> 00:56:46,402
 give me the associative value. So this is very succinct,
+然后给我这个关联值。这是很简明的
 
 1132
 00:56:46,404 --> 00:56:50,038
 one character for each side of you using this, okay?
+每次可以使用一种符号
 
 1133
 00:56:50,040 --> 00:56:51,774
 Question. >> Can you briefly talk about
+问题：
 
 1134
 00:56:51,776 --> 00:56:52,074
@@ -5530,1616 +5661,2019 @@ why you design the title to be optional instead of like
 1136
 00:56:53,978 --> 00:56:59,114
 an empty string? >> Okay, so the question is,
+问题是
 
 1137
 00:56:59,116 --> 00:57:02,384
 why does Swift have this optional thing instead of just
+为什么Swift 不直接用空字符
 
 1138
 00:57:02,386 --> 00:57:05,120
 doing empty string to mean a button without a title?
+而是用optional 来表示一个没有标题的button？
 
 1139
 00:57:05,122 --> 00:57:10,492
 Or maybe for an int minus 1. I don't know. Or for a point or
+或者是一个最小为1的int
 
 1140
 00:57:10,494 --> 00:57:14,463
 0 memory address or something like that. The main reason for
+又或者是一个指针、一个不占内存的地址或者类似的什么东西
 
 1141
 00:57:14,465 --> 00:57:18,100
 that is for example, pointers to objects in Swift, you don't
+这主要的原因是，Swift 里的指针
 
 1142
 00:57:18,102 --> 00:57:21,703
 see the memory address. So you couldn't have it be 0, okay,
+你是看不见内存地址的。所以你不能让他为0
 
 1143
 00:57:21,705 --> 00:57:23,906
 that's hidden from you. So there'd be no way to do it.
+这对你是隐藏的。所以没法这样做
 
 1144
 00:57:23,908 --> 00:57:28,076
 For an int, if you wanted an optional int, is it minus 1 or
+对于int，如果你想要一个optional int
 
 1145
 00:57:28,078 --> 00:57:31,280
 0, max int? What is it, it don't know what it is.
+它到底是1？是0？还是别的什么？他不知道应该是多少。
 
 1146
 00:57:31,282 --> 00:57:34,817
 So Swift is trying to be consistent across all things.
+所以Swift 想涵盖所有情况
 
 1147
 00:57:34,819 --> 00:57:38,854
 Ints, pointers to objects, whatever to make sure that
+Ints，指向对象的指针
 
 1148
 00:57:38,856 --> 00:57:40,456
 we can tell which ones are not set. Okay, so
+无论是什么，要保证我们能知道他有没有被赋值
 
 1149
 00:57:40,458 --> 00:57:42,591
 that's the thought behind it. It's really great actually,
+这就是optional 背后的思考，非常棒
 
 1150
 00:57:42,593 --> 00:57:46,094
 once you get used to it it's fantastic. All right, so
+一旦你习惯这种做法，真的非常赞
 
 1151
 00:57:46,096 --> 00:57:47,830
 we unwrap it with this exclamation point.
+我们用感叹号对它进行unwarp
 
 1152
 00:57:47,832 --> 00:57:51,767
 Now what would happen if that current title value was
+如果这里的currentTitle 没有被赋值，会发生什么？
 
 1153
 00:57:51,769 --> 00:57:54,903
 not set? And this exclamation point tried to pull out
+这个感叹号试着去把值取出来
 
 1154
 00:57:54,905 --> 00:57:57,873
 the associated value? What do you think would happen?
+你觉得会发生什么
 
 1155
 00:57:57,875 --> 00:57:58,674
 >> Error.
+错误
 
 1156
 00:57:58,676 --> 00:58:00,576
 >> Error, yeah, bad error.
+错误，是的大错特错
 
 1157
 00:58:00,578 --> 00:58:02,644
 It would crash my app, okay? So
+这会让你的应用崩溃
 
 1158
 00:58:02,646 --> 00:58:05,247
 exclamation point crashes your app if you tried to
+如果你试着unwarp 一个没有被赋值的optional
 
 1159
 00:58:05,249 --> 00:58:08,750
 unwrap an optional that's in the not set state, okay,
+感叹号会让你的应用崩溃
 
 1160
 00:58:08,752 --> 00:58:12,921
 if it's nil. Now some of you conservative folks might be
+如果它为空。有些保守的人会说
 
 1161
 00:58:12,923 --> 00:58:15,257
 saying I'm never using exclamation point, that's so
+他从来不用感叹号
 
 1162
 00:58:15,259 --> 00:58:18,927
 easy to crash my app. Okay? And the answer to that is yes
+因为太容易让应用崩溃。但答案是
 
 1163
 00:58:18,929 --> 00:58:22,498
 it is, but sometimes crashing your app is a good thing.
+是的，确实容易让应用崩溃，但有时候这是好事
 
 1164
 00:58:22,500 --> 00:58:23,999
 It helps you find a bug, okay?
+这会帮助你找到bug
 
 1165
 00:58:24,001 --> 00:58:26,869
 Because something that you expect to be set by a certain
+因为有的时候你希望他被赋予一个确定的值
 
 1166
 00:58:26,871 --> 00:58:28,737
 point isn't, and it crashes your app, and
+如果没有，那就让应用崩溃
 
 1167
 00:58:28,739 --> 00:58:31,206
 you find it before it goes out to your customer. And some
+你在app 发布给你的用户之前就找到这个bug
 
 1168
 00:58:31,208 --> 00:58:33,842
 unexpected thing is happening because something's not set.
+因为有些没被赋值，会发生一些预期之外的事情
 
 1169
 00:58:33,844 --> 00:58:36,311
 Now, I'm gonna show you a little later how you can
+我稍后会给你们展示
 
 1170
 00:58:36,313 --> 00:58:38,046
 unwrap the optional and get the associated value
+如何不让应用崩溃的情况下unwarp optional 并获取关联值
 
 1171
 00:58:38,048 --> 00:58:41,250
 without crashing. Basically, test to see if it's set and
+总的来说，自测一下它有没有被赋值
 
 1172
 00:58:41,252 --> 00:58:44,286
 do it, okay? So I'm gonna show you that in a little bit.
+我过一会会做给你们看
 
 1173
 00:58:44,421 --> 00:58:45,954
 All right, so we've unwrapped this, optional.
+我们已经unwarp 了这个optional
 
 1174
 00:58:45,956 --> 00:58:49,224
 We're gonna crash if it's not set, that's fine. And so
+如果没有被赋值会让应用崩溃，这没问题
 
 1175
 00:58:49,226 --> 00:58:52,661
 now, notice when I do the option click on digit,
+注意我按住option 然后点这个digit
 
 1176
 00:58:52,663 --> 00:58:57,299
 what's the type? String, not optional string,
+什么类型呢？不是optional string
 
 1177
 00:58:57,301 --> 00:59:00,569
 string, that's good because we unwrapped it. So now when we
+就是string，这很棒，因为我们unwarp 了
 
 1178
 00:59:00,571 --> 00:59:05,240
 run, instead of saying touched optional 6 digit down there,
+现在跑一下，就不会说touched optional 6 digit 了
 
 1179
 00:59:05,242 --> 00:59:10,579
 it's going to say touch the 6 digit, touch 2, touch 4, 8, 9,
+而是说touch the 6 digit 或者2、4、8、9
 
 1180
 00:59:10,581 --> 00:59:17,019
 okay? Got it? Okay, now, this is going good, but we
+明白了吗？这很棒
 
 1181
 00:59:17,021 --> 00:59:21,123
 don't really want this to be printing out in the console.
+但我们不想它在控制台打印出来
 
 1182
 00:59:21,125 --> 00:59:23,725
 We want our calculator to have a display and
+我们希望我们的计算器有个显示
 
 1183
 00:59:23,727 --> 00:59:26,762
 we want the digits we typed to go in the display, right. So
+我们希望我们按下的digits 能显示出来
 
 1184
 00:59:26,764 --> 00:59:29,665
 let's go do that. Let's add a display to our
+所以现在来做这个。加一个显示
 
 1185
 00:59:29,667 --> 00:59:32,534
 user interface here. We're gonna put it at the top, okay?
+到UI上。我们会把这个放在顶部
 
 1186
 00:59:32,536 --> 00:59:35,537
 I'm talking about this thing right up here where this 0 is.
+我指的是这个右上角零的这个
 
 1187
 00:59:35,539 --> 00:59:37,439
 And I wanna it to kinda look similar to that,
+我希望看起来很像这个
 
 1188
 00:59:37,441 --> 00:59:39,241
 maybe some different colors but kinda like that.
+可能是不同颜色，但是类似吧
 
 1189
 00:59:39,243 --> 00:59:44,479
 So I'm gonna go back to my utilities area over here and
+现在回到组建的区域
 
 1190
 00:59:44,481 --> 00:59:45,547
 go to the bottom. And this time,
+到最底部，这次
 
 1191
 00:59:45,549 --> 00:59:48,617
 instead of grabbing a button, I'm gonna grab one of these,
+不是抓一个button，而是抓一个这个
 
 1192
 00:59:48,619 --> 00:59:52,921
 a label. So a label is Read only text,
+一个label，label 是一个只读的文字
 
 1193
 00:59:52,923 --> 00:59:55,691
 okay? The user can't touch on it, and then type
+用户不能碰这个
 
 1194
 00:59:55,693 --> 00:59:58,527
 with the little keyboard on the iPhone, okay? This is read
+然后用键盘输入。
 
 1195
 00:59:58,529 --> 01:00:01,229
 only text which is what we want on my calculator. So
+这是一个我们计算器上需要的只读的文字
 
 1196
 01:00:01,231 --> 01:00:04,099
 I'm gonna bring it over here, bring it out, again same way
+我会让它到这里，拖出来
 
 1197
 01:00:04,101 --> 01:00:08,503
 as before. I can resize it, I can change what's in there,
+跟之前一样，我可以重新定义它的大小
 
 1198
 01:00:08,505 --> 01:00:11,273
 I can change the font over here. Let's make this one
+可以改变文字。现在让它字变大
 
 1199
 01:00:11,275 --> 01:00:15,978
 really big, how about 40 point. I can even make it
+差不多40pt 吧。我还可以让它右对齐
 
 1200
 01:00:15,980 --> 01:00:18,747
 right aligned, you know how in calculators usually
+你知道一般计算器都是右对齐
 
 1201
 01:00:18,749 --> 01:00:21,316
 the text is on the right so there's an alignment thing for
+这里有个label 对齐选项
 
 1202
 01:00:21,318 --> 01:00:23,952
 the label here, so we'll do that. Maybe I want to change
+我们可以这么做。
 
 1203
 01:00:23,954 --> 01:00:27,189
 the background color for this one too, how about blue, okay
+我也想换一下背景颜色，蓝色就不错
 
 1204
 01:00:27,191 --> 01:00:30,158
 there's blue. I don't really like black on blue, here's
+但我不喜欢蓝底黑字
 
 1205
 01:00:30,160 --> 01:00:33,829
 a color of the text, we'll go white on blue. Okay, so
+这里是文字颜色，蓝底白字就挺好
 
 1206
 01:00:33,831 --> 01:00:37,099
 I can basically set it however I want, okay, got this UI,
+我可以随意设置这些
 
 1207
 01:00:37,101 --> 01:00:39,001
 I could use the blue lines by the way,
+也可以用蓝线辅助
 
 1208
 01:00:39,003 --> 01:00:43,405
 to line it up nicely here, but again not so important because
+这样就可以很整齐的放置
 
 1209
 01:00:43,407 --> 01:00:46,742
 I'm going to do the flexible UI thing on Wednesday, but
+不是特别重要的是，我会在周三教自适应的UI布局
 
 1210
 01:00:46,744 --> 01:00:51,780
 I could do it. All right, so now, how about connecting this
+我可以做这些。
 
 1211
 01:00:51,782 --> 01:00:55,050
 to our controller? This is a little different because this
+那么如何把这个label 跟controller 联系起来？
 
 1212
 01:00:55,052 --> 01:00:58,220
 is not a case where the user's gonna touch this thing and
+这有点不太一样，因为这不是那种用户点一下
 
 1213
 01:00:58,222 --> 01:00:58,887
 it's gonna invoke a method.
+就调用一个方法的情况
 
 1214
 01:00:58,889 --> 01:01:02,524
 It's more the other way around. I wanna talk to it.
+这是另外一种情况，我想跟它交互
 
 1215
 01:01:02,526 --> 01:01:04,359
 Okay, I wanna put things in the display.
+我想把东西放进去展示
 
 1216
 01:01:04,361 --> 01:01:07,863
 So this is communication coming from the controller to
+这是一个从controller 到显示的通信
 
 1217
 01:01:07,865 --> 01:01:11,500
 the display instead of from a button to the controller. So
+而不是一个按钮到controller 的通信
 
 1218
 01:01:11,502 --> 01:01:15,771
 we still connect them up in the same way using control and
+我们还是一样用按住control 拖拽的方式
 
 1219
 01:01:15,773 --> 01:01:20,275
 drag, okay, to put something into our controller. But
+把一些东西放进controller
 
 1220
 01:01:20,277 --> 01:01:24,179
 this time instead of action up here we're going to do outlet.
+但这次我们选outlet 而不是action
 
 1221
 01:01:24,181 --> 01:01:27,149
 And what outlet means is instead of creating a method,
+outlet的意思是新建一个熟悉
 
 1222
 01:01:27,151 --> 01:01:30,285
 create a property. Right? An instance variable,
+而不是方法。一个实例变量
 
 1223
 01:01:30,287 --> 01:01:32,721
 just like currentTitle is an instance variable, or
+就像currentTitle 是一个实例变量
 
 1224
 01:01:32,723 --> 01:01:34,256
 property, we're gonna have a property here.
+或者一个属性，这里我们有了一个属性
 
 1225
 01:01:34,258 --> 01:01:36,992
 And this property is going to point to this display for
+这个属性会指向显示
 
 1226
 01:01:36,994 --> 01:01:39,628
 us so we can access it any time we want. So
+这样我们就可以在任何需要的时候获取他
 
 1227
 01:01:39,630 --> 01:01:44,299
 I'm gonna call this property display, not that, display,
+我准备叫这个属性display
 
 1228
 01:01:44,301 --> 01:01:47,469
 okay? Luckily it got the type right here, it didn't say any
+碰巧这里有类型，这没说有任何对象
 
 1229
 01:01:47,471 --> 01:01:50,338
 objects. It's good, it knows it was a UI label. And don't
+这很好，它知道是个UILabel
 
 1230
 01:01:50,340 --> 01:01:52,974
 worry about this storage, weak or strong, we'll talk about
+也不用担心这个storage 是strong 或是weak
 
 1231
 01:01:52,976 --> 01:01:55,043
 that next week, so you can just ignore that for now.
+我们下周再说，所以你现在就可以忽略他
 
 1232
 01:01:55,045 --> 01:01:58,213
 Okay, so I hit connect and it creates,
+我点击connect，它就被创建了
 
 1233
 01:01:58,215 --> 01:02:02,250
 instead of creating a method here, it created a property.
+这里创建了一个属性而不是一个方法
 
 1234
 01:02:02,252 --> 01:02:06,722
-Now again, this IB outlet is just something that Esco puts,
+Now again, this IB outlet is just something that Xcode puts,
+再一次，这个IBOutlet 只是Xcode 放这的。
 
 1235
 01:02:06,724 --> 01:02:07,989
 put this little circle here. So
+放了一个小圆圈在这里
 
 1236
 01:02:07,991 --> 01:02:11,159
 we can see what it's connected to, so you can ignore that.
+我们可以看到这个链接到了什么，所以你可以忽略那个
 
 1237
 01:02:11,161 --> 01:02:12,060
 I told you to ignore weak and
+我说了可以忽略weak 和strong
 
 1238
 01:02:12,062 --> 01:02:14,730
 strong, so you can ignore that. And so hopefully
+所以可以忽略它
 
 1239
 01:02:14,732 --> 01:02:18,533
 this is familiar to you, it looks like current title, var.
+这个看起来很熟悉，有点像currentTitle
 
 1240
 01:02:18,535 --> 01:02:21,636
 This is a property on our controller. Okay,
+这是你controller 里的一个属性
 
 1241
 01:02:21,638 --> 01:02:24,005
 an instance variable, if you wanna think of it that way.
+一个实例变量，如果你想这么认为的话
 
 1242
 01:02:24,007 --> 01:02:29,544
 It's called display. Its type is UI label exclamation point.
+这叫display。类型是UILabel ！
 
 1243
 01:02:29,546 --> 01:02:33,648
 Okay, now what the heck is that, exclamation point? Okay,
+这里的感叹号又是什么意思呢？
 
 1244
 01:02:33,650 --> 01:02:35,784
 I thought exclamation point was unwrapping optionals,
+我认为感叹号是用来unwrapping optional 的
 
 1245
 01:02:35,786 --> 01:02:38,153
 why is there an exclamation point here, it makes no sense.
+这里为什么有个感叹号？这不科学。
 
 1246
 01:02:38,155 --> 01:02:42,424
 And in fact you can put a question mark here because
+事实上你可以在这里放个问号
 
 1247
 01:02:42,426 --> 01:02:44,860
 exclamation point also means optional.
+因为感叹号也代表了optional
 
 1248
 01:02:44,862 --> 01:02:47,329
 It means the same kinda optional as question mark.
+这跟问号表示的optional 是一个意思
 
 1249
 01:02:47,331 --> 01:02:48,830
 And I'm gonna leave this question mark, and
+我会先在这放一个问号
 
 1250
 01:02:48,832 --> 01:02:50,599
 I'm gonna keep working on this demo, and
+继续完成这个demo
 
 1251
 01:02:50,601 --> 01:02:51,099
 then I'm gonna go back and
+然后回过头来
 
 1252
 01:02:51,101 --> 01:02:52,167
 change it to an exclamation point, and
+把它改成感叹号
 
 1253
 01:02:52,169 --> 01:02:55,604
 show you what exclamation point means. Okay? But
+告诉你们感叹号是什么意思。
 
 1254
 01:02:55,606 --> 01:02:58,073
 exclamation point and question mark both mean optional,
+当你定义的时候，
 
 1255
 01:02:58,075 --> 01:03:02,744
 when you're declaring. Okay, so now I have this display.
+感叹号和问号都表示optional。所以现在你有了这个display
 
 1256
 01:03:02,746 --> 01:03:06,515
 When numbers get touched here, I want to, basically, append
+当数字被按下的时候，我想
 
 1257
 01:03:06,517 --> 01:03:09,684
 these digits onto whatever's already in the display,
+不管显示了什么都把digit 加到display 上
 
 1258
 01:03:09,686 --> 01:03:12,287
 all right? So let's go ahead and do that.
+所以现在来做这个
 
 1259
 01:03:12,289 --> 01:03:14,556
 We can get rid of this print to the console.
+删掉这个打印到控制台的
 
 1260
 01:03:14,558 --> 01:03:16,658
 We don't need to do that anymore. So I'm gonna create
+我们不再需要它
 
 1261
 01:03:16,660 --> 01:03:19,294
 another local variable which is also gonna be a constant,
+我需要再新建一个本地变量，当然也是个常量
 
 1262
 01:03:19,296 --> 01:03:24,366
 so it's let. I'm gonna call it textCurrentlyInDisplay, okay?
+所以是let 。我叫它textCurrentlyInDisplay
 
 1263
 01:03:24,368 --> 01:03:28,904
 So I wanna get the text that's in this display currently. So
+我想获得现在display 里的字符
 
 1264
 01:03:28,906 --> 01:03:33,241
 I'm going to send a message to display here, right? Display.
+我要在这给display 发一个消息
 
 1265
 01:03:33,243 --> 01:03:35,377
 And the message, we can look it up in the documentation.
+这个信息，我们可以从文档中得知
 
 1266
 01:03:35,379 --> 01:03:37,913
 But the message that I want to send is text. Okay?
+但是我想发的消息是文字
 
 1267
 01:03:37,915 --> 01:03:41,416
 That gives me the text in the display. This is a UI label
+这会给我display 里的文字。这是个UILabel 方法
 
 1268
 01:03:41,418 --> 01:03:45,453
 method. But this is giving me an error. Okay, and
+但这里却告诉我是个错误
 
 1269
 01:03:45,455 --> 01:03:48,690
 the error that it's giving me here is that I haven't
+这个错误说我这里没有unwarp display
 
 1270
 01:03:48,692 --> 01:03:51,927
 unwrapped display. You see that display is an optional
+你看display 是个optional label
 
 1271
 01:03:51,929 --> 01:03:55,730
 label. You can't send text to the type optional Okay, and
+你不能把一个text 赋给一个optional
 
 1272
 01:03:55,732 --> 01:03:58,633
 optional doesn't understand the message text.
+optional 不理解什么是文字
 
 1273
 01:03:58,635 --> 01:04:02,003
 UILabel does. So, we need to get that associated value
+但UILabel 知道。所以我们要获得display 的label 的关联值
 
 1274
 01:04:02,005 --> 01:04:05,207
 of label, of a display, which is the UILabel, and
+是一个UILabel
 
 1275
 01:04:05,209 --> 01:04:07,843
 we do that with the exclamation point, here.
+我们会在这放一个感叹号
 
 1276
 01:04:07,845 --> 01:04:10,645
 And, again, notice it's offering, here, to fix it. So,
+注意这里，提供了修复选项
 
 1277
 01:04:10,647 --> 01:04:13,515
 I'm gonna fix it, and i put the exclamation point in
+所以我来修复他，就会放一个感叹号在这
 
 1278
 01:04:13,517 --> 01:04:17,752
 there. Now, this is a UILabel. It's an unwrapped,
+现在这里是个UILabel，这一个unwarpped
 
 1279
 01:04:17,754 --> 01:04:20,589
 optional UILabel, right? This is a UILabel,
+optional UILabel，对吗？这是一个UILabel
 
 1280
 01:04:20,591 --> 01:04:22,624
 and I'm sending it the message text,
+我把那个文字值发给他
 
 1281
 01:04:22,626 --> 01:04:24,626
 actually text is a property, just like currentTitle
+实际上text 是个属性， 就像currentTitle
 
 1282
 01:04:24,628 --> 01:04:29,030
 is a property on button, text is a property on UILabel. And,
+是一个button 的属性，text 是UILabel 的一个属性
 
 1283
 01:04:29,032 --> 01:04:33,001
 in fact, if I option+click on it, you'll see var text is an
+如果我按住option 点它，你可以看见var text
 
 1284
 01:04:33,003 --> 01:04:37,806
 optional string. Why? Because UILabel might be not set.
+是一个optional string。为什么？因为UILabel 可能没有被赋值
 
 1285
 01:04:37,808 --> 01:04:40,275
 The text in it might not be set. So it also is an option,
+它里面的text 可能没有被赋值，所以这也是个optional
 
 1286
 01:04:40,277 --> 01:04:45,647
 just like currentTitle. So I need to unwrap that as well.
+就像currentTitle 一样，我需要同样需要unwarp
 
 1287
 01:04:46,316 --> 01:04:48,950
 Okay? And so now I have a string,
+所以我现在有个string
 
 1288
 01:04:48,952 --> 01:04:51,052
 which is the string that's in there. Now you're probably
+就是这里这个
 
 1289
 01:04:51,054 --> 01:04:52,654
 getting tired of these exclamation points and so
+现在你可能对这个感叹号感到有点疲惫，我也是
 
 1290
 01:04:52,656 --> 01:04:54,422
 am I, and we're gonna be able to get rid of them.
+我们将要去掉它
 
 1291
 01:04:54,424 --> 01:04:56,358
 Some in a second here, so not to worry.
+一会就去掉，不用担心
 
 1292
 01:04:56,360 --> 01:04:58,693
 Anyway, I have this text currently in display.
+不管怎样，我现在在display 里拿到了这个文字
 
 1293
 01:04:58,695 --> 01:05:02,697
 So now I'm just gonna say that the displays, okay, and
+所以现在，display
 
 1294
 01:05:02,699 --> 01:05:07,002
 I'm unwrapping it, text = textCurrentlyInDisplay. I'm
+unwarp它 text ＝ textCurrentlyInDisplay
 
 1295
 01:05:07,004 --> 01:05:11,706
 just hitting tab here, okay, + the digit that was pressed.
+我在这慵懒tab 键，＋ digit
 
 1296
 01:05:11,708 --> 01:05:14,809
 Okay, notice that you can use + to concatenate strings.
+注意你用加号来串联字符
 
 1297
 01:05:14,811 --> 01:05:17,913
 That's really fun. Okay, some language allow that, some not.
+这很有趣，有的语言允许这么做，有的不允许
 
 1298
 01:05:17,915 --> 01:05:21,816
 So it does. Notice also that when I'm setting the value of
+Swift 可以。同时注意我在给optional 赋值的时候
 
 1299
 01:05:21,818 --> 01:05:25,120
 an optional, remember text here is an optional string.
+记住这里的text 是个optional string
 
 1300
 01:05:25,122 --> 01:05:28,123
 I can set it to be a string, and that means,
+我可以把它赋值为string，这意味着
 
 1301
 01:05:28,125 --> 01:05:32,294
 by definition, set this optional to set and
+根据定义，是赋值给optional 来设定
 
 1302
 01:05:32,296 --> 01:05:37,332
 use this as its associated value. Right? Now,
+把它赋为这个的关联变量
 
 1303
 01:05:37,334 --> 01:05:41,736
 how do you think I would set this optional to not be set?
+那么你认为我怎么才能给这个optional 赋一个不赋值的状态？
 
 1304
 01:05:41,738 --> 01:05:45,206
 Anyone know? You would say,
+有人知道吗？
 
 1305
 01:05:45,208 --> 01:05:49,878
 set this thing to be nil. This keyword means opp,
+把它赋值为nill，这个关键字
 
 1306
 01:05:49,880 --> 01:05:52,781
 optional not set. So that would set this text.
+表示optional 没有被赋值。所以会赋这个值
 
 1307
 01:05:52,783 --> 01:05:56,051
 It would blank out this text. It would set it to be not set.
+这个栏里为空，这会把它赋为没有被赋值
 
 1308
 01:05:56,053 --> 01:05:58,119
 Okay, so an optional you can, when you're setting it,
+所以一个optional，在你给它赋值的时候
 
 1309
 01:05:58,121 --> 01:06:02,190
 you can set it to either nil or to an associated value.
+你可以把它赋为nil 或者是 关联值
 
 1310
 01:06:03,060 --> 01:06:06,261
 Okay? Sound good? So let's run.
+听起来不错？让我继续
 
 1311
 01:06:11,435 --> 01:06:13,401
 All right, so hopefully when we press these buttons,
+所以，理想情况下当我们按下按钮
 
 1312
 01:06:13,403 --> 01:06:15,971
 it's going to append it on to the end, here. So let's try
+数字就会被加到末尾
 
 1313
 01:06:15,973 --> 01:06:20,976
 five, it did it. Eight, nine, although I'm not really a fan
+5，它做到了，8，9，但是我不喜欢
 
 1314
 01:06:20,978 --> 01:06:25,313
 of a zero at the beginning there. Okay, that zero is not
+前面有个0.所以
 
 1315
 01:06:25,315 --> 01:06:27,849
 really how a calculator would work. Okay, when I press that
+这不是一个计算器应该有的样子。当我按五的时候
 
 1316
 01:06:27,851 --> 01:06:30,452
 five, I'm essentially typing a new number. It would get rid
+实际上我是按了一个新数字。
 
 1317
 01:06:30,454 --> 01:06:33,021
 of the zero. So, we really need a way to keep track of
+它应该取代0。所以需要一个方法
 
 1318
 01:06:33,023 --> 01:06:35,757
 whether we're in the middle of typing a number or not. Cuz if
+来追踪我们是不是在输入中
 
 1319
 01:06:35,759 --> 01:06:37,425
 we're in the middle of typing a number,
+因为如果我们在输入中
 
 1320
 01:06:37,427 --> 01:06:37,926
 we do the apend thing, but
+那就得把数字加到尾部
 
 1321
 01:06:37,928 --> 01:06:39,260
 if we're not in the middle of typing a number,
+如果不是
 
 1322
 01:06:39,262 --> 01:06:42,163
 then we just replace whatever is in that display, right? So,
+那就把之前的数字替换掉，对吗？
 
 1323
 01:06:42,165 --> 01:06:46,368
 I'm going to add a new var, okay, a new instance variable,
+我要加一个变量，实例变量
 
 1324
 01:06:46,370 --> 01:06:47,769
 a new property, called,
+一个新的属性
 
 1325
 01:06:47,771 --> 01:06:51,706
 userIsInTheMiddleOfTyping. >> [LAUGH]
+叫做userIsInTheMiddleOfTyping（笑
 
 1326
 01:06:51,708 --> 01:06:52,474
 >> Okay, now you laugh,
+我知道你们为什么笑
 
 1327
 01:06:52,476 --> 01:06:54,609
 you laugh because that seems like a lot of typing, but
+你们笑是因为这个变量名字太长了
 
 1328
 01:06:54,611 --> 01:06:57,479
 I will never have to type that again. Okay?
+但我不会再做第二遍
 
 1329
 01:06:57,481 --> 01:06:59,948
 Because Xcode is always gonna escape complete things for
+因为Xcode 总会帮我自动补全
 
 1330
 01:06:59,950 --> 01:07:02,751
 me. So, long names like that are actually good.
+所以长变量名挺好的
 
 1331
 01:07:02,753 --> 01:07:05,286
 Okay, you wanna pick the shortest name that, you know,
+你可以选一个短一点的名字
 
 1332
 01:07:05,288 --> 01:07:08,123
 it conveys what you want but you want your names,
+这名字要能体现出你想要什么
 
 1333
 01:07:08,125 --> 01:07:10,258
 as you know in computer science naming is everything,
+计算机科学里命名就是一切，你懂的
 
 1334
 01:07:10,260 --> 01:07:14,429
 you want your names to be very, very, very good for
+你希望你的命名对读你代码的人
 
 1335
 01:07:14,431 --> 01:07:17,432
 the reader to understand what's going on, okay? Now,
+非常非常非常的好理解
 
 1336
 01:07:17,434 --> 01:07:20,702
 this userIsInTheMiddleOfTyping is a Bool, okay?
+userIsInTheMiddleOfTyping 是个Bool
 
 1337
 01:07:20,704 --> 01:07:21,603
 So, I'm giving you it's type,
+我给它一个Bool 类型
 
 1338
 01:07:21,605 --> 01:07:23,905
 Bool. It's not an optional Bool. It's just a Bool. So
+这不是个optional Bool，就是个Bool
 
 1339
 01:07:23,907 --> 01:07:27,442
 no question mark here. Okay, it's either true or false.
+所以这里没有问候，这里无论true 还是false
 
 1340
 01:07:27,444 --> 01:07:28,777
 I'm either in the middle of typing or I'm not.
+我不是在输入中或没输入
 
 1341
 01:07:28,779 --> 01:07:32,313
 Now as soon as I put that in there I got an error.
+一旦我把这些放在这，就报错了
 
 1342
 01:07:32,315 --> 01:07:34,282
 See that error up there? What? That's not fair.
+看到上面那个报错符合了吗？这不科学啊
 
 1343
 01:07:34,284 --> 01:07:38,753
 I didn't do anything up there. What is that? Let's click it.
+我在上面什么都没做啊，那是什么？点一下看看
 
 1344
 01:07:38,755 --> 01:07:41,456
 Class ViewController has no initializers.
+Class ViewController has no initializers
 
 1345
 01:07:41,458 --> 01:07:43,725
 Okay, now you're doing your homework and you're like,
+这里如果你们正在做作业
 
 1346
 01:07:43,727 --> 01:07:46,161
 what the, there's nothing to do, what I just did.
+你会发现，我们什么都没做
 
 1347
 01:07:46,163 --> 01:07:48,496
 I just typed in var here, what does that mean? Okay,
+我只是刚才声明了一个变量，这是什么意思？
 
 1348
 01:07:48,498 --> 01:07:51,366
 well the reason you're getting that error is cuz in Swift,
+你在这报错的原因是
 
 1349
 01:07:51,368 --> 01:07:55,336
 all properties, every single one, have to have an initial
+在Swift 里，所以的属性，每一个，都必须有一个初始化的值
 
 1350
 01:07:55,338 --> 01:07:59,340
 value. There's no, you are not allowed to have
+如果你不这么做
 
 1351
 01:07:59,342 --> 01:08:02,710
 any properties that don't have an initial value. Okay?
+就不能有一个未初始化的变量
 
 1352
 01:08:02,712 --> 01:08:04,612
 So how do we give this thing an initial value?
+所以我们怎么给它一个初始值？
 
 1353
 01:08:04,614 --> 01:08:07,715
 Well, there's two ways. One, we create an initializer.
+有两种方式，一种，对它进行初始化
 
 1354
 01:08:07,717 --> 01:08:08,683
 That's why you're getting this warning.
+这就是为什么会报错
 
 1355
 01:08:08,685 --> 01:08:11,486
 Now I'm not gonna talk about initializers til next week. So
+但下周前我不会讲怎么初始化
 
 1356
 01:08:11,488 --> 01:08:13,822
 we can't do that because I'm not gonna talk about it yet,
+所以我们不能做，因为我还没讲
 
 1357
 01:08:13,824 --> 01:08:16,324
 okay? What's the other way that we can do it?
+所以另一种是什么方式呢？
 
 1358
 01:08:16,326 --> 01:08:21,729
 We can just say = false. Okay, so we just initialize that,
+我们直接给它赋一个false 值，我们这就对它初始化了
 
 1359
 01:08:21,731 --> 01:08:24,933
 and the write error goes away. Woo hoo, were winning, and
+那个报错就消失了～
 
 1360
 01:08:24,935 --> 01:08:26,067
 I know some of you are saying, yeah,
+我知道你们可能会说
 
 1361
 01:08:26,069 --> 01:08:30,839
 what about this one? Okay, you didn't initialize that. Okay,
+那么这个呢？你没对它初始化啊
 
 1362
 01:08:30,841 --> 01:08:33,741
 that's because optionals are treated specially.
+因为optional 是很特殊的
 
 1363
 01:08:33,743 --> 01:08:39,047
 They are always automatically initialized to not set.
+他们会自动被初始化为空
 
 1364
 01:08:39,049 --> 01:08:42,550
 Okay? So this is basically always happening
+这就是你申明一个optional 的时候会发生的
 
 1365
 01:08:42,552 --> 01:08:44,686
 when you have an optional, or var that's an optional.
+或者是一个var 的optional
 
 1366
 01:08:44,688 --> 01:08:46,287
 Which makes sense, right? You have an optional.
+能理解吗？你有一个optional
 
 1367
 01:08:46,289 --> 01:08:47,589
 It's not set until you set it to something.
+它没有被赋值，直到你给它赋一个值
 
 1368
 01:08:47,591 --> 01:08:51,960
 So it starts out not set. Okay, so that's why it is set.
+所以它会以没有赋值开始。这就是为什么它被赋值了
 
 1369
 01:08:51,962 --> 01:08:55,630
 It's set to not set. Okay? All right, so
+它被赋值为没有赋值
 
 1370
 01:08:55,632 --> 01:08:57,665
 we have this thing now, we have this. Let's go ahead and
+所以我们现在有了这个，继续
 
 1371
 01:08:57,667 --> 01:09:00,635
 use this thing we created. Actually, I'm going to do one
+所有现在用我们刚刚创建的这个
 
 1372
 01:09:00,637 --> 01:09:05,940
 more thing here. You see this : Bool? Do we need that? No.
+我还要在这多做一件事。: Bool 我们真的需要这个吗？不
 
 1373
 01:09:05,942 --> 01:09:09,611
 Okay, why don't we need that? Because false can only be
+为什么我们不需要这个呢？
 
 1374
 01:09:09,613 --> 01:09:15,750
 a Bool, so Swift can infer that the type of this is Bool.
+因为false 只能是个Bool 型。所以Swift 可以推倒它就是个Bool 型
 
 1375
 01:09:15,886 --> 01:09:19,821
 See that? Okay? All right. So, we have this
+看到了吗？所以我们现在有了userIsInTheMiddleOfTyping
 
 1376
 01:09:19,823 --> 01:09:23,057
 userIsInTheMiddleOfTyping. We only wanna do this business
+我们只想它处理
 
 1377
 01:09:23,059 --> 01:09:25,493
 right here if the user is in the middle of typing.
+用户是不是正在输入中的问题
 
 1378
 01:09:25,495 --> 01:09:26,995
 So now we're gonna see in if statement.
+所以我接下来输入
 
 1379
 01:09:26,997 --> 01:09:28,263
 If the user is in the middle of typing,
+If userIsInTheMiddleOfTyping
 
 1380
 01:09:28,265 --> 01:09:31,232
 now again, I'm just hitting Tab here. Look Mom, no hands,
+我按下Tab，这一串就输入好了。
 
 1381
 01:09:31,234 --> 01:09:34,302
 or one hand. If the user is in the middle of typing,
+If userIsInTheMiddleOfTyping
 
 1382
 01:09:34,304 --> 01:09:36,938
 then we're gonna do this thing. Okay.
+然后我们做这些
 
 1383
 01:09:36,940 --> 01:09:40,742
 If the user's not in the middle of typing,
+如果用户不是在输入中
 
 1384
 01:09:40,744 --> 01:09:43,378
 then we're gonna set the displays text
+那么就让display 的数字
 
 1385
 01:09:43,380 --> 01:09:46,481
 equal to the digit we just typed. Okay, the five, or
+等于digit 的数字，5，或者别的什么
 
 1386
 01:09:46,483 --> 01:09:49,417
 whatever, we're gonna replace what's in the display. And,
+我们会替换display 里的数字
 
 1387
 01:09:49,419 --> 01:09:52,921
 of course, in either case, the user is definitely, no long,
+当然，另一种情况，用户
 
 1388
 01:09:52,923 --> 01:09:56,024
 is definitely, now, in the middle of typing. Okay,
+一定是在输入中
 
 1389
 01:09:56,026 --> 01:09:59,561
 cuz you just touched a digit, we're clearly in the middle of
+因为你刚刚按了输入按钮，我们显然是在输入中
 
 1390
 01:09:59,563 --> 01:10:03,097
 typing. Now I'm getting pretty tired of typing display
+我现在真的对没错都
 
 1391
 01:10:03,099 --> 01:10:05,466
 exclamation point all the time, okay?
+输入display! 感到疲惫
 
 1392
 01:10:05,468 --> 01:10:08,303
 All the time typing display exclamation point, when in
+每次都输入display! ，实际上
 
 1393
 01:10:08,305 --> 01:10:12,307
 fact, I know that that display is pretty much always set.
+我知道display 一定是被赋值的状态
 
 1394
 01:10:12,309 --> 01:10:14,776
 Okay, the only time that this is not set is for
+它唯一没被赋值的时间就是
 
 1395
 01:10:14,778 --> 01:10:18,546
 a nanosecond when this starts to come on screen,
+当他一出现在屏幕上的时候
 
 1396
 01:10:18,548 --> 01:10:22,650
 before iOS has a chance to wire it up to this UILabel.
+在iOS 系统把他变成UILabel 类型之前
 
 1397
 01:10:22,652 --> 01:10:25,119
 But once it's wired up, it's set forever. And
+一旦他被连接上，那就永远被赋值了
 
 1398
 01:10:25,121 --> 01:10:27,589
 certainly by the time users are touching on digits,
+而且很确定的是，当用户点在数字上时
 
 1399
 01:10:27,591 --> 01:10:31,226
 the UIs completely on screen, and wired up, and so I know
+UI 已经在屏幕上创建好、链接好了，
 
 1400
 01:10:31,228 --> 01:10:36,097
 that's never going to be nil. Never, okay, in this code. So
+所以我知道它用不会为空
 
 1401
 01:10:36,099 --> 01:10:38,199
 why am I forced to type display, exclamation point,
+所以我为什么非要
 
 1402
 01:10:38,201 --> 01:10:39,801
 display, exclamation point, over and over, okay?
+重复输入display! 呢？
 
 1403
 01:10:39,803 --> 01:10:42,670
 And the answer is you don't have to because we're
+答案是你不需要，
 
 1404
 01:10:42,672 --> 01:10:46,007
 gonna go back and change this question mark to be
+我们只要把一开始这个问号
 
 1405
 01:10:46,009 --> 01:10:48,910
 exclamation point. Basically if you put the exclamation
+改成感叹号。总的来说，
 
 1406
 01:10:48,912 --> 01:10:53,481
 point where you declare it, it says that anyone can use
+在你定义的时候放个感叹号，就表示所有对象都可以用这个
 
 1407
 01:10:53,483 --> 01:10:57,252
 this thing, and it will implicitly unwrap it, okay?
+就完全的unwarp 了这个对象
 
 1408
 01:10:57,254 --> 01:10:57,986
 It will automatically unwrap it.
+这就会自动unwarp
 
 1409
 01:10:57,988 --> 01:10:59,988
 Now its still unwrapping it, so if that was nil,
+现在它还是会unwarp，如果他是nil
 
 1410
 01:10:59,990 --> 01:11:04,292
 it will still crash, okay? But it allows me to get rid of all
+它还是会让你的应用崩溃。但是它允许我
 
 1411
 01:11:04,294 --> 01:11:08,529
 of these exclamation points. Okay? Because it's implicit
+去掉这里所有的感叹号
 
 1412
 01:11:08,531 --> 01:11:10,365
 that there's an exclamation point on all of them,
+因为这里的感叹号完全的unwarp 了所有的对象
 
 1413
 01:11:10,367 --> 01:11:12,200
 because instead of putting a question mark here,
+因为我在这放了个感叹号
 
 1414
 01:11:12,202 --> 01:11:13,468
 I put the exclamation point up there.
+而不是问号
 
 1415
 01:11:13,470 --> 01:11:15,837
 Everyone got that? >> [INAUDIBLE].
+都懂了吗
 
 1416
 01:11:15,839 --> 01:11:16,471
 >> It would crash down here,
+可能会在下面这里崩溃
 
 1417
 01:11:16,473 --> 01:11:18,906
 in this code down here. As soon as you access this,
+这一块代码，一旦你跑到这
 
 1418
 01:11:18,908 --> 01:11:21,709
 if that were nil, boom, it would be unwrapping it,
+如果是个nil，就会unwarp
 
 1419
 01:11:21,711 --> 01:11:24,445
 cuz it's implicitly unwrapped >> And again,
+因为它被完全unwarp 了
 
 1420
 01:11:24,447 --> 01:11:25,980
 if I change this back to a question mark,
+如果我把它改回问号
 
 1421
 01:11:25,982 --> 01:11:28,416
 now I'm gonna get all kinds of warnings down here.
+现在就会出现好多警告、错误
 
 1422
 01:11:28,418 --> 01:11:30,485
 See errors, because I'm not unwrapping it, but
+因为我没有unwarp 它
 
 1423
 01:11:30,487 --> 01:11:31,719
 if I put the exclamation point,
+如果我在这放一个感叹号
 
 1424
 01:11:31,721 --> 01:11:33,821
 now I'm in implicitly unwrapping it everywhere.
+这样我就一次性的把他在所有地方unwarp 了
 
 1425
 01:11:33,823 --> 01:11:36,658
 Okay, that's called an implicitly unwrap optional.
+这样就可以叫它一个完全unwarp 的optional
 
 1426
 01:11:36,660 --> 01:11:39,694
 Very important,
+非常重要
 
 1427
 01:11:39,696 --> 01:11:43,765
 Okay, so now let's go see if that fixed everything?
+我们现在看看它是不是修复了所有问题
 
 1428
 01:11:47,404 --> 01:11:47,602
 >> All right, so
+所以
 
 1429
 01:11:47,604 --> 01:11:48,536
 now hopefully when we press five,
+当我们按下5
 
 1430
 01:11:48,538 --> 01:11:50,772
 it will get rid of the zero. Five. There it is, and
+就会去掉0显示5
 
 1431
 01:11:50,774 --> 01:11:53,808
 this is still working. Okay? So that's good. We're
+我们做的很好
 
 1432
 01:11:53,810 --> 01:11:56,778
 doing great. Our keyboard is basically fully functional at
+这下我们的键盘功能完全了
 
 1433
 01:11:56,780 --> 01:11:59,147
 this point. So now we want to add a,
+现在要加一个操作
 
 1434
 01:11:59,149 --> 01:12:02,216
 an operation. Now, because of our technical thing,
+因为技术上的原因
 
 1435
 01:12:02,218 --> 01:12:04,319
-we're running out of time, but I have 30 minutes left.
+we're running out of time, but I have 3 minutes left.
+我们快没时间了，但还有三分钟
 
 1436
 01:12:04,321 --> 01:12:07,021
 I'm gonna add the pi button. Okay, pi is a very
+我要加一个π 按钮
 
 1437
 01:12:07,023 --> 01:12:10,024
 simple operation. It's just gonna put pi in the display.
+π 是个很简单的操作。只是放个π 在display 上
 
 1438
 01:12:10,026 --> 01:12:13,461
 So let's do that. I'm gonna do that by taking the 7 button
+来做这个吧。我要选中7这个按钮
 
 1439
 01:12:13,463 --> 01:12:14,362
 and copying and pasting it.
+复制粘贴它
 
 1440
 01:12:14,364 --> 01:12:17,665
 That's a really bad idea, as you'll see in a moment. But,
+现在看来这很不好
 
 1441
 01:12:17,667 --> 01:12:20,768
 I'm just going to do that and call it pi, okay? Now,
+但我就这么做了，叫它π 
 
 1442
 01:12:20,770 --> 01:12:24,706
 of course, pi is not a digit button, it's an operation, so
+当然，π 不是个数字，是一个操作
 
 1443
 01:12:24,708 --> 01:12:30,044
 I'm going to Ctrl drag down here to create another action,
+我要ctrl 拖动另外一个操作
 
 1444
 01:12:30,046 --> 01:12:30,878
 a different action.
+一个不同的操作
 
 1445
 01:12:30,880 --> 01:12:34,082
 This action is performOperation because pi
+这是个performOperation 因为π 是个操作
 
 1446
 01:12:34,084 --> 01:12:36,517
 is an operation. I'm gonna have all my operation buttons
+我会把所有操作的按钮叫做performOperation
 
 1447
 01:12:36,519 --> 01:12:39,721
 called performOperation. And of course I'm not gonna forget
+当然我不会忘了
 
 1448
 01:12:39,723 --> 01:12:41,289
 to change that to UI button, okay,
+把它换成UIButton
 
 1449
 01:12:41,291 --> 01:12:43,491
 either are you on your homework, right? Okay?
+你们做作业的时候也别忘了
 
 1450
 01:12:43,493 --> 01:12:47,095
 And here it is, so there's perform operation right there,
+所以performOperation 就在这了
 
 1451
 01:12:47,097 --> 01:12:50,064
 okay. And perform operation, I'm gonna do the exact same
+对performOperation 我要做跟
 
 1452
 01:12:50,066 --> 01:12:52,734
 thing that I did at the beginning of touch digit,
+之前按digit 一样的事情
 
 1453
 01:12:52,736 --> 01:12:55,002
 which is I'm gonna ask the sender which
+要问sender 
 
 1454
 01:12:55,004 --> 01:13:00,208
 operation are you? So I'm gonna let mathematicalSymbol =
+你是哪个操作
 
 1455
 01:13:00,210 --> 01:13:05,580
 the sender.currentTitle. Now of course
+let mathematicalSymbol = sender.currentTitle
 
 1456
 01:13:05,582 --> 01:13:09,083
 I want the string so I could do the exclamation point,
+我需要字符，我可以用感叹号
 
 1457
 01:13:09,085 --> 01:13:13,321
 okay? But if this were blank, what if I just wanted to
+如果这是空的，如果我只想忽略
 
 1458
 01:13:13,323 --> 01:13:17,658
 ignore that operation press? Okay, instead of crashing.
+这个按下的动作呢？而不是让它崩溃
 
 1459
 01:13:17,660 --> 01:13:20,027
 Okay, what if it was legal to have that
+如果让它为空是合法的
 
 1460
 01:13:20,029 --> 01:13:24,165
 be blank. Okay? I basically want to unwrap
+我只想它被赋值的时候unwarp
 
 1461
 01:13:24,167 --> 01:13:29,036
 only if this is set. So the way you do that is
+你做这个的方式
 
 1462
 01:13:29,038 --> 01:13:32,240
 you don't put the exclamation point there. Instead,
+就是不要在这放个感叹号
 
 1463
 01:13:32,242 --> 01:13:37,412
 you put if at the beginning. And what's nice about this is
+如果你在前面放个if 
 
 1464
 01:13:37,414 --> 01:13:42,116
 very little typing but also look how it reads, okay? If I
+这很好，也看看这是怎么写的。
 
 1465
 01:13:42,118 --> 01:13:47,422
 can let mathematicalSymbol = sender .currentTitle, then I'm
+if let mathematicalSymbol = sender.currentTitle
 
 1466
 01:13:47,424 --> 01:13:50,458
 gonna do something. Okay, so it reads just like English,
+然后再做一些什么。读起来像是英文
 
 1467
 01:13:50,460 --> 01:13:54,462
 it's a really nice way to unwrap. So inside this if,
+这个unwarp 的很好的方式
 
 1468
 01:13:54,464 --> 01:13:57,064
 this will be a string. It'll be the associated
+在这个if 里，这会是个string
 
 1469
 01:13:57,066 --> 01:14:00,701
 value of currenttype, Title. Outside of this if,
+这回事currentTitle 的关联值
 
 1470
 01:14:00,703 --> 01:14:01,302
 it's not even defined.
+if 之外，它甚至没有被定义
 
 1471
 01:14:01,304 --> 01:14:04,071
 mathematicalSymbol won't even be defined. Okay? Super
+mathematicalSymbol 甚至没被定义
 
 1472
 01:14:04,073 --> 01:14:10,011
 simple. So here I can just say if mathematicalSymbol = pi,
+超简单，所以我们只要let mathematicalSymbol == π
 
 1473
 01:14:10,013 --> 01:14:14,782
 by the way Alt + P to make pi, okay, then I can set my
+按alt ＋ P 就是π ，然后设置display
 
 1474
 01:14:14,784 --> 01:14:18,619
 displays. I don't even need the exclamation point anymore.
+我甚至不再需要感叹号
 
 1475
 01:14:18,621 --> 01:14:22,924
 Text = pi, which _pi is pi if we
+Text = π，M_PI
 
 1476
 01:14:22,926 --> 01:14:27,762
-Alt click on this. This is a symbol. See? M under our PI.
+Alt click on this. This is a symbol. See? M under bar PI.
+按alt 点它。这是个符号。M_PI
 
 1477
 01:14:27,764 --> 01:14:30,865
-It's a double. It's a double position value of PI. Now,
+It's a double. It's a double vision value of PI. Now,
+是个double。这是个double 版的π 值
 
 1478
 01:14:30,867 --> 01:14:33,301
 we have an error here. Why do we have an error?
+这里报错了，为什么呢？
 
 1479
 01:14:33,303 --> 01:14:36,504
 Because it says it cannot assign a type double to
+因为不能把一个double 赋值给
 
 1480
 01:14:36,506 --> 01:14:39,073
 something that is a string question mark, right?
+一个string？
 
 1481
 01:14:39,075 --> 01:14:42,577
 We know the display.text right here is a string question mark
+我们知道这是个display.text 是个string？
 
 1482
 01:14:42,579 --> 01:14:45,780
 so we can't do that. So, how do we convert this double to
+我们不能这么做，所以我们怎么把这个double
 
 1483
 01:14:45,782 --> 01:14:49,317
 a string? And the answer is we have to create a new string.
+转换成一个string？答案是新建一个string
 
 1484
 01:14:49,319 --> 01:14:51,886
 Okay, and now you're gonna see how to create new
+这样你会看到我们如何
 
 1485
 01:14:51,888 --> 01:14:56,290
 instances of objects in Swift, and the answer is you just put
+在Swift 里新建一个实例。答案是
 
 1486
 01:14:56,292 --> 01:14:59,694
 the name of the class and then parentheses and then inside
+打出这个类型名，然后把
 
 1487
 01:14:59,696 --> 01:15:02,263
 the parentheses you can put anything that the class
+任何允许你转换的值
 
 1488
 01:15:02,265 --> 01:15:06,501
 will allow you to create one of itself with. Okay, and
+放在括号里
 
 1489
 01:15:06,503 --> 01:15:07,702
 you can have multiple of these.
+你可以多次创建
 
 1490
 01:15:07,704 --> 01:15:10,538
 These are the initializers referred to earlier. And
+这是个早前的初始化方式
 
 1491
 01:15:10,540 --> 01:15:14,141
 string happens to be able to take a double as one of
+string 可以把一个double
 
 1492
 01:15:14,143 --> 01:15:16,444
 the things that it knows how to create a new string. So
+创建成一个新的string
 
 1493
 01:15:16,446 --> 01:15:19,947
 this creates a new string, okay, from a double. So
+所以它从一个double 创建一个新的string
 
 1494
 01:15:19,949 --> 01:15:22,683
 the string class knows how to look at a double, turn it into
+string 类知道如何把一个double
 
 1495
 01:15:22,685 --> 01:15:27,455
 a bunch of characters that are a double, okay? So
+转换成一个字符串
 
 1496
 01:15:27,457 --> 01:15:34,161
 we'll run this. Okay,
+所以再跑一下
 
 1497
 01:15:34,163 --> 01:15:37,732
 so here we go, this is still working and if we press Pi,
+这还是好用的，当我们按下π 
 
 1498
 01:15:37,734 --> 01:15:40,568
 we get Pi [SOUND], we got a problem, okay?
+我们得到π 值，但有个问题
 
 1499
 01:15:40,570 --> 01:15:41,836
 It's not fitting the whole Pi,
+没有显示全π 
 
 1500
 01:15:41,838 --> 01:15:43,971
 all the digits. We can fix that really easily.
+我们可以很简单的修复一下
 
 1501
 01:15:43,973 --> 01:15:47,475
 I'm gonna go back to here. And if we look at the inspector,
+我们回到这里，看一下inspector
 
 1502
 01:15:47,477 --> 01:15:51,245
 there's a nice feature in label called autoshrink.
+有个非常好的UILabel 特性叫autoshrink
 
 1503
 01:15:51,247 --> 01:15:53,881
 And I'm gonna make it so it autoshrinks but
+我会让这个autoshrink
 
 1504
 01:15:53,883 --> 01:15:59,320
 no smaller than 9 point, okay. That's gonna fix that one.
+不小于9 点。这就回修复
 
 1505
 01:15:59,322 --> 01:16:02,757
 We have one more problem. Okay, so we have,
+我们还有个问题
 
 1506
 01:16:02,759 --> 01:16:05,960
 this is working, pi, what's that?
+这个π 又是啥
 
 1507
 01:16:05,962 --> 01:16:09,196
 We got a little pi on the end there and also look at this,
+我们在最后有一个π，还有，看这个
 
 1508
 01:16:09,198 --> 01:16:12,600
 that, what a mess. So we got two problems there. For
+这很不好。我们现在这里有两个问题了
 
 1509
 01:16:12,602 --> 01:16:15,436
 some reason when we press pi, it puts pi on the end.
+因为一些原因，当我们按π，最后有个π 在末尾
 
 1510
 01:16:15,438 --> 01:16:19,173
 Well,why is that? Okay. That's because, let's look at
+为什么呢？因为看这个
 
 1511
 01:16:19,175 --> 01:16:22,276
 this little thing. Okay. Pi is sending that, right?
+π 会发送这个
 
 1512
 01:16:22,278 --> 01:16:26,480
 How about this one? Pi is sending that too.
+这个呢？π 也会发送这个
 
 1513
 01:16:26,482 --> 01:16:31,252
 You see, it's sending touch digit and perform operation.
+它同时响应两个方法
 
 1514
 01:16:31,254 --> 01:16:33,754
 That's because I copied and pasted the 7
+因为我复制黏贴了7
 
 1515
 01:16:33,756 --> 01:16:37,358
 which sent touch digit and then I added this one. Okay,
+所以也发送上面的这个方法
 
 1516
 01:16:37,360 --> 01:16:40,061
 now how do we fix that? You fix that by right-clicking on
+那我怎么修复呢？
 
 1517
 01:16:40,063 --> 01:16:42,663
 the button. If you right-click on anything in your UI, you'll
+可以右击这个按钮
 
 1518
 01:16:42,665 --> 01:16:45,266
 see all of the connections that it has. Very important to
+可以看到所有按钮关联的东西
 
 1519
 01:16:45,268 --> 01:16:47,668
 understand right-click, okay. So you right-click and
+理解右击很重要
 
 1520
 01:16:47,670 --> 01:16:49,203
 you can see it only has two connections here.
+右击，你可以在这看到两个链接
 
 1521
 01:16:49,205 --> 01:16:52,239
 It's connected to touch digit and to perform operation, so
+这链接了两个方法
 
 1522
 01:16:52,241 --> 01:16:55,509
 I'm just gonna get rid of the touch digit by clicking this,
+我只是需要去掉touchDigit
 
 1523
 01:16:55,511 --> 01:16:57,178
 gone. Now it only does perform digit,
+这样就只想响应下面这个方法了
 
 1524
 01:16:57,180 --> 01:17:00,715
 or perform operation, okay. So we fixed that problem where
+所以我们修复了
 
 1525
 01:17:00,717 --> 01:17:02,149
 we're just putting pi on the end, all right.
+这个末尾有π 的问题
 
 1526
 01:17:02,151 --> 01:17:05,453
 And the other problem was that when we have the pi and
+另一个问题是，当我们有π 的时候
 
 1527
 01:17:05,455 --> 01:17:05,987
 I started typing numbers,
+再按数字
 
 1528
 01:17:05,989 --> 01:17:07,922
 it thought I was in the middle of typing a number and
+会认为你在输入中
 
 1529
 01:17:07,924 --> 01:17:11,025
 it was adding them on. So that's simple, I'm just gonna
+会在末尾加数字，这很简单
 
 1530
 01:17:11,027 --> 01:17:14,228
 say userIsInTheMiddleofTyping number = false.
+userIsInTheMiddleofTyping = false
 
 1531
 01:17:14,230 --> 01:17:16,364
 Okay, whenever we perform an operation,
+无论我什么时候操作
 
 1532
 01:17:16,366 --> 01:17:19,767
 it's gonna wipe out what's in my display so I'm obviously
+就会去掉之前display 上的东西
 
 1533
 01:17:19,769 --> 01:17:22,703
 not in the middle of typing a number anymore and we have
+因为我很显然不是在输入中
 
 1534
 01:17:22,705 --> 01:17:28,242
 a fully functional calculator with one operation. 45 pi 89,
+现在我有了个全功能的计算器按钮
 
 1535
 01:17:28,244 --> 01:17:32,780
 okay? So on Wednesday, we'll pick up
+周三，我们会继续
 
 1536
 01:17:32,782 --> 01:17:35,516
 with some more, make a more powerful calculator. Sorry to
+做个更强的计算器
 
 1537
 01:17:35,518 --> 01:17:38,486
 run over a little bit because of technical difficulties,
+抱歉，因为技术难题拖课了一会
 
 1538
 01:17:38,488 --> 01:17:40,054
 see you then. >> For
+下回见
 
 1539
 01:17:40,056 --> 01:17:40,087
 more please visit us at stanford.edu.
-
+更多内容详见：stanford.edu
