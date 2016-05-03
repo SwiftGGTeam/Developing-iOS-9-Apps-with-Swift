@@ -2051,38 +2051,47 @@ it looks like to call them. So here I have a little example.
 411
 00:22:11,631 --> 00:22:14,899
 Here I have a var d which is a double, okay?
+我这里有有一个 double 的变量 b
 
 412
 00:22:14,901 --> 00:22:18,469
 And it's set to some value. So this d is an instance of
+然和我给它设置一些值，所以这个 d 是一个 double 的实例
 
 413
 00:22:18,471 --> 00:22:20,838
 a double. It is an actual double that has some value,
+这个 double 实际上有一些值
 
 414
 00:22:20,840 --> 00:22:24,742
 all right? And here I'm checking by sending a message,
+我通过发送一个消息来检查这一点
 
 415
 00:22:24,744 --> 00:22:28,245
 an instance method right here. Or probably a property
+它是一个对象的方法，也可能是一个属性
 
 416
 00:22:28,247 --> 00:22:32,383
 actually. Instance property on D, where I'm asking
+对象的 D 属性如果是负数的
 
 417
 00:22:32,385 --> 00:22:35,386
 if it's signed is the minus sign, I'm just making this up,
+我就把他变成正数
 
 418
 00:22:35,388 --> 00:22:37,822
 there's probably not even such a method on double.
+在 double 里面可能没有这样一个方法
 
 419
 00:22:37,824 --> 00:22:41,926
 But that would be an instance property or method and
+我会向 D 的属性或对象发送消息
 
 420
 00:22:41,928 --> 00:22:42,760
@@ -2091,322 +2100,403 @@ I would be sending it to D,
 421
 00:22:42,762 --> 00:22:46,263
 which is an instance. If it does have a minus sign,
+如果它没有负号
 
 422
 00:22:46,265 --> 00:22:49,700
 I'm going to use a type property. Or type function,
+我会使用一个类属性
 
 423
 00:22:49,702 --> 00:22:54,972
 rather, of double here, to change its probably absolute
+或者在 double 里的这个类方法里会把它变成绝对值
 
 424
 00:22:54,974 --> 00:22:57,808
 value, so it'd probably change its sign there. Okay.
+所以我可能在这里改变它的符号
 
 425
 00:22:57,810 --> 00:23:01,145
 Notice the syntax here, Double.abs, okay.
+好的。注意这里的语法 Double.abs
 
 426
 00:23:01,147 --> 00:23:03,647
 This is the name of the function abs, okay, and
+这个方法的名字叫 abs
 
 427
 00:23:03,649 --> 00:23:07,084
 I'm accessing it by saying Double. So in other words, I'm
+然后我通过向 Double 发消息来访问它
 
 428
 00:23:07,086 --> 00:23:11,322
 putting the name of the class. Not an instance of a class,
+换句话说，我把这个类名放在这里。不是一个类的对象
 
 429
 00:23:11,324 --> 00:23:13,858
 not a variable of that class, but the actual name of
+也不是一个类的变量，而是一个类的名字 
 
 430
 00:23:13,860 --> 00:23:18,462
 the class, dot abs. Okay, that's it's gonna be defined,
+.abs 好的。那个 abs 会被定义
 
 431
 00:23:18,464 --> 00:23:23,701
 that abs, will be defined like this. Static func abs.
+会用这种方法定义 Static func abs
 
 432
 00:23:23,703 --> 00:23:26,804
 This would be in the class double. And you put this word
+这会在 double 类的里面
 
 433
 00:23:26,806 --> 00:23:31,275
 static and that says that you don't send this to double
+在这里放关键字 static 意味着你不会把它发送给 double 对象
 
 434
 00:23:31,277 --> 00:23:35,045
 instances. You send it to the Double class by saying capital
+你会用大写的 D ，Double 点，发送给 Double 这个类
 
 435
 00:23:35,047 --> 00:23:39,683
 D Double dot. Okay? Why do we have these things? Okay these
+为什么我们会有这些东西？
 
 436
 00:23:39,685 --> 00:23:43,888
 are usually utility functions kind of global functions but
+我们经常会需要一些全局的功能函数
 
 437
 00:23:43,890 --> 00:23:46,824
 they're really strongly associated with the class. So
+但是他们和这些类有很强的关联的
 
 438
 00:23:46,826 --> 00:23:48,359
 we put them as class methods, okay?
+所以我们把他们放到类方法里面，好吗？
 
 439
 00:23:48,361 --> 00:23:52,096
 That's what they're for, mostly. Maybe you have a class
+这是它们存在的主要原因
 
 440
 00:23:52,098 --> 00:23:56,534
 method that creates Shared instances of a class, okay.
+或许你会有个类方法来创建一个类的共享对象
 
 441
 00:23:56,536 --> 00:23:59,637
 Something like that, we'll see a few of these.
+像这样，我们会看到这些
 
 442
 00:23:59,639 --> 00:24:00,538
 Once you start to see them in action,
+一旦你在实践中看见他们
 
 443
 00:24:00,540 --> 00:24:02,273
 you'll start to understand. But I just wanna make sure you
+你就会明白的。
 
 444
 00:24:02,275 --> 00:24:04,809
 understand that there is a difference between these two
+但是我想确保你们理解这两者之间是不同的
 
 445
 00:24:04,811 --> 00:24:07,478
 and this static that makes a difference on declaration,
+这个 static 在声明的时候是不同的
 
 446
 00:24:07,480 --> 00:24:10,381
 okay. That's also in the reading assignment, make sure
+好的。那些也在阅读作业里面
 
 447
 00:24:10,383 --> 00:24:13,184
 you read that carefully. In the homework assignment,
+确保你仔细的阅读过了
 
 448
 00:24:13,186 --> 00:24:17,121
 I even say be careful to read this carefully. All right,
+在作业里面我甚至也说了仔细阅读
+
 
 449
 00:24:17,123 --> 00:24:19,423
 properties, okay. Properties are really cool.
+好的。属性是很酷的
 
 450
 00:24:19,425 --> 00:24:21,892
 In Swift we're only just scratching the surface so
+在 Swift 里我们才刚刚揭开它的表面远不及它所能做的
 
 451
 00:24:21,894 --> 00:24:25,229
 far of what they can do. But one really cool thing about
+但是有一件关于它的很酷低是
 
 452
 00:24:25,231 --> 00:24:29,834
 them is that you can observe changes to a property, okay.
+你可以观察一个属性的改变
 
 453
 00:24:29,836 --> 00:24:33,437
 And you need to do that by, here's your var, okay. This is
+而且你需要这样做，这是你的变量。
 
 454
 00:24:33,439 --> 00:24:35,573
 a stored property, this is not a computed property,
+这是存储的属性，这不是一个计算的属性而是用来存储的
 
 455
 00:24:35,575 --> 00:24:39,310
 it's stored, okay. It stores in ints, its value is 42. But
+它存在 int 里，这个值是 42。
 
 456
 00:24:39,312 --> 00:24:41,979
 I'm putting the curly braces after it, not because I'm
+我把大括号放在它的后面，我要去得到和设置它
 
 457
 00:24:41,981 --> 00:24:45,015
 gonna do get and set, I'm not computing it. But
+我不去计算它
 
 458
 00:24:45,017 --> 00:24:50,154
 I'm gonna add willSet and/or didSet, okay. So willSet and
+但是我会使用 willSet 和 didSet。好的
 
 459
 00:24:50,156 --> 00:24:53,057
 didSet, this is just code in here that's gonna get called
+willSet 和 didSet，当调用 get 和 set 时就会调用者两个方法
 
 460
 00:24:53,059 --> 00:24:58,262
 whenever this thing gets set. Okay, before and after. Before
+好的，在这之前或在这之后。
 
 461
 00:24:58,264 --> 00:25:02,233
 it gets set, after it's been set, okay. And inside there
+这 get 之前和 set 之后，好的
 
 462
 00:25:02,235 --> 00:25:05,102
 newValue is going to be the value it's going to be set to
+在设置到 willset 的时候 newValue 就是要设置的值
 
 463
 00:25:05,104 --> 00:25:08,506
 in willSet. And oldValue is this value it used to have in
+当你执行 didSet， oldValue 就是已经存储着的值
 
 464
 00:25:08,508 --> 00:25:13,777
 did, when you're executing in didSet, okay. So, pretty cool.
+好的，非常酷
 
 465
 00:25:13,779 --> 00:25:17,281
 And you can do that for stored properties, you can do it for
+你可以这样来存储属性，你也可以对继承的属性这么做
 
 466
 00:25:17,283 --> 00:25:19,884
 inherited properties, properties you inherit even,
+你甚至可以继承属性
 
 467
 00:25:19,886 --> 00:25:23,554
 okay. And you can do it for computed properties as well,
+你也可以用它来计算属性
 
 468
 00:25:23,556 --> 00:25:27,725
 okay. Also here, this will be,
+好的
 
 469
 00:25:27,727 --> 00:25:31,428
 one thing to note about this is these willSets and didSets,
+ 这些 willSet 和 didSet 要注意的是
 
 470
 00:25:31,430 --> 00:25:35,666
 if you mutate a value type they will get called,
+如果你改变一个值的类型 get 会被调用
 
 471
 00:25:35,668 --> 00:25:39,603
 okay. So, operations here from our calculator brain,
+所以我们对计算器大脑的操作放在这里
 
 472
 00:25:39,605 --> 00:25:43,107
 dictionary string operation that is a value type,
+字典字符串操作是一个值类型
 
 473
 00:25:43,109 --> 00:25:45,743
 dictionary is a value type, right. So
+字典是一个值类型
 
 474
 00:25:45,745 --> 00:25:48,012
 if you add something to this dictionary,
+所以如果你往字典里加了什么
 
 475
 00:25:48,014 --> 00:25:51,582
 this will get called. willSet and didSet will get called,
+会调用 get。willSet 和 didSet 会被调用
 
 476
 00:25:51,584 --> 00:25:54,318
 okay. That's not true if it's a reference type, okay.
+如果它是一个引用类型的话这么做是无效的
 
 477
 00:25:54,320 --> 00:25:57,187
 If that if this property isn't a class and
+如果这属性不是类而且你修改了类的某个地方
 
 478
 00:25:57,189 --> 00:26:00,124
 you change the class somehow, it can't detect that, so
+它是不会检测到的
 
 479
 00:26:00,126 --> 00:26:02,393
 it doesn't do willSet and didSet, okay.
+所以它不会执行 willSet 和 didSet
 
 480
 00:26:02,395 --> 00:26:07,932
 You have to change the pointer itself. All right, okay.
+你必须改变指针本身
 
 481
 00:26:07,934 --> 00:26:11,101
 One very common thing to do in these willSets and didSets is
+通常 willSet 和 didiSet 的用途是更新 UI
 
 482
 00:26:11,103 --> 00:26:14,705
 update the UI. You got a method in your controller.
+你在你的控制器里得到一个方法
 
 483
 00:26:14,707 --> 00:26:16,440
 You set some value in controller that changes
+你改变了控制器某处的值就会在 UI 上显示出来
 
 484
 00:26:16,442 --> 00:26:19,176
 the way the UI would look. You ask your view to
+你要求你的 View 重绘
 
 485
 00:26:19,178 --> 00:26:21,378
 draw itself again, okay. Very, very common.
+好的。非常非常常见
 
 486
 00:26:21,380 --> 00:26:24,181
 We're gonna be doing that up the wazoo in the next lecture,
+我们会在下一节使用它们
 
 487
 00:26:24,183 --> 00:26:29,053
 okay. All right. Lazy initialization. So, this is
+好的。懒加载
 
 488
 00:26:29,055 --> 00:26:32,489
 a little bit of a cheat code of Swift right here.
+这是 swift 种有点欺骗性的代码
 
 489
 00:26:32,491 --> 00:26:37,595
 You can declare vars to be lazily instantiated.
+你可以声明一个懒加载的变量
 
 490
 00:26:37,597 --> 00:26:41,699
 Which means that, their value, this equals calculator brain,
+这意味它们等于计算器的大脑实际上不会执行
 
 491
 00:26:41,701 --> 00:26:45,436
 will not actually happen. That assignment will not happen
+知道有些地方需要调用它了才会执行分配
 
 492
 00:26:45,438 --> 00:26:47,705
 until someone asks for the brain, okay.
+好的
 
 493
 00:26:47,707 --> 00:26:50,641
 If someone tries to send a message to this brain or
+若果有什么动向想个这个大脑发一个信息
 
 494
 00:26:50,643 --> 00:26:51,976
 get a property to this brain,
+或者从这个大脑里拿到一个信息
 
 495
 00:26:51,978 --> 00:26:52,876
 then it's gonna get initialized.
+然后它就会被初始化
 
 496
 00:26:52,878 --> 00:26:55,379
 So in other words, it's lazily instantiated, okay.
+换句话说，这就是懒加载
 
 497
 00:26:55,381 --> 00:26:58,816
 And you can do it like that, okay. Just lazy var brain,
+而且你可以像这样做。就 lazy var brain
 
 498
 00:26:58,818 --> 00:27:02,152
 calculatorbrain. You can do down here, okay.
+你可以在这里做
 
 499
 00:27:02,154 --> 00:27:06,256
+Lazy var myProperty = self.initializedMyProperty.
 Lazy var myProperty = self.initializedMyProperty.
 
 500
 00:27:06,258 --> 00:27:10,227
 So, I'm calling a method on myself to initialize one of my
+所以我告诉我自己去初始化我的一个属性
 
 501
 00:27:10,229 --> 00:27:14,031
