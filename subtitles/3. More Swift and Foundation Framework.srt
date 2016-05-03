@@ -1674,50 +1674,62 @@ On the methods. So now we are gonna talk about the syntax
 335
 00:17:47,734 --> 00:17:51,369
 of methods. Okay, I showed you this in class a little bit but
+在这个类里我会展示一点
 
 336
 00:17:51,371 --> 00:17:54,372
 I'm gonna talk about the full semantics here of it.
+我还会介绍它在这里的完整的语义
 
 337
 00:17:54,374 --> 00:17:58,142
 So interesting about the naming of functions, so
+这些方法的命名挺有趣的
 
 338
 00:17:58,144 --> 00:18:00,878
 here is someone defining a method and here is someone
+这里定义了一个方法
 
 339
 00:18:00,880 --> 00:18:04,449
 calling this method. Okay? Okay, so watch this colored
+这里调用了这个方法。好的？好，在我讨论这几种东西的时候
 
 340
 00:18:04,451 --> 00:18:09,287
 stuff going on as I talk about these various things going on.
+注意这些高亮的部分
 
 341
 00:18:09,289 --> 00:18:13,658
 So all parameters to functions have an internal name and
+所有方法的参数都有一个内部的名字和一个外部的名字
 
 342
 00:18:13,660 --> 00:18:15,626
 an external name, every single parameter.
+是每一个参数都有
 
 343
 00:18:15,628 --> 00:18:18,596
 So here's the first parameter, here's the second parameter,
+那么这里是第一个参数，这里是第二个参数
 
 344
 00:18:18,598 --> 00:18:22,300
 they both have an external name and an internal name.
+它们都有一个外部的名字和一个内部的名字
 
 345
 00:18:22,302 --> 00:18:25,203
 Okay? The external name comes first. Internal name comes
+好的。先说外部名字，在说内部名字
 
 346
 00:18:25,205 --> 00:18:29,640
 second. The internal name is the name of the local
+内部名字是在你的方法里面的本地变量的命名
 
 347
 00:18:29,642 --> 00:18:33,778
@@ -1726,146 +1738,182 @@ variable that's gonna be used inside your method.
 348
 00:18:33,780 --> 00:18:35,546
 All right? So that's this one right here,
+所以这就是内部命名
 
 349
 00:18:35,548 --> 00:18:38,883
 internal name. Shows up right before the colon. Okay?
+就是出现在这冒号之前的东西
 
 350
 00:18:38,885 --> 00:18:40,751
 First and second. You can see how first and
+第一个和第二个
 
 351
 00:18:40,753 --> 00:18:44,722
 second are the names I used for those inside my function.
+你可以看到在我的方法里我是如何给第一个和第二个起名的
 
 352
 00:18:44,724 --> 00:18:47,091
 Don't appear anywhere here. Notice first and
+不要出现在别的地方。
 
 353
 00:18:47,093 --> 00:18:50,661
 second do not appear in the funk bar call. Okay,
+注意第一个和第二够不在方法块后面出现
 
 354
 00:18:50,663 --> 00:18:54,198
 cuz those are the internal names. The external name
+因为它们是内部的名字
 
 355
 00:18:54,200 --> 00:18:58,769
 is what the caller uses when they call this method. Okay,
+当这个方法被调用的时候这个方法会被使用
 
 356
 00:18:58,771 --> 00:19:03,207
 so you can see bar down there. It says externalFirst: 123,
+你可以看到这里有个下划线。这表示 外部第一个参数：123，
 
 357
 00:19:03,209 --> 00:19:08,179
 externalSecond: 5.5, right? Okay, it's using the external
+外部第二参数：5.5，好的
 
 358
 00:19:08,181 --> 00:19:10,114
 names first and second never appear but
+第一个和第二个名字并没有出现
 
 359
 00:19:10,116 --> 00:19:13,484
 first and second are still used in the implementation,
+但它们仍然能够被实现别使用
 
 360
 00:19:13,486 --> 00:19:16,854
 those in the internal names. Okay,
+可以在方法里用它们的内部名字
 
 361
 00:19:16,856 --> 00:19:20,024
 you can put an under bar if you don't want callers
+如果你不想让你的传递参数使用外部的名字
 
 362
 00:19:20,026 --> 00:19:24,562
 to use an external name at all for a given parameter. Okay,
+你可以使用 _ 来替代它们
 
 363
 00:19:24,564 --> 00:19:28,699
 so if you put underbar as the external name then there will
+所以你要是在外部名字的地方放了一个 _ 那这里有不会有外部参数
 
 364
 00:19:28,701 --> 00:19:33,337
 be no external parameters. So you see it says foo(123), not
+比如你调用 foo(123)
 
 365
 00:19:33,339 --> 00:19:38,176
 foo(externalFirst or anything, it's just nothing, 123. And
+不用调用 foo(外部第一个参数名或者其它什么东西，什么都不用，就写123
 
 366
 00:19:38,178 --> 00:19:43,147
 in fact, this is the default for the first parameter.
+实际上，第一个参数默认就是这么做的
 
 367
 00:19:43,149 --> 00:19:45,850
 The first parameter defaults to under bar, you don't need
+第一个参数默认就是 _ 
 
 368
 00:19:45,852 --> 00:19:48,519
 to put an under bar there when you're creating a function.
+当你创建一个方法的时候你不需要再在那里放 _ 
 
 369
 00:19:48,521 --> 00:19:51,856
 Just by default an under bar would be put there for you,
+那里默认就为你放了一个 _
 
 370
 00:19:51,858 --> 00:19:55,793
 okay? Now you could specify an external name for the first,
+现在你指定第一个外部参数的名字，这是合法的
 
 371
 00:19:55,795 --> 00:19:58,829
 it's legal. Okay, I'll show you that in a second. But
+我会展示第二个怎么做
 
 372
 00:19:58,831 --> 00:20:01,732
 by default under bar is the external name for the first
+默认的 _ 只有第一个外部命名才有
 
 373
 00:20:01,734 --> 00:20:05,903
 parameter only. All the other ones. Okay? The default is
+那么所有其它的是什么呢？
 
 374
 00:20:05,905 --> 00:20:09,507
 the internal name. So, if you don't have an external name,
+它们默认都是内部名字。所以如果你不想要一个外部名字
 
 375
 00:20:09,509 --> 00:20:15,680
 then it defaults to being the internal name. Got it?
+它们默认会是一个内部的名字。明白了吗？
 
 376
 00:20:15,682 --> 00:20:19,383
 Okay. Any parameter's external name can be changed, okay?
+好的。任何参数的外部名字都是可以修改的
 
 377
 00:20:19,385 --> 00:20:22,587
 You can change even the second one to be underbar, so
+你甚至可以把第二个改成 _
 
 378
 00:20:22,589 --> 00:20:26,324
 that the second one has no name, okay?
+这样第二个就没有名字了，对吗？
 
 379
 00:20:26,326 --> 00:20:29,694
 But don't do this, okay? It's very anti Swift
+当时不要这样做，好吗？
 
 380
 00:20:29,696 --> 00:20:33,898
 to either remove the second parameter name or
+把第二个参数移除或者添加到第一个参数，是很反 Swift 的
 
 381
 00:20:33,900 --> 00:20:37,501
 to add it back to the first. Adding to the first is
+添加到第一个可能不是很反 Swift
 
 382
 00:20:37,503 --> 00:20:40,404
 probably less anti Swift, there is probably some case
+可能在某些场景里会需要这么做
 
 383
 00:20:40,406 --> 00:20:43,207
 where that might actually make some sense. Removing them for
+但是后面要把它们删掉也是非常麻烦的
 
 384
 00:20:43,209 --> 00:20:45,743
@@ -1874,6 +1922,7 @@ subsequent ones is probably really bad. Okay,
 385
 00:20:45,745 --> 00:20:49,313
 I don't think I've ever had to do that in my entire life of
+在我用 Swift 写程序的时候，我不记得我曾经这么做过
 
 386
 00:20:49,315 --> 00:20:49,680
@@ -1882,98 +1931,122 @@ writing swift so.
 387
 00:20:49,682 --> 00:20:54,352
 All right now, methods are obviously overriddeable,
+现在，方法是可以被覆盖的
 
 388
 00:20:54,354 --> 00:20:58,289
 this is object orientated programming. Right and the way
+因为这是面向对象编程
 
 389
 00:20:58,291 --> 00:21:01,192
 you do it, you just put the word override in front of
+你只需要在 func 或者 var 前面加 override 关键字
 
 390
 00:21:01,194 --> 00:21:04,128
 the func or var. Both properties and functions can
+属性和方法都是可以被覆盖的
 
 391
 00:21:04,130 --> 00:21:06,964
 be overridden right, so you put override in there. It is
+所以你把 override 放在这里
 
 392
 00:21:06,966 --> 00:21:12,203
 possible to mark a method or a property final in which case
+它可以在子类的情况里用来标记方法和属性
 
 393
 00:21:12,205 --> 00:21:15,273
 no one can subclasses. Okay, there won't be a list,
+一个子类不能再类前放 override
 
 394
 00:21:15,275 --> 00:21:18,743
 a subclass can't say override that thing. The compiler won't
+编译器不允许这么做
 
 395
 00:21:18,745 --> 00:21:23,114
 let them. Okay, you can also mark an entire class final,
+你也可以在类的最后标记一个入口
 
 396
 00:21:23,116 --> 00:21:27,985
 and then the whole thing is not subclassable. All right?
+然后整个类就不能有子类了
 
 397
 00:21:27,987 --> 00:21:33,090
 Now, both types and instances can have methods and
+现在类和对象都可以有方法和属性
 
 398
 00:21:33,092 --> 00:21:36,060
 properties. What does that mean? So, so
+这意味着什么呢
 
 399
 00:21:36,062 --> 00:21:37,561
 far in all the demos we've done,
+现在我们已经完成了所有的演示
 
 400
 00:21:37,563 --> 00:21:39,997
 all you've seen is instance methods and
+你看到的都是对象方法和对象属性
 
 401
 00:21:39,999 --> 00:21:41,332
 instance properties. In other words,
+换言之
 
 402
 00:21:41,334 --> 00:21:44,535
 they are properties that you get from an instance of
+它们是你从一个对象中拿出来的属性
 
 403
 00:21:44,537 --> 00:21:47,104
 the thing. Okay, an instance of the calculator brain.
+好的，一个计算器大脑的对象
 
 404
 00:21:47,106 --> 00:21:52,076
 Someone actually created a calculator brain in the heap
+实际上你已经在堆里创建了一个计算器的大脑并且给它发送消息
 
 405
 00:21:52,078 --> 00:21:55,513
 and you send it messages, okay. Those are instances
+那些事对象消息
 
 406
 00:21:55,515 --> 00:21:59,917
 messages, Instances methods and instances properties. But
+对象方法和对象属性
 
 407
 00:21:59,919 --> 00:22:01,185
 it is possible to have methods and
+然而在它的类里它还能有自己的方法和属性
 
 408
 00:22:01,187 --> 00:22:04,422
 properties on the type itself, so calculator brain,
+所以在计算器大脑这个类里面它可以有方法，对吗
 
 409
 00:22:04,424 --> 00:22:08,259
 the type can have functions, okay? And here's what
+这里是调用他们时的样子
 
 410
 00:22:08,261 --> 00:22:11,629
 it looks like to call them. So here I have a little example.
+我这里有一个小例子
 
 411
 00:22:11,631 --> 00:22:14,899
