@@ -1,2002 +1,2503 @@
 1
 00:00:00,001 --> 00:00:08,207
 [SOUND] Stanford University. >> All right well welcome
+斯坦福大学
 
 2
 00:00:08,209 --> 00:00:13,212
 to Stanford CS193P. This is Spring of 2016 version and
+欢迎来到 2016 年春季的斯坦福 CS193P 课程
 
 3
 00:00:13,214 --> 00:00:16,982
 today I'm gonna give you a real quick explanation of what
+今天我会快速阐述一下这门课是关于什么的
 
 4
 00:00:16,984 --> 00:00:20,986
 this class is to make sure you're in the right place. I'm
+以免你们来错了地方
 
 5
 00:00:20,988 --> 00:00:23,722
 gonna talk about prerequisites cuz it's super important to be
+也会介绍一下参加这门课程的前提
 
 6
 00:00:23,724 --> 00:00:27,159
 successful in this class to have the prerequisites.
+要想上好这门课，有些准备还是很重要的
 
 7
 00:00:27,161 --> 00:00:30,129
 Then I'm just gonna give you the briefest overview of what
+接着我会介绍一下 iOS 是什么
 
 8
 00:00:30,131 --> 00:00:34,466
 iOS is. Most of you know because you have iPhones or
+你们应该都知道
 
 9
 00:00:34,468 --> 00:00:35,300
 iPads or something like that, so
+因为你们用过 iPhone 或者 iPad
 
 10
 00:00:35,302 --> 00:00:38,037
 I'm not gonna waste a lot of time talking about that. And
+我不会在介绍 iOS 上浪费很多时间
 
 11
 00:00:38,039 --> 00:00:41,206
 then finally I'm gonna dive right into a big demo that's
+最后我会带你们做一个大一点的 demo
 
 12
 00:00:41,208 --> 00:00:43,475
 gonna build our first application. Cuz I really
+直接开始打造我们的第一个应用程序
 
 13
 00:00:43,477 --> 00:00:45,411
 don't believe in wasting a lot of time with overhead.
+因为我不太想花太多时间讲一些理论的知识
 
 14
 00:00:45,413 --> 00:00:47,513
 We're just gonna dive right in and start learning how to do
+我们就直接开始上手做一些东西
 
 15
 00:00:47,515 --> 00:00:51,984
 this stuff, okay? We only have ten weeks to learn iOS. That's
+因为我们的课程只有 10 周
 
 16
 00:00:51,986 --> 00:00:54,753
 a short amount of time for it. It's a very powerful system.
+对于一个这么强大的系统来说，这点学习时间太短了
 
 17
 00:00:54,755 --> 00:00:59,158
 So we're gonna have to really go at break neck speed. So
+所以需要以飞快的速度进行学习
 
 18
 00:00:59,160 --> 00:01:00,292
 what will you learn in this class?
+在这门课程中你将学到什么？
 
 19
 00:01:00,294 --> 00:01:02,561
 You're gonna learn to build cool apps, all right.
+你将会学到如何打造很酷的 App
 
 20
 00:01:02,563 --> 00:01:05,064
 iOS apps are cool. Why are they cool?
+iOS App 很酷，为什么呢？
 
 21
 00:01:05,066 --> 00:01:07,466
 Well, they're cool because they sit in your pocket, and
+因为它们就在你的口袋里
 
 22
 00:01:07,468 --> 00:01:09,468
 you can bring it out and show your friends.
+你可以直接拿出来给你的朋友们看
 
 23
 00:01:09,470 --> 00:01:12,171
 They're cool because they're really easy to distribute.
+还有就是，App 很容易被发布
 
 24
 00:01:12,173 --> 00:01:12,304
 If you build an app,
+如果你开发了一款应用
 
 25
 00:01:12,306 --> 00:01:15,040
 you can put it on the app store with no work. Boom,
+你可以很轻松地把它放到 App Store 上
 
 26
 00:01:15,042 --> 00:01:19,078
 ship it out to your customers. And also it's a very vibrant,
+通过 App Store 把它移交给你的顾客
 
 27
 00:01:19,080 --> 00:01:22,448
 community. All right? A lot of people doing iOS development,
+iOS 开发的社区也很活跃
 
 28
 00:01:22,450 --> 00:01:24,416
 and they're very excited about it.
+很多人在做 iOS 开发，并且他们也很热爱
 
 29
 00:01:24,418 --> 00:01:28,320
 And, also the apps that you build have animation, a lot of
+App 也会包含一些很酷的动画
 
 30
 00:01:28,322 --> 00:01:31,323
 really cool interactions with users, so they're fun apps to
+和用户之间很炫的交互
 
 31
 00:01:31,325 --> 00:01:33,725
 build. Okay, so you probably know all that,
+所以制作 App 是很有趣的
 
 32
 00:01:33,727 --> 00:01:36,161
 that's why you're here. Another thing you're gonna
+你们都知道这一点，这也是你们为什么来到这里的原因
 
 33
 00:01:36,163 --> 00:01:38,197
 learn though and you're gonna get out of this class
+你们还会从这门课中学到
 
 34
 00:01:38,199 --> 00:01:40,899
 is real-life object-oriented programming.
+面向对象编程的知识
 
 35
 00:01:40,901 --> 00:01:43,569
 iOS is entirely object-oriented in its design.
+iOS 在设计上是完全面向对象的
 
 36
 00:01:43,571 --> 00:01:46,505
 All the writing of code you have to do is object-oriented
+你们写的每一行代码都会是面向对象的
 
 37
 00:01:46,507 --> 00:01:49,141
 programming. And you're really gonna get the experience of
+你们将会从现实的面向对象编程中
 
 38
 00:01:49,143 --> 00:01:52,444
 building a real-world thing using object-oriented
+获得很多经验
 
 39
 00:01:52,446 --> 00:01:55,481
 programming which is a great programming paradigm. And
+面向对象编程也是一个很好的编程范式
 
 40
 00:01:55,483 --> 00:01:57,282
 some of the things your going to learn for example using
+你们将会使用
 
 41
 00:01:57,284 --> 00:02:00,085
 object-oriented programming. Object-oriented databases,
+面向对象的数据库
 
 42
 00:02:00,087 --> 00:02:02,521
 were going to do graphics with object oriented programming.
+使用面向对象来编写界面
 
 43
 00:02:02,523 --> 00:02:04,790
 Obviously going to be some multimedia stuff,
+而且还会有一些关于多媒体的东西，
 
 44
 00:02:04,792 --> 00:02:06,959
 multi threading, animation, networking.
+多线程、动画、网络等
 
 45
 00:02:06,961 --> 00:02:08,927
 All kinds of stuff that you're learning in your other
+你们从其它 CS 课程中学到的知识
 
 46
 00:02:08,929 --> 00:02:11,163
 computer science classes, you're going to do for
+都会在这门课程中
 
 47
 00:02:11,165 --> 00:02:13,065
 real, real life here in this class. So
+得到真实的应用
 
 48
 00:02:13,067 --> 00:02:15,734
 that's really good, it's kind of a good synthesis class or
+这很好，这就像一门综合的课程
 
 49
 00:02:15,736 --> 00:02:18,570
 practical synthesis class for all that stuff.
+来运用你学所学到的知识
 
 50
 00:02:18,572 --> 00:02:22,908
 The prerequisites are really important in this class.
+这门课的前提非常重要
 
 51
 00:02:22,910 --> 00:02:25,110
 The main one is object-oriented programming.
+最主要的一个是面向对象编程
 
 52
 00:02:25,112 --> 00:02:27,746
 I really don't have time in ten weeks to take the time to
+我不会在这 10 周中花时间教你们
 
 53
 00:02:27,748 --> 00:02:30,015
 teach you object-oriented programming first, so
+如何使用面向对象编程
 
 54
 00:02:30,017 --> 00:02:32,851
 you really need to know that coming in. So in terms of
+你们需要知道在这门课中会用到
 
 55
 00:02:32,853 --> 00:02:37,890
 Stanford's prerequisites that means CS106A&B or CS106X.
+所以在学这门课之前需要先学习 CS106A&B 或 CS106X
 
 56
 00:02:37,892 --> 00:02:40,259
 That's absolutely required okay, so you get some
+这是必须要有的前提
 
 57
 00:02:40,261 --> 00:02:44,062
 Java experience in there and a little bit of object-oriented.
+所以我假定你们现在有了一些 Java 的编程经验和一些面向对象的基础
 
 58
 00:02:44,064 --> 00:02:47,399
 And then really important to take some,
+在上这门课这之前
 
 59
 00:02:47,401 --> 00:02:50,202
 just some class where you're gonna do a lot of programming.
+上过一些写了很多代码的课程也是很重要的
 
 60
 00:02:50,204 --> 00:02:53,305
 Okay like CS107 which is not hugely object-oriented but
+例如 CS107，虽然没有大量关于面向对象的东西
 
 61
 00:02:53,307 --> 00:02:54,273
 there's a lot of programming.
+但是上那门课会写很多代码
 
 62
 00:02:54,275 --> 00:02:58,043
 CS108 which is an awesome prerequisite for this class.
+如果你在参加这门课之前上过 CS108 是非常好的
 
 63
 00:02:58,045 --> 00:02:59,912
 Okay, that's basically object-oriented Programming.
+它讲是关于面向对象编程的东西
 
 64
 00:02:59,914 --> 00:03:02,548
 So if you've taken CS108, you're gonna be well prepared
+所以如果你上过 CS108，你就已经准备好上这门课了
 
 65
 00:03:02,550 --> 00:03:05,551
 for this class. CS110, again, not really object oriented
+CS110，同样也没有太多关于面向对象的知识
 
 66
 00:03:05,553 --> 00:03:07,553
 per-se, but there's a lot of coding in there.
+但同样是一门非常好的编程课程，因为其中有大量的编程实践
 
 67
 00:03:07,555 --> 00:03:10,189
 You know, preferably you've taken some other CS classes,
+你最好还上过其它的一些 CS 课程
 
 68
 00:03:10,191 --> 00:03:12,925
 you've written a lot of code because, let me warn you,
+写过很多代码
 
 69
 00:03:12,927 --> 00:03:16,728
 this class is a lot of coding. All your assignments are all
+因为上这门课需要写很多代码
 
 70
 00:03:16,730 --> 00:03:19,731
 coding. You're gonna write a ton of code in this class.
+所有的作业都是写代码，你会在这门课中写大量的代码
 
 71
 00:03:19,733 --> 00:03:22,267
 So if you're not comfortable writing a ton of code,
+所以如果你真的不太适应写比较多的代码
 
 72
 00:03:22,269 --> 00:03:24,703
 then this class is going to be a lot of work for you.
+那么这门课程对你来说将是一个挑战
 
 73
 00:03:24,705 --> 00:03:27,639
 You're gonna find it, maybe you'll be a little underwater.
+你会慢慢发现的
 
 74
 00:03:27,641 --> 00:03:31,677
 Okay so be prepared for a lot of coding.
+所以做好要写很多代码的准备
 
 75
 00:03:32,379 --> 00:03:33,779
 When it comes to object-oriented programming,
+当谈到面向对象编程
 
 76
 00:03:33,781 --> 00:03:36,515
 you should know all these terms like the back of your
+你就应该像了解你的手背一样了解这些术语
 
 77
 00:03:36,517 --> 00:03:37,616
 hand. You shouldn't be looking at those and
+你不应该连一些类似
 
 78
 00:03:37,618 --> 00:03:40,652
 going what, what's that, super class, I don't get it.
+「父类」的术语都不懂
 
 79
 00:03:40,654 --> 00:03:42,354
 Okay, you should not even be here, okay.
+如果是那样的话，你不应该来参加这门课程
 
 80
 00:03:42,356 --> 00:03:45,691
 Go take these other classes and then come back.
+先去参加别的课程，然后再回来
 
 81
 00:03:46,260 --> 00:03:50,062
 This is an upper-level CS course, this is not 106 or
+这是一门更高等级的 CS 课程
 
 82
 00:03:50,064 --> 00:03:52,965
 107. Okay? It's a next level up. So if you haven't
+它不是 CS106 或 CS107，它是更高一级的东西
 
 83
 00:03:52,967 --> 00:03:56,802
 written a fairly sophisticated app before, okay, then you're
+如果你还没有写过一些比较复杂的程序
 
 84
 00:03:56,804 --> 00:04:00,472
 gonna find out whoa, this is a lot of work, okay. So
+那你就会发现，你需要学习的东西有很多
 
 85
 00:04:00,474 --> 00:04:02,674
 that's the prerequisites, make sure you're prepared, for
+这就是参加这门课程的条件，确定你已经准备好了
 
 86
 00:04:02,676 --> 00:04:05,210
 this class. And if you're not, just go take those classes and
+如果没有，就先去参加其它课程，然后再回来
 
 87
 00:04:05,212 --> 00:04:08,180
 come back. All right. So, what's in iOS?
+什么是 iOS？
 
 88
 00:04:08,182 --> 00:04:10,749
-You all know what's in IOS from a user standpoint.
+You all know what's in iOS from a user standpoint.
+从一个用户的角度，你们应该都知道 iOS 是什么
 
 89
 00:04:10,751 --> 00:04:12,951
 I'm sure, you've used, all used iOS. So
+你确定你们全都用过 iOS
 
 90
 00:04:12,953 --> 00:04:16,622
 what's kinda under the covers? What are the programming APIs?
+但更深层的东西是什么？编程的 API 都是什么？
 
 91
 00:04:16,624 --> 00:04:19,791
 Everyone know what the words API means? That basically
+大家都知道 API 是什么意思
 
 92
 00:04:19,793 --> 00:04:23,161
 programming interface, it's the functions, and methods,
+它其实就是编程接口的意思，它是使 iOS App
 
 93
 00:04:23,163 --> 00:04:26,698
 and classes that we use to make an iOS app work. So
+工作的函数、方法和类
 
 94
 00:04:26,700 --> 00:04:30,936
 what are those APIs that we use? Well they're huge. Okay,
+我们能调用的 API 都有什么？它们有很多
 
 95
 00:04:30,938 --> 00:04:33,772
 there's so much of it I can barely even summarize it here,
+API 实在太多了，我都没办法概括出来
 
 96
 00:04:33,774 --> 00:04:36,708
 but I'm gonna summarize it by dividing it into four layers
+但是我可以把它分成四个层次来总结
 
 97
 00:04:36,710 --> 00:04:40,445
 okay? The core OS which is kind of near the hardware
+Core OS 层很接近硬件
 
 98
 00:04:40,447 --> 00:04:44,216
 all the way up to Cocoa Touch which is near the user, okay?
+Cocoa Touch 层很接近用户
 
 99
 00:04:44,218 --> 00:04:46,318
 And then there's some layers in between. So
+在这两层之间还有一些层
 
 100
 00:04:46,320 --> 00:04:46,918
 let's talk about these layers,
+所以我们先分层次来讨论
 
 101
 00:04:46,920 --> 00:04:50,055
 let's start down at the bottom there. The hardware.
+先从底部开始看，硬件层
 
 102
 00:04:50,057 --> 00:04:54,159
 So, people don't really realize this, but an iPhone
+大部分人都没有发现其实 iPhone 运行着 UNIX 系统
 
 103
 00:04:54,161 --> 00:04:58,330
 is running Unix, okay? There's basically a version of Unix
+UNIX 的最基本版本
 
 104
 00:04:58,332 --> 00:05:02,567
 running on it, so it has full multitasking, Unix filesystem,
+所以它有多线程、UNIX 文件系统
 
 105
 00:05:02,569 --> 00:05:04,303
 everything in there. And, you know,
+所有 UNIX 有的东西
 
 106
 00:05:04,305 --> 00:05:08,206
 you get the power of that when you build iOS apps, okay? And
+在做 iOS 开发的时候你可以运用这些强大的能力
 
 107
 00:05:08,208 --> 00:05:09,675
 that includes all these things here. Now,
+iPhone 包含所有这些
 
 108
 00:05:09,677 --> 00:05:12,911
 there's some things that this Unix layer, that are specific
+还有在 UNIX 这一层特意为了移动设备而打造的东西
 
 109
 00:05:12,913 --> 00:05:15,447
 to a mobile device like Power Management is really
+例如很重要的电量管理
 
 110
 00:05:15,449 --> 00:05:19,351
 important, Keychain Access to make sure that the people
+Keychain，来管理
 
 111
 00:05:19,353 --> 00:05:21,753
 are not accessing things on the phone that shouldn't,
+用户在手机上不应该接触的东西
 
 112
 00:05:21,755 --> 00:05:25,524
 etc. But this is basically Unix in all its glory,
+但这最底层，基本上都是 UNIX 带来的光芒
 
 113
 00:05:25,526 --> 00:05:30,095
 down at this low level. Next, there's a core services layer.
+在它上一层，是 Core Services 层
 
 114
 00:05:30,097 --> 00:05:33,265
 Because we wanna program in object-oriented programming as
+因为我们在编写程序的时候尽量用到面向对象
 
 115
 00:05:33,267 --> 00:05:36,702
 much as possible, there's a layer which is written in
+这一层是在 UNIX 之上使用面向对象语言编写的
 
 116
 00:05:36,704 --> 00:05:40,906
 object-oriented language, on top of Unix so that you can
+你可以在这一层得到
 
 117
 00:05:40,908 --> 00:05:44,743
 get at things like networking and multithreading and
+网络、多线程
 
 118
 00:05:44,745 --> 00:05:48,513
 network, or preferences and SQL for databases.
+或者 SQL 数据库之类的东西
 
 119
 00:05:48,515 --> 00:05:51,083
 You can get at these things using object oriented APIs.
+你可以通过面向对象的 API 来调用这些
 
 120
 00:05:51,085 --> 00:05:54,319
 So this is kind of an object oriented layer on top of
+所以这一层是在 Core Services 之上的面向对象的一层
 
 121
 00:05:54,321 --> 00:05:57,589
 the core services. Okay but there is no UI in this layer.
+在这一层是没有 UI(用户界面) 的
 
 122
 00:05:57,591 --> 00:06:01,126
 Okay this is kind of base layer. Now the next layer,
+有点像比较基础的层
 
 123
 00:06:01,128 --> 00:06:04,596
 super important. Ironically I don't have a lot of time to
+下一个非常重要的层
 
 124
 00:06:04,598 --> 00:06:07,899
 talk about this in this class. I'll kind of let you know it's
+我没有太多时间在课堂上介绍它
 
 125
 00:06:07,901 --> 00:06:10,369
 there but it'll be something you'll have to dive into
+你对这一层的了解取决你想要做些什么东西
 
 126
 00:06:10,371 --> 00:06:13,605
 depending on what you want to do. But that's multimedia.
+这一层就是多媒体层
 
 127
 00:06:13,607 --> 00:06:17,909
 So this is video, all kinds of different audio frameworks.
+在这一层，有视频、音频库
 
 128
 00:06:17,911 --> 00:06:21,680
 And then of course still pictures like JPEGs,
+处理例如 JPEG 图片的
 
 129
 00:06:21,682 --> 00:06:22,414
 things like that and
+图片库
 
 130
 00:06:22,416 --> 00:06:26,551
 drawing okay the Quartz API for drawing in 2D. OpenGL for
+用于 2D 绘图的 Quartz API
 
 131
 00:06:26,553 --> 00:06:29,388
 drawing in 3D. So there's a lot of stuff here okay we
+用于 3D 绘图的 OpenGL
 
 132
 00:06:29,390 --> 00:06:32,257
 obviously don't have time in ten weeks to teach you OpenGL
+显然在 10 周的课程之内我不会教你们 OpenGL
 
 133
 00:06:32,259 --> 00:06:35,427
 you're gonna have to learn that in a graphics class but
+你们需要在图形课程里学习
 
 134
 00:06:35,429 --> 00:06:36,962
 you'll be able to use it here, okay.
+并在那里运用
 
 135
 00:06:36,964 --> 00:06:39,664
 And then at the top layer, this is where were going to
+最顶层，就是我们要花几乎所有的时间在的层
 
 136
 00:06:39,666 --> 00:06:41,800
 spend most of our time, is Cocoa touch, okay.
+就是 Cocoa Touch 层
 
 137
 00:06:41,802 --> 00:06:46,638
 It is object-oriented API for building user interfaces okay?
+它提供了面向对象的 API 来搭建 UI
 
 138
 00:06:46,640 --> 00:06:49,341
 And these user interfaces are not just buttons and
+这些 UI 元素不仅仅包含
 
 139
 00:06:49,343 --> 00:06:52,043
 sliders on the screen. But things like,
+屏幕上的按扭的滑块
 
 140
 00:06:52,045 --> 00:06:54,012
 what to do when you shake your phone? Or
+还有当你摇动手机的时候应该怎么处理
 
 141
 00:06:54,014 --> 00:06:58,250
 using the orientation of the phone as input for example,
+或者把设备的方向当作输入
 
 142
 00:06:58,252 --> 00:07:01,086
 okay. It also includes animation because in iOS,
+它还包含动画
 
 143
 00:07:01,088 --> 00:07:04,890
 in a lot of the apps there's a lot of animation going on.
+因为在 iOS 中，大量的 App 使用动画
 
 144
 00:07:04,892 --> 00:07:06,992
 It's just part of the way it's being built and
+它被搭建的时候这就是其中的一部分了
 
 145
 00:07:06,994 --> 00:07:09,461
 a lot of the stuff at this level is really high
+这一层的许多东西都是非常高层次的
 
 146
 00:07:09,463 --> 00:07:12,264
 level. Like there are objects that basically let you put
+例如，你可以对一个对象进行操作
 
 147
 00:07:12,266 --> 00:07:16,701
 an entire Safari browser in a rectangle inside your app.
+把整个 Safari 浏览器放进你 App 的一块区域中
 
 148
 00:07:16,703 --> 00:07:18,336
 Okay, this one object you just drag it in,
+你可以拖进来一个对象
 
 149
 00:07:18,338 --> 00:07:20,071
 boom you've got it. All you have to do,
+然后你就有对应的功能了
 
 150
 00:07:20,073 --> 00:07:23,108
 maybe wire up the back button and you're ready to go.
+你也许只需要做一个连线就可以了
 
 151
 00:07:23,110 --> 00:07:26,278
 Same thing with maps. You've seen the whole map 3D maps and
+关于地图，你可能见过一些 2D，3D 地图
 
 152
 00:07:26,280 --> 00:07:28,814
 all that stuff. Again one thing you drag it in,
+同样的，你把它拖进来
 
 153
 00:07:28,816 --> 00:07:30,816
 now you've got full map functionality
+你就有了全部地图相关的功能
 
 154
 00:07:30,818 --> 00:07:34,986
 in you application. So this is super powerful objects. Again
+它是非常强大的对象
 
 155
 00:07:34,988 --> 00:07:37,355
 in 10 weeks and I can only show you the basics of this.
+在 10 周的课程内，我只能展示给你这些对象的基本用途
 
 156
 00:07:37,357 --> 00:07:39,858
 Hopefully the things I've chosen to teach you
+好在我选择教给你们的东西
 
 157
 00:07:39,860 --> 00:07:43,261
 will have paradigms for using them. That you can apply to
+都有一些使用的范式
 
 158
 00:07:43,263 --> 00:07:45,730
 the things that I don't have time to teach you, okay.
+你可以把它运用到我没有教给你的东西上面
 
 159
 00:07:45,732 --> 00:07:48,033
 So I'm going to try and teach you the basics
+所以我会尽量教给你们让
 
 160
 00:07:48,035 --> 00:07:51,436
 of how to make it all work in a way that lets you go out and
+这些东西基本运行起来的方式
 
 161
 00:07:51,438 --> 00:07:54,973
 learn new things quite straightforwardly. Okay, so
+然后你们就可以通过这种方式来直接学习新的东西了
 
 162
 00:07:54,975 --> 00:08:00,145
 that's basically what's an iOS in three minutes or less.
+所以这就是关于什么是 iOS 的小演讲
 
 163
 00:08:00,147 --> 00:08:02,848
 The components of the platform that we're gonna be developing
+以下这些东西是在这个平台开发所需要的
 
 164
 00:08:02,850 --> 00:08:07,185
 on are as follows. First, there's some tools. Really,
+首先是工具
 
 165
 00:08:07,187 --> 00:08:11,323
 Xcode 7 is 99% of what you're gonna be using in this class.
+99% 的时间你们都要使用 Xcode 7
 
 166
 00:08:11,325 --> 00:08:13,959
 Okay? It's your editor, your debugger,
+它是编辑器，debug 的工具
 
 167
 00:08:13,961 --> 00:08:15,894
 source code management, everything is in Xcode7,
+源码管理，Xcode 7 都有
 
 168
 00:08:15,896 --> 00:08:20,131
 it's kind of a one stop shop. There is an extra thing there
+它类似于一个一站式的工具
 
 169
 00:08:20,133 --> 00:08:22,133
 instruments which kind of plugs in with Xcode7 for
+Xcode 7 中还有类似于插件一样的 Instruments 工具
 
 170
 00:08:22,135 --> 00:08:24,669
 doing things like performance, measurement things like that
+做一些性能检测之类的事情
 
 171
 00:08:24,671 --> 00:08:27,372
 but basically we're going to be in Xcode7. Okay, that's
+但是基本我们会在 Xcode 7 中干活
 
 172
 00:08:27,374 --> 00:08:32,344
 where we're gonna be doing all our work. Language, languages,
+编程语言
 
 173
 00:08:32,346 --> 00:08:34,279
 there's actually two languages you can develop for
+做 iOS 开发你可以使用两种语言
 
 174
 00:08:34,281 --> 00:08:37,215
 in iOS. We're gonna teach you the more modern one which is
+我们会教你更现代的那个，Swift
 
 175
 00:08:37,217 --> 00:08:39,618
 called Swift, okay? But there's another one called
+另一个叫作 Objective-C
 
 176
 00:08:39,620 --> 00:08:42,187
 Objective C, I'm not really gonna talk about Objective C
+我不会太介绍 Objective-C
 
 177
 00:08:42,189 --> 00:08:47,425
 in this class, at least not primarily in the lecture. So
+至少在 lecture 中不是作为主要讲解的语言
 
 178
 00:08:47,427 --> 00:08:48,960
 you will have to learn a new language,
+所以你得学一门新的语言
 
 179
 00:08:48,962 --> 00:08:50,729
 I'm sure none of you know Swift, or
+我知道你们都不了解 Swift
 
 180
 00:08:50,731 --> 00:08:52,964
 if you do, it's because you already know iOS.
+如果你了解，是因为你对 iOS 也已经有了了解
 
 181
 00:08:52,966 --> 00:08:55,500
 So Swift will be a new language you'll have to learn,
+Swift 会作为你们必须要学习的新语言
 
 182
 00:08:55,502 --> 00:08:57,802
 I'll spend the first two weeks really trying to
+前两周我会尽力用火箭一般的速度
 
 183
 00:08:57,804 --> 00:09:01,406
 give you rocket speed learning of this new language.
+给你们讲解这门新的语言
 
 184
 00:09:01,408 --> 00:09:03,275
 Then there's a lot of frameworks,
+然后还有大量的框架
 
 185
 00:09:03,277 --> 00:09:06,811
 like foundation and UI kit which is the kinda that base
+例如 Foundation 和 UIKit
 
 186
 00:09:06,813 --> 00:09:09,247
 core services stuff and the UI stuff, but
+它们分别是核心服务和 UI 之类的东西
 
 187
 00:09:09,249 --> 00:09:12,551
 there's also core data and core motion and map kit for
+还有 Core Data、 Core Motion 和 MapKit
 
 188
 00:09:12,553 --> 00:09:16,087
 all these things like the gyro and the accelerometer and
+它们分别是对象数据库、陀螺仪和加速计
 
 189
 00:09:16,089 --> 00:09:19,724
 the object database so there's a lot of frameworks and
+还有地图相关的东西
 
 190
 00:09:19,726 --> 00:09:22,327
 we'll cover as many of them as we can. And
+还有一些其它的框架，我们将会尽可能地介绍它们
 
 191
 00:09:22,329 --> 00:09:24,229
 really just as important of all these things,
+还有和这些东西一样重要的一样东西
 
 192
 00:09:24,231 --> 00:09:28,667
 there's a design strategy or design methodology, okay, for
+就是设计 iOS 应用的一种设计策略或设计方式
 
 193
 00:09:28,669 --> 00:09:31,970
 iOS called MVC, it's used on other platforms as well.
+叫作 MVC，在其它平台上也有应用
 
 194
 00:09:31,972 --> 00:09:35,040
 How many people here have programmed before in an MVC
+有多少同学在之前使用过 MVC
 
 195
 00:09:35,042 --> 00:09:38,143
 type of environment? See, so about half of you.
+哦，大概一半
 
 196
 00:09:38,145 --> 00:09:40,412
 Now I'm going to, since it's only half of you,
+既然只有一半的人了解 MVC
 
 197
 00:09:40,414 --> 00:09:41,212
 I will spend Wednesday,
+在周三 lecture
 
 198
 00:09:41,214 --> 00:09:44,482
 the start of the lecture, explaining MVC. Okay, how,
+开始的时候，我会介绍 MVC
 
 199
 00:09:44,484 --> 00:09:49,454
-what MVC is, how it applies in IOS development. But it's very
+what MVC is, how it applies in iOS development. But it's very
+什么是 MVC，在 iOS 开发中如何运用
 
 200
 00:09:49,456 --> 00:09:51,990
 important to know, it's a very important thing to know. And
+这都非常重要
 
 201
 00:09:51,992 --> 00:09:55,093
 I'm even going to mention it a little bit in my demo today.
+我也会在今天的 demo 中介绍一些
 
 202
 00:09:55,095 --> 00:09:59,197
 And I'll just give you the 10 second overview of
+我只会给你们简单地讲述一下它
 
 203
 00:09:59,199 --> 00:10:02,701
 it. Because I can't really do anything, I can't show you any
+因为我还不能做任何事情
 
 204
 00:10:02,703 --> 00:10:06,304
 demo without talking about MVC, it's that important.
+在介绍 MVC 之前我不能做任何 demo，它就是这么重要
 
 205
 00:10:06,306 --> 00:10:10,775
 Okay? So this next slide here is kind of giving you
+下一张幻灯片简单地介绍了一下
 
 206
 00:10:10,777 --> 00:10:13,144
 a summary of what I'm gonna show you in the demo today.
+今天的这个 demo 大概要做些什么
 
 207
 00:10:13,146 --> 00:10:15,146
 You don't need to read this slide now,
+你现在还不需要阅读这上面的内容
 
 208
 00:10:15,148 --> 00:10:18,216
 my slides will be posted for you so you'll always going to
+幻灯片都会在课后发给你们
 
 209
 00:10:18,218 --> 00:10:20,919
 be able to go back. This is a kind of slide you go back and
+这一张就是那种课后回去阅读
 
 210
 00:10:20,921 --> 00:10:24,456
 look at later to make sure, yeah did I understand that in
+问问自己到底有没有看懂之类的幻灯片
 
 211
 00:10:24,458 --> 00:10:27,192
 the demo, etc. Also as I'm doing the demo you'll
+你们还会有我做 demo 时候的视频
 
 212
 00:10:27,194 --> 00:10:30,629
 have the video of it. You'll have a video of this demo so
+所以在我做 demo 的时候
 
 213
 00:10:30,631 --> 00:10:32,197
 you don't need to furiously take notes or
+你们不需要非常着急地记笔记
 
 214
 00:10:32,199 --> 00:10:34,499
 try to follow along to understand what I'm doing.
+或者完全跟着我同步做
 
 215
 00:10:34,501 --> 00:10:39,004
 You can watch it at your leisure later.
+你可以在课后看视频
 
 216
 00:10:39,006 --> 00:10:42,307
 All right, so I'm not going get back to my slides before,
+在 demo 之后，就不回放之前的幻灯片了
 
 217
 00:10:42,309 --> 00:10:45,577
 after the demo so let me tell you what's coming up and then
+所以我先告诉你们后续会发生什么
 
 218
 00:10:45,579 --> 00:10:50,682
 the rest of this is gonna be a demo. Today I have assigned
+然后这门课的后半部分都会是 demo
 
 219
 00:10:50,684 --> 00:10:54,119
 and it's on Piasa already, reading assignment number 1.
+今天我已经把第一次作业放到 Piazza（他们的课程平台） 上了
 
 220
 00:10:54,121 --> 00:10:57,355
 Okay, the reading assignments in this class are all learning
+这节课的阅读作业都是关于 Swift 的
 
 221
 00:10:57,357 --> 00:10:59,958
 Swift. You're gonna have three reading assignments and
+一共会有三次阅读作业
 
 222
 00:10:59,960 --> 00:11:01,693
 all of the three of them are gonna basically
+这几次作业
 
 223
 00:11:01,695 --> 00:11:05,897
 take you through the entire Swift language guide, okay. So
+会让你对 Swift 有一个完整的了解
 
 224
 00:11:05,899 --> 00:11:09,034
 that's what the reading assignments are all about.
+阅读作业的内容就是这些
 
 225
 00:11:09,269 --> 00:11:11,369
 On Wednesday, I'm gonna continue the demo that I'm
+周三，我会继续进行这个 demo
 
 226
 00:11:11,371 --> 00:11:13,938
 doing today. I'm gonna talk about MVC as I said and
+会介绍 MVC
 
 227
 00:11:13,940 --> 00:11:18,109
 then programming assignment number 1 will go out. And
+第一次编程作业也会放出
 
 228
 00:11:18,111 --> 00:11:20,045
 that's going to be due one week later.
+一周后截至
 
 229
 00:11:20,047 --> 00:11:25,483
 Before lecture the next Wednesday. On Friday we
+在下周三的 lecture 之前
 
 230
 00:11:25,485 --> 00:11:29,087
 have an optional section, room and time to be determined.
+会有个可选的部分，时间和地点有待确定
 
 231
 00:11:29,089 --> 00:11:32,023
 Probably around 1 o' clock. I'm not sure where.
+也许 1 点左右，我也不太确定在哪
 
 232
 00:11:32,025 --> 00:11:34,926
 This Friday's and each Friday sometimes we'll have these
+有的周五都会有课
 
 233
 00:11:34,928 --> 00:11:36,561
 sections, sometimes not and it's optional,
+它们是可选的
 
 234
 00:11:36,563 --> 00:11:38,430
 you don't have to show up if you don't want to but
+你不必须参加
 
 235
 00:11:38,432 --> 00:11:39,998
 it's gonna be pretty valuable information.
+但是课上会有很有价值的信息
 
 236
 00:11:40,000 --> 00:11:42,734
 This Friday is how to use the debugger, which as you can
+这个周五会介绍如何使用 debugger，还是挺有价值的内容
 
 237
 00:11:42,736 --> 00:11:49,240
 imagine pretty valuable. Next Monday next week in general
+下周一
 
 238
 00:11:49,242 --> 00:11:52,143
 we will be doing more of the same of getting started here
+会介绍如何上手
 
 239
 00:11:52,145 --> 00:11:54,713
 with Swift and Xcode 7. You're, you're reading
+Swift 和 Xcode 7
 
 240
 00:11:54,715 --> 00:11:57,716
 assignment from today is gonna be due on Monday, and
+今天的阅读作业会在周一之前截至
 
 241
 00:11:57,718 --> 00:11:59,684
 then, you'll have Reading Assignment 2 go
+接下来会有第二个阅读作业
 
 242
 00:11:59,686 --> 00:12:01,352
 out which will be due the next Monday, so
+下周一之前截至
 
 243
 00:12:01,354 --> 00:12:03,088
 the Reading Assignments for the first three weeks
+前三周的阅读作业
 
 244
 00:12:03,090 --> 00:12:05,423
 are overlapping the Program Assignments. The first two
+和编程作业是重叠的
 
 245
 00:12:05,425 --> 00:12:08,026
 programing assign- assignments are quite easy. So
+前两个作业是比较简单的
 
 246
 00:12:08,028 --> 00:12:10,328
 there won't be a problem where you're really overloaded.
+所以这些作业对于你们来说也不会显得很多
 
 247
 00:12:10,330 --> 00:12:12,530
 Starting with programming assignment number 3,
+第三次编程作业
 
 248
 00:12:12,532 --> 00:12:15,166
 it gets quite a bit steeper, okay.
+会有一个很大的跳跃
 
 249
 00:12:15,168 --> 00:12:15,834
 Question? >> The programming
+有问题？ 
 
 250
 00:12:15,836 --> 00:12:19,270
 assignments, they ask you to solve specific tasks?
+>> 编程作业是解决特定的编程任务吗？
 
 251
 00:12:19,272 --> 00:12:22,006
 Are there any ones that are more predicted?
+会有一些主观的问题吗？
 
 252
 00:12:22,008 --> 00:12:22,707
 >> Yes, so the question is
+>> 问题是，
 
 253
 00:12:22,709 --> 00:12:24,409
 do the programming assignments ask you to solve
+编程作业是让你解决特定的编程任务
 
 254
 00:12:24,411 --> 00:12:27,011
 a specific task, or are they kind of open-ended? And
+还是有一些开放性的问题？
 
 255
 00:12:27,013 --> 00:12:29,781
 the answer is the program assignments have very specific
+答案是，编程作业有很明确的需求
 
 256
 00:12:29,783 --> 00:12:33,551
 required tasks that you must do. You can do them any way
+你可以通过任何方式完成
 
 257
 00:12:33,553 --> 00:12:36,154
 you want, but you must satisfy the required tasks.
+但是你必须要满足指定的任务要求
 
 258
 00:12:36,156 --> 00:12:39,157
 As far as open ended is, your gonna have a final project in
+提到开放性任务，你们最终持续三周的项目
 
 259
 00:12:39,159 --> 00:12:40,825
 three weeks, that's completely open ended.
+是完全开放性的
 
 260
 00:12:40,827 --> 00:12:42,594
 You get to choose entirely what you're gonna do,
+你可以自己选择你想要做什么
 
 261
 00:12:42,596 --> 00:12:45,396
 completely on your own, okay? If you read the document
+如果你读 Piazza 上的文档
 
 262
 00:12:45,398 --> 00:12:48,800
 that's on Piazza, it explains all that, okay? So for
+上面就会有相关的解释了
 
 263
 00:12:48,802 --> 00:12:50,902
 those of you who arrived late, read that doc,
+所以对于迟到的这些同学，去读文档
 
 264
 00:12:50,904 --> 00:12:54,005
 get on Piazza, read it, stay on Piazza, it's all about
+上 Piazza，读内容，泡在 Piazza 上
 
 265
 00:12:54,007 --> 00:12:56,207
 Piazza in this class in terms of communication.
+Piazza 就是用来交流的工具
 
 266
 00:12:56,209 --> 00:12:59,477
 So get on there. Okay, all right,
+好的
 
 267
 00:12:59,479 --> 00:13:03,648
 that's it. I'm going to dive right into this demo right
+我们现在开始做 demo
 
 268
 00:13:03,650 --> 00:13:08,620
 here. We're going to start by launching Xcode.
+先启动 Xcode
 
 269
 00:13:08,622 --> 00:13:11,589
 Xcode is free, you just go to the Mac app store and
+它是免费的，可以到 Mac App Store 上下载
 
 270
 00:13:11,591 --> 00:13:15,226
 download it. And when you launch it, you're going to get
+启动它
 
 271
 00:13:15,228 --> 00:13:19,697
 this splash screen is going to appear right here. Let's hide
+会显示一个启动画面
 
 272
 00:13:19,699 --> 00:13:23,134
 these other things. So here's Xcode. This spash screen has
+把其它的隐藏起来，这就是 Xcode
 
 273
 00:13:23,136 --> 00:13:25,703
 a list of all the projects that you've been working on so
+启动界面的这个列表包含你当前进行的项目
 
 274
 00:13:25,705 --> 00:13:28,540
 right now we have none cuz it's the start of the quarter.
+现在还没有，因为课程才刚开始
 
 275
 00:13:28,542 --> 00:13:30,441
 But you'll have you know each week you're gonna
+但你应当知道
 
 276
 00:13:30,443 --> 00:13:33,344
 have more and more projects piling up in this side. And
+随着课程的进行，你会有越来越多的项目
 
 277
 00:13:33,346 --> 00:13:35,747
 then these three choices are the three ways to kinda
+这三个先项是进入 Xcode 的三个选项
 
 278
 00:13:35,749 --> 00:13:38,416
-get into Xcode 1. Here, playground,
+get into Xcode. 1, Here, playground,
+第一个选项 playground
 
 279
 00:13:38,418 --> 00:13:42,921
-that's basically, it gives you the ability to write IOS apps,
+that's basically, it gives you the ability to write iOS apps,
+它给了你写 iOS App 的能力
 
 280
 00:13:42,923 --> 00:13:45,924
 and play with Xcode without building an app. Okay.
+但不需要新建一个 App
 
 281
 00:13:45,926 --> 00:13:49,194
 So you can call APIs, put things on screen, draw things,
+所以你可以调用 API，画一些控件或图形等等
 
 282
 00:13:49,196 --> 00:13:52,330
-etc. It's kind of a playground for playing around with IOS.
+etc. It's kind of a playground for playing around with iOS.
+它就像一个学习开发 iOS 应用的小训练场
 
 283
 00:13:52,332 --> 00:13:54,599
 We really won't be using that much in this app.
+我们不会在这个 App 中使用它
 
 284
 00:13:54,601 --> 00:13:57,001
 But in this class, in my demos, but
+但在这门课，或者 demo 中
 
 285
 00:13:57,003 --> 00:13:59,404
 you can certainly you're welcome to use them,
+在你了解 Xcode 的过程中，
 
 286
 00:13:59,406 --> 00:14:01,439
 as you're playing around with Xcode.
+还是欢迎你使用它的
 
 287
 00:14:01,441 --> 00:14:03,508
 It's kind of a fun environment. Down at
+它是个很有趣的编程环境
 
 288
 00:14:03,510 --> 00:14:06,911
 the bottom here you can check out an existing Xcode,
+在最下面，你可以添加已有
 
 289
 00:14:06,913 --> 00:14:11,716
-project, IOS project, that is in Source Code, management.
+project, iOS project, that is in Source Code, management.
+源码管理的 Xcode 项目
 
 290
 00:14:11,718 --> 00:14:14,118
 Okay, now we're going to talk about Source Code management
+也许会在周五的课程中讨论源码管理
 
 291
 00:14:14,120 --> 00:14:16,888
 probably at a Friday section in this quarter but
+但是不会在
 
 292
 00:14:16,890 --> 00:14:18,122
 not right at the beginning of the class.
+这门课程刚开始的时候就讲
 
 293
 00:14:18,124 --> 00:14:20,859
 But Source Code manager is basically a way that you can
+源码管理就是你可以通过类似数据库的方式
 
 294
 00:14:20,861 --> 00:14:23,728
 check your code in and out of like a database okay,
+来管理你的源代码
 
 295
 00:14:23,730 --> 00:14:27,131
 so that you can work with a team, each make changes,
+通过这种方式进行团队协作
 
 296
 00:14:27,133 --> 00:14:28,099
 merge your changes, all that stuff.
+每个人对代码产生一些修改，然后合并这些修改之类的
 
 297
 00:14:28,101 --> 00:14:32,370
 So here is where you would check out your project to work
+所以这个就是你获取已有源码管理项目的地方
 
 298
 00:14:32,372 --> 00:14:36,207
 on. And this middle one is to create a new Xcode project,
+中间的这个是新建一个 Xcode 项目
 
 299
 00:14:36,209 --> 00:14:38,176
 a new Xcode App and that's we're gonna do right now,
+现在就进行这一项
 
 300
 00:14:38,178 --> 00:14:41,212
 okay? We're gonna create from scratch a new app. Most of my
+从头开始创建一个新的 App
 
 301
 00:14:41,214 --> 00:14:44,449
 demos involved creating an application from scratch,
+几乎所有的 demo 都是从头开始创建的
 
 302
 00:14:44,451 --> 00:14:45,750
 okay? Just because I think it's easier for
+因为在目前阶段
 
 303
 00:14:45,752 --> 00:14:49,120
 you to learn if there's no magic behind the scenes where
+从零开始写项目
 
 304
 00:14:49,122 --> 00:14:49,921
 things are appearing out of nowhere. So
+对你们来说更容易一些
 
 305
 00:14:49,923 --> 00:14:53,658
 where gonna start from scratch and go from there each time.
+所以我们从头开始新建应用
 
 306
 00:14:53,660 --> 00:14:55,660
 All right, so I'm gonna click on this.
+点这里
 
 307
 00:14:55,662 --> 00:14:58,029
 You can see it wants to create an app for me so
+它会为我新建一个应用
 
 308
 00:14:58,031 --> 00:14:59,264
 it's gonna ask me some questions.
+会问我几个问题
 
 309
 00:14:59,266 --> 00:15:01,866
 First it wants to know what kind of app I wanna build, and
+首先，它问我想要创建哪种类型的应用
 
 310
 00:15:01,868 --> 00:15:04,903
 we wanna build an iOS application. So make sure you
+我们想新建 iOS App
 
 311
 00:15:04,905 --> 00:15:09,974
 click iOS Application here, not watch app, or AppleTV app,
+所以确认你点击了 iOS Application，而不是其它的
 
 312
 00:15:09,976 --> 00:15:12,610
 or an OS X app, okay? We don't want any of that.
+我们不想要其它的
 
 313
 00:15:12,612 --> 00:15:16,047
 We want iOS application. And inside there we have some
+我们想要 iOS 应用
 
 314
 00:15:16,049 --> 00:15:20,652
 choices of the kind of iOS app we wanna build, like a game or
+在这里，它问我们想要建哪种类型的 iOS 应用
 
 315
 00:15:20,654 --> 00:15:23,087
 this master detail which is usually for browsing
+例如是 Game 还是为了浏览数据库的 Master Detail Application
 
 316
 00:15:23,089 --> 00:15:25,890
 a database. We're almost always gonna choose this one,
+我们几乎只会先择这一项
 
 317
 00:15:25,892 --> 00:15:30,028
 single view application. The view there is kinda referring
+Single View Application，这里的 View 代表
 
 318
 00:15:30,030 --> 00:15:32,196
 to the view in MVC, model view controller.
+MVC 中的 V
 
 319
 00:15:32,198 --> 00:15:35,667
 That design paradigm but this is the ba-, most basic
+这个模板会为我们的创建最基本的
 
 320
 00:15:35,669 --> 00:15:39,003
 template and it gives us the least amount of code to start
+MVC 骨架，它会产生最少量的代码
 
 321
 00:15:39,005 --> 00:15:41,472
 with, which is what we want cuz we're learning so we wanna
+这也是我们希望的
 
 322
 00:15:41,474 --> 00:15:44,676
 write the code. We don't want it to, write any code for us.
+我们正在学习，所以希望写代码的是我们，而不是 Xcode
 
 323
 00:15:44,678 --> 00:15:46,678
 So we're gonna pick single view template there.
+所以这里选择 Single View 的模板
 
 324
 00:15:46,680 --> 00:15:49,447
 Now it wants to know a few things about our app,
+现在它需要知道关于 App 的几点信息
 
 325
 00:15:49,449 --> 00:15:52,784
 what the name of our app is, etc. The app we're going
+App 的名字是什么等等
 
 326
 00:15:52,786 --> 00:15:55,853
 to build today is a calculator and it's gonna look quite
+今天要创建的应用是一个计算器
 
 327
 00:15:55,855 --> 00:15:58,790
 a bit like this calculator, not exactly the same, but
+它看起来非常像一个计算器，但又不完全一致
 
 328
 00:15:58,792 --> 00:16:01,826
 similar to this calculator. This is a basic calculator,
+它会像这个，最基本的计算器
 
 329
 00:16:01,828 --> 00:16:04,262
 it comes with Mac OS and it's gonna look like this,
+是 Mac OS 上的原生应用
 
 330
 00:16:04,264 --> 00:16:06,464
 it's gonna have some keypads, gonna have some operations,
+它会有键盘，会有运算符
 
 331
 00:16:06,466 --> 00:16:09,867
 gonna have a little display in here. Basically a calculator,
+在这里还会有个小显示器
 
 332
 00:16:09,869 --> 00:16:11,336
 so I'm gonna call my app calculator.
+所以给我的 App 起名为 calculator
 
 333
 00:16:11,338 --> 00:16:13,938
 So that's the name of this app. When I look at it on my
+它就是 App 的名字，当我在手机上查看它的时候
 
 334
 00:16:13,940 --> 00:16:16,074
 phone it's gonna say calculator is the name of it.
+上面显示的名字就会是 calculator
 
 335
 00:16:16,076 --> 00:16:19,010
 Okay? This organization name can be anything you want.
+这个组织名你可以随意填
 
 336
 00:16:19,012 --> 00:16:22,880
 It's basically gonna appear in the copyright of your code.
+它会显示在你代码的版权信息上
 
 337
 00:16:22,882 --> 00:16:23,748
 Okay? When you write code,
+当你写代码的时候
 
 338
 00:16:23,750 --> 00:16:25,116
 at the top it's gonna say copyright,
+在最上面会显示版权信息
 
 339
 00:16:25,118 --> 00:16:26,718
 whatever you put here. Put whatever you want.
+你可以在这里放什么都行
 
 340
 00:16:26,720 --> 00:16:28,953
 Your name or whatever. This however,
+姓名之类的
 
 341
 00:16:28,955 --> 00:16:33,925
 wants to uniquely identify you, okay, as a developer. And
+这里，需要一个不重复的标识
 
 342
 00:16:33,927 --> 00:16:36,728
 a good way to do it is this reverse DNS notation here,
+一个解决这个问题的很好方式是这个逆向的 DNS 标志
 
 343
 00:16:36,730 --> 00:16:40,698
 edu.stanford.cs193p and then instead of putting instructor,
+edu.stanford.cs193p
 
 344
 00:16:40,700 --> 00:16:44,268
 put your SU net ID. Cuz no one else has that.
+在 instructor 那里填上你的学号就好，因为这不会重复
 
 345
 00:16:44,270 --> 00:16:46,304
 This would uniquely identify you in the universe.
+这会在宇宙中唯一确定你
 
 346
 00:16:46,306 --> 00:16:49,407
 No one else is going to have that organization identifier.
+没人会跟你重复的
 
 347
 00:16:49,409 --> 00:16:50,875
 And then it builds a unique
+随后它会产生一个独一无二的标识
 
 348
 00:16:50,877 --> 00:16:54,679
 identifier from the app by combining these two things.
+通过把这两个结合起来的方式
 
 349
 00:16:54,681 --> 00:16:57,315
 Okay? You get to choose the language you want to program
+在这里选择你想要编程的语言
 
 350
 00:16:57,317 --> 00:17:00,385
 in here. It actually doesn't matter what you choose
+在这里选择什么无关紧要
 
 351
 00:17:00,387 --> 00:17:03,154
 here, this is just going to be the language that the initial
+它只会为你创建
 
 352
 00:17:03,156 --> 00:17:05,723
 template is going to give you it starts out in.
+相关语言的初始模板
 
 353
 00:17:05,725 --> 00:17:07,525
 You can freely mix Objective C and
+在写 iOS 应用的时候
 
 354
 00:17:07,527 --> 00:17:10,561
 Swift when you're building IOS apps. Okay? Back and
+你可以把 Swift 和 Objective-C 混合起来
 
 355
 00:17:10,563 --> 00:17:13,364
 forth they're, you don't have to pick one and be stuck with
+你不需要在选择完一个之后就卡在这了
 
 356
 00:17:13,366 --> 00:17:16,234
 it. We're going to do all of our programming in this class
+在这门课中我们所有的编程都会使用 Swift
 
 357
 00:17:16,236 --> 00:17:19,570
 in Swift however. Then this is whether we want
+这里决定我们是要搭建一个
 
 358
 00:17:19,572 --> 00:17:21,139
 to build an iPhone only calculator.
+专属 iPhone 的
+
 
 359
 00:17:21,141 --> 00:17:24,909
 An iPad only calculator. Or a universal calculator that will
+还是 iPad 的
 
 360
 00:17:24,911 --> 00:17:27,979
 work on either iPad or iPhone. Okay? And
+或者是它们都可以使用的计算器
 
 361
 00:17:27,981 --> 00:17:30,181
 we're gonna go universal even though the first two weeks
+选择 universal，尽管前两周
 
 362
 00:17:30,183 --> 00:17:33,151
 we're going to be focusing on iPhone only. In the third week
+我们只会专注在 iPhone 上
 
 363
 00:17:33,153 --> 00:17:37,688
 we'll expand our calculator to work on an iPad as well. Here,
+在第三周，我们会让计算器在 iPad 上也正常地跑起来
 
 364
 00:17:37,690 --> 00:17:39,657
 we're not going to be using databases yet, that will be
+目前我们还不需要使用数据库
 
 365
 00:17:39,659 --> 00:17:43,661
 about week six and we will be talking about testing later in
+第六周我们会讨论测试
 
 366
 00:17:43,663 --> 00:17:45,563
 the quarter. Probably in a Friday section again, but
+也许在周五的课程中
 
 367
 00:17:45,565 --> 00:17:48,733
 we're not doing it now so you can leave these unchecked.
+我们现在不会处理这些，所以这些不需要勾选
 
 368
 00:17:48,735 --> 00:17:49,767
 All right, so now I hit Next, and
+点 Next
 
 369
 00:17:49,769 --> 00:17:53,037
 it says where do you wanna put this project? I'm gonna put
+它问你想把项目放在哪里
 
 370
 00:17:53,039 --> 00:17:56,808
 it in my home directory, in a folder called Developer, and
+我把它放到 ~/Developer 中
 
 371
 00:17:56,810 --> 00:17:59,444
 I highly recommend you do the same, okay.
+我也建议你们这样做
 
 372
 00:17:59,446 --> 00:18:02,180
 Home Directory Developer, so all your apps will start
+~/Developer，你们所有的 App 都放到这里
 
 373
 00:18:02,182 --> 00:18:05,750
 piling up in here. Here's the source control thing I was
+关于源码管理
 
 374
 00:18:05,752 --> 00:18:07,785
 talking about, we're not gonna do this at the beginning, so
+我们一开始先不管
 
 375
 00:18:07,787 --> 00:18:10,521
 we're gonna leave this unchecked. All right. So
+所以先不勾选
 
 376
 00:18:10,523 --> 00:18:13,324
 we hit create, and it creates our first app. Now, it's
+点 create，它就创建了我们的第一个 App
 
 377
 00:18:13,326 --> 00:18:16,961
 actually created these six files, over here on the side.
+它实际上创建了这 6 个文件，在这侧边
 
 378
 00:18:16,963 --> 00:18:17,762
 And over the course of the quarter,
+在课程期间
 
 379
 00:18:17,764 --> 00:18:20,498
 I'll show you what all six of these are about. Today,
+我会告诉你们这 6 个文件都是做什么的
 
 380
 00:18:20,500 --> 00:18:23,768
 we're only gonna focus on two of them.
+今天我们只会关注这两个
 
 381
 00:18:24,871 --> 00:18:27,772
 How many of you have used Xcode before, for any class or
+你们有谁用过 Xcode？
 
 382
 00:18:27,774 --> 00:18:31,509
 anything? Okay, so about a third of you.
+好，大概 1/3
 
 383
 00:18:31,511 --> 00:18:34,178
 So let me explain a little bit about Xcode's UI,
+我先介绍一下 Xcode 的 UI
 
 384
 00:18:34,180 --> 00:18:36,781
 what it looks like. You see this area on the left,
+左边这里
 
 385
 00:18:36,783 --> 00:18:40,051
 this blue area? That's called the Navigator and
+蓝色的区域，它是 Navigator(导航器)
 
 386
 00:18:40,053 --> 00:18:43,554
 it's basically for navigating your project.
+它用来导航你的项目
 
 387
 00:18:43,556 --> 00:18:44,755
 And you can do it in different ways.
+通过几种不同的方式
 
 388
 00:18:44,757 --> 00:18:48,459
 This is the Project Navigator that we see right here, and
+现在这个是项目导航
 
 389
 00:18:48,461 --> 00:18:50,595
 it's basically showing you your files.
+它用来显示项目的文件
 
 390
 00:18:50,597 --> 00:18:52,029
 You can arrange them in folders and stuff, but
+你可以通过文件夹来重新组织它们
 
 391
 00:18:52,031 --> 00:18:55,166
 just basically the files in your app. But you can navigate
+但只是导航 App 中的文件
 
 392
 00:18:55,168 --> 00:18:58,669
 by searching, okay, you can type some search text in here,
+但是你可以通过搜索来查找 App 文件中的内容
 
 393
 00:18:58,671 --> 00:19:01,472
 search for it in your app. You can navigate all your
+如果你在 debug 的时候
 
 394
 00:19:01,474 --> 00:19:04,675
 breakpoints if you're debugging. You can go back and
+可以在这里查看所有断点
 
 395
 00:19:04,677 --> 00:19:07,345
 look at all your old builds to see any errors or
+查看之前编译版本的错误或警告
 
 396
 00:19:07,347 --> 00:19:11,149
 warnings you have, okay, even if you fixed it you go back,
+即使你已经修复了它们并返回了
 
 397
 00:19:11,151 --> 00:19:13,484
 and look at them. So the navigator is kind
+Navigator 就像是用来关注
 
 398
 00:19:13,486 --> 00:19:16,521
 of how you keep track of what's going on in your app.
+你的 App 到底发生了什么事情的地方
 
 399
 00:19:16,523 --> 00:19:19,457
 On the right hand side here we have the utilities area,
+在右手边，有 Utilities(工具) 区
 
 400
 00:19:19,459 --> 00:19:22,426
 which is actually two windows, see it's split top and
+有两个窗口，分成上下两部分
 
 401
 00:19:22,428 --> 00:19:26,230
 bottom here. The top part is essentially an inspector,
+上部是 Inspector(监视器)
 
 402
 00:19:26,232 --> 00:19:29,800
 it's going to let you analyze and change attributes of
+你可以通过它看到或改变
 
 403
 00:19:29,802 --> 00:19:33,004
 whatever's selected in this main window. Right now we
+在主窗口选中的东西的属性
 
 404
 00:19:33,006 --> 00:19:35,673
 don't have anything selected, so it's not showing anything.
+现在没有选中任何东西，所以没显示任何东西
 
 405
 00:19:35,675 --> 00:19:38,676
 And this bottom is essentially like a palette. Okay,
+这下面的部分就像一个调色板
 
 406
 00:19:38,678 --> 00:19:41,979
 you're gonna be an artist building your app, okay, and
+在写应用的时候，你就是一个艺术家
 
 407
 00:19:41,981 --> 00:19:45,983
 you're gonna need things like buttons and web views,
+因为你需要类似于 button 或 web view 之类的东西
 
 408
 00:19:45,985 --> 00:19:47,818
 and things like that, to build your app, and
+用来搭建你的应用
 
 409
 00:19:47,820 --> 00:19:48,953
 you're gonna be finding them all,
+你会在这里找到它们
 
 410
 00:19:48,955 --> 00:19:51,122
 and pulling them all out of here. So it's your palette,
+然后可以从这里把它们拖出来，所以这就是你的调色板
 
 411
 00:19:51,124 --> 00:19:54,825
 your artist palette, as you build things. Okay? You can
+你的艺术调色板，用来创造东西
 
 412
 00:19:54,827 --> 00:19:57,361
 show and hide these two side panels with these buttons,
+你可以通过这些按扭显示或者隐藏侧面的面板
 
 413
 00:19:57,363 --> 00:20:00,831
 up here. I will tend to not do command keys, except for
+我尽量不使用快捷键，除了复制粘贴
 
 414
 00:20:00,833 --> 00:20:03,801
 like copy and paste, so that you can see what's going on.
+所以你们就可以知道我到底做了哪些事情
 
 415
 00:20:03,803 --> 00:20:06,204
 But there are tons of command keys in Xcode, and
+但是 Xcode 中有大量的快捷键
 
 416
 00:20:06,206 --> 00:20:10,441
 if you go To Xcode preferences and look under
+在 Xcode 的设置界面
 
 417
 00:20:10,443 --> 00:20:12,610
 key bindings right here you can see all of them and
+你可以发现有大量大量的快捷键
 
 418
 00:20:12,612 --> 00:20:15,680
 there's tons and tons and tons and you can even change them.
+你也可以对它们进行定制
 
 419
 00:20:15,682 --> 00:20:17,348
 Of course if you don't like them but
+如果你不喜欢它们也没关系
 
 420
 00:20:17,350 --> 00:20:18,849
 it has a lot of commands. All right, so
+但是它有大量的快捷键
 
 421
 00:20:18,851 --> 00:20:21,886
 I'll try to avoid using those command keys. So you can hide
+我尽量不使用快捷键
 
 422
 00:20:21,888 --> 00:20:25,756
 those with these things so you have hidden both sides, right.
+可以使用按扭来做这些事情
 
 423
 00:20:25,758 --> 00:20:28,426
 So you can kind of manage your screen real estate.
+你可以管理屏幕的分辨率
 
 424
 00:20:28,428 --> 00:20:31,662
 Now I have a very low-resolution screen here, so
+我电脑的分辨率非常低
 
 425
 00:20:31,664 --> 00:20:34,732
 I have to manage my real estate quite efficiently.
+所以为了高效我需要改变自己的分辨率
 
 426
 00:20:34,734 --> 00:20:36,567
 If you have a higher resolution screen,
+如果你的分辨率很高
 
 427
 00:20:36,569 --> 00:20:39,837
 then you would obviously not be doing as much hiding and
+你就不需要把这些东西给隐藏起来了
 
 428
 00:20:39,839 --> 00:20:44,108
 showing of these things. So if we look at the navigator,
+现在我们看 Navigator
 
 429
 00:20:44,110 --> 00:20:44,775
 what's selected right now?
+当前选中的是什么？
 
 430
 00:20:44,777 --> 00:20:48,980
 It's the project itself at the very top level, this blue bar.
+是最顶层的项目本身
 
 431
 00:20:48,982 --> 00:20:49,680
 This selecting the project.
+它选中了项目
 
 432
 00:20:49,682 --> 00:20:53,217
 So we're actually seeing the project, the kind
+所以在主窗口
 
 433
 00:20:53,219 --> 00:20:55,820
 of settings of the project, in the main window here.
+我们可以看到这个项目的设置
 
 434
 00:20:55,822 --> 00:20:59,624
 This main window. Here are some of them here, right?
+这个主窗口，这里有一些设置
 
 435
 00:20:59,626 --> 00:21:01,325
 Some of these we set on that first page,
+第一页有一些可以设置的
 
 436
 00:21:01,327 --> 00:21:05,029
 like the bundle identifier and whether it was universal or
+例如 Bundle Identifier（包的 ID）
 
 437
 00:21:05,031 --> 00:21:07,898
 iPad and iPhone, etc. But there's plenty more
+是通用的还是只为了 iPhone 或 iPad 而造
 
 438
 00:21:07,900 --> 00:21:10,868
 settings over here. We'll get to most of those settings as
+这里还有许多其它设置信息
 
 439
 00:21:10,870 --> 00:21:14,372
 the quarter goes by. The only setting that's important for
+随着课程的进行，我们会逐渐了解这些设置
 
 440
 00:21:14,374 --> 00:21:16,540
 you to know now, is this team setting.
+现在需要知道的设置信息是这个 team
 
 441
 00:21:16,542 --> 00:21:19,477
 See here where it says team none? You're gonna wanna be
+现在上面显示的是 none
 
 442
 00:21:19,479 --> 00:21:24,782
 able to write your app, and have it run on a device. Okay.
+你想让你写的 App 运行在真实的设备上
 
 443
 00:21:24,784 --> 00:21:26,817
 It has a simulator, which I'm gonna use today.
+我们今天会使用模拟器
 
 444
 00:21:26,819 --> 00:21:29,253
 But you also wanna be able to run on a device. And
+但是你想让它运行在真实的设备上
 
 445
 00:21:29,255 --> 00:21:33,124
 to do that you need to register an Apple ID.
+为了这样，我们需要注册一个 Apple ID
 
 446
 00:21:33,126 --> 00:21:36,060
 So here I already have mine, this CS193p Instructor, but
+我已经注册好了
 
 447
 00:21:36,062 --> 00:21:39,630
 you're going to go down here to add an account, and
+不过你需要在这下面添加一个账号
 
 448
 00:21:39,632 --> 00:21:42,466
 you're going to give an Apple ID and password. Any Apple ID
+填入 Apple ID 和密码
 
 449
 00:21:42,468 --> 00:21:45,736
 will do, you don't have to join any program or anything,
+任意一个 Apple ID 都可以，不需要加入什么开发者计划之类的
 
 450
 00:21:45,738 --> 00:21:48,372
 just any Apple ID will work here. And
+普通的 Apple ID 就可以
 
 451
 00:21:48,374 --> 00:21:49,874
 you'll put the ID and password in, and
+填入 ID 和密码
 
 452
 00:21:49,876 --> 00:21:51,676
 then you're going to select it here. And
+选这里
 
 453
 00:21:51,678 --> 00:21:56,280
 then it's going to appear here, like this. Okay? Now,
+它会在这里出现
 
 454
 00:21:56,282 --> 00:21:59,617
 when you have a team selected now you can plug a device
+当 team 有选择的东西以后，你就可以插上一个设备
 
 455
 00:21:59,619 --> 00:22:02,720
 in and you're gonna get this warning here, no provisioning
+会有一个没有证书的警告
 
 456
 00:22:02,722 --> 00:22:07,158
 profiles found. And you just click fix issue right there.
+点这里的 fix issue 
 
 457
 00:22:07,160 --> 00:22:08,926
 You have to be connected to the network at the time,
+这时你需要联网
 
 458
 00:22:08,928 --> 00:22:11,829
 all right? Fix issue and it'll fix that.
+它会修复这个问题
 
 459
 00:22:11,831 --> 00:22:14,198
 It'll basically get the ID of your device,
+它会获取你设备的 ID
 
 460
 00:22:14,200 --> 00:22:18,436
 register it with you as the developer and off you go.
+注册成为开发者，然后就可以了
 
 461
 00:22:18,438 --> 00:22:21,672
 Okay? So you'll need to do that. You only really need to
+你只需要在想把 App 运行在真实设备的时候
 
 462
 00:22:21,674 --> 00:22:23,808
 do that when it comes to running on a device.
+才需要解决这个问题
 
 463
 00:22:23,810 --> 00:22:25,476
 When we're running in a simulator you're not gonna
+当在模拟器上运行的时候
 
 464
 00:22:25,478 --> 00:22:28,913
 need to do that, but you might as well get this started now.
+就不用这么做
 
 465
 00:22:29,048 --> 00:22:32,316
 Okay? Now what about these other files over here in the
+Navigator 中的其它这些文件
 
 466
 00:22:32,318 --> 00:22:35,453
 navigator that it made these 6 files. Well like I said, were
+都有什么作用呢？
 
 467
 00:22:35,455 --> 00:22:37,922
 not going to talk about all of them. This one for example,
+我不会对它们每一个都进行详细讲解
 
 468
 00:22:37,924 --> 00:22:42,093
 assets.xcassetts. That's all your media assets. So that's
+例如 assets.xcassets 是存放媒体文件的地方
 
 469
 00:22:42,095 --> 00:22:46,997
 images, sounds, icons, things like that. Here for example is
+图片，声音和图标之类的东西
 
 470
 00:22:46,999 --> 00:22:47,965
 the app icon which I haven't set so
+例如这里的应用图标
 
 471
 00:22:47,967 --> 00:22:51,635
 all of these are all blank. So we're not really gonna talk
+我还没有设置，所以这些都是空白的
 
 472
 00:22:51,637 --> 00:22:53,738
 about that today but we'll eventually talk about it.
+我今天不会介绍，但总有一天会介绍的
 
 473
 00:22:53,740 --> 00:22:56,841
 And in fact not only am I not gonna talk about
+实际上今天我不但不会介绍这个 xcassets 文件
 
 474
 00:22:56,843 --> 00:22:59,877
 this xcassets thing right here, but I'm also not gonna
+同样我也不会介绍
 
 475
 00:22:59,879 --> 00:23:02,813
 talk about this app delegate or the launch screen or
+AppDelegate 和 LaunchScreen 还有
 
 476
 00:23:02,815 --> 00:23:06,350
-the info.p list. Okay, so I'm gonna select all those and
+the info.plist. Okay, so I'm gonna select all those and
+info.plist 文件
 
 477
 00:23:06,352 --> 00:23:10,254
 right-click on them and choose new group from selection and
+我选中它们
 
 478
 00:23:10,256 --> 00:23:13,424
 put them all in a folder. Okay, which I'm gonna call
+然后右键为它们新建一个组
 
 479
 00:23:13,426 --> 00:23:17,261
 supporting files. Because that's what they are really,
+起名为 Supporting files
 
 480
 00:23:17,263 --> 00:23:19,330
 they're kind of files to support my app.
+因为它们对我 App 起的就是支持作用
 
 481
 00:23:19,332 --> 00:23:20,264
 You see they're still there,
+你看，它们还在这里
 
 482
 00:23:20,266 --> 00:23:21,799
 I just kind of got them out of the way so
+我只是把它们清理一下
 
 483
 00:23:21,801 --> 00:23:23,834
 we can focus on these two files
+这样我就可以关注这两个文件
 
 484
 00:23:23,836 --> 00:23:27,972
 which is the most important thing to our demo today. Okay?
+它俩是今天 demo 中最重要的部分
 
 485
 00:23:27,974 --> 00:23:31,409
 Now what are these two files? Now is where I have to talk
+这俩文件是干什么的？
 
 486
 00:23:31,411 --> 00:23:34,812
 about this MVC thing, okay? So MVC stands for
+现在我就得讲讲 MVC 了
 
 487
 00:23:34,814 --> 00:23:39,917
 Model View Controller, okay? Model View Controller is a way
+MVC 代表 Model(模型) View(视图) Controller(控制器)
 
 488
 00:23:39,919 --> 00:23:43,354
 of kind of dividing up all the classes in our object orient
+MVC 是一种把我们面向对象 App 中的类分成几种不同组的方式
 
 489
 00:23:43,356 --> 00:23:46,457
 app into three different groups, the model group,
+Model 组
 
 490
 00:23:46,459 --> 00:23:48,826
 the view group, and the controller group.
+View 组和 Controller 组
 
 491
 00:23:48,828 --> 00:23:52,163
 Okay, what are those three groups? The model group is
+这三个组都是什么？Model 组是
 
 492
 00:23:52,165 --> 00:23:55,900
 what our program does It's UI independent.
+关于我们的 App 是做什么的，它与 UI 是独立的
 
 493
 00:23:55,902 --> 00:23:58,736
 So for a calculator it's going to be all the calculating.
+对于计算器来说，它是关于计算的
 
 494
 00:23:58,738 --> 00:24:01,172
 The things that actually does the calculations, right?
+它实际做的事情就是计算，对吧？
 
 495
 00:24:01,174 --> 00:24:04,275
 That's UI independent, that's going to be our model, okay?
+它是 UI 独立的，它就是我们的 Model
 
 496
 00:24:04,277 --> 00:24:08,012
 The view is the user interface that the user interacts with.
+View 就是用户直接接触的 UI 界面
 
 497
 00:24:08,014 --> 00:24:11,315
 So for the calculator it's the buttons and the display and
+对于计算器来说就是按扭还有显示之类的东西
 
 498
 00:24:11,317 --> 00:24:14,051
 all that stuff. That is the view. Okay, usually that's
+这就是 View
 
 499
 00:24:14,053 --> 00:24:17,254
 made of generic user interface elements like buttons and
+通常它是由基本的例如按扭之类的 UI 元素组成
 
 500
 00:24:17,256 --> 00:24:20,391
 things like that. And then there's the controller,
+接着就是 Controller
 
 501
 00:24:20,393 --> 00:24:23,461
@@ -2314,7 +2815,7 @@ What about this other file over here? Main.storyboard,
 
 564
 00:27:33,352 --> 00:27:39,089
-what's that? That's the V for view of our NVC. That's
+what's that? That's the V for view of our MVC. That's
 它是什么呢？就是 MVC 里面的 V
 
 565
@@ -4489,62 +4990,77 @@ it shows me all the methods that start with title.
 1001
 00:49:43,348 --> 00:49:48,617
 All the methods that include title in the name. See?
+所有名字里包含了title 的方法，看见了吗？
 
 1002
 00:49:48,753 --> 00:49:54,156
 And all the methods that have T-I-T-L-E in the order. Okay,
+还有所有含有T-I-T-L-E 这个字母顺序的方法
 
 1003
 00:49:54,158 --> 00:49:57,093
 and it gives it to you in the order you might expect right?
+这会按照你期望的顺序呈现
 
 1004
 00:49:57,095 --> 00:50:00,363
 Title first and then. So this is kinda helping,
+含有title 这个词的优先，别的在后面，这提供了一种帮助
 
 1005
 00:50:00,365 --> 00:50:00,997
 you can search basically.
+你可以这么搜索
 
 1006
 00:50:00,999 --> 00:50:03,599
 And when you do this you would quickly see current title,
+当你这么做的时候，你快速浏览到currenttitle
 
 1007
 00:50:03,601 --> 00:50:06,769
 that looks like what I want. And you can double click here,
+这看起来像是我想要的。你就在这双击
 
 1008
 00:50:06,771 --> 00:50:09,138
 actually, and it will put in there. Okay? So
+这样就会出现在这里。
 
 1009
 00:50:09,140 --> 00:50:12,942
 there's our current title. Now instead of printing touch
+这就是我们要的currenttitle。
 
 1010
 00:50:12,944 --> 00:50:17,313
 digit we basically wanna print which one, which digit was,
+现在我们想打印具体按到的某个数字，而不是“touchDigit”
 
 1011
 00:50:17,315 --> 00:50:22,485
 touched here. So I'm gonna say touched, we could say percent,
+所以这里要换成
 
 1012
 00:50:22,487 --> 00:50:25,254
 s digit. Comma digit.
+“touched %s digit”, digit
 
 1013
 00:50:25,256 --> 00:50:27,790
 This is what it would look like in C. For example,
+这就看起来像是C语音
 
 1014
 00:50:27,792 --> 00:50:31,327
 is everyone familiar with this print F like format?
+所以你们对printf 熟悉吗
 
 1015
 00:50:31,329 --> 00:50:33,696
 Okay good, cuz you can't do it in Swift.
+很好，但你不能在Swift 里这样做
 
 1016
 00:50:33,698 --> 00:50:34,096
@@ -4553,470 +5069,586 @@ Okay. >> [LAUGH]
 1017
 00:50:34,098 --> 00:50:35,164
 >> We don't do that in Swift.
+我们在Swift 里不这么做
 
 1018
 00:50:35,166 --> 00:50:37,633
 Instead, we do backslash, open parentheses,
+我们用反斜杠、括号代替
 
 1019
 00:50:37,635 --> 00:50:40,903
 close parentheses. And then we can put anything we want in
+然后里面放任何我们想放的
 
 1020
 00:50:40,905 --> 00:50:43,806
 here. Okay clean digit. And we don't need this out here on
+删掉digit，引号外不需要它
 
 1021
 00:50:43,808 --> 00:50:47,510
 the side. Okay, so this will be invaluated converted to
+所以这会被转换成string 类型
 
 1022
 00:50:47,512 --> 00:50:50,279
 a string. Some things can't be converted to strings but
+有的不能被转换，但大多数可以
 
 1023
 00:50:50,281 --> 00:50:53,215
 most things can, so you put that in there. Okay,
+所以你可以把它放在里面
 
 1024
 00:50:53,217 --> 00:50:56,652
 if you can't you'll get a warning, okay? All right, so
+如果不可以，你会被警告
 
 1025
 00:50:56,654 --> 00:50:58,054
 that's how we do that. So, let's go ahead and
+所以我们就这么做了
 
 1026
 00:50:58,056 --> 00:51:01,357
 see what's going on. But now maybe we should start paying
+继续看看接下来会发生什么
 
 1027
 00:51:01,359 --> 00:51:02,024
 attention to our warnings.
+我想现在应该开始注意一下这个警告了
 
 1028
 00:51:02,026 --> 00:51:05,428
 Okay, when you submit your homework, no warnings please.
+当你们交作业的时候，不准有警告
 
 1029
 00:51:05,430 --> 00:51:07,463
 Okay, no warnings. And certainly no errors,
+没有警告，当然也不能有错误
 
 1030
 00:51:07,465 --> 00:51:10,433
 those are red things those won't build, no warnings. So
+有错误的时候就不能build
 
 1031
 00:51:10,435 --> 00:51:12,535
 what is this warning, let's take a look at this warning.
+这个警告是什么呢？我们来看看
 
 1032
 00:51:12,537 --> 00:51:14,170
 You look at a warning by clicking on it.
+我们通过点击来看一个警告
 
 1033
 00:51:14,172 --> 00:51:16,572
 So I'm gonna click on it, and it says here,
+我点击他，这里是这么写的
 
 1034
 00:51:16,574 --> 00:51:21,644
 variable digit with never mutated, consider changing to
+digit这个变量没有被改变过
 
 1035
 00:51:21,646 --> 00:51:26,082
 let constant. Okay, what does that mean?
+是不是考虑把他变成let型常量。这是什么意思呢？
 
 1036
 00:51:26,084 --> 00:51:31,020
 That means that instead of var here, it wants us to put let.
+这里的意思是，希望我们用let而不是var
 
 1037
 00:51:31,022 --> 00:51:34,623
 And in fact, you should always do that. Anytime you declare
+事实上我们应该这么做
 
 1038
 00:51:34,625 --> 00:51:37,793
 a local variable, okay, or even a property that is
+任何时候申明一个本地变量，或者一个属性
 
 1039
 00:51:37,795 --> 00:51:40,629
 initialized at the beginning and never changes, in other
+在初始化后就一直没被改变，换句话说，
 
 1040
 00:51:40,631 --> 00:51:43,599
 words, it's a constant, use let instead of var.
+就是个常量，我们就应该用let 而不是var
 
 1041
 00:51:43,601 --> 00:51:46,268
 Now why do you want to do that? Two reasons really, one,
+那么我们现在为什么要这么做？两个理由
 
 1042
 00:51:46,270 --> 00:51:48,804
 it helps people reading your code realize this thing's
+一、这帮助别人读你的代码的时候意识到
 
 1043
 00:51:48,806 --> 00:51:51,040
 never going to change, I don't have to worry about it,
+这个一直不会变，不需要去担心它
 
 1044
 00:51:51,042 --> 00:51:54,243
 it's just like a constant. And two, if that thing were for
+这只是个常量。二、如果那个东西，
 
 1045
 00:51:54,245 --> 00:51:57,613
 example, an array, or a dictionary, and you use let,
+比如说是一个数组或者字典，你用了let
 
 1046
 00:51:57,615 --> 00:52:00,883
 that means nothing can be put into that dictionary or
+这就意味着没有什么可以放进字典或从字典拿出
 
 1047
 00:52:00,885 --> 00:52:04,553
 taken out. Or into the array or taken out okay. So
+也可以放进数组或从数组拿出
 
 1048
 00:52:04,555 --> 00:52:08,023
-it's how you can create read only arrays in dictionaries
+it's how you can create read only arrays and dictionaries
+这就是你如何创建只读的数组或者是字典
 
 1049
 00:52:08,025 --> 00:52:12,628
 okay. So, always use let when you are doing a constant.
+所以申明常量的时候一定记得用let
 
 1050
 00:52:12,630 --> 00:52:14,563
 And in fact notice that XCode is saying,
+注意Xcode 这里说的
 
 1051
 00:52:14,565 --> 00:52:17,733
 hey if you click here I'll fix it for you. Okay,
+如果你点这里，我会为你修复这个问题
 
 1052
 00:52:17,735 --> 00:52:21,904
 see how it says fix it replays var with let. Sure. Okay, and
+看一下它如何用let 代替var 修正这个问题
 
 1053
 00:52:21,906 --> 00:52:24,773
 it did it and now the warnings gone. Okay, so
+所以它做到了，警告没了
 
 1054
 00:52:24,775 --> 00:52:29,678
 let's run, see if this is working. We're crossing our
+来跑一下，看看是不是能行
 
 1055
 00:52:29,680 --> 00:52:32,915
 fingers about that whole string question mark thing.
+我们越过我们的手指关于整串问号的事情
 
 1056
 00:52:32,917 --> 00:52:35,518
 All right, so here we go, let's press 5.
+好了，来按下5
 
 1057
 00:52:36,921 --> 00:52:40,189
 The heck is going on down there? Okay, touched
+这下面就会显示数字
 
 1058
 00:52:40,191 --> 00:52:45,294
 optional 5 digit? Okay so what is this optional business.
+touched optional("5") digit？这里的optional 是什么
 
 1059
 00:52:45,296 --> 00:52:47,163
 Here you all wanna take a deep breath,
+所以这里你们得深呼吸
 
 1060
 00:52:47,165 --> 00:52:50,332
 clear your minds, and pay close attention okay. Because
+清空你们的脑袋，集中全部注意力
 
 1061
 00:52:50,334 --> 00:52:52,935
 this is a very important thing in Swift, it's ubiquitous
+因为这是Swift 里非常非常重要的东西
 
 1062
 00:52:52,937 --> 00:52:57,740
 throughout the entire iOS API okay. Very cool feature, but
+这在iOS API 里无处不在，一个非常酷的特性
 
 1063
 00:52:57,742 --> 00:53:00,442
 it requires a little bit of getting used to in terms of
+但是需要一段时间来熟悉这个语法
 
 1064
 00:53:00,444 --> 00:53:05,381
 its syntax okay? This is the feature of optionals. Okay?
+这是一个叫optional 的特性
 
 1065
 00:53:05,383 --> 00:53:09,818
 In Swift, there is a type called optional.
+在Swift里，有一种类型叫optional
 
 1066
 00:53:09,820 --> 00:53:12,388
-It's a type like int or blue or anything else,
+It's a type like int or boolean or anything else,
+这是一种类似于int 或bool 的类型
 
 1067
 00:53:12,390 --> 00:53:14,323
 string, it's dictionary, array,
+或者是string、dictionary、array 这样的
 
 1068
 00:53:14,325 --> 00:53:18,360
 optional. Optional is just a type. This type can only have
+optional 只是一个类型，这个类型只有两个值
 
 1069
 00:53:18,362 --> 00:53:23,699
 two values. One value is not set. Okay?
+一个值是没有被赋值
 
 1070
 00:53:23,701 --> 00:53:28,070
 That's expressed in Swift with the key word nil, N-I-L.
+在Swift里表示它的关键字是nil
 
 1071
 00:53:28,072 --> 00:53:31,473
 Nil only means, this optional is not set.
+nil 只表示optional 没有被赋值
 
 1072
 00:53:31,475 --> 00:53:33,709
 That's all it means in Swift. It doesn't mean zero.
+这就是他在Swift 里全部的含义，这不代表它为零
 
 1073
 00:53:33,711 --> 00:53:36,245
 It doesn't mean a pointer that doesn't point anywhere, like
+这不像别的语言，它不代表一个不指向任何地方的指针
 
 1074
 00:53:36,247 --> 00:53:39,882
 in other languages. Nil means an optional that's not set.
+nil 代表一个optional 没有被赋值
 
 1075
 00:53:39,884 --> 00:53:45,120
-The other state that an optional can be in is set,
+The other state that an optional can be is set,
+另一个状态就是一个optional 被赋值了
 
 1076
 00:53:45,122 --> 00:53:48,691
 okay? Now, if it's in the set state, it can have
+如果它在被赋值状态
 
 1077
 00:53:48,693 --> 00:53:52,995
 an associated value, okay? An associated value,
+他就可以有一个关联值
 
 1078
 00:53:52,997 --> 00:53:55,698
 which can be of any other type, okay? Actually it also
+一个可以是其他任何类型的关联值
 
 1079
 00:53:55,700 --> 00:53:57,199
 could also be an optional. You can have an optional,
+实际上，它还可以是一个optional。你可以有一个optional(optional)
 
 1080
 00:53:57,201 --> 00:54:00,970
 optional, but that associated value is just associated with
+但是关联值只和它赋值的状态关联
 
 1081
 00:54:00,972 --> 00:54:03,405
 this set state, okay? In the not set state,
+在未赋值状态
 
 1082
 00:54:03,407 --> 00:54:06,375
 there is no associated value cuz it's not set. Okay?
+它就没有关联值，因为它没有被赋值
 
 1083
 00:54:06,377 --> 00:54:09,011
 Now what does it look like to declare it optional? Well,
+那么把它申明为optional 看起来是什么样呢？
 
 1084
 00:54:09,013 --> 00:54:12,615
 let's go back with our option key and take a look at current
+让我们回过头看一下我们的option key 看一下currentTitle
 
 1085
 00:54:12,617 --> 00:54:15,017
 title. Okay, you remember this from the documentation?
+还记得这段文档吗？
 
 1086
 00:54:15,019 --> 00:54:20,289
 It says var currentTitle string? That means this is
+这里写到var currentTitle: string?
 
 1087
 00:54:20,291 --> 00:54:25,694
 an optional whose associated value is a string. Okay?
+这里的意思是这是个关联值为string 的optional
 
 1088
 00:54:25,696 --> 00:54:28,063
 So if someone looks at this property and
+所以如果有人看到这个属性
 
 1089
 00:54:28,065 --> 00:54:29,198
 says, what type is that property?
+当他问这个是什么类型的时候
 
 1090
 00:54:29,200 --> 00:54:32,701
 And they say, it's a string but it's optional no, no.
+他可能会说，这是个string，但是是optional。不！
 
 1091
 00:54:32,703 --> 00:54:37,973
 This is an optional and it's associated values of string,
+这是个optional，他的关联值是string
 
 1092
 00:54:37,975 --> 00:54:42,311
 okay? Get used to saying, this type is optional, okay? So
+要习惯于说这个类型是optional
 
 1093
 00:54:42,313 --> 00:54:45,114
 this is an optional string, that's what would say.
+这是个optional string，这才是正确的
 
 1094
 00:54:45,116 --> 00:54:47,516
 It's an optional string, okay? But primarily,
+这是个optional string。主要是个optional
 
 1095
 00:54:47,518 --> 00:54:51,053
 it's an optional. Okay, it's associated value is a string.
+关联值是string
 
 1096
 00:54:51,055 --> 00:54:53,922
 So this currentTitle, why is it an optional? Well,
+所以这个currentTitle 为什么是个optional？
 
 1097
 00:54:53,924 --> 00:54:58,560
 because we might have a button here that has no title set.
+这是因为一个按钮的标题可能不会被赋值
 
 1098
 00:54:58,562 --> 00:55:02,064
 Not set. Okay, so the title needs to be an optional,
+没有赋值，所以它应该是个optional
 
 1099
 00:55:02,066 --> 00:55:05,367
 so it can represent the case where it's not set. Now,
+所以它就可以表示没有被赋值的情况
 
 1100
 00:55:05,369 --> 00:55:08,304
 anything can be an optional. Not just pointers, or objects.
+所以任何东西都可以是optional。不只是指针或对象
 
 1101
 00:55:08,306 --> 00:55:11,440
 Ints could be optional. You could have an optional int,
+int可以是optional，你可以有一个optional int
 
 1102
 00:55:11,442 --> 00:55:15,077
 okay? But here we are representing the title,
+但这里我们代表了一个标题
 
 1103
 00:55:15,079 --> 00:55:18,414
 the button, which is the string and it might be not set
+这个按钮的标题是个string，这可能不会被赋值
 
 1104
 00:55:18,416 --> 00:55:20,382
 okay? So we need that to be an optional.
+我们需要这个是个optional
 
 1105
 00:55:20,384 --> 00:55:23,519
 So how do I get the string, because I don't want
+所以我怎么得到这个string
 
 1106
 00:55:23,521 --> 00:55:27,690
 this digit, which currently is also an optional string?
+我不希望这个digit，现在还是个optional string
 
 1107
 00:55:27,692 --> 00:55:30,559
 Isn't it kinda weird here when I said let digit equal,
-
+当这里是let digit ＝ 的时候不是很奇怪吗
 1108
 00:55:30,561 --> 00:55:34,029
 nobody said how come you didn't say colon string?
+没人觉得你为什么不加上:string呢？
 
 1109
 00:55:34,031 --> 00:55:37,900
 Okay? I didn't say the type. I declared a local variable.
+我没有说类型，我申明一个本地变量
 
 1110
 00:55:37,902 --> 00:55:41,170
 It didn't even have a type. How was that possible?
+我甚至都没有一个类型，这怎么可能？
 
 1111
 00:55:41,172 --> 00:55:46,742
 In Swift, Swift will infer the type all the time, okay? If
+在Swift 里，Swift 会一直推断类型
 
 1112
 00:55:46,744 --> 00:55:49,411
 it's possible for it to know the type it will infer it.
+如果它可以在这里知道他的类型，那么就会推断这个类型
 
 1113
 00:55:49,413 --> 00:55:54,183
 And in fact it's wrong really bad coding style to put that
+实际上，这里写上类型是个非常差的编程风格
 
 1114
 00:55:54,185 --> 00:55:58,220
 type in there. It's better to just say let digit equal and
+这里最好就这么写
 
 1115
 00:55:58,222 --> 00:56:01,190
 let swift infer it. And here Swift has inferred.
+让Swift 来推断他的类型。这里Swift 也做到了
 
 1116
 00:56:01,192 --> 00:56:03,325
 The digit must be of type string question mark,
+这里的digit 一定会是个string? 类型
 
 1117
 00:56:03,327 --> 00:56:06,228
 that's because this is of type string question mark.
+因为后面的也是个string? 类型
 
 1118
 00:56:06,230 --> 00:56:09,365
 So of course digit has to be that. You see what's happening
+所以digit 当然也应该是那个类型。你看到那发生什么了吗？
 
 1119
 00:56:09,367 --> 00:56:12,668
 there? So you're going to see type inference all the time in
+Swift 里你会时时看到类型推断的结果
 
 1120
 00:56:12,670 --> 00:56:14,203
 Swift, it makes your code much more compact,
+这让你代码更加简洁
 
 1121
 00:56:14,205 --> 00:56:18,374
 a lot less repeated stuff, is that a question in the back?
+很多更少重复的工作，那边的同学有问题吗？
 
 1122
 00:56:18,376 --> 00:56:19,875
 >> Yeah, is that the same for
+这对var 是一样的吗？
 
 1123
 00:56:19,877 --> 00:56:20,209
 var too. >> Is the question is
+问题是：
 
 1124
 00:56:20,211 --> 00:56:22,277
 that same for var too, absolutely it's the same for
+这对var 是一样的吗？
 
 1125
 00:56:22,279 --> 00:56:26,382
 var, okay? So, how do I get that string though?
+完全一样。所以我怎么获得那个string 呢？
 
 1126
 00:56:26,384 --> 00:56:28,951
 If this button title is set, how do I get that
+如果这个按钮的标题已经有了，那我如何
 
 1127
 00:56:28,953 --> 00:56:32,721
 associated value thing, okay, out of this optional?
+从这个optional 里面获取这个关联值？
 
 1128
 00:56:32,723 --> 00:56:36,525
 And the answer is you put an exclamation point in the end,
+方法是你在最后放一个感叹号
 
 1129
 00:56:36,527 --> 00:56:39,328
 okay. Now, optional is question mark on the end of
+optional 在定义的末尾有个问号
 
 1130
 00:56:39,330 --> 00:56:42,831
 a declaration. Exclamation point is unwrap this thing and
+感叹号是用来unwarp（解包）这个optional
 
 1131
 00:56:42,833 --> 00:56:46,402
 give me the associative value. So this is very succinct,
+然后给我这个关联值。这是很简明的
 
 1132
 00:56:46,404 --> 00:56:50,038
 one character for each side of you using this, okay?
+每次可以使用一种符号
 
 1133
 00:56:50,040 --> 00:56:51,774
 Question. >> Can you briefly talk about
+问题：
 
 1134
 00:56:51,776 --> 00:56:52,074
@@ -5029,1616 +5661,2019 @@ why you design the title to be optional instead of like
 1136
 00:56:53,978 --> 00:56:59,114
 an empty string? >> Okay, so the question is,
+问题是
 
 1137
 00:56:59,116 --> 00:57:02,384
 why does Swift have this optional thing instead of just
+为什么Swift 不直接用空字符
 
 1138
 00:57:02,386 --> 00:57:05,120
 doing empty string to mean a button without a title?
+而是用optional 来表示一个没有标题的button？
 
 1139
 00:57:05,122 --> 00:57:10,492
 Or maybe for an int minus 1. I don't know. Or for a point or
+或者是一个最小为1的int
 
 1140
 00:57:10,494 --> 00:57:14,463
 0 memory address or something like that. The main reason for
+又或者是一个指针、一个不占内存的地址或者类似的什么东西
 
 1141
 00:57:14,465 --> 00:57:18,100
 that is for example, pointers to objects in Swift, you don't
+这主要的原因是，Swift 里的指针
 
 1142
 00:57:18,102 --> 00:57:21,703
 see the memory address. So you couldn't have it be 0, okay,
+你是看不见内存地址的。所以你不能让他为0
 
 1143
 00:57:21,705 --> 00:57:23,906
 that's hidden from you. So there'd be no way to do it.
+这对你是隐藏的。所以没法这样做
 
 1144
 00:57:23,908 --> 00:57:28,076
 For an int, if you wanted an optional int, is it minus 1 or
+对于int，如果你想要一个optional int
 
 1145
 00:57:28,078 --> 00:57:31,280
 0, max int? What is it, it don't know what it is.
+它到底是1？是0？还是别的什么？他不知道应该是多少。
 
 1146
 00:57:31,282 --> 00:57:34,817
 So Swift is trying to be consistent across all things.
+所以Swift 想涵盖所有情况
 
 1147
 00:57:34,819 --> 00:57:38,854
 Ints, pointers to objects, whatever to make sure that
+Ints，指向对象的指针
 
 1148
 00:57:38,856 --> 00:57:40,456
 we can tell which ones are not set. Okay, so
+无论是什么，要保证我们能知道他有没有被赋值
 
 1149
 00:57:40,458 --> 00:57:42,591
 that's the thought behind it. It's really great actually,
+这就是optional 背后的思考，非常棒
 
 1150
 00:57:42,593 --> 00:57:46,094
 once you get used to it it's fantastic. All right, so
+一旦你习惯这种做法，真的非常赞
 
 1151
 00:57:46,096 --> 00:57:47,830
 we unwrap it with this exclamation point.
+我们用感叹号对它进行unwarp
 
 1152
 00:57:47,832 --> 00:57:51,767
 Now what would happen if that current title value was
+如果这里的currentTitle 没有被赋值，会发生什么？
 
 1153
 00:57:51,769 --> 00:57:54,903
 not set? And this exclamation point tried to pull out
+这个感叹号试着去把值取出来
 
 1154
 00:57:54,905 --> 00:57:57,873
 the associated value? What do you think would happen?
+你觉得会发生什么
 
 1155
 00:57:57,875 --> 00:57:58,674
 >> Error.
+错误
 
 1156
 00:57:58,676 --> 00:58:00,576
 >> Error, yeah, bad error.
+错误，是的大错特错
 
 1157
 00:58:00,578 --> 00:58:02,644
 It would crash my app, okay? So
+这会让你的应用崩溃
 
 1158
 00:58:02,646 --> 00:58:05,247
 exclamation point crashes your app if you tried to
+如果你试着unwarp 一个没有被赋值的optional
 
 1159
 00:58:05,249 --> 00:58:08,750
 unwrap an optional that's in the not set state, okay,
+感叹号会让你的应用崩溃
 
 1160
 00:58:08,752 --> 00:58:12,921
 if it's nil. Now some of you conservative folks might be
+如果它为空。有些保守的人会说
 
 1161
 00:58:12,923 --> 00:58:15,257
 saying I'm never using exclamation point, that's so
+他从来不用感叹号
 
 1162
 00:58:15,259 --> 00:58:18,927
 easy to crash my app. Okay? And the answer to that is yes
+因为太容易让应用崩溃。但答案是
 
 1163
 00:58:18,929 --> 00:58:22,498
 it is, but sometimes crashing your app is a good thing.
+是的，确实容易让应用崩溃，但有时候这是好事
 
 1164
 00:58:22,500 --> 00:58:23,999
 It helps you find a bug, okay?
+这会帮助你找到bug
 
 1165
 00:58:24,001 --> 00:58:26,869
 Because something that you expect to be set by a certain
+因为有的时候你希望他被赋予一个确定的值
 
 1166
 00:58:26,871 --> 00:58:28,737
 point isn't, and it crashes your app, and
+如果没有，那就让应用崩溃
 
 1167
 00:58:28,739 --> 00:58:31,206
 you find it before it goes out to your customer. And some
+你在app 发布给你的用户之前就找到这个bug
 
 1168
 00:58:31,208 --> 00:58:33,842
 unexpected thing is happening because something's not set.
+因为有些没被赋值，会发生一些预期之外的事情
 
 1169
 00:58:33,844 --> 00:58:36,311
 Now, I'm gonna show you a little later how you can
+我稍后会给你们展示
 
 1170
 00:58:36,313 --> 00:58:38,046
 unwrap the optional and get the associated value
+如何不让应用崩溃的情况下unwarp optional 并获取关联值
 
 1171
 00:58:38,048 --> 00:58:41,250
 without crashing. Basically, test to see if it's set and
+总的来说，自测一下它有没有被赋值
 
 1172
 00:58:41,252 --> 00:58:44,286
 do it, okay? So I'm gonna show you that in a little bit.
+我过一会会做给你们看
 
 1173
 00:58:44,421 --> 00:58:45,954
 All right, so we've unwrapped this, optional.
+我们已经unwarp 了这个optional
 
 1174
 00:58:45,956 --> 00:58:49,224
 We're gonna crash if it's not set, that's fine. And so
+如果没有被赋值会让应用崩溃，这没问题
 
 1175
 00:58:49,226 --> 00:58:52,661
 now, notice when I do the option click on digit,
+注意我按住option 然后点这个digit
 
 1176
 00:58:52,663 --> 00:58:57,299
 what's the type? String, not optional string,
+什么类型呢？不是optional string
 
 1177
 00:58:57,301 --> 00:59:00,569
 string, that's good because we unwrapped it. So now when we
+就是string，这很棒，因为我们unwarp 了
 
 1178
 00:59:00,571 --> 00:59:05,240
 run, instead of saying touched optional 6 digit down there,
+现在跑一下，就不会说touched optional 6 digit 了
 
 1179
 00:59:05,242 --> 00:59:10,579
 it's going to say touch the 6 digit, touch 2, touch 4, 8, 9,
+而是说touch the 6 digit 或者2、4、8、9
 
 1180
 00:59:10,581 --> 00:59:17,019
 okay? Got it? Okay, now, this is going good, but we
+明白了吗？这很棒
 
 1181
 00:59:17,021 --> 00:59:21,123
 don't really want this to be printing out in the console.
+但我们不想它在控制台打印出来
 
 1182
 00:59:21,125 --> 00:59:23,725
 We want our calculator to have a display and
+我们希望我们的计算器有个显示
 
 1183
 00:59:23,727 --> 00:59:26,762
 we want the digits we typed to go in the display, right. So
+我们希望我们按下的digits 能显示出来
 
 1184
 00:59:26,764 --> 00:59:29,665
 let's go do that. Let's add a display to our
+所以现在来做这个。加一个显示
 
 1185
 00:59:29,667 --> 00:59:32,534
 user interface here. We're gonna put it at the top, okay?
+到UI上。我们会把这个放在顶部
 
 1186
 00:59:32,536 --> 00:59:35,537
 I'm talking about this thing right up here where this 0 is.
+我指的是这个右上角零的这个
 
 1187
 00:59:35,539 --> 00:59:37,439
 And I wanna it to kinda look similar to that,
+我希望看起来很像这个
 
 1188
 00:59:37,441 --> 00:59:39,241
 maybe some different colors but kinda like that.
+可能是不同颜色，但是类似吧
 
 1189
 00:59:39,243 --> 00:59:44,479
 So I'm gonna go back to my utilities area over here and
+现在回到组建的区域
 
 1190
 00:59:44,481 --> 00:59:45,547
 go to the bottom. And this time,
+到最底部，这次
 
 1191
 00:59:45,549 --> 00:59:48,617
 instead of grabbing a button, I'm gonna grab one of these,
+不是抓一个button，而是抓一个这个
 
 1192
 00:59:48,619 --> 00:59:52,921
 a label. So a label is Read only text,
+一个label，label 是一个只读的文字
 
 1193
 00:59:52,923 --> 00:59:55,691
 okay? The user can't touch on it, and then type
+用户不能碰这个
 
 1194
 00:59:55,693 --> 00:59:58,527
 with the little keyboard on the iPhone, okay? This is read
+然后用键盘输入。
 
 1195
 00:59:58,529 --> 01:00:01,229
 only text which is what we want on my calculator. So
+这是一个我们计算器上需要的只读的文字
 
 1196
 01:00:01,231 --> 01:00:04,099
 I'm gonna bring it over here, bring it out, again same way
+我会让它到这里，拖出来
 
 1197
 01:00:04,101 --> 01:00:08,503
 as before. I can resize it, I can change what's in there,
+跟之前一样，我可以重新定义它的大小
 
 1198
 01:00:08,505 --> 01:00:11,273
 I can change the font over here. Let's make this one
+可以改变文字。现在让它字变大
 
 1199
 01:00:11,275 --> 01:00:15,978
 really big, how about 40 point. I can even make it
+差不多40pt 吧。我还可以让它右对齐
 
 1200
 01:00:15,980 --> 01:00:18,747
 right aligned, you know how in calculators usually
+你知道一般计算器都是右对齐
 
 1201
 01:00:18,749 --> 01:00:21,316
 the text is on the right so there's an alignment thing for
+这里有个label 对齐选项
 
 1202
 01:00:21,318 --> 01:00:23,952
 the label here, so we'll do that. Maybe I want to change
+我们可以这么做。
 
 1203
 01:00:23,954 --> 01:00:27,189
 the background color for this one too, how about blue, okay
+我也想换一下背景颜色，蓝色就不错
 
 1204
 01:00:27,191 --> 01:00:30,158
 there's blue. I don't really like black on blue, here's
+但我不喜欢蓝底黑字
 
 1205
 01:00:30,160 --> 01:00:33,829
 a color of the text, we'll go white on blue. Okay, so
+这里是文字颜色，蓝底白字就挺好
 
 1206
 01:00:33,831 --> 01:00:37,099
 I can basically set it however I want, okay, got this UI,
+我可以随意设置这些
 
 1207
 01:00:37,101 --> 01:00:39,001
 I could use the blue lines by the way,
+也可以用蓝线辅助
 
 1208
 01:00:39,003 --> 01:00:43,405
 to line it up nicely here, but again not so important because
+这样就可以很整齐的放置
 
 1209
 01:00:43,407 --> 01:00:46,742
 I'm going to do the flexible UI thing on Wednesday, but
+不是特别重要的是，我会在周三教自适应的UI布局
 
 1210
 01:00:46,744 --> 01:00:51,780
 I could do it. All right, so now, how about connecting this
+我可以做这些。
 
 1211
 01:00:51,782 --> 01:00:55,050
 to our controller? This is a little different because this
+那么如何把这个label 跟controller 联系起来？
 
 1212
 01:00:55,052 --> 01:00:58,220
 is not a case where the user's gonna touch this thing and
+这有点不太一样，因为这不是那种用户点一下
 
 1213
 01:00:58,222 --> 01:00:58,887
 it's gonna invoke a method.
+就调用一个方法的情况
 
 1214
 01:00:58,889 --> 01:01:02,524
 It's more the other way around. I wanna talk to it.
+这是另外一种情况，我想跟它交互
 
 1215
 01:01:02,526 --> 01:01:04,359
 Okay, I wanna put things in the display.
+我想把东西放进去展示
 
 1216
 01:01:04,361 --> 01:01:07,863
 So this is communication coming from the controller to
+这是一个从controller 到显示的通信
 
 1217
 01:01:07,865 --> 01:01:11,500
 the display instead of from a button to the controller. So
+而不是一个按钮到controller 的通信
 
 1218
 01:01:11,502 --> 01:01:15,771
 we still connect them up in the same way using control and
+我们还是一样用按住control 拖拽的方式
 
 1219
 01:01:15,773 --> 01:01:20,275
 drag, okay, to put something into our controller. But
+把一些东西放进controller
 
 1220
 01:01:20,277 --> 01:01:24,179
 this time instead of action up here we're going to do outlet.
+但这次我们选outlet 而不是action
 
 1221
 01:01:24,181 --> 01:01:27,149
 And what outlet means is instead of creating a method,
+outlet的意思是新建一个熟悉
 
 1222
 01:01:27,151 --> 01:01:30,285
 create a property. Right? An instance variable,
+而不是方法。一个实例变量
 
 1223
 01:01:30,287 --> 01:01:32,721
 just like currentTitle is an instance variable, or
+就像currentTitle 是一个实例变量
 
 1224
 01:01:32,723 --> 01:01:34,256
 property, we're gonna have a property here.
+或者一个属性，这里我们有了一个属性
 
 1225
 01:01:34,258 --> 01:01:36,992
 And this property is going to point to this display for
+这个属性会指向显示
 
 1226
 01:01:36,994 --> 01:01:39,628
 us so we can access it any time we want. So
+这样我们就可以在任何需要的时候获取他
 
 1227
 01:01:39,630 --> 01:01:44,299
 I'm gonna call this property display, not that, display,
+我准备叫这个属性display
 
 1228
 01:01:44,301 --> 01:01:47,469
 okay? Luckily it got the type right here, it didn't say any
+碰巧这里有类型，这没说有任何对象
 
 1229
 01:01:47,471 --> 01:01:50,338
 objects. It's good, it knows it was a UI label. And don't
+这很好，它知道是个UILabel
 
 1230
 01:01:50,340 --> 01:01:52,974
 worry about this storage, weak or strong, we'll talk about
+也不用担心这个storage 是strong 或是weak
 
 1231
 01:01:52,976 --> 01:01:55,043
 that next week, so you can just ignore that for now.
+我们下周再说，所以你现在就可以忽略他
 
 1232
 01:01:55,045 --> 01:01:58,213
 Okay, so I hit connect and it creates,
+我点击connect，它就被创建了
 
 1233
 01:01:58,215 --> 01:02:02,250
 instead of creating a method here, it created a property.
+这里创建了一个属性而不是一个方法
 
 1234
 01:02:02,252 --> 01:02:06,722
-Now again, this IB outlet is just something that Esco puts,
+Now again, this IB outlet is just something that Xcode puts,
+再一次，这个IBOutlet 只是Xcode 放这的。
 
 1235
 01:02:06,724 --> 01:02:07,989
 put this little circle here. So
+放了一个小圆圈在这里
 
 1236
 01:02:07,991 --> 01:02:11,159
 we can see what it's connected to, so you can ignore that.
+我们可以看到这个链接到了什么，所以你可以忽略那个
 
 1237
 01:02:11,161 --> 01:02:12,060
 I told you to ignore weak and
+我说了可以忽略weak 和strong
 
 1238
 01:02:12,062 --> 01:02:14,730
 strong, so you can ignore that. And so hopefully
+所以可以忽略它
 
 1239
 01:02:14,732 --> 01:02:18,533
 this is familiar to you, it looks like current title, var.
+这个看起来很熟悉，有点像currentTitle
 
 1240
 01:02:18,535 --> 01:02:21,636
 This is a property on our controller. Okay,
+这是你controller 里的一个属性
 
 1241
 01:02:21,638 --> 01:02:24,005
 an instance variable, if you wanna think of it that way.
+一个实例变量，如果你想这么认为的话
 
 1242
 01:02:24,007 --> 01:02:29,544
 It's called display. Its type is UI label exclamation point.
+这叫display。类型是UILabel ！
 
 1243
 01:02:29,546 --> 01:02:33,648
 Okay, now what the heck is that, exclamation point? Okay,
+这里的感叹号又是什么意思呢？
 
 1244
 01:02:33,650 --> 01:02:35,784
 I thought exclamation point was unwrapping optionals,
+我认为感叹号是用来unwrapping optional 的
 
 1245
 01:02:35,786 --> 01:02:38,153
 why is there an exclamation point here, it makes no sense.
+这里为什么有个感叹号？这不科学。
 
 1246
 01:02:38,155 --> 01:02:42,424
 And in fact you can put a question mark here because
+事实上你可以在这里放个问号
 
 1247
 01:02:42,426 --> 01:02:44,860
 exclamation point also means optional.
+因为感叹号也代表了optional
 
 1248
 01:02:44,862 --> 01:02:47,329
 It means the same kinda optional as question mark.
+这跟问号表示的optional 是一个意思
 
 1249
 01:02:47,331 --> 01:02:48,830
 And I'm gonna leave this question mark, and
+我会先在这放一个问号
 
 1250
 01:02:48,832 --> 01:02:50,599
 I'm gonna keep working on this demo, and
+继续完成这个demo
 
 1251
 01:02:50,601 --> 01:02:51,099
 then I'm gonna go back and
+然后回过头来
 
 1252
 01:02:51,101 --> 01:02:52,167
 change it to an exclamation point, and
+把它改成感叹号
 
 1253
 01:02:52,169 --> 01:02:55,604
 show you what exclamation point means. Okay? But
+告诉你们感叹号是什么意思。
 
 1254
 01:02:55,606 --> 01:02:58,073
 exclamation point and question mark both mean optional,
+当你定义的时候，
 
 1255
 01:02:58,075 --> 01:03:02,744
 when you're declaring. Okay, so now I have this display.
+感叹号和问号都表示optional。所以现在你有了这个display
 
 1256
 01:03:02,746 --> 01:03:06,515
 When numbers get touched here, I want to, basically, append
+当数字被按下的时候，我想
 
 1257
 01:03:06,517 --> 01:03:09,684
 these digits onto whatever's already in the display,
+不管显示了什么都把digit 加到display 上
 
 1258
 01:03:09,686 --> 01:03:12,287
 all right? So let's go ahead and do that.
+所以现在来做这个
 
 1259
 01:03:12,289 --> 01:03:14,556
 We can get rid of this print to the console.
+删掉这个打印到控制台的
 
 1260
 01:03:14,558 --> 01:03:16,658
 We don't need to do that anymore. So I'm gonna create
+我们不再需要它
 
 1261
 01:03:16,660 --> 01:03:19,294
 another local variable which is also gonna be a constant,
+我需要再新建一个本地变量，当然也是个常量
 
 1262
 01:03:19,296 --> 01:03:24,366
 so it's let. I'm gonna call it textCurrentlyInDisplay, okay?
+所以是let 。我叫它textCurrentlyInDisplay
 
 1263
 01:03:24,368 --> 01:03:28,904
 So I wanna get the text that's in this display currently. So
+我想获得现在display 里的字符
 
 1264
 01:03:28,906 --> 01:03:33,241
 I'm going to send a message to display here, right? Display.
+我要在这给display 发一个消息
 
 1265
 01:03:33,243 --> 01:03:35,377
 And the message, we can look it up in the documentation.
+这个信息，我们可以从文档中得知
 
 1266
 01:03:35,379 --> 01:03:37,913
 But the message that I want to send is text. Okay?
+但是我想发的消息是文字
 
 1267
 01:03:37,915 --> 01:03:41,416
 That gives me the text in the display. This is a UI label
+这会给我display 里的文字。这是个UILabel 方法
 
 1268
 01:03:41,418 --> 01:03:45,453
 method. But this is giving me an error. Okay, and
+但这里却告诉我是个错误
 
 1269
 01:03:45,455 --> 01:03:48,690
 the error that it's giving me here is that I haven't
+这个错误说我这里没有unwarp display
 
 1270
 01:03:48,692 --> 01:03:51,927
 unwrapped display. You see that display is an optional
+你看display 是个optional label
 
 1271
 01:03:51,929 --> 01:03:55,730
 label. You can't send text to the type optional Okay, and
+你不能把一个text 赋给一个optional
 
 1272
 01:03:55,732 --> 01:03:58,633
 optional doesn't understand the message text.
+optional 不理解什么是文字
 
 1273
 01:03:58,635 --> 01:04:02,003
 UILabel does. So, we need to get that associated value
+但UILabel 知道。所以我们要获得display 的label 的关联值
 
 1274
 01:04:02,005 --> 01:04:05,207
 of label, of a display, which is the UILabel, and
+是一个UILabel
 
 1275
 01:04:05,209 --> 01:04:07,843
 we do that with the exclamation point, here.
+我们会在这放一个感叹号
 
 1276
 01:04:07,845 --> 01:04:10,645
 And, again, notice it's offering, here, to fix it. So,
+注意这里，提供了修复选项
 
 1277
 01:04:10,647 --> 01:04:13,515
 I'm gonna fix it, and i put the exclamation point in
+所以我来修复他，就会放一个感叹号在这
 
 1278
 01:04:13,517 --> 01:04:17,752
 there. Now, this is a UILabel. It's an unwrapped,
+现在这里是个UILabel，这一个unwarpped
 
 1279
 01:04:17,754 --> 01:04:20,589
 optional UILabel, right? This is a UILabel,
+optional UILabel，对吗？这是一个UILabel
 
 1280
 01:04:20,591 --> 01:04:22,624
 and I'm sending it the message text,
+我把那个文字值发给他
 
 1281
 01:04:22,626 --> 01:04:24,626
 actually text is a property, just like currentTitle
+实际上text 是个属性， 就像currentTitle
 
 1282
 01:04:24,628 --> 01:04:29,030
 is a property on button, text is a property on UILabel. And,
+是一个button 的属性，text 是UILabel 的一个属性
 
 1283
 01:04:29,032 --> 01:04:33,001
 in fact, if I option+click on it, you'll see var text is an
+如果我按住option 点它，你可以看见var text
 
 1284
 01:04:33,003 --> 01:04:37,806
 optional string. Why? Because UILabel might be not set.
+是一个optional string。为什么？因为UILabel 可能没有被赋值
 
 1285
 01:04:37,808 --> 01:04:40,275
 The text in it might not be set. So it also is an option,
+它里面的text 可能没有被赋值，所以这也是个optional
 
 1286
 01:04:40,277 --> 01:04:45,647
 just like currentTitle. So I need to unwrap that as well.
+就像currentTitle 一样，我需要同样需要unwarp
 
 1287
 01:04:46,316 --> 01:04:48,950
 Okay? And so now I have a string,
+所以我现在有个string
 
 1288
 01:04:48,952 --> 01:04:51,052
 which is the string that's in there. Now you're probably
+就是这里这个
 
 1289
 01:04:51,054 --> 01:04:52,654
 getting tired of these exclamation points and so
+现在你可能对这个感叹号感到有点疲惫，我也是
 
 1290
 01:04:52,656 --> 01:04:54,422
 am I, and we're gonna be able to get rid of them.
+我们将要去掉它
 
 1291
 01:04:54,424 --> 01:04:56,358
 Some in a second here, so not to worry.
+一会就去掉，不用担心
 
 1292
 01:04:56,360 --> 01:04:58,693
 Anyway, I have this text currently in display.
+不管怎样，我现在在display 里拿到了这个文字
 
 1293
 01:04:58,695 --> 01:05:02,697
 So now I'm just gonna say that the displays, okay, and
+所以现在，display
 
 1294
 01:05:02,699 --> 01:05:07,002
 I'm unwrapping it, text = textCurrentlyInDisplay. I'm
+unwarp它 text ＝ textCurrentlyInDisplay
 
 1295
 01:05:07,004 --> 01:05:11,706
 just hitting tab here, okay, + the digit that was pressed.
+我在这慵懒tab 键，＋ digit
 
 1296
 01:05:11,708 --> 01:05:14,809
 Okay, notice that you can use + to concatenate strings.
+注意你用加号来串联字符
 
 1297
 01:05:14,811 --> 01:05:17,913
 That's really fun. Okay, some language allow that, some not.
+这很有趣，有的语言允许这么做，有的不允许
 
 1298
 01:05:17,915 --> 01:05:21,816
 So it does. Notice also that when I'm setting the value of
+Swift 可以。同时注意我在给optional 赋值的时候
 
 1299
 01:05:21,818 --> 01:05:25,120
 an optional, remember text here is an optional string.
+记住这里的text 是个optional string
 
 1300
 01:05:25,122 --> 01:05:28,123
 I can set it to be a string, and that means,
+我可以把它赋值为string，这意味着
 
 1301
 01:05:28,125 --> 01:05:32,294
 by definition, set this optional to set and
+根据定义，是赋值给optional 来设定
 
 1302
 01:05:32,296 --> 01:05:37,332
 use this as its associated value. Right? Now,
+把它赋为这个的关联变量
 
 1303
 01:05:37,334 --> 01:05:41,736
 how do you think I would set this optional to not be set?
+那么你认为我怎么才能给这个optional 赋一个不赋值的状态？
 
 1304
 01:05:41,738 --> 01:05:45,206
 Anyone know? You would say,
+有人知道吗？
 
 1305
 01:05:45,208 --> 01:05:49,878
 set this thing to be nil. This keyword means opp,
+把它赋值为nill，这个关键字
 
 1306
 01:05:49,880 --> 01:05:52,781
 optional not set. So that would set this text.
+表示optional 没有被赋值。所以会赋这个值
 
 1307
 01:05:52,783 --> 01:05:56,051
 It would blank out this text. It would set it to be not set.
+这个栏里为空，这会把它赋为没有被赋值
 
 1308
 01:05:56,053 --> 01:05:58,119
 Okay, so an optional you can, when you're setting it,
+所以一个optional，在你给它赋值的时候
 
 1309
 01:05:58,121 --> 01:06:02,190
 you can set it to either nil or to an associated value.
+你可以把它赋为nil 或者是 关联值
 
 1310
 01:06:03,060 --> 01:06:06,261
 Okay? Sound good? So let's run.
+听起来不错？让我继续
 
 1311
 01:06:11,435 --> 01:06:13,401
 All right, so hopefully when we press these buttons,
+所以，理想情况下当我们按下按钮
 
 1312
 01:06:13,403 --> 01:06:15,971
 it's going to append it on to the end, here. So let's try
+数字就会被加到末尾
 
 1313
 01:06:15,973 --> 01:06:20,976
 five, it did it. Eight, nine, although I'm not really a fan
+5，它做到了，8，9，但是我不喜欢
 
 1314
 01:06:20,978 --> 01:06:25,313
 of a zero at the beginning there. Okay, that zero is not
+前面有个0.所以
 
 1315
 01:06:25,315 --> 01:06:27,849
 really how a calculator would work. Okay, when I press that
+这不是一个计算器应该有的样子。当我按五的时候
 
 1316
 01:06:27,851 --> 01:06:30,452
 five, I'm essentially typing a new number. It would get rid
+实际上我是按了一个新数字。
 
 1317
 01:06:30,454 --> 01:06:33,021
 of the zero. So, we really need a way to keep track of
+它应该取代0。所以需要一个方法
 
 1318
 01:06:33,023 --> 01:06:35,757
 whether we're in the middle of typing a number or not. Cuz if
+来追踪我们是不是在输入中
 
 1319
 01:06:35,759 --> 01:06:37,425
 we're in the middle of typing a number,
+因为如果我们在输入中
 
 1320
 01:06:37,427 --> 01:06:37,926
 we do the apend thing, but
+那就得把数字加到尾部
 
 1321
 01:06:37,928 --> 01:06:39,260
 if we're not in the middle of typing a number,
+如果不是
 
 1322
 01:06:39,262 --> 01:06:42,163
 then we just replace whatever is in that display, right? So,
+那就把之前的数字替换掉，对吗？
 
 1323
 01:06:42,165 --> 01:06:46,368
 I'm going to add a new var, okay, a new instance variable,
+我要加一个变量，实例变量
 
 1324
 01:06:46,370 --> 01:06:47,769
 a new property, called,
+一个新的属性
 
 1325
 01:06:47,771 --> 01:06:51,706
 userIsInTheMiddleOfTyping. >> [LAUGH]
+叫做userIsInTheMiddleOfTyping（笑
 
 1326
 01:06:51,708 --> 01:06:52,474
 >> Okay, now you laugh,
+我知道你们为什么笑
 
 1327
 01:06:52,476 --> 01:06:54,609
 you laugh because that seems like a lot of typing, but
+你们笑是因为这个变量名字太长了
 
 1328
 01:06:54,611 --> 01:06:57,479
 I will never have to type that again. Okay?
+但我不会再做第二遍
 
 1329
 01:06:57,481 --> 01:06:59,948
 Because Xcode is always gonna escape complete things for
+因为Xcode 总会帮我自动补全
 
 1330
 01:06:59,950 --> 01:07:02,751
 me. So, long names like that are actually good.
+所以长变量名挺好的
 
 1331
 01:07:02,753 --> 01:07:05,286
 Okay, you wanna pick the shortest name that, you know,
+你可以选一个短一点的名字
 
 1332
 01:07:05,288 --> 01:07:08,123
 it conveys what you want but you want your names,
+这名字要能体现出你想要什么
 
 1333
 01:07:08,125 --> 01:07:10,258
 as you know in computer science naming is everything,
+计算机科学里命名就是一切，你懂的
 
 1334
 01:07:10,260 --> 01:07:14,429
 you want your names to be very, very, very good for
+你希望你的命名对读你代码的人
 
 1335
 01:07:14,431 --> 01:07:17,432
 the reader to understand what's going on, okay? Now,
+非常非常非常的好理解
 
 1336
 01:07:17,434 --> 01:07:20,702
 this userIsInTheMiddleOfTyping is a Bool, okay?
+userIsInTheMiddleOfTyping 是个Bool
 
 1337
 01:07:20,704 --> 01:07:21,603
 So, I'm giving you it's type,
+我给它一个Bool 类型
 
 1338
 01:07:21,605 --> 01:07:23,905
 Bool. It's not an optional Bool. It's just a Bool. So
+这不是个optional Bool，就是个Bool
 
 1339
 01:07:23,907 --> 01:07:27,442
 no question mark here. Okay, it's either true or false.
+所以这里没有问候，这里无论true 还是false
 
 1340
 01:07:27,444 --> 01:07:28,777
 I'm either in the middle of typing or I'm not.
+我不是在输入中或没输入
 
 1341
 01:07:28,779 --> 01:07:32,313
 Now as soon as I put that in there I got an error.
+一旦我把这些放在这，就报错了
 
 1342
 01:07:32,315 --> 01:07:34,282
 See that error up there? What? That's not fair.
+看到上面那个报错符合了吗？这不科学啊
 
 1343
 01:07:34,284 --> 01:07:38,753
 I didn't do anything up there. What is that? Let's click it.
+我在上面什么都没做啊，那是什么？点一下看看
 
 1344
 01:07:38,755 --> 01:07:41,456
 Class ViewController has no initializers.
+Class ViewController has no initializers
 
 1345
 01:07:41,458 --> 01:07:43,725
 Okay, now you're doing your homework and you're like,
+这里如果你们正在做作业
 
 1346
 01:07:43,727 --> 01:07:46,161
 what the, there's nothing to do, what I just did.
+你会发现，我们什么都没做
 
 1347
 01:07:46,163 --> 01:07:48,496
 I just typed in var here, what does that mean? Okay,
+我只是刚才声明了一个变量，这是什么意思？
 
 1348
 01:07:48,498 --> 01:07:51,366
 well the reason you're getting that error is cuz in Swift,
+你在这报错的原因是
 
 1349
 01:07:51,368 --> 01:07:55,336
 all properties, every single one, have to have an initial
+在Swift 里，所以的属性，每一个，都必须有一个初始化的值
 
 1350
 01:07:55,338 --> 01:07:59,340
 value. There's no, you are not allowed to have
+如果你不这么做
 
 1351
 01:07:59,342 --> 01:08:02,710
 any properties that don't have an initial value. Okay?
+就不能有一个未初始化的变量
 
 1352
 01:08:02,712 --> 01:08:04,612
 So how do we give this thing an initial value?
+所以我们怎么给它一个初始值？
 
 1353
 01:08:04,614 --> 01:08:07,715
 Well, there's two ways. One, we create an initializer.
+有两种方式，一种，对它进行初始化
 
 1354
 01:08:07,717 --> 01:08:08,683
 That's why you're getting this warning.
+这就是为什么会报错
 
 1355
 01:08:08,685 --> 01:08:11,486
 Now I'm not gonna talk about initializers til next week. So
+但下周前我不会讲怎么初始化
 
 1356
 01:08:11,488 --> 01:08:13,822
 we can't do that because I'm not gonna talk about it yet,
+所以我们不能做，因为我还没讲
 
 1357
 01:08:13,824 --> 01:08:16,324
 okay? What's the other way that we can do it?
+所以另一种是什么方式呢？
 
 1358
 01:08:16,326 --> 01:08:21,729
 We can just say = false. Okay, so we just initialize that,
+我们直接给它赋一个false 值，我们这就对它初始化了
 
 1359
 01:08:21,731 --> 01:08:24,933
 and the write error goes away. Woo hoo, were winning, and
+那个报错就消失了～
 
 1360
 01:08:24,935 --> 01:08:26,067
 I know some of you are saying, yeah,
+我知道你们可能会说
 
 1361
 01:08:26,069 --> 01:08:30,839
 what about this one? Okay, you didn't initialize that. Okay,
+那么这个呢？你没对它初始化啊
 
 1362
 01:08:30,841 --> 01:08:33,741
 that's because optionals are treated specially.
+因为optional 是很特殊的
 
 1363
 01:08:33,743 --> 01:08:39,047
 They are always automatically initialized to not set.
+他们会自动被初始化为空
 
 1364
 01:08:39,049 --> 01:08:42,550
 Okay? So this is basically always happening
+这就是你申明一个optional 的时候会发生的
 
 1365
 01:08:42,552 --> 01:08:44,686
 when you have an optional, or var that's an optional.
+或者是一个var 的optional
 
 1366
 01:08:44,688 --> 01:08:46,287
 Which makes sense, right? You have an optional.
+能理解吗？你有一个optional
 
 1367
 01:08:46,289 --> 01:08:47,589
 It's not set until you set it to something.
+它没有被赋值，直到你给它赋一个值
 
 1368
 01:08:47,591 --> 01:08:51,960
 So it starts out not set. Okay, so that's why it is set.
+所以它会以没有赋值开始。这就是为什么它被赋值了
 
 1369
 01:08:51,962 --> 01:08:55,630
 It's set to not set. Okay? All right, so
+它被赋值为没有赋值
 
 1370
 01:08:55,632 --> 01:08:57,665
 we have this thing now, we have this. Let's go ahead and
+所以我们现在有了这个，继续
 
 1371
 01:08:57,667 --> 01:09:00,635
 use this thing we created. Actually, I'm going to do one
+所有现在用我们刚刚创建的这个
 
 1372
 01:09:00,637 --> 01:09:05,940
 more thing here. You see this : Bool? Do we need that? No.
+我还要在这多做一件事。: Bool 我们真的需要这个吗？不
 
 1373
 01:09:05,942 --> 01:09:09,611
 Okay, why don't we need that? Because false can only be
+为什么我们不需要这个呢？
 
 1374
 01:09:09,613 --> 01:09:15,750
 a Bool, so Swift can infer that the type of this is Bool.
+因为false 只能是个Bool 型。所以Swift 可以推倒它就是个Bool 型
 
 1375
 01:09:15,886 --> 01:09:19,821
 See that? Okay? All right. So, we have this
+看到了吗？所以我们现在有了userIsInTheMiddleOfTyping
 
 1376
 01:09:19,823 --> 01:09:23,057
 userIsInTheMiddleOfTyping. We only wanna do this business
+我们只想它处理
 
 1377
 01:09:23,059 --> 01:09:25,493
 right here if the user is in the middle of typing.
+用户是不是正在输入中的问题
 
 1378
 01:09:25,495 --> 01:09:26,995
 So now we're gonna see in if statement.
+所以我接下来输入
 
 1379
 01:09:26,997 --> 01:09:28,263
 If the user is in the middle of typing,
+If userIsInTheMiddleOfTyping
 
 1380
 01:09:28,265 --> 01:09:31,232
 now again, I'm just hitting Tab here. Look Mom, no hands,
+我按下Tab，这一串就输入好了。
 
 1381
 01:09:31,234 --> 01:09:34,302
 or one hand. If the user is in the middle of typing,
+If userIsInTheMiddleOfTyping
 
 1382
 01:09:34,304 --> 01:09:36,938
 then we're gonna do this thing. Okay.
+然后我们做这些
 
 1383
 01:09:36,940 --> 01:09:40,742
 If the user's not in the middle of typing,
+如果用户不是在输入中
 
 1384
 01:09:40,744 --> 01:09:43,378
 then we're gonna set the displays text
+那么就让display 的数字
 
 1385
 01:09:43,380 --> 01:09:46,481
 equal to the digit we just typed. Okay, the five, or
+等于digit 的数字，5，或者别的什么
 
 1386
 01:09:46,483 --> 01:09:49,417
 whatever, we're gonna replace what's in the display. And,
+我们会替换display 里的数字
 
 1387
 01:09:49,419 --> 01:09:52,921
 of course, in either case, the user is definitely, no long,
+当然，另一种情况，用户
 
 1388
 01:09:52,923 --> 01:09:56,024
 is definitely, now, in the middle of typing. Okay,
+一定是在输入中
 
 1389
 01:09:56,026 --> 01:09:59,561
 cuz you just touched a digit, we're clearly in the middle of
+因为你刚刚按了输入按钮，我们显然是在输入中
 
 1390
 01:09:59,563 --> 01:10:03,097
 typing. Now I'm getting pretty tired of typing display
+我现在真的对没错都
 
 1391
 01:10:03,099 --> 01:10:05,466
 exclamation point all the time, okay?
+输入display! 感到疲惫
 
 1392
 01:10:05,468 --> 01:10:08,303
 All the time typing display exclamation point, when in
+每次都输入display! ，实际上
 
 1393
 01:10:08,305 --> 01:10:12,307
 fact, I know that that display is pretty much always set.
+我知道display 一定是被赋值的状态
 
 1394
 01:10:12,309 --> 01:10:14,776
 Okay, the only time that this is not set is for
+它唯一没被赋值的时间就是
 
 1395
 01:10:14,778 --> 01:10:18,546
 a nanosecond when this starts to come on screen,
+当他一出现在屏幕上的时候
 
 1396
 01:10:18,548 --> 01:10:22,650
 before iOS has a chance to wire it up to this UILabel.
+在iOS 系统把他变成UILabel 类型之前
 
 1397
 01:10:22,652 --> 01:10:25,119
 But once it's wired up, it's set forever. And
+一旦他被连接上，那就永远被赋值了
 
 1398
 01:10:25,121 --> 01:10:27,589
 certainly by the time users are touching on digits,
+而且很确定的是，当用户点在数字上时
 
 1399
 01:10:27,591 --> 01:10:31,226
 the UIs completely on screen, and wired up, and so I know
+UI 已经在屏幕上创建好、链接好了，
 
 1400
 01:10:31,228 --> 01:10:36,097
 that's never going to be nil. Never, okay, in this code. So
+所以我知道它用不会为空
 
 1401
 01:10:36,099 --> 01:10:38,199
 why am I forced to type display, exclamation point,
+所以我为什么非要
 
 1402
 01:10:38,201 --> 01:10:39,801
 display, exclamation point, over and over, okay?
+重复输入display! 呢？
 
 1403
 01:10:39,803 --> 01:10:42,670
 And the answer is you don't have to because we're
+答案是你不需要，
 
 1404
 01:10:42,672 --> 01:10:46,007
 gonna go back and change this question mark to be
+我们只要把一开始这个问号
 
 1405
 01:10:46,009 --> 01:10:48,910
 exclamation point. Basically if you put the exclamation
+改成感叹号。总的来说，
 
 1406
 01:10:48,912 --> 01:10:53,481
 point where you declare it, it says that anyone can use
+在你定义的时候放个感叹号，就表示所有对象都可以用这个
 
 1407
 01:10:53,483 --> 01:10:57,252
 this thing, and it will implicitly unwrap it, okay?
+就完全的unwarp 了这个对象
 
 1408
 01:10:57,254 --> 01:10:57,986
 It will automatically unwrap it.
+这就会自动unwarp
 
 1409
 01:10:57,988 --> 01:10:59,988
 Now its still unwrapping it, so if that was nil,
+现在它还是会unwarp，如果他是nil
 
 1410
 01:10:59,990 --> 01:11:04,292
 it will still crash, okay? But it allows me to get rid of all
+它还是会让你的应用崩溃。但是它允许我
 
 1411
 01:11:04,294 --> 01:11:08,529
 of these exclamation points. Okay? Because it's implicit
+去掉这里所有的感叹号
 
 1412
 01:11:08,531 --> 01:11:10,365
 that there's an exclamation point on all of them,
+因为这里的感叹号完全的unwarp 了所有的对象
 
 1413
 01:11:10,367 --> 01:11:12,200
 because instead of putting a question mark here,
+因为我在这放了个感叹号
 
 1414
 01:11:12,202 --> 01:11:13,468
 I put the exclamation point up there.
+而不是问号
 
 1415
 01:11:13,470 --> 01:11:15,837
 Everyone got that? >> [INAUDIBLE].
+都懂了吗
 
 1416
 01:11:15,839 --> 01:11:16,471
 >> It would crash down here,
+可能会在下面这里崩溃
 
 1417
 01:11:16,473 --> 01:11:18,906
 in this code down here. As soon as you access this,
+这一块代码，一旦你跑到这
 
 1418
 01:11:18,908 --> 01:11:21,709
 if that were nil, boom, it would be unwrapping it,
+如果是个nil，就会unwarp
 
 1419
 01:11:21,711 --> 01:11:24,445
 cuz it's implicitly unwrapped >> And again,
+因为它被完全unwarp 了
 
 1420
 01:11:24,447 --> 01:11:25,980
 if I change this back to a question mark,
+如果我把它改回问号
 
 1421
 01:11:25,982 --> 01:11:28,416
 now I'm gonna get all kinds of warnings down here.
+现在就会出现好多警告、错误
 
 1422
 01:11:28,418 --> 01:11:30,485
 See errors, because I'm not unwrapping it, but
+因为我没有unwarp 它
 
 1423
 01:11:30,487 --> 01:11:31,719
 if I put the exclamation point,
+如果我在这放一个感叹号
 
 1424
 01:11:31,721 --> 01:11:33,821
 now I'm in implicitly unwrapping it everywhere.
+这样我就一次性的把他在所有地方unwarp 了
 
 1425
 01:11:33,823 --> 01:11:36,658
 Okay, that's called an implicitly unwrap optional.
+这样就可以叫它一个完全unwarp 的optional
 
 1426
 01:11:36,660 --> 01:11:39,694
 Very important,
+非常重要
 
 1427
 01:11:39,696 --> 01:11:43,765
 Okay, so now let's go see if that fixed everything?
+我们现在看看它是不是修复了所有问题
 
 1428
 01:11:47,404 --> 01:11:47,602
 >> All right, so
+所以
 
 1429
 01:11:47,604 --> 01:11:48,536
 now hopefully when we press five,
+当我们按下5
 
 1430
 01:11:48,538 --> 01:11:50,772
 it will get rid of the zero. Five. There it is, and
+就会去掉0显示5
 
 1431
 01:11:50,774 --> 01:11:53,808
 this is still working. Okay? So that's good. We're
+我们做的很好
 
 1432
 01:11:53,810 --> 01:11:56,778
 doing great. Our keyboard is basically fully functional at
+这下我们的键盘功能完全了
 
 1433
 01:11:56,780 --> 01:11:59,147
 this point. So now we want to add a,
+现在要加一个操作
 
 1434
 01:11:59,149 --> 01:12:02,216
 an operation. Now, because of our technical thing,
+因为技术上的原因
 
 1435
 01:12:02,218 --> 01:12:04,319
-we're running out of time, but I have 30 minutes left.
+we're running out of time, but I have 3 minutes left.
+我们快没时间了，但还有三分钟
 
 1436
 01:12:04,321 --> 01:12:07,021
 I'm gonna add the pi button. Okay, pi is a very
+我要加一个π 按钮
 
 1437
 01:12:07,023 --> 01:12:10,024
 simple operation. It's just gonna put pi in the display.
+π 是个很简单的操作。只是放个π 在display 上
 
 1438
 01:12:10,026 --> 01:12:13,461
 So let's do that. I'm gonna do that by taking the 7 button
+来做这个吧。我要选中7这个按钮
 
 1439
 01:12:13,463 --> 01:12:14,362
 and copying and pasting it.
+复制粘贴它
 
 1440
 01:12:14,364 --> 01:12:17,665
 That's a really bad idea, as you'll see in a moment. But,
+现在看来这很不好
 
 1441
 01:12:17,667 --> 01:12:20,768
 I'm just going to do that and call it pi, okay? Now,
+但我就这么做了，叫它π 
 
 1442
 01:12:20,770 --> 01:12:24,706
 of course, pi is not a digit button, it's an operation, so
+当然，π 不是个数字，是一个操作
 
 1443
 01:12:24,708 --> 01:12:30,044
 I'm going to Ctrl drag down here to create another action,
+我要ctrl 拖动另外一个操作
 
 1444
 01:12:30,046 --> 01:12:30,878
 a different action.
+一个不同的操作
 
 1445
 01:12:30,880 --> 01:12:34,082
 This action is performOperation because pi
+这是个performOperation 因为π 是个操作
 
 1446
 01:12:34,084 --> 01:12:36,517
 is an operation. I'm gonna have all my operation buttons
+我会把所有操作的按钮叫做performOperation
 
 1447
 01:12:36,519 --> 01:12:39,721
 called performOperation. And of course I'm not gonna forget
+当然我不会忘了
 
 1448
 01:12:39,723 --> 01:12:41,289
 to change that to UI button, okay,
+把它换成UIButton
 
 1449
 01:12:41,291 --> 01:12:43,491
 either are you on your homework, right? Okay?
+你们做作业的时候也别忘了
 
 1450
 01:12:43,493 --> 01:12:47,095
 And here it is, so there's perform operation right there,
+所以performOperation 就在这了
 
 1451
 01:12:47,097 --> 01:12:50,064
 okay. And perform operation, I'm gonna do the exact same
+对performOperation 我要做跟
 
 1452
 01:12:50,066 --> 01:12:52,734
 thing that I did at the beginning of touch digit,
+之前按digit 一样的事情
 
 1453
 01:12:52,736 --> 01:12:55,002
 which is I'm gonna ask the sender which
+要问sender 
 
 1454
 01:12:55,004 --> 01:13:00,208
 operation are you? So I'm gonna let mathematicalSymbol =
+你是哪个操作
 
 1455
 01:13:00,210 --> 01:13:05,580
 the sender.currentTitle. Now of course
+let mathematicalSymbol = sender.currentTitle
 
 1456
 01:13:05,582 --> 01:13:09,083
 I want the string so I could do the exclamation point,
+我需要字符，我可以用感叹号
 
 1457
 01:13:09,085 --> 01:13:13,321
 okay? But if this were blank, what if I just wanted to
+如果这是空的，如果我只想忽略
 
 1458
 01:13:13,323 --> 01:13:17,658
 ignore that operation press? Okay, instead of crashing.
+这个按下的动作呢？而不是让它崩溃
 
 1459
 01:13:17,660 --> 01:13:20,027
 Okay, what if it was legal to have that
+如果让它为空是合法的
 
 1460
 01:13:20,029 --> 01:13:24,165
 be blank. Okay? I basically want to unwrap
+我只想它被赋值的时候unwarp
 
 1461
 01:13:24,167 --> 01:13:29,036
 only if this is set. So the way you do that is
+你做这个的方式
 
 1462
 01:13:29,038 --> 01:13:32,240
 you don't put the exclamation point there. Instead,
+就是不要在这放个感叹号
 
 1463
 01:13:32,242 --> 01:13:37,412
 you put if at the beginning. And what's nice about this is
+如果你在前面放个if 
 
 1464
 01:13:37,414 --> 01:13:42,116
 very little typing but also look how it reads, okay? If I
+这很好，也看看这是怎么写的。
 
 1465
 01:13:42,118 --> 01:13:47,422
 can let mathematicalSymbol = sender .currentTitle, then I'm
+if let mathematicalSymbol = sender.currentTitle
 
 1466
 01:13:47,424 --> 01:13:50,458
 gonna do something. Okay, so it reads just like English,
+然后再做一些什么。读起来像是英文
 
 1467
 01:13:50,460 --> 01:13:54,462
 it's a really nice way to unwrap. So inside this if,
+这个unwarp 的很好的方式
 
 1468
 01:13:54,464 --> 01:13:57,064
 this will be a string. It'll be the associated
+在这个if 里，这会是个string
 
 1469
 01:13:57,066 --> 01:14:00,701
 value of currenttype, Title. Outside of this if,
+这回事currentTitle 的关联值
 
 1470
 01:14:00,703 --> 01:14:01,302
 it's not even defined.
+if 之外，它甚至没有被定义
 
 1471
 01:14:01,304 --> 01:14:04,071
 mathematicalSymbol won't even be defined. Okay? Super
+mathematicalSymbol 甚至没被定义
 
 1472
 01:14:04,073 --> 01:14:10,011
 simple. So here I can just say if mathematicalSymbol = pi,
+超简单，所以我们只要let mathematicalSymbol == π
 
 1473
 01:14:10,013 --> 01:14:14,782
 by the way Alt + P to make pi, okay, then I can set my
+按alt ＋ P 就是π ，然后设置display
 
 1474
 01:14:14,784 --> 01:14:18,619
 displays. I don't even need the exclamation point anymore.
+我甚至不再需要感叹号
 
 1475
 01:14:18,621 --> 01:14:22,924
 Text = pi, which _pi is pi if we
+Text = π，M_PI
 
 1476
 01:14:22,926 --> 01:14:27,762
-Alt click on this. This is a symbol. See? M under our PI.
+Alt click on this. This is a symbol. See? M under bar PI.
+按alt 点它。这是个符号。M_PI
 
 1477
 01:14:27,764 --> 01:14:30,865
-It's a double. It's a double position value of PI. Now,
+It's a double. It's a double vision value of PI. Now,
+是个double。这是个double 版的π 值
 
 1478
 01:14:30,867 --> 01:14:33,301
 we have an error here. Why do we have an error?
+这里报错了，为什么呢？
 
 1479
 01:14:33,303 --> 01:14:36,504
 Because it says it cannot assign a type double to
+因为不能把一个double 赋值给
 
 1480
 01:14:36,506 --> 01:14:39,073
 something that is a string question mark, right?
+一个string？
 
 1481
 01:14:39,075 --> 01:14:42,577
 We know the display.text right here is a string question mark
+我们知道这是个display.text 是个string？
 
 1482
 01:14:42,579 --> 01:14:45,780
 so we can't do that. So, how do we convert this double to
+我们不能这么做，所以我们怎么把这个double
 
 1483
 01:14:45,782 --> 01:14:49,317
 a string? And the answer is we have to create a new string.
+转换成一个string？答案是新建一个string
 
 1484
 01:14:49,319 --> 01:14:51,886
 Okay, and now you're gonna see how to create new
+这样你会看到我们如何
 
 1485
 01:14:51,888 --> 01:14:56,290
 instances of objects in Swift, and the answer is you just put
+在Swift 里新建一个实例。答案是
 
 1486
 01:14:56,292 --> 01:14:59,694
 the name of the class and then parentheses and then inside
+打出这个类型名，然后把
 
 1487
 01:14:59,696 --> 01:15:02,263
 the parentheses you can put anything that the class
+任何允许你转换的值
 
 1488
 01:15:02,265 --> 01:15:06,501
 will allow you to create one of itself with. Okay, and
+放在括号里
 
 1489
 01:15:06,503 --> 01:15:07,702
 you can have multiple of these.
+你可以多次创建
 
 1490
 01:15:07,704 --> 01:15:10,538
 These are the initializers referred to earlier. And
+这是个早前的初始化方式
 
 1491
 01:15:10,540 --> 01:15:14,141
 string happens to be able to take a double as one of
+string 可以把一个double
 
 1492
 01:15:14,143 --> 01:15:16,444
 the things that it knows how to create a new string. So
+创建成一个新的string
 
 1493
 01:15:16,446 --> 01:15:19,947
 this creates a new string, okay, from a double. So
+所以它从一个double 创建一个新的string
 
 1494
 01:15:19,949 --> 01:15:22,683
 the string class knows how to look at a double, turn it into
+string 类知道如何把一个double
 
 1495
 01:15:22,685 --> 01:15:27,455
 a bunch of characters that are a double, okay? So
+转换成一个字符串
 
 1496
 01:15:27,457 --> 01:15:34,161
 we'll run this. Okay,
+所以再跑一下
 
 1497
 01:15:34,163 --> 01:15:37,732
 so here we go, this is still working and if we press Pi,
+这还是好用的，当我们按下π 
 
 1498
 01:15:37,734 --> 01:15:40,568
 we get Pi [SOUND], we got a problem, okay?
+我们得到π 值，但有个问题
 
 1499
 01:15:40,570 --> 01:15:41,836
 It's not fitting the whole Pi,
+没有显示全π 
 
 1500
 01:15:41,838 --> 01:15:43,971
 all the digits. We can fix that really easily.
+我们可以很简单的修复一下
 
 1501
 01:15:43,973 --> 01:15:47,475
 I'm gonna go back to here. And if we look at the inspector,
+我们回到这里，看一下inspector
 
 1502
 01:15:47,477 --> 01:15:51,245
 there's a nice feature in label called autoshrink.
+有个非常好的UILabel 特性叫autoshrink
 
 1503
 01:15:51,247 --> 01:15:53,881
 And I'm gonna make it so it autoshrinks but
+我会让这个autoshrink
 
 1504
 01:15:53,883 --> 01:15:59,320
 no smaller than 9 point, okay. That's gonna fix that one.
+不小于9 点。这就回修复
 
 1505
 01:15:59,322 --> 01:16:02,757
 We have one more problem. Okay, so we have,
+我们还有个问题
 
 1506
 01:16:02,759 --> 01:16:05,960
 this is working, pi, what's that?
+这个π 又是啥
 
 1507
 01:16:05,962 --> 01:16:09,196
 We got a little pi on the end there and also look at this,
+我们在最后有一个π，还有，看这个
 
 1508
 01:16:09,198 --> 01:16:12,600
 that, what a mess. So we got two problems there. For
+这很不好。我们现在这里有两个问题了
 
 1509
 01:16:12,602 --> 01:16:15,436
 some reason when we press pi, it puts pi on the end.
+因为一些原因，当我们按π，最后有个π 在末尾
 
 1510
 01:16:15,438 --> 01:16:19,173
 Well,why is that? Okay. That's because, let's look at
+为什么呢？因为看这个
 
 1511
 01:16:19,175 --> 01:16:22,276
 this little thing. Okay. Pi is sending that, right?
+π 会发送这个
 
 1512
 01:16:22,278 --> 01:16:26,480
 How about this one? Pi is sending that too.
+这个呢？π 也会发送这个
 
 1513
 01:16:26,482 --> 01:16:31,252
 You see, it's sending touch digit and perform operation.
+它同时响应两个方法
 
 1514
 01:16:31,254 --> 01:16:33,754
 That's because I copied and pasted the 7
+因为我复制黏贴了7
 
 1515
 01:16:33,756 --> 01:16:37,358
 which sent touch digit and then I added this one. Okay,
+所以也发送上面的这个方法
 
 1516
 01:16:37,360 --> 01:16:40,061
 now how do we fix that? You fix that by right-clicking on
+那我怎么修复呢？
 
 1517
 01:16:40,063 --> 01:16:42,663
 the button. If you right-click on anything in your UI, you'll
+可以右击这个按钮
 
 1518
 01:16:42,665 --> 01:16:45,266
 see all of the connections that it has. Very important to
+可以看到所有按钮关联的东西
 
 1519
 01:16:45,268 --> 01:16:47,668
 understand right-click, okay. So you right-click and
+理解右击很重要
 
 1520
 01:16:47,670 --> 01:16:49,203
 you can see it only has two connections here.
+右击，你可以在这看到两个链接
 
 1521
 01:16:49,205 --> 01:16:52,239
 It's connected to touch digit and to perform operation, so
+这链接了两个方法
 
 1522
 01:16:52,241 --> 01:16:55,509
 I'm just gonna get rid of the touch digit by clicking this,
+我只是需要去掉touchDigit
 
 1523
 01:16:55,511 --> 01:16:57,178
 gone. Now it only does perform digit,
+这样就只想响应下面这个方法了
 
 1524
 01:16:57,180 --> 01:17:00,715
 or perform operation, okay. So we fixed that problem where
+所以我们修复了
 
 1525
 01:17:00,717 --> 01:17:02,149
 we're just putting pi on the end, all right.
+这个末尾有π 的问题
 
 1526
 01:17:02,151 --> 01:17:05,453
 And the other problem was that when we have the pi and
+另一个问题是，当我们有π 的时候
 
 1527
 01:17:05,455 --> 01:17:05,987
 I started typing numbers,
+再按数字
 
 1528
 01:17:05,989 --> 01:17:07,922
 it thought I was in the middle of typing a number and
+会认为你在输入中
 
 1529
 01:17:07,924 --> 01:17:11,025
 it was adding them on. So that's simple, I'm just gonna
+会在末尾加数字，这很简单
 
 1530
 01:17:11,027 --> 01:17:14,228
 say userIsInTheMiddleofTyping number = false.
+userIsInTheMiddleofTyping = false
 
 1531
 01:17:14,230 --> 01:17:16,364
 Okay, whenever we perform an operation,
+无论我什么时候操作
 
 1532
 01:17:16,366 --> 01:17:19,767
 it's gonna wipe out what's in my display so I'm obviously
+就会去掉之前display 上的东西
 
 1533
 01:17:19,769 --> 01:17:22,703
 not in the middle of typing a number anymore and we have
+因为我很显然不是在输入中
 
 1534
 01:17:22,705 --> 01:17:28,242
 a fully functional calculator with one operation. 45 pi 89,
+现在我有了个全功能的计算器按钮
 
 1535
 01:17:28,244 --> 01:17:32,780
 okay? So on Wednesday, we'll pick up
+周三，我们会继续
 
 1536
 01:17:32,782 --> 01:17:35,516
 with some more, make a more powerful calculator. Sorry to
+做个更强的计算器
 
 1537
 01:17:35,518 --> 01:17:38,486
 run over a little bit because of technical difficulties,
+抱歉，因为技术难题拖课了一会
 
 1538
 01:17:38,488 --> 01:17:40,054
 see you then. >> For
+下回见
 
 1539
 01:17:40,056 --> 01:17:40,087
 more please visit us at stanford.edu.
-
+更多内容详见：stanford.edu

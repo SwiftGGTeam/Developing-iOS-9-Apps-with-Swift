@@ -1,0 +1,5636 @@
+﻿1
+00:00:00,001 --> 00:00:03,068
+Stanford University. >> Okay,
+
+2
+00:00:03,070 --> 00:00:07,740
+well welcome to lecture number three of Stanford CS193P.
+
+3
+00:00:07,742 --> 00:00:11,410
+This is spring quarter 2016. And today we
+
+4
+00:00:11,412 --> 00:00:16,148
+are going to mostly talk about the layer under the UI.
+
+5
+00:00:16,150 --> 00:00:18,450
+Okay, so we're gonna talk about Swift the language.
+
+6
+00:00:18,452 --> 00:00:20,953
+We're gonna talk about this foundation framework that
+
+7
+00:00:20,955 --> 00:00:23,555
+lives on top of Core services. So we're not going to be
+
+8
+00:00:23,557 --> 00:00:26,925
+talking about the UI very much at all today. I do have a demo
+
+9
+00:00:26,927 --> 00:00:30,496
+towards the end. So I will finish off the slides and
+
+10
+00:00:30,498 --> 00:00:34,099
+then we'll do the demo to finish. Okay, all right, so
+
+11
+00:00:34,101 --> 00:00:37,202
+first thing I want to talk about is optional's,
+
+12
+00:00:37,204 --> 00:00:40,039
+by the way, everything I am talking about today is
+
+13
+00:00:40,041 --> 00:00:43,342
+in your reading assignments. Okay, I'm just, the things I
+
+14
+00:00:43,344 --> 00:00:46,045
+am talking about today I want to emphasize. I mean these
+
+15
+00:00:46,047 --> 00:00:48,280
+are things that you really really want to understand.
+
+16
+00:00:48,282 --> 00:00:50,883
+So if you see me mention it today and then you're reading
+
+17
+00:00:50,885 --> 00:00:53,952
+it in the reading assignment, be sure to pay close attention
+
+18
+00:00:53,954 --> 00:00:56,922
+all right? So as we learned in the last lecture,
+
+19
+00:00:56,924 --> 00:01:01,026
+optional is just an enum, okay? It's a generic type kind
+
+20
+00:01:01,028 --> 00:01:03,195
+of like array. It's got this little angle bracket T,
+
+21
+00:01:03,197 --> 00:01:05,531
+which just means an Optional can be an Optional of any
+
+22
+00:01:05,533 --> 00:01:08,000
+type. And we know that to be the case. We can have
+
+23
+00:01:08,002 --> 00:01:11,003
+Optional strings or Optional even Optional optionals.
+
+24
+00:01:11,005 --> 00:01:13,539
+We can have any kind of Optional we want. And so
+
+25
+00:01:13,541 --> 00:01:16,408
+it's an enum with two cases. The None case which is the not
+
+26
+00:01:16,410 --> 00:01:19,711
+set case and then the Some case, which is the set case.
+
+27
+00:01:19,713 --> 00:01:21,780
+And in the Some case it has an associated value. And you
+
+28
+00:01:21,782 --> 00:01:25,451
+learned all about enums last time. So this, syntax should
+
+29
+00:01:25,453 --> 00:01:31,223
+look completely, familiar to you. So let's look at some
+
+30
+00:01:31,225 --> 00:01:34,259
+of the little question mark, exclamation point stuff. And
+
+31
+00:01:34,261 --> 00:01:37,062
+what that means in terms of optional behind the scenes. So
+
+32
+00:01:37,064 --> 00:01:41,066
+if you had a constant x which was of type optional string,
+
+33
+00:01:41,068 --> 00:01:42,468
+right, string question mark.
+
+34
+00:01:42,470 --> 00:01:47,339
+And I set it to nil, then that's the same as saying that
+
+35
+00:01:47,341 --> 00:01:52,311
+x = Optional<s>.None, right? Obviously, and same</s>
+
+36
+00:01:52,313 --> 00:01:54,947
+thing if I had an optional string that was set to hello,
+
+37
+00:01:54,949 --> 00:01:58,884
+that'd be the same as x=Optional<s>.Some</s>
+
+38
+00:01:58,886 --> 00:02:01,153
+with the associated value, hello. Okay,
+
+39
+00:02:01,155 --> 00:02:04,690
+everybody cool with that? And similarly, if I unwrap,
+
+40
+00:02:04,692 --> 00:02:09,128
+if I said, var y=x unwrapped, that just means switch x,
+
+41
+00:02:09,130 --> 00:02:11,396
+because we know that the way we unwrap Optionals and
+
+42
+00:02:11,398 --> 00:02:13,565
+get their associated value is with switch, so
+
+43
+00:02:13,567 --> 00:02:16,401
+I'm gonna switch on x. And in the case of Some, I'm gonna
+
+44
+00:02:16,403 --> 00:02:19,671
+do that let value thing so I can grab the associated value.
+
+45
+00:02:19,673 --> 00:02:22,474
+And then I'm just gonna set y equal to that value.
+
+46
+00:02:22,476 --> 00:02:24,109
+In the case None, I'm gonna crash.
+
+47
+00:02:24,111 --> 00:02:26,745
+I'm gonna raise an exception, okay, because that's what
+
+48
+00:02:26,747 --> 00:02:29,548
+unwrapping an Optional that's not said is supposed to do,
+
+49
+00:02:29,550 --> 00:02:34,453
+it's supposed to crash, okay? And of course, in the case
+
+50
+00:02:34,455 --> 00:02:38,423
+where I'm doing if let, then I'm just gonna switch on x,
+
+51
+00:02:38,425 --> 00:02:41,193
+and I'm, the case of .Some, I'm gonna grab that y, and
+
+52
+00:02:41,195 --> 00:02:43,729
+then I'm just gonna put some code, whatever my code is in
+
+53
+00:02:43,731 --> 00:02:46,899
+there, and if let to happen there. And in the case None,
+
+54
+00:02:46,901 --> 00:02:48,667
+I just break out of the switch, I do nothing.
+
+55
+00:02:48,669 --> 00:02:53,705
+Okay, sound good? All right, so that's Optionals.
+
+56
+00:02:53,707 --> 00:02:55,374
+Hopefully Optional now should start feeling very,
+
+57
+00:02:55,376 --> 00:02:57,342
+very comfortable to you cuz, as you found out,
+
+58
+00:02:57,344 --> 00:03:01,647
+it's everywhere in these, in the API. Now Optionals have
+
+59
+00:03:01,649 --> 00:03:04,716
+some more syntax, okay. That question mark and exclamation
+
+60
+00:03:04,718 --> 00:03:07,886
+point stuff, as you're seeing, is just syntactic sugar.
+
+61
+00:03:07,888 --> 00:03:10,722
+It's just to make the, your typing it in easier and
+
+62
+00:03:10,724 --> 00:03:14,593
+look nicer. It has a little bit more syntactic sugar.
+
+63
+00:03:14,595 --> 00:03:18,664
+One thing is that Optionals can be chained. Okay, so
+
+64
+00:03:18,666 --> 00:03:20,465
+this is the case where, for example,
+
+65
+00:03:20,467 --> 00:03:23,535
+in our calculator, we have the display, and
+
+66
+00:03:23,537 --> 00:03:28,340
+lets say we want to get the text out of the display. And
+
+67
+00:03:28,342 --> 00:03:32,077
+then we want to send another message like hash value which,
+
+68
+00:03:32,079 --> 00:03:34,112
+strings understand this message hash value,
+
+69
+00:03:34,114 --> 00:03:37,382
+how would we do that? Well of course we would say,
+
+70
+00:03:37,384 --> 00:03:41,186
+if let label equal display to unwrap the display. And
+
+71
+00:03:41,188 --> 00:03:44,022
+they we would say if let text equal the labels text,
+
+72
+00:03:44,024 --> 00:03:48,026
+and unwrap that. Then we would say let x equal the text hash
+
+73
+00:03:48,028 --> 00:03:50,829
+value, okay? So that is how we would unwrap it.
+
+74
+00:03:50,831 --> 00:03:53,732
+Well there is a lot easy way to do it which is this,
+
+75
+00:03:53,734 --> 00:03:56,702
+you just say display?.text?.hashvalue,
+
+76
+00:03:56,704 --> 00:04:02,541
+okay? So if you use question marks when you're, not when
+
+77
+00:04:02,543 --> 00:04:05,644
+you're declaring the optional but when you're actually using
+
+78
+00:04:05,646 --> 00:04:08,847
+it, that basically means, try and unwrap this and
+
+79
+00:04:08,849 --> 00:04:12,384
+if you can then use that value to go to the next thing.
+
+80
+00:04:12,386 --> 00:04:15,654
+If you can't, just return nil from this whole expression.
+
+81
+00:04:15,656 --> 00:04:17,155
+Okay, this whole display question mark,
+
+82
+00:04:17,157 --> 00:04:18,590
+that typed question mark, that hash value,
+
+83
+00:04:18,592 --> 00:04:21,793
+that whole expression will return nil if at any point
+
+84
+00:04:21,795 --> 00:04:25,631
+any of these things that were changing unwrap turns out to
+
+85
+00:04:25,633 --> 00:04:29,001
+be nil. So, if the display is nil or if the display's text
+
+86
+00:04:29,003 --> 00:04:31,470
+is nil then this whole thing is gonna be nil.
+
+87
+00:04:31,472 --> 00:04:35,874
+So you see let x equal up there? What type do you think
+
+88
+00:04:35,876 --> 00:04:40,979
+x is right there? >> [INAUDIBLE].
+
+89
+00:04:40,981 --> 00:04:42,781
+>> Int, almost.
+
+90
+00:04:42,783 --> 00:04:45,784
+Optional int, exactly. It has to be optional int, because
+
+91
+00:04:45,786 --> 00:04:48,520
+any of those things could fail and it would return nil.
+
+92
+00:04:48,522 --> 00:04:49,521
+So it has to be able to take nil. So
+
+93
+00:04:49,523 --> 00:04:53,325
+that would be an optional int, cuz hash value returns an int,
+
+94
+00:04:53,327 --> 00:04:57,129
+okay. So you're definitely gonna wanna use this,
+
+95
+00:04:57,131 --> 00:04:59,998
+chaining, it really makes your code read beautifully, okay.
+
+96
+00:05:00,000 --> 00:05:03,001
+And the starts make Optionals make a lot of sense why we use
+
+97
+00:05:03,003 --> 00:05:05,637
+them so much. Okay, but there's more.
+
+98
+00:05:05,639 --> 00:05:08,640
+Here's another Optional syntaxtiture which is ??
+
+99
+00:05:08,642 --> 00:05:12,978
+Okay, and this is basically providing a default value
+
+100
+00:05:12,980 --> 00:05:16,648
+in case something is nil. Okay, so let's add an optional
+
+101
+00:05:16,650 --> 00:05:21,386
+string here s, okay. I could say if s is not nil,
+
+102
+00:05:21,388 --> 00:05:24,122
+then I'm gonna set my display to be s, okay.
+
+103
+00:05:24,124 --> 00:05:26,925
+So let's say I'm setting the display in my calculator, and
+
+104
+00:05:26,927 --> 00:05:30,062
+I never want it to be nil. At worst, I want it to be just
+
+105
+00:05:30,064 --> 00:05:32,698
+a space character. Because you might have noticed,
+
+106
+00:05:32,700 --> 00:05:34,499
+some of you when you're doing your homework,
+
+107
+00:05:34,501 --> 00:05:37,002
+that if you put nil into a label,
+
+108
+00:05:37,004 --> 00:05:39,671
+its size will go to zero. Okay,
+
+109
+00:05:39,673 --> 00:05:44,076
+cuz there's no text in there to have a natural size for. So
+
+110
+00:05:44,078 --> 00:05:46,878
+sometimes you might want to have a code like this where if
+
+111
+00:05:46,880 --> 00:05:48,313
+you want to put nothing in the display,
+
+112
+00:05:48,315 --> 00:05:51,083
+you put a space character, so at least there's something in
+
+113
+00:05:51,085 --> 00:05:54,920
+there for it to have a height, okay? Otherwise your display
+
+114
+00:05:54,922 --> 00:05:57,989
+would keep disappearing if you kept setting it to nil. So
+
+115
+00:05:57,991 --> 00:06:00,892
+we can do this, if s does not equal nil then display equals
+
+116
+00:06:00,894 --> 00:06:03,462
+s, that should be s exclamation point right there,
+
+117
+00:06:03,464 --> 00:06:06,264
+otherwise display equals a space. Okay, well,
+
+118
+00:06:06,266 --> 00:06:09,000
+a much simpler way to put that is with this,
+
+119
+00:06:09,002 --> 00:06:13,438
+defaulting operator, which is to say the display.text
+
+120
+00:06:13,440 --> 00:06:18,176
+= s Okay? And that means if s is not nil then unwrap it and
+
+121
+00:06:18,178 --> 00:06:21,680
+use that value, otherwise use space.
+
+122
+00:06:22,716 --> 00:06:25,851
+Got that? Everyone understand? I don't see any nodding heads
+
+123
+00:06:25,853 --> 00:06:28,687
+on that one. Make sense, okay? So this is, again, just
+
+124
+00:06:28,689 --> 00:06:32,924
+a simple way to have a default value in case an optional is
+
+125
+00:06:32,926 --> 00:06:37,496
+nil. All right so let's talk about another thing, tuples.
+
+126
+00:06:37,498 --> 00:06:41,967
+All right tuples are a type, okay? In Swift they're really,
+
+127
+00:06:41,969 --> 00:06:45,670
+really cool. They're basically a way to build a type out of
+
+128
+00:06:45,672 --> 00:06:48,173
+other types by grouping them, okay? And
+
+129
+00:06:48,175 --> 00:06:50,842
+you can use it anywhere you can use a type, a tuple can be
+
+130
+00:06:50,844 --> 00:06:55,647
+used anywhere types are valid, okay? So, here's an example.
+
+131
+00:06:55,649 --> 00:07:00,018
+I'm going to create x, okay? This let x, x is a constant.
+
+132
+00:07:00,020 --> 00:07:03,955
+It's type is a tuple, with a string, int, and
+
+133
+00:07:03,957 --> 00:07:08,026
+double. So, even though tuple has the sound, to, in it,
+
+134
+00:07:08,028 --> 00:07:11,196
+it's just not two things. Any number of things can be in
+
+135
+00:07:11,198 --> 00:07:16,468
+a tuple okay? So x there is a tuple with string int and
+
+136
+00:07:16,470 --> 00:07:18,703
+double. And I'm even setting it to a value,
+
+137
+00:07:18,705 --> 00:07:22,240
+which is just parenthesis, a string, an int, and a double,
+
+138
+00:07:22,242 --> 00:07:27,078
+okay? Now how do I get those values out of the tuple?
+
+139
+00:07:27,080 --> 00:07:28,480
+Well there is two ways to do it.
+
+140
+00:07:28,482 --> 00:07:32,951
+One is to say, let and then three, identifiers. These
+
+141
+00:07:32,953 --> 00:07:35,921
+are basically three local variable names, equals x,
+
+142
+00:07:35,923 --> 00:07:39,324
+okay? And that's gonna extract the three values and put them,
+
+143
+00:07:39,326 --> 00:07:42,327
+assign them to word, number, and value, which are gonna
+
+144
+00:07:42,329 --> 00:07:45,330
+be local variables in this context, okay? Now, if you
+
+145
+00:07:45,332 --> 00:07:49,734
+tried to say let word, comma, number, closed parentheses,
+
+146
+00:07:49,736 --> 00:07:54,172
+equal x, the compiler will complain, because word, comma,
+
+147
+00:07:54,174 --> 00:07:58,043
+number can't match a string in double tuples. Okay? So
+
+148
+00:07:58,045 --> 00:08:01,613
+this particular syntax is just putting names on the things in
+
+149
+00:08:01,615 --> 00:08:05,517
+the Tuple so you can use them, so now you can print them out.
+
+150
+00:08:05,519 --> 00:08:06,585
+Print word. Print number. Print value.
+
+151
+00:08:06,587 --> 00:08:10,522
+Value would be of type string. Number would be of type int
+
+152
+00:08:10,524 --> 00:08:12,123
+and value would be of type double. Okay,
+
+153
+00:08:12,125 --> 00:08:16,094
+another way to do it is when you create the tuple, okay,
+
+154
+00:08:16,096 --> 00:08:18,830
+you can name each of the things in the tuple. So
+
+155
+00:08:18,832 --> 00:08:25,070
+here I'm letting x, this time be w: String i: Int v: Double.
+
+156
+00:08:25,072 --> 00:08:28,640
+I'm giving the names w, i and v to the things inside
+
+157
+00:08:28,642 --> 00:08:31,243
+the tuple. I'm still assigning it, just like I did in
+
+158
+00:08:31,245 --> 00:08:34,346
+the version above. But now if I want to get at the values,
+
+159
+00:08:34,348 --> 00:08:39,551
+I can just say x.w, x.i, and x.v to get at the tuple
+
+160
+00:08:39,553 --> 00:08:42,254
+values. See the difference between those two cases?
+
+161
+00:08:42,256 --> 00:08:45,090
+One, you're kind of naming it when you declare the tuple,
+
+162
+00:08:45,092 --> 00:08:47,926
+the other one is you're taking a tuple that you got and
+
+163
+00:08:47,928 --> 00:08:50,629
+you're just extracting the values. And you can mix them.
+
+164
+00:08:50,631 --> 00:08:53,698
+For example I could say let = x.
+
+165
+00:08:53,700 --> 00:08:56,101
+Even though I defined it x to have w, i and v,
+
+166
+00:08:56,103 --> 00:08:59,371
+I could ignore the w, i and v and instead just do
+
+167
+00:08:59,373 --> 00:09:04,809
+the syntax from the top okay and call it wrd, num and val.
+
+168
+00:09:04,811 --> 00:09:09,347
+Okay? So, tuples are cool because you can return
+
+169
+00:09:09,349 --> 00:09:12,751
+multiple values from a function with a tuple. Okay?
+
+170
+00:09:12,753 --> 00:09:16,755
+So, we know that returned values are arrow and a type.
+
+171
+00:09:16,757 --> 00:09:19,524
+Well, since a tuple can be a type, you can go arrow and
+
+172
+00:09:19,526 --> 00:09:21,660
+a tuple, and return values. Yeah?
+
+173
+00:09:21,662 --> 00:09:22,260
+>> Can you ignore some of
+
+174
+00:09:22,262 --> 00:09:23,328
+the values? >> So, question,
+
+175
+00:09:23,330 --> 00:09:24,563
+can you ignore some of the values?
+
+176
+00:09:24,565 --> 00:09:27,599
+Absolutely you can, if you use under bar. Underbar and
+
+177
+00:09:27,601 --> 00:09:31,236
+swift is the universal I'm ignoring this character, okay,
+
+178
+00:09:31,238 --> 00:09:35,674
+so you can put underbar in there. So yeah, so
+
+179
+00:09:35,676 --> 00:09:38,076
+here I'm returning this tuple weight and
+
+180
+00:09:38,078 --> 00:09:41,212
+height, obviously straight forward how we do that.
+
+181
+00:09:41,214 --> 00:09:44,015
+So tuples are perfectly valid return values, okay? So
+
+182
+00:09:44,017 --> 00:09:46,918
+you can return multiple things from functions. All right,
+
+183
+00:09:46,920 --> 00:09:50,855
+range. So range is quite important, actually,
+
+184
+00:09:50,857 --> 00:09:54,960
+in Swift. It's essentially just two end points,
+
+185
+00:09:54,962 --> 00:09:59,331
+okay, of anything that can be representative consecutively,
+
+186
+00:09:59,333 --> 00:10:04,569
+okay? So range, the type, is generic, like array,
+
+187
+00:10:04,571 --> 00:10:07,238
+so you can have a range of ints. You can have
+
+188
+00:10:07,240 --> 00:10:10,909
+a range of indexes into something or whatever it
+
+189
+00:10:10,911 --> 00:10:14,245
+really conceptually just has two things, a startIndex and
+
+190
+00:10:14,247 --> 00:10:19,317
+a last index, okay, endIndex. An array's range, okay.
+
+191
+00:10:19,319 --> 00:10:21,953
+If you wanted to get an array, arrange into an array,
+
+192
+00:10:21,955 --> 00:10:22,887
+it would be a range of ints,
+
+193
+00:10:22,889 --> 00:10:24,956
+because an array is indexed by ints.
+
+194
+00:10:24,958 --> 00:10:28,226
+So you would have a range of ints. In fact you know,
+
+195
+00:10:28,228 --> 00:10:30,729
+you, there are methods in array where you can say, give
+
+196
+00:10:30,731 --> 00:10:35,900
+me this range of yourself, and you specify it as a Range.
+
+197
+00:10:35,902 --> 00:10:41,606
+A string's range is not Int. Okay, if you wanna substring,
+
+198
+00:10:41,608 --> 00:10:44,442
+you cannot use a range of Int. It's actually a range of
+
+199
+00:10:44,444 --> 00:10:47,746
+String.Index, which is a different type than Int. And
+
+200
+00:10:47,748 --> 00:10:51,683
+you're gonna need to read all about that in the assignment,
+
+201
+00:10:51,685 --> 00:10:53,318
+okay? One of the section's in assignment is
+
+202
+00:10:53,320 --> 00:10:55,720
+indexing into arrays in the ring assignment.
+
+203
+00:10:55,722 --> 00:10:57,555
+And you're gonna wanna understand that, okay?
+
+204
+00:10:57,557 --> 00:10:59,791
+It's a little bit complicated. I'm not gonna spend
+
+205
+00:10:59,793 --> 00:11:01,426
+lecture time but just I'm pointing it out to you,
+
+206
+00:11:01,428 --> 00:11:04,829
+so you could go look at it. Okay? Now, there's special,
+
+207
+00:11:04,831 --> 00:11:06,798
+just like with optionals we've got question marks and
+
+208
+00:11:06,800 --> 00:11:10,368
+exclamation points. There's some special syntax for
+
+209
+00:11:10,370 --> 00:11:14,072
+ranges, okay, which is this ...and ..<.
+
+210
+00:11:14,074 --> 00:11:18,910
+You see them right here? Okay the... ..<!--? Okay?
+
+211
+00:11:18,912 --> 00:11:22,814
+This means a range right here, okay, that goes from 2 to 3.
+
+212
+00:11:22,816 --> 00:11:27,986
+This is a range that goes from 2 to 3 but does not include 3.
+
+213
+00:11:27,988 --> 00:11:31,423
+Okay? So that would be just the number 2, right there.
+
+214
+00:11:31,425 --> 00:11:34,059
+Okay? Now, see this 4 right here?
+
+215
+00:11:34,061 --> 00:11:39,130
+4 loops in swift all are 4 in like this.
+
+216
+00:11:39,132 --> 00:11:44,502
+So if you wanted to go for I equals 1, 2, 10 I plus plus or
+
+217
+00:11:44,504 --> 00:11:48,006
+whatever you would so that with these, ranges like this,
+
+218
+00:11:48,008 --> 00:11:52,811
+okay, for IN 27 to 104 or whatever. Okay? And
+
+219
+00:11:52,813 --> 00:11:57,048
+you can make ranges that are more powerful than just direct
+
+220
+00:11:57,050 --> 00:12:00,518
+ranges. I can't talk about that really on time wise, but
+
+221
+00:12:00,520 --> 00:12:03,088
+again check the documentation and
+
+222
+00:12:03,090 --> 00:12:07,058
+you'll see out of the ranges, okay? So that's when you see
+
+223
+00:12:07,060 --> 00:12:11,129
+that. Okay, let's talk about data structures in Swift.
+
+224
+00:12:11,131 --> 00:12:13,164
+I'm talking about classes, structures and enums.
+
+225
+00:12:13,166 --> 00:12:16,501
+Okay, you've already seen them in the example. I'm gonna
+
+226
+00:12:16,503 --> 00:12:19,037
+talk about the similarities and the differences.
+
+227
+00:12:19,039 --> 00:12:21,506
+So what's similar between class, struct and enum,
+
+228
+00:12:21,508 --> 00:12:24,275
+they're declared the same way, right? Just a keyword,
+
+229
+00:12:24,277 --> 00:12:27,278
+the name of the thing and then curly braces.
+
+230
+00:12:27,280 --> 00:12:29,981
+They all serve like that way. They're also similar and
+
+231
+00:12:29,983 --> 00:12:31,316
+that they can also have properties and
+
+232
+00:12:31,318 --> 00:12:34,252
+functions. Okay? So you can have functions on there,
+
+233
+00:12:34,254 --> 00:12:37,288
+and you can have properties. Enums cannot have stored
+
+234
+00:12:37,290 --> 00:12:40,158
+properties. Only structs and classes can have stored
+
+235
+00:12:40,160 --> 00:12:44,162
+properties but enums can have computer properties. Okay?
+
+236
+00:12:44,164 --> 00:12:46,831
+The storage of an enum remember is the cases.
+
+237
+00:12:46,833 --> 00:12:49,734
+It's a discrete value thing so it's the cases and
+
+238
+00:12:49,736 --> 00:12:52,537
+their associated values that's the storage.
+
+239
+00:12:52,873 --> 00:12:56,141
+All right they all can have initializers.
+
+240
+00:12:56,143 --> 00:12:57,942
+Okay, we haven't talked much about initializers yet.
+
+241
+00:12:57,944 --> 00:13:01,546
+We're gonna get that today. Eh, so they're all allowed
+
+242
+00:13:01,548 --> 00:13:03,915
+to have initializers except enum. Okay,
+
+243
+00:13:03,917 --> 00:13:06,284
+obviously enum doesn't need an initializer because you just
+
+244
+00:13:06,286 --> 00:13:10,321
+set it to the discrete value with its associated values.
+
+245
+00:13:10,323 --> 00:13:14,459
+Okay? All right. Differences. One, inheritance. Okay?
+
+246
+00:13:14,461 --> 00:13:18,863
+With classes, you can inherit, structs and enum you can't.
+
+247
+00:13:18,865 --> 00:13:21,933
+Value types, I talked about this before, okay? Structs and
+
+248
+00:13:21,935 --> 00:13:24,869
+enum are value types. They're passed around by value.
+
+249
+00:13:24,871 --> 00:13:27,972
+Class is a reference type. You pass pointers to it around. It
+
+250
+00:13:27,974 --> 00:13:31,910
+lives in the heap. Okay? Let's talk a little more about value
+
+251
+00:13:31,912 --> 00:13:36,781
+versus reference. Value means that it's copied when passed
+
+252
+00:13:36,783 --> 00:13:39,984
+as argument to a function, that's kind of obvious. But
+
+253
+00:13:39,986 --> 00:13:44,489
+it also copies when you assign it to another variable.
+
+254
+00:13:44,491 --> 00:13:48,259
+If I say varx=y if y is a value type,
+
+255
+00:13:48,261 --> 00:13:49,561
+x will be a copy of y.
+
+256
+00:13:49,563 --> 00:13:54,265
+A copy, so if y is an array y might be an array. Okay? And
+
+257
+00:13:54,267 --> 00:13:58,436
+you say, x equals y. And then you say, x append this thing,
+
+258
+00:13:58,438 --> 00:14:01,372
+that thing will not be appended to y. Because x
+
+259
+00:14:01,374 --> 00:14:05,076
+was a copy of y. You see what I'm talking about there? Okay.
+
+260
+00:14:05,078 --> 00:14:06,911
+So that's a big difference with value semantics.
+
+261
+00:14:06,913 --> 00:14:11,883
+Even just assigning them, is a copy of them. A value symantec
+
+262
+00:14:11,885 --> 00:14:16,788
+thing is immutable if it's signed to a let variable.
+
+263
+00:14:16,790 --> 00:14:18,489
+Okay? So if you have an array okay,
+
+264
+00:14:18,491 --> 00:14:20,992
+since that value symmentic cuz an array is a struct.
+
+265
+00:14:20,994 --> 00:14:24,229
+If you assigned to a let, let x equal an array you cannot
+
+266
+00:14:24,231 --> 00:14:27,932
+append things on to that array cuz it is immutable. Okay,
+
+267
+00:14:27,934 --> 00:14:32,170
+same thing with the dictionary or whatever. Okay. Remember
+
+268
+00:14:32,172 --> 00:14:34,305
+the function parameters. All of them are constants so
+
+269
+00:14:34,307 --> 00:14:38,676
+of course you'd copy them into there, you can't modify them.
+
+270
+00:14:39,112 --> 00:14:42,580
+Because of the way copy symmentics work, Swift makes
+
+271
+00:14:42,582 --> 00:14:46,651
+you when you do have a struct or enum you have to mark all
+
+272
+00:14:46,653 --> 00:14:49,921
+functions that might change that thing. Mutating functions
+
+273
+00:14:49,923 --> 00:14:54,592
+with the keyword mutating. So like mutating funk whatever.
+
+274
+00:14:54,594 --> 00:14:56,828
+Okay? If that function could change that struct.
+
+275
+00:14:56,830 --> 00:14:59,797
+And the reason for that is when Swift copies it
+
+276
+00:14:59,799 --> 00:15:02,433
+it doesn't want to actually make a copy. Okay?
+
+277
+00:15:02,435 --> 00:15:05,436
+It gets another pointer to it but as soon as you try to
+
+278
+00:15:05,438 --> 00:15:09,374
+mutate it then it's gonna have to copy it. You see? So
+
+279
+00:15:09,376 --> 00:15:11,643
+it's kind of a performance enhancement. So
+
+280
+00:15:11,645 --> 00:15:14,312
+any time you have a struct that has a function that
+
+281
+00:15:14,314 --> 00:15:16,915
+changes the values, any of the values of the struct,
+
+282
+00:15:16,917 --> 00:15:19,584
+you have to put mutating in front so Swift knows
+
+283
+00:15:19,586 --> 00:15:24,222
+that you're doing that. Okay, reference types, okay.
+
+284
+00:15:24,224 --> 00:15:24,856
+This is what you're used to,
+
+285
+00:15:24,858 --> 00:15:26,391
+probably. Things are stored in the heap.
+
+286
+00:15:26,393 --> 00:15:29,794
+You have a reference to them. Those references are counted
+
+287
+00:15:29,796 --> 00:15:33,731
+automatically. That means there's no garbage collection
+
+288
+00:15:33,733 --> 00:15:36,434
+in Swift. All right, there's no mark and sweep in
+
+289
+00:15:36,436 --> 00:15:39,370
+the heap. Every single time you create a new pointer to
+
+290
+00:15:39,372 --> 00:15:41,205
+something in the heap Swift keeps track of that and
+
+291
+00:15:41,207 --> 00:15:43,975
+it keeps incrementing a count. And when that count goes down
+
+292
+00:15:43,977 --> 00:15:47,078
+to zero because maybe the last pointer that's pointing to it
+
+293
+00:15:47,080 --> 00:15:50,148
+goes out of scope or maybe you assign that last pointer to
+
+294
+00:15:50,150 --> 00:15:52,917
+point to something else. Nothing points to it.
+
+295
+00:15:52,919 --> 00:15:54,519
+It immediately removes that from the heap.
+
+296
+00:15:54,521 --> 00:15:57,855
+Okay, predictably removed from the heap immediately.
+
+297
+00:15:57,857 --> 00:16:00,325
+So, it's very different than garbage collection, where
+
+298
+00:16:00,327 --> 00:16:02,961
+garbage collection is kind of going on in the background,
+
+299
+00:16:02,963 --> 00:16:04,963
+and it might collect a whole bunch from the heap,
+
+300
+00:16:04,965 --> 00:16:07,398
+all at once. That's been sitting around for a while.
+
+301
+00:16:07,400 --> 00:16:07,832
+This is predictable,
+
+302
+00:16:07,834 --> 00:16:10,468
+memory management and it's all managed for you. Okay,
+
+303
+00:16:10,470 --> 00:16:13,204
+there's only one way that you participate in that, which is
+
+304
+00:16:13,206 --> 00:16:16,741
+the weak and strong, which I'll be talking about later,
+
+305
+00:16:18,378 --> 00:16:20,979
+okay? Let's see, constant pointers.
+
+306
+00:16:20,981 --> 00:16:22,680
+Okay, if you have a constant pointer to a class,
+
+307
+00:16:22,682 --> 00:16:25,683
+obviously it's a pointer, so you're still mutating it,
+
+308
+00:16:25,685 --> 00:16:29,520
+right? It's not like a struct where if I say var y = x and
+
+309
+00:16:29,522 --> 00:16:32,190
+then I add something to y, it doesn't modify x.
+
+310
+00:16:32,192 --> 00:16:35,560
+If I say var y = x and they're classes, then if I send
+
+311
+00:16:35,562 --> 00:16:38,229
+a message to y, it's sending a message to x because they're
+
+312
+00:16:38,231 --> 00:16:40,631
+the same thing. Right they, that same thing lives in
+
+313
+00:16:40,633 --> 00:16:44,702
+the heat. There's no copying, so let, all let means is that
+
+314
+00:16:44,704 --> 00:16:47,438
+pointer's not going to change. It doesn't
+
+315
+00:16:47,440 --> 00:16:50,375
+mean what the pointer points to won't change.
+
+316
+00:16:50,810 --> 00:16:55,380
+Okay obviously so when you pass a pointer to a class
+
+317
+00:16:55,382 --> 00:16:58,449
+as an argument, then it does not make a copy, it's just
+
+318
+00:16:58,451 --> 00:17:02,587
+passing a pointer. Okay. Now how do you know which to use?
+
+319
+00:17:02,589 --> 00:17:04,122
+Struct versus class, specially.
+
+320
+00:17:04,124 --> 00:17:07,892
+Okay, enum is pretty obvious. But struct versus class well.
+
+321
+00:17:07,894 --> 00:17:09,894
+Usually you're gonna choose class over struct.
+
+322
+00:17:09,896 --> 00:17:11,796
+Okay. Because this is object oriented program.
+
+323
+00:17:11,798 --> 00:17:13,631
+You use to do it and that's going to be fine.
+
+324
+00:17:13,633 --> 00:17:16,367
+Struct is gonna be used for more fundamental types.
+
+325
+00:17:16,369 --> 00:17:19,370
+Okay, things like strings and doubles, and ints and arrays
+
+326
+00:17:19,372 --> 00:17:22,507
+in dictionaries, and also for drawing, points, rectangles.
+
+327
+00:17:22,509 --> 00:17:24,742
+Do you see what I'm saying, smaller things that
+
+328
+00:17:24,744 --> 00:17:27,845
+are self-contained, that it makes sense to copy by value.
+
+329
+00:17:27,847 --> 00:17:30,348
+You want the value semantic, that's gonna be your primary
+
+330
+00:17:30,350 --> 00:17:32,116
+reason for choosing struct as you want values
+
+331
+00:17:32,118 --> 00:17:35,953
+semantics when you're passing this thing around. Otherwise,
+
+332
+00:17:35,955 --> 00:17:39,090
+you're gonna choose classes, okay? Anything big is almost
+
+333
+00:17:39,092 --> 00:17:44,662
+certainly gonna use the class, all right? Okay.
+
+334
+00:17:44,664 --> 00:17:47,732
+On the methods. So now we are gonna talk about the syntax
+
+335
+00:17:47,734 --> 00:17:51,369
+of methods. Okay, I showed you this in class a little bit but
+
+336
+00:17:51,371 --> 00:17:54,372
+I'm gonna talk about the full semantics here of it.
+
+337
+00:17:54,374 --> 00:17:58,142
+So interesting about the naming of functions, so
+
+338
+00:17:58,144 --> 00:18:00,878
+here is someone defining a method and here is someone
+
+339
+00:18:00,880 --> 00:18:04,449
+calling this method. Okay? Okay, so watch this colored
+
+340
+00:18:04,451 --> 00:18:09,287
+stuff going on as I talk about these various things going on.
+
+341
+00:18:09,289 --> 00:18:13,658
+So all parameters to functions have an internal name and
+
+342
+00:18:13,660 --> 00:18:15,626
+an external name, every single parameter.
+
+343
+00:18:15,628 --> 00:18:18,596
+So here's the first parameter, here's the second parameter,
+
+344
+00:18:18,598 --> 00:18:22,300
+they both have an external name and an internal name.
+
+345
+00:18:22,302 --> 00:18:25,203
+Okay? The external name comes first. Internal name comes
+
+346
+00:18:25,205 --> 00:18:29,640
+second. The internal name is the name of the local
+
+347
+00:18:29,642 --> 00:18:33,778
+variable that's gonna be used inside your method.
+
+348
+00:18:33,780 --> 00:18:35,546
+All right? So that's this one right here,
+
+349
+00:18:35,548 --> 00:18:38,883
+internal name. Shows up right before the colon. Okay?
+
+350
+00:18:38,885 --> 00:18:40,751
+First and second. You can see how first and
+
+351
+00:18:40,753 --> 00:18:44,722
+second are the names I used for those inside my function.
+
+352
+00:18:44,724 --> 00:18:47,091
+Don't appear anywhere here. Notice first and
+
+353
+00:18:47,093 --> 00:18:50,661
+second do not appear in the funk bar call. Okay,
+
+354
+00:18:50,663 --> 00:18:54,198
+cuz those are the internal names. The external name
+
+355
+00:18:54,200 --> 00:18:58,769
+is what the caller uses when they call this method. Okay,
+
+356
+00:18:58,771 --> 00:19:03,207
+so you can see bar down there. It says externalFirst: 123,
+
+357
+00:19:03,209 --> 00:19:08,179
+externalSecond: 5.5, right? Okay, it's using the external
+
+358
+00:19:08,181 --> 00:19:10,114
+names first and second never appear but
+
+359
+00:19:10,116 --> 00:19:13,484
+first and second are still used in the implementation,
+
+360
+00:19:13,486 --> 00:19:16,854
+those in the internal names. Okay,
+
+361
+00:19:16,856 --> 00:19:20,024
+you can put an under bar if you don't want callers
+
+362
+00:19:20,026 --> 00:19:24,562
+to use an external name at all for a given parameter. Okay,
+
+363
+00:19:24,564 --> 00:19:28,699
+so if you put underbar as the external name then there will
+
+364
+00:19:28,701 --> 00:19:33,337
+be no external parameters. So you see it says foo(123), not
+
+365
+00:19:33,339 --> 00:19:38,176
+foo(externalFirst or anything, it's just nothing, 123. And
+
+366
+00:19:38,178 --> 00:19:43,147
+in fact, this is the default for the first parameter.
+
+367
+00:19:43,149 --> 00:19:45,850
+The first parameter defaults to under bar, you don't need
+
+368
+00:19:45,852 --> 00:19:48,519
+to put an under bar there when you're creating a function.
+
+369
+00:19:48,521 --> 00:19:51,856
+Just by default an under bar would be put there for you,
+
+370
+00:19:51,858 --> 00:19:55,793
+okay? Now you could specify an external name for the first,
+
+371
+00:19:55,795 --> 00:19:58,829
+it's legal. Okay, I'll show you that in a second. But
+
+372
+00:19:58,831 --> 00:20:01,732
+by default under bar is the external name for the first
+
+373
+00:20:01,734 --> 00:20:05,903
+parameter only. All the other ones. Okay? The default is
+
+374
+00:20:05,905 --> 00:20:09,507
+the internal name. So, if you don't have an external name,
+
+375
+00:20:09,509 --> 00:20:15,680
+then it defaults to being the internal name. Got it?
+
+376
+00:20:15,682 --> 00:20:19,383
+Okay. Any parameter's external name can be changed, okay?
+
+377
+00:20:19,385 --> 00:20:22,587
+You can change even the second one to be underbar, so
+
+378
+00:20:22,589 --> 00:20:26,324
+that the second one has no name, okay?
+
+379
+00:20:26,326 --> 00:20:29,694
+But don't do this, okay? It's very anti Swift
+
+380
+00:20:29,696 --> 00:20:33,898
+to either remove the second parameter name or
+
+381
+00:20:33,900 --> 00:20:37,501
+to add it back to the first. Adding to the first is
+
+382
+00:20:37,503 --> 00:20:40,404
+probably less anti Swift, there is probably some case
+
+383
+00:20:40,406 --> 00:20:43,207
+where that might actually make some sense. Removing them for
+
+384
+00:20:43,209 --> 00:20:45,743
+subsequent ones is probably really bad. Okay,
+
+385
+00:20:45,745 --> 00:20:49,313
+I don't think I've ever had to do that in my entire life of
+
+386
+00:20:49,315 --> 00:20:49,680
+writing swift so.
+
+387
+00:20:49,682 --> 00:20:54,352
+All right now, methods are obviously overriddeable,
+
+388
+00:20:54,354 --> 00:20:58,289
+this is object orientated programming. Right and the way
+
+389
+00:20:58,291 --> 00:21:01,192
+you do it, you just put the word override in front of
+
+390
+00:21:01,194 --> 00:21:04,128
+the func or var. Both properties and functions can
+
+391
+00:21:04,130 --> 00:21:06,964
+be overridden right, so you put override in there. It is
+
+392
+00:21:06,966 --> 00:21:12,203
+possible to mark a method or a property final in which case
+
+393
+00:21:12,205 --> 00:21:15,273
+no one can subclasses. Okay, there won't be a list,
+
+394
+00:21:15,275 --> 00:21:18,743
+a subclass can't say override that thing. The compiler won't
+
+395
+00:21:18,745 --> 00:21:23,114
+let them. Okay, you can also mark an entire class final,
+
+396
+00:21:23,116 --> 00:21:27,985
+and then the whole thing is not subclassable. All right?
+
+397
+00:21:27,987 --> 00:21:33,090
+Now, both types and instances can have methods and
+
+398
+00:21:33,092 --> 00:21:36,060
+properties. What does that mean? So, so
+
+399
+00:21:36,062 --> 00:21:37,561
+far in all the demos we've done,
+
+400
+00:21:37,563 --> 00:21:39,997
+all you've seen is instance methods and
+
+401
+00:21:39,999 --> 00:21:41,332
+instance properties. In other words,
+
+402
+00:21:41,334 --> 00:21:44,535
+they are properties that you get from an instance of
+
+403
+00:21:44,537 --> 00:21:47,104
+the thing. Okay, an instance of the calculator brain.
+
+404
+00:21:47,106 --> 00:21:52,076
+Someone actually created a calculator brain in the heap
+
+405
+00:21:52,078 --> 00:21:55,513
+and you send it messages, okay. Those are instances
+
+406
+00:21:55,515 --> 00:21:59,917
+messages, Instances methods and instances properties. But
+
+407
+00:21:59,919 --> 00:22:01,185
+it is possible to have methods and
+
+408
+00:22:01,187 --> 00:22:04,422
+properties on the type itself, so calculator brain,
+
+409
+00:22:04,424 --> 00:22:08,259
+the type can have functions, okay? And here's what
+
+410
+00:22:08,261 --> 00:22:11,629
+it looks like to call them. So here I have a little example.
+
+411
+00:22:11,631 --> 00:22:14,899
+Here I have a var d which is a double, okay?
+
+412
+00:22:14,901 --> 00:22:18,469
+And it's set to some value. So this d is an instance of
+
+413
+00:22:18,471 --> 00:22:20,838
+a double. It is an actual double that has some value,
+
+414
+00:22:20,840 --> 00:22:24,742
+all right? And here I'm checking by sending a message,
+
+415
+00:22:24,744 --> 00:22:28,245
+an instance method right here. Or probably a property
+
+416
+00:22:28,247 --> 00:22:32,383
+actually. Instance property on D, where I'm asking
+
+417
+00:22:32,385 --> 00:22:35,386
+if it's signed is the minus sign, I'm just making this up,
+
+418
+00:22:35,388 --> 00:22:37,822
+there's probably not even such a method on double.
+
+419
+00:22:37,824 --> 00:22:41,926
+But that would be an instance property or method and
+
+420
+00:22:41,928 --> 00:22:42,760
+I would be sending it to D,
+
+421
+00:22:42,762 --> 00:22:46,263
+which is an instance. If it does have a minus sign,
+
+422
+00:22:46,265 --> 00:22:49,700
+I'm going to use a type property. Or type function,
+
+423
+00:22:49,702 --> 00:22:54,972
+rather, of double here, to change its probably absolute
+
+424
+00:22:54,974 --> 00:22:57,808
+value, so it'd probably change its sign there. Okay.
+
+425
+00:22:57,810 --> 00:23:01,145
+Notice the syntax here, Double.abs, okay.
+
+426
+00:23:01,147 --> 00:23:03,647
+This is the name of the function abs, okay, and
+
+427
+00:23:03,649 --> 00:23:07,084
+I'm accessing it by saying Double. So in other words, I'm
+
+428
+00:23:07,086 --> 00:23:11,322
+putting the name of the class. Not an instance of a class,
+
+429
+00:23:11,324 --> 00:23:13,858
+not a variable of that class, but the actual name of
+
+430
+00:23:13,860 --> 00:23:18,462
+the class, dot abs. Okay, that's it's gonna be defined,
+
+431
+00:23:18,464 --> 00:23:23,701
+that abs, will be defined like this. Static func abs.
+
+432
+00:23:23,703 --> 00:23:26,804
+This would be in the class double. And you put this word
+
+433
+00:23:26,806 --> 00:23:31,275
+static and that says that you don't send this to double
+
+434
+00:23:31,277 --> 00:23:35,045
+instances. You send it to the Double class by saying capital
+
+435
+00:23:35,047 --> 00:23:39,683
+D Double dot. Okay? Why do we have these things? Okay these
+
+436
+00:23:39,685 --> 00:23:43,888
+are usually utility functions kind of global functions but
+
+437
+00:23:43,890 --> 00:23:46,824
+they're really strongly associated with the class. So
+
+438
+00:23:46,826 --> 00:23:48,359
+we put them as class methods, okay?
+
+439
+00:23:48,361 --> 00:23:52,096
+That's what they're for, mostly. Maybe you have a class
+
+440
+00:23:52,098 --> 00:23:56,534
+method that creates Shared instances of a class, okay.
+
+441
+00:23:56,536 --> 00:23:59,637
+Something like that, we'll see a few of these.
+
+442
+00:23:59,639 --> 00:24:00,538
+Once you start to see them in action,
+
+443
+00:24:00,540 --> 00:24:02,273
+you'll start to understand. But I just wanna make sure you
+
+444
+00:24:02,275 --> 00:24:04,809
+understand that there is a difference between these two
+
+445
+00:24:04,811 --> 00:24:07,478
+and this static that makes a difference on declaration,
+
+446
+00:24:07,480 --> 00:24:10,381
+okay. That's also in the reading assignment, make sure
+
+447
+00:24:10,383 --> 00:24:13,184
+you read that carefully. In the homework assignment,
+
+448
+00:24:13,186 --> 00:24:17,121
+I even say be careful to read this carefully. All right,
+
+449
+00:24:17,123 --> 00:24:19,423
+properties, okay. Properties are really cool.
+
+450
+00:24:19,425 --> 00:24:21,892
+In Swift we're only just scratching the surface so
+
+451
+00:24:21,894 --> 00:24:25,229
+far of what they can do. But one really cool thing about
+
+452
+00:24:25,231 --> 00:24:29,834
+them is that you can observe changes to a property, okay.
+
+453
+00:24:29,836 --> 00:24:33,437
+And you need to do that by, here's your var, okay. This is
+
+454
+00:24:33,439 --> 00:24:35,573
+a stored property, this is not a computed property,
+
+455
+00:24:35,575 --> 00:24:39,310
+it's stored, okay. It stores in ints, its value is 42. But
+
+456
+00:24:39,312 --> 00:24:41,979
+I'm putting the curly braces after it, not because I'm
+
+457
+00:24:41,981 --> 00:24:45,015
+gonna do get and set, I'm not computing it. But
+
+458
+00:24:45,017 --> 00:24:50,154
+I'm gonna add willSet and/or didSet, okay. So willSet and
+
+459
+00:24:50,156 --> 00:24:53,057
+didSet, this is just code in here that's gonna get called
+
+460
+00:24:53,059 --> 00:24:58,262
+whenever this thing gets set. Okay, before and after. Before
+
+461
+00:24:58,264 --> 00:25:02,233
+it gets set, after it's been set, okay. And inside there
+
+462
+00:25:02,235 --> 00:25:05,102
+newValue is going to be the value it's going to be set to
+
+463
+00:25:05,104 --> 00:25:08,506
+in willSet. And oldValue is this value it used to have in
+
+464
+00:25:08,508 --> 00:25:13,777
+did, when you're executing in didSet, okay. So, pretty cool.
+
+465
+00:25:13,779 --> 00:25:17,281
+And you can do that for stored properties, you can do it for
+
+466
+00:25:17,283 --> 00:25:19,884
+inherited properties, properties you inherit even,
+
+467
+00:25:19,886 --> 00:25:23,554
+okay. And you can do it for computed properties as well,
+
+468
+00:25:23,556 --> 00:25:27,725
+okay. Also here, this will be,
+
+469
+00:25:27,727 --> 00:25:31,428
+one thing to note about this is these willSets and didSets,
+
+470
+00:25:31,430 --> 00:25:35,666
+if you mutate a value type they will get called,
+
+471
+00:25:35,668 --> 00:25:39,603
+okay. So, operations here from our calculator brain,
+
+472
+00:25:39,605 --> 00:25:43,107
+dictionary string operation that is a value type,
+
+473
+00:25:43,109 --> 00:25:45,743
+dictionary is a value type, right. So
+
+474
+00:25:45,745 --> 00:25:48,012
+if you add something to this dictionary,
+
+475
+00:25:48,014 --> 00:25:51,582
+this will get called. willSet and didSet will get called,
+
+476
+00:25:51,584 --> 00:25:54,318
+okay. That's not true if it's a reference type, okay.
+
+477
+00:25:54,320 --> 00:25:57,187
+If that if this property isn't a class and
+
+478
+00:25:57,189 --> 00:26:00,124
+you change the class somehow, it can't detect that, so
+
+479
+00:26:00,126 --> 00:26:02,393
+it doesn't do willSet and didSet, okay.
+
+480
+00:26:02,395 --> 00:26:07,932
+You have to change the pointer itself. All right, okay.
+
+481
+00:26:07,934 --> 00:26:11,101
+One very common thing to do in these willSets and didSets is
+
+482
+00:26:11,103 --> 00:26:14,705
+update the UI. You got a method in your controller.
+
+483
+00:26:14,707 --> 00:26:16,440
+You set some value in controller that changes
+
+484
+00:26:16,442 --> 00:26:19,176
+the way the UI would look. You ask your view to
+
+485
+00:26:19,178 --> 00:26:21,378
+draw itself again, okay. Very, very common.
+
+486
+00:26:21,380 --> 00:26:24,181
+We're gonna be doing that up the wazoo in the next lecture,
+
+487
+00:26:24,183 --> 00:26:29,053
+okay. All right. Lazy initialization. So, this is
+
+488
+00:26:29,055 --> 00:26:32,489
+a little bit of a cheat code of Swift right here.
+
+489
+00:26:32,491 --> 00:26:37,595
+You can declare vars to be lazily instantiated.
+
+490
+00:26:37,597 --> 00:26:41,699
+Which means that, their value, this equals calculator brain,
+
+491
+00:26:41,701 --> 00:26:45,436
+will not actually happen. That assignment will not happen
+
+492
+00:26:45,438 --> 00:26:47,705
+until someone asks for the brain, okay.
+
+493
+00:26:47,707 --> 00:26:50,641
+If someone tries to send a message to this brain or
+
+494
+00:26:50,643 --> 00:26:51,976
+get a property to this brain,
+
+495
+00:26:51,978 --> 00:26:52,876
+then it's gonna get initialized.
+
+496
+00:26:52,878 --> 00:26:55,379
+So in other words, it's lazily instantiated, okay.
+
+497
+00:26:55,381 --> 00:26:58,816
+And you can do it like that, okay. Just lazy var brain,
+
+498
+00:26:58,818 --> 00:27:02,152
+calculatorbrain. You can do down here, okay.
+
+499
+00:27:02,154 --> 00:27:06,256
+Lazy var myProperty = self.initializedMyProperty.
+
+500
+00:27:06,258 --> 00:27:10,227
+So, I'm calling a method on myself to initialize one of my
+
+501
+00:27:10,229 --> 00:27:14,031
+properties. Normally, this would be illegal
+
+502
+00:27:14,033 --> 00:27:16,734
+without the lazy. The reason this would be illegal
+
+503
+00:27:16,736 --> 00:27:19,503
+without the lazy is that you cannot send any messages to
+
+504
+00:27:19,505 --> 00:27:22,806
+yourself or access any of your properties until you're fully
+
+505
+00:27:22,808 --> 00:27:26,844
+initialized, okay. And this is part of your initialization,
+
+506
+00:27:26,846 --> 00:27:28,712
+so it's a catch 22, you can't do it. But
+
+507
+00:27:28,714 --> 00:27:32,783
+if you make this lazy, now you can. Because it's not actually
+
+508
+00:27:32,785 --> 00:27:35,152
+going to happen until after you're fully initialized and
+
+509
+00:27:35,154 --> 00:27:38,689
+someone comes along and tries to access myProperty, okay. No
+
+510
+00:27:38,691 --> 00:27:41,759
+one can access myProperty for your initialize anyway. So,
+
+511
+00:27:41,761 --> 00:27:44,595
+once you're fully initialized, I'm gonna access myProperty,
+
+512
+00:27:44,597 --> 00:27:48,832
+lazy, boom. This method will get called to initialize you,
+
+513
+00:27:48,834 --> 00:27:51,468
+got it? And how about this one in the middle here,
+
+514
+00:27:51,470 --> 00:27:56,573
+some property of this given type equals a closure
+
+515
+00:27:57,043 --> 00:27:58,342
+with open parentheses,
+
+516
+00:27:58,344 --> 00:28:01,645
+closed parentheses on the end. This just means,
+
+517
+00:28:01,647 --> 00:28:07,084
+initialize this by executing the code inside this closure,
+
+518
+00:28:07,086 --> 00:28:09,420
+okay. It's very similar to doing
+
+519
+00:28:09,422 --> 00:28:12,089
+self.initializeMyProperty but you're putting the code
+
+520
+00:28:12,091 --> 00:28:14,324
+in this closure instead of putting it in initialize
+
+521
+00:28:14,326 --> 00:28:18,062
+myProperty, whatever that method is, okay. Now,
+
+522
+00:28:18,064 --> 00:28:22,332
+normally inside here, okay. If this weren't lazy,
+
+523
+00:28:22,334 --> 00:28:25,602
+you would not be able to access self in here.
+
+524
+00:28:25,604 --> 00:28:29,073
+Because again, this is a part of initialization, you can't
+
+525
+00:28:29,075 --> 00:28:31,975
+do anything with self until you're fully initialized. So
+
+526
+00:28:31,977 --> 00:28:32,943
+if you tried to put self in here,
+
+527
+00:28:32,945 --> 00:28:36,213
+the compiler will complain. But if you make it lazy,
+
+528
+00:28:36,215 --> 00:28:40,250
+now you can access self in here. Got it?
+
+529
+00:28:40,252 --> 00:28:43,087
+Call your own methods or whatever you wanna do, okay.
+
+530
+00:28:43,089 --> 00:28:46,690
+So that's lazy. The reason this is kind of a cheat code
+
+531
+00:28:46,692 --> 00:28:51,128
+is that this lazy business satisfies the requirement
+
+532
+00:28:51,130 --> 00:28:54,698
+that all your vars have to be initialized, okay. So even
+
+533
+00:28:54,700 --> 00:28:57,868
+these, though these things are being initialized lazily,
+
+534
+00:28:57,870 --> 00:28:59,570
+they're still being initialized for
+
+535
+00:28:59,572 --> 00:29:02,139
+the purposes of that rule that all your vars have to be
+
+536
+00:29:02,141 --> 00:29:05,209
+initialized. This kind of will often keep you from having to
+
+537
+00:29:05,211 --> 00:29:07,211
+write an initializer. You won't need an init,
+
+538
+00:29:07,213 --> 00:29:10,013
+because of this lazily do it, okay.
+
+539
+00:29:10,015 --> 00:29:13,183
+That's why I say it's kind of a cheat code a little bit,
+
+540
+00:29:13,185 --> 00:29:16,220
+okay. One thing about lazy, they always have to be var.
+
+541
+00:29:16,222 --> 00:29:20,124
+So there's no such thing as lazy let, okay. Lazy var
+
+542
+00:29:20,126 --> 00:29:24,762
+only, okay. You can also use laziness to get around some
+
+543
+00:29:24,764 --> 00:29:28,098
+dependency issues, if you have one var depends on another. If
+
+544
+00:29:28,100 --> 00:29:30,968
+you can make one of them lazy, then that'll be fine, right.
+
+545
+00:29:30,970 --> 00:29:34,404
+Cuz the lazy one will call the one that gets pre-initialized,
+
+546
+00:29:34,406 --> 00:29:39,276
+okay. All right, let's talk about array.
+
+547
+00:29:39,278 --> 00:29:42,246
+Okay, I'm not gonna spend much time on this cuz array you're
+
+548
+00:29:42,248 --> 00:29:43,647
+used to array, you know what array is.
+
+549
+00:29:43,649 --> 00:29:46,049
+In other languages, it's pretty much the same in Swift.
+
+550
+00:29:46,051 --> 00:29:48,919
+So I'm just gonna try and cover the syntax a little bit.
+
+551
+00:29:48,921 --> 00:29:51,555
+One thing is we've been using this kind of syntax for
+
+552
+00:29:51,557 --> 00:29:55,793
+dictionary, right, dictionary angle, extreme colon
+
+553
+00:29:55,795 --> 00:30:00,097
+operation, remember that? This is the formal
+
+554
+00:30:01,200 --> 00:30:04,401
+syntax for an array but this square bracket,
+
+555
+00:30:04,403 --> 00:30:07,137
+string closed square bracket is more informal and
+
+556
+00:30:07,139 --> 00:30:11,909
+it's the one we use, okay. So as we go forward, we're gonna
+
+557
+00:30:11,911 --> 00:30:17,014
+use [string] to mean the type array of string, okay.
+
+558
+00:30:17,016 --> 00:30:22,719
+And similarly for dictionary, [key:value]. That is
+
+559
+00:30:22,721 --> 00:30:28,692
+dictionary with keys of this and values of that type, okay.
+
+560
+00:30:28,694 --> 00:30:29,960
+Now, this is the type,
+
+561
+00:30:29,962 --> 00:30:32,696
+so the open parenthesis close parenthesis on the end just
+
+562
+00:30:32,698 --> 00:30:35,599
+means that I'm calling the initializer with no arguments.
+
+563
+00:30:35,601 --> 00:30:38,602
+Same as up here. So don't get confused by that, okay.
+
+564
+00:30:38,604 --> 00:30:40,537
+So that just means I'm initializing,
+
+565
+00:30:40,539 --> 00:30:44,141
+I'm creating an instance of an array of string, okay. That's
+
+566
+00:30:44,143 --> 00:30:48,278
+what both of those mean. So, I can also create arrays and
+
+567
+00:30:48,280 --> 00:30:52,249
+initialize them by just saying some variable like animals
+
+568
+00:30:52,251 --> 00:30:56,119
+there which is constant let animals = [ list a bunch of
+
+569
+00:30:56,121 --> 00:30:59,323
+things ]. That creates an array of those things.
+
+570
+00:30:59,325 --> 00:31:02,426
+And notice I don't specify any type here.
+
+571
+00:31:02,428 --> 00:31:04,795
+Why, why do I get away with that? What does Swift do?
+
+572
+00:31:04,797 --> 00:31:09,900
+It infers type. So, we would look at this and say string,
+
+573
+00:31:09,902 --> 00:31:10,968
+string, string, string all right.
+
+574
+00:31:10,970 --> 00:31:14,438
+This is an array of string. Now if I went giraffe, cow,
+
+575
+00:31:14,440 --> 00:31:18,976
+three, bird, then Swift would complain, can't infer the type
+
+576
+00:31:18,978 --> 00:31:22,012
+of that array, because it's not all the same type.
+
+577
+00:31:22,014 --> 00:31:24,915
+Okay, so we'd infer it here. Now, notice this
+
+578
+00:31:24,917 --> 00:31:28,385
+animals.append("Ostrich"), if I put an Ostrich in here,
+
+579
+00:31:28,387 --> 00:31:31,521
+this will not compile, okay. Compiler will say no,
+
+580
+00:31:31,523 --> 00:31:35,425
+that's because animals is let, it's a constant.
+
+581
+00:31:35,427 --> 00:31:39,029
+So this is a constant array, it can not be modified.
+
+582
+00:31:39,031 --> 00:31:44,468
+If I put var right here, no problem, it would work, okay.
+
+583
+00:31:44,470 --> 00:31:47,671
+Now, if I say let animal = animals[5].
+
+584
+00:31:47,673 --> 00:31:51,441
+That's gonna crash my program. Array index out of bounds,
+
+585
+00:31:51,443 --> 00:31:53,911
+just like most Programming systems do. It's one
+
+586
+00:31:53,913 --> 00:31:57,214
+of the few cases that you can crash your program in Swift.
+
+587
+00:31:57,216 --> 00:32:00,884
+We know unwrapping optionals is one, this is another one.
+
+588
+00:32:00,886 --> 00:32:02,019
+If you array index out of bounds,
+
+589
+00:32:02,021 --> 00:32:07,257
+it will crash, okay? How do you enumerate array?
+
+590
+00:32:07,259 --> 00:32:10,027
+I wanna look at everything in an array. Yeah, I could do for
+
+591
+00:32:10,029 --> 00:32:13,997
+with a range 0.., the length of the array, right?
+
+592
+00:32:13,999 --> 00:32:16,400
+0.., less than sign, length of the array. But
+
+593
+00:32:16,402 --> 00:32:18,268
+that's not how you would do it, you would just say, for
+
+594
+00:32:18,270 --> 00:32:22,906
+animal in animals, okay? This is gonna loop through, and
+
+595
+00:32:22,908 --> 00:32:24,975
+this local variable is gonna be assigned each
+
+596
+00:32:24,977 --> 00:32:29,846
+of the animals, okay? That's how you enumerate an array.
+
+597
+00:32:30,215 --> 00:32:32,282
+All right, interesting Array<T> methods.
+
+598
+00:32:32,284 --> 00:32:34,551
+Okay, I'm not gonna spend a lot of time on this slide.
+
+599
+00:32:34,553 --> 00:32:37,054
+But I really want you to understand that these methods
+
+600
+00:32:37,056 --> 00:32:39,589
+are here, okay, and you're gonna wanna use them.
+
+601
+00:32:39,591 --> 00:32:40,490
+They will really clean up your code.
+
+602
+00:32:40,492 --> 00:32:43,593
+They'll keep you from doing a lot of code, this like for
+
+603
+00:32:43,595 --> 00:32:46,964
+enumerate through my array, do this, if then, this then,
+
+604
+00:32:46,966 --> 00:32:50,200
+collect it in another array, all that kinda stuff you can
+
+605
+00:32:50,202 --> 00:32:53,003
+put in one liners, okay? So what do these things do?
+
+606
+00:32:53,005 --> 00:32:58,075
+These things use closures to operate on arrays. So filter,
+
+607
+00:32:58,077 --> 00:33:00,711
+okay, is a method in Array. You send it to it.
+
+608
+00:33:00,713 --> 00:33:05,716
+You provide a closure, which takes whatever type is in the,
+
+609
+00:33:05,718 --> 00:33:08,518
+in the array and returns a bool. And it just
+
+610
+00:33:08,520 --> 00:33:12,923
+executes that closure on every single element of the array,
+
+611
+00:33:12,925 --> 00:33:13,824
+and it includes the ones
+
+612
+00:33:13,826 --> 00:33:17,394
+where you return true from your closure. And it excludes
+
+613
+00:33:17,396 --> 00:33:20,597
+the ones you don't, until filter returns a new array,
+
+614
+00:33:20,599 --> 00:33:24,801
+which is only the things that match your closure, okay? So
+
+615
+00:33:24,803 --> 00:33:27,671
+here for example, let bigNumbers = this
+
+616
+00:33:27,673 --> 00:33:30,841
+array.filter, here's my closure,
+
+617
+00:33:30,843 --> 00:33:34,644
+$0 is this thing that's gonna be for each of these,
+
+618
+00:33:34,646 --> 00:33:36,880
+called on each of these. If $0 is greater than 20,
+
+619
+00:33:36,882 --> 00:33:41,284
+I'm gonna return true. So this returns an array, bigNumbers,
+
+620
+00:33:41,286 --> 00:33:45,389
+that only has 47 and 118, cuz those are the only
+
+621
+00:33:45,391 --> 00:33:48,558
+two things greater than 20, got it? Okay,
+
+622
+00:33:48,560 --> 00:33:51,528
+there's another one simpler, similar, which is map.
+
+623
+00:33:51,530 --> 00:33:55,899
+Map takes your closure and your closure converts each
+
+624
+00:33:55,901 --> 00:33:58,869
+element in the array to something else.
+
+625
+00:33:58,871 --> 00:34:01,405
+So if you had an array of ints and you wanted it
+
+626
+00:34:01,407 --> 00:34:04,374
+to be an array of strings, you could do it with this,
+
+627
+00:34:04,376 --> 00:34:08,478
+okay map, closure. Notice, by the way,
+
+628
+00:34:08,480 --> 00:34:10,881
+no parentheses here. You see, map, okay,
+
+629
+00:34:10,883 --> 00:34:15,052
+map takes an argument, which is a closure there. But I have
+
+630
+00:34:15,054 --> 00:34:17,988
+no parentheses after map around the curly braces like I
+
+631
+00:34:17,990 --> 00:34:21,691
+had up here with filter. I put this in here to show you that
+
+632
+00:34:21,693 --> 00:34:24,728
+those parentheses are optional when a closure
+
+633
+00:34:24,730 --> 00:34:27,297
+is the last argument to a function, okay?
+
+634
+00:34:27,299 --> 00:34:30,233
+When a closure is the last argument to the function,
+
+635
+00:34:30,235 --> 00:34:34,004
+it can be outside of the function's parentheses, okay,
+
+636
+00:34:34,006 --> 00:34:35,238
+and live on its own out here.
+
+637
+00:34:35,240 --> 00:34:39,142
+Okay, here's another function, okay, called reduce.
+
+638
+00:34:39,144 --> 00:34:43,680
+This reduces the array to a single result. Okay, so
+
+639
+00:34:43,682 --> 00:34:46,817
+this particular one, you can convince yourself of it later,
+
+640
+00:34:46,819 --> 00:34:49,186
+it adds up the numbers, okay. It just reduces,
+
+641
+00:34:49,188 --> 00:34:52,622
+starts with zero, and for each one it takes the amount so
+
+642
+00:34:52,624 --> 00:34:55,625
+far and adds it to the next thing in there, so
+
+643
+00:34:55,627 --> 00:34:57,260
+it adds up the numbers.
+
+644
+00:34:57,262 --> 00:34:59,129
+Notice this one has two arguments,
+
+645
+00:34:59,131 --> 00:35:03,500
+an initial and a closure. Okay, see this closure here,
+
+646
+00:35:03,502 --> 00:35:06,803
+an initial? And notice the closure also is still living
+
+647
+00:35:06,805 --> 00:35:10,073
+outside of the parentheses. The first argument is inside
+
+648
+00:35:10,075 --> 00:35:13,210
+the parentheses, but the closure is living outside.
+
+649
+00:35:13,212 --> 00:35:14,377
+This one had no first argument.
+
+650
+00:35:14,379 --> 00:35:17,447
+It only had the closure, so it has no parentheses here. This
+
+651
+00:35:17,449 --> 00:35:22,185
+one does, okay? This is called trailing closure syntax, and
+
+652
+00:35:22,187 --> 00:35:25,188
+you almost always wanna use it, it looks really cool,
+
+653
+00:35:25,190 --> 00:35:29,893
+reads really nicely. Okay, dictionary.
+
+654
+00:35:29,895 --> 00:35:32,462
+All right, so dictionary, similar to array,
+
+655
+00:35:32,464 --> 00:35:34,531
+it's just looking up keys and values.
+
+656
+00:35:34,533 --> 00:35:38,235
+Again, we're gonna use this more informal kind of syntax,
+
+657
+00:35:38,237 --> 00:35:42,639
+okay? [String:Int] means the type dictionary where
+
+658
+00:35:42,641 --> 00:35:47,110
+the strings are keys and ints are values, all right?
+
+659
+00:35:47,112 --> 00:35:49,579
+So if I have pac10teamRankings here, and
+
+660
+00:35:49,581 --> 00:35:53,583
+I had Stanford at number 1, Cal number 10, and I let the,
+
+661
+00:35:53,585 --> 00:35:56,753
+I guess it's Pac-12 now. I should update this,
+
+662
+00:35:56,755 --> 00:36:01,024
+should't I? So, okay, Cal 12 and so if I say here, let
+
+663
+00:36:01,026 --> 00:36:04,895
+ranking = pac10teamRankings ["Ohio State"],
+
+664
+00:36:04,897 --> 00:36:08,598
+that's obviously, no Ohio State in the Pac-12.
+
+665
+00:36:08,600 --> 00:36:11,935
+So the ranking here has to be an Int?, right, it's
+
+666
+00:36:11,937 --> 00:36:16,973
+an optional Int, we already saw that in our, calculator.
+
+667
+00:36:16,975 --> 00:36:20,377
+Okay, anytime you dereference a dictionary,
+
+668
+00:36:20,379 --> 00:36:23,980
+it's gonna return an optional of whatever type is
+
+669
+00:36:23,982 --> 00:36:28,752
+the dictionary's values are, okay? The way you enumerate
+
+670
+00:36:28,754 --> 00:36:32,923
+through a dictionary is using a tuple, okay, for (key,
+
+671
+00:36:32,925 --> 00:36:36,626
+value) in pac10teamRankings, inside here, key is
+
+672
+00:36:36,628 --> 00:36:39,329
+gonna be the key. And here is gonna be the value for each of
+
+673
+00:36:39,331 --> 00:36:43,867
+the things in the dictionary, okay? Pretty cool. And again,
+
+674
+00:36:43,869 --> 00:36:46,236
+you could put under bar here if you just wanted the keys,
+
+675
+00:36:46,238 --> 00:36:51,107
+or under bar here if you just wanted the values. All right,
+
+676
+00:36:51,109 --> 00:36:56,179
+String. String is a little complicated in Swift because
+
+677
+00:36:56,181 --> 00:36:57,214
+it's full Unicode.
+
+678
+00:36:57,216 --> 00:37:00,016
+And I mean full Unicode. All right so,
+
+679
+00:37:00,018 --> 00:37:03,353
+it supports all kinds of languages. Languages where
+
+680
+00:37:03,355 --> 00:37:07,591
+one character might be many, many different codes, okay.
+
+681
+00:37:07,593 --> 00:37:12,629
+So characters are no longer single codes anymore. Okay,
+
+682
+00:37:12,631 --> 00:37:14,798
+so, that's why, when you index into a string,
+
+683
+00:37:14,800 --> 00:37:18,235
+you're not indexing by ints. You're indexing by
+
+684
+00:37:18,237 --> 00:37:22,472
+indexes that know how to move along in a string past things
+
+685
+00:37:22,474 --> 00:37:26,243
+like emojis that might have multiple codes, okay?
+
+686
+00:37:26,245 --> 00:37:28,245
+So you're gonna wanna read about this, so
+
+687
+00:37:28,247 --> 00:37:30,914
+I'm not gonna cover it all in lecture here. But
+
+688
+00:37:30,916 --> 00:37:33,883
+one interesting way to look at a string is by calling
+
+689
+00:37:33,885 --> 00:37:37,921
+this, String.CharacterView, okay? If you call character
+
+690
+00:37:37,923 --> 00:37:40,824
+view on a string, you'll get the characters
+
+691
+00:37:40,826 --> 00:37:44,594
+in what looks like an array of character, okay? It looks like
+
+692
+00:37:44,596 --> 00:37:47,097
+an array of characters, not actually array of character.
+
+693
+00:37:47,099 --> 00:37:51,134
+It's a character view. But it can be indexed with ints,
+
+694
+00:37:51,136 --> 00:37:54,104
+okay, and you can get at the characters. So that's one way.
+
+695
+00:37:54,106 --> 00:37:57,007
+Another way, you can actually create an array,
+
+696
+00:37:57,009 --> 00:38:00,710
+one of the initializers that array will take is a string,
+
+697
+00:38:00,712 --> 00:38:03,346
+okay. And then it'll be an array of characters.
+
+698
+00:38:03,348 --> 00:38:05,949
+Okay, not quite as efficient as this character view, but
+
+699
+00:38:05,951 --> 00:38:08,518
+you could do it that way, especially with a long string,
+
+700
+00:38:08,520 --> 00:38:11,154
+you probably might not wanna do that. Okay, but that's
+
+701
+00:38:11,156 --> 00:38:13,723
+a little easier way to get at it, otherwise you have to
+
+702
+00:38:13,725 --> 00:38:17,227
+understand what it says in the reading about string indexes,
+
+703
+00:38:17,229 --> 00:38:19,863
+okay. String.index that class and
+
+704
+00:38:19,865 --> 00:38:23,066
+how to use it to get things out of a string,
+
+705
+00:38:23,068 --> 00:38:28,138
+okay? There are a lot of other cool methods in String,
+
+706
+00:38:28,140 --> 00:38:30,707
+though, like hasPrefix will tell you whether one string
+
+707
+00:38:30,709 --> 00:38:34,044
+has the prefix of another string. You can capitalize and
+
+708
+00:38:34,046 --> 00:38:37,113
+lowercase and uppercase these strings.
+
+709
+00:38:37,115 --> 00:38:39,082
+You can even do sophisticated things like,
+
+710
+00:38:39,084 --> 00:38:42,952
+get me all the components in this string separated by
+
+711
+00:38:42,954 --> 00:38:42,986
+this other string. So
+
+712
+00:38:42,988 --> 00:38:46,556
+this is a method you send to a string. This might be a comma,
+
+713
+00:38:46,558 --> 00:38:50,460
+let's say, and this, right here like this, and it will
+
+714
+00:38:50,462 --> 00:38:54,130
+extract all the strings that are separated by a comma.
+
+715
+00:38:54,132 --> 00:38:57,367
+Okay, kinda fun. So make sure you familiarize yourself with
+
+716
+00:38:57,369 --> 00:39:00,303
+a lot of the methods in String so that you don't waste your
+
+717
+00:39:00,305 --> 00:39:03,239
+time writing this method which already exists, okay, or
+
+718
+00:39:03,241 --> 00:39:08,078
+similar methods like it. All right, other classes that
+
+719
+00:39:08,080 --> 00:39:12,315
+are here that you have to think about. One is NSObject.
+
+720
+00:39:12,317 --> 00:39:17,253
+This is the base class of all Objective-C classes, okay.
+
+721
+00:39:17,255 --> 00:39:20,857
+Now, we know, in Swift, it doesn't have a mandatory base
+
+722
+00:39:20,859 --> 00:39:24,661
+class, like CalculatorBrain, no superclass, okay.
+
+723
+00:39:24,663 --> 00:39:25,829
+Perfectly legal in Swift. But
+
+724
+00:39:25,831 --> 00:39:29,899
+all Objective-C ones have to be subclasses of NSObject.
+
+725
+00:39:29,901 --> 00:39:32,569
+Now, there are some APIs, they're fairly rare and
+
+726
+00:39:32,571 --> 00:39:35,839
+I'll tell you which ones they are when we get to them later
+
+727
+00:39:35,841 --> 00:39:39,309
+in the quarter, that are Objective-C APIs, okay.
+
+728
+00:39:39,311 --> 00:39:40,677
+And when you use them in Swift,
+
+729
+00:39:40,679 --> 00:39:44,180
+you need to have a class that subclasses from NSObject. So
+
+730
+00:39:44,182 --> 00:39:47,550
+in Swift, it's perfectly legal to subclass from NSObject,
+
+731
+00:39:47,552 --> 00:39:50,620
+not required except for in these few cases I'm gonna talk
+
+732
+00:39:50,622 --> 00:39:53,690
+about later in the quarter. But legal and it really won't
+
+733
+00:39:53,692 --> 00:39:56,659
+hurt anything, so you could do it if you want. Some people
+
+734
+00:39:56,661 --> 00:39:58,628
+just get in the habit of always sub-classing for
+
+735
+00:39:58,630 --> 00:40:01,131
+NSObjects in Swift, if they're not sub-classing from
+
+736
+00:40:01,133 --> 00:40:04,401
+something else, because why not, okay. Then their classes
+
+737
+00:40:04,403 --> 00:40:08,872
+are always ready for whatever these weird old APIs are,
+
+738
+00:40:08,874 --> 00:40:13,143
+okay? NSNumber, okay in Objective-C,
+
+739
+00:40:13,145 --> 00:40:17,113
+there's no such things as well structs
+
+740
+00:40:17,115 --> 00:40:22,118
+in Objective-C are not like structs in Swift.
+
+741
+00:40:22,120 --> 00:40:24,921
+They're not this nice value type semantic thing.
+
+742
+00:40:24,923 --> 00:40:30,193
+Okay, structs are more like C structs okay, so double and
+
+743
+00:40:30,195 --> 00:40:32,295
+int, string, array,
+
+744
+00:40:32,297 --> 00:40:35,098
+dictionary. In Objective-C these are classes.
+
+745
+00:40:35,100 --> 00:40:39,536
+Okay, sorry, array and diction are classes.
+
+746
+00:40:39,538 --> 00:40:45,041
+Double and int are C-double and int. Not even objects,
+
+747
+00:40:45,043 --> 00:40:47,544
+okay? So that brings a problem in Objective-C,
+
+748
+00:40:47,546 --> 00:40:50,914
+what if I wanna put a bunch of numbers into an array? Okay,
+
+749
+00:40:50,916 --> 00:40:53,716
+you can't do it, because an array is an array of objects.
+
+750
+00:40:53,718 --> 00:40:57,020
+And doubles and ints are C primitive types,
+
+751
+00:40:57,022 --> 00:40:59,422
+in Objective-C. So this class NSNumber,
+
+752
+00:40:59,424 --> 00:41:03,059
+is how you wrap a primitive type into an object.
+
+753
+00:41:03,061 --> 00:41:03,359
+So you can put it in an array.
+
+754
+00:41:03,361 --> 00:41:06,863
+Now in Swift we don't need that, because in Swift arrays
+
+755
+00:41:06,865 --> 00:41:10,099
+and dictionaries will accept structs, and double and
+
+756
+00:41:10,101 --> 00:41:14,571
+int is a struct. Okay, so this NSNumber not necessary for
+
+757
+00:41:14,573 --> 00:41:20,043
+that, okay. Now there are iOS APIs that take,
+
+758
+00:41:20,045 --> 00:41:23,713
+for example, arrays of ints. And
+
+759
+00:41:23,715 --> 00:41:27,283
+in Objective-C, they're gonna be arrays of NSNumber and
+
+760
+00:41:27,285 --> 00:41:31,521
+in Swift, they're going to be Swift arrays of Swift Ints.
+
+761
+00:41:31,523 --> 00:41:33,456
+And you might ask, how is that ever gonna work?
+
+762
+00:41:33,458 --> 00:41:35,925
+Cuz you're talking about a struct filled with struct
+
+763
+00:41:35,927 --> 00:41:40,897
+versus an array class filled with these NSNumber classes.
+
+764
+00:41:40,899 --> 00:41:43,833
+Well the answer is, those things, array, dictionary,
+
+765
+00:41:43,835 --> 00:41:48,771
+then int double, and NSNumber are all bridged, magically and
+
+766
+00:41:48,773 --> 00:41:52,075
+automatically, okay? As you call functions that require
+
+767
+00:41:52,077 --> 00:41:54,410
+one to be one way or the other. It just automatically
+
+768
+00:41:54,412 --> 00:41:57,847
+works. Okay, there's a lot of magic going on in Objective-C
+
+769
+00:41:57,849 --> 00:42:00,149
+runtime to make that work. Okay, and we're gonna take
+
+770
+00:42:00,151 --> 00:42:04,187
+advantage of that bridging in a couple of slides here.
+
+771
+00:42:04,189 --> 00:42:07,724
+NSDate, brilliant important class to know about. If
+
+772
+00:42:07,726 --> 00:42:11,027
+you wanna put a date in your UI, you need be very careful.
+
+773
+00:42:11,029 --> 00:42:13,663
+Because dates are represented in a different way all over
+
+774
+00:42:13,665 --> 00:42:19,302
+the Earth. Date date class knows all about those ways and
+
+775
+00:42:19,304 --> 00:42:22,672
+it has a lot of companion classes like NSCalendar,
+
+776
+00:42:22,674 --> 00:42:25,675
+NSDateFormatter, NSDateComponents to help you
+
+777
+00:42:25,677 --> 00:42:29,045
+put dates on screen in a way that's gonna work when you
+
+778
+00:42:29,047 --> 00:42:33,583
+translate your app to Chinese. So NSDate is an important
+
+779
+00:42:33,585 --> 00:42:37,053
+class to get familiar with and understand what it can do.
+
+780
+00:42:37,055 --> 00:42:39,322
+Okay, if you're ever gonna put a date in your UI,
+
+781
+00:42:39,324 --> 00:42:42,559
+you're gonna need to know about NSDate. NSDate can also
+
+782
+00:42:42,561 --> 00:42:46,796
+tell you the current date and time. All right NSData,
+
+783
+00:42:46,798 --> 00:42:51,534
+that's a bag of bits. Okay just unstructured bag o' bits.
+
+784
+00:42:51,536 --> 00:42:53,603
+We use it to pass things around,
+
+785
+00:42:53,605 --> 00:42:55,939
+sometimes over the network like image data,
+
+786
+00:42:55,941 --> 00:42:58,708
+things like that. It's pretty self explanatory,
+
+787
+00:42:58,710 --> 00:43:00,209
+bag of bits doesn't have a lot of methods on it.
+
+788
+00:43:00,211 --> 00:43:03,980
+It's basically just give me the bits and here's some bits.
+
+789
+00:43:04,215 --> 00:43:07,116
+Okay, now let's talk about initialization, I'm gonna kind
+
+790
+00:43:07,118 --> 00:43:10,253
+of blast through this pretty quick. There's a really
+
+791
+00:43:10,255 --> 00:43:13,122
+good explanation of this in your homework in your reading
+
+792
+00:43:13,124 --> 00:43:17,093
+assignment. For this coming week but I'm gonna try and
+
+793
+00:43:17,095 --> 00:43:19,729
+give you the 50,000 foot overview of it quickly so
+
+794
+00:43:19,731 --> 00:43:22,298
+that you kind of have an idea what's going on as you go and
+
+795
+00:43:22,300 --> 00:43:25,401
+read that very detailed description, okay?
+
+796
+00:43:25,403 --> 00:43:29,339
+So when is an init method needed? We're talking about
+
+797
+00:43:29,341 --> 00:43:33,843
+initializing structs and classes okay? They're
+
+798
+00:43:33,845 --> 00:43:36,379
+not needed that often because of course we can say equal
+
+799
+00:43:36,381 --> 00:43:39,415
+something in the var. We coud use those lazy instantiation
+
+800
+00:43:39,417 --> 00:43:43,019
+things to get around it. Properties might be optional,
+
+801
+00:43:43,021 --> 00:43:44,787
+so, and they can just start off being not set.
+
+802
+00:43:44,789 --> 00:43:47,857
+So there's a lot of reasons you don't need an init, okay?
+
+803
+00:43:47,859 --> 00:43:50,727
+And frankly, most people try to design their classes and
+
+804
+00:43:50,729 --> 00:43:53,796
+structs so they don't need an init, okay? So you can just
+
+805
+00:43:53,798 --> 00:43:55,698
+create them with an init with no arguments, right,
+
+806
+00:43:55,700 --> 00:43:59,168
+which you get for free. Or a string in a struct case maybe
+
+807
+00:43:59,170 --> 00:44:02,372
+you just do what we did in demo where you just init it
+
+808
+00:44:02,374 --> 00:44:05,875
+with the values of all the things in the struct, okay?
+
+809
+00:44:05,877 --> 00:44:09,112
+So but sometimes you might find yourself needing an init
+
+810
+00:44:09,114 --> 00:44:12,148
+because you just can initialize things using those
+
+811
+00:44:12,150 --> 00:44:15,718
+mechanisms, all right? Now, you do get some free inits,
+
+812
+00:44:15,720 --> 00:44:18,221
+okay? We know about in classes you get the init with no
+
+813
+00:44:18,223 --> 00:44:21,457
+arguments for free. That's how CalculatorBrain got an init,
+
+814
+00:44:21,459 --> 00:44:23,192
+so we could create one. And
+
+815
+00:44:23,194 --> 00:44:24,560
+we also know that structs have a free
+
+816
+00:44:24,562 --> 00:44:27,130
+initializer to let you initialize all of the,
+
+817
+00:44:27,132 --> 00:44:32,502
+all of its vars. Now, One thing to know about,
+
+818
+00:44:32,504 --> 00:44:35,238
+[COUGH] both of those cases is that you,
+
+819
+00:44:35,240 --> 00:44:38,741
+if you start providing your own initializers,
+
+820
+00:44:38,743 --> 00:44:41,744
+then you stop getting the free one, okay?
+
+821
+00:44:41,746 --> 00:44:44,847
+If you provide even one initializer for your struct
+
+822
+00:44:44,849 --> 00:44:48,451
+you no longer get this free one, the one that does both,
+
+823
+00:44:48,453 --> 00:44:52,922
+okay? All right, what can you do inside of init?
+
+824
+00:44:52,924 --> 00:44:56,826
+What is legal to do? You can set any property's value,
+
+825
+00:44:56,828 --> 00:44:59,495
+even one's that already have default values.
+
+826
+00:44:59,497 --> 00:45:00,496
+Ones that you said equal something,
+
+827
+00:45:00,498 --> 00:45:02,632
+you can reset them to something else if you want.
+
+828
+00:45:02,634 --> 00:45:03,599
+You can set any property's value,
+
+829
+00:45:03,601 --> 00:45:07,670
+okay. You can even set constant properties, okay.
+
+830
+00:45:07,672 --> 00:45:10,973
+So if you have let something, so you have a constant in your
+
+831
+00:45:10,975 --> 00:45:14,077
+class, like a constant instance variable basically.
+
+832
+00:45:14,079 --> 00:45:16,412
+You can set that in, even though it's let,
+
+833
+00:45:16,414 --> 00:45:18,981
+you can set it in the initializer. Constant
+
+834
+00:45:18,983 --> 00:45:21,851
+properties are fairly rare. You know, why would you have
+
+835
+00:45:21,853 --> 00:45:24,554
+something that's constant? You might, though, you might have
+
+836
+00:45:24,556 --> 00:45:27,557
+something that's determined in initialization. And
+
+837
+00:45:27,559 --> 00:45:27,990
+then it never changes,
+
+838
+00:45:27,992 --> 00:45:32,562
+okay? You can call other init methods from your init,
+
+839
+00:45:32,564 --> 00:45:36,833
+you actually can call one other init method from n init,
+
+840
+00:45:36,835 --> 00:45:41,604
+okay? And you can call superclass inits, okay.
+
+841
+00:45:41,606 --> 00:45:44,006
+You can call your superclass initializers, but
+
+842
+00:45:44,008 --> 00:45:46,743
+there are rules for calling inits and they are rather
+
+843
+00:45:46,745 --> 00:45:48,978
+complicated. And I'm gonna go through them quick and
+
+844
+00:45:48,980 --> 00:45:50,113
+you're gonna read the documentations,
+
+845
+00:45:50,115 --> 00:45:52,115
+it's gonna give you all the details, okay? So
+
+846
+00:45:52,117 --> 00:45:55,885
+there are requirements inside of init, things you must do.
+
+847
+00:45:55,887 --> 00:45:57,754
+The previous slide was things you are allowed to do,
+
+848
+00:45:57,756 --> 00:46:01,557
+here's the things you must do, okay? By the time any init is
+
+849
+00:46:01,559 --> 00:46:04,427
+done, okay? By the time the init is finished,
+
+850
+00:46:04,429 --> 00:46:07,597
+all properties must have values. We know this, right?
+
+851
+00:46:07,599 --> 00:46:10,633
+But in Swift, all, by the time initialization is done,
+
+852
+00:46:10,635 --> 00:46:13,302
+all properties have to have values, and again,
+
+853
+00:46:13,304 --> 00:46:14,871
+optionals must have a value too, but
+
+854
+00:46:14,873 --> 00:46:19,342
+it could be the value not set. That's fine, okay? Now,
+
+855
+00:46:19,344 --> 00:46:24,180
+there are two types of init methods in a class.
+
+856
+00:46:24,182 --> 00:46:28,117
+Convenience methods and, convenience initializers and
+
+857
+00:46:28,119 --> 00:46:31,287
+designated initializers. Designated initializers
+
+858
+00:46:31,289 --> 00:46:34,590
+are not marked with the word convenience. Okay,
+
+859
+00:46:34,592 --> 00:46:37,393
+convenience initializers say convenience init whatever,
+
+860
+00:46:37,395 --> 00:46:42,899
+okay, in their declaration. A designated initializer must,
+
+861
+00:46:42,901 --> 00:46:46,135
+and can only, call a designated initializers
+
+862
+00:46:46,137 --> 00:46:49,272
+in it's superclass, its immediate superclass, okay?
+
+863
+00:46:49,274 --> 00:46:51,908
+So a designated initializer can't call a convenience
+
+864
+00:46:51,910 --> 00:46:53,810
+initializer in its superclass, and it can't
+
+865
+00:46:53,812 --> 00:46:56,746
+call a convenience super, initializers in its own class.
+
+866
+00:46:56,748 --> 00:46:59,982
+It must call a superclass's designated initializer. Okay,
+
+867
+00:46:59,984 --> 00:47:04,887
+you must initialize all the properties that you introduce
+
+868
+00:47:04,889 --> 00:47:10,092
+in your class, before calling a superclass's init.
+
+869
+00:47:10,094 --> 00:47:13,763
+Okay, so by the time you call super init to let your super
+
+870
+00:47:13,765 --> 00:47:16,465
+class initialize you must have all your properties
+
+871
+00:47:16,467 --> 00:47:21,704
+initialized, all right? You must call a superclass's init
+
+872
+00:47:21,706 --> 00:47:26,375
+before you can touch any of your superclass's properties.
+
+873
+00:47:26,377 --> 00:47:29,278
+See the order there? You do yours, call the super,
+
+874
+00:47:29,280 --> 00:47:31,747
+now you can touch theirs, okay? That makes sense.
+
+875
+00:47:31,749 --> 00:47:34,383
+You gotta let them initialize theirs before you can touch it
+
+876
+00:47:34,385 --> 00:47:36,886
+and you want yours initialized before they come along and
+
+877
+00:47:36,888 --> 00:47:40,857
+start doing their stuff. A convenience initializer must
+
+878
+00:47:40,859 --> 00:47:46,262
+and can only call an init, either can be user designated,
+
+879
+00:47:46,264 --> 00:47:49,732
+in its own class, cannot call super. Okay,
+
+880
+00:47:49,734 --> 00:47:52,134
+a convenience initializer cannot call super initializer.
+
+881
+00:47:52,136 --> 00:47:57,039
+A convenience initializer must call that in it, before it can
+
+882
+00:47:57,041 --> 00:48:01,978
+set any property values. It's own, or it's super classes.
+
+883
+00:48:01,980 --> 00:48:05,848
+Okay, in other words, it must let a designated initializer
+
+884
+00:48:05,850 --> 00:48:08,551
+initialize your own properties first.
+
+885
+00:48:08,553 --> 00:48:10,086
+And that thing is gonna call supern,
+
+886
+00:48:10,088 --> 00:48:12,822
+it's gonna initialize it, so by the time a convenience
+
+887
+00:48:12,824 --> 00:48:15,992
+intializer gets back from the emit, all the property values
+
+888
+00:48:15,994 --> 00:48:18,594
+will be set and it can reset them to something else,
+
+889
+00:48:18,596 --> 00:48:23,733
+okay. It's just a convenience. Calling other inits
+
+890
+00:48:23,735 --> 00:48:27,470
+has to be complete before you can access any properties.
+
+891
+00:48:27,472 --> 00:48:30,706
+Access I'm talking about, not set. Access any properties or
+
+892
+00:48:30,708 --> 00:48:34,810
+methods in yourself. So you can't say self.anything.
+
+893
+00:48:34,812 --> 00:48:37,446
+You know, you can't access any of the properties or
+
+894
+00:48:37,448 --> 00:48:39,982
+methods in yourself until you're fully initialized.
+
+895
+00:48:39,984 --> 00:48:43,119
+Okay, so you'll have to have called the other inits first.
+
+896
+00:48:43,121 --> 00:48:45,922
+Yeah? >> If you're building
+
+897
+00:48:46,624 --> 00:48:47,823
+an imperative class why would you
+
+898
+00:48:47,825 --> 00:48:48,891
+ever need convenience inits? >> So
+
+899
+00:48:48,893 --> 00:48:51,694
+the question is why would I ever use a convenience init?
+
+900
+00:48:51,696 --> 00:48:56,198
+The answer is I have a reasonable default for
+
+901
+00:48:56,200 --> 00:49:00,569
+some of the arguments to a designated initializer, and
+
+902
+00:49:00,571 --> 00:49:02,805
+it's actually possible to default things in swift.
+
+903
+00:49:02,807 --> 00:49:06,042
+You can basically say, equal something. But let's say you
+
+904
+00:49:06,044 --> 00:49:09,011
+wanna default into some calculative value, maybe based
+
+905
+00:49:09,013 --> 00:49:11,080
+on the other argument. A community initialize,
+
+906
+00:49:11,082 --> 00:49:14,150
+initializer you could create would have fewer arguments and
+
+907
+00:49:14,152 --> 00:49:16,519
+then turn around and call the designated one.
+
+908
+00:49:16,521 --> 00:49:18,421
+Okay, it's truly for convenience,
+
+909
+00:49:18,423 --> 00:49:20,957
+that's all these are for, phew is right, okay.
+
+910
+00:49:20,959 --> 00:49:23,793
+There's a lot of rules there. And it's a lot to think about.
+
+911
+00:49:23,795 --> 00:49:25,628
+And when you start writing your own initializers you're
+
+912
+00:49:25,630 --> 00:49:27,063
+gonna bump up against these all the time.
+
+913
+00:49:27,065 --> 00:49:30,199
+You're gonna be like I can't, I can't access that one until
+
+914
+00:49:30,201 --> 00:49:32,902
+I do, yeah, I gotta call supren, okay, believe me.
+
+915
+00:49:32,904 --> 00:49:35,037
+So try to stay away from doing your own inits,
+
+916
+00:49:35,039 --> 00:49:39,041
+is my advice to you. Okay, inheriting init.
+
+917
+00:49:39,043 --> 00:49:42,445
+Now, if you don't implement any designated inits,
+
+918
+00:49:42,447 --> 00:49:45,281
+you'll inherit all of your superclass's designated inits.
+
+919
+00:49:45,283 --> 00:49:47,984
+But if you in, if you implement even one designated
+
+920
+00:49:47,986 --> 00:49:50,519
+init, you don't get any of your superclass's designated
+
+921
+00:49:50,521 --> 00:49:55,958
+initializers, okay. If you override all of your desig,
+
+922
+00:49:55,960 --> 00:49:58,361
+class, superclass's designated inits, or
+
+923
+00:49:58,363 --> 00:50:01,130
+don't implement any of them, then you will inherit all of
+
+924
+00:50:01,132 --> 00:50:06,102
+the convenience initializers from your superclass, okay. In
+
+925
+00:50:06,104 --> 00:50:07,870
+other words, the convenience superv, initializers in your
+
+926
+00:50:07,872 --> 00:50:11,574
+superclass are all kinda dependent on the designated
+
+927
+00:50:11,576 --> 00:50:13,843
+initializer in your superclass being sensible and
+
+928
+00:50:13,845 --> 00:50:17,380
+making sense together. So you have to get them all
+
+929
+00:50:17,382 --> 00:50:21,417
+by overriding them all, or by overriding none of them. For
+
+930
+00:50:21,419 --> 00:50:23,019
+the convenience one to inherit,
+
+931
+00:50:23,021 --> 00:50:27,289
+to make, for sure make sense, okay. If you omit no inits,
+
+932
+00:50:27,291 --> 00:50:30,226
+you get all of your superclasses inits,
+
+933
+00:50:30,228 --> 00:50:34,030
+convenience and designated, okay. Any in it that
+
+934
+00:50:34,032 --> 00:50:38,267
+you inherit by these rules count on the previous slide.
+
+935
+00:50:38,269 --> 00:50:41,737
+All right, the previous slide says things like you have to,
+
+936
+00:50:41,739 --> 00:50:44,874
+convenience has to call a designated in your own class,
+
+937
+00:50:44,876 --> 00:50:47,276
+blah, blah, blah. Well, if you inherit it,
+
+938
+00:50:47,278 --> 00:50:50,813
+then it is in your own class. Okay, so
+
+939
+00:50:50,815 --> 00:50:57,019
+chew on that okay. Required init, different topic.
+
+940
+00:50:57,021 --> 00:51:00,589
+It is possible to mark an init with the keyword required.
+
+941
+00:51:00,591 --> 00:51:06,362
+That means that a subclass must implement this init.
+
+942
+00:51:06,364 --> 00:51:08,464
+Okay, it is not optional for it, it must.
+
+943
+00:51:08,466 --> 00:51:12,968
+And it can inherit if it follows these rules above.
+
+944
+00:51:12,970 --> 00:51:17,573
+But it must implement it, it's required, okay. UI view, for
+
+945
+00:51:17,575 --> 00:51:19,542
+example, which we're gonna do on Wednesday.
+
+946
+00:51:19,544 --> 00:51:20,109
+It has a required init.
+
+947
+00:51:20,111 --> 00:51:23,345
+Okay, and we're gonna see that. All right,
+
+948
+00:51:23,347 --> 00:51:26,449
+failable initializers, it is possible for init to fail.
+
+949
+00:51:26,451 --> 00:51:30,186
+We saw this double if you pass a string to the initialize,
+
+950
+00:51:30,188 --> 00:51:32,721
+if a double has an initializer it takes a string.
+
+951
+00:51:32,723 --> 00:51:35,591
+If you pass a string. That's not a double,
+
+952
+00:51:35,593 --> 00:51:38,060
+then it will fail, then return nil, okay.
+
+953
+00:51:38,062 --> 00:51:41,730
+So failable initializers cause optional versions of the thing
+
+954
+00:51:41,732 --> 00:51:44,767
+to be returned and you specify them with this little question
+
+955
+00:51:44,769 --> 00:51:48,337
+mark. You put in a question mark in there, that turns
+
+956
+00:51:48,339 --> 00:51:51,674
+this ititializer into the kind of initializer that will turn
+
+957
+00:51:51,676 --> 00:51:56,846
+an optional of this class whatever it is. Okay? And
+
+958
+00:51:56,848 --> 00:52:00,282
+to fail, you just return nil. Inside this initializer,
+
+959
+00:52:00,284 --> 00:52:03,486
+if something goes wrong, return nil, and nil will come
+
+960
+00:52:03,488 --> 00:52:07,890
+back to whoever's trying to get this thing. Make sense?
+
+961
+00:52:07,892 --> 00:52:11,694
+Okay, failable initializers are pretty rare. Images, for
+
+962
+00:52:11,696 --> 00:52:12,094
+example, UI image,
+
+963
+00:52:12,096 --> 00:52:14,864
+image named, if it can't find an image with this name,
+
+964
+00:52:14,866 --> 00:52:17,967
+it returns nil. Okay. So that's why this image right
+
+965
+00:52:17,969 --> 00:52:22,905
+here Let image. This image is an Optional UIimage. And
+
+966
+00:52:22,907 --> 00:52:25,708
+we probably use if-let here, if let image if we can like
+
+967
+00:52:25,710 --> 00:52:29,845
+this image equal to UIimage name foo, then whatever.
+
+968
+00:52:30,948 --> 00:52:35,351
+Okay? All right. Creating Objects All right,
+
+969
+00:52:35,353 --> 00:52:39,121
+usually you create an object by calling its initializer
+
+970
+00:52:39,123 --> 00:52:43,259
+with the appropriate arguments using the type name. So
+
+971
+00:52:43,261 --> 00:52:44,927
+CalculatorBrain, we've seen that,
+
+972
+00:52:44,929 --> 00:52:48,597
+ComplicatedObject with a bunch of arguments to create it.
+
+973
+00:52:48,599 --> 00:52:54,670
+Or here's let z = the type array of String initializer.
+
+974
+00:52:54,672 --> 00:52:57,006
+Okay, that creates an empty array of string.
+
+975
+00:52:57,008 --> 00:53:02,211
+It's constant, so it's gonna be empty forever, okay? But
+
+976
+00:53:02,213 --> 00:53:05,247
+sometimes other objects will create objects for you.
+
+977
+00:53:05,249 --> 00:53:08,184
+They can call a method and it will create an object for you,
+
+978
+00:53:08,186 --> 00:53:08,817
+give it to you, right? But
+
+979
+00:53:08,819 --> 00:53:12,988
+when you're creating objects from scratch, this is the.
+
+980
+00:53:12,990 --> 00:53:14,590
+Syntax you're using, you're used to that, right?
+
+981
+00:53:14,592 --> 00:53:19,995
+No questions about that, it's a kind of obvious slide. Okay,
+
+982
+00:53:19,997 --> 00:53:22,998
+now AnyObject, little more complicated here.
+
+983
+00:53:23,000 --> 00:53:26,635
+AnyObject is a special type, it's actually a protocol, but
+
+984
+00:53:26,637 --> 00:53:27,903
+we haven't talked about it yet, but anyway,
+
+985
+00:53:27,905 --> 00:53:30,105
+it's a special type. You can leave it as a type.
+
+986
+00:53:30,107 --> 00:53:34,610
+Protocols are types, I guess. It is used Commonly, or used,
+
+987
+00:53:34,612 --> 00:53:37,913
+used to be, for compatibility with Objective-C APIs,
+
+988
+00:53:37,915 --> 00:53:41,450
+because Objective-C, for those of you who are trying to learn
+
+989
+00:53:41,452 --> 00:53:44,520
+some Objective-C along the way here, Objective-C has a very
+
+990
+00:53:44,522 --> 00:53:48,724
+important type called ID. Okay, the type ID.
+
+991
+00:53:48,726 --> 00:53:54,563
+Which means pointer to a object of unknown class.
+
+992
+00:53:54,565 --> 00:53:58,200
+Okay. So that's a very open-ended type. [LAUGH] Okay,
+
+993
+00:53:58,202 --> 00:54:01,403
+Swyft doesn't do things that way. Swyft is strongly typed.
+
+994
+00:54:01,405 --> 00:54:06,141
+Okay, it infers types but it's strongly typed. However,
+
+995
+00:54:06,143 --> 00:54:09,311
+Swyft has to work with all those IOSAPIs, so
+
+996
+00:54:09,313 --> 00:54:11,080
+it introduced this type called AnyObject.
+
+997
+00:54:11,082 --> 00:54:15,684
+So AnyObject in Swyft means A point or two an object of
+
+998
+00:54:15,686 --> 00:54:18,687
+unknown class, okay? It only works for objects for
+
+999
+00:54:18,689 --> 00:54:23,359
+classes not for. So it means the same thing as objective C.
+
+1000
+00:54:23,361 --> 00:54:27,563
+IN iOS 9 they fixed objective C. So it has almost none of
+
+1001
+00:54:27,565 --> 00:54:32,534
+these, okay? They're still a few but very very few. So
+
+1002
+00:54:32,536 --> 00:54:36,639
+nowadays It is more used as an opaque type. Okay?
+
+1003
+00:54:36,641 --> 00:54:37,406
+When you want to have a point or
+
+1004
+00:54:37,408 --> 00:54:39,975
+two in the object and you are not sure what it is or
+
+1005
+00:54:39,977 --> 00:54:42,378
+you don't want anyone to know what it is okay?
+
+1006
+00:54:42,380 --> 00:54:46,515
+So let's talk about how we can do this okay? So classes only
+
+1007
+00:54:46,517 --> 00:54:49,685
+and no structs. There is another type by the way. It is
+
+1008
+00:54:49,687 --> 00:54:54,089
+what is called any, which is anything. Could be a struct,
+
+1009
+00:54:54,091 --> 00:54:56,992
+could be a class, anything. We almost, in fact, this class we
+
+1010
+00:54:56,994 --> 00:55:00,229
+will never use Any, okay? You probably never wanna use it.
+
+1011
+00:55:00,231 --> 00:55:02,931
+It's in there, I think, for just language completeness.
+
+1012
+00:55:02,933 --> 00:55:06,135
+But I can't even think of a good explanation of why you
+
+1013
+00:55:06,137 --> 00:55:09,171
+would wanna use it. So we're not even gonna talk about Any.
+
+1014
+00:55:09,173 --> 00:55:11,040
+But we are gonna talk about AnyObject, okay?
+
+1015
+00:55:11,042 --> 00:55:13,275
+So where will you see AnyObject? You'll sometimes
+
+1016
+00:55:13,277 --> 00:55:17,646
+see it in a method where one of the arguments Truly can be
+
+1017
+00:55:17,648 --> 00:55:20,349
+more than one different kinds of class, mm kay? For
+
+1018
+00:55:20,351 --> 00:55:23,319
+example, you'll see on Wednesday, prepare for segue
+
+1019
+00:55:23,321 --> 00:55:27,122
+which is a thing that prepares for transitions from one NVC
+
+1020
+00:55:27,124 --> 00:55:30,592
+to another, okay? We're gonna have multiple NVCs someday.
+
+1021
+00:55:30,594 --> 00:55:32,695
+We're gonna wanna transition from one to the other, prepare
+
+1022
+00:55:32,697 --> 00:55:35,664
+for segue prepares for that transition. Well the sender,
+
+1023
+00:55:35,666 --> 00:55:39,101
+in other words the object that initiated the transition could
+
+1024
+00:55:39,103 --> 00:55:41,103
+be lots of different kinds of objects.
+
+1025
+00:55:41,105 --> 00:55:42,438
+It might be a button you collect on,
+
+1026
+00:55:42,440 --> 00:55:45,207
+it might be a roll in a table, it might be some custom code
+
+1027
+00:55:45,209 --> 00:55:49,244
+inside of your controller. Okay? So this sender has to be
+
+1028
+00:55:49,246 --> 00:55:53,849
+any object. Okay, cuz we don't know what it is. We
+
+1029
+00:55:53,851 --> 00:55:57,419
+don't know if it is a button or table row or what it is.
+
+1030
+00:55:57,421 --> 00:56:00,589
+So AnyObject. Okay. So this is a case where he is an object,
+
+1031
+00:56:00,591 --> 00:56:03,659
+it could be many things we don't know what it is.
+
+1032
+00:56:03,661 --> 00:56:06,061
+So we have to type this as AnyObject.
+
+1033
+00:56:06,063 --> 00:56:09,932
+Okay? Another example of that is touch digit. If we haven't,
+
+1034
+00:56:09,934 --> 00:56:10,632
+when we control dragged,
+
+1035
+00:56:10,634 --> 00:56:13,635
+remember when we changed it from any object to UI button,
+
+1036
+00:56:13,637 --> 00:56:16,205
+Okay. If we hadn't done that, it would have created a touch
+
+1037
+00:56:16,207 --> 00:56:19,174
+digit with sender AnyObject and then touch digit could've
+
+1038
+00:56:19,176 --> 00:56:23,145
+been sent by a UI button or maybe by UI slider. Okay. Or
+
+1039
+00:56:23,147 --> 00:56:26,715
+something else. And we didn't do that because the inside
+
+1040
+00:56:26,717 --> 00:56:28,917
+touch digit we wanted sender to be a UI button so
+
+1041
+00:56:28,919 --> 00:56:32,921
+we just send it current title and other button things, but
+
+1042
+00:56:32,923 --> 00:56:37,826
+it could have been AnyObject, all right? So, another use for
+
+1043
+00:56:37,828 --> 00:56:40,696
+AnyObject is when you wanna return essentially a cookie,
+
+1044
+00:56:40,698 --> 00:56:43,298
+okay? A cookie is something
+
+1045
+00:56:43,300 --> 00:56:46,235
+you give back where you're giving it to someone,
+
+1046
+00:56:46,237 --> 00:56:47,369
+they don't know what's inside of it,
+
+1047
+00:56:47,371 --> 00:56:50,105
+you're not gonna tell them, the only thing they can do
+
+1048
+00:56:50,107 --> 00:56:54,343
+is give it back to you, okay? So the cookie just saves some
+
+1049
+00:56:54,345 --> 00:56:57,513
+state, remembers something and you can give it back. So
+
+1050
+00:56:57,515 --> 00:57:00,549
+browsers have cookies, right? You go visit a browser site,
+
+1051
+00:57:00,551 --> 00:57:04,486
+the site stores some stuff about itself and about you in
+
+1052
+00:57:04,488 --> 00:57:07,189
+their cookie. When you go away and come back to that site,
+
+1053
+00:57:07,191 --> 00:57:09,591
+it looks in the cookie and it can interpret it, okay?
+
+1054
+00:57:09,593 --> 00:57:10,893
+But it gives the cookie to the browser.
+
+1055
+00:57:10,895 --> 00:57:13,128
+The browser has no idea what's in there. Okay.
+
+1056
+00:57:13,130 --> 00:57:17,533
+To pick with AnyObject as far as the browser is concerned.
+
+1057
+00:57:17,535 --> 00:57:21,870
+All right. So how do we use a variable type AnyObject when
+
+1058
+00:57:21,872 --> 00:57:24,940
+we don't know what the heck it is? Okay. And the answer is we
+
+1059
+00:57:24,942 --> 00:57:27,643
+have to convert it to a type that we do know what it is.
+
+1060
+00:57:27,645 --> 00:57:30,979
+Okay. Now this conversion might not be possible.
+
+1061
+00:57:30,981 --> 00:57:34,316
+All right, because that thing might not be of that type
+
+1062
+00:57:34,318 --> 00:57:35,350
+when we try to convert it. So
+
+1063
+00:57:35,352 --> 00:57:40,823
+we use this as keyword in Swift to try to convert it to
+
+1064
+00:57:40,825 --> 00:57:44,159
+the other type. Okay. In other words, try to treat that
+
+1065
+00:57:44,161 --> 00:57:48,997
+AnyObject as something else, optionally. So this is an op,
+
+1066
+00:57:48,999 --> 00:57:53,001
+this returns an optional. Okay, we usually, usually use
+
+1067
+00:57:53,003 --> 00:57:55,971
+it with if let, this as thing because it ensure an optional,
+
+1068
+00:57:55,973 --> 00:57:58,674
+right? So if I have this local variable here,
+
+1069
+00:57:58,676 --> 00:58:02,878
+AO which is in AnyObject and I was tying it to something,
+
+1070
+00:58:02,880 --> 00:58:06,281
+some class I don't know what it is, okay? But I wanna try
+
+1071
+00:58:06,283 --> 00:58:11,420
+and use AO as if it were of class SomeClass, okay,
+
+1072
+00:58:11,422 --> 00:58:14,189
+AO might be of SomeClass, and I'm gonna see if it is, and
+
+1073
+00:58:14,191 --> 00:58:17,893
+if it is I'm gonna use it as some class, I say if I can let
+
+1074
+00:58:17,895 --> 00:58:22,998
+foo equal AO as SomeClass, then in here there's gonna be
+
+1075
+00:58:23,000 --> 00:58:26,535
+a local variable foo, which is not gonna be AnyObject, it's
+
+1076
+00:58:26,537 --> 00:58:32,241
+gonna be of type SomeClass. Got it? Just to that symbol
+
+1077
+00:58:32,243 --> 00:58:36,845
+essentially casting if you wanna use that terminology?
+
+1078
+00:58:36,847 --> 00:58:40,949
+Casting any object to be some class conditionally, okay?
+
+1079
+00:58:40,951 --> 00:58:45,420
+So that's how we use something of AnyObject either that or
+
+1080
+00:58:45,422 --> 00:58:48,657
+we don't know what's in there we just pass it around. Okay,
+
+1081
+00:58:48,659 --> 00:58:51,960
+just pass it around to people who know what to do with it.
+
+1082
+00:58:51,962 --> 00:58:56,665
+We don't know what to do with it if it's a cookie, okay? So,
+
+1083
+00:58:56,667 --> 00:58:59,401
+what would code look like let's say on touchDigit.
+
+1084
+00:58:59,403 --> 00:59:02,871
+If we had touchDigit and we had any object instead.
+
+1085
+00:59:02,873 --> 00:59:07,342
+We probably say if we can let sendingButton equal the sender
+
+1086
+00:59:07,344 --> 00:59:10,245
+as a UIbutton, then we'll treat it as a button,
+
+1087
+00:59:10,247 --> 00:59:13,415
+get its currentTitle and go. Other wise else if
+
+1088
+00:59:13,417 --> 00:59:17,519
+we can let sending slider equal to sender as UI slider,
+
+1089
+00:59:17,521 --> 00:59:20,722
+then we'll let the digit equal the sending sliders value
+
+1090
+00:59:20,724 --> 00:59:22,824
+which is a double, we'll convert it to an int and
+
+1091
+00:59:22,826 --> 00:59:25,794
+we'll convert that to a string, okay? That's how we
+
+1092
+00:59:25,796 --> 00:59:29,665
+get the digit. Did you see how we're doing kinda if let else,
+
+1093
+00:59:29,667 --> 00:59:33,068
+if let else? With this optional thing, that's how we
+
+1094
+00:59:33,070 --> 00:59:37,706
+would use that AnyObject. All right, another use
+
+1095
+00:59:37,708 --> 00:59:43,145
+of AnyObject is Property List, okay? So Property Lists are,
+
+1096
+00:59:43,147 --> 00:59:47,082
+essentially any combination of array, dictionary, string,
+
+1097
+00:59:47,084 --> 00:59:51,086
+double, int, NSData, and NSDate. Kay, if you build
+
+1098
+00:59:51,088 --> 00:59:53,522
+any data structure out of only those classes,
+
+1099
+00:59:53,524 --> 00:59:56,224
+you got a property list. So it's just a word. It's just
+
+1100
+00:59:56,226 --> 01:00:00,162
+a term we use to mean that. Kay, that's what it means.
+
+1101
+01:00:00,164 --> 01:00:04,132
+And you might feel like, wait a second. Array,
+
+1102
+01:00:04,134 --> 01:00:07,169
+AnyObject has to be a class, it cannot be a structs.
+
+1103
+01:00:07,171 --> 01:00:10,005
+But string, array, dictionary, double, those are structs.
+
+1104
+01:00:10,007 --> 01:00:12,741
+So how could this ever be in a property list. How could it
+
+1105
+01:00:12,743 --> 01:00:17,212
+ever be any object. And the answer is the bridging, kay?
+
+1106
+01:00:17,214 --> 01:00:20,115
+We got this automatic bridging to Objective-C, kay?
+
+1107
+01:00:20,117 --> 01:00:24,319
+It automatically treats them like NSDictionary, NSArray,
+
+1108
+01:00:24,321 --> 01:00:28,890
+NSNumber, which are all classes. And allows them to be
+
+1109
+01:00:28,892 --> 01:00:33,829
+AnyObject, kay? Now these property lists
+
+1110
+01:00:33,831 --> 01:00:37,566
+are passed around blindly. The people who are looking in them
+
+1111
+01:00:37,568 --> 01:00:40,736
+are only knowing that their dictionaries and
+
+1112
+01:00:40,738 --> 01:00:41,903
+arrays of strings and dates and stuff.
+
+1113
+01:00:41,905 --> 01:00:44,806
+They don't know anything about what that data means, okay.
+
+1114
+01:00:44,808 --> 01:00:46,608
+They're just being passed around, so
+
+1115
+01:00:46,610 --> 01:00:49,011
+let's look at an API and iOS that uses a property
+
+1116
+01:00:49,013 --> 01:00:52,614
+list to understand it better. It's called NSUserDefaults.
+
+1117
+01:00:52,616 --> 01:00:56,118
+What NSUserDefaults does, is it takes a property list and
+
+1118
+01:00:56,120 --> 01:00:59,554
+makes it persistent on disk. So when your app quits and
+
+1119
+01:00:59,556 --> 01:01:02,190
+runs again and you look it up again, it's there.
+
+1120
+01:01:02,192 --> 01:01:04,660
+So it's basically a database of property lists,
+
+1121
+01:01:04,662 --> 01:01:08,830
+a database of structures with dictionaries, arrays, dates,
+
+1122
+01:01:08,832 --> 01:01:11,066
+okay, that's what it is.
+
+1123
+01:01:11,068 --> 01:01:13,435
+It's a small database so don't use it for big things.
+
+1124
+01:01:13,437 --> 01:01:15,704
+You wouldn't wanna store like a dictionary of the entire
+
+1125
+01:01:15,706 --> 01:01:17,339
+English language in there. It's for
+
+1126
+01:01:17,341 --> 01:01:20,876
+small things like settings and things like that. The API on
+
+1127
+01:01:20,878 --> 01:01:24,813
+it is very simply just say, setObject, property list here,
+
+1128
+01:01:24,815 --> 01:01:27,716
+forKey, string. And then you can look it up and
+
+1129
+01:01:27,718 --> 01:01:30,285
+get the property list back. So here you can see how you're
+
+1130
+01:01:30,287 --> 01:01:33,455
+just passing it around. You're storing it as a cookie and
+
+1131
+01:01:33,457 --> 01:01:35,757
+it's user defaults has no idea what's inside there.
+
+1132
+01:01:35,759 --> 01:01:38,293
+It just knows it's only array is dictionary strings,
+
+1133
+01:01:38,295 --> 01:01:42,831
+ints, etc, okay. It can also restore smaller things.
+
+1134
+01:01:42,833 --> 01:01:45,133
+Like as I said a double, and it will make a little property
+
+1135
+01:01:45,135 --> 01:01:48,303
+list out of a double because a double by itself Is a property
+
+1136
+01:01:48,305 --> 01:01:52,207
+list, right? Because it's one of those classes, okay?
+
+1137
+01:01:52,209 --> 01:01:55,711
+Just like array is. How do you use user defaults?
+
+1138
+01:01:55,713 --> 01:02:00,816
+You create a shared one using this class or type method,
+
+1139
+01:02:00,818 --> 01:02:02,984
+NSUserDefaults.standardUserDe- faults().
+
+1140
+01:02:02,986 --> 01:02:06,321
+This gives you the shared instance of standard, of user
+
+1141
+01:02:06,323 --> 01:02:11,326
+defaults. And then you just say To it. Get me a certain
+
+1142
+01:02:11,328 --> 01:02:15,630
+property list, write this property list out. The changes
+
+1143
+01:02:15,632 --> 01:02:17,733
+you make will automatically be saved eventually, but
+
+1144
+01:02:17,735 --> 01:02:20,202
+if you wanna force them to be saved on disk, you can do
+
+1145
+01:02:20,204 --> 01:02:23,538
+synchronize, which returns a bool, which we almost always
+
+1146
+01:02:23,540 --> 01:02:25,407
+ignore because not clear what to do if it fails.
+
+1147
+01:02:25,409 --> 01:02:27,909
+It would probably only fail if your disk were full.
+
+1148
+01:02:27,911 --> 01:02:30,812
+Not sure what you're gonna do at that point, but any way.
+
+1149
+01:02:30,814 --> 01:02:35,717
+We usually ignore that return value, okay? Another example
+
+1150
+01:02:35,719 --> 01:02:39,254
+of property list might be in our calculator brain and
+
+1151
+01:02:39,256 --> 01:02:40,689
+I'm gonna show you a demo of this.
+
+1152
+01:02:40,691 --> 01:02:44,793
+Really quick here, which is, what if we wanted to get
+
+1153
+01:02:44,795 --> 01:02:47,596
+the program that it's in the calculator? Right now,
+
+1154
+01:02:47,598 --> 01:02:49,564
+our calculator could be programmed by saying
+
+1155
+01:02:49,566 --> 01:02:52,734
+five times four times three equals, let's put a program
+
+1156
+01:02:52,736 --> 01:02:54,903
+in the calculator, right? Five times four times three.
+
+1157
+01:02:54,905 --> 01:02:57,939
+It's kinda simple program. It'd be cool if we get
+
+1158
+01:02:57,941 --> 01:02:59,407
+that program and the person who got it,
+
+1159
+01:02:59,409 --> 01:03:02,577
+it doesn't know anything about our internal data structure.
+
+1160
+01:03:02,579 --> 01:03:04,946
+So it's AnyObject to them. And then later,
+
+1161
+01:03:04,948 --> 01:03:06,281
+they could come back to the CalculatorBrain and
+
+1162
+01:03:06,283 --> 01:03:10,819
+say. Run this program that you gave me earlier, you see? So
+
+1163
+01:03:10,821 --> 01:03:13,922
+we use AnyObject as kind of this opaque program.
+
+1164
+01:03:13,924 --> 01:03:16,224
+Okay. Now this doesn't seem very variable right now.
+
+1165
+01:03:16,226 --> 01:03:18,527
+But it's gonna be really valuable in assignment two,
+
+1166
+01:03:18,529 --> 01:03:21,730
+when you're gonna add variables to your calculator.
+
+1167
+01:03:21,732 --> 01:03:25,133
+You're gonna be able to say three times X times five
+
+1168
+01:03:25,135 --> 01:03:26,902
+equals, where X is a variable, and
+
+1169
+01:03:26,904 --> 01:03:30,372
+then you can run this then you get this program using this
+
+1170
+01:03:30,374 --> 01:03:34,176
+code I'm going to show you here, the property list, and
+
+1171
+01:03:34,178 --> 01:03:37,179
+then later you can, they can set the variable x and
+
+1172
+01:03:37,181 --> 01:03:39,948
+run it again. Maybe set the x to something else and
+
+1173
+01:03:39,950 --> 01:03:41,683
+run the program again and again and again, you see?
+
+1174
+01:03:41,685 --> 01:03:44,653
+So this would be a good use of AnyObject, because
+
+1175
+01:03:44,655 --> 01:03:48,156
+the calculator brain doesn't wanna give away its internal
+
+1176
+01:03:48,158 --> 01:03:51,092
+data struc for how, structure for how it represents
+
+1177
+01:03:51,094 --> 01:03:54,663
+a program. But it's happy to let someone have the program
+
+1178
+01:03:54,665 --> 01:03:58,667
+and give it to them later and they'll run again it later.
+
+1179
+01:03:58,669 --> 01:04:00,001
+Make sense, see why we want it?
+
+1180
+01:04:00,003 --> 01:04:01,837
+Now why would we make it a property list?
+
+1181
+01:04:01,839 --> 01:04:04,873
+Because it'd be nice to store it in user defaults, right?
+
+1182
+01:04:04,875 --> 01:04:07,209
+I've got a program? I'm gonna put it in the user defaults.
+
+1183
+01:04:07,211 --> 01:04:09,444
+Next time my program runs, I can pull it out and
+
+1184
+01:04:09,446 --> 01:04:11,346
+ask a calculator brain to run it. You see,
+
+1185
+01:04:11,348 --> 01:04:13,281
+it's just more flexible to be a property list.
+
+1186
+01:04:13,283 --> 01:04:15,851
+So that's what we're gonna do. We're gonna create a var
+
+1187
+01:04:15,853 --> 01:04:17,519
+called program in our calculator brain.
+
+1188
+01:04:17,521 --> 01:04:19,888
+It's gonna be gettable and settable. When you get it,
+
+1189
+01:04:19,890 --> 01:04:23,425
+it gets the current program in, that the calculator brain
+
+1190
+01:04:23,427 --> 01:04:27,229
+has just run, and if you set it, it runs the program, okay?
+
+1191
+01:04:27,231 --> 01:04:29,664
+All right, so I'm gonna do that as the demo. I'm gonna
+
+1192
+01:04:29,666 --> 01:04:32,601
+finish off the slides here first. One thing about this
+
+1193
+01:04:32,603 --> 01:04:35,804
+casting, you can cast other things besides any object,
+
+1194
+01:04:35,806 --> 01:04:39,274
+okay. So you, for example, you can look at this slide later,
+
+1195
+01:04:39,276 --> 01:04:42,010
+but you could have a class that's a subclass of another
+
+1196
+01:04:42,012 --> 01:04:45,747
+class, okay? And you can try and cast using as to get
+
+1197
+01:04:45,749 --> 01:04:49,551
+the subclass. You're not sure whether it's a subclass, but
+
+1198
+01:04:49,553 --> 01:04:52,554
+you can cast and as will tell you whether it is, okay?
+
+1199
+01:04:52,556 --> 01:04:55,223
+In this case, for example, if I have view controller
+
+1200
+01:04:55,225 --> 01:04:57,726
+the base class of our view controller, we can't say
+
+1201
+01:04:57,728 --> 01:05:00,896
+vc.displayValue cuz this is a CalculatorViewController
+
+1202
+01:05:00,898 --> 01:05:03,031
+thing. But if I went and as'ed it, okay,
+
+1203
+01:05:03,033 --> 01:05:06,801
+if I took this VC and as'ed it to CalculatorViewController,
+
+1204
+01:05:06,803 --> 01:05:10,472
+now I could use displayValue. Okay, so as is for
+
+1205
+01:05:10,474 --> 01:05:12,407
+more than just any object.
+
+1206
+01:05:12,409 --> 01:05:14,476
+Okay, and yes, you can force with as!,
+
+1207
+01:05:14,478 --> 01:05:17,746
+it'll crash if it can't do it. Assertions I'm not gonna talk
+
+1208
+01:05:17,748 --> 01:05:20,248
+about cuz we talked about it in the debugging section.
+
+1209
+01:05:20,250 --> 01:05:23,852
+You can look at the slide or the reading assignment to find
+
+1210
+01:05:23,854 --> 01:05:26,788
+out more about assert. And that's it. So coming up on
+
+1211
+01:05:26,790 --> 01:05:29,824
+Wednesday I'm gonna start talking about custom drawing.
+
+1212
+01:05:29,826 --> 01:05:32,160
+On Friday we don't have a section for this week.
+
+1213
+01:05:32,162 --> 01:05:34,963
+And next Monday I'm gonna start talking about gestures,
+
+1214
+01:05:34,965 --> 01:05:37,699
+multi-touch gestures, okay, pinches and swipes and
+
+1215
+01:05:37,701 --> 01:05:39,868
+stuff leading up to your assignment three,
+
+1216
+01:05:39,870 --> 01:05:42,137
+which is you're gonna be doing a lot of drawing and
+
+1217
+01:05:42,139 --> 01:05:44,973
+multiple MVCs and all that stuff. Your assignment this
+
+1218
+01:05:44,975 --> 01:05:47,375
+week is going to be the variables thing, okay?
+
+1219
+01:05:47,377 --> 01:05:51,713
+All right, so let's do that program var, okay?
+
+1220
+01:05:52,783 --> 01:05:56,117
+Just gonna go back to our calculator here, all right,
+
+1221
+01:05:56,119 --> 01:06:01,089
+and leave off exactly where we were. All right,
+
+1222
+01:06:01,091 --> 01:06:02,691
+so here's my controller, right here.
+
+1223
+01:06:02,693 --> 01:06:04,893
+I'm not gonna change my controller to do this.
+
+1224
+01:06:04,895 --> 01:06:07,762
+This is purely a brain thing, okay, here's my brain,
+
+1225
+01:06:07,764 --> 01:06:10,799
+calculator brain. So I'm gonna add a new var.
+
+1226
+01:06:10,801 --> 01:06:15,437
+Let's put it I don't know, down here, okay?
+
+1227
+01:06:15,439 --> 01:06:19,040
+It's gonna be called program. It's AnyObject.
+
+1228
+01:06:19,042 --> 01:06:21,876
+Now I'm gonna make it be AnyObject, but I'm also gonna
+
+1229
+01:06:21,878 --> 01:06:24,446
+make it be a property list, cuz it's more useful.
+
+1230
+01:06:24,448 --> 01:06:26,381
+People can put it in as user defaults or whatever.
+
+1231
+01:06:26,383 --> 01:06:29,884
+So I'm gonna use a cool Swift thing called typealias.
+
+1232
+01:06:29,886 --> 01:06:32,721
+typealias lets you create a type, a name type,
+
+1233
+01:06:32,723 --> 01:06:35,457
+that's exactly the same as some other type. So
+
+1234
+01:06:35,459 --> 01:06:39,894
+I'm gonna create a type called PropertyList which equals
+
+1235
+01:06:39,896 --> 01:06:44,332
+AnyObject. So PropertyList is now a type in Swift.
+
+1236
+01:06:44,334 --> 01:06:46,101
+It's exactly the same thing as AnyObject.
+
+1237
+01:06:46,103 --> 01:06:49,004
+Now why would I create this? That's because
+
+1238
+01:06:49,006 --> 01:06:51,539
+I'm gonna change this to say PropertyList. So
+
+1239
+01:06:51,541 --> 01:06:54,242
+I'm gonna cha, make the type of my program be PropertyList.
+
+1240
+01:06:54,244 --> 01:06:57,112
+This tells anyone using my program that yeah,
+
+1241
+01:06:57,114 --> 01:07:00,548
+it's AnyObject but it's also a PropertyList, okay?
+
+1242
+01:07:00,550 --> 01:07:03,918
+This is documentation. I'm essentially documenting here
+
+1243
+01:07:03,920 --> 01:07:05,720
+that this AnyObject is PropertyList.
+
+1244
+01:07:05,722 --> 01:07:08,990
+I could have also just put some comments in my code that
+
+1245
+01:07:08,992 --> 01:07:12,594
+says it is, but this kind of really hammers home the po,
+
+1246
+01:07:12,596 --> 01:07:15,697
+the point here that this is a PropertyList,
+
+1247
+01:07:15,699 --> 01:07:19,868
+okay? Now I'm gonna have my program here be computed,
+
+1248
+01:07:19,870 --> 01:07:23,538
+okay? So I'm gonna do the get set thing, right? And
+
+1249
+01:07:23,540 --> 01:07:27,142
+so now I need to have my program internally,
+
+1250
+01:07:27,144 --> 01:07:29,878
+I mean, internally store my program, so I'm actually gonna
+
+1251
+01:07:29,880 --> 01:07:33,248
+go up to the top and create another private var
+
+1252
+01:07:33,250 --> 01:07:35,784
+which is my internalProgram. And
+
+1253
+01:07:35,786 --> 01:07:38,353
+so I have to think about how I'm gonna store my program,
+
+1254
+01:07:38,355 --> 01:07:42,257
+you know, all the operands and operations, internally. And
+
+1255
+01:07:42,259 --> 01:07:44,959
+I'm just gonna store it to show you the power of
+
+1256
+01:07:44,961 --> 01:07:50,765
+AnyObject. I'm gonna store it as an array of AnyObject,
+
+1257
+01:07:50,767 --> 01:07:55,537
+okay? And the objects in that array are gonna be a double if
+
+1258
+01:07:55,539 --> 01:07:59,507
+it's an operand or a string if it's an operation. So
+
+1259
+01:07:59,509 --> 01:08:02,410
+I'm gonna have an array that has a mix of doubles and
+
+1260
+01:08:02,412 --> 01:08:05,280
+strings, okay, and that's gonna store my program.
+
+1261
+01:08:05,282 --> 01:08:08,016
+I'm just gonna put operands in as doubles and I'm gonna put
+
+1262
+01:08:08,018 --> 01:08:10,785
+operations as strings. So that's another power of
+
+1263
+01:08:10,787 --> 01:08:14,189
+AnyObject here. So how do I implement my internalProgram?
+
+1264
+01:08:14,191 --> 01:08:18,693
+Real simple, okay. When I set an operand, I'm just gonna
+
+1265
+01:08:18,695 --> 01:08:23,832
+tell my internalProgram append that operand, oops.
+
+1266
+01:08:23,834 --> 01:08:26,434
+Okay, now normally this is AnyObject.
+
+1267
+01:08:26,436 --> 01:08:30,905
+Operand is a double, that's a struct. That normally wouldn't
+
+1268
+01:08:30,907 --> 01:08:33,808
+work, but the bridging, the Objective-C bridging,
+
+1269
+01:08:33,810 --> 01:08:37,345
+will make this work. Okay, I told you everywhere in the UI
+
+1270
+01:08:37,347 --> 01:08:39,314
+where you have this compatibility,
+
+1271
+01:08:39,316 --> 01:08:40,849
+it's gonna automatically bridge.
+
+1272
+01:08:40,851 --> 01:08:42,984
+I don't, look, I don't have to do anything or say anything.
+
+1273
+01:08:42,986 --> 01:08:46,154
+It just automatically always bridges when necessary.
+
+1274
+01:08:46,156 --> 01:08:48,223
+Okay, similar down here in my operation.
+
+1275
+01:08:48,225 --> 01:08:51,159
+When someone performs an operation, I'm just gonna tell
+
+1276
+01:08:51,161 --> 01:08:54,429
+my internalProgram append the symbol for this operation.
+
+1277
+01:08:54,431 --> 01:08:56,998
+Okay, that's a string. Again, a struct but
+
+1278
+01:08:57,000 --> 01:09:00,201
+it's automatically bridged to NSString and
+
+1279
+01:09:00,203 --> 01:09:03,338
+thus can be an AnyObject. Okay, that's it, that's
+
+1280
+01:09:03,340 --> 01:09:05,473
+the entire implementation of my internalProgram.
+
+1281
+01:09:05,475 --> 01:09:08,776
+I'm just remembering every operand and operation.
+
+1282
+01:09:08,778 --> 01:09:13,615
+So now I'm just gonna return that internalProgram here,
+
+1283
+01:09:13,617 --> 01:09:14,983
+okay, to be the program.
+
+1284
+01:09:14,985 --> 01:09:18,153
+Now you might be freaking out, whoa, you're returning
+
+1285
+01:09:18,155 --> 01:09:21,789
+your internal data structure here to a public caller. But
+
+1286
+01:09:21,791 --> 01:09:26,561
+what kind of type is an array? A value type. And
+
+1287
+01:09:26,563 --> 01:09:30,832
+what happens when you return a value type? It gets copied.
+
+1288
+01:09:30,834 --> 01:09:34,369
+Okay, so I'm not returning a pointer to my internal data
+
+1289
+01:09:34,371 --> 01:09:38,373
+structure here, I'm returning a copy. Okay, that's, again,
+
+1290
+01:09:38,375 --> 01:09:41,109
+a cool thing about having these things be value types.
+
+1291
+01:09:41,111 --> 01:09:44,479
+All right, so now we have to do the set. So someone can now
+
+1292
+01:09:44,481 --> 01:09:47,182
+get my program and they can give it back to me later and
+
+1293
+01:09:47,184 --> 01:09:49,584
+I have to run it. Okay, so how am I gonna do that?
+
+1294
+01:09:49,586 --> 01:09:53,388
+Well, when someone sets my program, first I'm gonna clear
+
+1295
+01:09:53,390 --> 01:09:57,192
+whatever's in my program. So you, you guys probably
+
+1296
+01:09:57,194 --> 01:10:01,496
+implemented something like this for your homework, but
+
+1297
+01:10:01,498 --> 01:10:05,667
+I'm gonna, see clear my accumulator. I'm gonna say
+
+1298
+01:10:05,669 --> 01:10:09,070
+that I have no pending binary operation. And I'm gonna
+
+1299
+01:10:09,072 --> 01:10:12,640
+clear my internalProgram that I currently have out.
+
+1300
+01:10:12,642 --> 01:10:16,244
+Actually I'll just removeAll items from my internalProgram.
+
+1301
+01:10:16,246 --> 01:10:19,547
+Okay, so that's clear cuz I'm running a new program, so
+
+1302
+01:10:19,549 --> 01:10:20,882
+I wanna clear all my stuff out.
+
+1303
+01:10:20,884 --> 01:10:23,918
+Right, make sense? Now I'm just gonna say if
+
+1304
+01:10:23,920 --> 01:10:28,189
+the program they get me, gave me is an array of op,
+
+1305
+01:10:28,191 --> 01:10:31,059
+operands and operations, so I'm gonna
+
+1306
+01:10:31,061 --> 01:10:35,563
+say if I can let arrayOfOps equal this newValue that they
+
+1307
+01:10:35,565 --> 01:10:40,235
+just gave me as an array of AnyObject, which it has to be.
+
+1308
+01:10:40,237 --> 01:10:42,937
+If it's not that, I can just ignore this. Someone gave
+
+1309
+01:10:42,939 --> 01:10:45,607
+me a program which was not one that I gave out, so I'm
+
+1310
+01:10:45,609 --> 01:10:48,543
+ignoring it, cuz it's gotta be an array of AnyObject or
+
+1311
+01:10:48,545 --> 01:10:51,613
+I can't figure out what it is. So if it is, now I'm just
+
+1312
+01:10:51,615 --> 01:10:53,848
+gonna go look through at all the ops in there,
+
+1313
+01:10:53,850 --> 01:10:57,552
+all the operations and operands. Okay, an arrayOfOps.
+
+1314
+01:10:57,554 --> 01:11:00,622
+Okay, that's how we loop through an array, right, for
+
+1315
+01:11:00,624 --> 01:11:03,958
+in. And for each one I'm gonna check and see what it is.
+
+1316
+01:11:03,960 --> 01:11:06,461
+Now what type, if I can Alt-click on this,
+
+1317
+01:11:06,463 --> 01:11:10,098
+what type is this gonna be? >> AnyObject?
+
+1318
+01:11:10,100 --> 01:11:10,932
+>> AnyObject, exactly.
+
+1319
+01:11:10,934 --> 01:11:14,535
+See, AnyObject. So I can't do anything with AnyObject,
+
+1320
+01:11:14,537 --> 01:11:17,105
+so I have to try and see if I can make it something else.
+
+1321
+01:11:17,107 --> 01:11:21,409
+So I'm gonna first try and make it be an operand by
+
+1322
+01:11:21,411 --> 01:11:26,014
+saying op as a Double, okay? So if I get to here,
+
+1323
+01:11:26,016 --> 01:11:26,147
+then this op,
+
+1324
+01:11:26,149 --> 01:11:30,385
+the next thing I looked in the array was a Double. Excellent,
+
+1325
+01:11:30,387 --> 01:11:33,688
+then I can just say setOperand to be that operand, okay,
+
+1326
+01:11:33,690 --> 01:11:37,091
+cuz I'm running the program. So I'm just gonna replay,
+
+1327
+01:11:37,093 --> 01:11:40,295
+basically, my operands and operations. Otherwise,
+
+1328
+01:11:40,297 --> 01:11:43,998
+if I can let, let's say operation = op as a String,
+
+1329
+01:11:44,000 --> 01:11:48,770
+okay, then I'm going to perform that operation.
+
+1330
+01:11:52,542 --> 01:11:57,078
+Okay? Done, okay, very simple, I've done it.
+
+1331
+01:11:57,080 --> 01:11:59,814
+Now you're going to have to really make sure you
+
+1332
+01:11:59,816 --> 01:12:03,451
+understand this, because you need to enhance this for your
+
+1333
+01:12:03,453 --> 01:12:06,754
+assignment number two. Because you're gonna have variables,
+
+1334
+01:12:06,756 --> 01:12:09,490
+you're gonna have to deal with here too. You're gonna have
+
+1335
+01:12:09,492 --> 01:12:13,027
+variables in your program, not just operands and operations.
+
+1336
+01:12:13,029 --> 01:12:14,529
+Now, let's see this thing in action.
+
+1337
+01:12:14,531 --> 01:12:16,764
+We've got this code and we wanna make sure it works, so
+
+1338
+01:12:16,766 --> 01:12:19,934
+let's put something in our UI that actually checks
+
+1339
+01:12:19,936 --> 01:12:20,702
+this program business.
+
+1340
+01:12:20,704 --> 01:12:21,803
+So, I'm gonna go back to my storyboard.
+
+1341
+01:12:21,805 --> 01:12:25,606
+I'm gonna steal a couple of buttons here. I'm gonna make
+
+1342
+01:12:25,608 --> 01:12:28,543
+this be the save button and this be the restore button.
+
+1343
+01:12:28,545 --> 01:12:31,679
+So I'm gonna have the save button, save the program, and
+
+1344
+01:12:31,681 --> 01:12:34,949
+then I have the restore button, restore the program.
+
+1345
+01:12:34,951 --> 01:12:37,985
+Okay, so you can see how it would look like to use that.
+
+1346
+01:12:37,987 --> 01:12:42,123
+So these are not operation buttons anymore, so
+
+1347
+01:12:42,125 --> 01:12:45,993
+I'm gonna disconnect using right-click,
+
+1348
+01:12:45,995 --> 01:12:48,596
+all these perform operations. Okay,
+
+1349
+01:12:48,598 --> 01:12:53,768
+then I'm gonna wire these up. Let's make some room. Wire up,
+
+1350
+01:12:53,770 --> 01:12:59,207
+down here. All right, so I'm gonna wire up save first.
+
+1351
+01:12:59,209 --> 01:13:03,444
+Put it right here. I'll call it save. It's an action.
+
+1352
+01:13:03,446 --> 01:13:03,644
+It doesn't need an arg,
+
+1353
+01:13:03,646 --> 01:13:05,980
+I don't need the sender this time, this is the first time
+
+1354
+01:13:05,982 --> 01:13:08,416
+we've seen where we don't need the sender. Okay,
+
+1355
+01:13:08,418 --> 01:13:10,818
+at least the first time not in your homework.
+
+1356
+01:13:10,820 --> 01:13:16,023
+And here's restore. And restore is also an action, and
+
+1357
+01:13:16,025 --> 01:13:19,260
+it doesn't need an argument either. Here we go, there's
+
+1358
+01:13:19,262 --> 01:13:22,530
+save and restore. Okay, how am I gonna implement this? Well,
+
+1359
+01:13:22,532 --> 01:13:26,100
+I need the saved program, so I'm gonna have a savedProgram.
+
+1360
+01:13:26,102 --> 01:13:28,569
+Its type could be any object, but
+
+1361
+01:13:28,571 --> 01:13:34,008
+I'm actually gonna have it be CalculatorBrain.PropertyList.
+
+1362
+01:13:34,010 --> 01:13:36,978
+Just to be clear to myself, this is a property list, and
+
+1363
+01:13:36,980 --> 01:13:39,814
+if I wanted to save this into NFC or default,
+
+1364
+01:13:39,816 --> 01:13:43,151
+I could. Okay, but I'm not going to, but I could.
+
+1365
+01:13:43,153 --> 01:13:45,153
+All right, so how do I save?
+
+1366
+01:13:45,155 --> 01:13:46,788
+And I'm gonna make this optional because,
+
+1367
+01:13:46,790 --> 01:13:48,423
+of course I might not have hit save yet.
+
+1368
+01:13:48,425 --> 01:13:49,090
+So it's gonna start out as nil,
+
+1369
+01:13:49,092 --> 01:13:51,859
+as soon as I hit save it's gonna have a value. All right,
+
+1370
+01:13:51,861 --> 01:13:56,431
+so how do I save? Well, I'm just gonna say that this
+
+1371
+01:13:56,433 --> 01:14:00,635
+savedProgram = the calculators brain.program.
+
+1372
+01:14:00,637 --> 01:14:04,405
+Okay, that's gonna store it in there, really good, you see?
+
+1373
+01:14:04,407 --> 01:14:09,911
+How about restore? Okay, well, if I have a savedProgram
+
+1374
+01:14:09,913 --> 01:14:15,082
+!= nil, then I'm just gonna set the brains.program
+
+1375
+01:14:15,084 --> 01:14:17,718
+= savedProgram. Okay, I have to unwrap it,
+
+1376
+01:14:17,720 --> 01:14:21,355
+cuz it's an optional. And then I'd better update my display
+
+1377
+01:14:21,357 --> 01:14:24,392
+value now because the brain is gonna have a different result.
+
+1378
+01:14:24,394 --> 01:14:28,429
+It's got a new program, it's gonna have a different result,
+
+1379
+01:14:28,431 --> 01:14:30,231
+got it? Okay now, this code,
+
+1380
+01:14:30,233 --> 01:14:32,333
+you don't need this in your assignment. This is,
+
+1381
+01:14:32,335 --> 01:14:35,169
+I'm only putting this here just to demonstrate program.
+
+1382
+01:14:35,171 --> 01:14:37,171
+You will need the other code in CalculatorBrain,
+
+1383
+01:14:37,173 --> 01:14:40,341
+but you will not need this code. Okay, let's go ahead and
+
+1384
+01:14:40,343 --> 01:14:49,317
+run this. All right,
+
+1385
+01:14:49,319 --> 01:14:51,786
+here we go, make this a little bigger. All right,
+
+1386
+01:14:51,788 --> 01:14:54,622
+let's rotate so that our restore button looks better.
+
+1387
+01:14:54,624 --> 01:14:57,291
+All right, here we go. So let's put a program in here,
+
+1388
+01:14:57,293 --> 01:15:04,065
+4 x 5 + 1 =. Okay, that's 21. Okay, let's save that program,
+
+1389
+01:15:04,067 --> 01:15:08,936
+now let's do pi square root. Okay, that's good, + 8 =,
+
+1390
+01:15:08,938 --> 01:15:12,740
+something like that. Now let's restore. What should happen to
+
+1391
+01:15:12,742 --> 01:15:15,543
+our display when I restore? >> 21.
+
+1392
+01:15:15,545 --> 01:15:16,377
+>> 21 cuz it's gonna rerun
+
+1393
+01:15:16,379 --> 01:15:21,449
+that program. And sure enough, there it is.
+
+1394
+01:15:21,451 --> 01:15:24,485
+Okay, 14 divided by 7=, restore. Okay, we, we,
+
+1395
+01:15:24,487 --> 01:15:28,456
+we've run that program, and that's the result in there, so
+
+1396
+01:15:28,458 --> 01:15:32,894
+we can say x 2 =. Okay, we could save
+
+1397
+01:15:32,896 --> 01:15:36,531
+it again. Okay, 47 divide 8 =, and now when we restore,
+
+1398
+01:15:36,533 --> 01:15:39,300
+we'll get 42, which is the meaning of life, the universe,
+
+1399
+01:15:39,302 --> 01:15:41,903
+and everything, and so we're done, okay. So
+
+1400
+01:15:41,905 --> 01:15:46,507
+get that program to code into your app, okay.
+
+1401
+01:15:46,509 --> 01:15:49,577
+You'll need to add that to your assignment one, and then
+
+1402
+01:15:49,579 --> 01:15:52,613
+I will be publishing, I might actually publish assignment
+
+1403
+01:15:52,615 --> 01:15:55,116
+two before Wednesday, okay. It goes out on Wednesday,
+
+1404
+01:15:55,118 --> 01:15:57,285
+due the next Wednesday. But for those of you who want to
+
+1405
+01:15:57,287 --> 01:15:59,587
+start a little early, cuz you know everything you need to
+
+1406
+01:15:59,589 --> 01:16:02,657
+know now to do assignment two as well, okay. So
+
+1407
+01:16:02,659 --> 01:16:07,061
+I'll probably publish that earlier, maybe tomorrow.
+
+1408
+01:16:07,063 --> 01:16:07,528
+>> For more,
+
+1409
+01:16:07,530 --> 01:16:07,561
+please visit us at stanford.edu.
+
