@@ -4001,1636 +4001,2047 @@ IN iOS 9 they fixed objective C. So it has almost none of
 1001
 00:54:27,565 --> 00:54:32,534
 these, okay? They're still a few but very very few. So
+移除了旧的实现。 但是在少数代码中还是存在的。
 
 1002
 00:54:32,536 --> 00:54:36,639
 nowadays It is more used as an opaque type. Okay?
+现在 AnyObject 主要用于需要隐藏具体细节的类型的场景。
 
 1003
 00:54:36,641 --> 00:54:37,406
 When you want to have a point or
+当你希望有一个指针指向
 
 1004
 00:54:37,408 --> 00:54:39,975
 two in the object and you are not sure what it is or
+一个对象，并且你不确定这个对象是什么你不希望让别人知道
 
 1005
 00:54:39,977 --> 00:54:42,378
 you don't want anyone to know what it is okay?
+这个对象具体是什么的时候，可以考虑用 AnyObject
 
 1006
 00:54:42,380 --> 00:54:46,515
 So let's talk about how we can do this okay? So classes only
+那么我们可以如何使用 AnyObject 这个类型呢？它只能用于 Class 类型的
 
 1007
 00:54:46,517 --> 00:54:49,685
 and no structs. There is another type by the way. It is
+对象，而不能使用在 Struct 的对象上。 这里顺带提一句， 还有另外一种类型。
 
 1008
 00:54:49,687 --> 00:54:54,089
 what is called any, which is anything. Could be a struct,
+叫做 Any， 他能指向任何类型的对象， 可以指向 Struct、
 
 1009
 00:54:54,091 --> 00:54:56,992
 could be a class, anything. We almost, in fact, this class we
+Class 以及其他所有类型的对象。 事实上，我们基本上
 
 1010
 00:54:56,994 --> 00:55:00,229
 will never use Any, okay? You probably never wanna use it.
+不会用到 Any 这个类型。 你也不会想要使用它。
 
 1011
 00:55:00,231 --> 00:55:02,931
 It's in there, I think, for just language completeness.
+它存在的意义就在于保证语法的完整性。
 
 1012
 00:55:02,933 --> 00:55:06,135
 But I can't even think of a good explanation of why you
+但是我完全无法想到你能使用到它的场景。
 
 1013
 00:55:06,137 --> 00:55:09,171
 would wanna use it. So we're not even gonna talk about Any.
+所以我们这就不讨论 Any 。
 
 1014
 00:55:09,173 --> 00:55:11,040
 But we are gonna talk about AnyObject, okay?
+我们还是继续讨论 AnyObject 吧。
 
 1015
 00:55:11,042 --> 00:55:13,275
 So where will you see AnyObject? You'll sometimes
+想想你们都在哪见过 AnyObject ？
 
 1016
 00:55:13,277 --> 00:55:17,646
 see it in a method where one of the arguments Truly can be
+你应该在在一些参数可能是多种类型的
 
 1017
 00:55:17,648 --> 00:55:20,349
 more than one different kinds of class, mm kay? For
+方法中看到它对吧？
 
 1018
 00:55:20,351 --> 00:55:23,319
 example, you'll see on Wednesday, prepare for segue
+例如将在下周三的课上才讲到的在MVC
 
 1019
 00:55:23,321 --> 00:55:27,122
 which is a thing that prepares for transitions from one NVC
+跳转前会调用 prepareForSegue 方法中含有 AnyObject 的参数。
 
 1020
 00:55:27,124 --> 00:55:30,592
 to another, okay? We're gonna have multiple NVCs someday.
+我们会在一个项目中含有非常多的 MVC 。
 
 1021
 00:55:30,594 --> 00:55:32,695
 We're gonna wanna transition from one to the other, prepare
+我们经常会从一个跳转到另一个过程，
 
 1022
 00:55:32,697 --> 00:55:35,664
 for segue prepares for that transition. Well the sender,
+而 prepareForSegue 则是为了这种跳转而存在的。 至于该方法的参数 sender，
 
 1023
 00:55:35,666 --> 00:55:39,101
 in other words the object that initiated the transition could
+换句话来说，这个对象用来初始化跳转，并且它包含
 
 1024
 00:55:39,103 --> 00:55:41,103
 be lots of different kinds of objects.
+许多不同的类型的对象。
 
 1025
 00:55:41,105 --> 00:55:42,438
 It might be a button you collect on,
+他可能是一个按钮
 
 1026
 00:55:42,440 --> 00:55:45,207
 it might be a roll in a table, it might be some custom code
+他可能是一个一个在列表中的滚动条， 它可能是一段在你的 Controller 中自定义的代码。
 
 1027
 00:55:45,209 --> 00:55:49,244
 inside of your controller. Okay? So this sender has to be
+所以这个 sender 参数必须使用 AnyObject 类型。
 
 1028
 00:55:49,246 --> 00:55:53,849
 any object. Okay, cuz we don't know what it is. We
+因为我们不知道具体情况下，它是什么？
 
 1029
 00:55:53,851 --> 00:55:57,419
 don't know if it is a button or table row or what it is.
+我们不知道它是否是一个按钮、列表或者是其他什么东西。
 
 1030
 00:55:57,421 --> 00:56:00,589
 So AnyObject. Okay. So this is a case where he is an object,
+因此最好使用 AnyObject。 这就是一个对象使用 AnyObject 的例子，
 
 1031
 00:56:00,591 --> 00:56:03,659
 it could be many things we don't know what it is.
+他可能是非常多类型的对象， 而我们不知道它具体是什么。
 
 1032
 00:56:03,661 --> 00:56:06,061
 So we have to type this as AnyObject.
+所以我们这里必须使用 AnyObject 类型。
 
 1033
 00:56:06,063 --> 00:56:09,932
 Okay? Another example of that is touch digit. If we haven't,
+另外一个例子就是之前用到的 touchDigit 方法。
 
 1034
 00:56:09,934 --> 00:56:10,632
 when we control dragged,
+如果在我们拖拽链接中，
 
 1035
 00:56:10,634 --> 00:56:13,635
 remember when we changed it from any object to UI button,
+忘记了从 AnyObject 改成 UIButton 的情况下。
 
 1036
 00:56:13,637 --> 00:56:16,205
 Okay. If we hadn't done that, it would have created a touch
+如果我们忘记了修改， 他将会创建一个 touchDigit 方法，
 
 1037
 00:56:16,207 --> 00:56:19,174
 digit with sender AnyObject and then touch digit could've
+该方法带有一个 AnyObject 类型的 sender 参数， 这样 touchDigit 方法
 
 1038
 00:56:19,176 --> 00:56:23,145
 been sent by a UI button or maybe by UI slider. Okay. Or
+可能由一个 UIButton 触发或者是 UISlider 触发。 
 
 1039
 00:56:23,147 --> 00:56:26,715
 something else. And we didn't do that because the inside
+当时我们当时并没有用 AnyObject 类型的参数是因为
 
 1040
 00:56:26,717 --> 00:56:28,917
 touch digit we wanted sender to be a UI button so
+我们希望触发 touchDigit 放的的对象是 UIButton 的类型。
 
 1041
 00:56:28,919 --> 00:56:32,921
 we just send it current title and other button things, but
+这样我们就可以获得他的内容以及一些其他按钮的属性或方法， 
 
 1042
 00:56:32,923 --> 00:56:37,826
 it could have been AnyObject, all right? So, another use for
+但是其实它还是可以改成 AnyObject。 
 
 1043
 00:56:37,828 --> 00:56:40,696
 AnyObject is when you wanna return essentially a cookie,
+当时想要用一个密封的 Cookie 的时候， 你也可以用 AnyObject 类型。
 
 1044
 00:56:40,698 --> 00:56:43,298
 okay? A cookie is something
+Cookie 是一个
 
 1045
 00:56:43,300 --> 00:56:46,235
 you give back where you're giving it to someone,
+你给一个指定的人
 
 1046
 00:56:46,237 --> 00:56:47,369
 they don't know what's inside of it,
+但是他们不需要知道它里面的内容，
 
 1047
 00:56:47,371 --> 00:56:50,105
 you're not gonna tell them, the only thing they can do
+你也不希望告诉他们， 他们所要做的就是将它
 
 1048
 00:56:50,107 --> 00:56:54,343
 is give it back to you, okay? So the cookie just saves some
+再传递给你。 所有 Cookie 只是保存了一些
 
 1049
 00:56:54,345 --> 00:56:57,513
 state, remembers something and you can give it back. So
+状态， 或者是一些你能知道内部实现的东西。
 
 1050
 00:56:57,515 --> 00:57:00,549
 browsers have cookies, right? You go visit a browser site,
+因此浏览器有对应的 Cookie， 当你访问一个网站，
 
 1051
 00:57:00,551 --> 00:57:04,486
 the site stores some stuff about itself and about you in
+该网站会存储很多关于它的信息以及保存一些关于你信息
 
 1052
 00:57:04,488 --> 00:57:07,189
 their cookie. When you go away and come back to that site,
+的 Cookie。 当你离开这个网站的时候，这些 Cookie 会传回该网站，
 
 1053
 00:57:07,191 --> 00:57:09,591
 it looks in the cookie and it can interpret it, okay?
+如此看来的话， 该网站对 Cookie 应该是可理解的。
 
 1054
 00:57:09,593 --> 00:57:10,893
 But it gives the cookie to the browser.
+但是当将这个 Cookie 给浏览器时，
 
 1055
 00:57:10,895 --> 00:57:13,128
 The browser has no idea what's in there. Okay.
+浏览器完全无法知道它具体是什么内容。
 
 1056
 00:57:13,130 --> 00:57:17,533
 To pick with AnyObject as far as the browser is concerned.
+因此用 AnyObject 是浏览器最好的选择。
 
 1057
 00:57:17,535 --> 00:57:21,870
 All right. So how do we use a variable type AnyObject when
+那么我们如何使用一个 AnyObject 类型的对象， 并且
 
 1058
 00:57:21,872 --> 00:57:24,940
 we don't know what the heck it is? Okay. And the answer is we
+我们不知道它具体的内容？ 答案是
 
 1059
 00:57:24,942 --> 00:57:27,643
 have to convert it to a type that we do know what it is.
+我们必须将其转换成一个我们知道的类型。
 
 1060
 00:57:27,645 --> 00:57:30,979
 Okay. Now this conversion might not be possible.
+当然， 这种换换过程可能会失败，
 
 1061
 00:57:30,981 --> 00:57:34,316
 All right, because that thing might not be of that type
+因为在我们转换的过程中，
 
 1062
 00:57:34,318 --> 00:57:35,350
 when we try to convert it. So
+我们所转换的对象可能不是那种类型。
 
 1063
 00:57:35,352 --> 00:57:40,823
 we use this as keyword in Swift to try to convert it to
+因此我们在 Swift 中用一个关键字 as 尝试去
 
 1064
 00:57:40,825 --> 00:57:44,159
 the other type. Okay. In other words, try to treat that
+转换成其他类型。 也就是说， 你尝试将 AnyObject
 
 1065
 00:57:44,161 --> 00:57:48,997
 AnyObject as something else, optionally. So this is an op,
+转换成其他东西。 转换后
 
 1066
 00:57:48,999 --> 00:57:53,001
 this returns an optional. Okay, we usually, usually use
+返回的是 Optional 的类型。 我们经常用 if let 的方式
 
 1067
 00:57:53,003 --> 00:57:55,971
 it with if let, this as thing because it ensure an optional,
+因为用这个中法获得的一定是 Optaional 的类型。
 
 1068
 00:57:55,973 --> 00:57:58,674
 right? So if I have this local variable here,
+例如我这里有一个变量，
+
 
 1069
 00:57:58,676 --> 00:58:02,878
 AO which is in AnyObject and I was tying it to something,
+ao 是一个 AnyObject 类型， 并且我尝试将它转换成
 
 1070
 00:58:02,880 --> 00:58:06,281
 some class I don't know what it is, okay? But I wanna try
+其他类型, 并且我们不知道 ao 具体是什么类型。 但是这里我希望将其
 
 1071
 00:58:06,283 --> 00:58:11,420
 and use AO as if it were of class SomeClass, okay,
+换换成 SomeClass 这种类型。
 
 1072
 00:58:11,422 --> 00:58:14,189
 AO might be of SomeClass, and I'm gonna see if it is, and
+ao 可能是 SomeClass 这种类型， 那么如果它是的话，
 
 1073
 00:58:14,191 --> 00:58:17,893
 if it is I'm gonna use it as some class, I say if I can let
+我们将其转换成 SomeClass 并且使用它， 也就是说如果我能让 foo
 
 1074
 00:58:17,895 --> 00:58:22,998
 foo equal AO as SomeClass, then in here there's gonna be
+等于 ao 转换成 SomeClass 的对象不为空的话， 那么我这里将会等一个
 
 1075
 00:58:23,000 --> 00:58:26,535
 a local variable foo, which is not gonna be AnyObject, it's
+名为 foo 的本地变量， 并且 foo 将不再是 AnyObject 类型， 应该
 
 1076
 00:58:26,537 --> 00:58:32,241
 gonna be of type SomeClass. Got it? Just to that symbol
+是 SomeClass 类型。 明白了吗？ 使用这种方式
 
 1077
 00:58:32,243 --> 00:58:36,845
 essentially casting if you wanna use that terminology?
+将其转换成想要的类型。
 
 1078
 00:58:36,847 --> 00:58:40,949
 Casting any object to be some class conditionally, okay?
+使用 let if 这种方式将 AnyObject 转换成想要转换的类型即可。
 
 1079
 00:58:40,951 --> 00:58:45,420
 So that's how we use something of AnyObject either that or
+这就是我们如何使用 AnyObject 对象的方式， 或者是在我们
 
 1080
 00:58:45,422 --> 00:58:48,657
 we don't know what's in there we just pass it around. Okay,
+不青春它具体的内容是，而只是传递它时使用。
 
 1081
 00:58:48,659 --> 00:58:51,960
 just pass it around to people who know what to do with it.
+将其传递给真正知道它是什么内容的人。
 
 1082
 00:58:51,962 --> 00:58:56,665
 We don't know what to do with it if it's a cookie, okay? So,
+我们不知道一个 Cookie 具体能做什么。
 
 1083
 00:58:56,667 --> 00:58:59,401
 what would code look like let's say on touchDigit.
+那么如果 touchDigit 方法使用 AnyObject 参数该如何写？
 
 1084
 00:58:59,403 --> 00:59:02,871
 If we had touchDigit and we had any object instead.
+如果我们有一个 touchDigit 带有 AnyObject 的参数的话。
 
 1085
 00:59:02,873 --> 00:59:07,342
 We probably say if we can let sendingButton equal the sender
+我们可能会使用如果 sendingButton 等于 sender 转换成
 
 1086
 00:59:07,344 --> 00:59:10,245
 as a UIbutton, then we'll treat it as a button,
+UIButton 并且 sendingButton 不为空的话， 我们将其转换成，
 
 1087
 00:59:10,247 --> 00:59:13,415
 get its currentTitle and go. Other wise else if
+然后获得他的内容以及调用它的方法等。 另一方面， 如果
 
 1088
 00:59:13,417 --> 00:59:17,519
 we can let sending slider equal to sender as UI slider,
+能将其转换成 UISlider 并且不为空的话， 
 
 1089
 00:59:17,521 --> 00:59:20,722
 then we'll let the digit equal the sending sliders value
+那么数字就等于 Slider 的值。
 
 1090
 00:59:20,724 --> 00:59:22,824
 which is a double, we'll convert it to an int and
+但是由于其实 Double 类型，所以我们需要将其转换成 Int
 
 1091
 00:59:22,826 --> 00:59:25,794
 we'll convert that to a string, okay? That's how we
+然后再转换成 String 类型。 这就是如何获得具体
 
 1092
 00:59:25,796 --> 00:59:29,665
 get the digit. Did you see how we're doing kinda if let else,
+数值的方式。 大家看清楚 if let 的方式
 
 1093
 00:59:29,667 --> 00:59:33,068
 if let else? With this optional thing, that's how we
+该如何操作了吗？ 这就是我们处理 AnyObject 的方式。
 
 1094
 00:59:33,070 --> 00:59:37,706
 would use that AnyObject. All right, another use
+还有一种使用 AnyOject 的场景就是
 
 1095
 00:59:37,708 --> 00:59:43,145
 of AnyObject is Property List, okay? So Property Lists are,
+用在 Property List 中。 因为 Property List 中可能包含
 
 1096
 00:59:43,147 --> 00:59:47,082
 essentially any combination of array, dictionary, string,
+数组、 字典、 字符串
 
 1097
 00:59:47,084 --> 00:59:51,086
 double, int, NSData, and NSDate. Kay, if you build
+Double、 Int、 NSData 甚至是 NSDate 类型的数据。 
 
 1098
 00:59:51,088 --> 00:59:53,522
 any data structure out of only those classes,
+如果你使用这些类型来存储数据的话，
 
 1099
 00:59:53,524 --> 00:59:56,224
 you got a property list. So it's just a word. It's just
+那么你就能获得一个 Property List。 这就是我们
 
 1100
 00:59:56,226 --> 01:00:00,162
 a term we use to mean that. Kay, that's what it means.
+想要的类型。 这就是它的含义。
 
 1101
 01:00:00,164 --> 01:00:04,132
 And you might feel like, wait a second. Array,
+等等，或许你会想：
 
 1102
 01:00:04,134 --> 01:00:07,169
 AnyObject has to be a class, it cannot be a structs.
+AnyObject 是一个Class类型， 而不是 Struct 类型。
 
 1103
 01:00:07,171 --> 01:00:10,005
 But string, array, dictionary, double, those are structs.
+但是 String、 Array、 Dictionary、 Double 这些都是 Struct 类型。
 
 1104
 01:00:10,007 --> 01:00:12,741
 So how could this ever be in a property list. How could it
+那么他们如何包含在一个 Property List 中呢？
 
 1105
 01:00:12,743 --> 01:00:17,212
 ever be any object. And the answer is the bridging, kay?
+他们是如何转换成 AnyObject 类型呢？ 答案是桥接。
 
 1106
 01:00:17,214 --> 01:00:20,115
 We got this automatic bridging to Objective-C, kay?
+它们能自动转换成Objective C。
 
 1107
 01:00:20,117 --> 01:00:24,319
 It automatically treats them like NSDictionary, NSArray,
+它们会自动转换成 NSDictionary、 NSArray、
 
 1108
 01:00:24,321 --> 01:00:28,890
 NSNumber, which are all classes. And allows them to be
+NSNumber 或者是任何它们的封装类型。 这样就允许他们转换成 AnyObject了。
 
 1109
 01:00:28,892 --> 01:00:33,829
 AnyObject, kay? Now these property lists
+那么通过这种方式
 
 1110
 01:00:33,831 --> 01:00:37,566
 are passed around blindly. The people who are looking in them
+Property List 就在传递过程中可以不让人知道具体内容。 那么及时有人破解它的话，
 
 1111
 01:00:37,568 --> 01:00:40,736
 are only knowing that their dictionaries and
+他们也只能知道字典、数组
 
 1112
 01:00:40,738 --> 01:00:41,903
 arrays of strings and dates and stuff.
+字符串、日期以及一些其他的东西。
 
 1113
 01:00:41,905 --> 01:00:44,806
 They don't know anything about what that data means, okay.
+但是他们却不知道具体数据的含义。
 
 1114
 01:00:44,808 --> 01:00:46,608
 They're just being passed around, so
+那么它就可以被传递了。
 
 1115
 01:00:46,610 --> 01:00:49,011
 let's look at an API and iOS that uses a property
+那么让我们看看 iOS 中的一个 API， 一个便于
 
 1116
 01:00:49,013 --> 01:00:52,614
 list to understand it better. It's called NSUserDefaults.
+我们理解 Property List 的API。 那就是 NSUserDefaults。
 
 1117
 01:00:52,616 --> 01:00:56,118
 What NSUserDefaults does, is it takes a property list and
+那么 NSUserDefaults 是拿来干嘛的呢？ 它是用来缓存 Property List
 
 1118
 01:00:56,120 --> 01:00:59,554
 makes it persistent on disk. So when your app quits and
+并且将其保存到磁盘上的。 那么当你 App 退出重启后，
 
 1119
 01:00:59,556 --> 01:01:02,190
 runs again and you look it up again, it's there.
+你能从新查询到保存的数据， 因为它保存在磁盘了。
 
 1120
 01:01:02,192 --> 01:01:04,660
 So it's basically a database of property lists,
+它有点类似一个 Property List 的基础数据库，
 
 1121
 01:01:04,662 --> 01:01:08,830
 a database of structures with dictionaries, arrays, dates,
+一个包含字典，数组，日期的数据库。
 
 1122
 01:01:08,832 --> 01:01:11,066
 okay, that's what it is.
+这就是N SUserDefaults。
 
 1123
 01:01:11,068 --> 01:01:13,435
 It's a small database so don't use it for big things.
+由于它是一个微型数据库，所以我们一般用它来保存大的数据。
 
 1124
 01:01:13,437 --> 01:01:15,704
 You wouldn't wanna store like a dictionary of the entire
+例如你绝对不会想用它来保存
 
 1125
 01:01:15,706 --> 01:01:17,339
 English language in there. It's for
+所以英语的字典。
 
 1126
 01:01:17,341 --> 01:01:20,876
 small things like settings and things like that. The API on
+他只是用来存一些小东西，例如设置、配置等一些小的东西。
 
 1127
 01:01:20,878 --> 01:01:24,813
 it is very simply just say, setObject, property list here,
+并且它的接口也非常简单， 只需要调用 setObject 用来存 Property List,
 
 1128
 01:01:24,815 --> 01:01:27,716
 forKey, string. And then you can look it up and
+用 String 来存 Key。 这样你就可以通过
 
 1129
 01:01:27,718 --> 01:01:30,285
 get the property list back. So here you can see how you're
+get 方法重新获得具体的 Property List。 你可以看得出，这里你
 
 1130
 01:01:30,287 --> 01:01:33,455
 just passing it around. You're storing it as a cookie and
+只是负责传递给NSUserDefaults。 你想保存 Cookie 一样保存它，
 
 1131
 01:01:33,457 --> 01:01:35,757
 it's user defaults has no idea what's inside there.
+并且 NSUserDefaults 对于里面具体是什么完全不了解。
 
 1132
 01:01:35,759 --> 01:01:38,293
 It just knows it's only array is dictionary strings,
+它只知道他可能是数组、 字典、 字符串
 
 1133
 01:01:38,295 --> 01:01:42,831
 ints, etc, okay. It can also restore smaller things.
+数值等一些数据。 并且能通过它重新获得这些小数据。
 
 1134
 01:01:42,833 --> 01:01:45,133
 Like as I said a double, and it will make a little property
+例如我告诉它保存一个 Double， 那么他就会创建一个小的 Property List
 
 1135
 01:01:45,135 --> 01:01:48,303
 list out of a double because a double by itself Is a property
+用来保存 Double， 因为 Double 会是一个 Property List 类型。
 
 1136
 01:01:48,305 --> 01:01:52,207
 list, right? Because it's one of those classes, okay?
+它是一个 Class 的类型。
 
 1137
 01:01:52,209 --> 01:01:55,711
 Just like array is. How do you use user defaults?
+就像一个数组一样。 那么你是如何使用 NSUserDefaults 的呢？
 
 1138
 01:01:55,713 --> 01:02:00,816
 You create a shared one using this class or type method,
+你只需调用它的类方法，
 
 1139
 01:02:00,818 --> 01:02:02,984
 NSUserDefaults.standardUserDe- faults().
+一个叫 NSUserDefaults.standardUserDefaults() 的方法。
 
 1140
 01:02:02,986 --> 01:02:06,321
 This gives you the shared instance of standard, of user
+这个方法将会返回一个共享的 NSUserDefaults 对象。
 
 1141
 01:02:06,323 --> 01:02:11,326
 defaults. And then you just say To it. Get me a certain
+接下来你只需调用它的方法获得数据，或者
 
 1142
 01:02:11,328 --> 01:02:15,630
 property list, write this property list out. The changes
+将一些数据写入即可。
 
 1143
 01:02:15,632 --> 01:02:17,733
 you make will automatically be saved eventually, but
+这些改变将会自动的保存下来，
 
 1144
 01:02:17,735 --> 01:02:20,202
 if you wanna force them to be saved on disk, you can do
+但是如果你想强制将其保存到磁盘的话， 你可以调用
 
 1145
 01:02:20,204 --> 01:02:23,538
 synchronize, which returns a bool, which we almost always
+synchronize 这个方法， 这个方法返回一个布尔类型，
 
 1146
 01:02:23,540 --> 01:02:25,407
 ignore because not clear what to do if it fails.
+这个返回值经常被我们忽略， 因为我们并不清楚它做什么，并且是否失败。
 
 1147
 01:02:25,409 --> 01:02:27,909
 It would probably only fail if your disk were full.
+如果返回时的false的话， 则表示你的磁盘以满。
 
 1148
 01:02:27,911 --> 01:02:30,812
 Not sure what you're gonna do at that point, but any way.
+并且你不确定如果失败了你应该做什么。
 
 1149
 01:02:30,814 --> 01:02:35,717
 We usually ignore that return value, okay? Another example
+我们经常会忽略这个返回值。
 
 1150
 01:02:35,719 --> 01:02:39,254
 of property list might be in our calculator brain and
+另一个使用 Property List 的例子将会在我们的 CalculatorBrain中使用，
 
 1151
 01:02:39,256 --> 01:02:40,689
 I'm gonna show you a demo of this.
+我将会在接下来的Demo进行展示。
 
 1152
 01:02:40,691 --> 01:02:44,793
 Really quick here, which is, what if we wanted to get
+接下来会讲非常快，关于假如我们希望在计算器中
 
 1153
 01:02:44,795 --> 01:02:47,596
 the program that it's in the calculator? Right now,
+获得它之前的运算结果。
 
 1154
 01:02:47,598 --> 01:02:49,564
 our calculator could be programmed by saying
+现在的计算能可以计算出类似：
 
 1155
 01:02:49,566 --> 01:02:52,734
 five times four times three equals, let's put a program
+5 乘以 4 乘以 3 等于什么这种运算， 我们只需将具体
 
 1156
 01:02:52,736 --> 01:02:54,903
 in the calculator, right? Five times four times three.
+操作输入计算器中即可。 输入 5 * 4 * 3.
 
 1157
 01:02:54,905 --> 01:02:57,939
 It's kinda simple program. It'd be cool if we get
+这个是非常简单的运算， 那么如果计算器能
 
 1158
 01:02:57,941 --> 01:02:59,407
 that program and the person who got it,
+将这种与运算表达式交给一个完全
 
 1159
 01:02:59,409 --> 01:03:02,577
 it doesn't know anything about our internal data structure.
+不了解运算表达式内部实现的人，那肯定非常溜的功能。
 
 1160
 01:03:02,579 --> 01:03:04,946
 So it's AnyObject to them. And then later,
+那么这就可以用上 AnyObject了。
 
 1161
 01:03:04,948 --> 01:03:06,281
 they could come back to the CalculatorBrain and
+只需将重新传递运算表达式给 CalculatorBrain，
 
 1162
 01:03:06,283 --> 01:03:10,819
 say. Run this program that you gave me earlier, you see? So
+并且告诉它， 运行这些你之前给我的运算表达式， 这样就可以得到答案了。
 
 1163
 01:03:10,821 --> 01:03:13,922
 we use AnyObject as kind of this opaque program.
+因此我们在这里用 AnyObject 来代表一个不透明的运算表达式。
 
 1164
 01:03:13,924 --> 01:03:16,224
 Okay. Now this doesn't seem very variable right now.
+不过现在看起来好像不可以带参数的。
 
 1165
 01:03:16,226 --> 01:03:18,527
 But it's gonna be really valuable in assignment two,
+但是我们希望将其做成可带参数的，
 
 1166
 01:03:18,529 --> 01:03:21,730
 when you're gonna add variables to your calculator.
+之后只需将参数的具体值告诉给你的计算器即可。
 
 1167
 01:03:21,732 --> 01:03:25,133
 You're gonna be able to say three times X times five
+也许你希望保存表达式 3 * X * 5这种表达式，
 
 1168
 01:03:25,135 --> 01:03:26,902
 equals, where X is a variable, and
+其中 X 是一个变量，
 
 1169
 01:03:26,904 --> 01:03:30,372
 then you can run this then you get this program using this
+那么你可以使用我接下来
 
 1170
 01:03:30,374 --> 01:03:34,176
 code I'm going to show you here, the property list, and
+将要完成的代码， 并且在代码中使用 Property List，这样你
 
 1171
 01:03:34,178 --> 01:03:37,179
 then later you can, they can set the variable x and
+可以做到了， 你可以设置变量 X 的值，并且重新运行
 
 1172
 01:03:37,181 --> 01:03:39,948
 run it again. Maybe set the x to something else and
+具体的表达式。 可以设置 X 为任意的一个值，然后
 
 1173
 01:03:39,950 --> 01:03:41,683
 run the program again and again and again, you see?
+不断的重复运行这个表达式。
 
 1174
 01:03:41,685 --> 01:03:44,653
 So this would be a good use of AnyObject, because
+那么希望这样的话， 最好使用 AnyObject 类型，
 
 1175
 01:03:44,655 --> 01:03:48,156
 the calculator brain doesn't wanna give away its internal
+因为 CalculatorBrain 并不想泄露
 
 1176
 01:03:48,158 --> 01:03:51,092
 data struc for how, structure for how it represents
+他的类型以及它是如何
 
 1177
 01:03:51,094 --> 01:03:54,663
 a program. But it's happy to let someone have the program
+重新运算该表达式的。  但是可以让别人拥有该运算表达式，
 
 1178
 01:03:54,665 --> 01:03:58,667
 and give it to them later and they'll run again it later.
+并且将其重新交给计算器， 计算器将会重新计算该运算表达式。
 
 1179
 01:03:58,669 --> 01:04:00,001
 Make sense, see why we want it?
+这样就可以理解为什么使用 AnyObject 了吧？
 
 1180
 01:04:00,003 --> 01:04:01,837
 Now why would we make it a property list?
+那么我们这里为什么要用使用 Property List 呢？
 
 1181
 01:04:01,839 --> 01:04:04,873
 Because it'd be nice to store it in user defaults, right?
+因为这样方面将其存入到 NSUserDefaults 里。
 
 1182
 01:04:04,875 --> 01:04:07,209
 I've got a program? I'm gonna put it in the user defaults.
+当我获得一个表达式之后， 我将其保存在 NSUserDefaults 中。
 
 1183
 01:04:07,211 --> 01:04:09,444
 Next time my program runs, I can pull it out and
+当下次我的程序运行时， 我能从 NSUserDefaults 重新获得，
 
 1184
 01:04:09,446 --> 01:04:11,346
 ask a calculator brain to run it. You see,
+然后让 CalculatorBrain 重新运算它。
 
 1185
 01:04:11,348 --> 01:04:13,281
 it's just more flexible to be a property list.
+由此可以看出 Property List 相对比较灵活。
 
 1186
 01:04:13,283 --> 01:04:15,851
 So that's what we're gonna do. We're gonna create a var
+我们接下来就按照上面的方法来实现。 首先，我们在 CalculatorBrain 中先创建一个
 
 1187
 01:04:15,853 --> 01:04:17,519
 called program in our calculator brain.
+叫做 program 的的属性。
 
 1188
 01:04:17,521 --> 01:04:19,888
 It's gonna be gettable and settable. When you get it,
+并且给他添加 get 和 set 的方法。 当你获得它的值得时候，
 
 1189
 01:04:19,890 --> 01:04:23,425
 it gets the current program in, that the calculator brain
+他将会给出之前当前表达式， 之前计算过的表达式。
 
 1190
 01:04:23,427 --> 01:04:27,229
 has just run, and if you set it, it runs the program, okay?
+当时你设置它的值得时候， 该表达式会重新运算一遍。
 
 1191
 01:04:27,231 --> 01:04:29,664
 All right, so I'm gonna do that as the demo. I'm gonna
+好的，接下来我讲在我们的Demo上添加该功能。
 
 1192
 01:04:29,666 --> 01:04:32,601
 finish off the slides here first. One thing about this
+不过我们先讲完所有的幻灯片。 首先是关于强制转换的，
 
 1193
 01:04:32,603 --> 01:04:35,804
 casting, you can cast other things besides any object,
+你可以强制转换任何类型，而不单单是 AnyObject。
 
 1194
 01:04:35,806 --> 01:04:39,274
 okay. So you, for example, you can look at this slide later,
+例如像幻灯片上所展示的，
 
 1195
 01:04:39,276 --> 01:04:42,010
 but you could have a class that's a subclass of another
+当你有一个子类的对象指向父类的指针的情况下，
 
 1196
 01:04:42,012 --> 01:04:45,747
 class, okay? And you can try and cast using as to get
+你可以将父类指针强制转换成子类的对象。
 
 1197
 01:04:45,749 --> 01:04:49,551
 the subclass. You're not sure whether it's a subclass, but
+虽然你没办法确定它是否是子类的对象，
 
 1198
 01:04:49,553 --> 01:04:52,554
 you can cast and as will tell you whether it is, okay?
+但是你可以通过强制转换的结果告诉你是否是其子类。
 
 1199
 01:04:52,556 --> 01:04:55,223
 In this case, for example, if I have view controller
+例如，我有一个UIViewController的变量，
 
 1200
 01:04:55,225 --> 01:04:57,726
 the base class of our view controller, we can't say
+但是我们没办法使用
 
 1201
 01:04:57,728 --> 01:05:00,896
 vc.displayValue cuz this is a CalculatorViewController
+vc.displayValue, 因为这个属性是属于 CalculatorViewController 的属性。
 
 1202
 01:05:00,898 --> 01:05:03,031
 thing. But if I went and as'ed it, okay,
+当时如果我进行强制转换的话，
 
 1203
 01:05:03,033 --> 01:05:06,801
 if I took this VC and as'ed it to CalculatorViewController,
+我将其强制转换成 CalculatorViewController 后，
 
 1204
 01:05:06,803 --> 01:05:10,472
 now I could use displayValue. Okay, so as is for
+我就可以使用 displayValue 这个属性了。 因此强制转换
 
 1205
 01:05:10,474 --> 01:05:12,407
 more than just any object.
+不单单是针对 AnyObject。
 
 1206
 01:05:12,409 --> 01:05:14,476
 Okay, and yes, you can force with as!,
+当然你也可以使用关键字 as! 来进行强制转换，
 
 1207
 01:05:14,478 --> 01:05:17,746
 it'll crash if it can't do it. Assertions I'm not gonna talk
+但是如果没办法进行强制转换的话， 你的程序会崩溃。 我不会在这里进行
 
 1208
 01:05:17,748 --> 01:05:20,248
 about cuz we talked about it in the debugging section.
+讲解断言， 因为我们将在调试的章节进行讲解。
 
 1209
 01:05:20,250 --> 01:05:23,852
 You can look at the slide or the reading assignment to find
+你可以查看幻灯片或者是阅读作业来查看
 
 1210
 01:05:23,854 --> 01:05:26,788
 out more about assert. And that's it. So coming up on
+更多的关于断言的信息。 记得周三来听
 
 1211
 01:05:26,790 --> 01:05:29,824
 Wednesday I'm gonna start talking about custom drawing.
+关于自定义绘制的课程。
 
 1212
 01:05:29,826 --> 01:05:32,160
 On Friday we don't have a section for this week.
+这周五， 我们没有课程。
 
 1213
 01:05:32,162 --> 01:05:34,963
 And next Monday I'm gonna start talking about gestures,
+下周我们我们开始讲解手势，
 
 1214
 01:05:34,965 --> 01:05:37,699
 multi-touch gestures, okay, pinches and swipes and
+多点触摸手势， 缩放以及滑动手势等， 
 
 1215
 01:05:37,701 --> 01:05:39,868
 stuff leading up to your assignment three,
+并且该内容将会在你的第三次作业中用到，
 
 1216
 01:05:39,870 --> 01:05:42,137
 which is you're gonna be doing a lot of drawing and
+第三次作业包含了绘制、 多 MVC 以及其他的一些内容。
 
 1217
 01:05:42,139 --> 01:05:44,973
 multiple MVCs and all that stuff. Your assignment this
+这周的作业是
 
 1218
 01:05:44,975 --> 01:05:47,375
 week is going to be the variables thing, okay?
+关于变量的题目。
 
 1219
 01:05:47,377 --> 01:05:51,713
 All right, so let's do that program var, okay?
+接下来我们开始实现 program 属性吧。
 
 1220
 01:05:52,783 --> 01:05:56,117
 Just gonna go back to our calculator here, all right,
+重新回到计算器的程序， 
 
 1221
 01:05:56,119 --> 01:06:01,089
 and leave off exactly where we were. All right,
+回到我们之前结束的地方。
 
 1222
 01:06:01,091 --> 01:06:02,691
 so here's my controller, right here.
+屏幕上显示的是我的 Controller。 
 
 1223
 01:06:02,693 --> 01:06:04,893
 I'm not gonna change my controller to do this.
+目前我还不打算修改 Controller。
 
 1224
 01:06:04,895 --> 01:06:07,762
 This is purely a brain thing, okay, here's my brain,
+所需修改的都在 CalculatorBrain 中，
 
 1225
 01:06:07,764 --> 01:06:10,799
 calculator brain. So I'm gonna add a new var.
+这就是我的 CalculatorBrain 的代码， 我讲为其添加一个新的属性。
 
 1226
 01:06:10,801 --> 01:06:15,437
 Let's put it I don't know, down here, okay?
+我们加在那呢？ 就这里吧。
 
 1227
 01:06:15,439 --> 01:06:19,040
 It's gonna be called program. It's AnyObject.
+取名为 program， 类型为 AnyObject。
 
 1228
 01:06:19,042 --> 01:06:21,876
 Now I'm gonna make it be AnyObject, but I'm also gonna
+这里虽然我给他的类型为 AnyObject， 但是我同事也可以给他的类型
 
 1229
 01:06:21,878 --> 01:06:24,446
 make it be a property list, cuz it's more useful.
+为 PropertyList， 因为这个名字更加有可读性。
 
 1230
 01:06:24,448 --> 01:06:26,381
 People can put it in as user defaults or whatever.
+其他人可以将其存在 NSUserDefaults 或者是其他的地方。
 
 1231
 01:06:26,383 --> 01:06:29,884
 So I'm gonna use a cool Swift thing called typealias.
+这里就要用到一个 Swift 的一个特性， 叫做 typealias 。
 
 1232
 01:06:29,886 --> 01:06:32,721
 typealias lets you create a type, a name type,
+typealias 让你可以创建一个新的类型， 一个别名的类型，
 
 1233
 01:06:32,723 --> 01:06:35,457
 that's exactly the same as some other type. So
+它实际上与你绑定的类型是等价的。
 
 1234
 01:06:35,459 --> 01:06:39,894
 I'm gonna create a type called PropertyList which equals
+这里我讲创建一个叫做 PropertyList 的类型，并且它与
 
 1235
 01:06:39,896 --> 01:06:44,332
 AnyObject. So PropertyList is now a type in Swift.
+AnyObject 等价。 那么这样之后， PropertyList 就是一个新的类型了。
 
 1236
 01:06:44,334 --> 01:06:46,101
 It's exactly the same thing as AnyObject.
+但是其实他是跟 AnyObject 等价的。
 
 1237
 01:06:46,103 --> 01:06:49,004
 Now why would I create this? That's because
+为什么我要创建这个类型呢？
 
 1238
 01:06:49,006 --> 01:06:51,539
 I'm gonna change this to say PropertyList. So
+因为我希望这里的类型名称是 PropertyList。
 
 1239
 01:06:51,541 --> 01:06:54,242
 I'm gonna cha, make the type of my program be PropertyList.
+然后将 program 的类型修改成新的类型 PropertyList。
 
 1240
 01:06:54,244 --> 01:06:57,112
 This tells anyone using my program that yeah,
+这就等于告诉任何用 program 属性的人，
 
 1241
 01:06:57,114 --> 01:07:00,548
 it's AnyObject but it's also a PropertyList, okay?
+虽然他是一个 AnyObject 类型，但是它同样是 PropertyList 类型。
 
 1242
 01:07:00,550 --> 01:07:03,918
 This is documentation. I'm essentially documenting here
+这就是文档化， 我本来就是进行文档化
 
 1243
 01:07:03,920 --> 01:07:05,720
 that this AnyObject is PropertyList.
+即 AnyObject 改名为 PropertyList。
 
 1244
 01:07:05,722 --> 01:07:08,990
 I could have also just put some comments in my code that
+并且我也会将在代码中添加对应的注释
 
 1245
 01:07:08,992 --> 01:07:12,594
 says it is, but this kind of really hammers home the po,
+这是一个非常好的做法将 program 的
 
 1246
 01:07:12,596 --> 01:07:15,697
 the point here that this is a PropertyList,
+类型修改成 PropertyList。
 
 1247
 01:07:15,699 --> 01:07:19,868
 okay? Now I'm gonna have my program here be computed,
+现在我将要把我的运算表达式拿来计算。
 
 1248
 01:07:19,870 --> 01:07:23,538
 okay? So I'm gonna do the get set thing, right? And
+因此我要添加 get 和 set 方法。
 
 1249
 01:07:23,540 --> 01:07:27,142
 so now I need to have my program internally,
+因此我需要有一个内部的变量用来存储运算表达式，
+
 
 1250
 01:07:27,144 --> 01:07:29,878
 I mean, internally store my program, so I'm actually gonna
+我的意思是在该类中存储运算表达式的变量，
 
 1251
 01:07:29,880 --> 01:07:33,248
 go up to the top and create another private var
+因此我们回到程序的上端，添加一个新的私有属性
 
 1252
 01:07:33,250 --> 01:07:35,784
 which is my internalProgram. And
+名叫 internalProgram 的属性。
 
 1253
 01:07:35,786 --> 01:07:38,353
 so I have to think about how I'm gonna store my program,
+因此我需要考虑我应该如何存储我的运算表达式，
 
 1254
 01:07:38,355 --> 01:07:42,257
 you know, all the operands and operations, internally. And
+而我们知道所有的运算表达式都是有操作数和操作符组成的。
 
 1255
 01:07:42,259 --> 01:07:44,959
 I'm just gonna store it to show you the power of
+因此我只需要存储这些信息，并且用来展示 AnyObject 的强大。
 
 1256
 01:07:44,961 --> 01:07:50,765
 AnyObject. I'm gonna store it as an array of AnyObject,
+因此我这里用一个 AnyObject 的数组来存储这些信息。
 
 1257
 01:07:50,767 --> 01:07:55,537
 okay? And the objects in that array are gonna be a double if
+而数组中的元素可能是 Double 类型，当然是一个操作数的时候，
 
 1258
 01:07:55,539 --> 01:07:59,507
 it's an operand or a string if it's an operation. So
+可能是一个 String 类型，当它是一个操作符的时候。
 
 1259
 01:07:59,509 --> 01:08:02,410
 I'm gonna have an array that has a mix of doubles and
+因此我这里需要一个混合了 Double 和 String 类型的数组，
 
 1260
 01:08:02,412 --> 01:08:05,280
 strings, okay, and that's gonna store my program.
+用来存储的运算表达式。
 
 1261
 01:08:05,282 --> 01:08:08,016
 I'm just gonna put operands in as doubles and I'm gonna put
+我只需将操作数以 Double 的形式进行存储， 
 
 1262
 01:08:08,018 --> 01:08:10,785
 operations as strings. So that's another power of
+将操作符以 String 的形式进行存储。 这里就能展示 AnyObject 的优势之一了。
 
 1263
 01:08:10,787 --> 01:08:14,189
 AnyObject here. So how do I implement my internalProgram?
+那么我应该如何使用 internalProgram 呢？
 
 1264
 01:08:14,191 --> 01:08:18,693
 Real simple, okay. When I set an operand, I'm just gonna
+非常简单， 当我调用 setOperand 的时候，
 
 1265
 01:08:18,695 --> 01:08:23,832
 tell my internalProgram append that operand, oops.
+我只需将对应的操作数添加到 internalProgram 中即可。
 
 1266
 01:08:23,834 --> 01:08:26,434
 Okay, now normally this is AnyObject.
+当时这里使用的是 AnyObject 类型做为数组元素的类型，
 
 1267
 01:08:26,436 --> 01:08:30,905
 Operand is a double, that's a struct. That normally wouldn't
+但是操作数是一个 Double 的类型， 它是一个Struct。 原本应该是没办法
 
 1268
 01:08:30,907 --> 01:08:33,808
 work, but the bridging, the Objective-C bridging,
+存入数组中的， 但是苹果的桥接技术做到了， 就是与 Objective-C 的桥接技术
 
 1269
 01:08:33,810 --> 01:08:37,345
 will make this work. Okay, I told you everywhere in the UI
+使的操作数能存入数组中。 我之前在讲 UI 的时候也提到过，
 
 1270
 01:08:37,347 --> 01:08:39,314
 where you have this compatibility,
+Swift 与 Objective-C 是具有非常好的兼容性。
 
 1271
 01:08:39,316 --> 01:08:40,849
 it's gonna automatically bridge.
+因为苹果内部已经实现了自动的桥接技术。
 
 1272
 01:08:40,851 --> 01:08:42,984
 I don't, look, I don't have to do anything or say anything.
+而我不需要做任何事情。
 
 1273
 01:08:42,986 --> 01:08:46,154
 It just automatically always bridges when necessary.
+当它需要兼容的时候，就会自动进行桥接。
 
 1274
 01:08:46,156 --> 01:08:48,223
 Okay, similar down here in my operation.
+当然，下面的操作符也是同样的处理方式。
 
 1275
 01:08:48,225 --> 01:08:51,159
 When someone performs an operation, I'm just gonna tell
+当有人调用 performOperation 时， 我只需将它加到
 
 1276
 01:08:51,161 --> 01:08:54,429
 my internalProgram append the symbol for this operation.
+运算表达式的 internalProgram 变量即可。
 
 1277
 01:08:54,431 --> 01:08:56,998
 Okay, that's a string. Again, a struct but
+但是操作符是一个 String， 同样是一个 Struct 类型，
 
 1278
 01:08:57,000 --> 01:09:00,201
 it's automatically bridged to NSString and
+但是它会自动使用桥接技术， 转换成 NSString 类型，
 
 1279
 01:09:00,203 --> 01:09:03,338
 thus can be an AnyObject. Okay, that's it, that's
+所能能将其转换成 AnyObject 类型。 
 
 1280
 01:09:03,340 --> 01:09:05,473
 the entire implementation of my internalProgram.
+这就是关于所有的 internalProgram 属性的使用。
 
 1281
 01:09:05,475 --> 01:09:08,776
 I'm just remembering every operand and operation.
+我只需记住没有一个操作数和操作符即可。
 
 1282
 01:09:08,778 --> 01:09:13,615
 So now I'm just gonna return that internalProgram here,
+接着在这里我只需返回 internalProgram 即可，
 
 1283
 01:09:13,617 --> 01:09:14,983
 okay, to be the program.
+用来返回 prgram。
 
 1284
 01:09:14,985 --> 01:09:18,153
 Now you might be freaking out, whoa, you're returning
+也许你会吓到， 为什么你这里 
 
 1285
 01:09:18,155 --> 01:09:21,789
 your internal data structure here to a public caller. But
+要讲私有的数据返回给公用的接口？
 
 1286
 01:09:21,791 --> 01:09:26,561
 what kind of type is an array? A value type. And
+但是数组具体是什么类型？ 是一个值传递的类型。
 
 1287
 01:09:26,563 --> 01:09:30,832
 what happens when you return a value type? It gets copied.
+那么一个值传递类型的数据作为返回值会出现什么情况？ 会用它的副本进行返回。
 
 1288
 01:09:30,834 --> 01:09:34,369
 Okay, so I'm not returning a pointer to my internal data
+因此我不是返回一个指向内部数据的指针对象，
 
 1289
 01:09:34,371 --> 01:09:38,373
 structure here, I'm returning a copy. Okay, that's, again,
+而是返回它的一个副本而已。
 
 1290
 01:09:38,375 --> 01:09:41,109
 a cool thing about having these things be value types.
+由此可以看出一个值传递类型的优点。
 
 1291
 01:09:41,111 --> 01:09:44,479
 All right, so now we have to do the set. So someone can now
+那么解析来我们实现一下 set 方法。 目前别人能获得
 
 1292
 01:09:44,481 --> 01:09:47,182
 get my program and they can give it back to me later and
+我的运算表达式， 并且之后会将其重新交给我，
 
 1293
 01:09:47,184 --> 01:09:49,584
 I have to run it. Okay, so how am I gonna do that?
+而我必须重新运算一遍这个表达式。 那么我该如何实现呢？
 
 1294
 01:09:49,586 --> 01:09:53,388
 Well, when someone sets my program, first I'm gonna clear
+首先，当有人需要重新给我运算表达式的时候， 我先要清空
 
 1295
 01:09:53,390 --> 01:09:57,192
 whatever's in my program. So you, you guys probably
+当前的运算表达式。 而在之后的作业中，
 
 1296
 01:09:57,194 --> 01:10:01,496
 implemented something like this for your homework, but
+也可能会遇到类似的题目。 
 
 1297
 01:10:01,498 --> 01:10:05,667
 I'm gonna, see clear my accumulator. I'm gonna say
+而这里我需要重置操作数， 将
 
 1298
 01:10:05,669 --> 01:10:09,070
 that I have no pending binary operation. And I'm gonna
+pending 属性有置为空并且
 
 1299
 01:10:09,072 --> 01:10:12,640
 clear my internalProgram that I currently have out.
+将当前存储的操作数和操作符都清空。
 
 1300
 01:10:12,642 --> 01:10:16,244
 Actually I'll just removeAll items from my internalProgram.
+事实上我只需将数组中的所有元素移除即可。
 
 1301
 01:10:16,246 --> 01:10:19,547
 Okay, so that's clear cuz I'm running a new program, so
+这就是我的清空方法， 然后我需要重新运算新的运算表达式，
 
 1302
 01:10:19,549 --> 01:10:20,882
 I wanna clear all my stuff out.
+但是在此之前我必须重置我的所有属性。
 
 1303
 01:10:20,884 --> 01:10:23,918
 Right, make sense? Now I'm just gonna say if
+而我现在只需判断
 
 1304
 01:10:23,920 --> 01:10:28,189
 the program they get me, gave me is an array of op,
+他们给我的新的运算表达式是否是一个操作数和操作符的数组，
 
 1305
 01:10:28,191 --> 01:10:31,059
 operands and operations, so I'm gonna
+而我这里只需要
 
 1306
 01:10:31,061 --> 01:10:35,563
 say if I can let arrayOfOps equal this newValue that they
+通过 if let arrayOfOps = newValue as? [AnyObject]
 
 1307
 01:10:35,565 --> 01:10:40,235
 just gave me as an array of AnyObject, which it has to be.
+的语句进行判断，并且该判断必须要成立。
 
 1308
 01:10:40,237 --> 01:10:42,937
 If it's not that, I can just ignore this. Someone gave
+如果它不成立的话，我就直接忽视它即可。
 
 1309
 01:10:42,939 --> 01:10:45,607
 me a program which was not one that I gave out, so I'm
+例如有人给了一个运算表达式给我， 但是却不是从我这里给出的，
 
 1310
 01:10:45,609 --> 01:10:48,543
 ignoring it, cuz it's gotta be an array of AnyObject or
+那么我讲忽视它， 因此它必须是一个 AnyObject 的数组，
 
 1311
 01:10:48,545 --> 01:10:51,613
 I can't figure out what it is. So if it is, now I'm just
+否则我无法判断里面具体是什么内容。 那么如果它是一个数组的话， 
 
 1312
 01:10:51,615 --> 01:10:53,848
 gonna go look through at all the ops in there,
+我只需遍历所有在数组中
 
 1313
 01:10:53,850 --> 01:10:57,552
 all the operations and operands. Okay, an arrayOfOps.
+的操作数和操作符。
 
 1314
 01:10:57,554 --> 01:11:00,622
 Okay, that's how we loop through an array, right, for
+这就是我们常用的遍历数组的方式———— for in 的方式。
 
 1315
 01:11:00,624 --> 01:11:03,958
 in. And for each one I'm gonna check and see what it is.
+对于每一个元素我都进行检查看看它是什么。
 
 1316
 01:11:03,960 --> 01:11:06,461
 Now what type, if I can Alt-click on this,
+那么这里的 op 是什么类型呢？ 如果我通过 Alt + 左键点击op的话，
 
 1317
 01:11:06,463 --> 01:11:10,098
 what type is this gonna be? >> AnyObject?
+会显示什么类型呢？ [学生回答] AnyObject ?
 
 1318
 01:11:10,100 --> 01:11:10,932
 >> AnyObject, exactly.
+对的， 就是 AnyObject 类型。
 
 1319
 01:11:10,934 --> 01:11:14,535
 See, AnyObject. So I can't do anything with AnyObject,
+看见没， 就是 AnyObject 类型。 但是我们还没办法处理 AnyObject 类型，
 
 1320
 01:11:14,537 --> 01:11:17,105
 so I have to try and see if I can make it something else.
+因此我必须尝试看看能否做一些其他的事情。
 
 1321
 01:11:17,107 --> 01:11:21,409
 So I'm gonna first try and make it be an operand by
+首先我先进行判断它是否是一个 Double 类型的
 
 1322
 01:11:21,411 --> 01:11:26,014
 saying op as a Double, okay? So if I get to here,
+操作数？ 如果运行到这一行的话，
 
 1323
 01:11:26,016 --> 01:11:26,147
 then this op,
+那么这个 op 在数组中的变量
 
 1324
 01:11:26,149 --> 01:11:30,385
 the next thing I looked in the array was a Double. Excellent,
+就是一个 Double 类型的数据。
 
 1325
 01:11:30,387 --> 01:11:33,688
 then I can just say setOperand to be that operand, okay,
+那么接下来我就可以调用  setOperand 来进行进行处理这个操作数。
 
 1326
 01:11:33,690 --> 01:11:37,091
 cuz I'm running the program. So I'm just gonna replay,
+因为我这里是重新运行运算表达式， 所以我这里只需对
 
 1327
 01:11:37,093 --> 01:11:40,295
 basically, my operands and operations. Otherwise,
+操作数和操作符进行一遍运算。
 
 1328
 01:11:40,297 --> 01:11:43,998
 if I can let, let's say operation = op as a String,
+另一方面， 我通过 let operation = op as? String 来进行判断是否是操作数，
 
 1329
 01:11:44,000 --> 01:11:48,770
 okay, then I'm going to perform that operation.
+如果是操作数的话， 这里就调用一下 performOperation 的方法。
 
 1330
 01:11:52,542 --> 01:11:57,078
 Okay? Done, okay, very simple, I've done it.
+实现好了，非常简单吧。 
 
 1331
 01:11:57,080 --> 01:11:59,814
 Now you're going to have to really make sure you
+那么目前你必须保证你是理解
 
 1332
 01:11:59,816 --> 01:12:03,451
 understand this, because you need to enhance this for your
+这些代码的， 因为你需要对该项目进行完善， 在作业中
 
 1333
 01:12:03,453 --> 01:12:06,754
 assignment number two. Because you're gonna have variables,
+用到类似的方法。 例如你将用到变量，
 
 1334
 01:12:06,756 --> 01:12:09,490
 you're gonna have to deal with here too. You're gonna have
+而你也需要处理这些变量。
 
 1335
 01:12:09,492 --> 01:12:13,027
 variables in your program, not just operands and operations.
+你需要处理的你的运算表达式， 而不是仅仅的操作数与操作符。
 
 1336
 01:12:13,029 --> 01:12:14,529
-Now, let's see this thing in action.
+Now, let's see this thing in action. 
+那么看我们来实际运行看看。
 
 1337
 01:12:14,531 --> 01:12:16,764
 We've got this code and we wanna make sure it works, so
+我们写好了这些代码，我们需要确认是否它实现成功了，
 
 1338
 01:12:16,766 --> 01:12:19,934
 let's put something in our UI that actually checks
+我们需要在界面上添加一些东西来检查这段
 
 1339
 01:12:19,936 --> 01:12:20,702
 this program business.
+程序的正确性。
 
 1340
 01:12:20,704 --> 01:12:21,803
 So, I'm gonna go back to my storyboard.
+所以我们先回到我们的 Storyboard。
 
 1341
 01:12:21,805 --> 01:12:25,606
 I'm gonna steal a couple of buttons here. I'm gonna make
+我这里只需要修改一些按钮。
 
 1342
 01:12:25,608 --> 01:12:28,543
 this be the save button and this be the restore button.
+将这个按钮变成保存的按钮， 而下面一个按钮变成重新运算的按钮。
 
 1343
 01:12:28,545 --> 01:12:31,679
 So I'm gonna have the save button, save the program, and
+而保存的按钮用来保存之前的运算表达式，
 
 1344
 01:12:31,681 --> 01:12:34,949
 then I have the restore button, restore the program.
+重新运算的按钮用来重新运算之前的的运算表达式。
 
 1345
 01:12:34,951 --> 01:12:37,985
 Okay, so you can see how it would look like to use that.
+这样你就可以想象我们应该如何使用它了。
 
 1346
 01:12:37,987 --> 01:12:42,123
 So these are not operation buttons anymore, so
+而这两个按钮不在是操作符的按钮，
 
 1347
 01:12:42,125 --> 01:12:45,993
 I'm gonna disconnect using right-click,
+所以我需要通过右键来断开之前链接的事件，
 
 1348
 01:12:45,995 --> 01:12:48,596
 all these perform operations. Okay,
+所有这两个按钮的事件回调。
 
 1349
 01:12:48,598 --> 01:12:53,768
 then I'm gonna wire these up. Let's make some room. Wire up,
+解析来我要重新绑定事件的回调。 让我们让 Xcode 多一些控件来进行绑定。
 
 1350
 01:12:53,770 --> 01:12:59,207
 down here. All right, so I'm gonna wire up save first.
+那么我们先对保存按钮进行绑定事件的回调方法。
 
 1351
 01:12:59,209 --> 01:13:03,444
 Put it right here. I'll call it save. It's an action.
+将其拖拉到这里， 并且给方法取名为 save, 设置它是 Action。
 
 1352
 01:13:03,446 --> 01:13:03,644
 It doesn't need an arg,
+该方法不需要参数，
 
 1353
 01:13:03,646 --> 01:13:05,980
 I don't need the sender this time, this is the first time
+这次回调方法不需要一个参数， 这是我们第一次遇到不需要
 
 1354
 01:13:05,982 --> 01:13:08,416
 we've seen where we don't need the sender. Okay,
+参数的回调方法。
 
 1355
 01:13:08,418 --> 01:13:10,818
 at least the first time not in your homework.
+至少不是在你的作业中的第一次遇到。
 
 1356
 01:13:10,820 --> 01:13:16,023
 And here's restore. And restore is also an action, and
+同样的方法拉一个 restore 的事件回调， 同样是一个 Action，
 
 1357
 01:13:16,025 --> 01:13:19,260
 it doesn't need an argument either. Here we go, there's
+同样不需要一个参数。 这样就可以了，
 
 1358
 01:13:19,262 --> 01:13:22,530
 save and restore. Okay, how am I gonna implement this? Well,
+这就是我们的两个按钮的事件回调的方法。 那么我具体该如何实现呢？
 
 1359
 01:13:22,532 --> 01:13:26,100
 I need the saved program, so I'm gonna have a savedProgram.
+我需要保存之前的运算表达式， 所以我需要一个 saveProgram 的属性。
 
 1360
 01:13:26,102 --> 01:13:28,569
 Its type could be any object, but
+它的类型可以是 AnyObject， 但是
 
 1361
 01:13:28,571 --> 01:13:34,008
 I'm actually gonna have it be CalculatorBrain.PropertyList.
+这里更建议使用 CalculatorBrain.PropertyList 的类型。
 
 1362
 01:13:34,010 --> 01:13:36,978
 Just to be clear to myself, this is a property list, and
+首先你的自己清楚， 这是一个 PropertyList，
 
 1363
 01:13:36,980 --> 01:13:39,814
 if I wanted to save this into NFC or default,
+并且如果我我想将其存入 NSUserDefaults 的话， 
 
 1364
 01:13:39,816 --> 01:13:43,151
 I could. Okay, but I'm not going to, but I could.
+我也能做到。  但是目前我还没算这样做， 即使我是能做到的。
 
 1365
 01:13:43,153 --> 01:13:45,153
 All right, so how do I save?
+那么我该如何实现 save 方法呢？
 
 1366
 01:13:45,155 --> 01:13:46,788
 And I'm gonna make this optional because,
+在此之前我应该将其变成一个 Optional 的类型，
 
 1367
 01:13:46,790 --> 01:13:48,423
 of course I might not have hit save yet.
+因为我刚开始可能没有保存过预算表达式。
 
 1368
 01:13:48,425 --> 01:13:49,090
 So it's gonna start out as nil,
+那么它的初始值应该是 nil .
 
 1369
 01:13:49,092 --> 01:13:51,859
 as soon as I hit save it's gonna have a value. All right,
+直到我触发 save 方法之后， 它才会有值。
 
 1370
 01:13:51,861 --> 01:13:56,431
 so how do I save? Well, I'm just gonna say that this
+那么我们该如何实现 save 方法呢？ 我应该
 
 1371
 01:13:56,433 --> 01:14:00,635
 savedProgram = the calculators brain.program.
+将 CalculatorBrain 中的 program 保存到 savedProgram 即可。
 
 1372
 01:14:00,637 --> 01:14:04,405
 Okay, that's gonna store it in there, really good, you see?
+只需在这里保存即可， 非常简单， 对吧？
 
 1373
 01:14:04,407 --> 01:14:09,911
 How about restore? Okay, well, if I have a savedProgram
+那么 restore 方法又该如何实现呢？ 如果 savedProgram 不为
 
 1374
 01:14:09,913 --> 01:14:15,082
 != nil, then I'm just gonna set the brains.program
+空的话， 我将其重新传递给 CalculatorBrain。
 
 1375
 01:14:15,084 --> 01:14:17,718
 = savedProgram. Okay, I have to unwrap it,
+并且我这里需要强制解析它，
 
 1376
 01:14:17,720 --> 01:14:21,355
 cuz it's an optional. And then I'd better update my display
+因为他是一个 Optional 的类型。 然后我需要更新我
 
 1377
 01:14:21,357 --> 01:14:24,392
 value now because the brain is gonna have a different result.
+显示的值， 因为 CalculatorBrain 可能重新运算后会有不同的结果。
 
 1378
 01:14:24,394 --> 01:14:28,429
 It's got a new program, it's gonna have a different result,
+因为它获得了一个新的运算表达式， 所以它可能会运算跟当前显示不同的结果。
 
 1379
 01:14:28,431 --> 01:14:30,231
 got it? Okay now, this code,
+看明白这段代码了吗？
 
 1380
 01:14:30,233 --> 01:14:32,333
 you don't need this in your assignment. This is,
+这些代码应该在作业中用不到。 
 
 1381
 01:14:32,335 --> 01:14:35,169
 I'm only putting this here just to demonstrate program.
+这只是我放在这里的实例代码而已。
 
 1382
 01:14:35,171 --> 01:14:37,171
 You will need the other code in CalculatorBrain,
+你需要在 CalculatorBrain 中的其他代码，
 
 1383
 01:14:37,173 --> 01:14:40,341
 but you will not need this code. Okay, let's go ahead and
+而不需要这段代码。 那么让我重新
 
 1384
 01:14:40,343 --> 01:14:49,317
 run this. All right,
+运行这个程序。
 
 1385
 01:14:49,319 --> 01:14:51,786
 here we go, make this a little bigger. All right,
+将模拟器变大一点。
 
 1386
 01:14:51,788 --> 01:14:54,622
 let's rotate so that our restore button looks better.
+将模拟器进行旋转一下， 这样我们的 restore 按钮看起来更美观一点。
 
 1387
 01:14:54,624 --> 01:14:57,291
 All right, here we go. So let's put a program in here,
+我们先输入一个表达式，
 
 1388
 01:14:57,293 --> 01:15:04,065
 4 x 5 + 1 =. Okay, that's 21. Okay, let's save that program,
+输入 4 乘以 5 加上 1 等于。 答案是21. 然后点击保存按钮。
 
 1389
 01:15:04,067 --> 01:15:08,936
 now let's do pi square root. Okay, that's good, + 8 =,
+然后在点击π、 根号、 加号、 8 等一些其他按钮。
 
 1390
 01:15:08,938 --> 01:15:12,740
 something like that. Now let's restore. What should happen to
+然后点击 restore 按钮， 那么会发生什么呢？
 
 1391
 01:15:12,742 --> 01:15:15,543
 our display when I restore? >> 21.
+如果我点击 restore 后。 [学生回答] 21.
 
 1392
 01:15:15,545 --> 01:15:16,377
 >> 21 cuz it's gonna rerun
+答案是21， 因为我们重新运算了之前的
 
 1393
 01:15:16,379 --> 01:15:21,449
 that program. And sure enough, there it is.
+运算表达式。 这个是可以肯定的。
 
 1394
 01:15:21,451 --> 01:15:24,485
 Okay, 14 divided by 7=, restore. Okay, we, we,
+14 除以 7 等于， 点击restore。 看见没？
 
 1395
 01:15:24,487 --> 01:15:28,456
 we've run that program, and that's the result in there, so
+我们重新运算了之前的表达式， 所以它的结果就展示在这里了。
 
 1396
 01:15:28,458 --> 01:15:32,894
 we can say x 2 =. Okay, we could save
+而我们可以针对结果继续运算， 如乘以 2 等于之类的。
 
 1397
 01:15:32,896 --> 01:15:36,531
 it again. Okay, 47 divide 8 =, and now when we restore,
+当然我们重新保存新的表达式。 继续输入 47 除以 8 等于， 然后我们在点击 restore 按钮，
 
 1398
 01:15:36,533 --> 01:15:39,300
 we'll get 42, which is the meaning of life, the universe,
+我们还是能拿到 42，也就是说无论从哪个角度来
 
 1399
 01:15:39,302 --> 01:15:41,903
 and everything, and so we're done, okay. So
+说， 我们都完成了想要的功能。
 
 1400
 01:15:41,905 --> 01:15:46,507
 get that program to code into your app, okay.
+将这部分代码拷贝到你们的程序中，
 
 1401
 01:15:46,509 --> 01:15:49,577
 You'll need to add that to your assignment one, and then
+你将会在作业一种需要用到这些代码，
 
 1402
 01:15:49,579 --> 01:15:52,613
 I will be publishing, I might actually publish assignment
+当然我会将这些代码发布出来， 我也会将作业二
 
 1403
 01:15:52,615 --> 01:15:55,116
 two before Wednesday, okay. It goes out on Wednesday,
+在周三前发布出来。 作业将在周三发布，
 
 1404
 01:15:55,118 --> 01:15:57,285
 due the next Wednesday. But for those of you who want to
+直到下周三为止。 当然对于那些想先多学一点
 
 1405
 01:15:57,287 --> 01:15:59,587
 start a little early, cuz you know everything you need to
+的同学们， 因为已经学会了一些
 
 1406
 01:15:59,589 --> 01:16:02,657
 know now to do assignment two as well, okay. So
+你们也可以提前做作业二。
 
 1407
 01:16:02,659 --> 01:16:07,061
 I'll probably publish that earlier, maybe tomorrow.
+我会尽早将其发布出来，也可能是明天。
 
 1408
 01:16:07,063 --> 01:16:07,528
 >> For more,
+想获得更多信息，
 
 1409
 01:16:07,530 --> 01:16:07,561
 please visit us at stanford.edu.
+请访问我们的网站 stanford.edu。 
 
