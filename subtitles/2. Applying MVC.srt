@@ -25,7 +25,7 @@ about MVC, okay, I'm gonna try and really briefly cover that
 6
 00:00:19,952 --> 00:00:23,553
 because I know only about half of you know what MVC is, and
-因为关于什么是 MVC 我知道可能不及你们.
+因为我知道你们中大概只有一半知道MVC 是什么.
 
 7
 00:00:23,555 --> 00:00:27,257
@@ -245,7 +245,7 @@ Model 之间的交互吧. Controller 能调用 Model 的方法.
 50
 00:02:35,907 --> 00:02:37,940
 wants. It knows everything about the model.
-它能知道 Model 的所有接口.
+它能知道 Model 的所有.
 
 51
 00:02:37,942 --> 00:02:39,708
@@ -330,7 +330,7 @@ Controller 和 View 之间的交互方式.
 67
 00:03:22,681 --> 00:03:25,715
 That label, that UI label was part of it's view.
-那个标签就是那个 View 中的一部分.
+那个Label, UILabel 就是那个 View 中的一部分.
 
 68
 00:03:25,717 --> 00:03:28,317
@@ -410,7 +410,7 @@ All right, what about from the view to the controller?
 83
 00:04:07,421 --> 00:04:10,254
 Can the view, like a label and stuff like that,
-那么 View (例如标签等控件)能访问
+那么 View (例如Label 等控件)能访问
 
 84
 00:04:10,256 --> 00:04:12,923
@@ -425,7 +425,7 @@ no. The problem with the view is all the minions
 86
 00:04:15,895 --> 00:04:19,296
 in there are generic objects like UIButton or UILabel.
-都是一个通用的类型,例如按钮或标签.
+都是一个通用的类型,例如UIButton 或UILabel.
 
 87
 00:04:19,298 --> 00:04:21,297
@@ -445,7 +445,7 @@ So there's way to kind of for them to talk to a calculator
 90
 00:04:26,170 --> 00:04:28,804
 and know it's a calculator. Okay, so there's limited
-以及指导它是一个计算器.因此对于 Controller 和 View 来说
+以及知道它是一个计算器.因此对于 Controller 和 View 来说
 
 91
 00:04:28,806 --> 00:04:31,239
@@ -685,12 +685,12 @@ Okay? So, [COUGH] This is done via what's called
 138
 00:06:46,294 --> 00:06:48,795
 a delegate. And we're gonna talk about delegation next
-代理的方式进行实现的.我们将在下周讲述代理的课程.
+委托的方式进行实现的.我们将在下周讲述委托的课程.
 
 139
 00:06:48,797 --> 00:06:51,897
 week. And the word delegate is appropriate here because
-这里用代理这个词语是非常恰当的,
+这里用委托这个词语是非常恰当的,
 
 140
 00:06:51,899 --> 00:06:53,899
@@ -705,7 +705,7 @@ some responsibility to the controller Okay. The way this
 142
 00:06:57,805 --> 00:07:01,906
 is implemented is very simple. Delegate, the delegate is just
-也非常简单.代理通常是
+也非常简单.委托通常是
 
 143
 00:07:01,908 --> 00:07:05,243
@@ -725,7 +725,7 @@ because the view doesn't know anything about the calculator
 146
 00:07:12,618 --> 00:07:15,852
 view controller. The answer is, it's not gonna be a class.
-答案就是代理不是一个类型(Class),
+答案就是委托不是一个类型(Class),
 
 147
 00:07:15,854 --> 00:07:19,055
@@ -760,12 +760,12 @@ would promise to implement these will, should, and did
 153
 00:07:31,301 --> 00:07:33,768
 things, then the viewer could talk to it even if the view
-View 就可以通过代理通知 Controller,即使 View
+View 就可以通过委托通知 Controller,即使 View
 
 154
 00:07:33,770 --> 00:07:37,705
 doesn't know what class it is. Okay, no similarly There's
-不知道代理具体是什么类型(Class).
+不知道委托具体是什么类型(Class).
 
 155
 00:07:37,707 --> 00:07:40,741
@@ -825,12 +825,12 @@ the viewer can figure out what's going on and
 166
 00:08:09,368 --> 00:08:13,103
 display it, okay. And that's also done with delegation,
-根据数据来决定如何显示, 而这也是通过代理的方式来实现
+根据数据来决定如何显示, 而这也是通过委托的方式来实现
 
 167
 00:08:13,105 --> 00:08:16,706
 although we call that Delegate the Data Source. Okay, so
-但是我们称这些代理为数据源(Data Source).
+但是我们称这些委托为数据源(Data Source).
 
 168
 00:08:16,708 --> 00:08:19,308
@@ -1050,7 +1050,7 @@ into the model directly, and short circuit the controller?
 211
 00:10:18,215 --> 00:10:20,849
 And the answer is no, you don't wanna do it that way.
-当然是不行, 这样做是不被建议的.
+当然是不行, 不建议这样做.
 
 212
 00:10:20,851 --> 00:10:23,018
@@ -1750,7 +1750,7 @@ I'm just going to return the display's text. Okay?
 351
 00:16:58,736 --> 00:17:03,938
 Unwrapped, but of course, this is a string. Right? Okay? And
-然后解析它,但是这是一个 String 类型. 对吧?
+然后unwarp它,但是这是一个 String 类型. 对吧?
 
 352
 00:17:03,940 --> 00:17:06,307
@@ -1775,12 +1775,12 @@ okay? Why is that? Let's look at our error. It says
 356
 00:17:18,220 --> 00:17:21,087
 the value of optional double is not unwrapped. Look it's
-一个 Optional Double 并没有解析.  
+一个 Optional Double 并没有unwarp.  
 
 357
 00:17:21,089 --> 00:17:24,691
 trying to unwrap this. Okay, that's really weird. See it's
-从界面可以看得出来,这里试图解析它.这个看起来非常奇怪.
+从界面可以看得出来,这里试图unwarp它.这个看起来非常奇怪.
 
 358
 00:17:24,693 --> 00:17:27,426
@@ -1800,12 +1800,12 @@ When I converted from this Double to a string, I didn't
 361
 00:17:31,699 --> 00:17:36,134
 unwrap it. Why is this? I'm trying to create a double
-进行解析. 那么上面这里当我从一个 String 生成一个 Double 类型时
+进行unwarp. 那么上面这里当我从一个 String 生成一个 Double 类型时
 
 362
 00:17:36,136 --> 00:17:37,168
 here using this string.
-为什么需要解析?
+为什么需要unwarp?
 
 363
 00:17:37,170 --> 00:17:40,037
@@ -1870,7 +1870,7 @@ you. Okay? So that's really kind of awesome.
 375
 00:18:14,937 --> 00:18:17,871
 So let's go ahead and unwrap that. Okay now this would,
-我们继续,并且解析它.
+我们继续,并且unwarp它.
 
 376
 00:18:17,873 --> 00:18:20,607
@@ -2480,7 +2480,7 @@ that operand. And the argument there is gonna be a String,
 497
 00:24:30,304 --> 00:24:33,405
 which is the mathematical symbol, okay? And then lastly,
-一个用来存储操作符的参数. 
+一个用来数学操作符的参数. 
 
 498
 00:24:33,407 --> 00:24:38,242
