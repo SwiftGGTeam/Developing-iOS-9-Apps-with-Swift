@@ -25,7 +25,7 @@ about MVC, okay, I'm gonna try and really briefly cover that
 6
 00:00:19,952 --> 00:00:23,553
 because I know only about half of you know what MVC is, and
-因为关于什么是 MVC 我知道可能不及你们.
+因为我知道，你们中差不多只有一半知道 MVC 是什么
 
 7
 00:00:23,555 --> 00:00:27,257
