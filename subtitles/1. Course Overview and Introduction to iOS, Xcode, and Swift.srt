@@ -3824,7 +3824,7 @@ this case because I'm gonna have a whole bunch of buttons.
 766
 00:37:50,035 --> 00:37:52,235
 They're each gonna be sending touch digit, and
-每一个案件都会发送一个数字
+每一个按键都会发送一个数字
 
 767
 00:37:52,237 --> 00:37:53,336
