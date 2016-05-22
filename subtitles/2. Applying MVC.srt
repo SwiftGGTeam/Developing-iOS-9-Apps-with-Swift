@@ -25,7 +25,7 @@ about MVC, okay, I'm gonna try and really briefly cover that
 6
 00:00:19,952 --> 00:00:23,553
 because I know only about half of you know what MVC is, and
-因为关于什么是 MVC 我知道可能不及你们.
+因为我知道你们中大概只有一半知道MVC 是什么.
 
 7
 00:00:23,555 --> 00:00:27,257
@@ -245,7 +245,7 @@ Model 之间的交互吧. Controller 能调用 Model 的方法.
 50
 00:02:35,907 --> 00:02:37,940
 wants. It knows everything about the model.
-它能知道 Model 的所有接口.
+它能知道 Model 的所有.
 
 51
 00:02:37,942 --> 00:02:39,708
@@ -330,7 +330,7 @@ Controller 和 View 之间的交互方式.
 67
 00:03:22,681 --> 00:03:25,715
 That label, that UI label was part of it's view.
-那个标签就是那个 View 中的一部分.
+那个Label, UILabel 就是那个 View 中的一部分.
 
 68
 00:03:25,717 --> 00:03:28,317
@@ -410,7 +410,7 @@ All right, what about from the view to the controller?
 83
 00:04:07,421 --> 00:04:10,254
 Can the view, like a label and stuff like that,
-那么 View (例如标签等控件)能访问
+那么 View (例如Label 等控件)能访问
 
 84
 00:04:10,256 --> 00:04:12,923
@@ -425,7 +425,7 @@ no. The problem with the view is all the minions
 86
 00:04:15,895 --> 00:04:19,296
 in there are generic objects like UIButton or UILabel.
-都是一个通用的类型,例如按钮或标签.
+都是一个通用的类型,例如UIButton 或UILabel.
 
 87
 00:04:19,298 --> 00:04:21,297
@@ -445,7 +445,7 @@ So there's way to kind of for them to talk to a calculator
 90
 00:04:26,170 --> 00:04:28,804
 and know it's a calculator. Okay, so there's limited
-以及指导它是一个计算器.因此对于 Controller 和 View 来说
+以及知道它是一个计算器.因此对于 Controller 和 View 来说
 
 91
 00:04:28,806 --> 00:04:31,239
@@ -685,12 +685,12 @@ Okay? So, [COUGH] This is done via what's called
 138
 00:06:46,294 --> 00:06:48,795
 a delegate. And we're gonna talk about delegation next
-代理的方式进行实现的.我们将在下周讲述代理的课程.
+委托的方式进行实现的.我们将在下周讲述委托的课程.
 
 139
 00:06:48,797 --> 00:06:51,897
 week. And the word delegate is appropriate here because
-这里用代理这个词语是非常恰当的,
+这里用委托这个词语是非常恰当的,
 
 140
 00:06:51,899 --> 00:06:53,899
@@ -705,7 +705,7 @@ some responsibility to the controller Okay. The way this
 142
 00:06:57,805 --> 00:07:01,906
 is implemented is very simple. Delegate, the delegate is just
-也非常简单.代理通常是
+也非常简单.委托通常是
 
 143
 00:07:01,908 --> 00:07:05,243
@@ -725,7 +725,7 @@ because the view doesn't know anything about the calculator
 146
 00:07:12,618 --> 00:07:15,852
 view controller. The answer is, it's not gonna be a class.
-答案就是代理不是一个类型(Class),
+答案就是委托不是一个类型(Class),
 
 147
 00:07:15,854 --> 00:07:19,055
@@ -760,12 +760,12 @@ would promise to implement these will, should, and did
 153
 00:07:31,301 --> 00:07:33,768
 things, then the viewer could talk to it even if the view
-View 就可以通过代理通知 Controller,即使 View
+View 就可以通过委托通知 Controller,即使 View
 
 154
 00:07:33,770 --> 00:07:37,705
 doesn't know what class it is. Okay, no similarly There's
-不知道代理具体是什么类型(Class).
+不知道委托具体是什么类型(Class).
 
 155
 00:07:37,707 --> 00:07:40,741
@@ -825,12 +825,12 @@ the viewer can figure out what's going on and
 166
 00:08:09,368 --> 00:08:13,103
 display it, okay. And that's also done with delegation,
-根据数据来决定如何显示, 而这也是通过代理的方式来实现
+根据数据来决定如何显示, 而这也是通过委托的方式来实现
 
 167
 00:08:13,105 --> 00:08:16,706
 although we call that Delegate the Data Source. Okay, so
-但是我们称这些代理为数据源(Data Source).
+但是我们称这些委托为数据源(Data Source).
 
 168
 00:08:16,708 --> 00:08:19,308
@@ -1050,7 +1050,7 @@ into the model directly, and short circuit the controller?
 211
 00:10:18,215 --> 00:10:20,849
 And the answer is no, you don't wanna do it that way.
-当然是不行, 这样做是不被建议的.
+当然是不行, 不建议这样做.
 
 212
 00:10:20,851 --> 00:10:23,018
@@ -1750,7 +1750,7 @@ I'm just going to return the display's text. Okay?
 351
 00:16:58,736 --> 00:17:03,938
 Unwrapped, but of course, this is a string. Right? Okay? And
-然后解析它,但是这是一个 String 类型. 对吧?
+然后unwarp它,但是这是一个 String 类型. 对吧?
 
 352
 00:17:03,940 --> 00:17:06,307
@@ -1775,12 +1775,12 @@ okay? Why is that? Let's look at our error. It says
 356
 00:17:18,220 --> 00:17:21,087
 the value of optional double is not unwrapped. Look it's
-一个 Optional Double 并没有解析.  
+一个 Optional Double 并没有unwarp.  
 
 357
 00:17:21,089 --> 00:17:24,691
 trying to unwrap this. Okay, that's really weird. See it's
-从界面可以看得出来,这里试图解析它.这个看起来非常奇怪.
+从界面可以看得出来,这里试图unwarp它.这个看起来非常奇怪.
 
 358
 00:17:24,693 --> 00:17:27,426
@@ -1800,12 +1800,12 @@ When I converted from this Double to a string, I didn't
 361
 00:17:31,699 --> 00:17:36,134
 unwrap it. Why is this? I'm trying to create a double
-进行解析. 那么上面这里当我从一个 String 生成一个 Double 类型时
+进行unwarp. 那么上面这里当我从一个 String 生成一个 Double 类型时
 
 362
 00:17:36,136 --> 00:17:37,168
 here using this string.
-为什么需要解析?
+为什么需要unwarp?
 
 363
 00:17:37,170 --> 00:17:40,037
@@ -1870,7 +1870,7 @@ you. Okay? So that's really kind of awesome.
 375
 00:18:14,937 --> 00:18:17,871
 So let's go ahead and unwrap that. Okay now this would,
-我们继续,并且解析它.
+我们继续,并且unwarp它.
 
 376
 00:18:17,873 --> 00:18:20,607
@@ -2480,7 +2480,7 @@ that operand. And the argument there is gonna be a String,
 497
 00:24:30,304 --> 00:24:33,405
 which is the mathematical symbol, okay? And then lastly,
-一个用来存储操作符的参数. 
+一个用来数学操作符的参数. 
 
 498
 00:24:33,407 --> 00:24:38,242
@@ -2495,12 +2495,12 @@ which is gonna be a Double.
 500
 00:24:39,679 --> 00:24:43,681
 And I'm gonna do something interesting here, instead of
-我在这里做一件有意思的事情,
+我将在这里做一件有趣的事
 
 501
 00:24:43,683 --> 00:24:47,384
 just having this be a public var that could be set and got.
-我不会让这个公有变量同时实现 get 和 set 方法
+我不会让这个公有变量同时拥有 get 和 set 方法
 
 502
 00:24:47,386 --> 00:24:49,953
@@ -2510,22 +2510,22 @@ Because the setting of this doesn't really make sense for
 503
 00:24:49,955 --> 00:24:51,854
 anyone using my CalculatorBrain to set this.
-get 方法没有什么意义
+set 方法实在没有什么意义
 
 504
 00:24:51,856 --> 00:24:55,558
 I set it internally, okay, because of performOperation.
-因为 performOperation，我可以在内部 set 它
+因为我只在 performOperation 的内部 set 它
 
 505
 00:24:55,560 --> 00:24:58,494
 So I'm actually gonna make this computed and
-所以我只会
+所以我会实际的去做运算，并
 
 506
 00:24:58,496 --> 00:25:01,229
 only implement the get side of it, okay?
-实现它的 get 方法
+实现在它的 get 方法里面
 
 507
 00:25:01,231 --> 00:25:02,864
@@ -2535,32 +2535,32 @@ I'm not gonna implement this set, so
 508
 00:25:02,866 --> 00:25:05,833
 now this becomes a read-only property. Do you, do you all
-所以它现在是一个只读属性
+所以现在它变成了一个只读属性
 
 509
 00:25:05,835 --> 00:25:09,637
 remember another a read-only property we used last time?
-还记得上一个只读属性吗？
+你们还记得我们上次使用的另一个只读属性吗？
 
 510
 00:25:09,639 --> 00:25:12,940
 Current title in button, okay? So current title in button is
-button 的 currentTitle
+Button 的 currentTitle
 
 511
 00:25:12,942 --> 00:25:16,476
 a computed read-only property in button. That title, that
-它是 button 中的一个可计算的只读属性
+它是 Button 中的一个可计算的只读属性
 
 512
 00:25:16,478 --> 00:25:18,545
 current title, is probably gotten from a UI label or
-currentTitle 是从
+currentTitle 可能来自于一个 UI Label
 
 513
 00:25:18,547 --> 00:25:21,080
 something that the button is using to draw its title, okay?
-button 使用来绘制它 title（也许是一个 UILabel）中的一个变量
+或者被 Button 用来绘制它的 title 的东西
 
 514
 00:25:21,082 --> 00:25:24,150
@@ -2570,7 +2570,7 @@ It comes from somewhere else, that's why it's computed,
 515
 00:25:24,152 --> 00:25:27,019
 okay? So I'm gonna do the same thing here. So this is how you
-我在这里也做了相同的事情
+我在这里也将做同样的事情
 
 516
 00:25:27,021 --> 00:25:29,321
@@ -2620,7 +2620,7 @@ And those two sides have to implement certain methods
 525
 00:25:53,344 --> 00:25:54,843
 if they wanna be comparable, okay?
-就需要实现某个待定的方法
+就需要实现某些待定的方法
 
 526
 00:25:54,845 --> 00:25:57,979
@@ -2635,7 +2635,7 @@ understanding of Swift to see exactly how that works. But
 528
 00:26:01,284 --> 00:26:03,518
 the answer to your question succinctly is no,
-简而言之，你问题的答案是，不正确
+但是你的问题的答案是不会
 
 529
 00:26:03,520 --> 00:26:06,053
@@ -2660,7 +2660,7 @@ right now, okay? Just to get rid of my little, error there.
 533
 00:26:18,834 --> 00:26:21,934
 But eventually, we're gonna have to implement this,
-不过最终我们还是得实现这里
+不过最终我们还是会实现这里
 
 534
 00:26:21,936 --> 00:26:22,735
@@ -2680,12 +2680,12 @@ So far, every method and property we've done
 537
 00:26:29,677 --> 00:26:33,078
 in this whole class has been essentially public. Meaning,
-都是 public（公有） 的
+都是 public（公有） 的，意味着
 
 538
 00:26:33,080 --> 00:26:36,447
 any class can call any of the methods in any of the classes
-我们类中的所有方法都可以被调用
+我们类中的所有方法都可以被其他类调用
 
 539
 00:26:36,449 --> 00:26:40,484
@@ -2720,7 +2720,7 @@ in the calculators through this controller. Because we
 545
 00:26:53,431 --> 00:26:56,832
 managed that displayValue by what our model calculates,
-因为我们通过 model 计算的值来管理 displayValue
+因为我们通过我们的 model 计算的值来管理 displayValue
 
 546
 00:26:56,834 --> 00:26:59,067
@@ -2730,7 +2730,7 @@ right? So this is internal implementation.
 547
 00:26:59,069 --> 00:27:01,770
 In fact, all of this is internal implementation or
-实际所有这些都是内部实现和控制
+事实上，所有这些都是内部实现或控制的
 
 548
 00:27:01,772 --> 00:27:05,506
@@ -2745,7 +2745,7 @@ unlike these three, which are external, okay? They're, they,
 550
 00:27:09,946 --> 00:27:12,146
 we want people calling these in CalculatorBrain.
-我们希望其它人的 CalculatorBrain 中调用它们
+我们希望其它人在 CalculatorBrain 中调用它们
 
 551
 00:27:12,148 --> 00:27:13,747
@@ -2785,12 +2785,12 @@ this private keyword right here,
 558
 00:27:28,195 --> 00:27:31,329
 to all of my functions and methods over here.
-把所有的方法都标记为 private 的
+把这所有的方法都标记为 private 
 
 559
 00:27:31,331 --> 00:27:33,564
 I don't, this is not really part of Swift again,
-这不是 Swift 中的关键字
+再说一次，这不是 Swift 中的关键字
 
 560
 00:27:33,566 --> 00:27:34,865
@@ -2820,7 +2820,7 @@ And as you program, okay, you're gonna see that one of
 565
 00:27:43,307 --> 00:27:45,908
 the evaluation criteria on your homework is that you
-你们可能会使用这种判断标准
+也就是在你们的作业中你们会使用这种判断标准
 
 566
 00:27:45,910 --> 00:27:48,610
@@ -2830,17 +2830,17 @@ properly make things private when they should be private.
 567
 00:27:48,612 --> 00:27:51,680
 And I generally would err on the side of making it private.
-我不建议使用这种策略
+但我不建议你们这样做
 
 568
 00:27:51,682 --> 00:27:53,881
 It's a lot easier to make something private and
-我还是建议你们先把东西设置成 private 的
+我还是建议你们先设置成 private 的
 
 569
 00:27:53,883 --> 00:27:53,981
 decide to make it public, than to use something public,
-当你决定它们可以成为 private 的时候
+当你决定让它们成为 public 的时候
 
 570
 00:27:53,983 --> 00:27:56,083
@@ -2850,17 +2850,17 @@ go back later and
 571
 00:27:56,085 --> 00:27:57,851
 have a whole bunch of coders start using it, and
-如果你反过来做，当一堆人使用你开发类的时候
+如果有很多人调用了你开发的类
 
 572
 00:27:57,853 --> 00:27:59,853
 then decide, no, no, I want that to be private.
-你决定把某个方法变成 private 的
+然后你又决定把某个方法变成 private 的
 
 573
 00:27:59,855 --> 00:28:02,789
 Then you break all those other people. So err on the side of
-那么其他人的程序就会产生问题
+那么所有其他人的程序都会出现问题
 
 574
 00:28:02,791 --> 00:28:06,125
@@ -2885,22 +2885,22 @@ picking Generated Interface. This will show you the public
 578
 00:28:16,570 --> 00:28:20,438
 API of the class in the main window on the left there.
-它会显示左边窗口的所有 public API
+它会显示左边窗口的类的所有公共的 API
 
 579
 00:28:20,440 --> 00:28:23,341
 So we're gonna look at the public API of CalculatorBrain.
-看看 CalculatorBrain 的 public API
+让我们看看 CalculatorBrain 公共的 API
 
 580
 00:28:23,343 --> 00:28:25,676
 You can see that it has that setOperand, performOperation,
-可以看到有 setOperand, performOperation 的 reslt
+可以看到有 setOperand, performOperation 和 result
 
 581
 00:28:25,678 --> 00:28:28,211
 and result. Notice this looks just like current title,
-这个 result 看起来和 currentTitle 一样
+注意，这个 result 看起来和 currentTitle 一样
 
 582
 00:28:28,213 --> 00:28:30,914
@@ -2910,17 +2910,17 @@ right, where it's saying this is a read-only thing.
 583
 00:28:30,916 --> 00:28:32,715
 We don't see any implementation here,
-在这里看不到实现
+我们在这里看不到实现
 
 584
 00:28:32,717 --> 00:28:35,918
 this is purely the API, okay? So
-只能看到 API，看不到实现
+只能看到 API
 
 585
 00:28:35,920 --> 00:28:38,787
 no implementation here. Also notice this says internal,
-注意这里的 internal
+这里没有实现。还需要注意这里的 internal
 
 586
 00:28:38,789 --> 00:28:41,490
@@ -2955,12 +2955,12 @@ UIKit 有许多我们可以调用的公有方法
 592
 00:28:55,738 --> 00:28:58,271
 But it also has hundreds, if not thousands of internal
-但还有许多方法
+但还有许多 internal 方法
 
 593
 00:28:58,273 --> 00:29:01,007
 methods that only other UIkit classes can call between
-是只有在 UIKit 中的类才可以互相调用的
+是只有在 UIKit 中的类才可以相互调用的
 
 594
 00:29:01,009 --> 00:29:05,111
@@ -2975,12 +2975,12 @@ for your purposes,
 596
 00:29:05,246 --> 00:29:07,145
 since you're always gonna be working in the module,
-你的 App 就是一个 module
+因为你总是只在你的 module 里工作
 
 597
 00:29:07,147 --> 00:29:09,781
 which is your app, internal means public,
-所以 internal 就代表着 public
+所以在你的 APP 里 internal 就代表着 public
 
 598
 00:29:09,783 --> 00:29:13,117
@@ -3005,27 +3005,27 @@ userIsInTheMiddleOfTyping，我不想让它是 public 的
 602
 00:29:22,528 --> 00:29:24,661
 I wanted that to be private, too, I just forgot to put
-我想让它变成 private 的
+我想让它也变成 private 的
 
 603
 00:29:24,663 --> 00:29:26,996
 the private on there. So if I go back over here and
-我只是忘加了关键字
+我刚刚只是忘了在这加 private
 
 604
 00:29:26,998 --> 00:29:30,966
 say private, okay, then you'll see it goes away. So now we
-回到这里，加上，会发现它已经不在这里了
+回到这里，加上 private，你会发现它已经消失了
 
 605
 00:29:30,968 --> 00:29:35,204
 have no public API here. Now, it's still completely usable,
-现在它已经没有 public API 了，但它仍然可以使用
+现在它已经没有 public API 了，但它仍然是可用的
 
 606
 00:29:35,206 --> 00:29:38,707
 because in Interface Builder, we can wire up to this
-因为在 Interface Builder 中，可以给这个 controller 连线
+因为在 Interface Builder 中，可以连线到这个 controller 
 
 607
 00:29:38,709 --> 00:29:40,775
@@ -3055,7 +3055,7 @@ CalculatorBrain
 612
 00:29:54,590 --> 00:29:59,259
 over here. All right, so we've got brain and
-这里放 CalculatorViewController
+这里放 ViewController
 
 613
 00:29:59,261 --> 00:30:02,195
@@ -3100,17 +3100,17 @@ we want to start using our model here. Well, to have
 621
 00:30:23,115 --> 00:30:26,550
 a model in our controller, we need to be able to talk to it,
-为了在 controller 中使用 model
+为了在 controller 中使用 model，也就是与 model 交互
 
 622
 00:30:26,552 --> 00:30:28,051
 that big green arrow, okay?
-需要有一个 model 的实例
+正如那个绿箭头所表示的那样
 
 623
 00:30:28,053 --> 00:30:32,922
 So we need a private var, which I'll call brain,
-所以创建一个 private 的 var，起名为 brain
+我们需要创建一个 private 的变量，命名为 brain
 
 624
 00:30:32,924 --> 00:30:36,625
@@ -3120,7 +3120,7 @@ which is gonna be a CalculatorBrain, okay?
 625
 00:30:36,627 --> 00:30:38,961
 And this is the var that we're, it's gonna create our,
-所以我们创建了一个
+所以我们创建一个
 
 626
 00:30:38,963 --> 00:30:40,195
@@ -3130,7 +3130,7 @@ CalculatorBrain 的实例
 627
 00:30:40,197 --> 00:30:43,365
 And we're gonna talk to it to do all the calculations, okay?
-然后可以通过它来实现所有的计算
+然后我们通过它来实现所有的计算
 
 628
 00:30:43,367 --> 00:30:46,501
@@ -3140,7 +3140,7 @@ So this is just that big green arrow I showed you on that,
 629
 00:30:46,503 --> 00:30:49,804
 those previous slides, where the controller talks through
-大的绿色我箭头
+大的绿色箭头
 
 630
 00:30:49,806 --> 00:30:54,375
@@ -3180,27 +3180,27 @@ I'm gonna create a CalculatorBrain here. And
 637
 00:31:06,220 --> 00:31:11,389
 to do that, I have to call one of its initializers. And every
-调用它的初始化函数之一
+并调用它的其中一个初始化函数
 
 638
 00:31:11,391 --> 00:31:15,360
 time you create a new class, you get one free initializer,
-每一个你新创建的类都会一个自带的初始化函数
+每一次你新创建的类都会有一个自带的初始化函数
 
 639
 00:31:15,362 --> 00:31:19,897
 which is an initializer that takes no arguments, okay,
-就是没有参数的那个
+这个函数是没有参数的
 
 640
 00:31:19,899 --> 00:31:21,532
 kinda the basic initializer. So
-最基本的初始化函数
+它就是最基本的初始化函数
 
 641
 00:31:21,534 --> 00:31:25,268
 I'm using that CalculatorBrain initializer, it came for free.
-我用那个自带的初始化函数
+我调用了那个自带的初始化函数
 
 642
 00:31:25,270 --> 00:31:27,937
@@ -3215,17 +3215,17 @@ So, that's perfectly fine, okay, so I've created it. Now,
 644
 00:31:33,111 --> 00:31:38,180
 notice that this right here, do we need this?
-我们需要右边的这个吗？
+我们需要这个吗？
 
 645
 00:31:38,182 --> 00:31:40,382
 No, because Swift can infer that
-不，因为 Swift 可以推倒出来
+不需要，因为 Swift 可以推断出来
 
 646
 00:31:40,384 --> 00:31:45,087
 brain is a CalculatorBrain from that = right there, okay?
-它的类型可以从右边被推倒出来
+从等号的右边可以推断出它的类型是 CalculatorBrain
 
 647
 00:31:45,089 --> 00:31:49,724
@@ -3235,7 +3235,7 @@ So we do not wanna put colon CalculatorBrain. All right, so
 648
 00:31:49,726 --> 00:31:53,227
 now that we have this brain, kay, and it's created here, we
-现在已经创建了 brain 
+现在已经在这里创建好了 brain 
 
 649
 00:31:53,229 --> 00:31:56,530
@@ -3265,7 +3265,7 @@ symbol as the operation, we know that. We also
 654
 00:32:08,243 --> 00:32:11,544
 probably know that after it's done performing the operation,
-当它执行完操作的时候
+当它执行完操作以后
 
 655
 00:32:11,546 --> 00:32:15,247
@@ -3275,12 +3275,12 @@ we probably wanna put in the display the result,
 656
 00:32:15,249 --> 00:32:19,818
 the brain's result, this thing right here. Right? And
-这里的它
+是 brain  计算的结果
 
 657
 00:32:19,820 --> 00:32:22,620
 also at the beginning of the perform operation,
-在 performOperation 之前
+在做运算之前
 
 658
 00:32:22,622 --> 00:32:24,789
@@ -3295,12 +3295,12 @@ we better set that number at the operand for
 660
 00:32:27,193 --> 00:32:30,561
 the calculator to work on it. If we go 235 square root,
-如果我们计算根号 235
+如果我们计算根号235
 
 661
 00:32:30,563 --> 00:32:34,464
 we got to put that 235 in as the operand for the brain.
-要把 235 设置为 brain 的 operand
+要把235设置为 brain 的 operand
 
 662
 00:32:34,466 --> 00:32:37,233
@@ -3330,7 +3330,7 @@ Okay. We can probably put this inside this if, because
 667
 00:32:52,916 --> 00:32:57,886
 no need to set it false if it's already true. Okay, so
-如果它是 已经是 false 了，就没有把它设置成 false 的必要了（这里 Paul 口误了）
+如果它已经是 false 了，就没有把它设置成 false 的必要了（这里 Paul 口误了）
 
 668
 00:32:57,888 --> 00:33:01,589
@@ -3340,12 +3340,12 @@ that's it! That's all we need to do to hook our model up
 669
 00:33:01,591 --> 00:33:04,759
 to our controller. Okay. And we've removed everything
-把实际计算的代码都已
+并且也把实际计算的代码
 
 670
 00:33:04,761 --> 00:33:07,027
 in our controller that has to do with actually calculating.
-移出了 controller
+都从 controller 里移除了
 
 671
 00:33:07,029 --> 00:33:12,833
@@ -3355,22 +3355,22 @@ We've basically given it all off to the model to do.
 672
 00:33:13,068 --> 00:33:14,367
 So now we have to implement this, okay?
-现在得实现这个
+现在得实现这个了
 
 673
 00:33:14,369 --> 00:33:16,168
 We've gotta implement this brain over here.
-实现 brain 的逻辑
+我们得实现 brain 的逻辑
 
 674
 00:33:16,170 --> 00:33:19,638
 I'm gonna make that be the main window here.
-让它占用整个窗口
+让它占满整个窗口
 
 675
 00:33:19,640 --> 00:33:20,172
 And how are we gonna do that?
-怎么实现呢？
+该怎么实现呢？
 
 676
 00:33:20,174 --> 00:33:24,743
@@ -3390,7 +3390,7 @@ which is gonna be called accumulator. It's gonna be
 679
 00:33:30,116 --> 00:33:34,318
 a Double and it's going to accumulate the results, okay.
-用它来存结果
+用它来保存结果
 
 680
 00:33:34,320 --> 00:33:37,521
@@ -3415,7 +3415,7 @@ this is our accumulator. Notice that I,
 684
 00:33:45,596 --> 00:33:47,696
 as soon as I put this in here I get this error.
-看这里，写完了以后，就出现了一个错误
+看这里，写完了以后就出现了一个错误
 
 685
 00:33:47,698 --> 00:33:51,233
@@ -3425,22 +3425,22 @@ Again, calculator brain has no initializers, that's because
 686
 00:33:51,235 --> 00:33:54,402
 I don't initialize this. So, I'm gonna say this equals 0.0.
-我还没有初始化这个，把它设置为 0.0
+因为我还没有初始化它。我会把它设置为 0.0
 
 687
 00:33:54,404 --> 00:33:59,874
 Once I do that I do not need this because 0.0,
-不过不需要这里的 Double
+这样做了就不再需要这里的 Double
 
 688
 00:33:59,876 --> 00:34:04,311
 Swift always infers that. Or any something dot something,
-因为 Swift 可以从 0.0 推倒出它是 Double 类型的
+因为 Swift 可以从0.0推断出它是 Double 类型的
 
 689
 00:34:04,313 --> 00:34:07,548
 it always infers it to be a Double, okay. So that makes
-它可以推倒出来
+它可以推断出来
 
 690
 00:34:07,550 --> 00:34:12,019
@@ -3450,7 +3450,7 @@ this be a Double. You see? If I made this no dots just zero,
 691
 00:34:12,021 --> 00:34:14,888
 then it's gonna infer this as an int, okay.
-如果这里没有 .，Swift 就会认为它是 int 类型的
+如果这里只是0，Swift 就会认为它是 int 类型
 
 692
 00:34:14,890 --> 00:34:19,092
@@ -3475,7 +3475,7 @@ same thing when someone says the operand, that kinda
 696
 00:34:28,435 --> 00:34:33,271
 resets my accumulator to be whatever that operand is.
-就会改变我 accumulator 的值
+就会改变 accumulator 的值
 
 697
 00:34:33,840 --> 00:34:37,241
@@ -3520,7 +3520,7 @@ much more powerful in Swift and
 705
 00:34:59,663 --> 00:35:02,764
 also much more important in Swift as you will see. Okay.
-你们也会看到，它在 Swift 中更重要
+你们也会看到它在 Swift 中更重要
 
 706
 00:35:02,766 --> 00:35:04,799
@@ -3545,17 +3545,17 @@ I wanna try. So, we have for example pi. And if pi happens,
 710
 00:35:15,544 --> 00:35:19,779
 I wanna set my accumulator equal to pi,
-把 accumulator 设置为 pi
+如果是 pi，就把 accumulator 设置为 pi
 
 711
 00:35:19,781 --> 00:35:24,017
 okay. If it was for example, square root,
-如果是 pi
+如果是 根号
 
 712
 00:35:24,019 --> 00:35:28,354
 let's go do that. My square root symbol back, here it is.
-把根号调出来
+我们先把根号调出来
 
 713
 00:35:28,356 --> 00:35:31,790
@@ -3565,7 +3565,7 @@ So if we get square root, then I'm just gonna say that my
 714
 00:35:31,792 --> 00:35:36,461
 accumulator equals the square root of the accumulator. Okay?
-accumulator 就等于 根号 accumulator
+accumulator 就等于根号 accumulator
 
 715
 00:35:36,463 --> 00:35:40,331
@@ -3575,7 +3575,7 @@ So, this is basically getting us back to exactly where we
 716
 00:35:40,333 --> 00:35:43,067
 were before but now we have a model.
-只不过我们是在 model 内做
+只不过现在我们是在 model 里做
 
 717
 00:35:43,069 --> 00:35:43,968
@@ -3590,32 +3590,32 @@ That's because one thing about switch, you must consider
 719
 00:35:47,173 --> 00:35:51,241
 every possible value of this thing you're switching on.
-你必须考虑你要 switch 东西的所有情形
+你必须考虑到 switch 的所有可能的情形
 
 720
 00:35:51,243 --> 00:35:55,011
 Now, this is a String, so it has infinite possibilities,
-它的类型是 String
+它的类型是 String，所以它有无限多种可能
 
 721
 00:35:55,013 --> 00:35:59,682
 okay? Now, we could spend the next few years saying case A,
-我们可以花几天的时间 switch 所有的条件
+我们可以花几天的时间 switch 所有的情形
 
 722
 00:35:59,684 --> 00:36:02,184
 no, we don't wanna do that. Instead, we're gonna put
-但我们不会这么做
+但我们不会那样做
 
 723
 00:36:02,186 --> 00:36:06,155
 default break, so default means, if you can't match any
-写上 default break 就可以了
+我们只需要写上 default break
 
 724
 00:36:06,157 --> 00:36:10,392
 of these other ones than just break out of this, okay? Now
-这句话的意思是，如果一个 case 都匹配不上，就跳出这个 switch
+它的意思是如果每一个 case 都匹配不上，就跳出这个 switch
 
 725
 00:36:10,394 --> 00:36:13,528
@@ -3625,27 +3625,27 @@ notice my indentations gotten a little wonky here, I'm gonna
 726
 00:36:13,530 --> 00:36:16,931
 teach you something fun. If you select a curly braced
-教你们一个小技巧吧
+教你们一个小技巧吧，选中
 
 727
 00:36:16,933 --> 00:36:20,968
 region including your whole file, and hit Ctrl+I.
-选中一段文件中的花括号部分
+文件中的花括号部分，按下 Ctrl+I
 
 728
 00:36:20,970 --> 00:36:23,637
 It'll reformat it, okay? Re-lay it out. And
-输入 Ctrl+I 快捷键，这部分的缩进就会回归正确的状态
+这部分的缩进就会变成正确的状态
 
 729
 00:36:23,639 --> 00:36:26,540
 I strongly recommend that when you turn your homework in,
-当你们在交作业之前，我强烈建议你们这么做
+我强烈建议你们在交作业之前这么做
 
 730
 00:36:26,542 --> 00:36:29,142
 you select all and do Ctrl+I. Okay?
-全选，然后 Ctrl+I
+选择代码，然后按下 Ctrl+I
 
 731
 00:36:29,144 --> 00:36:32,211
@@ -3725,7 +3725,7 @@ for us. So this is all we need to do right here, okay.
 746
 00:37:08,845 --> 00:37:10,812
 This is full implementation. We can go back and
-这是完整的实现了
+这就是完整的实现
 
 747
 00:37:10,814 --> 00:37:13,781
@@ -3735,12 +3735,12 @@ run our app and it's exactly the way it was before,
 748
 00:37:13,783 --> 00:37:17,985
 but now we're using a model. Okay. So
-但是现在，我们有了 model
+但是现在，我们使用了 model
 
 749
 00:37:17,987 --> 00:37:21,321
 here we go, let's try 4-5, that's working square root.
-试试 45，根号
+试试根号45
 
 750
 00:37:21,323 --> 00:37:24,090
@@ -3750,22 +3750,22 @@ That looks like it's working. We'll just be sure by picking
 751
 00:37:24,092 --> 00:37:26,626
 a number we know the square root of, pi seems to work,
-根号 9 的值是 3，也没问题
+根号9的值是3，也没问题
 
 752
 00:37:26,628 --> 00:37:28,728
 square root. Okay, so we're back to where we were,
-pi，根号 pi 都没问题，又回到了当时的状态
+pi，根号 pi 都没问题，又回到了之前的状态
 
 753
 00:37:28,730 --> 00:37:33,132
 that's nice. Now, they'll, thing about this now is I'm
-还不错
+很不错
 
 754
 00:37:33,134 --> 00:37:37,336
 about to go add a whole bunch more operations here. And
-不过还要添加好多其它的操作符在这里
+不过还要添加更多的操作符在这里
 
 755
 00:37:37,338 --> 00:37:42,273
@@ -3780,12 +3780,12 @@ do the math each one,
 757
 00:37:43,343 --> 00:37:45,176
 this is gonna be a lot of duplicated code
-这里重复的代码会比较多
+这将会有很多的重复代码
 
 758
 00:37:45,178 --> 00:37:47,978
 in here. Because every time I have a unary operation like
-当它是一元操作符的时候，类似于根号
+当它是一元操作符的时候，比如根号
 
 759
 00:37:47,980 --> 00:37:51,281
@@ -3805,7 +3805,7 @@ The only difference is these four characters. Square root,
 762
 00:37:56,788 --> 00:38:00,423
 or cosign or whatever. Same thing for these constants,
-sqrt 还是 cos。这里的常量也是类似的
+是 sqrt 还是 cos。这里的常量也是类似的
 
 763
 00:38:00,425 --> 00:38:02,558
@@ -3835,7 +3835,7 @@ factor this stuff out, so that all of these things,
 768
 00:38:12,735 --> 00:38:17,805
 like pi and square root and multiply are in a table, okay?
-pi，根号，乘号之类的符号都放进一个表中
+把如 pi，根号，乘号之类的符号都放进一个表中
 
 769
 00:38:17,807 --> 00:38:21,441
@@ -3845,17 +3845,17 @@ And I'm just going to have this only be doing the generic
 770
 00:38:21,443 --> 00:38:22,742
 calculations, generic constants,
-通用和常量
+通用的常量
 
 771
 00:38:22,744 --> 00:38:25,611
 generic numeral operations, generic binary operations.
-还有通用的二元操作
+还有通用的一元操作和二元操作
 
 772
 00:38:25,613 --> 00:38:28,447
 And it's gonna look in the table to find out what to do.
-它就会上表中查找，应该做些什么
+它会到表里查找，应该做什么操作
 
 773
 00:38:28,449 --> 00:38:30,115
@@ -3870,7 +3870,7 @@ more extensible, less code, etc? So
 775
 00:38:31,485 --> 00:38:35,053
 that's what were gonna do. So let's create that table, okay?
-先创建这张表
+所有让我们先创建这张表
 
 776
 00:38:35,055 --> 00:38:37,488
@@ -3919,7 +3919,7 @@ key 的类型是 String
 
 785
 00:39:02,379 --> 00:39:06,281
-That'll be the name of the constant, like the pie
+That'll be the name of the constant, like the pi
 key 是常量的名字，例如 pi
 
 786
@@ -3929,7 +3929,7 @@ value 的类型是 Double
 
 787
 00:39:09,352 --> 00:39:14,055
-So that'll be like M under bar pie or whatever. Okay? So,
+So that'll be like M under bar pi or whatever. Okay? So,
 它就是 pi 的值 M_PI 之类的东西
 
 788
@@ -3945,12 +3945,12 @@ it because remember I have to initialize all my vars.
 790
 00:39:19,028 --> 00:39:21,895
 You can initialize a Dictionary right on the fly
-你可以在创建一个 Dictionary 的时候就初始化它
+你可以在创建 Dictionary 的时候就初始化它
 
 791
 00:39:21,897 --> 00:39:25,898
 just by using the open square bracket. Notation and
-使用方括号
+只需要使用方括号
 
 792
 00:39:25,900 --> 00:39:26,732
@@ -3965,7 +3965,7 @@ example pi cuz key colon m under bar pi the value.
 794
 00:39:32,973 --> 00:39:36,174
 Okay so I'm basically filling up the Dictionary here.
-现在我是在填充这个字典
+现在我要继续填充这个字典
 
 795
 00:39:36,176 --> 00:39:39,210
@@ -3975,7 +3975,7 @@ Let's do another constant how about E that's M under bar e
 796
 00:39:39,212 --> 00:39:42,714
 everyone know what e is 2.71 or whatever it is. Okay?
-大家都知道 e 是 2.71
+大家都知道 e 是2.71
 
 797
 00:39:42,716 --> 00:39:45,983
@@ -4025,7 +4025,7 @@ you look it up with square brackets and the thing to look
 806
 00:40:11,274 --> 00:40:14,575
 up. Okay? And now, I could just say my accumulator equals
-然后把 constant 赋值给 constant
+然后把 constant 赋值给 accumulator
 
 807
 00:40:14,577 --> 00:40:19,380
@@ -4115,7 +4115,7 @@ So, we simply need to unwrap it. Now, this is dangerous,
 824
 00:41:04,088 --> 00:41:06,221
 because maybe somebody's using my API, and
-如果有人调用了我的 API
+因为如果有人调用了我的 API
 
 825
 00:41:06,223 --> 00:41:08,623
@@ -4125,7 +4125,7 @@ performOperation 的参数在这里没有的话
 826
 00:41:08,625 --> 00:41:11,359
 now I'm gonna crash. That's not very friendly. So,
-程序就会崩溃，这非常不友好
+程序就会崩溃，这很不友好
 
 827
 00:41:11,361 --> 00:41:16,764
@@ -4145,7 +4145,7 @@ understand. I'm not going to affect my accumulator.
 830
 00:41:21,970 --> 00:41:26,840
 Just leave it. Okay? All right, so let's run, make sure
-运行一个程序，确定还有效果
+让我们运行程序，看看是否还正常工作
 
 831
 00:41:26,842 --> 00:41:33,346
@@ -4165,12 +4165,12 @@ we only have constants.
 834
 00:41:36,317 --> 00:41:38,183
 But, we have these are still working, and
-这些还有效
+但是这些还有效
 
 835
 00:41:38,185 --> 00:41:41,219
 pi is still working. Okay. So that's good. So
-pi 也是，还不错
+pi 也可以正常工作，还不错
 
 836
 00:41:41,221 --> 00:41:43,755
@@ -4280,12 +4280,12 @@ inside this enum, I'm gonna have all the different kinds
 857
 00:42:47,447 --> 00:42:50,214
 of operations I know how to do. Now, you're probably used
-你们可能在其它语言中
+你们可能使用过 enum
 
 858
 00:42:50,216 --> 00:42:52,683
 to enum in other languages. What is enum in
-使用过 enum
+在其它语言中
 
 859
 00:42:52,685 --> 00:42:56,286
@@ -4329,13 +4329,13 @@ is that they're like classes in that they can have methods.
 
 867
 00:43:20,076 --> 00:43:22,610
-Okay? So, I can go down here and say funk,
-我可以在这里
+Okay? So, I can go down here and say func,
+我可以在这里定义函数
 
 868
 00:43:22,612 --> 00:43:25,679
 you know, something, take some arguments, return something.
-定义函数，设置参数或返回值
+设置参数或返回值
 
 869
 00:43:25,681 --> 00:43:29,916
@@ -4345,12 +4345,12 @@ I can do that down here. Okay? Enums are allowed to have
 870
 00:43:29,918 --> 00:43:34,454
 methods. Now, they can't have any vars. Okay? They can have
-它不能有 var，但是它可以有 computed var（可计算的变量）
+它不能有 var，但是它可以有
 
 871
 00:43:34,456 --> 00:43:37,290
 computed vars, but they can't have any storage vars because
-但是它不能存储变量
+computed var（计算属性），但是它不能存储变量
 
 872
 00:43:37,292 --> 00:43:39,125
@@ -4395,7 +4395,7 @@ until I show you struct, which is another pass by value
 880
 00:43:59,878 --> 00:44:03,513
 data structure, in a moment. Okay? So, here is operation,
-这是是 Operation 枚举
+这是 Operation 枚举
 
 881
 00:44:03,515 --> 00:44:07,150
@@ -4430,12 +4430,12 @@ cool. So, we can now change this Double to the type
 887
 00:44:31,841 --> 00:44:37,311
 operation. Okay? And errors go away. These are all operations
-没有错误了
+没有错误了。这就是 Operation
 
 888
 00:44:37,313 --> 00:44:40,848
 and it all works. Now, small problem here is that,
-有点小问题
+这有个小问题
 
 889
 00:44:40,850 --> 00:44:45,452
@@ -4445,7 +4445,7 @@ we've lost track of the actual constants and, functions, and
 890
 00:44:45,454 --> 00:44:49,322
 we've commented them out. They're not even involved
-我们把它注释起来了，它们没有参与其中
+我们把它注释掉了，它们没有参与其中
 
 891
 00:44:49,324 --> 00:44:51,691
@@ -4460,7 +4460,7 @@ It's a step on the way to solving the problem, but
 893
 00:44:53,795 --> 00:44:57,496
 it has not solved the problem. All right, the other thing is,
-问题还在
+问题还在，还没解决
 
 894
 00:44:57,498 --> 00:45:01,767
@@ -4475,12 +4475,12 @@ making the cumulative, this doesn't work,
 896
 00:45:02,836 --> 00:45:05,636
 this only works for constants, so we're not gonna do that.
-它只对 constant 有效，我们就不这么做了
+它只对 constant 有效，我们就不那么做了
 
 897
 00:45:05,638 --> 00:45:08,472
 So, how do we look things up now for operations?
-所以我们怎样查找 operatio 呢？
+所以我们怎样查找 operations 呢？
 
 898
 00:45:08,474 --> 00:45:11,241
@@ -4535,7 +4535,7 @@ You can nest these things.
 908
 00:45:35,198 --> 00:45:38,132
 You can even put classes inside classes if you want and
-你可以在一个类中内置另一个类
+如果你想你可以在一个类中内置另一个类
 
 909
 00:45:38,134 --> 00:45:40,000
@@ -4570,7 +4570,7 @@ And, I'll just break on all these for now. So,
 915
 00:45:54,715 --> 00:45:59,484
 it could be a constant. It could be a unary operation.
-它也可能是一元操作
+它可能是一个常量，也可能是一元操作
 
 916
 00:45:59,953 --> 00:46:05,356
@@ -4600,17 +4600,17 @@ four possible things that an operation could be. So,
 921
 00:46:17,769 --> 00:46:21,671
 I've got a case for all of them in my switch.
-我已经在 switch 中都处理了
+我已经在 switch 中全都处理了
 
 922
 00:46:21,673 --> 00:46:23,305
 Question? >> Two things.
-有问题吗？
+有问题吗？>> 两个问题
 
 923
 00:46:23,307 --> 00:46:26,141
 Why is operation, are we not referring to the same
-为什么是 operation
+为什么是 operation？
 
 924
 00:46:26,143 --> 00:46:28,543
@@ -4625,17 +4625,17 @@ Because it's not capitalized. >> Yeah,
 926
 00:46:32,315 --> 00:46:33,247
 this operation? >> Yeah.
-这个 operation?
+这个 operation 吗？
 
 927
 00:46:33,249 --> 00:46:34,014
 >> Not capitalized makes it
-因为它是一个局部变量，所以不需要大写
+没有大写是因为它是一个局部变量
 
 928
 00:46:34,016 --> 00:46:36,450
 a local variable, we're making it a local variable here yeah.
-它是个局部变量
+我们把它定义为了局部变量
 
 929
 00:46:36,452 --> 00:46:38,251
@@ -4650,12 +4650,12 @@ me to talk about how you capitalize okay?
 931
 00:46:41,056 --> 00:46:45,257
 All types you want to be capitalized, like Calculator,
-所有的类型都要大写
+所有的类型都要大写, Calculator
 
 932
 00:46:45,259 --> 00:46:47,459
 Brain, Dictionary, Operation, String, Double.
-Calculator, Brain, Dictionary, Operation, String, Double.
+Brain, Dictionary, Operation, String, Double.
 
 933
 00:46:47,461 --> 00:46:49,094
@@ -4670,12 +4670,12 @@ Operate, everything, okay, is capitalized.
 935
 00:46:51,665 --> 00:46:55,767
 All local variables and vars are lowercase first letter and
-局部变量第一个字母都是小写的
+局部变量和变量的第一个字母都是小写的
 
 936
 00:46:55,769 --> 00:47:00,104
 then capital letter for all the subsequent words in there.
-后面每一个开头的子单词开头都要大写
+后面每一个单词的开头都要大写
 
 937
 00:47:00,106 --> 00:47:01,672
@@ -4685,17 +4685,17 @@ So it's called Camel Case, you guys know of,
 938
 00:47:01,674 --> 00:47:05,909
 have heard of that before? So, that's how you want to do
-也许你们之前听说过
+你们之前听说过吗？
 
 939
 00:47:05,911 --> 00:47:06,943
 all your naming. If you don't do that,
-你们最好都这么命名
+你们最好都这么命名。但如果你不这么做
 
 940
 00:47:06,945 --> 00:47:09,479
 you're going to get in trouble with me. Okay? So, I know some
-但如果你不这么做，我可能就会找你麻烦了
+我可能就会找你的麻烦了
 
 941
 00:47:09,481 --> 00:47:11,947
@@ -4705,7 +4705,7 @@ people like to use lower case for class names, forget it.
 942
 00:47:11,949 --> 00:47:13,582
 You can't do it in Swift. Just don't do it, okay.
-你不能在 Swift 中这么做
+你不能在 Swift 中这么做。不要这么做了
 
 943
 00:47:13,584 --> 00:47:15,517
@@ -4715,12 +4715,12 @@ It'll be allowed, but you'll get in trouble, so
 944
 00:47:15,519 --> 00:47:17,519
 don't do it. Okay? Well,
-所以不要这么做
+所以不要这么做了。好吗？
 
 945
 00:47:17,521 --> 00:47:21,155
 you had a second question? >> Yeah.
-还有第二个问题？
+你还有第二个问题？
 
 946
 00:47:21,157 --> 00:47:21,722
@@ -4735,7 +4735,7 @@ constants? Are we referring to operation dot,
 948
 00:47:23,993 --> 00:47:26,960
 okay that's my confusion. >> So, why did I say dot
-这是我的问题
+这就是我的问题
 
 949
 00:47:26,962 --> 00:47:30,096
@@ -4770,7 +4770,7 @@ Is that because it's within the operation's Dictionary?
 955
 00:47:48,848 --> 00:47:51,615
 operation, you see, operation is not really,
-Operation 不......
+不......
 
 956
 00:47:51,617 --> 00:47:53,584
@@ -4780,32 +4780,32 @@ we're not inside the Dictionary here. We pulled it
 957
 00:47:53,586 --> 00:47:56,853
 already out of the Dictionary. >> So, how does it know,
-我们把它从字典中取了出来。
+我们把它从字典中取出来了。>>它怎么知道呢？
 
 958
 00:47:56,855 --> 00:47:59,222
 is it intelligent enough Oo distinguish even though you
-所以它智能到可以识别出它是 Operation 类型的
+它足够智能到可以识别出它是 Operation 类型的吗？
 
 959
 00:47:59,224 --> 00:48:00,590
-computed a lower pace operation,
-即使你给它取名为小写的 operation
+computed a lowercase operation,
+即使你给它命名为小写的 operation
 
 960
 00:48:00,592 --> 00:48:02,458
 that it's referring to the enum with
-它俩之间
+它和大写的 Operation 之间
 
 961
 00:48:02,460 --> 00:48:03,325
 the uppercase operation? >> Okay.
-还可以建立关联吗？
+也可以建立关联吗？
 
 962
 00:48:03,327 --> 00:48:06,828
 It knows that this lowercase operation is a capital
-Swift 知道这个小写的 operation 是 大写的 Operation 类型的
+Swift 知道这个小写的 operation 是大写的 Operation 类型的
 
 963
 00:48:06,830 --> 00:48:10,231
@@ -4815,7 +4815,7 @@ operation because I pulled it out of this Dictionary, and
 964
 00:48:10,233 --> 00:48:13,634
 it knows that that Dictionary has operations as its value.
-它知道这个字典是以 Operation 作为 value 的
+并且它知道这个字典是以 Operation 作为 value 的
 
 965
 00:48:13,636 --> 00:48:15,302
@@ -4825,17 +4825,17 @@ So, when I pulled out its value, it knew it.
 966
 00:48:15,304 --> 00:48:19,907
 Okay? There you go. All right. So this is all going good
-懂了吧？
+懂了吧？代码很好
 
 967
 00:48:19,909 --> 00:48:23,310
 except for, again, we don't have the pi and the e and
-代码很好，只还过我们还没有把
+只不过我们还没有把
 
 968
 00:48:23,312 --> 00:48:24,411
 the square root and the cosine in here.
-pi, e, 根号，cos 放进来
+pi，e，根号，cos 放进来
 
 969
 00:48:24,413 --> 00:48:26,979
@@ -4850,7 +4850,7 @@ the answer is, you actually already know it.
 971
 00:48:29,217 --> 00:48:34,186
 You've heard it before. Associated values. Okay?
-Associated values（关联值）
+你们之前就听过。使用 Associated values（关联值）
 
 972
 00:48:34,188 --> 00:48:37,322
@@ -4860,12 +4860,12 @@ Remember optional has that associated value. All
 973
 00:48:37,324 --> 00:48:41,226
 enums have associated value. In fact, optional is an enum.
-enum 也可以有，实际上 optional 就是个 enum
+enum 也可以有。实际上 optional 就是个 enum 类型
 
 974
 00:48:41,228 --> 00:48:45,930
 Okay? This is what optional looks like if you were to look
-Optional 长这个样子
+Optional 就长这个样子
 
 975
 00:48:45,932 --> 00:48:51,902
@@ -4905,7 +4905,7 @@ for example, a Double with constants. Okay?
 982
 00:49:12,523 --> 00:49:14,189
 Because constants need a Double, M under broad pi,
-因为 Constants 需要 Double
+因为 Constants 需要 Double 类型的 M_PI
 
 983
 00:49:14,191 --> 00:49:17,459
@@ -4915,12 +4915,12 @@ we need that thing. Okay? And so, we're doing the same thing
 984
 00:49:17,461 --> 00:49:20,828
 that optional does. Associating a value
-把 Constants 关联上一个值
+给 Constants 关联上一个值
 
 985
 00:49:20,830 --> 00:49:24,065
 with our constants. So, we have this constant Double,
-所以我们已经关联上了
+所以我们已经关联上了一个 Double
 
 986
 00:49:24,067 --> 00:49:27,067
@@ -4930,22 +4930,22 @@ then here, when we declare the constant we have to provide
 987
 00:49:27,069 --> 00:49:29,236
 the associated value which is m under bar pi.
-把这个值提供出来
+把这个值和 M_PI 关联起来
 
 988
 00:49:29,238 --> 00:49:32,872
 Okay? Now we can get rid of our comment there.
-现在可以把注释删去了
+现在可以把注释删掉了
 
 989
 00:49:32,874 --> 00:49:35,942
 Same thing here, we can take this M under bar E, and
-这也是一样
+这也一样，把 M_E 关联起来
 
 990
 00:49:35,944 --> 00:49:41,814
 associate it with this constant, oops. Okay,
-把 M_E 关联起来
+和这个 constant
 
 991
 00:49:41,816 --> 00:49:44,883
@@ -5000,346 +5000,432 @@ is, this is just a local variable, but you can call it
 1001
 00:50:12,710 --> 00:50:17,212
 anything you want. Okay? That will make this local variable
+你可以给它起任何名字，这会让这个局部变量
 
 1002
 00:50:17,214 --> 00:50:21,683
 glom onto this associated value. okay? And
+与这个关联值连接起来
 
 1003
 00:50:21,685 --> 00:50:26,388
 so, now we can say accumulator equals the associated constant
+所以现在我们可以说 accumulator 等于 associated constant
 
 1004
 00:50:26,390 --> 00:50:30,792
 value. Okay? So, that's why I said switch is really
+这就是为什么我说swift很强大
 
 1005
 00:50:30,794 --> 00:50:35,596
 powerful it does this kind of pattern matching to get these
+它能够处理这样一些模式匹配的工作
 
 1006
 00:50:35,598 --> 00:50:39,800
 associated values out, so you do that with switch. Okay.
+来取出关联的值，所以善加利用
 
 1007
 00:50:39,802 --> 00:50:42,469
 Now, associated constant value, it's kinda yucky.
+现在，这个名字有点冗长，我改成 value
 
 1008
 00:50:42,471 --> 00:50:44,838
 I'm just gonna call it value. Okay. I only called it that
+我改成value，只是为了展示
 
 1009
 00:50:44,840 --> 00:50:47,306
 long thing just to show you it can be called anything and
+它可以被取很多名字
 
 1010
 00:50:47,308 --> 00:50:50,142
 that it is the associated value, but you can probably
+但是的确是一个关联值，但是你可以叫它value
 
 1011
 00:50:50,144 --> 00:50:54,980
 call it value. Okay, you got that? All right. Let's run and
+知道了吗？运行一下
 
 1012
 00:50:54,982 --> 00:50:58,050
 see if this works. It's only going to work for constants,
+看是否工作，但它只对常数有用
 
 1013
 00:50:58,052 --> 00:51:00,819
 cuz that's the only one we're, we've done any associated
+因为我们目前只做了常数这个功能
 
 1014
 00:51:00,821 --> 00:51:03,488
 values for yet. But here we go, this is still working,
+看见了吗，它照常工作
 
 1015
 00:51:03,490 --> 00:51:07,692
 Pi works, okay, square root, not implemented yet.
+Pi起作用了，平方根，我们还没实现
 
 1016
 00:51:07,694 --> 00:51:11,929
 All right? So, let's do square root, okay? So square root,
+现在我们来做平方根
 
 1017
 00:51:11,931 --> 00:51:13,330
 what would be the associated
+那么平方根应该关联于
 
 1018
 00:51:13,332 --> 00:51:19,469
 value of a unary operation? Don't be shy. What?
+一个一元操作数？ 不要害羞，什么？
 
 1019
 00:51:21,840 --> 00:51:25,241
 A function yes. It's a function. Okay? So,
+一个函数，对，它是一个函数
 
 1020
 00:51:25,243 --> 00:51:29,144
 how do we make a function be associated value here? Well,
+那么我们如何让一个函数称为关联值呢？
 
 1021
 00:51:29,146 --> 00:51:30,912
 the lucky thing is that in Swift,
+在swift种，幸运的是
 
 1022
 00:51:30,914 --> 00:51:35,150
 functions are types just like any other type. Okay? There's
+函数类型如同其他类型一样
 
 1023
 00:51:35,152 --> 00:51:38,953
 no differences in Swift's mind between a function type and
+在 swift 脑袋里，函数类型和 Double 类型没有任何区别
 
 1024
 00:51:38,955 --> 00:51:42,223
 a Double. Exactly the same. It can be used in all the same
+完全一样，在任何场景下都能这样认为
 
 1025
 00:51:42,225 --> 00:51:45,526
 circumstances, arguments to functions, associated values,
+函数的参数，关联值
 
 1026
 00:51:45,528 --> 00:51:49,529
 local variables, anything can be of type, a function. And
+局部变量，一个函数，任何东西都有类型
 
 1027
 00:51:49,531 --> 00:51:51,898
 not only that, it's not a generic function,
+不止如此，它不是一个普通函数
 
 1028
 00:51:51,900 --> 00:51:54,967
 it's a function with certain arguments and return values.
+而是一个拥有特性参数类型和返回值类型的函数
 
 1029
 00:51:54,969 --> 00:51:56,268
 And how do you declare such a type?
+那么我们如何声明这种类型呢？
 
 1030
 00:51:56,270 --> 00:52:00,072
 How do you say that that's a type here? You just type it.
+你如何表示这种类型？ 你只需要打出来
 
 1031
 00:52:00,074 --> 00:52:04,009
 So, this is a function that takes a Double and
+那么这个函数有一个 Double 类型的输入
 
 1032
 00:52:04,011 --> 00:52:05,810
 returns a Double. Okay?
+和一个 Double 返回值
 
 1033
 00:52:05,812 --> 00:52:08,579
 That's the associated value of unary operation.
+这就是一元参数的关联值
 
 1034
 00:52:08,581 --> 00:52:12,516
 It's a function. So, here when we want to associate a value,
+它是个函数，这里我们想要一个关联值
 
 1035
 00:52:12,518 --> 00:52:16,487
 we have to put In here, just like we put a Double here for
+我把它放在这， 就像我放了一个 Double 在那一样
 
 1036
 00:52:16,489 --> 00:52:20,323
 this one. All right? Here we have to put a function that
+所以在这里我们放一个函数
 
 1037
 00:52:20,325 --> 00:52:24,561
 takes a Double and returns a Double like, I don't know,
+有一个 Double 输入， 返回一个 Double，我不知道
 
 1038
 00:52:24,563 --> 00:52:30,266
 square root. Okay? Or maybe,
+平方根，或者
 
 1039
 00:52:31,002 --> 00:52:37,506
 cosine. Okay? Everybody got that?
+cos ？大家都懂了吗？
 
 1040
 00:52:37,508 --> 00:52:38,774
 Now, same thing down here.
+现在同样的操作
 
 1041
 00:52:38,776 --> 00:52:41,176
 We got to grab that associated value.
+我们要取出关联值
 
 1042
 00:52:41,178 --> 00:52:45,446
 So, here I'm going to say let and again I can say associated
+在这我再 let 一个 asscociatedfuntisn
 
 1043
 00:52:45,448 --> 00:52:50,017
 function, but I'm just going to call this function. Okay?
+但我只打算叫它function
 
 1044
 00:52:50,019 --> 00:52:54,321
 Now I have this is a local variable of type function that
+现在我有了这个局部变量
 
 1045
 00:52:54,323 --> 00:52:57,524
 takes a Double and returns a Double. That's its type. Okay?
+它被输入一个 Double 然后返回一个Double，这就是它的类型
 
 1046
 00:52:57,526 --> 00:52:59,225
 That's the type of this function. In fact, watch,
+这就是这个函数的类型，事实上
 
 1047
 00:52:59,227 --> 00:53:04,964
 I'll click on it. Look at it's type. It's a function that
+看，我点击一下，看这个类型，就是
 
 1048
 00:53:04,966 --> 00:53:11,103
 takes a Double and returns a Double.
+输入一个 Double 返回一个 Double 的函数类型
 
 1049
 00:53:11,105 --> 00:53:15,207
 How do I use a variable like that? Accumulator.
+我怎么使用这个变量呢？  Accumulator
 
 1050
 00:53:15,209 --> 00:53:17,242
 Oops, not accessor. Accumulator. Okay?
+搞错了，不是 accessor，是 Accumulator
 
 1051
 00:53:17,244 --> 00:53:21,780
 Now, again this is just a local variable.
+它只是一个局部变量
 
 1052
 00:53:21,782 --> 00:53:24,515
 I could call this foo and then I would put foo here. Okay?
+我可以叫它foo，然后我把foo放在这
 
 1053
 00:53:24,517 --> 00:53:26,717
 Its just a local variable. That's all it is. And
+它就只是一个局部变量
 
 1054
 00:53:26,719 --> 00:53:29,286
 it happens to be, its type is a function that takes
+它也只能是一个局部变量， 这个变量的类型
 
 1055
 00:53:29,288 --> 00:53:32,356
 a Double, returns a Double. All right. Everybody cool with
+就是 (Double)->Double，大家都懂了吗
 
 1056
 00:53:32,358 --> 00:53:36,760
 that? All right, let's run again, see if this is working.
+现在我们再运行一下，看看能否工作
 
 1057
 00:53:39,431 --> 00:53:44,433
 All right so 81 square root, excellent. Okay?
+81的平方根，太好了
 
 1058
 00:53:44,435 --> 00:53:47,670
 Executing this associated value, it looked up that
+执行了这个关联值
 
 1059
 00:53:47,672 --> 00:53:52,240
 square root, found that it was an Unary Operation with this
+它查询了平方根，发现平方根是对关联值的一元操作
 
 1060
 00:53:52,242 --> 00:53:55,710
 associated value, went down here and performed operation.
+走下来，执行这个操作
 
 1061
 00:53:55,712 --> 00:53:58,346
 Found it here, grabbed that associated value,
+看这里，提取了关联值 
 
 1062
 00:53:58,348 --> 00:54:02,950
 and then I used it to update my accumulator.
+接着我用它更新了我的 accumulator
 
 1063
 00:54:02,952 --> 00:54:03,784
 Question? >> So, so
+什么问题？
 
 1064
 00:54:03,786 --> 00:54:07,888
 you just specified the types and I'm surprised that you're
+你只是说明了类型，但我惊讶的是
 
 1065
 00:54:07,890 --> 00:54:11,991
 in, operation does not require [INAUDIBLE] because your
+operation不需要 ［听不见］
 
 1066
 00:54:11,993 --> 00:54:15,928
 Dictionary could potentially just pull anything,
+因为字典可以提取出任意类型
 
 1067
 00:54:15,930 --> 00:54:18,197
 any kind of- >> [COUGH]
+任意值吗
 
 1068
 00:54:18,199 --> 00:54:18,564
 >> We know that Dictionary can
+我们知道字典里只有一种值
 
 1069
 00:54:18,566 --> 00:54:21,400
 only have an operation in it, right. You can only have one
+那就是 operation，你只能有一种类型
 
 1070
 00:54:21,402 --> 00:54:25,203
 of these and this only has four possible cases.
+但这种类型有4种可能的情况
 
 1071
 00:54:25,205 --> 00:54:27,939
 Even though any given case might have any associated
+就算在任何情形下，可能有任意的关联值
 
 1072
 00:54:27,941 --> 00:54:30,841
 value, it's still the actual case of that operation.
+但它也必定属于这四种基本操作之一
 
 1073
 00:54:30,843 --> 00:54:32,009
 There's only these four.
+这就四种
 
 1074
 00:54:32,011 --> 00:54:33,443
 So down here, when I switch on it,
+所以看下来，我用下 switch
 
 1075
 00:54:33,445 --> 00:54:38,281
 I only have to cover those four cases. No more. Okay?
+我只需要搞定这四种情况
 
 1076
 00:54:38,283 --> 00:54:40,950
 All right, what about binary operation?
+那么二元操作呢？
 
 1077
 00:54:40,952 --> 00:54:45,121
 Okay, well, binary operation, a little more complicated and
+二元操作，更加复杂一点
 
 1078
 00:54:45,123 --> 00:54:48,023
 why is it more complicated? Because if you think about
+为什么更复杂？ 因为你想想
 
 1079
 00:54:48,025 --> 00:54:51,893
 the way a binary operation works like multiply, 3 times
+比如乘法的操作，3*5
 
 1080
 00:54:51,895 --> 00:54:56,331
 5 equals. Okay, when I press times I don't have enough
+等于，okay，当我按下乘号的时候，我没有足够的信息
 
 1081
 00:54:56,333 --> 00:54:59,634
 information to update the accumulator yet. I need the 3
+来更新我的 accumulator，我需要那个3
 
 1082
 00:54:59,636 --> 00:55:02,436
 and then the equals, it's only when the equals is hit that I
+然后那个等号，只有当等号被按下
 
 1083
 00:55:02,438 --> 00:55:05,072
 have enough information to actually do it. So,
+我才有足够的信息来进行运算
 
 1084
 00:55:05,074 --> 00:55:06,106
 in binary operation here,
+那么对二元操作来说
 
 1085
 00:55:06,108 --> 00:55:11,044
 I'm still going to grab that binary function out of there.
+我还是需要取出二元函数
 
 1086
 00:55:11,846 --> 00:55:12,011
 I can't actually perform that function like I can here. So
+我不能像以前那样去实现
 
 1087
 00:55:12,013 --> 00:55:14,346
@@ -5348,190 +5434,237 @@ Okay? But,
 1088
 00:55:14,348 --> 00:55:18,617
 I'm going to have to salt away that function and the operands
+但我仍需要记录下函数和操作数
 
 1089
 00:55:18,619 --> 00:55:22,053
 so far and wait til equals happens then I can do it.
+目前为止，只有按下等号键我们才能开始运算
 
 1090
 00:55:22,055 --> 00:55:24,522
 Okay? But, I still need, just like unary operation,
+但我依然需要，像一元操作一样
 
 1091
 00:55:24,524 --> 00:55:27,491
 I need to have an associated value with a binary operation.
+我需要二元操作的关联值
 
 1092
 00:55:27,493 --> 00:55:32,896
 What do you think that looks like? Another function,
+你觉得应该看起来像什么？其他函数形式？
 
 1093
 00:55:32,898 --> 00:55:38,435
 right, that takes two Doubles and returns a Double. Okay?
+对了，接收2个 Double 返回一个 Double
 
 1094
 00:55:38,437 --> 00:55:39,235
 Like multiply.
+就像乘法一样
 
 1095
 00:55:39,237 --> 00:55:42,972
 So, that's just a different kind of function. Okay?
+不同地方是函数的类型不同
 
 1096
 00:55:42,974 --> 00:55:45,908
 And so now I can go up here and add multiply, so
+所以我现在上来添加乘法
 
 1097
 00:55:45,910 --> 00:55:50,412
 let's go ahead and get the, a, the mathematical symbol for
+让我们继续，从这个 emoji and symbols 中
 
 1098
 00:55:50,414 --> 00:55:52,948
 multiply out of my emoji and symbols.
+找出我们的乘号
 
 1099
 00:55:52,950 --> 00:55:56,551
 Here it is right here. Multiply, okay? And
+就在这，乘号
 
 1100
 00:55:56,553 --> 00:56:00,755
 that is an operation tha's BinaryOperation.
+这是一个二元操作
 
 1101
 00:56:00,757 --> 00:56:03,924
 And look it wants a function that takes two Doubles and
+它需要一个函数，两个 Double 输入
 
 1102
 00:56:03,926 --> 00:56:07,261
 returns a Double. So I'm gonna put a function there called
+返回一个 Double，所以我在这放一个函数
 
 1103
 00:56:07,263 --> 00:56:10,864
 multiply, which doesn't exist in Swift, so I'm gonna have to
+取名 multiply，swift没有自带，所以我打算写在这
 
 1104
 00:56:10,866 --> 00:56:14,901
 go write that. By the way, we have another thing here
+顺便提一下，这里还有个其他东西
 
 1105
 00:56:14,903 --> 00:56:19,105
 which is equals, which is Operation.Equals, okay?
+叫做等式，它也是一种操作
 
 1106
 00:56:19,107 --> 00:56:22,074
 So i's a kind of a special operation there,
+但是它有点特殊
 
 1107
 00:56:22,076 --> 00:56:25,444
 okay? So, it's complaining here because multiply doesn't
+这里报错是因为 mutiply 并不存在
 
 1108
 00:56:25,446 --> 00:56:28,780
 exist, all right? So, I'm going to write multiply.
+在这，我就写下 multiply 了
 
 1109
 00:56:28,782 --> 00:56:31,016
 Here it is, I'm gonna make it a global function even,
+这里，我打算把它写成全局函数
 
 1110
 00:56:31,018 --> 00:56:32,984
 just like square root. Func multiply,
+就像平方根函数一样，func multiply
 
 1111
 00:56:32,986 --> 00:56:35,753
 okay, takes one argument that is a Double.
+接收一个 Double 参数
 
 1112
 00:56:35,755 --> 00:56:37,721
 Takes another argument tha's a Double.
+再接受另一个 Double 参数
 
 1113
 00:56:37,723 --> 00:56:42,459
 Returns a Double, and it just returns op1* op2,
+返回一个 Double，返回的事 op1*op2
 
 1114
 00:56:42,461 --> 00:56:45,729
 okay? So I've created this new function, multiply,
+所以我写了这个新函数，mutiply
 
 1115
 00:56:45,731 --> 00:56:50,633
 here it is, and I can now use it right here. Sound good,
+就在这里，放在这我就可以用，很不错
 
 1116
 00:56:50,635 --> 00:56:55,371
 you understand that? Question? >> Why is that
+你明白了吗？ 什么问题？
 
 1117
 00:56:55,373 --> 00:56:56,972
 outside. >> Yeah, so
+为什么写在外面？
 
 1118
 00:56:56,974 --> 00:56:57,539
 why did I put this outside?
+为什么我写在外面？
 
 1119
 00:56:57,541 --> 00:57:00,241
 Because I wanted it be a function, a global function.
+因为我想要一个函数，全局函数
 
 1120
 00:57:00,243 --> 00:57:04,345
 Not a method in this class, okay? So I just wanted its
+不是类中的一个方法，我希望它的作用范围
 
 1121
 00:57:04,347 --> 00:57:07,048
 scope to be wider. >> So it's more of a style?
+更大一点，那么这是一个编程风格问题？
 
 1122
 00:57:07,050 --> 00:57:07,848
 >> Yeah, it's kind of a style.
+对，是一种风格
 
 1123
 00:57:07,850 --> 00:57:09,850
 A little more of a style thing. All right,
+更多是一种编程风格的事儿
 
 1124
 00:57:09,852 --> 00:57:14,187
 so so now we have this binary operation here,
+那么现在我们有二元操作了
 
 1125
 00:57:14,189 --> 00:57:18,057
 we have to salt away the binary function like times,
+二元函数需要等待才能执行，比如乘法
 
 1126
 00:57:18,059 --> 00:57:22,561
 and the accumulator so far, the 5, in 5 times 3 equals,
+现在 accumulator 是5，然后把5乘上3
 
 1127
 00:57:22,563 --> 00:57:26,965
 the 5 and the times we have to wait, salt them away. So
+在“5”和乘号的时候我们必须等待，把它们存起来
 
 1128
 00:57:26,967 --> 00:57:29,768
 I'm gonna salt them away in a data structure, and I'm,
+我打算用一个数据结构来存储
 
 1129
 00:57:29,770 --> 00:57:32,837
 gives me a chance to teach you another data structure.
+我将教你们另一种数据结构
 
 1130
 00:57:32,839 --> 00:57:33,237
 You know class,
+你们知道类
 
 1131
 00:57:33,239 --> 00:57:37,041
 you know enum, here's another one called struct. Okay?
+知道枚举，还有一种叫做结构体
 
 1132
 00:57:37,043 --> 00:57:39,309
 Now you know struct from other languages, of course.
+你当然知道其它语言中的结构体
 
 1133
 00:57:39,311 --> 00:57:44,014
 I'm gonna call this struct PendingBinaryOperationInfo,
+我打算把这个结构体叫做 PendingBinaryOperationInfo
 
 1134
 00:57:44,016 --> 00:57:47,150
 okay? And it's just gonna contain these two things I
+他只包含我想要的2个东西
 
 1135
 00:57:47,152 --> 00:57:51,187
@@ -5540,1691 +5673,2109 @@ want. One of them is the binary function that I'm going
 1136
 00:57:51,189 --> 00:57:55,124
 to do. What's the type of this? Something that
+它是什么类型？
 
 1137
 00:57:55,126 --> 00:57:58,794
 takes two Doubles and returns a Double, that's it's type.
+接受2个 Double 返回一个 Double，这就是类型
 
 1138
 00:57:58,796 --> 00:58:00,095
 See, I'm just declaring, that is a type,
+看，我正在声明它，这就是类型
 
 1139
 00:58:00,097 --> 00:58:03,498
 it's a type like any other type, like int, okay?
+这种类型和其他类型，比如int,没有区别
 
 1140
 00:58:03,500 --> 00:58:06,000
 We also need to keep track of the firstOperand for
+对这个二元操作来说
 
 1141
 00:58:06,002 --> 00:58:09,403
 this binary function, which is gonna be the accumulator so
+我们需要记下第一个操作数，把它赋给 accumulator
 
 1142
 00:58:09,405 --> 00:58:12,106
 far. And that's gonna be of type Double, okay?
+它是 Double 类型的
 
 1143
 00:58:12,108 --> 00:58:16,510
 Now, what is a struct? Okay, we know class, we know enum,
+现在，什么是结构体？我们知道类，枚举
 
 1144
 00:58:16,512 --> 00:58:20,113
 what's struct? Okay, struct is very much like class.
+结构体呢？ 结构体非常像类
 
 1145
 00:58:20,115 --> 00:58:24,050
 Almost identical, okay? It can have vars, stored vars, and
+几乎是一样的，它能有变量，存储变量
 
 1146
 00:58:24,052 --> 00:58:28,888
 computed vars, no inheritance, okay? But the big difference
+计算变量，但没有继承，但是
 
 1147
 00:58:28,890 --> 00:58:33,625
 between struct and class, is that structs, like enums,
+结构体和类最大的区别是，结构体和枚举一样
 
 1148
 00:58:33,627 --> 00:58:37,729
 are passed by value, whereas classes are passed by
+是按值传递的，类是按引用传递的
 
 1149
 00:58:37,731 --> 00:58:41,333
 reference, okay? What does that mean? All right, so
+这是什么意思？
 
 1150
 00:58:41,335 --> 00:58:45,003
 passing something by reference means that that thing lives in
+按引用传递就是它存储在堆里
 
 1151
 00:58:45,005 --> 00:58:47,972
 the heap, okay, lives in memory somewhere, and
+内存中的某个地方
 
 1152
 00:58:47,974 --> 00:58:49,707
 when you pass it around to methods or
+当你把它传递给某个方法
 
 1153
 00:58:49,709 --> 00:58:52,743
 something like that, you're really passing a pointer
+或其他什么的，你实际上传递的是它的指针
 
 1154
 00:58:52,745 --> 00:58:55,345
 to it. And so, when you give it to someone else, they have
+你把指针传递了给去
 
 1155
 00:58:55,347 --> 00:58:58,147
 the same one you have, because you both just have a pointer
+他们和你有同一个类，因为你们拥有的是同一个指针
 
 1156
 00:58:58,149 --> 00:58:59,849
 to the same thing that lives in the heap.
+都指向堆里存储的这个东西
 
 1157
 00:58:59,851 --> 00:59:02,384
 That's passing by reference, okay? Hopefully you know that
+这就是按引用传递，希望你有了解过这些计算机知识
 
 1158
 00:59:02,386 --> 00:59:04,853
 much of computer science, that that's pass by reference,
+这就是按引用传递
 
 1159
 00:59:04,855 --> 00:59:06,755
 okay, and that's what it means in this scenario. So
+这就是一种按引用传递的场景
 
 1160
 00:59:06,757 --> 00:59:08,322
 if I had a class like calculator brain,
+如果我有一个类，像 calculator brian
 
 1161
 00:59:08,324 --> 00:59:10,858
 and I pass that brain around, I'm talking about the same
+我到处传递它，那么我一直说的是同一个
 
 1162
 00:59:10,860 --> 00:59:14,028
 calculator brain all the time. Now I can instantiate another
+calculator brain，现在我可以实例化另一个
 
 1163
 00:59:14,030 --> 00:59:14,861
 one in the heap and have a different one,
+存储在堆中的类
 
 1164
 00:59:14,863 --> 00:59:18,665
 but, but I'm pointing, when I create one I'm pointing to it,
+但当我实例化时，指针指向了它
 
 1165
 00:59:18,667 --> 00:59:21,834
-and I'm passing the pointer to it around. Path by
+and I'm passing the pointer to it around. Pass by
+传递时也传递的指针
 
 1166
 00:59:21,836 --> 00:59:26,038
 value means that when you pass it, it copies it, okay?
+按值传递的意思就是，当你传递时，它会进行拷贝
 
 1167
 00:59:26,040 --> 00:59:29,074
 Some would think of it as it's being passed on this stack,
+有些人会认为它在栈中被传递
 
 1168
 00:59:29,076 --> 00:59:30,208
 the call stack of the function.
+执行函数时会调用栈
 
 1169
 00:59:30,210 --> 00:59:32,577
 But that's not necessarily how Swift implements it.
+但这不是swift的实现方式
 
 1170
 00:59:32,579 --> 00:59:35,413
 But the semantics of it, are that it is copied.
+从语义上来说，是的它被拷贝了
 
 1171
 00:59:35,415 --> 00:59:38,816
 So if you have a, let's say an array, which is a struct,
+那么如果你有一个，比如说数组，它是一个结构体
 
 1172
 00:59:38,818 --> 00:59:42,453
 okay? A Double is a struct, it turns out. An int is a struct.
+Double 是一个结构体，实际上 Int 也是一个结构体
 
 1173
 00:59:42,455 --> 00:59:45,188
 A String is a struct. These are all structs, okay?
+String 也是结构体，它们全是结构体
 
 1174
 00:59:45,190 --> 00:59:48,525
 And so if I passed an array to some other method, and
+如果我把一个数组传递给一个方法
 
 1175
 00:59:48,527 --> 00:59:49,992
 then I added something to that array,
+接着我在数组上添加些什么
 
 1176
 00:59:49,994 --> 00:59:53,262
 it would not be added back in the caller's array. The caller
+它不会添加到原先的数组里
 
 1177
 00:59:53,264 --> 00:59:56,131
 would have that array without that thing added, okay,
+原先的数组不会被添加任何东西
 
 1178
 00:59:56,133 --> 00:59:59,368
 cuz it would get a copy of it. Now you would think, whoa,
+因为方法得到的是一个拷贝，现在回也许会想
 
 1179
 00:59:59,370 --> 01:00:00,769
 this is gonna be really low performance,
+哇，这样做真没效率
 
 1180
 01:00:00,771 --> 01:00:03,371
 because what if I had an array of 10,000 items and
+因为，如果我有一个10,000长的数组
 
 1181
 01:00:03,373 --> 01:00:06,474
 I passed it, it's gonna copy 10,000 things. My God,
+然后我传递它了，它岂不是要拷贝10,000个元素，我的天哪
 
 1182
 01:00:06,476 --> 01:00:09,877
 my code is just gonna grind to a halt. No, Swift is really
+我的代码会相当慢了，实际上
 
 1183
 01:00:09,879 --> 01:00:12,646
 smart about when you pass a bi-valued struct,
+当你按值传递的时候，swift相当聪明
 
 1184
 01:00:12,648 --> 01:00:15,915
 it doesn't actually make a copy of it until you try and
+它不会真的进行拷贝，直到你真的试图使用它为止
 
 1185
 01:00:15,917 --> 01:00:19,452
 touch it, okay? If you try and mutate it, then it'll make
+如果你试图更改，那么它会进行必要的拷贝
 
 1186
 01:00:19,454 --> 01:00:22,455
 a copy as necessary, maybe not even a full copy, but
+甚至不会拷贝全部元素
 
 1187
 01:00:22,457 --> 01:00:26,225
 it'll mutate it. So if you're passing something and
+接着它会被改变，所以如果你传递了某些东西但又不使用
 
 1188
 01:00:26,227 --> 01:00:29,027
 you don't touch it, then you are gonna be sharing it, okay?
+那么它不会被拷贝的
 
 1189
 01:00:29,029 --> 01:00:32,464
 But, all of that is behind the scenes performance
+不过，你们的确不知道
 
 1190
 01:00:32,466 --> 01:00:34,232
 enhancement, you don't know anything about it.
+很多场景背后的性能优化
 
 1191
 01:00:34,234 --> 01:00:37,301
 From your point of view it copies it. Structs always get
+你们会认为他会拷贝，结构体总是被拷贝
 
 1192
 01:00:37,303 --> 01:00:40,871
 copied, okay? Understand the difference there?
+知道其中区别了吗
 
 1193
 01:00:40,873 --> 01:00:43,173
 A very important difference between structs and classes.
+结构体和类的这个差别相当重要
 
 1194
 01:00:43,175 --> 01:00:45,141
 And enums are like structs. All right, so
+枚举于结构体相似
 
 1195
 01:00:45,143 --> 01:00:49,178
 I've got this right here. Now, notice that I didn't set these
+现在我们看看她，发现，我没有初始化
 
 1196
 01:00:49,180 --> 01:00:52,348
 equal to anything, but I didn't get that warning,
+但也没给我任何警告
 
 1197
 01:00:52,350 --> 01:00:57,553
 no initializers. Now usually if I put a var in a class,
+没有 initializer，通常在类里如果我的一个 var 
 
 1198
 01:00:57,555 --> 01:00:58,587
 if I don't put initial, then it says,
+不进行初始化，那么会报错说
 
 1199
 01:00:58,589 --> 01:01:01,423
 no initializers, right? So, why is it not saying here?
+没有 initializer，那么为什么这里没报错？
 
 1200
 01:01:01,425 --> 01:01:05,560
 That's because for structs, unlike classes, classes we got
+这也是结构体不同于类的一个地方，类里我们有一个
 
 1201
 01:01:05,562 --> 01:01:09,230
 a free initializer. What were the arguments to it? Nothing,
+默认 initializer，它有什么参数呢？没有参数
 
 1202
 01:01:09,232 --> 01:01:11,865
 right? Like calculator brain, parenthesis, no arguments. So,
+如同 calculation brian，括号，没有参数
 
 1203
 01:01:11,867 --> 01:01:13,433
 that's the free initializer you get for classes.
+这就是类里默认的一个 initializer
 
 1204
 01:01:13,435 --> 01:01:16,302
 For struct, the free initializer you get,
+在结构体中，你的 initializer
 
 1205
 01:01:16,304 --> 01:01:20,940
 is an initializer that, whose arguments are all of its vars,
+的参数是这个结构体里所有的变量
 
 1206
 01:01:20,942 --> 01:01:24,176
 every one of its vars, okay? So let's go ahead and
+每一个变量，现在我们继续
 
 1207
 01:01:24,178 --> 01:01:26,245
 call that, because here in BinaryOperation,
-
+调用他，因为这里是一个二元操作
 1208
 01:01:26,247 --> 01:01:29,348
 I need to create one. So I'm gonna create a private var
+我需要新建一个，所以我新建一个私有变量
 
 1209
 01:01:29,350 --> 01:01:32,951
 here. I'm gonna call it pending. It's gonna be of type
+我打算叫它 pending，它的类型是
 
 1210
 01:01:32,953 --> 01:01:38,756
 PendingBinaryOperationInfo, and it's gonna be an optional.
+PendingBinaryOperationInfo，并且是一个可选类型
 
 1211
 01:01:38,758 --> 01:01:40,691
 So here I am creating my first optional.
+那么我建立了第一个可选类型
 
 1212
 01:01:40,693 --> 01:01:45,462
 It's an optional struct, okay? Why am I making this optional?
+是一个可选结构体，为什么我要让他是可选类型？
 
 1213
 01:01:45,597 --> 01:01:47,997
 Because this PendingBinaryOperationInfo is
+因为这个 PendingBinaryOperationInfo 只在我执行二元操作
 
 1214
 01:01:47,999 --> 01:01:51,234
 only there if I have a pending binary operation.
+的时候才有值
 
 1215
 01:01:51,236 --> 01:01:53,502
 If I haven't typed times or divide or something,
+如果我没有输入乘号或者除号什么的
 
 1216
 01:01:53,504 --> 01:01:56,739
 I don't have one of these, so I want this to be nil, okay?
+我没有这些东西我的话，我希望它是 nil
 
 1217
 01:01:56,741 --> 01:02:00,375
 I want this pending var that's holding this pending stuff,
+我希望这个变量在这个时刻 
 
 1218
 01:02:00,377 --> 01:02:02,677
 to be nil at that point. And then when I have one,
+是 nil 的，来表示一种没有输入的状态
 
 1219
 01:02:02,679 --> 01:02:04,612
 I'll set it to something, okay? And
+当我有了输入后，我希望它被设置成某些值
 
 1220
 01:02:04,614 --> 01:02:06,714
 that's exactly what I'm gonna do here in BinaryOperation,
+这就是接下来我要做的事
 
 1221
 01:02:06,716 --> 01:02:11,518
 I'm gonna say, pending. That's this thing right here, okay,
+我叫它 pending，就是这个东西
 
 1222
 01:02:11,520 --> 01:02:13,520
 = PendingBinaryOperationInfo.
+等于 PendingBinaryOperationInfo
 
 1223
 01:02:13,522 --> 01:02:19,592
 And when I open parentheses, look. I got a constructor for
+当我输入括号，看，我有了构造函数
 
 1224
 01:02:19,594 --> 01:02:23,629
 this PendingBinaryOperation that has these two things
+这里有两个参数
 
 1225
 01:02:23,631 --> 01:02:26,432
 as its two arguments. See, binaryFunction, and
+看， binaryFunction
 
 1226
 01:02:26,434 --> 01:02:30,736
 firstOperand. So now I can apply these values, this is
+和 firsyOperand，现在我传入 function
 
 1227
 01:02:30,738 --> 01:02:36,108
 function, and the firstOperand is the accumulator. Okay, so
+给 firstOperand 传入 accumulator 
 
 1228
 01:02:36,110 --> 01:02:40,478
 now I've created one of these pending hoo-has right here,
+所以我建立起了这样的功能
 
 1229
 01:02:40,480 --> 01:02:43,014
 and that's all I've done. I pressed time, but
+我就做了这些，我按下乘号
 
 1230
 01:02:43,016 --> 01:02:46,183
 I'm doing 5 times 3 equals, I press the times, all I did was
+我计算5*3，等号，我按下乘号，我所做的
 
 1231
 01:02:46,185 --> 01:02:49,086
 create one of these structs, and put the times and
+就是建立了这样一个结构体，按下乘号
 
 1232
 01:02:49,088 --> 01:02:52,889
 the 5 in there. Now in Equals, right here,
+再按下5，现在看这里的 Equals
 
 1233
 01:02:52,891 --> 01:02:56,926
 I'm gonna say if pending != nil. So
+我想说，如果 pending 不为 nil
 
 1234
 01:02:56,928 --> 01:03:00,963
 if I have a pending operation, then I'm going to evaluate it.
+那么我就在做 pending 操作，接着我再计算
 
 1235
 01:03:00,965 --> 01:03:04,000
 So 5 times 3 equals works, but if I just say 5 equals, I
+所以5*3起作用，但如果我按下5和等号
 
 1236
 01:03:04,002 --> 01:03:07,903
 don't have any pending times, so I'm just gonna ignore this.
+我没有输出乘号，那么我就选择忽略它
 
 1237
 01:03:07,905 --> 01:03:10,172
 So I'm only gonna do this if I have a pending one, and
+所以如果我在 pending 的话
 
 1238
 01:03:10,174 --> 01:03:14,242
 what am I gonna do? Well, I'm gonna set my accumulator =,
+我会怎么做呢？我会把 accumulator设置成
 
 1239
 01:03:14,244 --> 01:03:18,813
 evaluating that pending function, which is pending!,
+pending 函数的结果，就是给 pending 拆包
 
 1240
 01:03:18,815 --> 01:03:22,283
 because it's an optional, .binaryFunction.
+因为它是可选类型，.binaryFunction
 
 1241
 01:03:22,285 --> 01:03:27,921
 Called with the arguments of the pending!.firstOperand, and
+用 pending!.firstOperand 和
 
 1242
 01:03:27,923 --> 01:03:33,093
 my current accumulator. Okay,
+和当前 accumulator 作为参数调用
 
 1243
 01:03:33,095 --> 01:03:35,228
 and now pending is nil, because I no longer,
-
+现在 pending 是nil，因为
 1244
 01:03:35,230 --> 01:03:36,796
 I just handled that pending thing, so
+我不再需要处理接下来的输入
 
 1245
 01:03:36,798 --> 01:03:40,266
 now I no longer have a pending operation anymore.
+所以我这里不再有 pending 操作了
 
 1246
 01:03:40,901 --> 01:03:44,870
 That make sense? Okay, so let's go take a look and
+理解吗？ 现在看看它是否工作
 
 1247
 01:03:44,872 --> 01:03:52,811
 see if this works. All right, here we go. Let's try,
+看，看这里，我们试试
 
 1248
 01:03:52,813 --> 01:03:55,446
 we don't have a times button. Let's go back to our UI and
+我们还没有乘号按键，回到我们的UI
 
 1249
 01:03:55,448 --> 01:03:59,150
 add a times button [LAUGH]. In fact, we'll add of our binary
+加上乘号，事实上，我们应该把所有二元操作按键加上
 
 1250
 01:03:59,152 --> 01:04:04,054
 operations here. Okay, so, I'm gonna just copy and paste.
+那么接下来我就是复制粘贴
 
 1251
 01:04:04,056 --> 01:04:08,225
 Put this here, paste another one. Here, we'll put all my
+放在这里，粘贴一个，我打算把所有二元操作
 
 1252
 01:04:08,227 --> 01:04:13,029
 binary operations across the top here, paste, okay.
+都放在顶上这一栏
 
 1253
 01:04:13,031 --> 01:04:17,300
 Go here, we'll go to our emoji and symbols things.
+在这里，emoji and symbols
 
 1254
 01:04:17,302 --> 01:04:21,904
 Here's times. We'll put divide right next to times.
+这里是乘号，我们把除号放在旁边
 
 1255
 01:04:21,906 --> 01:04:27,443
 We'll put plus right here. We'll put minus right here.
+加号放在这里，减号放在这里
 
 1256
 01:04:27,445 --> 01:04:30,145
 We can put some other buttons down here too, like maybe
+下面也可以放一些按键
 
 1257
 01:04:30,147 --> 01:04:34,215
 we'll put, cosine, yeah, let's put cosine in there.
+比如，放一个 cos，放在那
 
 1258
 01:04:34,217 --> 01:04:39,520
 Let's cosine. Did I have another one? E I guess I had,
+再放一个吧，我觉得应该再放一个 E
 
 1259
 01:04:39,522 --> 01:04:44,592
 right? Put E in there too. E.
+这？ 把 E 也放在这 
 
 1260
 01:04:44,594 --> 01:04:48,696
 Let's also put a equal sign. Gotta have that.
+还要放一个等号
 
 1261
 01:04:48,698 --> 01:04:52,799
 We'll put it down here. Equal sign. And here, in this empty
+就这里了，等号，在这里
 
 1262
 01:04:52,801 --> 01:04:55,702
 space is just begging for me to put something there.
+这个空白简直要逼死强迫症
 
 1263
 01:04:55,704 --> 01:04:59,572
 I'm gonna put period. Because in your homework,
+我打算放一个”.”在这，因为在你们的作业里
 
 1264
 01:04:59,574 --> 01:05:01,540
 you're gonna have to add the capability to be able to
+你们需要给计算器加上使用浮点数
 
 1265
 01:05:01,542 --> 01:05:04,209
 enter floating point numbers. So you'll need this one.
+这个功能，所以你需要它
 
 1266
 01:05:04,211 --> 01:05:07,779
 So I'll put it there for you. Okay? All right, so here's our
+我就把它放在这了，这就是我们的UI
 
 1267
 01:05:07,781 --> 01:05:12,283
 nice UI. Looks really pretty. And let's run it.
+是挺漂亮的，运行一下
 
 1268
 01:05:16,856 --> 01:05:22,026
 All right, let's try 4 x 5 =, woo hoo, it works.
+现在我们试试 4 x 5 =，哇，起作用了
 
 1269
 01:05:22,028 --> 01:05:23,660
 A miracle the first time. Okay,
+没有 bug 的奇迹啊
 
 1270
 01:05:23,662 --> 01:05:24,728
 let's try something a little complicated.
+现在试试更复杂一点的
 
 1271
 01:05:24,730 --> 01:05:26,563
 How about this? Well, let's do some other things.
+这个怎么样，比如说
 
 1272
 01:05:26,565 --> 01:05:29,065
 The square root's still working, cosine, let's play pi
+平方根也可以使用，cos，我们算算 pi
 
 1273
 01:05:29,067 --> 01:05:33,803
 cosine. That worked, cool. All right, there's E, 2.71, nice.
+的cos值，也是对的，酷，好的，现在是 E，2.71，漂亮
 
 1274
 01:05:33,805 --> 01:05:36,538
 Here's something that doesn't work though, watch this.
+但是还是有些运算不支持，看
 
 1275
 01:05:36,540 --> 01:05:38,874
 7 x 8 x 2 x 3, uh-oh,
+7 x 8 x 2 x 3，啊哦
 
 1276
 01:05:38,876 --> 01:05:43,244
 this is not working. And this is not working because it's
+不起作用了，原因是因为
 
 1277
 01:05:43,246 --> 01:05:46,581
 requiring me to press equals to evaluate minor operations.
+它需要我按下等号键来计算等式
 
 1278
 01:05:46,583 --> 01:05:51,252
 So I have to go 4 x 7= x3 = x8 =, really, what I want is
+所以我需要这样 4 x 7= x3 = x8 =，我想要的是
 
 1279
 01:05:51,254 --> 01:05:55,823
 an automatic equals anytime I press a binary operation.
+在我做二元运算的任意时刻，它都能自动替我按下等号
 
 1280
 01:05:55,825 --> 01:06:00,927
 So I can go 4 x 5, and when I go times, it doesn't equals.
+那么我就可以做 4 x 5，接着按乘号，不用按等号
 
 1281
 01:06:00,929 --> 01:06:04,898
 And then let me do it. So let's just do that real quick.
+让我来飞快的完成它吧
 
 1282
 01:06:04,900 --> 01:06:09,202
 Let's go back to our brain. I'm just gonna take this
+回到我们的 brain，我打算把一块
 
 1283
 01:06:09,204 --> 01:06:11,070
 little thing that equals uses and
+equals的实现，用一个函数来完成
 
 1284
 01:06:11,072 --> 01:06:15,207
 make it into a function, private func, we'll call it
+并且是私有函数，我们打算叫它
 
 1285
 01:06:15,209 --> 01:06:20,045
 executePendingBinaryOperation. It's just gonna,
+executePendingBinaryOperation，只是
 
 1286
 01:06:20,047 --> 01:06:21,913
 I'm just pasting in the exact same thing.
+单纯的复制粘贴
 
 1287
 01:06:21,915 --> 01:06:26,084
 I'm gonna call that here, executePendingBinaryOperation.
+我在这调用它，executePendingBinaryOperation.
 
 1288
 01:06:26,086 --> 01:06:33,124
 And I'm also gonna call it here. Okay, I personally like,
+也在这调用它，因为我个人习惯
 
 1289
 01:06:33,126 --> 01:06:35,359
 if I have any of my cases that go onto second line,
+如果有任何一个 case 在第二行
 
 1290
 01:06:35,361 --> 01:06:37,928
 I like to put them all there. I just think it looks a little
+我就会把所有 case 都放在第二行，比起全部堆在一行里
 
 1291
 01:06:37,930 --> 01:06:40,630
 nicer than having sum on the end. It doesn't really matter
+更好看，这在swift里没多重要
 
 1292
 01:06:40,632 --> 01:06:44,600
 to SWF, but I just think this looks a little nicer. Okay, so
+我只是觉得好看一些而已
 
 1293
 01:06:44,602 --> 01:06:47,470
 we did that. So that'll fix that case.
+所以我要更改所有的 case
 
 1294
 01:06:48,739 --> 01:06:53,108
 All right, the last two things I wanna do,
+最后两件我要做的
 
 1295
 01:06:53,110 --> 01:06:58,747
 okay let's take this 4 x 7 x 8 x 9 = okay.
+就是做 4 x 7 x 8 x 9 =
 
 1296
 01:06:58,749 --> 01:07:01,115
 Now the last thing, two things I wanna do is one,
+最后两件我想要做的事情
 
 1297
 01:07:01,117 --> 01:07:05,453
 I'm gonna show you how to make, divide and plus and
+就是教给你怎么如何实现除法，加法，减法
 
 1298
 01:07:05,455 --> 01:07:08,922
 minus work without creating a whole ton of these little
+甚至不需要一堆
 
 1299
 01:07:08,924 --> 01:07:12,626
 extra functions like multiply cuz that's really gross. And
+像乘法这样的函数，因为这么做很恶心
 
 1300
 01:07:12,628 --> 01:07:15,161
 then second, I'm gonna make our UI stretchy, so
+第二个，我要让UI更灵活
 
 1301
 01:07:15,163 --> 01:07:16,429
 it works with landscape and portrait.
+让它在横屏和竖屏都能工作
 
 1302
 01:07:16,431 --> 01:07:19,098
 Okay, those are the two things I'm gonna do. All right,
+这就是最后的两件事情
 
 1303
 01:07:19,100 --> 01:07:23,936
 so let's go ahead and make our other four operations here,
+我们继续，实现另外几个操作
 
 1304
 01:07:23,938 --> 01:07:25,270
 which is divide, plus and minus.
+除法，加法，和减法
 
 1305
 01:07:25,272 --> 01:07:29,541
 So I have to bring up our emoji again. Okay, so
+我需要吧 emoji 调出来
 
 1306
 01:07:29,543 --> 01:07:34,412
 this one will make the divide. We'll make this one be plus.
+这个是除法，这个做成加法
 
 1307
 01:07:34,414 --> 01:07:39,050
 And we'll make this one be minus. Okay,
+这一个是减法
 
 1308
 01:07:39,052 --> 01:07:42,686
 now here I could have a function called divide, and
+现在我可以写一个函数叫做 divide
 
 1309
 01:07:42,688 --> 01:07:46,323
 another one called add, another one called subtract.
+再写一个叫做 add，再写一个叫做 substract
 
 1310
 01:07:46,325 --> 01:07:49,092
 And then, I could go up here and make one of these for
+接着，我可以走上来，实现这几个操作
 
 1311
 01:07:49,094 --> 01:07:51,127
 divide, and one of these for add and one. Okay, but
+一个除法，一个加法
 
 1312
 01:07:51,129 --> 01:07:54,263
 if I start doing that, what a mess. Okay, I-I've hardly even
+但如果我真的这么做了，一团糟，这样做
 
 1313
 01:07:54,265 --> 01:07:56,799
 gained anything by having this nice table of operations,
+似乎并没有善加利用这张 operations 表
 
 1314
 01:07:56,801 --> 01:07:58,400
 if I also have to have a separate function for
+如果我必须要有不同的函数去实现不同功能
 
 1315
 01:07:58,402 --> 01:08:02,404
 everything I want to do. Well, SWF is gonna take care of us
+swift有办法解决这样的需求
 
 1316
 01:08:02,406 --> 01:08:04,939
 on that front because it implements closures.
+因为swift里实现了闭包
 
 1317
 01:08:04,941 --> 01:08:06,340
 How many people know what closures are,
+你们多少人知道闭包是什么？
 
 1318
 01:08:06,342 --> 01:08:08,842
 the computer science term closures? Okay,
+计算机科学术语，闭包？
 
 1319
 01:08:08,844 --> 01:08:12,279
 hardly anybody, whoo, okay. So a closure is basically,
+好吧，几乎没有，其实闭包基本上
 
 1320
 01:08:12,281 --> 01:08:15,015
 you can think of it as an inline function,
+可以被看作是一个内嵌函数
 
 1321
 01:08:15,017 --> 01:08:17,483
 okay? But it's an inline function that captures
+但这个内嵌函数捕捉环境中的状态
 
 1322
 01:08:17,485 --> 01:08:20,319
 the state of it's environment. And we're gonna see why
+我们会看到
 
 1323
 01:08:20,321 --> 01:08:21,553
 that's important later in the quarter. But, for
+在课程后期它为什么那么重要
 
 1324
 01:08:21,555 --> 01:08:25,524
 now, you can just focus on the inlined function part of it.
+现在，我们只关注内嵌函数这部分
 
 1325
 01:08:25,526 --> 01:08:29,527
 So, I can actually take this multiply function, okay? I'm
+现在我选中 multiply 函数的这部分
 
 1326
 01:08:29,529 --> 01:08:32,964
 just gonna select the function without the word multiply. And
+只是选中它们，除了 multiply
 
 1327
 01:08:32,966 --> 01:08:39,670
 I'm gonna cut, and I'm gonna paste it right in here. Okay?
+然后剪切，然后粘贴在这里
 
 1328
 01:08:39,672 --> 01:08:43,407
 Now, I can't quite do that. I have to do two things. One, I
+实习上我不能直接这样，还有两件事要做
 
 1329
 01:08:43,409 --> 01:08:47,911
 have to take this curly brace and put it at the beginning so
+第一，我要把大括号放在开头
 
 1330
 01:08:47,913 --> 01:08:51,981
 that the arguments here is inside the curly brace,
+让参数被包含在大括号里
 
 1331
 01:08:51,983 --> 01:08:56,052
 because the whole closure has to have curly braces beginning
+因为闭包是以大括号开始和结束的
 
 1332
 01:08:56,054 --> 01:08:59,021
 to end. And then, since I need to separate this
+接着，为了区分前面和后面
 
 1333
 01:08:59,023 --> 01:09:03,325
 from the rest, I also put the word in right there. Okay, so
+我需要在中间放入一个关键词 in
 
 1334
 01:09:03,327 --> 01:09:04,359
 that's how you make a closure.
+这就是如何使用闭包
 
 1335
 01:09:04,361 --> 01:09:05,727
 It's exactly the same as a function, except for
+和函数是一样的，除了
 
 1336
 01:09:05,729 --> 01:09:08,596
 the curly brace starts before the arguments and you put in
+大括号从参数前开始，并且参数后你要放一个 in
 
 1337
 01:09:08,598 --> 01:09:13,701
 after the arguments. Got that? Now, this doesn't look, so
+知道了吗？所以
 
 1338
 01:09:13,703 --> 01:09:15,402
 that I don't need function multiply any more.
+我不再需要这个 multiply 函数了
 
 1339
 01:09:15,404 --> 01:09:18,138
 So this doesn't look that much better. It's still kind
+这个看起来好多了，但还是有点乱
 
 1340
 01:09:18,140 --> 01:09:23,143
 of a mess. But we're gonna use type inference, yeah, to make
+但是我们可以使用类型推断，让它看起来
 
 1341
 01:09:23,145 --> 01:09:27,413
 this look a lot better. Now, remember that SWF knows that
+更漂亮，记住，swift 知道这个二元操作
 
 1342
 01:09:27,415 --> 01:09:30,883
 this binary operation takes a Double, two Doubles, and
+需要两个 Double 输入，两个 Double
 
 1343
 01:09:30,885 --> 01:09:36,388
 returns a Double. So this is all redundant, okay?
+然后返回一个 Double，所以这是多余的
 
 1344
 01:09:36,390 --> 01:09:39,991
 SWF can infer that that's a Double.
+swift能推断这是个 Double
 
 1345
 01:09:39,993 --> 01:09:40,658
 It can infer that's a Double.
+也能推断它是 Double
 
 1346
 01:09:40,660 --> 01:09:43,728
 And it can infer that it re-returns a Double. So
+也能推断返回类型是一个 Double
 
 1347
 01:09:43,730 --> 01:09:47,131
 this is wow, all of a sudden looking a lot better already,
+那么，哇，突然间看起来好多了
 
 1348
 01:09:47,133 --> 01:09:51,702
 okay? We can make this look all in one line. Okay,
+我们可以写成一行了
 
 1349
 01:09:51,704 --> 01:09:55,272
 that's looking pretty good. I mean, that alone is probably
+看起来很不错，这看起来
 
 1350
 01:09:55,274 --> 01:09:59,142
 really, really good. However, it gets better than that,
+依旧相当不错了，但是呢，我们还可以精简
 
 1351
 01:09:59,144 --> 01:10:02,445
 because closers also can have default arguments.
+因为闭包拥有默认参数名
 
 1352
 01:10:02,447 --> 01:10:06,682
 The default argument names are $0, $1, $2,
+默认参数名是，$0，$1，$2
 
 1353
 01:10:06,684 --> 01:10:09,218
 $3, however many arguments it has.
+$3，表示有多少个参数
 
 1354
 01:10:09,220 --> 01:10:12,054
 So you can put those as the names of the arguments
+比可以把它们当作参数名是用
 
 1355
 01:10:12,056 --> 01:10:15,724
 instead of having op one or op two whatever you
+而不是 op1 或者 op2
 
 1356
 01:10:15,726 --> 01:10:16,657
 want to call it. Okay?
+这种你起的名字
 
 1357
 01:10:16,659 --> 01:10:21,028
 And if you do this, then you don't even need that. Okay?
+如果你这么做，你甚至不需要它了
 
 1358
 01:10:21,030 --> 01:10:26,200
 If you use the $0 and $1, and since this is a Double, and
+如果你用 $0 和 $1，因为它们是 Double
 
 1359
 01:10:26,202 --> 01:10:29,469
 SWF can infer that this return's a Double, you don't
+swift能推断它返回了一个 Double
 
 1360
 01:10:29,471 --> 01:10:33,106
 need return right here. >> [LAUGH]
+你不需要返回了 >>[笑]
 
 1361
 01:10:33,108 --> 01:10:33,673
 >> Okay?
+Okay?
 
 1362
 01:10:33,675 --> 01:10:34,740
 >> [LAUGH]
+[笑]
 
 1363
 01:10:34,742 --> 01:10:34,973
 >> So we've cleaned up our
+我们收拾干净了这代码
 
 1364
 01:10:34,975 --> 01:10:40,912
 code quite a bit. And in fact, now divide is just this. And
+事实上，除法也如此，加法亦然
 
 1365
 01:10:40,914 --> 01:10:47,118
 add is just this. And subtract is just this.
+减法也是一样
 
 1366
 01:10:47,253 --> 01:10:51,055
 Okay? So that's closures. Super powerful.
+这就是闭包，非常强大
 
 1367
 01:10:51,057 --> 01:10:53,390
 Used a lot in the iOS API. You're going to be
+iOS API里用了很多，你们以后
 
 1368
 01:10:53,392 --> 01:10:56,893
 able to use it in your code to your heart's content.
+在代码中会把它当做心头好的
 
 1369
 01:10:56,895 --> 01:11:02,799
 It's very fun. Let's make sure it actually
+非常有趣，验证一下它们是否工作
 
 1370
 01:11:02,801 --> 01:11:07,203
 works. All right, 7 x 8 = all right,
+7 x 8 = 对的
 
 1371
 01:11:07,205 --> 01:11:12,908
 divided by 5 equals? Looks good. minus nine equals?
+除以5等于？ 对的，减去9等于？
 
 1372
 01:11:12,910 --> 01:11:17,713
 All right, so all of our things here are working. Okay?
+对的，所以所有东西都能工作了
 
 1373
 01:11:17,715 --> 01:11:21,483
 We also could, so we can do that for
+我们也能对一元操作
 
 1374
 01:11:21,485 --> 01:11:23,485
 our UnaryOperations as well. What if we wanted, for
+这样做，如果我们想的话
 
 1375
 01:11:23,487 --> 01:11:27,188
 example, something like change sign. Let's go find something
+比如，反号，我来找一下这个符号
 
 1376
 01:11:27,190 --> 01:11:30,458
 to be change sign. How about this? That's not really
+这个怎么样，虽然并不是
 
 1377
 01:11:30,460 --> 01:11:33,360
 [LAUGH] a change sign symbol, but I'm gonna use it for that.
+真正的反号，但就这样吧
 
 1378
 01:11:33,362 --> 01:11:36,563
 I could say change sign is Operation.constant, or
+这个反号是 Operation.constant
 
 1379
 01:11:36,565 --> 01:11:39,499
 .UnaryOperation, sorry. UnaryOperation and
+或者.UnaryOperation，不好意思 UnaryOperation
 
 1380
 01:11:39,501 --> 01:11:43,503
 I need a function that takes a Double returns a Double,
+我需要一个函数接受一个 Double，返回一个 Double
 
 1381
 01:11:43,505 --> 01:11:48,574
 how about -$0. Okay, that changes the sign of
+-$0 如何? 这可以让参数反号
 
 1382
 01:11:48,576 --> 01:11:53,679
 the one argument. And Swift is smart enough to know that this
+swift 相当聪明，知道这只有一个参数
 
 1383
 01:11:53,681 --> 01:11:58,550
 has one argument. And that it is returning that argument and
+也知道返回参数，这个一元操作
 
 1384
 01:11:58,552 --> 01:12:00,752
 that unary operation is Double Double, so
+是一个 Double -> Double
 
 1385
 01:12:00,754 --> 01:12:05,790
 it knows that this must be a Double. It'll even infer that.
+它知道这必然是 Double，能被推断出来
 
 1386
 01:12:05,792 --> 01:12:09,326
 Okay. All right, so that's it for our calculator brain.
+好了，这就是我们的 calculator brain 了
 
 1387
 01:12:09,328 --> 01:12:11,962
 And if we look back at our calculator brain and
+回头看看我们的 calculator brain
 
 1388
 01:12:11,964 --> 01:12:13,864
 the code in it. All the code
+看下它的代码
 
 1389
 01:12:13,866 --> 01:12:15,532
 here has nothing to do with UI.
+这些代码都与 UI 无关
 
 1390
 01:12:15,534 --> 01:12:19,969
 It's purely about calculating and it's super-extensible.
+只是单纯地计算，并且非常易扩展
 
 1391
 01:12:19,971 --> 01:12:22,805
 If you want to add more operations here, all you need
+你如果想加入更多操作
 
 1392
 01:12:22,807 --> 01:12:26,308
 to do is to provide the type of operation and
+只需要提供操作类型
 
 1393
 01:12:26,310 --> 01:12:28,110
 what's specific to that operation.
+和操作的一些细节了
 
 1394
 01:12:28,112 --> 01:12:30,845
 All the calculation is done is this very simple
+这些计算都是非常简单的函数
 
 1395
 01:12:30,847 --> 01:12:33,881
 function right here, the only complexity of which is this
+唯一复杂的就是二元操作 pending 这部分
 
 1396
 01:12:33,883 --> 01:12:37,351
 pending binary operation thing we have to do. By the way,
+不过它是很必要的，另外
 
 1397
 01:12:37,353 --> 01:12:41,889
 this right here, this struct, should also be private. Okay,
+这里的 struct，也因该是私有的
 
 1398
 01:12:41,891 --> 01:12:44,458
 this struct which is calculatorBrain.PendingBinary-
+这个 calculatorBrain.PendingBinaryinfo 结构体
 
 1399
 01:12:44,460 --> 01:12:47,127
 Info, that's its full name, that should be private as
+它的全名，它该是私有的
 
 1400
 01:12:47,129 --> 01:12:50,063
 well, because we're only using that internally.
+因为我们只在内部使用
 
 1401
 01:12:50,065 --> 01:12:52,398
 Same thing with this operation.
+这个 Operation 也是一样
 
 1402
 01:12:52,400 --> 01:12:52,664
 It should be private.
+应该是私有的
 
 1403
 01:12:52,666 --> 01:12:55,634
 Cuz we're not using it in our public API and same thing
+因为我们无需公布它的 API，
 
 1404
 01:12:55,636 --> 01:12:59,437
 with this operation, should be private. Okay, should make
+这个 operations 也是一样，私有的
 
 1405
 01:12:59,439 --> 01:13:01,472
 everything private that you can make private, okay?
+尽量将所有能私有化的东西私有
 
 1406
 01:13:01,474 --> 01:13:04,909
 Make the things public that you intend to support forever
+对于你要永久支持的对象可以公有
 
 1407
 01:13:04,911 --> 01:13:09,513
 in your object. Okay? So let's do that UI thing I was telling
+现在我们来做UI
 
 1408
 01:13:09,515 --> 01:13:12,315
 you about. Let's go back to our story board here, and
+回到 storyboard
 
 1409
 01:13:12,317 --> 01:13:14,050
 we want to make this thing so that when we,
+我们想让他变得
 
 1410
 01:13:14,052 --> 01:13:20,490
 let's see what it looks like now, actually. Okay,
+看看它现在的样子，实际上
 
 1411
 01:13:20,492 --> 01:13:22,224
 so our UI, we know it doesn't look very good,
+我们的 UI 不是很好
 
 1412
 01:13:22,226 --> 01:13:24,927
 this is not lined up. This is kind of nice right here but
+他们没有连接起来，看起来是不错但
 
 1413
 01:13:24,929 --> 01:13:27,195
 it's not lined up. But what happens if we
+没有连接，如果我们横屏会
 
 1414
 01:13:27,197 --> 01:13:29,898
 rotate to landscape? The way we do that is Hardware,
+发生什么呢？ 我们从 Hardware 里去找
 
 1415
 01:13:29,900 --> 01:13:33,368
 in the simulator, Hardware > Rotate Left and Right, okay?
+在 Simulator，Hardware，Rotate Left 或者 Right
 
 1416
 01:13:33,370 --> 01:13:38,572
 I'm gonna use command keys to do it. Cmd+arrow. That really
+我用 command 键来操作，Cmd+方向键
 
 1417
 01:13:38,574 --> 01:13:43,344
 looks bad because I can't even say equal six times four.
+看起来很糟，我用 6*4 都找不到等号键
 
 1418
 01:13:43,346 --> 01:13:45,312
 Okay. I can't even use this UI, it's so
+我不能使用这个UI
 
 1419
 01:13:45,314 --> 01:13:48,748
 bad, okay? So, we need to fix this UI so
+太糟糕了，我们需要修改UI
 
 1420
 01:13:48,750 --> 01:13:51,784
 that when it's in portrait, it's using the whole space.
+当它横屏的时候也能使用整个屏幕空间
 
 1421
 01:13:51,786 --> 01:13:54,653
 Laying the buttons out to make it work and,
+跑到外面去的按键能工作
 
 1422
 01:13:54,655 --> 01:13:57,022
 when it's in landscape, it's using the whole space and
+横屏的时候也能使用整个空间
 
 1423
 01:13:57,024 --> 01:13:58,557
 the buttons are a different shape. Okay,
+只是按键的形状不同
 
 1424
 01:13:58,559 --> 01:14:02,060
 how are we gonna do that? Well I'm gonna do that by taking
+怎么做呢？我们要把
 
 1425
 01:14:02,062 --> 01:14:05,697
 each of these and putting them in a little stack. And then
+按键们弄成一个小整块
 
 1426
 01:14:05,699 --> 01:14:08,699
 I'm gonna take the five stacks and stack them together.
+再把5个小整块变成一个大整块
 
 1427
 01:14:08,701 --> 01:14:12,503
 And then I'm gonna stack this whole thing with this, okay,
+然后把大整块和这个变成一个整块
 
 1428
 01:14:12,505 --> 01:14:16,406
 and create a stack of stacks. And then I'm going to bind
+用整块堆整块，然后
 
 1429
 01:14:16,408 --> 01:14:19,709
 the left, top, right and bottom edges of that whole
+整块的左边，上面，右边和下面的边缘与 UI
 
 1430
 01:14:19,711 --> 01:14:23,046
 thing to the outer edges of my UI. That way,
+的边缘绑定，这样
 
 1431
 01:14:23,048 --> 01:14:25,781
 when the outer edges of my UI change, that thing will
+当 UI 外部边缘改变的时候，它也会改变
 
 1432
 01:14:25,783 --> 01:14:27,616
 change. And the stacks automatic gonna how to,
+整块会自动知道它如何调整
 
 1433
 01:14:27,618 --> 01:14:30,886
 you know, reallocate the space. Okay, simple as that.
+你知道的，重新分配空间，就这么简单
 
 1434
 01:14:30,888 --> 01:14:33,154
 So that's what we're gonna do. So let's make stacks here.
+我们将这么做，现在我们来做一个整块
 
 1435
 01:14:33,156 --> 01:14:35,723
 The way we do that, we select the things we want to stack.
-
+做的方法就是，选中我们需要的元素
 1436
 01:14:35,725 --> 01:14:39,460
 We go to editor Embed In > Stack View. Okay, and that's
+点击 editor Embed > Stack View
 
 1437
 01:14:39,462 --> 01:14:43,263
 gonna put it in a stack view here. Now, we can also go over
+这样就放在了一个 stack view 里面，我们还能
 
 1438
 01:14:43,265 --> 01:14:45,799
 to the inspector and inspect some things about this stack
+在视察窗口里面改变一些 stack view 的设置
 
 1439
 01:14:45,801 --> 01:14:50,036
 view like I want some spacing, 10 points between each one.
+比如我要一些空格，每个之间间隔 10 points
 
 1440
 01:14:50,038 --> 01:14:52,972
 Also, you see how the cosine one is wider then the dot?
+再有，你看 cos 比其他的更宽
 
 1441
 01:14:52,974 --> 01:14:55,107
 I don't want that, I want them all the same, so
+我不想这个，我要它们看起来都一样
 
 1442
 01:14:55,109 --> 01:15:00,346
 I want it to distribute its space equally. Okay, so
+我希望他们的空间分布相同
 
 1443
 01:15:00,348 --> 01:15:01,947
 now they're all equal. Okay,
+现在他们一样了
 
 1444
 01:15:01,949 --> 01:15:06,751
 same thing here. Okay, 10 points, and
+这也是同样，10 points
 
 1445
 01:15:06,753 --> 01:15:10,321
 fill equally. Now, by the way, there is no command key for
+fill equally，现在这个没有快捷键
 
 1446
 01:15:10,323 --> 01:15:13,791
 this, but you could go to Preferences over here,
+但你可以到 Preferences 里面
 
 1447
 01:15:13,793 --> 01:15:16,126
 Xcode > Preferences, and go to the key bindings and
+Xcode > Preferences 自定义你的快捷键
 
 1448
 01:15:16,128 --> 01:15:17,260
 give it a command key if you wanted.
+如果你需要的话
 
 1449
 01:15:17,262 --> 01:15:19,195
 If you were using stacking a lot, like I am,
+或者你常常使用 stack
 
 1450
 01:15:19,197 --> 01:15:23,166
 you could do that. So let's put these in here.
+你可以这么做，现在把它们放这
 
 1451
 01:15:23,168 --> 01:15:29,739
 10, fill equally. This one. Oops.
+10，fill equally，这个，Oop
 
 1452
 01:15:32,276 --> 01:15:36,812
 10, fill equally, and this last one. [BLANK
+10，fill equally，最后一个
 
 1453
 01:15:36,814 --> 01:15:42,884
 AUDIO] All right. Now I have these five stacks right here.
+好了，现在我们有5个 stacks 了
 
 1454
 01:15:42,886 --> 01:15:46,254
 Okay, horizontal stacks. Now I'm going to take them and
+水平的 stack 现在我们要把它放
 
 1455
 01:15:46,256 --> 01:15:47,822
 put them in a stack. Okay? So
+在一个更大的 stack 里
 
 1456
 01:15:47,824 --> 01:15:51,558
 I'm going to put them in a vertical stack. [NOISE] Okay?
-
+这个 stack 是垂直的
 1457
 01:15:51,560 --> 01:15:56,029
 Now, these, I want, here, to all be spread out.
+我想让它们整齐分布
 
 1458
 01:15:56,031 --> 01:15:58,231
 So right now you see the alignment is leading, so
+这边你可以看见 Alignment 是 leading
 
 1459
 01:15:58,233 --> 01:16:00,600
 it's putting all these things on the leading edge?
+就是把所有东西与最左边的框对其
 
 1460
 01:16:00,602 --> 01:16:05,037
 I want them to fill instead, so they fill the whole width.
+我想让它填充，所以，这样就一个宽度了
 
 1461
 01:16:05,039 --> 01:16:07,906
 Okay? I also want spacing here, okay?
+在这我也想要一些空间
 
 1462
 01:16:07,908 --> 01:16:10,942
 10 between all of them, so I've got kind of a nice
+中间隔开10，现在我有了好看的
 
 1463
 01:16:10,944 --> 01:16:14,045
 little key pad. Now let's stack this with this.
+小键盘了，现在把它与这个 stack
 
 1464
 01:16:14,047 --> 01:16:18,449
 So I'm going to select both of these and stack. Okay,
+选中这两个，然后 stack
 
 1465
 01:16:18,451 --> 01:16:22,086
 put them in a stack together. Again, I want spacing. I want,
+把它们变成一个 stack，这里要隔开
 
 1466
 01:16:22,088 --> 01:16:24,888
 do definitely do not want fill equally here, because that
+这里不要使用 fill equally
 
 1467
 01:16:24,890 --> 01:16:28,325
 would make this blue thing the same height as this big stack.
+这样会让蓝色区域和小键盘一样高
 
 1468
 01:16:28,327 --> 01:16:31,561
 So we don't want that, we just want Fill. That means they're
+我们不需要这样，只是 Fill 就可以了
 
 1469
 01:16:31,563 --> 01:16:35,331
 gonna be their natural size, okay? [COUGH] So for this,
+意味着它是一个合适的尺寸
 
 1470
 01:16:35,333 --> 01:16:38,401
 it's gonna be the size that fits this text and for this,
+这是文本框的尺寸
 
 1471
 01:16:38,403 --> 01:16:39,201
 it's gonna be a size for
+这是所有的 stack
 
 1472
 01:16:39,203 --> 01:16:42,637
 all those stacks to fit their contents. All right,
+会填充的尺寸
 
 1473
 01:16:42,639 --> 01:16:46,841
 now I'm gonna finally use the blue lines. Okay, because I'm
+最后我终于要用到蓝色线条了
 
 1474
 01:16:46,843 --> 01:16:50,812
 gonna put this thing up in the upper-left corner right here.
+我要把这个放在左上角
 
 1475
 01:16:50,814 --> 01:16:53,581
 Okay? And I'm gonna anchor it to that corner and
+把它定位到这个角落
 
 1476
 01:16:53,583 --> 01:16:55,949
 here's how we do that. We use the Ctrl key,
+如何做呢？ 使用 Ctrl 键
 
 1477
 01:16:55,951 --> 01:16:58,518
 just like we did when we were dragging to the code.
+就像我们拖动 UI 到代码里一样
 
 1478
 01:16:58,520 --> 01:17:01,287
 We can also drag between elements in the UI. So,
+在 UI 里也能拖动各种元素
 
 1479
 01:17:01,289 --> 01:17:05,925
 I'm gonna drag between this, stack thing and this
+所以我打算把这个 stack
 
 1480
 01:17:05,927 --> 01:17:09,328
 outer container. So, I'm just dragging up to its top edge.
+拖动到这个 container 边缘，把它拖到顶部边缘
 
 1481
 01:17:09,330 --> 01:17:12,064
 Now when I do, when I Ctrl+drag between things,
+我拖动的时候，要按下 Ctrl 键
 
 1482
 01:17:12,066 --> 01:17:15,233
 I can constrain them to be related in some way.
+这样让 UI 与 container 边缘联系起来
 
 1483
 01:17:15,235 --> 01:17:18,203
 Like I could make them be equal widths. I can make this
+就可以使它们同等宽
 
 1484
 01:17:18,205 --> 01:17:20,705
 thing be the same width as the container view. Or
+可以让 UI 和我的 container 一样宽
 
 1485
 01:17:20,707 --> 01:17:25,209
 I can do what I want, which is constrain the vertical spacing
+或者选择我要的，就是 Vertical Spacing to Top Layout
 
 1486
 01:17:25,211 --> 01:17:27,478
 of this to the top layout. In other words,
+换句话说
 
 1487
 01:17:27,480 --> 01:17:30,514
 kind of attach that to that, so I'm gonna create that.
+像把它们固定在一起，所以我点击它
 
 1488
 01:17:30,516 --> 01:17:32,749
 And you can see it creates this little I-beam,
+你看一看见这个小“I”柱
 
 1489
 01:17:32,751 --> 01:17:34,717
 this little tiny I-beam right there. Okay,
+这里的小“I”柱
 
 1490
 01:17:34,719 --> 01:17:37,520
 I'm gonna do the same thing to this edge, right here.
+同样的，对这条边也是这样
 
 1491
 01:17:37,522 --> 01:17:41,523
 I'm gonna attach the leading space to the container margin,
+我们点击 Leading Space to Container Margin
 
 1492
 01:17:41,525 --> 01:17:43,125
 okay? And I can do the same thing. Now,
+同样的，这条边也是
 
 1493
 01:17:43,127 --> 01:17:46,695
 by the way, when you do this, be careful when you Ctrl+drag,
+提一句，当你这样做的时候一定要小心
 
 1494
 01:17:46,697 --> 01:17:49,630
 you wanna make sure the thing you're dragging from
+确保你拖住啊的是整块 stack
 
 1495
 01:17:49,632 --> 01:17:52,667
 is the entire stack. Don't be,
-
+而不是
 1496
 01:17:52,669 --> 01:17:55,436
 you know, just Ctrl+dragging from this eight or it'll
+你知道的，这个8
 
 1497
 01:17:55,438 --> 01:17:58,238
 actually pin the eight to the edge. Okay, you want to pin
+不然它会把“8”拼在边缘上面
 
 1498
 01:17:58,240 --> 01:18:00,807
 this whole stack view and I'm going to show you how you can
+我给你展示下，如何选中整块stack
 
 1499
 01:18:00,809 --> 01:18:03,543
 select the whole stack view in a second here. Let's drag
+在一秒钟之内
 
 1500
 01:18:03,545 --> 01:18:06,278
 this over, this is going to be the trailing space.
+拖动它，这个选trailing space
 
 1501
 01:18:06,280 --> 01:18:09,314
 Okay. And now, here I'll show you how to, if I click on
+现在我教你们
 
 1502
 01:18:09,316 --> 01:18:12,284
 this thing right here, it's selecting the two. But I want
+如果我点了这个东西，它选中了“2”
 
 1503
 01:18:12,286 --> 01:18:15,053
 to select the whole thing, so I'm going to do Ctrl+Shift.
+但我想要一整块，按下 Ctrl+Shift
 
 1504
 01:18:15,055 --> 01:18:17,755
 Ctrl+Shift, okay, see it down in the lower left there,
+Ctrl+Shift，看屏幕下面
 
 1505
 01:18:17,757 --> 01:18:20,658
 Ctrl+Shift? Ctrl+Shift-click. When you do that,
+Ctrl+Shift，按住 Ctrl+Shift 再点击
 
 1506
 01:18:20,660 --> 01:18:24,294
 it says, what thing under the mouse do you want to select?
+这样的做的时候它会说，你的鼠标想选中什么？
 
 1507
 01:18:24,296 --> 01:18:27,864
 Do you want to select that outer container, the big stack
+你想选中Outer container， stack view
 
 1508
 01:18:27,866 --> 01:18:30,734
 view, or this little, interior stack view? So here, I want
+还是这个小的内部 stack ?
 
 1509
 01:18:30,736 --> 01:18:34,137
 the big stack view, the one that contains the whole thing.
+在这我选择 stack view，它包含了全部按键
 
 1510
 01:18:34,238 --> 01:18:37,406
 All right, so and then when I Ctrl+drag, I'm being careful
+所以当我按下 Ctrl 拖拽的时候
 
 1511
 01:18:37,408 --> 01:18:39,474
 not to Ctrl+drag from one of these buttons.
+要非常小心，不要选择一个按键
 
 1512
 01:18:39,476 --> 01:18:42,110
 And here, I'm Ctrl+dragging from one the spaces there,
+现在我把它拖到这里
 
 1513
 01:18:42,112 --> 01:18:45,246
 okay. So this is to vertical space into the bottom.
+这里选 vertical space into the bottom
 
 1514
 01:18:45,248 --> 01:18:48,282
 And so now I've tied them to the edges. Unfortunately,
+现在我绑定了它们的边缘，不幸的是
 
 1515
 01:18:48,284 --> 01:18:52,386
 I've tied these two edges too far away from the edges.
+这两条边相隔太远了
 
 1516
 01:18:52,388 --> 01:18:55,489
 Okay. I wanna tie these two edges to right up next to it.
+我想让它们在彼此的旁边
 
 1517
 01:18:55,491 --> 01:18:59,325
 And the way I do that is, I can do it via the Inspector
+在视察窗口里就可以做到
 
 1518
 01:18:59,327 --> 01:19:02,462
 right here, by clicking on this I-beam, you see.
+点击这个小”I”柱，你可以看到
 
 1519
 01:19:02,464 --> 01:19:04,030
 This constant saying how far it is.
+这个常数就是距离
 
 1520
 01:19:04,032 --> 01:19:06,832
 I can also Double-click on this I-beam. And
+我可以双击这个”I”
 
 1521
 01:19:06,834 --> 01:19:09,735
 it puts up a little thing here. So, I don't want her
+这里出现了一些设置
 
 1522
 01:19:09,737 --> 01:19:12,904
 to be 338 points away, I want her to be either some standard
+我不希望它们 338 那么远，想设置成一个标准值
 
 1523
 01:19:12,906 --> 01:19:15,740
 value, or if a standard value doesn't make sense here,
+如果标准值不行的话
 
 1524
 01:19:15,742 --> 01:19:17,608
 which it doesn't, that's why it's grayed out,
+事实上不能用，这就是为什么它是灰色
 
 1525
 01:19:17,610 --> 01:19:22,413
 then I'm gonna put it 0 points away. Bam. Okay?
+那么我就在这输入0
 
 1526
 01:19:22,415 --> 01:19:25,582
 Same thing I can do down here. Let's Double-click this one.
+下面这我们可以做相同的事，双击它
 
 1527
 01:19:25,584 --> 01:19:27,817
 Here, a standard value is available, so
+这里标准值可以用
 
 1528
 01:19:27,819 --> 01:19:29,318
 I'm gonna click standard value. And
+所以我点击 standard value
 
 1529
 01:19:29,320 --> 01:19:32,655
 now it's putting its standard value from the bottom. Okay.
+现在它把距离设置成了标准值
 
 1530
 01:19:32,657 --> 01:19:35,324
 Now, when it's stretched there, it made these tall.
+当设置成功后，这一部分变高了
 
 1531
 01:19:35,326 --> 01:19:38,894
 Okay, so that means we did something bad with our,
+这说明我们之前做错了
 
 1532
 01:19:38,896 --> 01:19:41,730
 you know, spacing of the things, which is,
+你知道的，设置距离什么的
 
 1533
 01:19:41,732 --> 01:19:45,833
 what did we do wrong here? Those are all fill equally.
+我们做错了什么？ 它们 fill equally
 
 1534
 01:19:45,835 --> 01:19:49,837
 Yes. How about this guy right here? Maybe this,
+对，是这个小东西吗？可能是这个
 
 1535
 01:19:49,839 --> 01:19:54,008
 this guy fill equally. Okay we want this internal one.
+这个 fill equally，好了我们想要的就是它
 
 1536
 01:19:54,010 --> 01:19:59,012
 Okay, this internal stack view, to be fill equally.
+中间的整个 stack 就是 fill equally
 
 1537
 01:19:59,014 --> 01:20:00,914
 Glad I made that mistake, so I show you how to do that,
+挺高兴翻了这种错，这样展示给你们看
 
 1538
 01:20:00,916 --> 01:20:04,017
 okay? So, we've got this all equally spaced out. This
+现在整个 UI 分布好了
 
 1539
 01:20:04,019 --> 01:20:06,852
 looks pretty kind of funny in a square, but I bet it's gonna
+看起来还不错的样子
 
 1540
 01:20:06,854 --> 01:20:08,654
 look pretty good in portrait and landscape,
+我觉得横屏竖屏下应该都很好看
 
 1541
 01:20:08,656 --> 01:20:17,763
 let's go take a look. All right here's portrait. Hey,
+我们看一眼，好了，这是竖屏
 
 1542
 01:20:17,765 --> 01:20:22,067
 that looks pretty darn good. 4 times 8, you know, plus 9
+看起来还不错，4*8，加上9
 
 1543
 01:20:22,069 --> 01:20:27,238
 equals. Square root, okay, cosine, pi, cosine. Excellent,
+等号，根号，好的，cos，pi，cos非常不错
 
 1544
 01:20:27,240 --> 01:20:31,709
 let's take a look at landscape, woohoo! It worked,
+看看横屏，哇哦，不错哦
 
 1545
 01:20:31,711 --> 01:20:36,213
 okay. So, very little work here. And we can make our UI
+做了点微小的工作，就可以让 UI
 
 1546
 01:20:36,215 --> 01:20:39,349
 stretchable, okay? Now, later in the quarter, we're gonna
+伸缩自如，课程后面我们会学到
 
 1547
 01:20:39,351 --> 01:20:41,751
 have more sophisticated UIs than just these stack things,
+更多更复杂的 UI 技巧，不仅仅是这种 stack
 
 1548
 01:20:41,753 --> 01:20:45,188
 but we'll still be using that Ctrl+dragging to the edges.
+但会一直用到 Ctrl 加拖拽
 
 1549
 01:20:45,190 --> 01:20:48,424
 Now, your homework assignment is to reproduce everything
+现在，作业就是重复我
 
 1550
 01:20:48,426 --> 01:20:49,992
 I've done in these two days.
+在过去两节课中的所有工作
 
 1551
 01:20:49,994 --> 01:20:51,493
 Add that floating point number,
+并且加上浮点数
 
 1552
 01:20:51,495 --> 01:20:54,329
 add a little text field that shows a history of all
+再加上一个文本框，可以显示所有
 
 1553
 01:20:54,331 --> 01:20:55,963
 the things that have been typed in, and
+的输入信息的历史
 
 1554
 01:20:55,965 --> 01:20:58,332
 add some more buttons. So you're gonna be doing outlets,
+添加更多的按键，所以也要做 outlet action
 
 1555
 01:20:58,334 --> 01:21:00,834
 actions, and a little bit more. And that's
+还有
 
 1556
 01:21:00,836 --> 01:21:04,705
 basically your entire homework okay? It's all posted.
+这基本就是所有作业了，现在都发布了
 
 1557
 01:21:04,707 --> 01:21:06,873
 See ya next week. >> For
+下个星期再见
 
 1558
 01:21:06,875 --> 01:21:06,906
 more, please visit us at stanford.edu
+更多信息，请访问 stanford.edu

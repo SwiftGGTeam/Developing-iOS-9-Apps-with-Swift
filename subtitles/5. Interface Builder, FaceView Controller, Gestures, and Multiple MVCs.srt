@@ -1,0 +1,5644 @@
+﻿1
+00:00:00,001 --> 00:00:03,836
+[MUSIC]
+
+2
+00:00:03,838 --> 00:00:06,305
+Stanford University. >> All right,
+
+3
+00:00:06,307 --> 00:00:12,177
+well then welcome to lecture 5, of CS193P,
+
+4
+00:00:12,179 --> 00:00:16,015
+this is the spring of 2016. And
+
+5
+00:00:16,017 --> 00:00:21,420
+today we are going to, first, work a little more and
+
+6
+00:00:21,422 --> 00:00:24,957
+face it. I'm gonna show you a little kind of some cool
+
+7
+00:00:24,959 --> 00:00:27,359
+features in the interface builder part of Xcode,
+
+8
+00:00:27,361 --> 00:00:30,662
+that's the part where we're building our storyboard.
+
+9
+00:00:30,931 --> 00:00:34,033
+Then we're gonna start talking about what FACEIT's
+
+10
+00:00:34,035 --> 00:00:36,802
+view controllers model really should be.
+
+11
+00:00:36,804 --> 00:00:39,638
+Okay, cuz right now if you look at the code in our
+
+12
+00:00:39,640 --> 00:00:42,307
+controller of our MVC for FACEIT. It's blank,
+
+13
+00:00:42,309 --> 00:00:44,743
+there's nothing in there. So we need to do some work there.
+
+14
+00:00:44,745 --> 00:00:48,113
+Now we're gonna come back to the slides and I'm gonna talk
+
+15
+00:00:48,115 --> 00:00:51,283
+about gestures, okay which is the input side of UIView.
+
+16
+00:00:51,285 --> 00:00:54,453
+And I'll do a demo where we put some gestures in FACEIT.
+
+17
+00:00:54,455 --> 00:00:57,456
+And then time permitting I'm gonna end with some more
+
+18
+00:00:57,458 --> 00:01:00,225
+slides starting to talk about multiple MVCs which is
+
+19
+00:01:00,227 --> 00:01:04,229
+the gateway to building bigger applications. Okay, so that's
+
+20
+00:01:04,231 --> 00:01:07,499
+what's on tap for today. So let's dive right into the demo
+
+21
+00:01:07,501 --> 00:01:10,702
+here. I'm gonna do these two things I talked about,
+
+22
+00:01:10,704 --> 00:01:15,941
+which is the Interface Builder. And a model for
+
+23
+00:01:15,943 --> 00:01:16,508
+our FaceViewController,
+
+24
+00:01:16,510 --> 00:01:18,243
+which is gonna be a facial expression,
+
+25
+00:01:18,245 --> 00:01:22,548
+not surprisingly. All right, so here we are in FaceView,
+
+26
+00:01:22,550 --> 00:01:26,285
+this is where we left off last time. I'm gonna quickly
+
+27
+00:01:26,287 --> 00:01:29,855
+enhance our FaceView to be a little cooler right now if you
+
+28
+00:01:29,857 --> 00:01:33,559
+remember from last time our FaceView has a mouth which we
+
+29
+00:01:33,561 --> 00:01:37,029
+can configure a little bit. We can make it smile and
+
+30
+00:01:37,031 --> 00:01:40,466
+frown and then it has two eyes, okay. And I'm gonna add
+
+31
+00:01:40,468 --> 00:01:43,368
+two things, one I'm gonna make it so he can close those eyes.
+
+32
+00:01:43,370 --> 00:01:46,505
+And another thing I'm gonna do is, I'm gonna add eyebrows.
+
+33
+00:01:46,507 --> 00:01:49,208
+Okay, now I'm gonna do this really fast because the code
+
+34
+00:01:49,210 --> 00:01:51,577
+that it takes me to do this really wouldn't learn that
+
+35
+00:01:51,579 --> 00:01:53,879
+much from going through it, but it's pretty just more,
+
+36
+00:01:53,881 --> 00:01:56,081
+pretty much more of the same of the stuff women doing.
+
+37
+00:01:56,083 --> 00:02:01,120
+So I'm gonna add a couple of more public vars because
+
+38
+00:02:01,122 --> 00:02:03,122
+these are gonna be configurable thing. One is
+
+39
+00:02:03,124 --> 00:02:06,758
+whether the eyes are open, which is gonna be a bull. And
+
+40
+00:02:06,760 --> 00:02:10,462
+I'm gonna say these are gonna start out open, okay?
+
+41
+00:02:10,464 --> 00:02:13,398
+So it's just gonna be the default. And then I'm also
+
+42
+00:02:13,400 --> 00:02:16,568
+going to have something called eyebrowTilt, okay?
+
+43
+00:02:16,570 --> 00:02:20,272
+Which is gonna be a double. And I'm gonna start it at 0.0.
+
+44
+00:02:20,274 --> 00:02:23,575
+It's similar to the kind of the mouth curvature. So
+
+45
+00:02:23,577 --> 00:02:26,979
+we're gonna have -1 be full furrow.
+
+46
+00:02:26,981 --> 00:02:31,016
+And one will be fully relaxed eyebrows, okay?
+
+47
+00:02:31,018 --> 00:02:35,187
+So similar kind of thing as we had for the mouth curvature.
+
+48
+00:02:35,189 --> 00:02:38,190
+So let's do the eyes open first. Quite simple.
+
+49
+00:02:38,192 --> 00:02:42,094
+In path for eye right now. You can see that we use a path for
+
+50
+00:02:42,096 --> 00:02:44,429
+circle, so that's why our eyes are circular. So
+
+51
+00:02:44,431 --> 00:02:48,800
+if my eyes are open, I'm just gonna continue to do that,
+
+52
+00:02:48,802 --> 00:02:50,035
+okay? We'll do to pass the circle.
+
+53
+00:02:50,037 --> 00:02:54,206
+But if the eyes are closed, then instead what I'm gonna do
+
+54
+00:02:54,208 --> 00:02:58,877
+is do this, which is basically use a line.
+
+55
+00:02:58,879 --> 00:03:00,546
+So I'm just gonna draw a horizontal line,
+
+56
+00:03:00,548 --> 00:03:03,815
+if the eyes are closed. Okay? Very simple. Here, BezierPath,
+
+57
+00:03:03,817 --> 00:03:07,786
+move to a point, draw a line. Okay? And then for the brows,
+
+58
+00:03:07,788 --> 00:03:10,422
+you see, you know we have path for eye, we have path for
+
+59
+00:03:10,424 --> 00:03:15,093
+mouth, so I'm just gonna make a path for brows. Which I
+
+60
+00:03:15,095 --> 00:03:19,198
+think I have here, yes. So here's our path for brow and
+
+61
+00:03:19,200 --> 00:03:22,167
+it's pretty straightforward. It's just drawing a line but
+
+62
+00:03:22,169 --> 00:03:28,207
+this line is tilted. Depending on how much tilt we want.
+
+63
+00:03:28,209 --> 00:03:32,077
+And of course we need a little func a little static here to
+
+64
+00:03:32,079 --> 00:03:36,815
+go up in our ratios. Which is the relative position of
+
+65
+00:03:36,817 --> 00:03:40,285
+the brow to the scroll radius, just like we have all these
+
+66
+00:03:40,287 --> 00:03:44,089
+other things that are relative to the radius. Okay? And
+
+67
+00:03:44,091 --> 00:03:46,892
+now that we have pathForBrow, just like we did with
+
+68
+00:03:46,894 --> 00:03:48,594
+pathForEye and pathForMouth, we'll go ahead and
+
+69
+00:03:48,596 --> 00:03:52,831
+stroke those. So I'll say pathFor, Brow, the left one,
+
+70
+00:03:52,833 --> 00:03:58,270
+stroke, and then we'll do a pathForBrow, the right one,
+
+71
+00:03:58,272 --> 00:04:01,073
+and stroke. Okay?
+
+72
+00:04:01,075 --> 00:04:03,408
+So let's go ahead and run, see what we'll look,
+
+73
+00:04:03,410 --> 00:04:08,280
+we should have eyebrows now. Okay,
+
+74
+00:04:08,282 --> 00:04:10,949
+yeah, look we got eyebrows, they're kinda cute. And
+
+75
+00:04:10,951 --> 00:04:12,384
+we should also be able to close the eyes.
+
+76
+00:04:12,386 --> 00:04:16,421
+So I'm gonna change this eyesOpen to false.
+
+77
+00:04:18,559 --> 00:04:22,494
+See if that works, it does, eyes closed.
+
+78
+00:04:22,496 --> 00:04:26,298
+We could set our eyebrowTilt maybe to I don't know -0.5.
+
+79
+00:04:26,300 --> 00:04:33,538
+See what that does. Okay,
+
+80
+00:04:33,540 --> 00:04:36,775
+we have some tilt there. Okay, so you can see with eyebrows,
+
+81
+00:04:36,777 --> 00:04:38,510
+we can make more facial expressions.
+
+82
+00:04:38,512 --> 00:04:39,011
+That's why I put him in there.
+
+83
+00:04:39,013 --> 00:04:42,247
+So we'd have a little more room to maneuver when it
+
+84
+00:04:42,249 --> 00:04:43,048
+comes to facial expressions.
+
+85
+00:04:43,050 --> 00:04:46,318
+I'm gonna do a couple other things here. One is, there's
+
+86
+00:04:46,320 --> 00:04:51,290
+some constants I have in here like my face is always blue.
+
+87
+00:04:51,292 --> 00:04:53,959
+I don't really want that. So I'm gonna make that be a var,
+
+88
+00:04:53,961 --> 00:04:57,029
+so I'm gonna call it color. So I'm gonna go up here and
+
+89
+00:04:57,031 --> 00:05:01,967
+make a var. Color, which is gonna be a UIColor.
+
+90
+00:05:01,969 --> 00:05:06,371
+And I'm gonna let it be blue by default. Whoops UIColor,
+
+91
+00:05:06,373 --> 00:05:10,909
+blueColor by default. And I'm also gonna do a var for
+
+92
+00:05:10,911 --> 00:05:14,579
+the linewidth, okay? Currently, our linewidth is
+
+93
+00:05:14,581 --> 00:05:18,617
+always 5.0, but I'm gonna, and we'll make the default 5.0.
+
+94
+00:05:18,619 --> 00:05:22,454
+But I'm gonna change all those 5.0s with this var, so let's
+
+95
+00:05:22,456 --> 00:05:28,994
+do that. There's 1, 2, 3, 4. Okay, that's our four things.
+
+96
+00:05:28,996 --> 00:05:33,298
+Eyebrows, eyes, our mouth, and the skull. Okay? So now we've
+
+97
+00:05:33,300 --> 00:05:37,402
+kind of made our faceView quite externally usable, okay.
+
+98
+00:05:37,404 --> 00:05:40,772
+All these public functions are something that a controller
+
+99
+00:05:40,774 --> 00:05:44,443
+is likely to use. Because we're part of the view, okay.
+
+100
+00:05:44,445 --> 00:05:48,280
+We're a generic face-drawing view, and so we can be used by
+
+101
+00:05:48,282 --> 00:05:52,084
+any controller that might want to draw a face. Okay? Which is
+
+102
+00:05:52,086 --> 00:05:53,985
+the kind of controller we happen to have now.
+
+103
+00:05:53,987 --> 00:05:54,619
+It's drawing a face. But
+
+104
+00:05:54,621 --> 00:05:57,222
+if we look at our controller right here, it's drawing
+
+105
+00:05:57,224 --> 00:06:01,326
+a face but doesn't really control that face much, okay?
+
+106
+00:06:01,328 --> 00:06:04,563
+It has a view that it has in its storyboard, where we put
+
+107
+00:06:04,565 --> 00:06:08,667
+our face right here, but it's not really doing much. And
+
+108
+00:06:08,669 --> 00:06:12,037
+we'll fix that in a minute. Now, one thing that's kind of
+
+109
+00:06:12,039 --> 00:06:15,140
+annoying is if we look in our storyboard right here.
+
+110
+00:06:15,142 --> 00:06:16,341
+Okay, here's our storyboard right there.
+
+111
+00:06:16,343 --> 00:06:20,312
+We don't see that face and okay we only have one
+
+112
+00:06:20,314 --> 00:06:23,682
+MVC here we know it's a face and the fact that it
+
+113
+00:06:23,684 --> 00:06:24,850
+doesn't show up there,eh. But
+
+114
+00:06:24,852 --> 00:06:27,886
+what if we had like 20 view controllers and this is just,
+
+115
+00:06:27,888 --> 00:06:29,755
+this was the face but there's a whole bunch of other ones.
+
+116
+00:06:29,757 --> 00:06:32,958
+Would be really cool if that face would show up here. Okay.
+
+117
+00:06:32,960 --> 00:06:34,626
+So we can see it in interface build. And in fact,
+
+118
+00:06:34,628 --> 00:06:38,330
+that's really easy to do. All you do is you go to your view,
+
+119
+00:06:38,332 --> 00:06:41,366
+okay? Your custom UIView, faceView. And you just put
+
+120
+00:06:41,368 --> 00:06:46,638
+@IBdesignable at the front. And if you say @IBdesignable,
+
+121
+00:06:46,640 --> 00:06:51,676
+then interface's builder is automatically going to assume,
+
+122
+00:06:51,678 --> 00:06:52,711
+you want me to draw this thing.
+
+123
+00:06:52,713 --> 00:06:54,579
+So you can see, it's even compiling it and drawing it.
+
+124
+00:06:54,581 --> 00:06:59,684
+So now it appears, here in my storyboard, okay. So that's
+
+125
+00:06:59,686 --> 00:07:02,154
+pretty cool. But one thing that's not so cool is, if I
+
+126
+00:07:02,156 --> 00:07:05,724
+click on my faceView and bring up the inspector. I can only
+
+127
+00:07:05,726 --> 00:07:08,593
+inspect the attributes about my faceView that inherits from
+
+128
+00:07:08,595 --> 00:07:11,663
+view like its background color and things like that, right?
+
+129
+00:07:11,665 --> 00:07:15,133
+It'd be really cool if I could inspect things like eyebrow
+
+130
+00:07:15,135 --> 00:07:15,500
+mouth curvature and the color and the scale. Wouldn't it be
+
+131
+00:07:15,502 --> 00:07:18,770
+tilt and
+
+132
+00:07:18,772 --> 00:07:20,572
+cool if I could do all that in interface builder so
+
+133
+00:07:20,574 --> 00:07:23,842
+I could set up the face how I want it to initially look
+
+134
+00:07:23,844 --> 00:07:27,245
+maybe, interface builder and you can do that too.
+
+135
+00:07:27,247 --> 00:07:28,313
+If you go back to faceView.
+
+136
+00:07:28,315 --> 00:07:33,151
+All of these things that are right here, that are settable,
+
+137
+00:07:33,153 --> 00:07:37,022
+you can just put in front of them @IBInspectable.
+
+138
+00:07:37,024 --> 00:07:38,957
+Okay, which means they will show up in the inspector.
+
+139
+00:07:38,959 --> 00:07:42,561
+And so I am gonna make all of these things be inspectable,
+
+140
+00:07:42,563 --> 00:07:47,432
+put inspectable on all these guys. Okay. Could go into
+
+141
+00:07:47,434 --> 00:07:50,068
+interface builder. But if I go here and bring out my
+
+142
+00:07:50,070 --> 00:07:53,238
+utilities now you can see I've still got all the view stuff.
+
+143
+00:07:53,240 --> 00:07:55,774
+But now I've got all these faceView things, so
+
+144
+00:07:55,776 --> 00:07:59,010
+I can set my scale to 0.05. Okay, and that makes it small.
+
+145
+00:07:59,012 --> 00:08:02,814
+Or I could set my color to orange. Okay,
+
+146
+00:08:02,816 --> 00:08:05,383
+San Francisco Giants color, all right! I can make my line
+
+147
+00:08:05,385 --> 00:08:09,254
+width B2 instead of 5, where it's a little thinner, okay?
+
+148
+00:08:09,256 --> 00:08:13,925
+I could set my mouth curvature in here, let's say -0.5.
+
+149
+00:08:13,927 --> 00:08:18,196
+All right, eyes open? On?
+
+150
+00:08:18,198 --> 00:08:22,234
+There we go, okay, see that? 3.9 again.
+
+151
+00:08:22,236 --> 00:08:25,103
+All right, so that's kinda cool that we can do that.
+
+152
+00:08:25,105 --> 00:08:27,372
+And, in fact, when we first run our application,
+
+153
+00:08:27,374 --> 00:08:30,842
+it will use these values. So let's go ahead and run and
+
+154
+00:08:30,844 --> 00:08:32,711
+you're gonna see it's gonna keep this exact face.
+
+155
+00:08:32,713 --> 00:08:35,981
+Line, the color, the line thickness, all these things.
+
+156
+00:08:35,983 --> 00:08:38,316
+Just like if we had set any other attribute over here,
+
+157
+00:08:38,318 --> 00:08:40,819
+background color or something like that. When we run,
+
+158
+00:08:40,821 --> 00:08:43,889
+of course, those would be the things it starts out with,
+
+159
+00:08:43,891 --> 00:08:46,758
+okay? Now, one little thing to watch out for
+
+160
+00:08:46,760 --> 00:08:50,428
+when you're doing this, is [COUGH] these IBInspectable
+
+161
+00:08:50,430 --> 00:08:54,232
+vars, you have to explicitly type them. You see, there,
+
+162
+00:08:54,234 --> 00:08:56,434
+most of these I wouldn't even need to type, right?
+
+163
+00:08:56,436 --> 00:09:00,071
+Swift could infer that that's a double from there. But
+
+164
+00:09:00,073 --> 00:09:00,906
+if you're using the IBInspectable,
+
+165
+00:09:00,908 --> 00:09:03,975
+you have to explicitly type, basically interface builder
+
+166
+00:09:03,977 --> 00:09:07,379
+can't infer it, Swift can, but interface builder can't.
+
+167
+00:09:07,381 --> 00:09:09,748
+So you need to make those explicit, okay.
+
+168
+00:09:09,750 --> 00:09:14,786
+Just a minor deal there. Okay, now, one other thing I wanna
+
+169
+00:09:14,788 --> 00:09:19,224
+talk about here with a view is if somebody sets the scale to
+
+170
+00:09:19,226 --> 00:09:22,093
+something, okay, in the code. Like let's say our
+
+171
+00:09:22,095 --> 00:09:24,696
+controller over here, let's say we have some code in here
+
+172
+00:09:24,698 --> 00:09:29,100
+to set the face view scale. It would actually do nothing.
+
+173
+00:09:29,102 --> 00:09:32,404
+Okay, nothing would change on screen, and why is that?
+
+174
+00:09:32,406 --> 00:09:35,373
+Well because when you set this scale to be 0.5,
+
+175
+00:09:35,375 --> 00:09:39,511
+all you did was set this var, you didn't do anything else,
+
+176
+00:09:39,513 --> 00:09:41,379
+okay? So that var is set to 0.5 and
+
+177
+00:09:41,381 --> 00:09:44,616
+if the face were to redraw, it would redraw smaller but
+
+178
+00:09:44,618 --> 00:09:49,020
+nothing is causing the face to redraw. So any time you have
+
+179
+00:09:49,022 --> 00:09:53,625
+these public vars that you allow to be set, you need to
+
+180
+00:09:53,627 --> 00:09:57,562
+make it so that when they change, the viewer redraws.
+
+181
+00:09:57,564 --> 00:10:00,298
+Okay, now how are we gonna do that? Well we're gonna do that
+
+182
+00:10:00,300 --> 00:10:03,935
+using these property observers we talked about before.
+
+183
+00:10:03,937 --> 00:10:07,172
+Remember, the dil, didSet and the willSet? These are little
+
+184
+00:10:07,174 --> 00:10:10,475
+pieces of code that get executed whenever this,
+
+185
+00:10:10,477 --> 00:10:15,246
+in this case get set, okay? So if this got set to something
+
+186
+00:10:15,248 --> 00:10:19,117
+then in didSet, I wanna re-draw, and how do I re-draw?
+
+187
+00:10:19,119 --> 00:10:24,756
+Maybe I say self.drawRect do I do that? No,
+
+188
+00:10:24,758 --> 00:10:27,926
+I would fail this class if I did that cuz we never call
+
+189
+00:10:27,928 --> 00:10:32,831
+drawRect. We say instead setNeedsDisplay, okay,
+
+190
+00:10:32,833 --> 00:10:38,169
+setNeedsDisplay is how we tell the system, please I need to
+
+191
+00:10:38,171 --> 00:10:42,207
+be redrawn, okay. And it will happen sometime in the future,
+
+192
+00:10:42,209 --> 00:10:45,043
+very close near future but sometime in the future.
+
+193
+00:10:45,045 --> 00:10:48,380
+Now, this is so common to do this. Usually we will take out
+
+194
+00:10:48,382 --> 00:10:51,349
+a little bit of these character-turns here and
+
+195
+00:10:51,351 --> 00:10:55,987
+put this all on the same line. Okay, like that. And
+
+196
+00:10:55,989 --> 00:10:59,524
+we're gonna put this after all of our little vars here.
+
+197
+00:10:59,526 --> 00:11:02,861
+So I'm gonna put it in the place of the comment there.
+
+198
+00:11:02,863 --> 00:11:07,565
+Put one there. The same thing here just so you can easily
+
+199
+00:11:07,567 --> 00:11:11,302
+see it cuz they're a little bit screen real estate
+
+200
+00:11:11,304 --> 00:11:14,205
+challenged here. All right, so now all of these vars,
+
+201
+00:11:14,207 --> 00:11:17,475
+if someone sets it, it's gonna cause this thing to redraw.
+
+202
+00:11:17,477 --> 00:11:18,777
+What's really cool is if they set three or
+
+203
+00:11:18,779 --> 00:11:21,746
+four of them right in a row, it's not gonna redraw three or
+
+204
+00:11:21,748 --> 00:11:23,782
+four times. It's gonna keep saying,
+
+205
+00:11:23,784 --> 00:11:25,750
+I need to be displayed, I need to be displayed,
+
+206
+00:11:25,752 --> 00:11:25,817
+I need to be displayed.
+
+207
+00:11:25,819 --> 00:11:28,553
+But it's not gonna actually display until a little bit
+
+208
+00:11:28,555 --> 00:11:30,822
+later, and they'll all get displayed at once.
+
+209
+00:11:30,824 --> 00:11:33,458
+So it's much more better performance to delay,
+
+210
+00:11:33,460 --> 00:11:37,128
+slightly, to do these things. That's not even the primary
+
+211
+00:11:37,130 --> 00:11:39,164
+reason this is, does, it does it this way, but
+
+212
+00:11:39,166 --> 00:11:44,135
+it's one of the reasons, okay? Everybody got that?
+
+213
+00:11:44,137 --> 00:11:46,438
+Okay, so we're almost always gonna use this didSet.
+
+214
+00:11:46,440 --> 00:11:48,373
+Now you're gonna see we're using the didSet in
+
+215
+00:11:48,375 --> 00:11:50,975
+the controller as well for a slightly different reason,
+
+216
+00:11:50,977 --> 00:11:53,111
+okay? But the did, didSet is super convenient.
+
+217
+00:11:53,113 --> 00:11:57,415
+All right, okay so let's talk about our controller here,
+
+218
+00:11:57,417 --> 00:12:02,020
+it needs a model, okay. I have created a little class over
+
+219
+00:12:02,022 --> 00:12:06,591
+here called FacialExpression, which I'm gonna drag in.
+
+220
+00:12:06,593 --> 00:12:09,461
+I'm gonna copy it in here, okay? When you draw things in,
+
+221
+00:12:09,463 --> 00:12:10,995
+you almost always want this selected.
+
+222
+00:12:10,997 --> 00:12:12,997
+So pay attention to that, you want it to copy in, you don't
+
+223
+00:12:12,999 --> 00:12:16,134
+really want it having a link to the other thing,
+
+224
+00:12:16,136 --> 00:12:16,267
+most of the time.
+
+225
+00:12:16,269 --> 00:12:19,537
+So I'm gonna copy this little FacialExpression in.
+
+226
+00:12:19,539 --> 00:12:22,474
+Let's take a look at FacialExpression. You'll see
+
+227
+00:12:22,476 --> 00:12:25,910
+we'll see FacialExpression right here, is our model.
+
+228
+00:12:25,912 --> 00:12:28,646
+See, it's not a UI thing, it imports only foundation.
+
+229
+00:12:28,648 --> 00:12:31,549
+It's completely UI independent. Its idea of
+
+230
+00:12:31,551 --> 00:12:34,586
+a face is not really the same as a face view. Okay,
+
+231
+00:12:34,588 --> 00:12:37,388
+a face view thinks of mouth curvature and eyebrow tilt and
+
+232
+00:12:37,390 --> 00:12:40,125
+things like that. This doesn't have any of that. It
+
+233
+00:12:40,127 --> 00:12:44,262
+does have eyebrows but it just has Relaxed, Normal, Furrowed.
+
+234
+00:12:44,264 --> 00:12:46,965
+That's the only thing it knows about, those three states.
+
+235
+00:12:46,967 --> 00:12:50,001
+Same thing with Mouth. It's Frown, Smirk, Neutral, Grin,
+
+236
+00:12:50,003 --> 00:12:52,704
+Smile. That's it, it doesn't have mouth curvature.
+
+237
+00:12:52,706 --> 00:12:53,872
+It doesn't even know what that is,
+
+238
+00:12:53,874 --> 00:12:57,509
+okay? One thing kinda cool here, you see these are enums?
+
+239
+00:12:57,511 --> 00:13:00,745
+Notice I have functions on my enums here, okay?
+
+240
+00:13:00,747 --> 00:13:03,114
+I'm not gonna talk about the implementation of those.
+
+241
+00:13:03,116 --> 00:13:04,249
+If you read the reading assignment,
+
+242
+00:13:04,251 --> 00:13:06,684
+you should be able to figure these out. But
+
+243
+00:13:06,686 --> 00:13:09,187
+I got some functions in here with my enums. But
+
+244
+00:13:09,189 --> 00:13:12,490
+really facial expression is just the eyes, eyebrows, and
+
+245
+00:13:12,492 --> 00:13:15,660
+mouth, okay, which is specified by these enums. And
+
+246
+00:13:15,662 --> 00:13:18,463
+some of the enums like eyes even has a state
+
+247
+00:13:18,465 --> 00:13:21,900
+FaceView can't even represent that face. It doesn't have
+
+248
+00:13:21,902 --> 00:13:23,868
+a Squinting, it only knows how to have eyes open and
+
+249
+00:13:23,870 --> 00:13:27,705
+closed. So the point here is that this model has to be
+
+250
+00:13:27,707 --> 00:13:31,643
+interpreted by the controller for that view, okay?
+
+251
+00:13:31,645 --> 00:13:35,213
+The mo, the controller's gonna have to figure out, okay,
+
+252
+00:13:35,215 --> 00:13:37,282
+what does relaxed eyebrow mean? Well, for
+
+253
+00:13:37,284 --> 00:13:39,818
+the face view it means some sort of of eyebrow tilt, and
+
+254
+00:13:39,820 --> 00:13:42,253
+so the controller has to figure out what that is, and
+
+255
+00:13:42,255 --> 00:13:45,824
+tell the view, you see? So this shows the primary
+
+256
+00:13:45,826 --> 00:13:50,128
+role of a controller in your MVC is to interpret
+
+257
+00:13:50,130 --> 00:13:51,563
+the model for the view.
+
+258
+00:13:51,565 --> 00:13:54,065
+It also interprets input in the view for the model and
+
+259
+00:13:54,067 --> 00:13:56,401
+we'll see that when we talk about gestures, okay.
+
+260
+00:13:56,403 --> 00:13:59,003
+That's its kind of primary purpose in the controller.
+
+261
+00:13:59,005 --> 00:14:01,072
+So let's make our controller do that,
+
+262
+00:14:01,074 --> 00:14:04,943
+let's make it turn a facial expression into something in
+
+263
+00:14:04,945 --> 00:14:09,180
+the face view, okay. So in our controller, the first thing
+
+264
+00:14:09,182 --> 00:14:11,749
+we're gonna do is we're gonna create a var here,
+
+265
+00:14:11,751 --> 00:14:14,953
+which is a pointer to our model, and it's just gonna be
+
+266
+00:14:14,955 --> 00:14:17,121
+a FacialExpression, okay. And we are even
+
+267
+00:14:17,123 --> 00:14:19,824
+gonna set it to some facial expression to start it off
+
+268
+00:14:19,826 --> 00:14:22,994
+here. Remember we, with the FacialExpression, which is
+
+269
+00:14:22,996 --> 00:14:28,032
+a struct by the way, we get the free constructor. I,
+
+270
+00:14:28,034 --> 00:14:31,069
+by the way, I can infer this. I don't need to have that,
+
+271
+00:14:31,071 --> 00:14:34,272
+right? So I get the free constructure which is what,
+
+272
+00:14:34,274 --> 00:14:40,678
+eyes are we'll have them be open, and then eyeBrows.
+
+273
+00:14:41,114 --> 00:14:44,749
+We'll have him be normal. I think is what it is,
+
+274
+00:14:44,751 --> 00:14:48,820
+normal. And then, we'll have mouth, which will have,
+
+275
+00:14:48,822 --> 00:14:55,293
+be a smile I'd say, okay? So this is gonna be our default
+
+276
+00:14:55,395 --> 00:14:58,963
+value of our facial expression.
+
+277
+00:14:58,965 --> 00:15:00,732
+So this is the model for our MVC.
+
+278
+00:15:00,734 --> 00:15:05,536
+Now what's interesting about this model is what if it
+
+279
+00:15:05,538 --> 00:15:09,741
+changes? Okay, if it changes, I need to update my view.
+
+280
+00:15:09,743 --> 00:15:15,046
+All right, if, if it changes from smile to a frown
+
+281
+00:15:15,048 --> 00:15:18,917
+I need to change my curvature of my face view. So I'm gonna
+
+282
+00:15:18,919 --> 00:15:23,321
+use that same magic the didSet thing that we did before to
+
+283
+00:15:23,323 --> 00:15:27,692
+update my UI whenever this facial expression changes.
+
+284
+00:15:27,694 --> 00:15:31,229
+And since this is a value type FacialExpression,
+
+285
+00:15:31,231 --> 00:15:34,465
+if any of the vars in that value type change,
+
+286
+00:15:34,467 --> 00:15:37,302
+this didSet is gonna get called, okay?
+
+287
+00:15:37,304 --> 00:15:40,104
+If this were a class, it wouldn't. So
+
+288
+00:15:40,106 --> 00:15:43,675
+luckily it's value type. So this is gonna get called. So
+
+289
+00:15:43,677 --> 00:15:46,945
+we need this update UI. This can be any function we call.
+
+290
+00:15:46,947 --> 00:15:48,680
+I like calling it function, updateUI, but
+
+291
+00:15:48,682 --> 00:15:52,417
+you can do whatever you want. And it's gonna be private,
+
+292
+00:15:52,419 --> 00:15:53,184
+it's a func updateUI.
+
+293
+00:15:53,186 --> 00:15:56,387
+And inside here we have to update our faceView.
+
+294
+00:15:56,389 --> 00:15:59,123
+Okay well, if we're gonna update our face view, we need
+
+295
+00:15:59,125 --> 00:16:02,860
+a pointer to that as well. Okay, how do we make a pointer
+
+296
+00:16:02,862 --> 00:16:06,331
+to something in our view? >> Click drag.
+
+297
+00:16:06,333 --> 00:16:08,232
+Yeah we click, we ctrl drag, right?
+
+298
+00:16:08,234 --> 00:16:09,867
+We made an outlet. So let's just do that.
+
+299
+00:16:09,869 --> 00:16:13,037
+Let's bring our storyboard up here. We've got our face view.
+
+300
+00:16:13,039 --> 00:16:15,640
+Here's our controller right here. I'm just gonna control
+
+301
+00:16:15,642 --> 00:16:18,509
+drag from the face view into here and I'm gonna create
+
+302
+00:16:18,511 --> 00:16:21,679
+an outlet. I'm gonna to call it face view. It's my face
+
+303
+00:16:21,681 --> 00:16:24,782
+view, okay. We used display in our calculator. This is our
+
+304
+00:16:24,784 --> 00:16:30,588
+face view. We click okay here and now we've got this outlet,
+
+305
+00:16:30,590 --> 00:16:32,156
+okay. So now we've got a pointer to this face.
+
+306
+00:16:32,158 --> 00:16:35,226
+So now we can talk to this face set it's curvatures and
+
+307
+00:16:35,228 --> 00:16:37,628
+all that business, right?
+
+308
+00:16:37,630 --> 00:16:42,333
+So, now we've got a pointer to this in our update UI.
+
+309
+00:16:42,335 --> 00:16:44,969
+We can just talk to it and set it based on what
+
+310
+00:16:44,971 --> 00:16:46,838
+the expression is. So how are we gonna do that?
+
+311
+00:16:46,840 --> 00:16:50,008
+All right, well first of all let's start with the eyes. So
+
+312
+00:16:50,010 --> 00:16:55,313
+if the facial expression's eyes are in the state
+
+313
+00:16:55,315 --> 00:16:59,817
+open, then we're gonna send a message to our faceView saying
+
+314
+00:16:59,819 --> 00:17:03,221
+eyes open equals true. So that's an easy one okay our
+
+315
+00:17:03,223 --> 00:17:06,391
+face views very similar to our model in that way, and
+
+316
+00:17:06,393 --> 00:17:10,461
+same thing here closed. We'll do faceview.eyesopen
+
+317
+00:17:10,463 --> 00:17:15,066
+equals false but what about case squinting?
+
+318
+00:17:15,502 --> 00:17:19,137
+Okay, we don't really have faceView.squint, okay we can't
+
+319
+00:17:19,139 --> 00:17:23,307
+do that. So I'm just gonna say eyes open equals false.
+
+320
+00:17:23,309 --> 00:17:26,878
+if you are squinting, eyes are closer to closed than they
+
+321
+00:17:26,880 --> 00:17:28,913
+are to open, okay. So it is the best I can do,
+
+322
+00:17:28,915 --> 00:17:31,482
+and this is the way some times a controller is. It's
+
+323
+00:17:31,484 --> 00:17:34,886
+view might not be perfect at representing the model, it's
+
+324
+00:17:34,888 --> 00:17:37,488
+doing the best it can. Now it might be, we might be sending
+
+325
+00:17:37,490 --> 00:17:40,091
+in a request to the face view guys on our team saying hey,
+
+326
+00:17:40,093 --> 00:17:42,460
+we wanna feature where our face view will do squinting
+
+327
+00:17:42,462 --> 00:17:44,929
+because we got squinting in our model. And they might be,
+
+328
+00:17:44,931 --> 00:17:47,465
+okay we'll take it under advisement and we'll see.
+
+329
+00:17:47,467 --> 00:17:48,833
+But for now we're kind of stuck.
+
+330
+00:17:48,835 --> 00:17:53,438
+So we're gonna do squinting is the same as eyes closed.
+
+331
+00:17:53,440 --> 00:17:54,939
+How about our other two things? Okay,
+
+332
+00:17:54,941 --> 00:17:56,374
+we've got these curvatures to deal with, right?
+
+333
+00:17:56,376 --> 00:18:01,512
+So, we want to say something like faceView.mouthCurvature =
+
+334
+00:18:01,514 --> 00:18:05,650
+something based on the expression's mouth. But
+
+335
+00:18:05,652 --> 00:18:08,553
+the expression's mouth is like grin and frown.
+
+336
+00:18:08,555 --> 00:18:09,187
+What the heck are we gonna do?
+
+337
+00:18:09,189 --> 00:18:11,289
+How are we gonna convert that to a curvature?
+
+338
+00:18:11,291 --> 00:18:11,856
+And what I'm gonna do is,
+
+339
+00:18:11,858 --> 00:18:16,360
+I'm actually going to create a little private dictionary,
+
+340
+00:18:16,362 --> 00:18:21,199
+I'm gonna call it mouthCurvatures. Okay, plural
+
+341
+00:18:21,201 --> 00:18:25,002
+and I'm gonna make it equal to a dictionary. Remember,
+
+342
+00:18:25,004 --> 00:18:27,338
+we can make a dictionary on the fly with square brackets.
+
+343
+00:18:27,340 --> 00:18:30,541
+And then I'm gonna have the keys of this dictionary be
+
+344
+00:18:30,543 --> 00:18:31,909
+mouthCurvatures for my model and
+
+345
+00:18:31,911 --> 00:18:35,146
+I'm gonna have the values be mouthCurvatures for my view.
+
+346
+00:18:35,148 --> 00:18:40,118
+Okay, doubles. All right, so for example let's do
+
+347
+00:18:40,120 --> 00:18:44,722
+FacialExpression.Mouth.Frown. Okay, that's
+
+348
+00:18:44,724 --> 00:18:47,892
+the key. And the values gonna be -1.0 that's the curvature
+
+349
+00:18:47,894 --> 00:18:50,194
+that goes along with that. See what I'm saying? So
+
+350
+00:18:50,196 --> 00:18:52,497
+I'm just creating this dictionary that's mapping
+
+351
+00:18:52,499 --> 00:18:59,103
+between my model and my view. So how about Grin? Notice but
+
+352
+00:18:59,105 --> 00:19:02,473
+by the way, when I do Grin, okay, it's already inferred to
+
+353
+00:19:02,475 --> 00:19:04,342
+the fact that we're doing a FacialExpression.Mouth.
+
+354
+00:19:04,344 --> 00:19:07,578
+So and I do, don't need to repeat this every single time.
+
+355
+00:19:07,580 --> 00:19:10,448
+I can just say the Grin. and the Grin, we'll say, is 0.5.
+
+356
+00:19:10,450 --> 00:19:12,617
+So it's not a full smile, just kind of a little bit
+
+357
+00:19:12,619 --> 00:19:16,854
+of a smile. But a full smile would be 1.0 and
+
+358
+00:19:16,856 --> 00:19:22,660
+a Smirk, now that sounds kinda like a little bit of a frown,
+
+359
+00:19:22,662 --> 00:19:23,227
+but not too much of one.
+
+360
+00:19:23,229 --> 00:19:27,165
+So, we'll -0.5 right there and then there's this neutral
+
+361
+00:19:27,167 --> 00:19:31,736
+mouth position which we'll have be zero point zero. Okay,
+
+362
+00:19:31,738 --> 00:19:34,172
+so, I created these mouth curvatures in a table. So now,
+
+363
+00:19:34,174 --> 00:19:38,242
+down here, I can just let my mouth curvature equal mouth
+
+364
+00:19:38,244 --> 00:19:42,780
+curvatures sub expression.mouth.
+
+365
+00:19:42,782 --> 00:19:45,683
+Okay, now the problem with this, and you can see there's
+
+366
+00:19:45,685 --> 00:19:49,420
+an error here. And can anyone see what the problem here is?
+
+367
+00:19:49,822 --> 00:19:53,824
+This is a dictionary lookup. What is a dictionary lookup?
+
+368
+00:19:53,826 --> 00:19:56,861
+What type does it return? Optional,
+
+369
+00:19:56,863 --> 00:20:00,965
+yeah, so this is a double. It's not an optional, okay?
+
+370
+00:20:00,967 --> 00:20:02,200
+So how are we gonna deal with this?
+
+371
+00:20:02,202 --> 00:20:07,972
+What if facial expression gets enhanced some future date and
+
+372
+00:20:07,974 --> 00:20:10,107
+the expression's not in here?
+
+373
+00:20:10,109 --> 00:20:14,345
+I'm going to have it default to zero. Okay?
+
+374
+00:20:14,347 --> 00:20:18,749
+Remember this defaulting thing right here where you can take
+
+375
+00:20:18,751 --> 00:20:23,020
+something that's a double and if it turns into to nil if it
+
+376
+00:20:23,022 --> 00:20:27,024
+returns nil then you can have a default value there,
+
+377
+00:20:27,026 --> 00:20:30,361
+make sense? Var there. Okay, everyone's
+
+378
+00:20:30,363 --> 00:20:34,131
+cool with what I did there? All right, hopefully if you
+
+379
+00:20:34,133 --> 00:20:36,300
+solve it from calculator it's very similar to that,
+
+380
+00:20:36,302 --> 00:20:38,636
+looking things up in the dictionary. So I'm gonna
+
+381
+00:20:38,638 --> 00:20:41,038
+do with the same thing with the eyebrow tilt okay
+
+382
+00:20:41,040 --> 00:20:44,208
+the eyeBrowTilt equals eyeBrowTilts
+
+383
+00:20:44,210 --> 00:20:48,446
+which is gonna be a dictionary and I'm gonna put the,
+
+384
+00:20:48,448 --> 00:20:53,651
+a facial expression.eyebrows in there and
+
+385
+00:20:53,653 --> 00:20:57,822
+also default that one to zero if we can't find it. And
+
+386
+00:20:57,824 --> 00:20:59,991
+then I'll just make a private var here,
+
+387
+00:20:59,993 --> 00:21:02,393
+we'll call it eyeBrowTilts And
+
+388
+00:21:02,395 --> 00:21:09,000
+this one we'll do FacialExpression.Eyebrows.
+
+389
+00:21:09,002 --> 00:21:11,669
+What do we got here, relaxed: so
+
+390
+00:21:11,671 --> 00:21:16,707
+we'll have relaxed be a CGFloat, which is 0.5, so
+
+391
+00:21:16,709 --> 00:21:20,211
+it's kind of relaxed eyebrows notice I.
+
+392
+00:21:20,213 --> 00:21:23,681
+Oops not CGFloat, that's 0.5 okay that's a double,
+
+393
+00:21:23,683 --> 00:21:25,583
+okay the eyebrow tilts are doubles.
+
+394
+00:21:25,585 --> 00:21:29,220
+So we don't I did not want CG float there.
+
+395
+00:21:29,222 --> 00:21:35,092
+Okay how about .furrowed is -0.5 tilt and
+
+396
+00:21:35,094 --> 00:21:41,132
+.normal we'll make be 0. Okay?
+
+397
+00:21:41,968 --> 00:21:46,337
+Got that? All make sense? So we are doing the same look up
+
+398
+00:21:46,339 --> 00:21:51,309
+there. Okay so we've matched up our model with our view.
+
+399
+00:21:51,311 --> 00:21:54,945
+We've kind of interpreted our model for view. Now,
+
+400
+00:21:54,947 --> 00:21:59,150
+lets go ahead and run this and see what this looks like.
+
+401
+00:22:04,223 --> 00:22:08,025
+Okay, now, hmm this doesn't quite look right. Because,
+
+402
+00:22:08,027 --> 00:22:11,095
+if we look at our model it's supposed to be eyes open.
+
+403
+00:22:11,097 --> 00:22:13,931
+Okay, that's good. Eyebrows normal. No.
+
+404
+00:22:13,933 --> 00:22:16,200
+Those are not normal eyebrows, those are kinda furrowed.
+
+405
+00:22:16,202 --> 00:22:20,071
+And mouth is supposed to be smile. Hmm, no, it's a frown.
+
+406
+00:22:20,073 --> 00:22:24,175
+In fact, all of this here instead of the UI looking like
+
+407
+00:22:24,177 --> 00:22:28,212
+the model it still looks like we set it in the storyboard.
+
+408
+00:22:28,214 --> 00:22:32,717
+Okay, so, why is it that our update UI is not getting
+
+409
+00:22:32,719 --> 00:22:37,188
+called here when we initialize our facial expression?
+
+410
+00:22:37,190 --> 00:22:39,957
+That's because if you're setting a value during
+
+411
+00:22:39,959 --> 00:22:44,929
+initialization, didSet is not called. Okay?
+
+412
+00:22:44,931 --> 00:22:48,966
+It's only called if you set it later. Now why is that?
+
+413
+00:22:48,968 --> 00:22:52,169
+Because you know that when things are being initialized
+
+414
+00:22:52,171 --> 00:22:54,305
+in Swift, they have to be fully initialized before
+
+415
+00:22:54,307 --> 00:22:57,241
+you can do anything with them. So of course, they have to be
+
+416
+00:22:57,243 --> 00:22:59,009
+fully initialized before you can do any of this
+
+417
+00:22:59,011 --> 00:23:03,581
+stuff either. Okay? So, this initialization did happen, but
+
+418
+00:23:03,583 --> 00:23:05,983
+this, you updateUI didn't get called because this was
+
+419
+00:23:05,985 --> 00:23:07,918
+happening during the initialization phase of our
+
+420
+00:23:07,920 --> 00:23:10,821
+faceView controller. Now, if we were to set the expression
+
+421
+00:23:10,823 --> 00:23:14,325
+later, this would get called, our UI would change. So,
+
+422
+00:23:14,327 --> 00:23:16,927
+how do we deal with that? Okay, what we are gonna do
+
+423
+00:23:16,929 --> 00:23:20,131
+there is something we should of done anyway. Which is,
+
+424
+00:23:20,133 --> 00:23:25,669
+when our face view outlet is set by the system.
+
+425
+00:23:25,671 --> 00:23:30,040
+We are gonna do didSet here and Update our UI. Okay?
+
+426
+00:23:30,042 --> 00:23:35,279
+So, this didSet is called when iOS comes along shortly after
+
+427
+00:23:35,281 --> 00:23:39,250
+your MVC is created, and it wires up this outlet. Okay?
+
+428
+00:23:39,252 --> 00:23:42,019
+It hooks up the outlet so it's actually pointing to that face
+
+429
+00:23:42,021 --> 00:23:45,089
+view. So, as soon as that happens, now we have
+
+430
+00:23:45,091 --> 00:23:49,393
+a hold of our face view. Now we can update it. Okay, so
+
+431
+00:23:49,395 --> 00:23:51,929
+we are updating it both when our model changes and
+
+432
+00:23:51,931 --> 00:23:56,767
+the first time our view is hooked up. Okay.
+
+433
+00:23:56,769 --> 00:24:00,171
+And this is something also that we would usually
+
+434
+00:24:00,173 --> 00:24:02,339
+put on the end like this.
+
+435
+00:24:07,747 --> 00:24:10,347
+Okay we might even do it here I might even leave this here
+
+436
+00:24:10,349 --> 00:24:13,083
+just to emphasize that we're doing this but again this
+
+437
+00:24:13,085 --> 00:24:16,587
+would be a common thing to throw on the end there okay.
+
+438
+00:24:16,589 --> 00:24:21,091
+All right, so now let's run, now when Swift
+
+439
+00:24:21,093 --> 00:24:24,161
+iOS basically comes along and hooks up that face view.
+
+440
+00:24:24,163 --> 00:24:28,165
+Boom. It's going to be updated with our model, okay?
+
+441
+00:24:28,167 --> 00:24:30,634
+And so now if we change our model here, let's make
+
+442
+00:24:30,636 --> 00:24:35,773
+the eyebrows be relaxed. We'll make the mouth be a smirk.
+
+443
+00:24:35,775 --> 00:24:39,610
+Let's get those eyes closed. Okay. And we change all of
+
+444
+00:24:39,612 --> 00:24:42,613
+this in the model, then our view should be reflecting our
+
+445
+00:24:42,615 --> 00:24:49,553
+model. Okay, and there it is. Kay? All good?
+
+446
+00:24:49,555 --> 00:24:53,057
+Everyone understand what we're doing there with our model?
+
+447
+00:24:53,793 --> 00:24:57,061
+Okay. So let's go back to the slides and
+
+448
+00:24:57,063 --> 00:25:00,030
+talk a little bit about gestures and then we'll come
+
+449
+00:25:00,032 --> 00:25:04,301
+back and add some gestures to our FACEIT right here.
+
+450
+00:25:11,711 --> 00:25:15,513
+Okay. So, we saw last time how to draw in a view.
+
+451
+00:25:15,515 --> 00:25:19,116
+We drew the mouth, we drew the eyes, we did the eyebrows, but
+
+452
+00:25:19,118 --> 00:25:22,086
+all of these things. We know how to do that pretty much,
+
+453
+00:25:22,088 --> 00:25:22,653
+right? We're using the use,
+
+454
+00:25:22,655 --> 00:25:25,689
+UI bezier path in our draw rect, not so hard.
+
+455
+00:25:25,691 --> 00:25:29,727
+What about gestures? Okay? So this is input from the user on
+
+456
+00:25:29,729 --> 00:25:35,733
+the screen. Now, we can get the location and movement
+
+457
+00:25:35,735 --> 00:25:38,235
+of every single finger that touches down on the screen,
+
+458
+00:25:38,237 --> 00:25:42,573
+that's possible. Okay? There's API for doing that, but we
+
+459
+00:25:42,575 --> 00:25:46,010
+virtually never do that ever. Okay? Why don't we do that?
+
+460
+00:25:46,012 --> 00:25:49,547
+The reason for that is that the user thinks of interacting
+
+461
+00:25:49,549 --> 00:25:53,417
+with your UI as a gesture, like, they're swiping, or
+
+462
+00:25:53,419 --> 00:25:56,787
+they're pinching. Okay, where they're panning around.
+
+463
+00:25:56,789 --> 00:25:59,023
+Those are gestures that they're making.
+
+464
+00:25:59,025 --> 00:26:02,259
+So iOS has an abstraction layer that lets your
+
+465
+00:26:02,261 --> 00:26:06,630
+app think of the input as gestures as well, okay? So
+
+466
+00:26:06,632 --> 00:26:07,398
+you're gonna get those gestures and
+
+467
+00:26:07,400 --> 00:26:10,067
+do something when they happen. There's predefined gestures.
+
+468
+00:26:10,069 --> 00:26:13,304
+The great thing about that is, a swipe is exactly the same
+
+469
+00:26:13,306 --> 00:26:16,273
+thing in every single app. Okay? It's like, you know,
+
+470
+00:26:16,275 --> 00:26:19,209
+know, the speed of swiping and how far you have to swipe,
+
+471
+00:26:19,211 --> 00:26:20,778
+all that's exactly the same in every single app,
+
+472
+00:26:20,780 --> 00:26:23,247
+cuz every single app is using these gestures. Okay,
+
+473
+00:26:23,249 --> 00:26:25,716
+if you had to do your own swipe, well, you know,
+
+474
+00:26:25,718 --> 00:26:27,017
+did, did the person swipe fast enough?
+
+475
+00:26:27,019 --> 00:26:29,853
+Or was that a pan? You'd have to do all that logic yourself.
+
+476
+00:26:29,855 --> 00:26:30,487
+It would be a pain in the neck, and
+
+477
+00:26:30,489 --> 00:26:34,525
+it would be inconsistent between applications. Okay. So
+
+478
+00:26:34,527 --> 00:26:38,696
+gestures are recognized by instances of a class called
+
+479
+00:26:38,698 --> 00:26:42,066
+UIGestureRecognizer. Okay, good name. But
+
+480
+00:26:42,068 --> 00:26:44,468
+UIGestureRecognizer itself is abstract.
+
+481
+00:26:44,470 --> 00:26:47,771
+You never actually instatiate one. Instead there's a bunch
+
+482
+00:26:47,773 --> 00:26:50,140
+of sub-classes of UIGestureRecognizer. And
+
+483
+00:26:50,142 --> 00:26:53,777
+those are what you instantiate to get the kind of gesture you
+
+484
+00:26:53,779 --> 00:26:55,746
+want. So there's pan gesture recognizer and
+
+485
+00:26:55,748 --> 00:26:58,916
+pinch gesture resto recognizer and tap and swipe gesture
+
+486
+00:26:58,918 --> 00:27:03,554
+recognizer etc. Okay. Now when you wanna use a recognizer,
+
+487
+00:27:03,556 --> 00:27:06,256
+there's really two parts to it, okay.
+
+488
+00:27:06,258 --> 00:27:11,028
+One is you have to get some UIView to.
+
+489
+00:27:11,030 --> 00:27:14,465
+Take on this gesture recognizer and recognize that
+
+490
+00:27:14,467 --> 00:27:17,034
+gesture. So there's the gesture recognition part
+
+491
+00:27:17,036 --> 00:27:19,203
+which is done by creating a gesture recognizer and
+
+492
+00:27:19,205 --> 00:27:23,107
+then a view to use it. Only views can recognize gesdri,
+
+493
+00:27:23,109 --> 00:27:27,077
+gestures not controllers. They can't recognize it only views.
+
+494
+00:27:27,079 --> 00:27:29,947
+Okay? So part one is to create the gesture recognizer you
+
+495
+00:27:29,949 --> 00:27:31,682
+want, configure it how you want, and
+
+496
+00:27:31,684 --> 00:27:35,619
+then ask some view please start recognizing this. Okay?
+
+497
+00:27:35,621 --> 00:27:39,957
+Then part two is, what if the recognizer does recognize it?
+
+498
+00:27:39,959 --> 00:27:43,193
+Then it needs to have that handled some how. And
+
+499
+00:27:43,195 --> 00:27:44,995
+that's done with a gesture handler.
+
+500
+00:27:44,997 --> 00:27:46,664
+So you've got gesture recognizers and
+
+501
+00:27:46,666 --> 00:27:50,067
+gesture handlers, okay? And the handler is called
+
+502
+00:27:50,069 --> 00:27:53,370
+as the recognizer goes through a basically a state machine
+
+503
+00:27:53,372 --> 00:27:55,506
+of recognizing this gesture. Okay, and
+
+504
+00:27:55,508 --> 00:27:58,142
+we'll talk about what that state machine looks like. But
+
+505
+00:27:58,144 --> 00:27:58,475
+it's called repeatedly,
+
+506
+00:27:58,477 --> 00:28:01,145
+the handler's gonna be called repeatedly, as the gesture
+
+507
+00:28:01,147 --> 00:28:03,080
+goes through the process of being recognized and
+
+508
+00:28:03,082 --> 00:28:06,383
+moving and all the things it does. Okay now usually
+
+509
+00:28:06,385 --> 00:28:10,454
+the first of these things the creating of a recognizer and
+
+510
+00:28:10,456 --> 00:28:10,821
+adding it to some
+
+511
+00:28:10,823 --> 00:28:14,191
+view is usually done by your controller. Okay.
+
+512
+00:28:14,193 --> 00:28:16,560
+It doesn't have to be done by your controller but
+
+513
+00:28:16,562 --> 00:28:20,030
+it's a good way for
+
+514
+00:28:20,032 --> 00:28:22,866
+its views. Okay the views are the minion of the controller
+
+515
+00:28:22,868 --> 00:28:26,603
+anyway. So, the controller wants to control its minions.
+
+516
+00:28:26,605 --> 00:28:30,541
+So, it might usually be the one that wants to
+
+517
+00:28:30,543 --> 00:28:32,976
+add the gesture recognizer to a view but
+
+518
+00:28:32,978 --> 00:28:36,013
+some views, the gesture recognition is so
+
+519
+00:28:36,015 --> 00:28:39,783
+fundamental to who they are that they add it themselves.
+
+520
+00:28:39,785 --> 00:28:40,084
+They add it themselves.
+
+521
+00:28:40,086 --> 00:28:42,653
+For example, ScrollView. Okay what would a ScrollView
+
+522
+00:28:42,655 --> 00:28:45,456
+be without a pan gesture. Just scrolling up and down it would
+
+523
+00:28:45,458 --> 00:28:48,726
+be useless it wouldn't even be a ScrollView anymore.
+
+524
+00:28:48,728 --> 00:28:52,262
+So ScrollView adds a pan gesture recognizer and
+
+525
+00:28:52,264 --> 00:28:54,131
+a pinch gesture recognizer to itself.
+
+526
+00:28:54,133 --> 00:28:58,001
+Probably in it's initializer. Okay but lot of the times your
+
+527
+00:28:58,003 --> 00:28:59,903
+controller that's adding the gesture,
+
+528
+00:28:59,905 --> 00:29:03,140
+again the controller can't do the recognition to gesture
+
+529
+00:29:03,142 --> 00:29:05,576
+only of you with the gesture recognizer can. But
+
+530
+00:29:05,578 --> 00:29:08,879
+the controller can add that gesture recognizer create and
+
+531
+00:29:08,881 --> 00:29:11,582
+add the gesture I can add it to one of its views in its
+
+532
+00:29:11,584 --> 00:29:17,154
+view. Okay, the second thing that handler that handles it.
+
+533
+00:29:17,156 --> 00:29:19,723
+Well that could be handled by the controller or
+
+534
+00:29:19,725 --> 00:29:20,691
+it might be handled by the view.
+
+535
+00:29:20,693 --> 00:29:23,393
+It could even be handled by someone else. Would never be
+
+536
+00:29:23,395 --> 00:29:26,663
+handled by your model because UI independent. But it could
+
+537
+00:29:26,665 --> 00:29:30,100
+be anyone in the controller view camps can handle it.
+
+538
+00:29:30,102 --> 00:29:34,872
+Generally, kind of, if the things that's the gesture is
+
+539
+00:29:34,874 --> 00:29:38,509
+doing is only modifying how the view displays itself,
+
+540
+00:29:38,511 --> 00:29:42,012
+like in our Faceview, it was just the scale of the view or
+
+541
+00:29:42,014 --> 00:29:44,414
+maybe somehow it was change in the color of the view.
+
+542
+00:29:44,416 --> 00:29:47,518
+Then the view is probably going to handle the gesture.
+
+543
+00:29:47,520 --> 00:29:49,052
+Okay, it's gonna both recognize it
+
+544
+00:29:49,054 --> 00:29:52,990
+with the recognizers and handle it. But if the gesture
+
+545
+00:29:52,992 --> 00:29:56,260
+is changing the model, then definitely the controller
+
+546
+00:29:56,262 --> 00:29:58,662
+would be the handler. Do you see why that is?
+
+547
+00:29:58,664 --> 00:30:00,597
+Because the view can't see the model, okay,
+
+548
+00:30:00,599 --> 00:30:03,934
+but the controller can. So the controller would set itself
+
+549
+00:30:03,936 --> 00:30:07,004
+as the recognizer of anything that's gonna affect the model.
+
+550
+00:30:07,006 --> 00:30:11,308
+We'll see that in the demo as well. Okay, so how do we
+
+551
+00:30:11,310 --> 00:30:15,445
+add a gesture to UIView? We've decided we want a view,
+
+552
+00:30:15,447 --> 00:30:18,515
+in this case lets say to recognize pan.
+
+553
+00:30:18,517 --> 00:30:21,752
+Okay a pan is putting your finger down on the screen and
+
+554
+00:30:21,754 --> 00:30:23,287
+moving it around without lifting it up.
+
+555
+00:30:23,289 --> 00:30:26,023
+And when you lift it up the pan is over. Kay,
+
+556
+00:30:26,025 --> 00:30:27,157
+that's what a pan is basically.
+
+557
+00:30:27,159 --> 00:30:30,160
+You're panning your finger around. On the screen.
+
+558
+00:30:30,162 --> 00:30:33,831
+All right? So if we wanted to do that. Well, one, so we have
+
+559
+00:30:33,833 --> 00:30:37,067
+to somewhere in our controller code add a pan gesture
+
+560
+00:30:37,069 --> 00:30:40,437
+recognizer to the view that we want the panning to happen in.
+
+561
+00:30:40,439 --> 00:30:45,142
+Okay? Well a great place to do that is in that didSet, okay?
+
+562
+00:30:45,144 --> 00:30:48,111
+Of the outlet. Cuz as soon as that view that
+
+563
+00:30:48,113 --> 00:30:48,145
+as soon as we get a pointer to it, let's immediately just add
+
+564
+00:30:48,147 --> 00:30:51,381
+we want to pan,
+
+565
+00:30:51,383 --> 00:30:53,350
+the gesture recognizer right there. Okay.
+
+566
+00:30:53,352 --> 00:30:55,886
+And we know that this didSet right here.
+
+567
+00:30:55,888 --> 00:30:58,622
+Okay we already saw this in the demo I just did. This
+
+568
+00:30:58,624 --> 00:31:01,758
+didSet, when you're doing it to an outlet. This gets called
+
+569
+00:31:01,760 --> 00:31:05,963
+only once. It gets called when iOS first hooks up that view.
+
+570
+00:31:05,965 --> 00:31:10,567
+Kay, perfect time to go add a gesture recognizer. Okay, so
+
+571
+00:31:10,569 --> 00:31:14,938
+we're gonna do that. First, we are going to create the pan
+
+572
+00:31:14,940 --> 00:31:18,275
+gesture recognizer. Okay, here is a concrete subclass of
+
+573
+00:31:18,277 --> 00:31:21,478
+UIGestureRecognizer called pan gesture recognizer.
+
+574
+00:31:21,480 --> 00:31:26,617
+It takes two arguments here. The first is who is going
+
+575
+00:31:26,619 --> 00:31:31,822
+to handle this gesture when I recognize it. Okay.
+
+576
+00:31:31,824 --> 00:31:33,957
+So this gesture pan gesture recognizer saying hey,
+
+577
+00:31:33,959 --> 00:31:36,760
+if I recognize a pan, who's gonna handle it for me?
+
+578
+00:31:36,762 --> 00:31:40,764
+And the answer is, self, so that's the controller. Okay.
+
+579
+00:31:40,766 --> 00:31:42,499
+Cuz there's an outlet in the controller so
+
+580
+00:31:42,501 --> 00:31:44,968
+the target itself means the controller is going to
+
+581
+00:31:44,970 --> 00:31:50,007
+handle this pan itself. Okay. The second argument here.
+
+582
+00:31:50,009 --> 00:31:55,379
+Is what method do you want me to invoke in self?
+
+583
+00:31:55,381 --> 00:31:58,749
+When this gets recognized, okay?
+
+584
+00:31:58,751 --> 00:32:00,984
+Now there's some kind of funky syntax here.
+
+585
+00:32:00,986 --> 00:32:05,989
+This has to be an Objective-C runtime compatible selector,
+
+586
+00:32:05,991 --> 00:32:10,093
+okay? That just means a selector, a method, okay,
+
+587
+00:32:10,095 --> 00:32:10,928
+the name of a method,
+
+588
+00:32:10,930 --> 00:32:14,631
+that is visible to the Objective-C runtime. Now, for
+
+589
+00:32:14,633 --> 00:32:17,701
+this to be visible to run to the Objective-C runtime,
+
+590
+00:32:17,703 --> 00:32:21,538
+this method must be in a class that inherits from NS object.
+
+591
+00:32:21,540 --> 00:32:24,641
+Remember I was talking about that NS object thing and
+
+592
+00:32:24,643 --> 00:32:25,776
+sometimes you're gonna need it, well,
+
+593
+00:32:25,778 --> 00:32:28,345
+here you would need it. Now you don't usually care about
+
+594
+00:32:28,347 --> 00:32:31,281
+that here, because this is almost always being handled by
+
+595
+00:32:31,283 --> 00:32:34,952
+either a UI view controller which definitely inherits from
+
+596
+00:32:34,954 --> 00:32:35,619
+NS objects or a UI view,
+
+597
+00:32:35,621 --> 00:32:38,322
+which definitely inherits from NS object, right? So
+
+598
+00:32:38,324 --> 00:32:41,692
+you usually don't care, okay? You're not usually going to be
+
+599
+00:32:41,694 --> 00:32:44,761
+trying to send this to some object that's a Swift object
+
+600
+00:32:44,763 --> 00:32:48,699
+that doesn't inherit from NS object. But this syntax here
+
+601
+00:32:48,701 --> 00:32:53,070
+means create an Objective-C compatible selector, okay?
+
+602
+00:32:53,072 --> 00:32:56,573
+Selector just means a kind of an identifier for a method.
+
+603
+00:32:56,575 --> 00:33:00,911
+And here is just the class, a dot, and then the name of
+
+604
+00:33:00,913 --> 00:33:04,648
+the method including the argument names. Don't forget
+
+605
+00:33:04,650 --> 00:33:07,951
+the argument names here. Now, this pan method that I'm gonna
+
+606
+00:33:07,953 --> 00:33:11,989
+show you on the next screen, it has one argument.
+
+607
+00:33:11,991 --> 00:33:14,958
+That argument is the pan gesture recognizer.
+
+608
+00:33:14,960 --> 00:33:16,994
+So just like when we have target action, and
+
+609
+00:33:16,996 --> 00:33:19,863
+we have a button that has the sender is sending itself.
+
+610
+00:33:19,865 --> 00:33:22,332
+Same thing here, when we have a pan gesture recognizer and
+
+611
+00:33:22,334 --> 00:33:25,502
+it starts to recognize, it sends this pan method
+
+612
+00:33:25,504 --> 00:33:29,706
+here to the view controller with itself as the argument.
+
+613
+00:33:29,708 --> 00:33:32,409
+Now you might say, why is this underbar right here?
+
+614
+00:33:32,411 --> 00:33:35,345
+Why don't I have the name of whatever this first keyword
+
+615
+00:33:35,347 --> 00:33:39,349
+is? And that's because I don't really care what that name is.
+
+616
+00:33:39,351 --> 00:33:39,883
+I just wanna make it clear,
+
+617
+00:33:39,885 --> 00:33:44,221
+I want the version of pan that has one argument. Now if I had
+
+618
+00:33:44,223 --> 00:33:49,426
+multiple, pan methods that had different first, names there,
+
+619
+00:33:49,428 --> 00:33:52,829
+then I would have to put the name in there. But I can put
+
+620
+00:33:52,831 --> 00:33:56,133
+underbar here because underbar in Swift means, I don't care,
+
+621
+00:33:56,135 --> 00:33:59,269
+whatever, okay? I don't really care what this is. It's
+
+622
+00:33:59,271 --> 00:34:02,272
+a substitute for I don't care. So I don't really care here.
+
+623
+00:34:02,274 --> 00:34:05,675
+So I just wanna introduce that you can do this underbar here.
+
+624
+00:34:05,677 --> 00:34:09,179
+But if I don't put this _:) here, then it's gonna try and
+
+625
+00:34:09,181 --> 00:34:10,981
+call a pan method that has no arguments.
+
+626
+00:34:10,983 --> 00:34:14,017
+So be careful, if you want the one that has the gesture
+
+627
+00:34:14,019 --> 00:34:17,854
+recognizer as an argument, you gotta put that in there, okay?
+
+628
+00:34:17,856 --> 00:34:21,458
+So that's specifying the selector. And then I just turn
+
+629
+00:34:21,460 --> 00:34:25,562
+on this recognizer by taking the view, this is the UIView,
+
+630
+00:34:25,564 --> 00:34:30,434
+this pannableView, okay? And adding this thing I created as
+
+631
+00:34:30,436 --> 00:34:34,504
+a gesture recognizer, okay? As soon as I add that,
+
+632
+00:34:34,506 --> 00:34:38,108
+this view is gonna start recognizing pan gestures,
+
+633
+00:34:38,110 --> 00:34:41,378
+okay? And when it does, it's gonna send this method to
+
+634
+00:34:41,380 --> 00:34:46,516
+self which is the controller, got it? Okay, makes sense,
+
+635
+00:34:46,518 --> 00:34:48,985
+that's what we're doing there? All right, so now,
+
+636
+00:34:48,987 --> 00:34:50,420
+let's talk about how we implement this handler?
+
+637
+00:34:50,422 --> 00:34:52,656
+This method right here, this pan thing, okay?
+
+638
+00:34:52,658 --> 00:34:57,060
+What does that look like to implement? To,
+
+639
+00:34:57,062 --> 00:34:59,663
+to understand how we're gonna implement such a method, we
+
+640
+00:34:59,665 --> 00:35:02,766
+needed to understand a little bit more about the concrete
+
+641
+00:35:02,768 --> 00:35:04,668
+subclasses of UI gesture recognizer. So
+
+642
+00:35:04,670 --> 00:35:09,272
+let's look at pan, okay? So pan, UIPanGestureRecognizer,
+
+643
+00:35:09,274 --> 00:35:12,943
+it has a few methods on it that are specific to panning,
+
+644
+00:35:12,945 --> 00:35:15,045
+okay? For example, it has translationInView.
+
+645
+00:35:15,047 --> 00:35:19,783
+It takes a UIView and tells you how far the pan has moved
+
+646
+00:35:19,785 --> 00:35:23,053
+in that view's coordinate system, okay?
+
+647
+00:35:23,055 --> 00:35:25,789
+Which is exactly what you want for a pan cuz you wanna know
+
+648
+00:35:25,791 --> 00:35:29,459
+where you are, so calls wanted to know how far you moved?
+
+649
+00:35:29,461 --> 00:35:32,129
+It even has velocity in view, we'll tell you how fast
+
+650
+00:35:32,131 --> 00:35:34,998
+the pan is happening, okay? If you're ripping it around
+
+651
+00:35:35,000 --> 00:35:36,833
+versus going really really really really slow.
+
+652
+00:35:36,835 --> 00:35:39,002
+Like if you had a drawing app, when you're going really slow,
+
+653
+00:35:39,004 --> 00:35:40,270
+you might be drawing really carefully.
+
+654
+00:35:40,272 --> 00:35:41,271
+And if you're zipping it around,
+
+655
+00:35:41,273 --> 00:35:43,874
+now you're making big arcs or something, who knows? And
+
+656
+00:35:43,876 --> 00:35:47,511
+it even has set translation, which is setting this.
+
+657
+00:35:47,513 --> 00:35:48,845
+Why would you ever want to set this?
+
+658
+00:35:48,847 --> 00:35:53,583
+Well, if you don't set this, okay? Then this translationVew
+
+659
+00:35:53,585 --> 00:35:56,620
+is going to be the cumulative translationInView,
+
+660
+00:35:56,622 --> 00:36:00,090
+okay? It's how far the pan has moved since it started,
+
+661
+00:36:00,092 --> 00:36:04,227
+the cumulative thing. If you what you want instead is, how
+
+662
+00:36:04,229 --> 00:36:07,831
+much it's changed since last time you told me about it,
+
+663
+00:36:07,833 --> 00:36:11,468
+okay? You can constantly reset this to zero.
+
+664
+00:36:11,470 --> 00:36:13,637
+If you constantly reset this translation to zero,
+
+665
+00:36:13,639 --> 00:36:14,504
+then the next time you get it,
+
+666
+00:36:14,506 --> 00:36:18,408
+it's gonna be the translation incremental, okay? Tiny bit,
+
+667
+00:36:18,410 --> 00:36:21,411
+little tiny bit it moves since the last time, okay?
+
+668
+00:36:21,413 --> 00:36:24,748
+So you'll see in the demo that we we will reset this to zero
+
+669
+00:36:24,750 --> 00:36:28,218
+every time, cuz we just want the incremental panning, okay?
+
+670
+00:36:28,220 --> 00:36:32,956
+All right, so the abstract superclass of UI pan gesture
+
+671
+00:36:32,958 --> 00:36:37,761
+also provides a very important var, which is the state.
+
+672
+00:36:37,763 --> 00:36:40,730
+Okay, I told you that these gesture recognizers go through
+
+673
+00:36:40,732 --> 00:36:44,568
+a state machine, okay? And this is how you can find out
+
+674
+00:36:44,570 --> 00:36:48,371
+in your handler what state the gesture is in.
+
+675
+00:36:48,373 --> 00:36:52,409
+So they all start around in this state possible, okay?
+
+676
+00:36:52,411 --> 00:36:55,478
+UIGestureRecognizerState.Poss- ible. Then for
+
+677
+00:36:55,480 --> 00:36:59,015
+a discrete gesture, like a swipe, once the swipe happens,
+
+678
+00:36:59,017 --> 00:37:02,652
+it immediately goes to the state recognized, okay?
+
+679
+00:37:02,654 --> 00:37:03,720
+It recognized the swipe. So
+
+680
+00:37:03,722 --> 00:37:07,591
+your handler gets called, the state will be recognized. For
+
+681
+00:37:07,593 --> 00:37:11,828
+a continuous gesture like a pan or a pinch, okay? It goes
+
+682
+00:37:11,830 --> 00:37:15,599
+to the state Began as soon as the pan gets held down, and
+
+683
+00:37:15,601 --> 00:37:18,768
+as soon as the pan starts moving it keeps going to
+
+684
+00:37:18,770 --> 00:37:21,471
+the state Changed. Change, change, change, change,
+
+685
+00:37:21,473 --> 00:37:23,306
+change, the handler keeps getting called over and
+
+686
+00:37:23,308 --> 00:37:25,208
+over and over and over and over with Changed, okay?
+
+687
+00:37:25,210 --> 00:37:28,812
+And every time this translation is changing, okay?
+
+688
+00:37:28,814 --> 00:37:33,883
+And then, when the finger goes up, then it goes to Ended.
+
+689
+00:37:33,885 --> 00:37:38,188
+Make sense? Now there's couple other states here, Failed and
+
+690
+00:37:38,190 --> 00:37:41,925
+Cancelled. Like if you're doing the middle of a pan and
+
+691
+00:37:41,927 --> 00:37:43,760
+a phone call comes in, okay?
+
+692
+00:37:43,762 --> 00:37:45,996
+Then you're gesture is gonna get cancelled,
+
+693
+00:37:45,998 --> 00:37:49,032
+okay? So you might or might not have to deal with that.
+
+694
+00:37:49,034 --> 00:37:52,035
+If you're dealing with your pan incrementally,
+
+695
+00:37:52,037 --> 00:37:54,638
+then who cares if it gets interrupted?
+
+696
+00:37:54,640 --> 00:37:55,605
+You were moving the thing incrementally.
+
+697
+00:37:55,607 --> 00:37:58,074
+If you are dealing with your pan with some big
+
+698
+00:37:58,076 --> 00:38:01,678
+thing at the end, when the pan ends, then you better do in
+
+699
+00:38:01,680 --> 00:38:04,547
+here what you were gonna do when it ended, okay?
+
+700
+00:38:04,549 --> 00:38:07,617
+But a lot of times you don't care cuz you're doing all
+
+701
+00:38:07,619 --> 00:38:09,919
+the work in Changed so Cancelled and Failed is
+
+702
+00:38:09,921 --> 00:38:13,256
+just like Ended but you don't notice the finger going up.
+
+703
+00:38:13,258 --> 00:38:16,793
+Well, no big deal. Okay, so now that I have all this
+
+704
+00:38:16,795 --> 00:38:17,927
+information about a pan gesture,
+
+705
+00:38:17,929 --> 00:38:21,831
+how do I make a handler that handles a pan gesture, okay?
+
+706
+00:38:21,833 --> 00:38:23,500
+This is what the code would look like. This code is gonna
+
+707
+00:38:23,502 --> 00:38:25,969
+be in my controller because I said the controller is gonna
+
+708
+00:38:25,971 --> 00:38:30,440
+handle the pan. And first I'm gonna look at the state, okay?
+
+709
+00:38:30,442 --> 00:38:35,111
+Of the, okay, yeah, I'm sorry, here's that pan_:),
+
+710
+00:38:35,113 --> 00:38:37,380
+you see, this pan takes an argument,
+
+711
+00:38:37,382 --> 00:38:39,983
+okay? Instead of underbar there I could have put gesture
+
+712
+00:38:39,985 --> 00:38:42,218
+because that's what I called it here, gesture, but
+
+713
+00:38:42,220 --> 00:38:45,188
+I don't care. But, this one take an argument,
+
+714
+00:38:45,190 --> 00:38:47,190
+you could have pan with no arguments here and
+
+715
+00:38:47,192 --> 00:38:50,293
+nothing there and this would not pass the pan gesture along
+
+716
+00:38:50,295 --> 00:38:52,896
+as an argument. But, here I need the pan gesture,
+
+717
+00:38:52,898 --> 00:38:56,499
+cuz I need to know how far the pan is gone, okay? So, next
+
+718
+00:38:56,501 --> 00:39:00,370
+I'm gonna switch on the state that the pan gesture is in and
+
+719
+00:39:00,372 --> 00:39:05,608
+if it's Changed Or Ended, then I am going to update something
+
+720
+00:39:05,610 --> 00:39:08,311
+in my controller, okay? Otherwise,
+
+721
+00:39:08,313 --> 00:39:10,947
+I'm gonna ignore it, okay? If it's Cancelled or Failed or
+
+722
+00:39:10,949 --> 00:39:15,151
+if it Began, I don't care. I'm only interested when it moves,
+
+723
+00:39:15,153 --> 00:39:17,053
+okay? So that's why I'm only looking at this.
+
+724
+00:39:17,055 --> 00:39:19,656
+Now, I wanna show you this kinda cool thing in Switch.
+
+725
+00:39:19,658 --> 00:39:22,459
+Hopefully you got this in your homework? But there's this
+
+726
+00:39:22,461 --> 00:39:25,061
+thing, fallthrough. Remember that Swift cases
+
+727
+00:39:25,063 --> 00:39:28,631
+don't fall through to the next case like they do in C, okay?
+
+728
+00:39:28,633 --> 00:39:31,368
+But you can force them to fall through with fallthrough.
+
+729
+00:39:31,370 --> 00:39:34,504
+Now, I probably wouldn't write code like this,
+
+730
+00:39:34,506 --> 00:39:37,841
+I would just say case.Changed, .Ended, okay?
+
+731
+00:39:37,843 --> 00:39:39,442
+That's a easier way to do this, but
+
+732
+00:39:39,444 --> 00:39:42,912
+I just wanted to show you fallthrough, okay? All right,
+
+733
+00:39:42,914 --> 00:39:46,616
+so here inside, when things have Changed or Ended,
+
+734
+00:39:46,618 --> 00:39:50,653
+I'm gonna get the translation in the pannableView. Okay,
+
+735
+00:39:50,655 --> 00:39:53,957
+remember this to that outlet? I'm gonna get that translation
+
+736
+00:39:53,959 --> 00:39:56,559
+from the gesture. And then I'm gonna go and
+
+737
+00:39:56,561 --> 00:39:59,629
+update something that depends on where the pan is.
+
+738
+00:39:59,631 --> 00:40:02,966
+I've got, I know where the pan, how far it has moved. So
+
+739
+00:40:02,968 --> 00:40:06,836
+I'm just gonna update what, something that needs that.
+
+740
+00:40:06,838 --> 00:40:10,039
+And then I'm gonna set the translation back to 0.
+
+741
+00:40:10,041 --> 00:40:13,910
+Okay, this also could be CGPoint.Zero if you want. But
+
+742
+00:40:13,912 --> 00:40:15,078
+see, I'm gonna set it back to 0 so
+
+743
+00:40:15,080 --> 00:40:17,113
+that the next time I get called to my handler,
+
+744
+00:40:17,115 --> 00:40:19,983
+next time it comes back around, this translation will
+
+745
+00:40:19,985 --> 00:40:23,520
+be the incremental translation from the last time it sent it
+
+746
+00:40:23,522 --> 00:40:28,992
+to me. Everybody get that? Please? Okay? All right.
+
+747
+00:40:28,994 --> 00:40:30,560
+So that's it. That's what the handler looks like.
+
+748
+00:40:30,562 --> 00:40:32,896
+Pretty straight forward. Okay. We'll see this in the demo,
+
+749
+00:40:32,898 --> 00:40:36,933
+it's not too bad, okay? Let's briefly talk about some of
+
+750
+00:40:36,935 --> 00:40:39,102
+the other concrete gestures besides pan,
+
+751
+00:40:39,104 --> 00:40:41,571
+there's pinches. Pinches is two fingers down,
+
+752
+00:40:41,573 --> 00:40:44,741
+pinching in and out like this, okay? And here what
+
+753
+00:40:44,743 --> 00:40:48,378
+you're getting instead of the translation, it is the scale.
+
+754
+00:40:48,380 --> 00:40:51,581
+So if I start my fingers here and I bring them out twice as
+
+755
+00:40:51,583 --> 00:40:55,185
+wide that will be a scale of two. If I start him here and
+
+756
+00:40:55,187 --> 00:40:57,654
+move him in half way, that's a scale 0.5.
+
+757
+00:40:57,656 --> 00:41:01,791
+Okay, so I'm scaling whatever on my screen and again I can
+
+758
+00:41:01,793 --> 00:41:06,663
+get velocity, how fast I'm pinching. Rotation is two
+
+759
+00:41:06,665 --> 00:41:10,767
+fingers turning them, okay. Like you're turning a knob and
+
+760
+00:41:10,769 --> 00:41:14,337
+it will tell you how many radians you've turned, okay.
+
+761
+00:41:14,339 --> 00:41:18,374
+And again velocity, how fast you're turning. Swipe gesture,
+
+762
+00:41:18,376 --> 00:41:21,544
+okay. The swipe gesture you usually have to configure
+
+763
+00:41:21,546 --> 00:41:24,147
+before you use it. You have to say, do you want a left
+
+764
+00:41:24,149 --> 00:41:27,484
+going swipe, or right going swipe or up or down. Okay, and
+
+765
+00:41:27,486 --> 00:41:31,421
+also two fingers swipe, or one finger or three fingers okay.
+
+766
+00:41:31,423 --> 00:41:34,324
+You have to configure that then you add the gesture
+
+767
+00:41:34,326 --> 00:41:37,026
+recognizer and it will only recognize it if all those
+
+768
+00:41:37,028 --> 00:41:39,896
+things are true. Two finger swipe up has all the,
+
+769
+00:41:39,898 --> 00:41:41,397
+it has to be a two finger swipe up.
+
+770
+00:41:41,399 --> 00:41:44,334
+Otherwise it doesn't recognize it, okay. So
+
+771
+00:41:44,336 --> 00:41:48,037
+that's swipe. Tap, which seems like it would be discreet,
+
+772
+00:41:48,039 --> 00:41:49,939
+is not quite a discreet gesture, but
+
+773
+00:41:49,941 --> 00:41:52,108
+you also configure it with how many taps. You know,
+
+774
+00:41:52,110 --> 00:41:55,945
+is it a single tap, or a double tap? And two fingers,
+
+775
+00:41:55,947 --> 00:41:59,415
+or one? Okay, you configure that, add it, and here, you're
+
+776
+00:41:59,417 --> 00:42:03,853
+gonna look for .ended to find out when the tap has happened,
+
+777
+00:42:03,855 --> 00:42:07,290
+okay. That's because a tap actually has intermediate
+
+778
+00:42:07,292 --> 00:42:10,593
+things going on like a double tap has a, the first tap. And
+
+779
+00:42:10,595 --> 00:42:12,929
+then the second tap. And it might go through a state
+
+780
+00:42:12,931 --> 00:42:16,533
+change that will call your handler, but
+
+781
+00:42:16,535 --> 00:42:20,236
+it's not done yet. Okay and you can't look at recognized,
+
+782
+00:42:20,238 --> 00:42:23,139
+at recognized with tap because it's not a discreet gesture.
+
+783
+00:42:23,141 --> 00:42:25,675
+Because it goes through those intermediate phases.
+
+784
+00:42:25,677 --> 00:42:29,245
+So you really look for .ended for tap, okay.
+
+785
+00:42:29,247 --> 00:42:33,283
+All right, so let's do a demo. Let's see all this in action
+
+786
+00:42:33,285 --> 00:42:38,054
+with our facet and what we're gonna do. First, I'm gonna add
+
+787
+00:42:38,056 --> 00:42:41,190
+a pinch gesture that makes our face get bigger and
+
+788
+00:42:41,192 --> 00:42:43,493
+smaller. Okay, we're just gonna pinch in and out and
+
+789
+00:42:43,495 --> 00:42:47,530
+adjust our scale. And then I'm gonna add a pan gesture.
+
+790
+00:42:47,532 --> 00:42:48,398
+Actually I'll probably do a swipe.
+
+791
+00:42:48,400 --> 00:42:53,002
+Let's do a swipe gesture, that modifies our model, okay.
+
+792
+00:42:53,004 --> 00:42:55,939
+We're gonna use it to make our model happier or sadder.
+
+793
+00:42:55,941 --> 00:42:59,375
+If I make it happier or sadder, then we'll adjust our
+
+794
+00:42:59,377 --> 00:43:04,914
+face view, okay. Let's do that. Back to our facet here.
+
+795
+00:43:04,916 --> 00:43:09,419
+All right, so how are we gonna do this?
+
+796
+00:43:09,421 --> 00:43:12,722
+First thing we need to do is add a gesture recognizer,
+
+797
+00:43:12,724 --> 00:43:16,759
+okay. And again I said inside faceView didset is a good
+
+798
+00:43:16,761 --> 00:43:19,095
+place to do that. So now I'm gonna expand this back out.
+
+799
+00:43:19,097 --> 00:43:21,998
+Because I'm gonna add more code than just that one,
+
+800
+00:43:22,000 --> 00:43:25,034
+thing here, okay. And I'm still gonna update you,
+
+801
+00:43:25,036 --> 00:43:28,037
+UI here, but I'm also going to add a gesture recognizer.
+
+802
+00:43:28,039 --> 00:43:30,807
+I know that this didSet is only gonna be called once
+
+803
+00:43:30,809 --> 00:43:34,110
+when my outlet is first hooked up to my UI, so that's perfect
+
+804
+00:43:34,112 --> 00:43:36,512
+cuz I only wanna add the gesture recognizer once. And
+
+805
+00:43:36,514 --> 00:43:39,582
+I know that the faceView is the guy who has to recognize
+
+806
+00:43:39,584 --> 00:43:43,953
+the gesture. Only views can recognize gestures. So
+
+807
+00:43:43,955 --> 00:43:48,024
+I'm going to add a gesture recognizer.
+
+808
+00:43:48,026 --> 00:43:50,994
+Okay and you can see that when you add a gesture
+
+809
+00:43:50,996 --> 00:43:52,462
+recognizer to a UI view it takes
+
+810
+00:43:52,464 --> 00:43:56,132
+a gesture recognizer an argument. So I'm gonna create
+
+811
+00:43:56,134 --> 00:44:00,703
+one here, a UI pinch gesture recognizer, okay. And
+
+812
+00:44:00,705 --> 00:44:04,374
+that recognizer takes that target and action as they are,
+
+813
+00:44:04,376 --> 00:44:07,443
+as the two arguments, right? So the target here,
+
+814
+00:44:07,445 --> 00:44:11,381
+in this case, since that pinch is only changing the scale
+
+815
+00:44:11,383 --> 00:44:13,216
+of the view, it's not changing my model,
+
+816
+00:44:13,218 --> 00:44:18,488
+I'm gonna let the face view handle this thing itself. Now,
+
+817
+00:44:18,490 --> 00:44:21,157
+for the FaceView to handle it, it's going to have to make
+
+818
+00:44:21,159 --> 00:44:25,728
+some sort of gesture handler available to my controller.
+
+819
+00:44:25,730 --> 00:44:28,765
+So it's gonna have the public method right,
+
+820
+00:44:28,767 --> 00:44:30,133
+that handles a pinch.
+
+821
+00:44:30,135 --> 00:44:32,969
+So we're gonna have to add that to FaceView which will do
+
+822
+00:44:32,971 --> 00:44:36,606
+next. And the action here is gonna be a selector,
+
+823
+00:44:36,608 --> 00:44:41,477
+it's gonna be a FaceView selector. FaceView selector.
+
+824
+00:44:41,479 --> 00:44:44,614
+And I'm gonna call it changeScale, okay.
+
+825
+00:44:44,616 --> 00:44:49,318
+And I am definitely going to need the argument there.
+
+826
+00:44:49,320 --> 00:44:52,422
+So I'm gonna do that, as well, okay.
+
+827
+00:44:52,424 --> 00:44:56,459
+Maybe this is a little easier to see if I do this.
+
+828
+00:44:56,461 --> 00:45:02,865
+Like that. Okay. So it gives me an error here because
+
+829
+00:45:02,867 --> 00:45:05,635
+of course this method doesn't exist. So it's nice that it
+
+830
+00:45:05,637 --> 00:45:08,404
+actually checks to make sure that this exist, okay.
+
+831
+00:45:08,406 --> 00:45:11,140
+So let's go ahead and add this method right here, okay. This
+
+832
+00:45:11,142 --> 00:45:14,644
+is the method that's going to handle when a pinch happens,
+
+833
+00:45:14,646 --> 00:45:16,446
+okay. We're gonna put that in our FaceView, so
+
+834
+00:45:16,448 --> 00:45:18,347
+I'm gonna go over here to FaceView.
+
+835
+00:45:18,349 --> 00:45:20,883
+Put it up here towards the top since it's gonna be public,
+
+836
+00:45:20,885 --> 00:45:23,486
+okay. It has to be public, because the controller
+
+837
+00:45:23,488 --> 00:45:27,657
+wants the gesture handler to call it. So changeScale. It's
+
+838
+00:45:27,659 --> 00:45:31,427
+going to have a recognizer as its argument, okay?
+
+839
+00:45:31,429 --> 00:45:36,566
+That UIPinchGestureRecognizer. Okay,
+
+840
+00:45:36,568 --> 00:45:39,902
+so it's nice that when we're asked to handle the gesture,
+
+841
+00:45:39,904 --> 00:45:42,505
+the recognizer is passed along to us.
+
+842
+00:45:42,507 --> 00:45:44,540
+And, this is really easy to implement,
+
+843
+00:45:44,542 --> 00:45:49,879
+I'm just gonna switch on the recognizer state. And
+
+844
+00:45:49,881 --> 00:45:52,115
+if the state is changed or
+
+845
+00:45:52,117 --> 00:45:57,186
+ended, and yes you can do it that way in switches, in Swift
+
+846
+00:45:57,188 --> 00:46:00,656
+you can have multiple things there. If it's changed or
+
+847
+00:46:00,658 --> 00:46:03,993
+ended then I'm just gonna set my scale to be multiplied
+
+848
+00:46:03,995 --> 00:46:08,965
+by the recognizer scale. Okay cuz here's my scale up here.
+
+849
+00:46:08,967 --> 00:46:13,436
+And so if this pinch goes 2.0 twice as wide,
+
+850
+00:46:13,438 --> 00:46:16,272
+then I want my scale to be twice of what it was. And
+
+851
+00:46:16,274 --> 00:46:17,673
+if it goes down to 0.5, I want my scale
+
+852
+00:46:17,675 --> 00:46:20,743
+to be 0.5 of what it was. Okay, but this is gonna
+
+853
+00:46:20,745 --> 00:46:24,380
+be repeatedly called as that thing is moving in and out, so
+
+854
+00:46:24,382 --> 00:46:30,219
+I need to make sure here that I reset the recognizer scale
+
+855
+00:46:30,488 --> 00:46:33,589
+to 1.0 all the time. So that, as it moves out,
+
+856
+00:46:33,591 --> 00:46:37,126
+it's going to be give me the incremental scale in and out.
+
+857
+00:46:37,128 --> 00:46:40,630
+Because I'm actually applying the scale change every single
+
+858
+00:46:40,632 --> 00:46:45,468
+time it moves, every .Changed here I'm applying the scale,
+
+859
+00:46:45,470 --> 00:46:49,005
+okay. Now of course we need to have the default,
+
+860
+00:46:49,007 --> 00:46:53,709
+state which is cancel, it covers cancelled and began and
+
+861
+00:46:53,711 --> 00:46:53,876
+all those things.
+
+862
+00:46:53,878 --> 00:46:56,179
+And it those case statuses I'm just gonna do nothing because
+
+863
+00:46:56,181 --> 00:46:59,215
+I'm actually tracking the scale and implementing it
+
+864
+00:46:59,217 --> 00:47:02,585
+as it goes along, so I don't even care when it ends, okay.
+
+865
+00:47:02,587 --> 00:47:06,389
+I mean, it's nice when the fingers go up to do that one
+
+866
+00:47:06,391 --> 00:47:09,158
+last adjustment of the scale but it's not crucial. Okay,
+
+867
+00:47:09,160 --> 00:47:11,661
+and if we were cancelled, we wouldn't get that opportunity
+
+868
+00:47:11,663 --> 00:47:15,131
+anyway. Okay, everyone understand that?
+
+869
+00:47:15,133 --> 00:47:21,737
+This is a public method, yeah. >> [INAUDIBLE]
+
+870
+00:47:21,739 --> 00:47:22,238
+>> Well, yeah, see I'm, this
+
+871
+00:47:22,240 --> 00:47:24,507
+is why I ask three or four times, everybody getting this.
+
+872
+00:47:24,509 --> 00:47:25,808
+And everyone was kind of like yeah, I think so.
+
+873
+00:47:25,810 --> 00:47:30,179
+Okay. The reason for this is, if I don't do this, okay,
+
+874
+00:47:30,181 --> 00:47:34,517
+then as I pinch, I'm gonna get the cumulative scale, okay. So
+
+875
+00:47:34,519 --> 00:47:37,520
+let's say I start here, okay. And I start moving it out,
+
+876
+00:47:37,522 --> 00:47:39,021
+moving it out. And it's getting called changed,
+
+877
+00:47:39,023 --> 00:47:43,726
+change, change, change, okay. First time it's 1.1, 1.2, 1.3,
+
+878
+00:47:43,728 --> 00:47:46,128
+1.4, 1.5, 1.6, 2.0, okay.
+
+879
+00:47:46,130 --> 00:47:49,198
+So it's getting called seven times with all those numbers.
+
+880
+00:47:49,200 --> 00:47:52,501
+Imagine if I took my scale and multiplied it times by 1.0.
+
+881
+00:47:52,503 --> 00:47:54,937
+And then I multiplied it times 1.2, 1.3, 1.4.
+
+882
+00:47:54,939 --> 00:47:57,306
+Now the scale's getting gigantic. Okay,
+
+883
+00:47:57,308 --> 00:48:00,943
+that's not what I want. What I want is the incremental scale.
+
+884
+00:48:00,945 --> 00:48:03,679
+So if I keep resetting it to 1, then when it gets a little
+
+885
+00:48:03,681 --> 00:48:07,116
+bigger, I'm gonna get 1.01 again, okay? Reset to 1,
+
+886
+00:48:07,118 --> 00:48:11,621
+1.01 again, you see? Exactly, I'm not by the scale. Now,
+
+887
+00:48:11,623 --> 00:48:14,757
+the alternative is, I could just have the pinch do nothing
+
+888
+00:48:14,759 --> 00:48:17,793
+until you let go and then I could set the scale, okay?
+
+889
+00:48:17,795 --> 00:48:18,928
+But, since I'm doing it incrementally,
+
+890
+00:48:18,930 --> 00:48:23,966
+I have to keep resetting it to 1, okay? Good question. All
+
+891
+00:48:23,968 --> 00:48:27,436
+right, so now if we go back to our FaceViewController,
+
+892
+00:48:27,438 --> 00:48:29,939
+you'll see that we don't have an error here anymore on this
+
+893
+00:48:29,941 --> 00:48:33,876
+line because we've actually defined this handler, okay? So
+
+894
+00:48:33,878 --> 00:48:39,415
+now when we run, and we pinch. We're gonna update the scale,
+
+895
+00:48:39,417 --> 00:48:40,683
+hopefully, of our face.
+
+896
+00:48:40,685 --> 00:48:42,952
+So here's our face. He doesn't look very happy, but
+
+897
+00:48:42,954 --> 00:48:45,755
+I'm going to make him smaller, so we won't notice, okay? Now,
+
+898
+00:48:45,757 --> 00:48:48,958
+you might ask, how am I gonna pinch with my mouse, okay?
+
+899
+00:48:48,960 --> 00:48:51,594
+I've got my mouse here, I can't, just a little,
+
+900
+00:48:51,596 --> 00:48:55,564
+how am I gonna do it? And the answer is, Option, okay?
+
+901
+00:48:55,566 --> 00:48:56,198
+If you're running the simulator and
+
+902
+00:48:56,200 --> 00:48:59,669
+you hold down Option, look. Two fingers come up there,
+
+903
+00:48:59,671 --> 00:49:04,874
+okay? Now you can mouse down and drag and it's like you're
+
+904
+00:49:04,876 --> 00:49:09,512
+pinching. You see, pinching in pinching out,
+
+905
+00:49:09,514 --> 00:49:15,351
+okay? Got it, so you can see these gesture hands
+
+906
+00:49:15,353 --> 00:49:19,255
+are super easy to implement, okay? We probably had four
+
+907
+00:49:19,257 --> 00:49:22,725
+lines of code there, of actual lines of code. All right,
+
+908
+00:49:22,727 --> 00:49:25,761
+now, let's do another gesture recognizer, okay? Let's have
+
+909
+00:49:25,763 --> 00:49:28,464
+this one modify our model. So what I'm gonna do here is,
+
+910
+00:49:28,466 --> 00:49:32,368
+I'm gonna make it so that when I swipe down, he gets sadder.
+
+911
+00:49:32,370 --> 00:49:33,069
+And when I swipe up,
+
+912
+00:49:33,071 --> 00:49:37,039
+he gets happier in a model sense, okay? Okay,
+
+913
+00:49:37,041 --> 00:49:38,007
+I'm gonna make the model happier.
+
+914
+00:49:38,009 --> 00:49:40,643
+I'm not gonna move my mouth curvature. I'm gonna change
+
+915
+00:49:40,645 --> 00:49:42,812
+the model. Now of course, every time I change the model,
+
+916
+00:49:42,814 --> 00:49:44,981
+that's going to change my mouth curvature. So
+
+917
+00:49:44,983 --> 00:49:47,149
+it's gonna work. But we're gonna change the model.
+
+918
+00:49:47,151 --> 00:49:50,353
+So to do that, I'm gonna do a swipe gesture.
+
+919
+00:49:50,355 --> 00:49:51,887
+Now, a swipe gesture we have to configure.
+
+920
+00:49:51,889 --> 00:49:55,725
+So I'm to create a local variable to hold it, okay?
+
+921
+00:49:55,727 --> 00:50:00,396
+I am gonna call this local variable,
+
+922
+00:50:00,398 --> 00:50:05,201
+my happierSwipeGestureRecognizer,
+
+923
+00:50:05,203 --> 00:50:10,806
+and so I say UISwipeGestureRecognizer.
+
+924
+00:50:10,808 --> 00:50:11,007
+SwipeGestureRecognizer and same arguments though,
+
+925
+00:50:11,009 --> 00:50:15,411
+Oops,
+
+926
+00:50:15,413 --> 00:50:19,982
+target and action, okay? So the target here, okay,
+
+927
+00:50:19,984 --> 00:50:23,953
+is not going to be the faceView because it modifies
+
+928
+00:50:23,955 --> 00:50:28,457
+the model, it's gonna be self. Okay,
+
+929
+00:50:28,459 --> 00:50:31,560
+controller has to be the one handling this one, okay?
+
+930
+00:50:31,562 --> 00:50:36,032
+And the action, which is the selector, is going to be
+
+931
+00:50:36,501 --> 00:50:41,804
+a FaceViewController selector, not a FaceView one.
+
+932
+00:50:41,806 --> 00:50:45,107
+And we'll call this thing we'll do,
+
+933
+00:50:45,109 --> 00:50:48,511
+we'll make this be the happier one, so this is swipe up, so
+
+934
+00:50:48,513 --> 00:50:52,748
+we'll call this increaseHappiness, okay?
+
+935
+00:50:52,750 --> 00:50:55,017
+And I don't need the swipe gesture
+
+936
+00:50:55,019 --> 00:50:57,353
+because it's either gonna be recognized or not. So
+
+937
+00:50:57,355 --> 00:50:58,854
+I'm not gonna have any arguments
+
+938
+00:50:58,856 --> 00:51:03,092
+to that increaseHappiness method, okay?
+
+939
+00:51:03,094 --> 00:51:05,061
+Okay, I'll do the same thing here so
+
+940
+00:51:05,063 --> 00:51:08,297
+you can see this a little better, okay? So this is not,
+
+941
+00:51:08,299 --> 00:51:11,233
+this guy right here is not going to have any arguments.
+
+942
+00:51:11,235 --> 00:51:15,304
+So that's gonna be a func, okay? increaseHappiness,
+
+943
+00:51:15,306 --> 00:51:18,641
+no arguments. And when the increaseHappiness happens,
+
+944
+00:51:18,643 --> 00:51:22,144
+what are we gonna do to our model, okay? Well,
+
+945
+00:51:22,146 --> 00:51:25,581
+we're just gonna say that our facial expression's mouth
+
+946
+00:51:25,583 --> 00:51:30,753
+equals the expression's mouth.happierMouth.
+
+947
+00:51:30,755 --> 00:51:34,323
+Okay, so if you look at our facial expression over here,
+
+948
+00:51:34,325 --> 00:51:37,293
+okay, mouth okay?
+
+949
+00:51:37,295 --> 00:51:40,863
+This enum has two methods, sadderMouth and happierMouth,
+
+950
+00:51:40,865 --> 00:51:44,133
+which will take the current mouth and make it sadder or
+
+951
+00:51:44,135 --> 00:51:47,236
+happier and return a new mouth, okay? So
+
+952
+00:51:47,238 --> 00:51:51,941
+it's just gonna go more happy or less happy along here.
+
+953
+00:51:51,943 --> 00:51:57,880
+Okay, so we got that. Now so that's gonna be fine.
+
+954
+00:51:57,882 --> 00:52:02,017
+This swipe gesture though, we have to add it to our view.
+
+955
+00:52:02,019 --> 00:52:03,085
+We have to do addGestureRecognizer.
+
+956
+00:52:03,087 --> 00:52:06,021
+We haven't done that. And we also have to configure it.
+
+957
+00:52:06,023 --> 00:52:08,791
+So let's configure it. This is happier. So
+
+958
+00:52:08,793 --> 00:52:13,596
+I'm gonna have the hype, the SwipeGestureRecognizerDirect-
+
+959
+00:52:13,598 --> 00:52:18,834
+ion. Okay, which is the direction of the swipe,
+
+960
+00:52:18,836 --> 00:52:22,138
+= .Up. Okay, so you're swiping up, that's for
+
+961
+00:52:22,140 --> 00:52:23,572
+happier, and now we, and
+
+962
+00:52:23,574 --> 00:52:28,177
+it will have it be a single finger swipe, not two. And so
+
+963
+00:52:28,179 --> 00:52:33,382
+now I can just say faceView.addGestureRecognizer-
+
+964
+00:52:33,384 --> 00:52:38,988
+(happierSwipeGestureRecogniz- er), okay?
+
+965
+00:52:39,357 --> 00:52:43,259
+Make sense there? All right, let's go try this.
+
+966
+00:52:43,261 --> 00:52:45,761
+Now notice every time we change the expression here,
+
+967
+00:52:45,763 --> 00:52:48,430
+it's gonna automatically update our UI because of this
+
+968
+00:52:48,432 --> 00:52:52,201
+didSet. You see that? We changed this expression, boom,
+
+969
+00:52:52,203 --> 00:52:55,571
+updateUI. So, let's try it. All right, so,
+
+970
+00:52:55,573 --> 00:52:56,238
+hopefully this is still working.
+
+971
+00:52:56,240 --> 00:52:58,741
+Pinching, yes, still working. Now I'm gonna swipe up and
+
+972
+00:52:58,743 --> 00:53:03,245
+sure enough, he's getting happier and happier. Okay, but
+
+973
+00:53:03,247 --> 00:53:05,481
+we better do swipe down also, okay?
+
+974
+00:53:05,483 --> 00:53:08,350
+We don't have all only swipe up, let's get swipe down in
+
+975
+00:53:08,352 --> 00:53:10,719
+there. In fact, I'm gonna do that by copying and
+
+976
+00:53:10,721 --> 00:53:13,455
+pasting because it's almost the same as this.
+
+977
+00:53:13,457 --> 00:53:18,360
+I'm just gonna replace this happier here with sadder.
+
+978
+00:53:21,465 --> 00:53:25,501
+And instead of it being an up swipe, it's gonna be a down
+
+979
+00:53:25,503 --> 00:53:28,871
+swipe. And instead of increasing the happiness,
+
+980
+00:53:28,873 --> 00:53:30,973
+it's going to decrease the happiness.
+
+981
+00:53:30,975 --> 00:53:37,479
+So I need a new method here called decreaseHappiness.
+
+982
+00:53:38,216 --> 00:53:42,451
+And this one's going to get the sadderMouth, okay?
+
+983
+00:53:42,453 --> 00:53:45,454
+Everyone understand, it's real important to understand here
+
+984
+00:53:45,456 --> 00:53:48,457
+that we have recognizers that as they're being handled,
+
+985
+00:53:48,459 --> 00:53:49,658
+they're being handled by the controller.
+
+986
+00:53:49,660 --> 00:53:53,829
+And the controller's modifying the model. And since, and
+
+987
+00:53:53,831 --> 00:53:56,865
+every time the model gets modified, it calls updateUI.
+
+988
+00:53:56,867 --> 00:54:00,469
+updateUI is the thing that's going to update, in this case,
+
+989
+00:54:00,471 --> 00:54:04,940
+the mouth curvature. Everybody understand that flow? Okay, so
+
+990
+00:54:04,942 --> 00:54:11,647
+let's make sure that swipe down is working. All right,
+
+991
+00:54:11,649 --> 00:54:16,118
+so swipe down, sad. Swipe up, happy, okay? Sad,
+
+992
+00:54:16,120 --> 00:54:21,023
+happy, got it? All right, let's do one more gesture.
+
+993
+00:54:21,025 --> 00:54:24,593
+This one, when you tap, he's gonna open and close his eyes.
+
+994
+00:54:24,595 --> 00:54:27,162
+Every tap will toggle the opening and closing the eyes.
+
+995
+00:54:27,164 --> 00:54:30,165
+Now I'm gonna do this one a little bit different, because
+
+996
+00:54:30,167 --> 00:54:32,868
+we added all these gesture recognizers in code here.
+
+997
+00:54:32,870 --> 00:54:35,271
+You see how this adding GestureRecognizer in code?
+
+998
+00:54:35,273 --> 00:54:41,977
+You can actually add these things in your storyboard,
+
+999
+00:54:41,979 --> 00:54:46,115
+okay? So let's go over to our storyboard, right here,
+
+1000
+00:54:46,117 --> 00:54:51,687
+okay? Let's get our controller onscreen at the same time,
+
+1001
+00:54:51,689 --> 00:54:53,989
+Automatic. So here's our controller over here.
+
+1002
+00:54:53,991 --> 00:54:58,761
+Here's our faceView over here. If I wanna add a gesture to my
+
+1003
+00:54:58,763 --> 00:55:02,364
+faceView right here from my storyboard, I go over here to
+
+1004
+00:55:02,366 --> 00:55:05,200
+the bottom, same place I get buttons and things like that.
+
+1005
+00:55:05,202 --> 00:55:09,605
+If you scroll way down, you'll see there are gesture
+
+1006
+00:55:09,607 --> 00:55:12,675
+recognizers here, you see? Rotation, pinch, swipe, pan.
+
+1007
+00:55:12,677 --> 00:55:16,645
+Here's tap. I'm gonna take tap out and drag it onto the view
+
+1008
+00:55:16,647 --> 00:55:19,948
+I want to recognize the tap, which is my faceView. And
+
+1009
+00:55:19,950 --> 00:55:22,951
+when you do that, it actually appears along the top here.
+
+1010
+00:55:22,953 --> 00:55:25,054
+See that Tap Gesture Recognizer right there? And
+
+1011
+00:55:25,056 --> 00:55:28,424
+you can even inspect it. You could set how many taps,
+
+1012
+00:55:28,426 --> 00:55:31,727
+how many touches, okay, how many fingers. Okay,
+
+1013
+00:55:31,729 --> 00:55:36,598
+you can also Ctrl+drag from it over here, let's do it down
+
+1014
+00:55:36,600 --> 00:55:42,137
+a little lower, here. Okay, you can Ctrl+drag and
+
+1015
+00:55:42,139 --> 00:55:47,776
+create the gesture recognizer action, okay, right here.
+
+1016
+00:55:47,778 --> 00:55:52,381
+So I'm gonna call this toggleEyes,
+
+1017
+00:55:52,383 --> 00:55:53,449
+okay? And the argument,
+
+1018
+00:55:53,451 --> 00:55:55,951
+I'm gonna make it to a tap gesture instead of any object.
+
+1019
+00:55:55,953 --> 00:55:59,521
+We all know to get rid of the any object in these little,
+
+1020
+00:55:59,523 --> 00:56:03,359
+dialogues. Okay, so here's my tap gesture right here.
+
+1021
+00:56:03,361 --> 00:56:07,363
+Let's go ahead and go back to full screen,
+
+1022
+00:56:07,365 --> 00:56:10,699
+okay? So, here's my tap gesture for toggleEyes. So,
+
+1023
+00:56:10,701 --> 00:56:14,603
+in here I need to toggle my eye, so I'm just going to say,
+
+1024
+00:56:14,605 --> 00:56:21,643
+if the recognizer's state is ended. Okay? So the tap ended,
+
+1025
+00:56:21,645 --> 00:56:24,446
+so I'm gonna take action here and do the toggle.
+
+1026
+00:56:24,448 --> 00:56:28,250
+Then, depending on what the expression's current eyes are,
+
+1027
+00:56:28,252 --> 00:56:30,519
+if it, they're open, then I'm gonna be the,
+
+1028
+00:56:30,521 --> 00:56:34,990
+make the expression's eyes be closed. And
+
+1029
+00:56:34,992 --> 00:56:37,860
+if it's, if the eyes are closed, then I'm gonna make
+
+1030
+00:56:37,862 --> 00:56:42,598
+the expression's eyes open. And if the express,
+
+1031
+00:56:42,600 --> 00:56:46,168
+if the expression is squinting then I'm going to do nothing
+
+1032
+00:56:46,170 --> 00:56:51,106
+cuz I don't know how to handle squinting. Okay make
+
+1033
+00:56:51,108 --> 00:56:57,079
+sense? Sorry notice I used recognizer.state here.
+
+1034
+00:56:57,081 --> 00:57:00,015
+By default when you Ctrl+drag it calls a thing sender.
+
+1035
+00:57:00,017 --> 00:57:02,684
+I really like to call this recognizer. So
+
+1036
+00:57:02,686 --> 00:57:05,654
+that you remember that it's a recognizer that we're dealing
+
+1037
+00:57:05,656 --> 00:57:09,425
+with here, okay, gesture recognizer. Okay so
+
+1038
+00:57:09,427 --> 00:57:15,230
+let's try that. All right,
+
+1039
+00:57:15,232 --> 00:57:19,001
+your face. We can make him happier and we can open and
+
+1040
+00:57:19,003 --> 00:57:22,704
+close his eyes. Okay? Maybe later in the quarter,
+
+1041
+00:57:22,706 --> 00:57:23,071
+we'll talk about animation,
+
+1042
+00:57:23,073 --> 00:57:27,676
+we'll talk about animating the eye it will turn so he blinks.
+
+1043
+00:57:27,678 --> 00:57:31,880
+Okay? And I'm gonna post code after lecture because
+
+1044
+00:57:31,882 --> 00:57:34,283
+the time here I wanna make sure we get to the next thing.
+
+1045
+00:57:34,285 --> 00:57:37,753
+Where I'm gonna show how to do rotation to move those
+
+1046
+00:57:37,755 --> 00:57:38,420
+eyebrows. Okay?
+
+1047
+00:57:38,422 --> 00:57:42,558
+So, rotate the eyebrows down or rotate them up. Okay?
+
+1048
+00:57:42,560 --> 00:57:44,026
+I'll show you how to do a rotation disk, so
+
+1049
+00:57:44,028 --> 00:57:46,762
+that'll be in the code that I post. Okay,
+
+1050
+00:57:46,764 --> 00:57:50,866
+any questions about gestures? Pretty straightforward, okay?
+
+1051
+00:57:50,868 --> 00:57:54,136
+All right, let's get back to our
+
+1052
+00:57:54,138 --> 00:57:58,674
+slides. >> Is
+
+1053
+00:57:58,676 --> 00:58:04,279
+that odd gesture recognizer code automatically
+
+1054
+00:58:04,281 --> 00:58:06,782
+added to the UIView? >> Okay so
+
+1055
+00:58:06,784 --> 00:58:11,453
+the question was is that eye gesture recognize your code
+
+1056
+00:58:11,455 --> 00:58:12,721
+that I put in there do the tap.
+
+1057
+00:58:12,723 --> 00:58:15,657
+Is it already automatically added to the UIView?
+
+1058
+00:58:15,659 --> 00:58:19,695
+And the answer, you mean the add gesture recognizer?
+
+1059
+00:58:19,697 --> 00:58:20,829
+Cog it made? >> Yeah.
+
+1060
+00:58:20,831 --> 00:58:22,598
+>> Yeah, that, basically,
+
+1061
+00:58:22,600 --> 00:58:23,532
+when you can control,
+
+1062
+00:58:23,534 --> 00:58:27,002
+when I dragged the tap gesture onto the face view,
+
+1063
+00:58:27,004 --> 00:58:27,135
+the add gesture recognizer was gonna happen. Make sense?
+
+1064
+00:58:27,137 --> 00:58:30,372
+that made it so
+
+1065
+00:58:30,374 --> 00:58:35,410
+Good question, though. Okay, so, back to the slides here.
+
+1066
+00:58:35,412 --> 00:58:39,214
+Now we're gonna start talking about MVCs working together.
+
+1067
+00:58:39,216 --> 00:58:43,352
+Okay? This is a slide from when I was talking about MVCs
+
+1068
+00:58:43,354 --> 00:58:45,621
+and we talked about we wanted to build big apps, and
+
+1069
+00:58:45,623 --> 00:58:47,089
+we're gonna do that with multiple MVCs.
+
+1070
+00:58:47,091 --> 00:58:50,959
+So, we're gonna start talking about how we actually do that.
+
+1071
+00:58:50,961 --> 00:58:55,063
+All right? The way we combine MVCs as
+
+1072
+00:58:55,065 --> 00:58:59,268
+I talked about before is that we're gonna have an MVC, okay?
+
+1073
+00:58:59,270 --> 00:59:04,506
+Whose view is made up of other MVCs. Okay?
+
+1074
+00:59:04,508 --> 00:59:09,378
+Now iOS provides for us some MVCs that are like this.
+
+1075
+00:59:09,380 --> 00:59:13,248
+Okay, MVCs whose view is other MVCs. Now, it is possible for
+
+1076
+00:59:13,250 --> 00:59:17,286
+you to create your own MVCs that have other MVCs as view,
+
+1077
+00:59:17,288 --> 00:59:19,721
+but it is really beyond the scope of this class.
+
+1078
+00:59:19,723 --> 00:59:22,424
+Okay? So in this class we are only gonna use the ones that
+
+1079
+00:59:22,426 --> 00:59:27,596
+are provided by iOS. These MVCs that use other MVCs as
+
+1080
+00:59:27,598 --> 00:59:30,799
+their view. Now specifically, we are gonna talk about
+
+1081
+00:59:30,801 --> 00:59:33,936
+TabBarController. Everyone know what that is all right?
+
+1082
+00:59:33,938 --> 00:59:34,369
+You've seen that in an iOS
+
+1083
+00:59:34,371 --> 00:59:37,306
+AVS the little tabs on the bottom and each time you click
+
+1084
+00:59:37,308 --> 00:59:39,474
+on a different tab, what appears on top?
+
+1085
+00:59:39,476 --> 00:59:45,280
+A different MVC, okay. Also SplitViewController mostly you
+
+1086
+00:59:45,282 --> 00:59:48,717
+see this on an iPad you can all see on an iPhone 6 plus.
+
+1087
+00:59:48,719 --> 00:59:53,355
+This is where you're splitting your screen into two halves.
+
+1088
+00:59:53,357 --> 00:59:53,522
+Okay, not really halves.
+
+1089
+00:59:53,524 --> 00:59:56,925
+Two parts, one side's usually smaller that the other, okay?
+
+1090
+00:59:56,927 --> 01:00:00,295
+So, each side a different MVC. So, you see how
+
+1091
+01:00:00,297 --> 01:00:03,231
+we combine two MVCs right there. And then, of course,
+
+1092
+01:00:03,233 --> 01:00:08,003
+UINavigationController, the number one combiner of MVCs.
+
+1093
+01:00:08,005 --> 01:00:09,938
+Okay, this is something where you have
+
+1094
+01:00:09,940 --> 01:00:12,808
+an MVC, it's got a button in it, you click it, and a new
+
+1095
+01:00:12,810 --> 01:00:15,243
+MVC appears, where there's a back button at the top,
+
+1096
+01:00:15,245 --> 01:00:18,981
+and you've click it to go back to the one you were on. Okay?
+
+1097
+01:00:18,983 --> 01:00:21,950
+See navigation controllers in almost every iOS app that's
+
+1098
+01:00:21,952 --> 01:00:24,553
+ever been designed ever except for
+
+1099
+01:00:24,555 --> 01:00:27,155
+maybe games that are all one MVC.
+
+1100
+01:00:27,157 --> 01:00:29,558
+You're gonna see navigation controllers. Okay so
+
+1101
+01:00:29,560 --> 01:00:32,160
+let's talk a little bit about how all these things work.
+
+1102
+01:00:32,162 --> 01:00:33,895
+So let's talk about the TabBarControllers and
+
+1103
+01:00:33,897 --> 01:00:35,831
+the simplest of them all, right?
+
+1104
+01:00:35,833 --> 01:00:37,232
+You've seen this right it's got the tabs along
+
+1105
+01:00:37,234 --> 01:00:39,468
+the bottom here. I've got this one the dashboard this is
+
+1106
+01:00:39,470 --> 01:00:42,704
+the health app I think. Got the dashboard selection here,
+
+1107
+01:00:42,706 --> 01:00:47,142
+and this entire space is being owned and managed
+
+1108
+01:00:47,144 --> 01:00:51,613
+by a Dashboard MVC. Not the TabBarController MVC, but
+
+1109
+01:00:51,615 --> 01:00:55,417
+the dash part MVC. And in fact this dashboard is controlling
+
+1110
+01:00:55,419 --> 01:00:58,453
+not only the contents of here. But it tells you,
+
+1111
+01:00:58,455 --> 01:01:00,889
+our TabBarcontroller what icon to put here and
+
+1112
+01:01:00,891 --> 01:01:04,926
+what word to put here. Okay? These tabs over here, these
+
+1113
+01:01:04,928 --> 01:01:09,564
+other tabs are, their contents are controlled by other MVCs.
+
+1114
+01:01:09,566 --> 01:01:14,269
+Okay? So, this var, tab bar item that you see right there.
+
+1115
+01:01:14,271 --> 01:01:18,306
+It's kind of a little bag of goodies that each MVC,
+
+1116
+01:01:18,308 --> 01:01:20,509
+remember an MVC is controlled by its controller.
+
+1117
+01:01:20,511 --> 01:01:22,778
+So this is a method in UIViewController.
+
+1118
+01:01:22,780 --> 01:01:25,781
+And it has things in there like the icon and the text for
+
+1119
+01:01:25,783 --> 01:01:28,617
+the tab, okay? In TabBarItem. So you can take a look at
+
+1120
+01:01:28,619 --> 01:01:31,420
+the TabBarItem and you'll immediately see. What's going
+
+1121
+01:01:31,422 --> 01:01:34,156
+on there. All right. So, let's click on a different one,
+
+1122
+01:01:34,158 --> 01:01:38,160
+like Health Data, and we get a completely different MVC here.
+
+1123
+01:01:38,162 --> 01:01:39,127
+This is the Health Data MVC.
+
+1124
+01:01:39,129 --> 01:01:41,396
+Completely unrelated to this one. Okay?
+
+1125
+01:01:41,398 --> 01:01:44,332
+Utterly and completely unrelated to this one.
+
+1126
+01:01:44,334 --> 01:01:48,403
+Okay? Here, one thing to notice about this is,
+
+1127
+01:01:48,405 --> 01:01:51,406
+if there are more than five tabs down here.
+
+1128
+01:01:51,408 --> 01:01:55,177
+This actually still works. It'll automatically replace
+
+1129
+01:01:55,179 --> 01:01:57,512
+the 5th one with a tab here that says More.
+
+1130
+01:01:57,514 --> 01:02:01,283
+And when you click on More it'll have a UITabBar
+
+1131
+01:02:01,285 --> 01:02:04,753
+controlled UI in here that has all the other tabs in here.
+
+1132
+01:02:04,755 --> 01:02:07,656
+And you can pick them. Or you can actually choose to put
+
+1133
+01:02:07,658 --> 01:02:11,393
+them down here, okay, which four you want down here. Okay,
+
+1134
+01:02:11,395 --> 01:02:12,494
+and that happens automatically for you.
+
+1135
+01:02:12,496 --> 01:02:14,329
+You don't have to do anything to make that work.
+
+1136
+01:02:14,331 --> 01:02:18,033
+I don't really recommend UIs that have more than five tabs
+
+1137
+01:02:18,035 --> 01:02:20,802
+down here. It's a little bit of a pain for people to have
+
+1138
+01:02:20,804 --> 01:02:24,806
+to have that more thing, but it's not out of the question.
+
+1139
+01:02:24,808 --> 01:02:26,274
+Obviously the functionality's in there.
+
+1140
+01:02:26,276 --> 01:02:29,277
+If you can do it without it, that'd be nice. Okay here's
+
+1141
+01:02:29,279 --> 01:02:32,681
+a couple more tabs here is the source's one another MVC
+
+1142
+01:02:32,683 --> 01:02:35,617
+another so these are four completely separate MVCs.
+
+1143
+01:02:35,619 --> 01:02:37,119
+They have nothing to do with each other okay.
+
+1144
+01:02:37,121 --> 01:02:40,722
+The only thing that might link them maybe they share a model.
+
+1145
+01:02:40,724 --> 01:02:43,725
+That's possible okay but maybe even not.
+
+1146
+01:02:44,194 --> 01:02:46,528
+Okay so a tab bar is what's you gonna use when you
+
+1147
+01:02:46,530 --> 01:02:51,967
+have MVCs they're completely unrelated. Okay? All right.
+
+1148
+01:02:51,969 --> 01:02:52,634
+What about SplitViewController?
+
+1149
+01:02:52,636 --> 01:02:56,171
+So, SplitViewController puts two MVCs side by side. So,
+
+1150
+01:02:56,173 --> 01:02:59,441
+let's imagine your calculator was a graphing calculator.
+
+1151
+01:02:59,443 --> 01:03:00,242
+Okay, instead of just a calculator,
+
+1152
+01:03:00,244 --> 01:03:03,278
+it could graph, what's going on over here.
+
+1153
+01:03:03,280 --> 01:03:05,447
+Then on the left here, you'd have your calculator, and
+
+1154
+01:03:05,449 --> 01:03:08,550
+on the right, you'd have a totally different MVC.
+
+1155
+01:03:08,552 --> 01:03:10,485
+Which is a graph view calculator,
+
+1156
+01:03:10,487 --> 01:03:13,588
+calculator graph view, or something like that. Okay,
+
+1157
+01:03:13,590 --> 01:03:18,693
+we call this one on the left the Master View Controller and
+
+1158
+01:03:18,695 --> 01:03:22,764
+we call the one on the right the Detail View Controller.
+
+1159
+01:03:22,766 --> 01:03:25,767
+Okay, when you take your iPad here and
+
+1160
+01:03:25,769 --> 01:03:29,905
+you rotate it, you still get both. Its just that
+
+1161
+01:03:29,907 --> 01:03:32,974
+the detail will usually take over the whole screen. And
+
+1162
+01:03:32,976 --> 01:03:37,145
+you can slide from the right, you kind of swipe in from, or
+
+1163
+01:03:37,147 --> 01:03:41,082
+sorry from the left. And you'll see that the master
+
+1164
+01:03:41,084 --> 01:03:46,154
+slides in on top of the detail. Okay. So
+
+1165
+01:03:46,156 --> 01:03:47,989
+that's what view, how it, how it arrange.
+
+1166
+01:03:47,991 --> 01:03:52,227
+NavigationController, so NavigationController it's like
+
+1167
+01:03:52,229 --> 01:03:57,132
+a stack of cards. Okay? Where each card is a different MVC.
+
+1168
+01:03:57,134 --> 01:03:59,100
+So here I have an all settings MVC,
+
+1169
+01:03:59,102 --> 01:04:02,003
+okay, inside of a navigation controller Now,
+
+1170
+01:04:02,005 --> 01:04:05,006
+this navigation controller is responsible for
+
+1171
+01:04:05,008 --> 01:04:07,342
+drawing this title bar at the top, okay?
+
+1172
+01:04:07,344 --> 01:04:09,978
+This whole area in the top where it says Settings. But
+
+1173
+01:04:09,980 --> 01:04:12,480
+it's not responsible for the actual contents
+
+1174
+01:04:12,482 --> 01:04:15,550
+of what's in there. That word Settings is determined,
+
+1175
+01:04:15,552 --> 01:04:19,754
+just like in tab bar situation, with by this MVC,
+
+1176
+01:04:19,756 --> 01:04:25,660
+okay? This MVC down here has a, property on it. It's view,
+
+1177
+01:04:25,662 --> 01:04:27,929
+it's view controller called Navigation Item. And
+
+1178
+01:04:27,931 --> 01:04:31,833
+navigation item has properties in it like the title, the,
+
+1179
+01:04:31,835 --> 01:04:36,171
+any buttons that go here, maybe a back button title,
+
+1180
+01:04:36,173 --> 01:04:37,472
+those kind of things.
+
+1181
+01:04:37,474 --> 01:04:40,809
+All would be in this navigation item of this all
+
+1182
+01:04:40,811 --> 01:04:44,512
+Settings MVC, not of the navigation controller,
+
+1183
+01:04:44,514 --> 01:04:49,084
+right? So, here if I touched on General and
+
+1184
+01:04:49,086 --> 01:04:52,554
+I wanted the general settings, then of course, the general
+
+1185
+01:04:52,556 --> 01:04:57,392
+settings would slide in, okay? And replace the whole contents
+
+1186
+01:04:57,394 --> 01:05:01,596
+here with a general settings MVP, yet another new MVC. And
+
+1187
+01:05:01,598 --> 01:05:04,633
+notice the back button by default will be set to have
+
+1188
+01:05:04,635 --> 01:05:07,903
+the name of the previous MVC. That other MVC is still in
+
+1189
+01:05:07,905 --> 01:05:11,473
+the navigation controller, it's just underneath, okay?
+
+1190
+01:05:11,475 --> 01:05:14,542
+So this is stack of cards, I just put another MVC on top,
+
+1191
+01:05:14,544 --> 01:05:17,612
+so the other one's still there, okay? And
+
+1192
+01:05:17,614 --> 01:05:21,349
+you can also put toolbar items at the bottom here, okay?
+
+1193
+01:05:21,351 --> 01:05:24,185
+That's also controlled by whatever MVC is showing.
+
+1194
+01:05:24,187 --> 01:05:27,022
+So this tool by are, barItems is a property on
+
+1195
+01:05:27,024 --> 01:05:30,926
+UIViewController, it's an array of UI toolbarItem, and
+
+1196
+01:05:30,928 --> 01:05:34,796
+it'll let you put toolbarItems down here, okay? Little,
+
+1197
+01:05:34,798 --> 01:05:38,934
+small buttons, okay? So again, if I click, let's say sorry.
+
+1198
+01:05:38,936 --> 01:05:42,404
+Yeah, the back button got the title there, but you can also
+
+1199
+01:05:42,406 --> 01:05:45,040
+set the title to something different if you want,
+
+1200
+01:05:45,042 --> 01:05:48,843
+okay? So let's say I clicked on Accessibility right here,
+
+1201
+01:05:48,845 --> 01:05:52,847
+I get another new MVC. Now I have three MVCs on my stack,
+
+1202
+01:05:52,849 --> 01:05:56,051
+okay? Let's go ahead and click on another one here,
+
+1203
+01:05:56,053 --> 01:05:59,387
+a larger text right there. Now I got another one, so
+
+1204
+01:05:59,389 --> 01:06:03,725
+now I have four MVCs on my stack, okay? Now,
+
+1205
+01:06:03,727 --> 01:06:07,028
+I'm going to go and click on Accessibility,
+
+1206
+01:06:07,030 --> 01:06:11,766
+up in the top there, the back button. Now what happens? Now,
+
+1207
+01:06:11,768 --> 01:06:17,072
+this MVC gets thrown away, in the trash, out of the heap,
+
+1208
+01:06:17,074 --> 01:06:21,776
+gone forever, okay? Now there's only three MVCs left,
+
+1209
+01:06:21,778 --> 01:06:23,511
+okay? The other one's completely gone.
+
+1210
+01:06:23,513 --> 01:06:25,847
+It's important to understand on a MVC,
+
+1211
+01:06:25,849 --> 01:06:29,851
+when you go back, the one that got thrown off literally gets
+
+1212
+01:06:29,853 --> 01:06:33,254
+thrown away, okay? And so, if we go back again, now that one
+
+1213
+01:06:33,256 --> 01:06:36,591
+got thrown away. Now there's only two MVCs in the world,
+
+1214
+01:06:36,593 --> 01:06:39,327
+okay, on top of each other. And of course if we go back to
+
+1215
+01:06:39,329 --> 01:06:43,231
+the beginning, now we get back to here, this MVC we'll call
+
+1216
+01:06:43,233 --> 01:06:45,567
+the root view controller of the navigation controller.
+
+1217
+01:06:45,569 --> 01:06:48,770
+It's just one that's at the bottom of the deck. Okay,
+
+1218
+01:06:48,772 --> 01:06:53,008
+it's always in there. Okay, so lets talk about how that
+
+1219
+01:06:53,010 --> 01:06:56,444
+navigation controller works from our MVC standpoint, okay?
+
+1220
+01:06:56,446 --> 01:07:00,181
+Let's say I have an MVC here. And I just have too much
+
+1221
+01:07:00,183 --> 01:07:03,551
+functionality. I just can't fit all the functionality in
+
+1222
+01:07:03,553 --> 01:07:05,687
+my view, I need to put this somewhere else.
+
+1223
+01:07:05,689 --> 01:07:09,257
+So I create another MVC, okay? Cuz somebody has to control
+
+1224
+01:07:09,259 --> 01:07:12,394
+this extra functionality. So there's another controller,
+
+1225
+01:07:12,396 --> 01:07:16,531
+okay? A whole other MVC here, okay? And I want these two,
+
+1226
+01:07:16,533 --> 01:07:19,901
+they're related, okay? So somehow in this view, I,
+
+1227
+01:07:19,903 --> 01:07:24,005
+I get to this UI because this UI kinda all goes together in
+
+1228
+01:07:24,007 --> 01:07:26,808
+some way. It's not related in some mechanism, maybe it's
+
+1229
+01:07:26,810 --> 01:07:30,578
+master detail kind of effect or something like that.
+
+1230
+01:07:30,580 --> 01:07:32,614
+So how am I gonna make this work, okay? So
+
+1231
+01:07:32,616 --> 01:07:34,949
+I'm using UINavigationController. And
+
+1232
+01:07:34,951 --> 01:07:36,117
+here's a UINavigationController.
+
+1233
+01:07:36,119 --> 01:07:40,588
+It's view, looks like this, okay? It's blank, okay?
+
+1234
+01:07:40,590 --> 01:07:42,223
+It's got room up here though for a title,
+
+1235
+01:07:42,225 --> 01:07:45,093
+back button, maybe some other buttons over here. But
+
+1236
+01:07:45,095 --> 01:07:48,096
+it never lives like this because there is an outlet
+
+1237
+01:07:48,098 --> 01:07:51,399
+called rootViewController, okay? Which is hooked up to
+
+1238
+01:07:51,401 --> 01:07:56,404
+some MVC. And when it's hooked up, the contents of the view
+
+1239
+01:07:56,406 --> 01:07:59,841
+of the navigation controller are the contents of this MVCs
+
+1240
+01:07:59,843 --> 01:08:03,945
+view. Right, make sense, kinda obvious? Now
+
+1241
+01:08:03,947 --> 01:08:08,016
+there's probably some button in here that if I touch it,
+
+1242
+01:08:08,018 --> 01:08:12,120
+means I wanna show this UI over here, I want this MVC. So
+
+1243
+01:08:12,122 --> 01:08:14,789
+if I touch it, what the navigation controller does,
+
+1244
+01:08:14,791 --> 01:08:16,825
+it moves over here, shows this view.
+
+1245
+01:08:16,827 --> 01:08:19,561
+This one's still around, okay? It's just not showing but
+
+1246
+01:08:19,563 --> 01:08:23,098
+it's still in the UINavigationController stack,
+
+1247
+01:08:23,100 --> 01:08:25,333
+okay? It shows this guy right here.
+
+1248
+01:08:25,335 --> 01:08:28,069
+Notice we get this automatic back button right there.
+
+1249
+01:08:28,071 --> 01:08:31,806
+If we press that back button, okay? Then it's going to
+
+1250
+01:08:31,808 --> 01:08:34,742
+go back here, and look what happened to this MVC.
+
+1251
+01:08:34,744 --> 01:08:39,214
+Gone, okay, completely got eliminated. If I press this
+
+1252
+01:08:39,216 --> 01:08:42,851
+button again to go back, it would create a new one,
+
+1253
+01:08:42,853 --> 01:08:49,090
+okay? A brand new instance of this MVC, okay? [INAUDIBLE] So
+
+1254
+01:08:49,092 --> 01:08:52,494
+that's how the Navigation Controller is working from
+
+1255
+01:08:52,496 --> 01:08:56,030
+an MVC standpoint. All right, [COUGH] now in these MVCs,
+
+1256
+01:08:56,032 --> 01:08:59,000
+how do I get at the other MVCs that are, I'm sharing
+
+1257
+01:08:59,002 --> 01:09:02,604
+the navigation controller or the split view controller or
+
+1258
+01:09:02,606 --> 01:09:05,306
+the tab bar controller, how do I get to them,
+
+1259
+01:09:05,308 --> 01:09:07,909
+send them messages, talk to them in some way?
+
+1260
+01:09:07,911 --> 01:09:10,778
+And the answer is through this very important var in UI
+
+1261
+01:09:10,780 --> 01:09:13,915
+viewController, okay? Sorry, in UI tab bar controller,
+
+1262
+01:09:13,917 --> 01:09:17,185
+UI split view controller, and UI navigation controller,
+
+1263
+01:09:17,187 --> 01:09:17,952
+they all have this var.
+
+1264
+01:09:17,954 --> 01:09:20,088
+And it's an array of view controllers,
+
+1265
+01:09:20,090 --> 01:09:22,790
+it's all the view controllers in this thing. All
+
+1266
+01:09:22,792 --> 01:09:25,927
+the tabs in the tab bar, both this master and the detail and
+
+1267
+01:09:25,929 --> 01:09:30,498
+the split view, all the things on the navigation stack. And
+
+1268
+01:09:30,500 --> 01:09:33,168
+navigation controller. It can be an optional,
+
+1269
+01:09:33,170 --> 01:09:35,203
+like the tab bar case, it can be an optional.
+
+1270
+01:09:35,205 --> 01:09:37,805
+I don't think it's an optional for the other two.
+
+1271
+01:09:37,807 --> 01:09:39,774
+You're have to look at documentation there for
+
+1272
+01:09:39,776 --> 01:09:43,745
+that. But in a tab bar this is just the array.
+
+1273
+01:09:43,747 --> 01:09:45,713
+I believe it's from left to right, okay?
+
+1274
+01:09:45,715 --> 01:09:48,316
+So it's all the MVCs from the left tab to the right, and if
+
+1275
+01:09:48,318 --> 01:09:51,553
+you have more then it spills into the order in the more
+
+1276
+01:09:51,555 --> 01:09:55,957
+tab. For split view, [0] in this array is the master and
+
+1277
+01:09:55,959 --> 01:09:59,360
+[1] is the detail. And for navigation controller,
+
+1278
+01:09:59,362 --> 01:10:02,230
+[0] is the bottom card and 1, 2, 3, 4, 5, 6,
+
+1279
+01:10:02,232 --> 01:10:05,633
+7 is going up the stack, okay? So the last one that's
+
+1280
+01:10:05,635 --> 01:10:10,605
+visible would be the last one in this array, okay? Got it?
+
+1281
+01:10:10,607 --> 01:10:13,508
+Notice this is set table, it's get and set but we usually
+
+1282
+01:10:13,510 --> 01:10:16,177
+don't set our viewControllers this way, okay?
+
+1283
+01:10:16,179 --> 01:10:19,914
+Like split view, we usually wire it up in our storyboard.
+
+1284
+01:10:19,916 --> 01:10:22,817
+In navigation controller we're usually navigating to those
+
+1285
+01:10:22,819 --> 01:10:27,555
+other MVCs and tab bar we also set up in our storyboard,
+
+1286
+01:10:27,557 --> 01:10:31,893
+okay? So, it is set table but usually we're getting them.
+
+1287
+01:10:31,895 --> 01:10:34,529
+But, so that's great but if I'm inside
+
+1288
+01:10:34,531 --> 01:10:37,599
+a splitViewController, how do I get the splitViewController
+
+1289
+01:10:37,601 --> 01:10:40,034
+I'm in so that I can access this property? And
+
+1290
+01:10:40,036 --> 01:10:43,271
+the answer is UIViewController has these three very important
+
+1291
+01:10:43,273 --> 01:10:45,540
+properties, tabBarController, splitViewController and
+
+1292
+01:10:45,542 --> 01:10:48,843
+navigationController, they're all optionals. They will tell
+
+1293
+01:10:48,845 --> 01:10:52,780
+you the splitViewController you are in, if you're in one.
+
+1294
+01:10:52,782 --> 01:10:55,650
+If you're not, it'll be nil, okay? It will also tell
+
+1295
+01:10:55,652 --> 01:10:58,886
+you this one, what navigation controller you're in if you're
+
+1296
+01:10:58,888 --> 01:11:01,823
+in one? And you could be in both a splitViewController and
+
+1297
+01:11:01,825 --> 01:11:04,559
+a navigationController. Imagine a splitVieController
+
+1298
+01:11:04,561 --> 01:11:07,161
+where the master is actually the navigationController
+
+1299
+01:11:07,163 --> 01:11:09,764
+that you can navigate through, okay? So you can have
+
+1300
+01:11:09,766 --> 01:11:13,101
+a navigationController inside a splitVewController and
+
+1301
+01:11:13,103 --> 01:11:15,536
+any MVC that's in that navigationController,
+
+1302
+01:11:15,538 --> 01:11:18,806
+this would be nil, non nil and this would also be non nill,
+
+1303
+01:11:18,808 --> 01:11:22,644
+okay? Cuz it would be in, in both of those things. And
+
+1304
+01:11:22,646 --> 01:11:24,879
+once you get the splitViewController or
+
+1305
+01:11:24,881 --> 01:11:25,913
+navigationController in, you can
+
+1306
+01:11:25,915 --> 01:11:28,149
+find the other MVCs using this thing up here.
+
+1307
+01:11:28,151 --> 01:11:31,019
+So for example, if I have an MVC and it's the master in
+
+1308
+01:11:31,021 --> 01:11:33,988
+a splitViewController, and I want to get the detail. I can
+
+1309
+01:11:33,990 --> 01:11:37,659
+just say, splitViewController? Because it might be nil and
+
+1310
+01:11:37,661 --> 01:11:40,828
+this a chaining. Remember, everyone hopefully remembers
+
+1311
+01:11:40,830 --> 01:11:44,165
+chaining? I'm gonna get the view controllers, sub one.
+
+1312
+01:11:44,167 --> 01:11:47,368
+Remember, number one is the detail. And that's gonna give
+
+1313
+01:11:47,370 --> 01:11:50,238
+me the detail of the splitViewController I'm in,
+
+1314
+01:11:50,240 --> 01:11:53,808
+if I'm in one, otherwise it'd be nil, this would be nil.
+
+1315
+01:11:53,810 --> 01:11:56,444
+So this actually says detailVC: UIViewController,
+
+1316
+01:11:56,446 --> 01:11:59,647
+but this would be detailVC: UIViewController? Okay?
+
+1317
+01:11:59,649 --> 01:12:04,452
+This would be optional. That's a bug in the slides there.
+
+1318
+01:12:04,454 --> 01:12:08,189
+Okay, so, how do we wire up these MVCs, how do we get this
+
+1319
+01:12:08,191 --> 01:12:14,095
+all set up? Let's take a look at Split View and briefly,
+
+1320
+01:12:14,097 --> 01:12:17,265
+Navigation Controller. And then on, in our next
+
+1321
+01:12:17,267 --> 01:12:20,702
+lecture we'll talk about how we transition between these
+
+1322
+01:12:20,704 --> 01:12:23,738
+various MVCs. Okay. especially in Navigation Controller,
+
+1323
+01:12:23,740 --> 01:12:26,274
+how do we put things, more things on the stack? How do we
+
+1324
+01:12:26,276 --> 01:12:29,744
+make it go to the next, thing? So, for split view controller,
+
+1325
+01:12:29,746 --> 01:12:32,647
+you basically drag a split view controller out of your
+
+1326
+01:12:32,649 --> 01:12:36,184
+little utilities, object palette in interface mode.
+
+1327
+01:12:36,186 --> 01:12:38,786
+Just drag it out. Now, when you drag out a split view
+
+1328
+01:12:38,788 --> 01:12:41,422
+controller, you're gonna get a whole bunch of other MVCs.
+
+1329
+01:12:41,424 --> 01:12:43,658
+It tries to help you out by giving you Navigation
+
+1330
+01:12:43,660 --> 01:12:45,860
+controllers with table views in it,
+
+1331
+01:12:45,862 --> 01:12:47,829
+all that stuff, just delete all that stuff, okay?
+
+1332
+01:12:47,831 --> 01:12:50,465
+You just want the split view controller. You, it's being
+
+1333
+01:12:50,467 --> 01:12:52,900
+a little too helpful for the, you most of the time there,
+
+1334
+01:12:52,902 --> 01:12:55,703
+kkay? So you're gonna drag that out, and then you're just
+
+1335
+01:12:55,705 --> 01:12:58,272
+gonna Ctrl + drag from the split control, view controller
+
+1336
+01:12:58,274 --> 01:13:01,576
+to the master, and the detail, okay? Looks like this.
+
+1337
+01:13:01,578 --> 01:13:02,477
+Here's my split view control and
+
+1338
+01:13:02,479 --> 01:13:04,412
+I dragged it out of the utilities pane.
+
+1339
+01:13:04,414 --> 01:13:07,715
+I'm just Ctrl + dragging to my calculator, for example,
+
+1340
+01:13:07,717 --> 01:13:11,119
+to be my master. When I do, this popover will appear and
+
+1341
+01:13:11,121 --> 01:13:14,222
+the only two things that make sense to pick are master and
+
+1342
+01:13:14,224 --> 01:13:17,225
+detail. Okay, these are the only two choices that make any
+
+1343
+01:13:17,227 --> 01:13:18,593
+sense. Those don't make sense here.
+
+1344
+01:13:18,595 --> 01:13:22,330
+So let's pick the master. It's gonna create a connection,
+
+1345
+01:13:22,332 --> 01:13:25,767
+the master connection. Ctrl+drag down here. I'm gonna
+
+1346
+01:13:25,769 --> 01:13:29,704
+pick Detail. It's gonna make a connection down there. Voila,
+
+1347
+01:13:29,706 --> 01:13:33,174
+I've wired up my split view controller, okay?
+
+1348
+01:13:33,176 --> 01:13:38,246
+All right, but split view can only do what it does on iPad,
+
+1349
+01:13:38,248 --> 01:13:42,383
+right? There's really, on most iPhones, everything except for
+
+1350
+01:13:42,385 --> 01:13:42,550
+the iPhone 6 Plus,
+
+1351
+01:13:42,552 --> 01:13:45,853
+there's really not enough room to have a split view. So
+
+1352
+01:13:45,855 --> 01:13:49,557
+we want to simultaneously put the MVCs that are our master
+
+1353
+01:13:49,559 --> 01:13:52,326
+in details with split view into Navigation Controllers.
+
+1354
+01:13:52,328 --> 01:13:55,530
+And then iOS is smart enough, if it's on iPhone only, okay,
+
+1355
+01:13:55,532 --> 01:13:58,266
+iPhone 6 or iPhone 5 or something like that, it knows
+
+1356
+01:13:58,268 --> 01:14:00,868
+not to use the split view controller, it will only use
+
+1357
+01:14:00,870 --> 01:14:04,205
+the Navigation Controllers. Okay, so let' take a look and
+
+1358
+01:14:04,207 --> 01:14:05,306
+see what that looks like. So,
+
+1359
+01:14:05,308 --> 01:14:07,909
+here I've got that thing I just showed you, right?
+
+1360
+01:14:07,911 --> 01:14:08,810
+The calculator, the graph,
+
+1361
+01:14:08,812 --> 01:14:10,411
+here's the split view controller.
+
+1362
+01:14:10,413 --> 01:14:12,180
+I'm just gonna take this guy and
+
+1363
+01:14:12,182 --> 01:14:14,115
+put it inside a Navigation Controller. And
+
+1364
+01:14:14,117 --> 01:14:17,051
+the way we do that, easiest way is to select it and
+
+1365
+01:14:17,053 --> 01:14:20,054
+then say embed in Navigation Controller. Same way we did
+
+1366
+01:14:20,056 --> 01:14:22,824
+embed in stack view, but here since we're choosing
+
+1367
+01:14:22,826 --> 01:14:25,860
+a whole controller, we can't embed it in a stack view.
+
+1368
+01:14:25,862 --> 01:14:27,895
+So we're gonna say embed in Navigation Controller. And
+
+1369
+01:14:27,897 --> 01:14:31,265
+it's gonna embed this thing into a Navigation Controller,
+
+1370
+01:14:31,267 --> 01:14:33,301
+which is gonna look like this. So split the controller,
+
+1371
+01:14:33,303 --> 01:14:36,571
+this is still the master. Now this Navigation Controller,
+
+1372
+01:14:36,573 --> 01:14:40,274
+this MVC, is the master and its root view controller
+
+1373
+01:14:40,276 --> 01:14:43,678
+is the calculator. Okay, and the cool thing about this,
+
+1374
+01:14:43,680 --> 01:14:46,214
+like I say, if you run this in an iPhone it'll ignore this
+
+1375
+01:14:46,216 --> 01:14:49,217
+and just have your calculator in a Navigation Controller and
+
+1376
+01:14:49,219 --> 01:14:53,254
+when you try to show a graph it'll put this as a stack,
+
+1377
+01:14:53,256 --> 01:14:55,490
+a card stack, on this Navigation Controller.
+
+1378
+01:14:55,492 --> 01:15:00,161
+Isn't that cool? Okay, so that way it'll work on both
+
+1379
+01:15:00,163 --> 01:15:02,930
+platforms. Exactly the same storyboard.
+
+1380
+01:15:02,932 --> 01:15:08,469
+All right, okay, yes, I'm just noticing, I'm mentioning here,
+
+1381
+01:15:08,471 --> 01:15:12,940
+you can put this one inside a Navigation Controller too.
+
+1382
+01:15:12,942 --> 01:15:13,908
+You don't really need to,
+
+1383
+01:15:13,910 --> 01:15:16,777
+okay? Only the thing that is the root view controller
+
+1384
+01:15:16,779 --> 01:15:18,045
+really needs to be inside of it, but
+
+1385
+01:15:18,047 --> 01:15:20,615
+if you put it then you'll get a nice title on the top.
+
+1386
+01:15:20,617 --> 01:15:21,249
+You see you've got a title there,
+
+1387
+01:15:21,251 --> 01:15:24,418
+a calculator, you'll get that nice title here, even in
+
+1388
+01:15:24,420 --> 01:15:27,221
+the split view case. The only thing to watch out for
+
+1389
+01:15:27,223 --> 01:15:30,958
+is this detail will now be a Navigation Controller,
+
+1390
+01:15:30,960 --> 01:15:32,260
+not a calculator graph controller.
+
+1391
+01:15:32,262 --> 01:15:36,998
+You always have to be careful of that case. All right, so
+
+1392
+01:15:37,000 --> 01:15:37,265
+that's it for today.
+
+1393
+01:15:37,267 --> 01:15:39,800
+On Wednesday, we'll talk about what are called segues.
+
+1394
+01:15:39,802 --> 01:15:42,703
+That's how we transfer from one MVC to another,
+
+1395
+01:15:42,705 --> 01:15:44,472
+either in the split view or the Navigation Controller
+
+1396
+01:15:44,474 --> 01:15:48,543
+case. We'll do a demo which is going to extend face it, okay,
+
+1397
+01:15:48,545 --> 01:15:51,212
+it's going to call, be called emotions as you can imagine,
+
+1398
+01:15:51,214 --> 01:15:53,848
+we're gonna show some emotions on our faces. Then I'm going
+
+1399
+01:15:53,850 --> 01:15:55,917
+to start talking about the view controller lifecycle,
+
+1400
+01:15:55,919 --> 01:15:58,586
+that's part of the two methods that I always delete
+
+1401
+01:15:58,588 --> 01:15:59,820
+when I start a new thing.
+
+1402
+01:15:59,822 --> 01:16:02,356
+We'll learn what those are, so you don't have to delete them.
+
+1403
+01:16:02,358 --> 01:16:06,494
+Friday, really good optional section, which is source code
+
+1404
+01:16:06,496 --> 01:16:10,431
+management. Remember I've been not clicking that button.
+
+1405
+01:16:10,433 --> 01:16:11,098
+Now you'll know what that is.
+
+1406
+01:16:11,100 --> 01:16:13,501
+And you can click that button from now on, if you want,
+
+1407
+01:16:13,503 --> 01:16:15,036
+after Friday. And then next week,
+
+1408
+01:16:15,038 --> 01:16:17,338
+we'll talk about protocols, delegations, scroll view,
+
+1409
+01:16:17,340 --> 01:16:21,509
+all kinds of wonderful stuff. Okay, that's it. I'll be here
+
+1410
+01:16:21,511 --> 01:16:23,744
+if you have any questions. >> For
+
+1411
+01:16:23,746 --> 01:16:23,777
+more, please visit us at stanford.edu.
+
