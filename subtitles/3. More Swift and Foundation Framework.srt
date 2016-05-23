@@ -1,4 +1,4 @@
-﻿1
+1
 00:00:06,000 --> 00:00:09,060
 Stanford University. >> Okay,
 斯坦福大学
@@ -620,12 +620,12 @@ a simple way to have a default value in case an optional is
 124
 00:06:38,920 --> 00:06:43,490
 nil. All right so let's talk about another thing, tuples.
-继续介绍另一东西，元祖。
+继续介绍另一东西，元组。
 
 125
 00:06:43,490 --> 00:06:47,960
 All right tuples are a type, okay? In Swift they're really,
-元祖是一种类型，在 Swift 中它们非常酷
+元组是一种类型，在 Swift 中它们非常酷
 
 126
 00:06:47,960 --> 00:06:51,670
@@ -645,7 +645,7 @@ you can use it anywhere you can use a type, a tuple can be
 129
 00:06:56,840 --> 00:07:01,640
 used anywhere types are valid, okay? So, here's an example.
-一个元祖在任何地方使用都是可以的，好的。这里有一个例子
+一个元组在任何地方使用都是可以的，好的。这里有一个例子
 
 130
 00:07:01,640 --> 00:07:06,010
@@ -655,22 +655,22 @@ I'm going to create x, okay? This let x, x is a constant.
 131
 00:07:06,020 --> 00:07:09,950
 It's type is a tuple, with a string, int, and
-这是一个元祖类型，含有 string, int, 和 double
+这是一个元组类型，含有 string, int, 和 double
 
 132
 00:07:09,950 --> 00:07:14,020
 double. So, even though tuple has the sound, to, in it,
-尽管元祖听起来有 two 的声音
+尽管元组听起来有 two 的声音
 
 133
 00:07:14,020 --> 00:07:17,190
 it's just not two things. Any number of things can be in
-但并不是他有只有两个东西。一个元祖里面可以有任何数量的东西
+但并不是他有只有两个东西。一个元组里面可以有任何数量的东西
 
 134
 00:07:17,190 --> 00:07:22,460
 a tuple okay? So x there is a tuple with string int and
-好的，所以 x 是一个含有 string int double 的元祖
+好的，所以 x 是一个含有 string int double 的元组
 
 135
 00:07:22,470 --> 00:07:24,700
@@ -685,7 +685,7 @@ which is just parenthesis, a string, an int, and a double,
 137
 00:07:28,240 --> 00:07:33,070
 okay? Now how do I get those values out of the tuple?
-好的。现在我该如何从这个元祖里面获得值呢
+好的。现在我该如何从这个元组里面获得值呢
 
 138
 00:07:33,080 --> 00:07:34,480
@@ -715,7 +715,7 @@ assign them to word, number, and value, which are gonna
 143
 00:07:48,320 --> 00:07:51,330
 be local variables in this context, okay? Now, if you
-它们会在这个上下文里得到蹦迪变量。好的，现在
+它们会在这个上下文里得到本地变量。好的，现在
 
 144
 00:07:51,330 --> 00:07:55,730
@@ -730,7 +730,7 @@ equal x, the compiler will complain, because word, comma,
 146
 00:08:00,170 --> 00:08:04,040
 number can't match a string in double tuples. Okay? So
-应为 word, number 无法和元祖里的 double 关键字匹配。好的
+应为 word, number 无法和元组里的 double 关键字匹配。好的
 
 147
 00:08:04,040 --> 00:08:07,610
@@ -740,7 +740,7 @@ this particular syntax is just putting names on the things in
 148
 00:08:07,610 --> 00:08:11,510
 the Tuple so you can use them, so now you can print them out.
-你可以这样使用元祖，所以你现在可以把它们打印出来了
+你可以这样使用元组，所以你现在可以把它们打印出来了
 
 149
 00:08:11,510 --> 00:08:12,580
@@ -760,12 +760,12 @@ and value would be of type double. Okay,
 152
 00:08:18,120 --> 00:08:22,090
 another way to do it is when you create the tuple, okay,
-另一种这么做的方法是，当你在生成元祖时，好的。
+另一种这么做的方法是，当你在生成元组时，好的。
 
 153
 00:08:22,090 --> 00:08:24,830
 you can name each of the things in the tuple. So
-你可以为元祖里的每个东西命名。
+你可以为元组里的每个东西命名。
 
 154
 00:08:24,830 --> 00:08:31,070
@@ -775,7 +775,7 @@ here I'm letting x, this time be w: String i: Int v: Double.
 155
 00:08:31,070 --> 00:08:34,640
 I'm giving the names w, i and v to the things inside
-我在元祖里面分别起了几个名字叫 w，i 和 v
+我在元组里面分别起了几个名字叫 w，i 和 v
 
 156
 00:08:34,640 --> 00:08:37,240
@@ -790,7 +790,7 @@ the version above. But now if I want to get at the values,
 158
 00:08:40,340 --> 00:08:45,550
 I can just say x.w, x.i, and x.v to get at the tuple
-我可以直接说 x.w，x.i，还有 x.v 来获得元祖中的值
+我可以直接说 x.w，x.i，还有 x.v 来获得元组中的值
 
 159
 00:08:45,550 --> 00:08:48,250
@@ -800,12 +800,12 @@ values. See the difference between those two cases?
 160
 00:08:48,250 --> 00:08:51,090
 One, you're kind of naming it when you declare the tuple,
-一种，在你声明元祖的时候定义一种命名
+一种，在你声明元组的时候定义一种命名
 
 161
 00:08:51,090 --> 00:08:53,920
 the other one is you're taking a tuple that you got and
-另一种是你拿到一个元祖
+另一种是你拿到一个元组
 
 162
 00:08:53,920 --> 00:08:56,620
@@ -905,7 +905,7 @@ So tuples are perfectly valid return values, okay? So
 181
 00:09:50,010 --> 00:09:52,910
 you can return multiple things from functions. All right,
-所以你可以从这可方法返回多个值
+所以你可以从函数返回多个值
 
 182
 00:09:52,920 --> 00:09:56,850
@@ -1380,7 +1380,7 @@ it doesn't want to actually make a copy. Okay?
 276
 00:15:08,430 --> 00:15:11,430
 It gets another pointer to it but as soon as you try to
-在你视图去改变它的时候
+在你试图去改变它的时候
 
 277
 00:15:11,430 --> 00:15:15,370
@@ -1660,7 +1660,7 @@ you're gonna choose classes, okay? Anything big is almost
 332
 00:17:45,090 --> 00:17:50,660
 certainly gonna use the class, all right? Okay.
-任何大型的东西坑定会使用类，对吗？
+任何大型的东西肯定会使用类，对吗？
 
 333
 00:17:50,660 --> 00:17:53,730
@@ -1957,7 +1957,7 @@ possible to mark a method or a property final in which case
 392
 00:21:18,200 --> 00:21:21,270
 no one can subclasses. Okay, there won't be a list,
-一个子类不能再类前放 override
+一个子类不能在类前放 override
 
 393
 00:21:21,270 --> 00:21:24,740
@@ -2246,7 +2246,7 @@ In Swift we're only just scratching the surface so
 450
 00:24:27,890 --> 00:24:31,220
 far of what they can do. But one really cool thing about
-但是有一件关于它的很酷低是
+但是有一件关于它的很酷的是
 
 451
 00:24:31,230 --> 00:24:35,830
