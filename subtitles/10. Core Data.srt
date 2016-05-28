@@ -1,0 +1,5844 @@
+﻿1
+00:00:00,001 --> 00:00:03,469
+[MUSIC]
+
+2
+00:00:03,471 --> 00:00:09,508
+Stanford University. >> Welcome to Lecture Number
+
+3
+00:00:09,510 --> 00:00:13,746
+10 of Stanford CS193P. It's the Spring of 2016.
+
+4
+00:00:13,748 --> 00:00:18,250
+Today we have one topic only, which is Core Data, okay,
+
+5
+00:00:18,252 --> 00:00:22,221
+which is an object oriented database. Sometimes when
+
+6
+00:00:22,223 --> 00:00:24,957
+you're building an app you need to store a huge amount of
+
+7
+00:00:24,959 --> 00:00:27,926
+data like you're doing some kind of twitter thing where
+
+8
+00:00:27,928 --> 00:00:29,294
+you're collecting all the tweets and
+
+9
+00:00:29,296 --> 00:00:29,995
+you've got all these tweets and
+
+10
+00:00:29,997 --> 00:00:31,030
+you want to search through them and
+
+11
+00:00:31,032 --> 00:00:33,632
+do some kind of queries or something like that. And
+
+12
+00:00:33,634 --> 00:00:36,735
+of course there's lots of technologies out there for
+
+13
+00:00:36,737 --> 00:00:40,005
+doing that kind of thing. SQL databases and
+
+14
+00:00:40,007 --> 00:00:42,274
+things like that. But really when we're programming,
+
+15
+00:00:42,276 --> 00:00:45,778
+we want obviously all of our stuff to be object oriented.
+
+16
+00:00:45,780 --> 00:00:49,648
+So iOS has this awesome object oriented database system
+
+17
+00:00:49,650 --> 00:00:53,252
+called Core Data. It's very powerful.
+
+18
+00:00:53,254 --> 00:00:55,020
+It's actually based on SQL underneath so
+
+19
+00:00:55,022 --> 00:00:58,090
+it's got all the full kind of power of that.
+
+20
+00:00:58,325 --> 00:01:01,393
+And yet it interacts with your code just like all your other
+
+21
+00:01:01,395 --> 00:01:02,761
+object oriented stuff that you do,
+
+22
+00:01:02,763 --> 00:01:04,997
+especially if you're doing things like table and
+
+23
+00:01:04,999 --> 00:01:07,666
+stuff like that that has a lot of good integration,
+
+24
+00:01:07,668 --> 00:01:10,269
+with that. So it's essentially a way of
+
+25
+00:01:10,271 --> 00:01:14,039
+creating an object graph that's backed by a database,
+
+26
+00:01:14,041 --> 00:01:14,840
+a SQL database in this case.
+
+27
+00:01:14,842 --> 00:01:17,776
+It can actually be backed by other kinds of databases
+
+28
+00:01:17,778 --> 00:01:19,678
+like XML or just in memory stuff but
+
+29
+00:01:19,680 --> 00:01:23,015
+primarily we're using Core Data with SQL as our,
+
+30
+00:01:23,017 --> 00:01:25,050
+backing store. And the way it works,
+
+31
+00:01:25,052 --> 00:01:29,054
+is you're going to create this visual mapping, okay? And
+
+32
+00:01:29,056 --> 00:01:32,024
+then you're gonna create objects in your code. Visual
+
+33
+00:01:32,026 --> 00:01:33,892
+mapping's gonna basically describe your database,
+
+34
+00:01:33,894 --> 00:01:36,061
+then you're gonna create objects in your code,
+
+35
+00:01:36,063 --> 00:01:38,831
+that are in that database. And you're gonna access
+
+36
+00:01:38,833 --> 00:01:41,800
+the columns in the database, and the rows, and
+
+37
+00:01:41,802 --> 00:01:42,000
+the columns and
+
+38
+00:01:42,002 --> 00:01:44,069
+the tables if you want to think of it that way, but
+
+39
+00:01:44,071 --> 00:01:46,738
+you can access the attributes just using vars.
+
+40
+00:01:46,740 --> 00:01:49,141
+So you're gonna have objects and vars on them and
+
+41
+00:01:49,143 --> 00:01:52,211
+those are gonna be stored in the database, okay.
+
+42
+00:01:52,213 --> 00:01:54,813
+So I'm gonna walk you through all that. Let's start with
+
+43
+00:01:54,815 --> 00:01:57,916
+creating that visual mapping of the database, okay.
+
+44
+00:01:57,918 --> 00:02:01,253
+Now just like anything, that you do when you're
+
+45
+00:02:01,255 --> 00:02:04,189
+adding a new file to x code, whether it's a swift file or
+
+46
+00:02:04,191 --> 00:02:07,593
+something like that, you're going to start with new file.
+
+47
+00:02:07,595 --> 00:02:08,527
+But in this case, we're not going
+
+48
+00:02:08,529 --> 00:02:11,196
+to be adding a code file, we're actually going to be
+
+49
+00:02:11,198 --> 00:02:15,134
+adding a database mapping file. So, you say new file,
+
+50
+00:02:15,136 --> 00:02:18,570
+and you're going to go down to iOS Core Data, okay? You see
+
+51
+00:02:18,572 --> 00:02:23,075
+where it says Core Data down there instead of, iOS source,
+
+52
+00:02:23,077 --> 00:02:25,611
+and inside of there, you're gonna pick data model.
+
+53
+00:02:25,613 --> 00:02:30,115
+Don't pick mapping model, you want data model, okay? And
+
+54
+00:02:30,117 --> 00:02:32,818
+it's gonna ask you what you wanna call this mapping.
+
+55
+00:02:32,820 --> 00:02:33,986
+Okay, this mapping, by the way,
+
+56
+00:02:33,988 --> 00:02:37,089
+what we're mapping between is these objects that we're gonna
+
+57
+00:02:37,091 --> 00:02:40,692
+describe in this database and what's gonna be in our code.
+
+58
+00:02:40,694 --> 00:02:44,796
+And usually if you only have one database in your app
+
+59
+00:02:44,798 --> 00:02:47,599
+you'll call it model, because it's usually the model for
+
+60
+00:02:47,601 --> 00:02:49,601
+a lot of your view controllers, but you could
+
+61
+00:02:49,603 --> 00:02:52,571
+also call it the name or your app or if you had multiple of
+
+62
+00:02:52,573 --> 00:02:55,307
+them you could kind of name them appropriately, right, so
+
+63
+00:02:55,309 --> 00:02:59,845
+any name will, is fine here. When you create it,
+
+64
+00:02:59,847 --> 00:03:03,415
+looks like this, okay? It's called Model.xcdatamodeld
+
+65
+00:03:03,417 --> 00:03:07,319
+right here. And this is the contents of it, right?
+
+66
+00:03:07,321 --> 00:03:10,022
+We're looking at the contents of it. And,
+
+67
+00:03:10,024 --> 00:03:14,026
+it's kind of like a storyboard for the database, okay?
+
+68
+00:03:14,028 --> 00:03:14,626
+You're gonna graphically,
+
+69
+00:03:14,628 --> 00:03:19,198
+visually edit your database schema right here. So
+
+70
+00:03:19,200 --> 00:03:21,934
+the database lets you store things obviously.
+
+71
+00:03:21,936 --> 00:03:25,003
+The main things that you're storing are called entities,
+
+72
+00:03:25,005 --> 00:03:28,407
+okay? And they're kinda analogous to objects,
+
+73
+00:03:28,409 --> 00:03:31,076
+all right? So here I'm gonna create an entity so
+
+74
+00:03:31,078 --> 00:03:33,645
+I'm gonna click on this add entity button at the bottom.
+
+75
+00:03:33,647 --> 00:03:37,249
+And just say add entity. When I do, it creates one up here.
+
+76
+00:03:37,251 --> 00:03:39,218
+And I'm gonna change the name of it to Tweet.
+
+77
+00:03:39,220 --> 00:03:42,321
+So for my examples today, let's say we're building
+
+78
+00:03:42,323 --> 00:03:44,523
+a database that's storing some Twitter stuff.
+
+79
+00:03:44,525 --> 00:03:45,524
+We're all in kinda Twitter mode
+
+80
+00:03:45,526 --> 00:03:48,660
+right now with your assignment stuff. So we'll store some
+
+81
+00:03:48,662 --> 00:03:54,333
+tweets and some Twitter users into this database, okay? Now
+
+82
+00:03:54,335 --> 00:03:57,769
+this entity Tweet that we're gonna store in the database,
+
+83
+00:03:57,771 --> 00:04:01,673
+they're gonna appear in our code as NSManagedObject
+
+84
+00:04:01,675 --> 00:04:05,978
+instances. So there's a class in iOS NSManagedObject, okay.
+
+85
+00:04:05,980 --> 00:04:09,381
+And so all these entities will appear in our code as
+
+86
+00:04:09,383 --> 00:04:14,953
+NSManagedObject, okay. All right so in addition
+
+87
+00:04:14,955 --> 00:04:19,024
+to entities these entities have attributes. So those
+
+88
+00:04:19,026 --> 00:04:21,727
+are kind of like properties on a class right there.
+
+89
+00:04:21,729 --> 00:04:25,030
+They have relationships. Relationships are kind of like
+
+90
+00:04:25,032 --> 00:04:29,668
+vars that point to other objects in the database, okay.
+
+91
+00:04:29,670 --> 00:04:32,337
+And then there also have this thing down here called fetch
+
+92
+00:04:32,339 --> 00:04:35,340
+properties. Which I'm not gonna really talk about but
+
+93
+00:04:35,342 --> 00:04:36,708
+kind of the name implies what they are.
+
+94
+00:04:36,710 --> 00:04:40,045
+They're essentially properties that are, that basically
+
+95
+00:04:40,047 --> 00:04:43,382
+represent fetching in the database. So pulling objects
+
+96
+00:04:43,384 --> 00:04:46,018
+out that meet some query or something like that. You can
+
+97
+00:04:46,020 --> 00:04:48,353
+make it look like that's just a property on you're entity.
+
+98
+00:04:48,355 --> 00:04:50,422
+Unfortunately, don't have time to talk about that.
+
+99
+00:04:50,424 --> 00:04:53,525
+We're gonna focus here on these attributes and
+
+100
+00:04:53,527 --> 00:04:55,560
+relationships, okay?
+
+101
+00:04:55,562 --> 00:04:58,897
+So to add an attribute, we're going to hit this little plus
+
+102
+00:04:58,899 --> 00:05:00,399
+sign right here under the attributes and
+
+103
+00:05:00,401 --> 00:05:03,502
+it's going to add one. Here, I'm doing a Tweet, right,
+
+104
+00:05:03,504 --> 00:05:06,371
+that's my entity as a Tweet, so I'm going to put the text
+
+105
+00:05:06,373 --> 00:05:10,342
+of the Tweet. Notice as soon as I type, as I added this and
+
+106
+00:05:10,344 --> 00:05:12,444
+typed it in, I get start getting an error right here.
+
+107
+00:05:12,446 --> 00:05:15,847
+See, red error up in the, upper corner there, okay.
+
+108
+00:05:15,849 --> 00:05:17,816
+And that's because this Tweet or
+
+109
+00:05:17,818 --> 00:05:21,053
+this text attribute on the Tweet has no type, okay.
+
+110
+00:05:21,055 --> 00:05:24,089
+Everything that goes in there obviously has to have a type,
+
+111
+00:05:24,091 --> 00:05:26,525
+so you just click on this type to set it and
+
+112
+00:05:26,527 --> 00:05:30,896
+I'm gonna set the text to be a string. Okay, so these are all
+
+113
+00:05:30,898 --> 00:05:34,566
+the types that the attributes, the vars in your Tweet entity
+
+114
+00:05:34,568 --> 00:05:38,737
+can be basically. All the ones like integers, decimal,
+
+115
+00:05:38,739 --> 00:05:42,541
+double, float, even Boolean, those are actually stored as
+
+116
+00:05:42,543 --> 00:05:46,645
+an NS number. Those appear in your code as an NS number.
+
+117
+00:05:46,647 --> 00:05:50,015
+Okay, this binary data is in NS data.
+
+118
+00:05:50,017 --> 00:05:55,420
+The date is an NSDate, and the string here is an NSString.
+
+119
+00:05:55,422 --> 00:05:58,690
+Now remember that you get the automatic bridging, right?
+
+120
+00:05:58,692 --> 00:06:01,660
+From NSString to string, things like that,
+
+121
+00:06:01,662 --> 00:06:04,363
+even from double and int to NSNumbers, right?
+
+122
+00:06:04,365 --> 00:06:07,232
+So, even though these are NSNumbers and NSString,
+
+123
+00:06:07,234 --> 00:06:09,601
+you're still gonna get your Swift-like things when you're
+
+124
+00:06:09,603 --> 00:06:14,005
+using them, in your code. Now, you can set any of these
+
+125
+00:06:14,007 --> 00:06:17,876
+things, like this text attribute using these two
+
+126
+00:06:17,878 --> 00:06:21,480
+methods right here on NSManagedObject, okay?
+
+127
+00:06:21,482 --> 00:06:25,217
+Value for key which gets the value, and set value for
+
+128
+00:06:25,219 --> 00:06:28,720
+key. Okay, so valueForKey returns any object,
+
+129
+00:06:28,722 --> 00:06:32,457
+could be an NSNumber or an NSDate or an NSData, right.
+
+130
+00:06:32,459 --> 00:06:36,561
+And setValue(forKey:) the key is a string like text and
+
+131
+00:06:36,563 --> 00:06:41,466
+the value is, again, NSNumber, NSData, NSDate, whatever,
+
+132
+00:06:41,468 --> 00:06:45,203
+okay? So that's how you can set the data on your object
+
+133
+00:06:45,205 --> 00:06:47,005
+once you get a hold of one of these NSManagedObject.
+
+134
+00:06:47,007 --> 00:06:50,041
+Now I haven't shown you how to get those NSManagedObject yet,
+
+135
+00:06:50,043 --> 00:06:51,209
+but I will soon.
+
+136
+00:06:51,578 --> 00:06:54,813
+See the error's gone because I set this to be a string. So,
+
+137
+00:06:54,815 --> 00:06:57,716
+here's I'm going to add some more attributes, an ID,
+
+138
+00:06:57,718 --> 00:07:00,585
+which is some unique identifier for this Tweet.
+
+139
+00:07:00,587 --> 00:07:03,588
+Also created, which is the date the Tweet was created,
+
+140
+00:07:03,590 --> 00:07:06,758
+you can see that's an NSDate right there. By the way,
+
+141
+00:07:06,760 --> 00:07:10,529
+this ID you're probably going to want that in your homework.
+
+142
+00:07:10,531 --> 00:07:10,862
+Just a little hint.
+
+143
+00:07:10,864 --> 00:07:13,665
+I like to give you hints sometimes in the lecture.
+
+144
+00:07:13,667 --> 00:07:17,436
+So you'll need your unique ID there at some point.
+
+145
+00:07:17,704 --> 00:07:20,906
+We're looking at these attributes on this entity in
+
+146
+00:07:20,908 --> 00:07:24,943
+kind of a table format here. But we can also do it in
+
+147
+00:07:24,945 --> 00:07:27,746
+a graphical way by clicking on this little button down here,
+
+148
+00:07:27,748 --> 00:07:31,416
+this editor style. It changes the style of this editor and
+
+149
+00:07:31,418 --> 00:07:34,719
+it looks like this. So the graphical one basically has
+
+150
+00:07:34,721 --> 00:07:37,889
+all of my entities and my attributes, but in kind of
+
+151
+00:07:37,891 --> 00:07:41,026
+on a graph paper graphical format. And this is going to
+
+152
+00:07:41,028 --> 00:07:44,596
+make sense when I start having a lot of relationships between
+
+153
+00:07:44,598 --> 00:07:45,263
+entities, right.
+
+154
+00:07:45,265 --> 00:07:48,333
+Then I'm gonna be able to see them here on the graph paper
+
+155
+00:07:48,335 --> 00:07:49,267
+all pointing to each other so
+
+156
+00:07:49,269 --> 00:07:51,603
+I can see what their relationships are. Okay, so
+
+157
+00:07:51,605 --> 00:07:55,140
+let's add another entity in this. We can add entities and
+
+158
+00:07:55,142 --> 00:07:58,376
+attributes in this view just as much as in the table view.
+
+159
+00:07:58,378 --> 00:08:00,645
+So I'm gonna go down here and add another entity.
+
+160
+00:08:00,647 --> 00:08:04,549
+This is gonna be a Twitter user, okay? And you can see it
+
+161
+00:08:04,551 --> 00:08:07,419
+added the Twitter user here. It has no attributes or
+
+162
+00:08:07,421 --> 00:08:09,221
+relationships yet. What's really cool,
+
+163
+00:08:09,223 --> 00:08:12,224
+if you move these around and they do have wires pointing
+
+164
+00:08:12,226 --> 00:08:14,960
+to each other, it'll rearrange the wires all over the place
+
+165
+00:08:14,962 --> 00:08:19,231
+to look nice, okay? So that's kinda fun. I can also add
+
+166
+00:08:19,233 --> 00:08:20,832
+attributes from here. So I'm just going down here and
+
+167
+00:08:20,834 --> 00:08:23,869
+say add attribute to add an attribute to my Twitter user.
+
+168
+00:08:23,871 --> 00:08:27,305
+I'm gonna call this attribute screen name, okay,
+
+169
+00:08:27,307 --> 00:08:30,442
+that's like the at sign, whatever, screen name
+
+170
+00:08:30,444 --> 00:08:33,745
+of the user. Notice that if I have this selected,
+
+171
+00:08:33,747 --> 00:08:37,716
+then the Inspector over here can be used to inspect things
+
+172
+00:08:37,718 --> 00:08:41,753
+about this attribute. So let's do that. Here's a screen name,
+
+173
+00:08:41,755 --> 00:08:43,688
+its attributes. For example, here's its type.
+
+174
+00:08:43,690 --> 00:08:46,458
+I'm going to say this type to be a string. It has some other
+
+175
+00:08:46,460 --> 00:08:48,860
+attributes here which I'm not really going to have time to
+
+176
+00:08:48,862 --> 00:08:51,429
+talk about. But you'll definitely, you can look up.
+
+177
+00:08:51,431 --> 00:08:53,765
+You won't need it for any of your homework obviously, but
+
+178
+00:08:53,767 --> 00:08:55,066
+for your final project you might. So
+
+179
+00:08:55,068 --> 00:08:58,670
+you can look those up in the documentation for core data.
+
+180
+00:08:58,672 --> 00:09:02,207
+Mkay I'm gonna add another attribute here which is name.
+
+181
+00:09:02,209 --> 00:09:03,341
+So that's the user's real name.
+
+182
+00:09:03,343 --> 00:09:06,278
+Okay not their at time whatever but their actual real
+
+183
+00:09:06,280 --> 00:09:09,714
+name. So I'll add that. And now I'm gonna add
+
+184
+00:09:09,716 --> 00:09:13,685
+a relationship between these two entities and of course we
+
+185
+00:09:13,687 --> 00:09:17,522
+know that a Twitter user Is the one who tweets the tweet.
+
+186
+00:09:17,524 --> 00:09:21,259
+Right? So, there's a relationship between this two.
+
+187
+00:09:21,261 --> 00:09:23,795
+And to create a relationship between these two,
+
+188
+00:09:23,797 --> 00:09:25,764
+I just Ctrl-drag from one to the other.
+
+189
+00:09:25,766 --> 00:09:27,699
+And I can Ctrl-drag from either to the other.
+
+190
+00:09:27,701 --> 00:09:29,034
+It really doesn't matter which direction.
+
+191
+00:09:29,036 --> 00:09:32,070
+And when I do that, it's going to create
+
+192
+00:09:32,072 --> 00:09:36,608
+a new thing over here called a relationship on both sides,
+
+193
+00:09:36,610 --> 00:09:38,577
+it called it new relationship by default,
+
+194
+00:09:38,579 --> 00:09:41,112
+we're going to change the name of that, okay, on both sides,
+
+195
+00:09:41,114 --> 00:09:44,049
+and you can see it's got an arrow that points both ways.
+
+196
+00:09:44,051 --> 00:09:46,651
+So now we know there's a relationship on both sides.
+
+197
+00:09:46,653 --> 00:09:49,287
+Now, we want to rename these relationships
+
+198
+00:09:49,289 --> 00:09:51,756
+just like the attributes have names that are meaningful,
+
+199
+00:09:51,758 --> 00:09:55,961
+we want these to be meaningful names too. So the tweet okay,
+
+200
+00:09:55,963 --> 00:09:58,530
+if you look at this relationship to this guy.
+
+201
+00:09:58,532 --> 00:10:01,466
+This is the tweeter. Okay this is the tweeter for
+
+202
+00:10:01,468 --> 00:10:04,336
+this tweet so I'm gonna call the relationship tweeter
+
+203
+00:10:04,338 --> 00:10:07,672
+on this side. Okay I could probably call it user or
+
+204
+00:10:07,674 --> 00:10:10,842
+something as well but tweeter is kind of fun.
+
+205
+00:10:10,844 --> 00:10:13,378
+On the other side this is tweet. Okay.
+
+206
+00:10:13,380 --> 00:10:19,117
+So this is the tweet that this user has tweeted. Okay.
+
+207
+00:10:19,119 --> 00:10:22,921
+Now notice when you do this if you inspect either one,
+
+208
+00:10:22,923 --> 00:10:24,956
+like if you inspect tweets right there,
+
+209
+00:10:24,958 --> 00:10:26,891
+it's showing me that the inverse is tweeter.
+
+210
+00:10:26,893 --> 00:10:29,494
+So it knows the inder-, inverse right there,
+
+211
+00:10:29,496 --> 00:10:32,197
+okay. Now there's something different though about
+
+212
+00:10:32,199 --> 00:10:36,901
+this tweets relationship to the tweeter relationship. Cuz,
+
+213
+00:10:36,903 --> 00:10:41,940
+there are multiple tweets per Twitter user, right?
+
+214
+00:10:41,942 --> 00:10:45,210
+So user could have tweeted hundreds of times. So
+
+215
+00:10:45,212 --> 00:10:46,911
+this basically is multiple things,
+
+216
+00:10:46,913 --> 00:10:50,548
+this is a to-many relationship to use database jargon there
+
+217
+00:10:50,550 --> 00:10:53,385
+are many tweets per user even though there's only one user
+
+218
+00:10:53,387 --> 00:10:57,455
+per tweet. And you define that up here in the inspector,
+
+219
+00:10:57,457 --> 00:10:58,423
+if you have tweet selected.
+
+220
+00:10:58,425 --> 00:11:01,793
+You go here to the type of relationship it is. And
+
+221
+00:11:01,795 --> 00:11:05,930
+you can say it's a too many relationship. And when I do
+
+222
+00:11:05,932 --> 00:11:09,668
+that notice I get this little double arrow right here. Okay?
+
+223
+00:11:09,670 --> 00:11:13,672
+That's telling me that there's many tweets per Twitter user.
+
+224
+00:11:13,674 --> 00:11:16,241
+Now, this is gonna show up differently in my code.
+
+225
+00:11:16,243 --> 00:11:19,678
+This one right here is gonna show up in my code, okay,
+
+226
+00:11:19,680 --> 00:11:21,613
+this tweet thing that I have, this
+
+227
+00:11:21,615 --> 00:11:24,115
+tweet entity is gonna have a var, right here,
+
+228
+00:11:24,117 --> 00:11:28,386
+called tweeter. It's gonna be of type NSManagedObject,
+
+229
+00:11:28,388 --> 00:11:31,289
+because I told you all of these entities, this, and
+
+230
+00:11:31,291 --> 00:11:34,559
+this, are gonna show up in your code as NSManagedObject,
+
+231
+00:11:34,561 --> 00:11:36,227
+so that's gonna be the type of this var.
+
+232
+00:11:36,229 --> 00:11:42,233
+The type of this var over here is gonna be ns set. Okay?
+
+233
+00:11:42,235 --> 00:11:45,136
+And NSSet I can't remember if we talked about that earlier
+
+234
+00:11:45,138 --> 00:11:49,074
+in the quarter but it's very similar to NSArray, okay?
+
+235
+00:11:49,076 --> 00:11:53,745
+But it's unordered and unique. Ok, so an NS
+
+236
+00:11:53,747 --> 00:11:56,881
+array can have the same object in it multiple times and
+
+237
+00:11:56,883 --> 00:11:59,684
+an NS array is also in order. And in a set,
+
+238
+00:11:59,686 --> 00:12:02,120
+it's just a bunch of objects in there, and
+
+239
+00:12:02,122 --> 00:12:05,256
+if you add in the same object again, it would do nothing.
+
+240
+00:12:05,258 --> 00:12:06,991
+Okay, so it's basically a unique set and
+
+241
+00:12:06,993 --> 00:12:10,895
+there's no order to it's just a big jumble of them. Okay,
+
+242
+00:12:10,897 --> 00:12:14,132
+and since these Tweets are basically a big jumble of
+
+243
+00:12:14,134 --> 00:12:17,168
+tweets done by this user in no particular order, that's why
+
+244
+00:12:17,170 --> 00:12:23,208
+it's an NS set. Now, there is in Swift a struck called set,
+
+245
+00:12:23,210 --> 00:12:27,178
+and is automatically bridged just like NS array,
+
+246
+00:12:27,180 --> 00:12:28,813
+automatically bridged to an array. Okay?
+
+247
+00:12:28,815 --> 00:12:31,382
+So you can think of this as just being a set, but in fact,
+
+248
+00:12:31,384 --> 00:12:35,286
+it's an NSSet. Okay? And what's in that set? Of course,
+
+249
+00:12:35,288 --> 00:12:39,190
+ManageObject, NSManageObject, cuz these are in there. Okay?
+
+250
+00:12:39,192 --> 00:12:43,595
+So it's exactly what you would think. All right? Now.
+
+251
+00:12:43,597 --> 00:12:46,464
+There's lots of things you can do, okay, in core data.
+
+252
+00:12:46,466 --> 00:12:49,601
+We're gonna focus on a small part of it, but
+
+253
+00:12:49,603 --> 00:12:51,770
+the core of it, which is entities, attributes, and
+
+254
+00:12:51,772 --> 00:12:54,706
+relationships, these things that I just told you about.
+
+255
+00:12:54,708 --> 00:12:58,176
+Okay. How do you access all this stuff in the code?
+
+256
+00:12:58,178 --> 00:13:00,612
+You need an instance of one of these.
+
+257
+00:13:00,614 --> 00:13:04,082
+NSManagedObjectContext. You can think of that as kind of
+
+258
+00:13:04,084 --> 00:13:11,523
+the window into the world of your database of objects,
+
+259
+00:13:11,525 --> 00:13:13,958
+okay? So you need one of these to be able to do anything
+
+260
+00:13:13,960 --> 00:13:17,862
+from the database. All right? So how do I get one of these?
+
+261
+00:13:17,864 --> 00:13:20,765
+[LAUGH] Okay? I need one of these, how do I get it? Well,
+
+262
+00:13:20,767 --> 00:13:23,434
+there's really two ways to get it, and you use them kind
+
+263
+00:13:23,436 --> 00:13:26,404
+of about equally. One's not really necessarily preferred
+
+264
+00:13:26,406 --> 00:13:29,841
+over the other. One of them is when you create your project,
+
+265
+00:13:29,843 --> 00:13:31,609
+do you remember when we create a project there was a little
+
+266
+00:13:31,611 --> 00:13:34,078
+button at the bottom, there's three switches at the bottom.
+
+267
+00:13:34,080 --> 00:13:37,949
+One was You, are you gonna do testing or UI testing? And
+
+268
+00:13:37,951 --> 00:13:40,418
+the other one on the top of the three buttons was
+
+269
+00:13:40,420 --> 00:13:44,656
+I'm using Core Data. Do you remember that button? Anyway,
+
+270
+00:13:44,658 --> 00:13:45,857
+it's there, I promise you. And
+
+271
+00:13:45,859 --> 00:13:49,861
+if you click that button when you create your application,
+
+272
+00:13:49,863 --> 00:13:52,330
+then you're going to get a bunch of code
+
+273
+00:13:52,332 --> 00:13:56,034
+Provided to you.. One of which is a method that gives you one
+
+274
+00:13:56,036 --> 00:14:00,038
+of these shared in your whole application. Okay, and
+
+275
+00:14:00,040 --> 00:14:02,941
+I'm going to talk about how that works in a second.
+
+276
+00:14:02,943 --> 00:14:05,977
+The second way you can get one of these little guys
+
+277
+00:14:05,979 --> 00:14:09,180
+is to create a U-I managed document, okay?
+
+278
+00:14:09,182 --> 00:14:12,350
+The U-I managed document has a var on it called managed
+
+279
+00:14:12,352 --> 00:14:16,421
+object context, which will give you one of these. Okay?
+
+280
+00:14:16,423 --> 00:14:19,357
+So, I'm going to talk about both of these mechanisms for,
+
+281
+00:14:19,359 --> 00:14:21,926
+for getting this. All right. So, the first one,
+
+282
+00:14:21,928 --> 00:14:25,363
+where you click the switch: When you flip that switch,
+
+283
+00:14:25,365 --> 00:14:28,366
+you're going to, essentially get some code
+
+284
+00:14:28,368 --> 00:14:31,035
+put in that AppDelegate.Swift file. Remember
+
+285
+00:14:31,037 --> 00:14:34,038
+the AppDelegate.Swift? It's one of the files we always
+
+286
+00:14:34,040 --> 00:14:35,240
+move in to supporting files.
+
+287
+00:14:35,242 --> 00:14:37,141
+One of the first things I ever do, is okay,
+
+288
+00:14:37,143 --> 00:14:41,045
+let's take image assets and AppDelegate and info.plist.
+
+289
+00:14:41,047 --> 00:14:43,114
+Let's move them into a little folder called supporting
+
+290
+00:14:43,116 --> 00:14:45,550
+files. Well, we haven't looked at that AppDelegate cuz
+
+291
+00:14:45,552 --> 00:14:49,420
+there's really not much in there at this point but
+
+292
+00:14:49,422 --> 00:14:52,757
+in there will be a bunch of code for core data, okay,
+
+293
+00:14:52,759 --> 00:14:56,127
+if you flip that switch. Okay, and one of the things in that
+
+294
+00:14:56,129 --> 00:14:58,763
+bunch of code is a method called managedObject,
+
+295
+00:14:58,765 --> 00:15:00,765
+it's a var actually called managedObjectContext.
+
+296
+00:15:00,767 --> 00:15:04,102
+And all you need to do is call that var and boom, you'll have
+
+297
+00:15:04,104 --> 00:15:05,837
+a managedObjectContext to the database for
+
+298
+00:15:05,839 --> 00:15:09,440
+this app. And App Delegate is kinda a global resource but
+
+299
+00:15:09,442 --> 00:15:11,542
+your database is often a global resource, right?
+
+300
+00:15:11,544 --> 00:15:14,712
+All your view controllers want to be able to see the data in
+
+301
+00:15:14,714 --> 00:15:17,348
+the database, so it's reasonable. Now, the way you
+
+302
+00:15:17,350 --> 00:15:20,418
+get at it, you get this AppDelegate. It's a little,
+
+303
+00:15:20,420 --> 00:15:22,687
+it seems a little complicated, but it's not too bad.
+
+304
+00:15:22,689 --> 00:15:25,924
+We're going to call this, this, class method on new
+
+305
+00:15:25,926 --> 00:15:29,260
+application called Shared Application. And this returns
+
+306
+00:15:29,262 --> 00:15:33,331
+you the one and only instance of UI application,
+
+307
+00:15:33,333 --> 00:15:36,467
+which is just a class that represents your app.
+
+308
+00:15:36,469 --> 00:15:39,637
+Ok now that object, UI application dot shared
+
+309
+00:15:39,639 --> 00:15:42,707
+application, has a delegate. You all know what delegation
+
+310
+00:15:42,709 --> 00:15:47,278
+is. It has a delegate. That delegate is that app delegate,
+
+311
+00:15:47,280 --> 00:15:51,282
+the place where that manage object code got thrown.
+
+312
+00:15:51,284 --> 00:15:54,719
+So you're going to cast it though as app delegate.
+
+313
+00:15:54,721 --> 00:15:57,689
+You could do question mark here and then If it comes
+
+314
+00:15:57,691 --> 00:16:01,492
+backs nil, I'm guess you're SOL you have any database, but
+
+315
+00:16:01,494 --> 00:16:04,896
+here I'm gonna force cast it because if I can't get this
+
+316
+00:16:04,898 --> 00:16:08,066
+managed object contacts. Then I can't do anything with my
+
+317
+00:16:08,068 --> 00:16:10,902
+app, so I'm going to let it crash here for
+
+318
+00:16:10,904 --> 00:16:14,339
+some reason my app delegate is not my delegate of
+
+319
+00:16:14,341 --> 00:16:17,241
+my UI application. So anyway, you do this line of code and
+
+320
+00:16:17,243 --> 00:16:20,044
+this is going to give you back your managed object context.
+
+321
+00:16:20,046 --> 00:16:22,046
+So, now you have the portal that you need.
+
+322
+00:16:22,048 --> 00:16:24,782
+To do all the database stuff. Okay? So that's one way to get
+
+323
+00:16:24,784 --> 00:16:28,286
+this portal. The other way is UIManagedDocument. Okay,
+
+324
+00:16:28,288 --> 00:16:31,689
+UIManagedDocument is a class it inherits from UIDocument
+
+325
+00:16:31,691 --> 00:16:35,059
+and it's only job really is to encapsulate a core data
+
+326
+00:16:35,061 --> 00:16:38,129
+database, that's what it does. It encapsulates a core data
+
+327
+00:16:38,131 --> 00:16:41,866
+database, I mean, a file on disk Alright?
+
+328
+00:16:42,369 --> 00:16:45,036
+And, the way you create a UIManagedDocument,
+
+329
+00:16:45,038 --> 00:16:47,305
+UIManagedDocument is actually really easy. And you might
+
+330
+00:16:47,307 --> 00:16:50,274
+ask, why would I ever do that other clicking the switch and
+
+331
+00:16:50,276 --> 00:16:53,044
+the- creating my project in AppDelegate? All that.
+
+332
+00:16:53,046 --> 00:16:55,646
+Why would I do that when I have this UIManagedDocument?
+
+333
+00:16:55,648 --> 00:16:58,549
+I just create one and get the managed object context.
+
+334
+00:16:58,551 --> 00:17:02,120
+Well, the reason it's a little more complicated here is
+
+335
+00:17:02,122 --> 00:17:04,355
+because it does it's work asynchronously.
+
+336
+00:17:04,357 --> 00:17:07,558
+You guys are only just getting used to asynchrony, so
+
+337
+00:17:07,560 --> 00:17:09,027
+it might seem a little complicated to you. Once
+
+338
+00:17:09,029 --> 00:17:12,263
+you're used to it it won't seem complicated at all, but
+
+339
+00:17:12,265 --> 00:17:13,998
+when asynchrony is new to you,
+
+340
+00:17:14,000 --> 00:17:16,601
+UIManagedDocument might seem a little
+
+341
+00:17:16,603 --> 00:17:19,570
+Kind of how does that work? Here is how it works. Okay,
+
+342
+00:17:19,572 --> 00:17:23,241
+here's a UIManagedDocument, I'm going to create it.
+
+343
+00:17:23,243 --> 00:17:26,811
+First I'm going to get an NS File Manager here.
+
+344
+00:17:26,813 --> 00:17:29,447
+This is a thing we haven't talked about yet, which lets
+
+345
+00:17:29,449 --> 00:17:32,150
+you access the file system. And of course, I'm going to
+
+346
+00:17:32,152 --> 00:17:34,519
+store my UIManagedDocument in the file system. So,
+
+347
+00:17:34,521 --> 00:17:37,722
+I obviously need this little file manager guy right here.
+
+348
+00:17:37,724 --> 00:17:40,425
+Then, I also need to know where to put my managed
+
+349
+00:17:40,427 --> 00:17:43,327
+document. And I'm gonna put it in the documents
+
+350
+00:17:43,329 --> 00:17:47,632
+directory for my app. So we're gonna learn later that
+
+351
+00:17:47,634 --> 00:17:48,733
+your app has a documents directory,
+
+352
+00:17:48,735 --> 00:17:52,303
+it has a caches directory, it has a temporary directory.
+
+353
+00:17:52,305 --> 00:17:55,740
+It has all these kind of named magic directories
+
+354
+00:17:55,742 --> 00:17:59,143
+where you put stuff, and the document directory right here
+
+355
+00:17:59,145 --> 00:18:02,447
+is the one where you probably wanna put your users data.
+
+356
+00:18:02,449 --> 00:18:04,282
+Okay, that's what that directory's really for.
+
+357
+00:18:04,284 --> 00:18:06,117
+So you're gonna do this thing URLs for
+
+358
+00:18:06,119 --> 00:18:08,553
+directory which returns the document directory and
+
+359
+00:18:08,555 --> 00:18:09,487
+then you can get the first one.
+
+360
+00:18:09,489 --> 00:18:13,591
+This returns an array of URLs like there might be multiple
+
+361
+00:18:13,593 --> 00:18:15,193
+document directories out there.
+
+362
+00:18:15,195 --> 00:18:16,494
+In iOS, there's always only one.
+
+363
+00:18:16,496 --> 00:18:19,764
+If you're on the Mac, some of these directories can return
+
+364
+00:18:19,766 --> 00:18:21,632
+multiple things because there might be one on the network,
+
+365
+00:18:21,634 --> 00:18:23,201
+there might be one on your local machine, etc. But
+
+366
+00:18:23,203 --> 00:18:26,304
+in iOS, there's always only the users, so it's always only
+
+367
+00:18:26,306 --> 00:18:29,574
+one. So we just get the first one out of there. Okay now, I
+
+368
+00:18:29,576 --> 00:18:32,777
+have the document's directory. Now I'm just going to append
+
+369
+00:18:32,779 --> 00:18:35,413
+to the end of that, it's a URL. So, I'm gonna append
+
+370
+00:18:35,415 --> 00:18:38,516
+to the end of that URL the name of the document.
+
+371
+00:18:38,518 --> 00:18:41,018
+Okay, so the URL is pointing to the document's directory.
+
+372
+00:18:41,020 --> 00:18:44,689
+If I append the name of the document now I've got a URL to
+
+373
+00:18:44,691 --> 00:18:47,658
+the document. Now that I have that I can just create a new
+
+374
+00:18:47,660 --> 00:18:51,696
+UIManagedDocument. Right? Just tell at the URL where it is.
+
+375
+00:18:51,698 --> 00:18:55,233
+Boom, so now I have UIManagedDocument. Okay, and
+
+376
+00:18:55,235 --> 00:18:57,902
+I could go get the managed object context from it,
+
+377
+00:18:57,904 --> 00:19:02,406
+except that managed object context is no good unless it's
+
+378
+00:19:02,408 --> 00:19:06,677
+open. Okay? So here's where the asynchrony comes in. Okay,
+
+379
+00:19:06,679 --> 00:19:09,480
+we have to open this ui managed document okay?
+
+380
+00:19:09,482 --> 00:19:12,116
+Usually we check first to see if it's already open.
+
+381
+00:19:12,118 --> 00:19:15,887
+Okay, you can ask the document is your document state normal?
+
+382
+00:19:15,889 --> 00:19:18,055
+That means it's already open and ready to go. So
+
+383
+00:19:18,057 --> 00:19:20,291
+if that if it's in that state then you're good to go.
+
+384
+00:19:20,293 --> 00:19:23,494
+You can just start using that managed object context thing,
+
+385
+00:19:23,496 --> 00:19:26,097
+but it might be in this state closed right here,
+
+386
+00:19:26,099 --> 00:19:28,533
+which means it has not yet been opened. In that case,
+
+387
+00:19:28,535 --> 00:19:31,469
+you cannot use the managed object context yet. Now,
+
+388
+00:19:31,471 --> 00:19:32,803
+what if it's closed? How do you open it?
+
+389
+00:19:32,805 --> 00:19:35,439
+Well, you have to use this asynchronous method here.
+
+390
+00:19:35,441 --> 00:19:40,211
+Okay? It's called open with completion handler, all right?
+
+391
+00:19:40,213 --> 00:19:42,813
+First you can find out if the file exists right here by
+
+392
+00:19:42,815 --> 00:19:46,217
+using this file manager thing, file exists at path. Okay,
+
+393
+00:19:46,219 --> 00:19:48,452
+see if you Document's already there.
+
+394
+00:19:48,454 --> 00:19:50,254
+If it does exist then you're gonna open it,
+
+395
+00:19:50,256 --> 00:19:51,622
+by calling openWithCompletionHandler,
+
+396
+00:19:51,624 --> 00:19:54,091
+if it doesn't exist you're gonna create it by using
+
+397
+00:19:54,093 --> 00:19:57,461
+saveToURL. These are both methods in UIMangedDocument
+
+398
+00:19:57,463 --> 00:20:02,433
+right? Notice that they take, both of them, a closure.
+
+399
+00:20:02,435 --> 00:20:06,737
+See that? Okay? Why do they take that closure?
+
+400
+00:20:06,739 --> 00:20:09,840
+That's because the open, or save, happens on another
+
+401
+00:20:09,842 --> 00:20:13,578
+thread. Why is that? Well, because UIManageDocument is
+
+402
+00:20:13,580 --> 00:20:16,714
+really awesome. It works great with iCloud for
+
+403
+00:20:16,716 --> 00:20:17,648
+example, okay? And
+
+404
+00:20:17,650 --> 00:20:20,418
+so, it might actually make a quick check on the network
+
+405
+00:20:20,420 --> 00:20:23,054
+to see what the status of this document is. Okay,
+
+406
+00:20:23,056 --> 00:20:26,457
+you do not want that block in your main queue, okay.
+
+407
+00:20:26,459 --> 00:20:29,360
+So these things, these closures, get called
+
+408
+00:20:29,362 --> 00:20:31,462
+after the document has been opened, asynchronously.
+
+409
+00:20:31,464 --> 00:20:34,565
+Now usually these documents open almost instantaneously,
+
+410
+00:20:34,567 --> 00:20:38,169
+but you're still going to get them open with this callback
+
+411
+00:20:38,171 --> 00:20:41,005
+and it tells you whether it was successful in doing it.
+
+412
+00:20:41,007 --> 00:20:43,741
+Okay? So the fact that this is asynchronous is
+
+413
+00:20:43,743 --> 00:20:45,810
+gonna make your code a little trickier, okay?
+
+414
+00:20:45,812 --> 00:20:47,645
+Cuz you wanna open the document and start
+
+415
+00:20:47,647 --> 00:20:50,314
+using ManagedObjectContext right away, but you can't.
+
+416
+00:20:50,316 --> 00:20:52,383
+You have to wait until this closure gets called,
+
+417
+00:20:52,385 --> 00:20:56,654
+then you can start using your ManagedObjectContext, okay?
+
+418
+00:20:56,656 --> 00:20:59,090
+That's the only trickiness about it. All right, and
+
+419
+00:20:59,092 --> 00:21:01,726
+it's a little tricky that you have to see if it exists or,
+
+420
+00:21:01,728 --> 00:21:04,695
+to know whether to open it or to save it. Okay,
+
+421
+00:21:04,697 --> 00:21:07,131
+when you save it for the first time you're gonna do
+
+422
+00:21:07,133 --> 00:21:11,636
+forSaveOperation .ForCreating, okay? You can actually save
+
+423
+00:21:11,638 --> 00:21:14,572
+your document if you want on top of the existing one by
+
+424
+00:21:14,574 --> 00:21:19,510
+doing forSaveOperation for overriding. Okay.
+
+425
+00:21:19,512 --> 00:21:23,281
+So it's all asynchronous so be careful about that.
+
+426
+00:21:23,283 --> 00:21:25,049
+There's other states besides closed and
+
+427
+00:21:25,051 --> 00:21:28,085
+normal that you might run into. These are pretty rare
+
+428
+00:21:28,087 --> 00:21:30,221
+states I'm not gonna talk about any of them.
+
+429
+00:21:30,223 --> 00:21:31,856
+Some of them have Have to do with iCloud,
+
+430
+00:21:31,858 --> 00:21:34,692
+like in conflict. Remember iCloud let's you see this
+
+431
+00:21:34,694 --> 00:21:36,527
+document on two different devices, your iPad and
+
+432
+00:21:36,529 --> 00:21:39,363
+your iPhone, let's say. And you might change it on one and
+
+433
+00:21:39,365 --> 00:21:41,365
+then try to change it on the other and now they conflict,
+
+434
+00:21:41,367 --> 00:21:44,902
+the two changes might conflict in the database, right? So
+
+435
+00:21:44,904 --> 00:21:46,504
+they can be in that state.
+
+436
+00:21:46,506 --> 00:21:49,307
+I'm not gonna ask you to handle any iCloud or
+
+437
+00:21:49,309 --> 00:21:50,641
+anything like that for this class,
+
+438
+00:21:50,643 --> 00:21:52,576
+but you need to know if you're gonna do iCloud.
+
+439
+00:21:52,578 --> 00:21:55,112
+Then you might have some of these other states cropping
+
+440
+00:21:55,114 --> 00:21:59,483
+up. I thought it might be a fun thing to do in your final
+
+441
+00:21:59,485 --> 00:22:02,286
+project. One of the things in your final project you have to
+
+442
+00:22:02,288 --> 00:22:04,288
+do some feature I didn't go over in lecture.
+
+443
+00:22:04,290 --> 00:22:06,824
+Well, iCloud might be one of those. So maybe that would be
+
+444
+00:22:06,826 --> 00:22:10,795
+something you want to do. All right, let's talk about saving
+
+445
+00:22:10,797 --> 00:22:13,497
+the document, because I got this managed object context.
+
+446
+00:22:13,499 --> 00:22:16,467
+And I'm going to be getting these in as managed objects,
+
+447
+00:22:16,469 --> 00:22:16,867
+like tweets and
+
+448
+00:22:16,869 --> 00:22:18,769
+twitter users aren't going to be changing them.
+
+449
+00:22:18,771 --> 00:22:21,906
+When does is actually get saved? Okay, and for
+
+450
+00:22:21,908 --> 00:22:25,109
+UIManagedDocument, it autosaves, which is really
+
+451
+00:22:25,111 --> 00:22:28,245
+cool. Basically autosaves when it thinks it's a good time, so
+
+452
+00:22:28,247 --> 00:22:31,615
+you really don't ever have to save a UIManagedDocument.
+
+453
+00:22:31,617 --> 00:22:34,352
+You can, by doing that ForOverwriting that I was
+
+454
+00:22:34,354 --> 00:22:38,456
+talking about. But you really don't ever have to do that,
+
+455
+00:22:38,458 --> 00:22:40,624
+okay? It's just gonna automatically autosave for
+
+456
+00:22:40,626 --> 00:22:47,798
+you. Closing the document, it also automatically closes,
+
+457
+00:22:47,800 --> 00:22:50,101
+so as soon nobody has a strong pointer to it and
+
+458
+00:22:50,103 --> 00:22:53,137
+it wants to leave the heap, it'll close automatically and
+
+459
+00:22:53,139 --> 00:22:56,607
+then leave the heap. So that's cool too. But if you wanted to
+
+460
+00:22:56,609 --> 00:23:00,244
+forcible close it and still keep a strong pointer to it,
+
+461
+00:23:00,246 --> 00:23:02,246
+you could do close with completion handler,
+
+462
+00:23:02,248 --> 00:23:04,382
+again here's a closure, it takes time for
+
+463
+00:23:04,384 --> 00:23:08,753
+it to close. Probably micro seconds but anyway this will
+
+464
+00:23:08,755 --> 00:23:12,289
+tell you when it is actually closed. And then it's state,
+
+465
+00:23:12,291 --> 00:23:16,961
+document state will go back to dot closed okay.
+
+466
+00:23:16,963 --> 00:23:21,098
+All right so now we have an NSManagedObjectContext.
+
+467
+00:23:21,100 --> 00:23:23,634
+We either call that method in our app delegate to get it or
+
+468
+00:23:23,636 --> 00:23:26,537
+we create new unmanaged document, opened it. And
+
+469
+00:23:26,539 --> 00:23:29,673
+in the closure once the closure's executed, bam, now
+
+470
+00:23:29,675 --> 00:23:33,210
+we have this managed object context that we can access our
+
+471
+00:23:33,212 --> 00:23:37,715
+databases, okay? So, what do we do with it? How do we make
+
+472
+00:23:37,717 --> 00:23:41,051
+it work, okay? Well, let's talk about putting objects
+
+473
+00:23:41,053 --> 00:23:43,220
+in the database cuz until we've put something in there,
+
+474
+00:23:43,222 --> 00:23:44,989
+we can't really do anything else with it.
+
+475
+00:23:44,991 --> 00:23:47,925
+How do we do that? Well, we create objects
+
+476
+00:23:47,927 --> 00:23:52,096
+in the database by using this method right here called
+
+477
+00:23:52,098 --> 00:23:54,999
+InsertNewObjectForEntityForN- ame, okay?
+
+478
+00:23:55,001 --> 00:23:58,068
+This is a static method, a class method.
+
+479
+00:23:58,070 --> 00:23:59,336
+In the class NSEntityDescription.
+
+480
+00:23:59,338 --> 00:24:02,873
+NSEntityDescription is kind of a simple little class,
+
+481
+00:24:02,875 --> 00:24:05,042
+That just describes the entities okay,
+
+482
+00:24:05,044 --> 00:24:07,978
+knows what all the properties are and all that.
+
+483
+00:24:07,980 --> 00:24:12,416
+We only really use it for this one thing which is to create
+
+484
+00:24:12,418 --> 00:24:14,652
+one of these things in the database okay. But
+
+485
+00:24:14,654 --> 00:24:17,855
+notice that it takes in managedObjectContext, so
+
+486
+00:24:17,857 --> 00:24:19,490
+you have to have a managedObjectContext or
+
+487
+00:24:19,492 --> 00:24:23,527
+you cannot create a new object. Okay now when you
+
+488
+00:24:23,529 --> 00:24:26,197
+create this document or this object in there,
+
+489
+00:24:26,199 --> 00:24:30,434
+all of its properties or either nil or you can actually
+
+490
+00:24:30,436 --> 00:24:33,838
+go in the inspector. In the little visual mapper.
+
+491
+00:24:33,840 --> 00:24:38,209
+You can set defaults for some of the properties. Okay, so
+
+492
+00:24:38,211 --> 00:24:39,543
+it's either gonna be the default you set there or
+
+493
+00:24:39,545 --> 00:24:41,812
+if you didn't set a default, it'll just be nil. Okay, and
+
+494
+00:24:41,814 --> 00:24:44,682
+remember they're all objects, they're NSNumbers, NSDates,
+
+495
+00:24:44,684 --> 00:24:49,420
+all these properties. So that'll just be nil, okay. So
+
+496
+00:24:49,422 --> 00:24:52,756
+this creates one. So now you've got a Tweet, it's of
+
+497
+00:24:52,758 --> 00:24:56,594
+class, look what its class is, NSManagedObject, right.
+
+498
+00:24:56,596 --> 00:24:59,096
+Tweet is an NSManagedObject. I just created one, so
+
+499
+00:24:59,098 --> 00:25:03,534
+I've got an empty Tweet. All it's Properties, it's text and
+
+500
+00:25:03,536 --> 00:25:07,071
+everything is nil, okay? All right, so
+
+501
+00:25:07,073 --> 00:25:10,374
+now I've got one of these. How do I set the values?
+
+502
+00:25:10,376 --> 00:25:12,109
+Okay, well I already told you how to do that,
+
+503
+00:25:12,111 --> 00:25:14,445
+it's with this set value for key. Right,
+
+504
+00:25:14,447 --> 00:25:18,415
+so I can do setValue, some string, for key text, and I
+
+505
+00:25:18,417 --> 00:25:22,353
+can set the text of the Tweet for example, okay? Same thing,
+
+506
+00:25:22,355 --> 00:25:25,256
+I kept the value for the key. One thing that's kind of cool,
+
+507
+00:25:25,258 --> 00:25:29,226
+there's also this method called valueForKeyPath, okay?
+
+508
+00:25:29,228 --> 00:25:32,296
+There's valueForKey and valueForKeyPath and
+
+509
+00:25:32,298 --> 00:25:36,166
+valueForKeyPath, the string you pass to it can have dots
+
+510
+00:25:36,168 --> 00:25:41,105
+in it to follow relationships. So, if you said on a Tweet,
+
+511
+00:25:41,107 --> 00:25:45,042
+valueForKeyPath Tweeter dot name,
+
+512
+00:25:45,044 --> 00:25:48,979
+it would give you the name of the Twitter user. It would
+
+513
+00:25:48,981 --> 00:25:52,983
+follow that relationship over to the user and get the name.
+
+514
+00:25:52,985 --> 00:25:55,920
+Even though I'd be saying valueForKeyPath on a Tweet,
+
+515
+00:25:55,922 --> 00:25:58,556
+tweeter dot name on a Tweet is followed through
+
+516
+00:25:58,558 --> 00:26:03,060
+the relationship so that's what the keyPath will do,
+
+517
+00:26:03,062 --> 00:26:07,064
+got that? Now that sounds exciting I'm sure, but
+
+518
+00:26:07,066 --> 00:26:08,999
+we actually almost never use these methods and
+
+519
+00:26:09,001 --> 00:26:12,136
+you'll find out, in a moment why that is, okay.
+
+520
+00:26:12,138 --> 00:26:15,606
+So that's the key that's the value I already talked about
+
+521
+00:26:15,608 --> 00:26:18,909
+what all the values are right NSData NSDate,
+
+522
+00:26:18,911 --> 00:26:22,046
+NSSet if it's a to-many relationship.
+
+523
+00:26:22,048 --> 00:26:24,381
+An NSManagedObject if it's not, okay?
+
+524
+00:26:24,383 --> 00:26:28,485
+All right, now changes, when you're changing something
+
+525
+00:26:28,487 --> 00:26:31,355
+in the database, that only happens in memory, okay?
+
+526
+00:26:31,357 --> 00:26:34,425
+Doesn't actually get stored in the database on disk until
+
+527
+00:26:34,427 --> 00:26:37,661
+it saves. Now, we know that UIManagedDocument autosaves,
+
+528
+00:26:37,663 --> 00:26:40,598
+so we're good to go there. But what if you use that other
+
+529
+00:26:40,600 --> 00:26:43,968
+ManagedObjectContext? It's not in the UIManagedDocument, so
+
+530
+00:26:43,970 --> 00:26:47,605
+there's no autosave there. You have to save it, okay. And
+
+531
+00:26:47,607 --> 00:26:51,008
+you do that with this method called save, you send it to
+
+532
+00:26:51,010 --> 00:26:53,310
+the ManagedObjectContext, right, so here's that
+
+533
+00:26:53,312 --> 00:26:55,946
+ManagedObjectContext I got from my app delegate.
+
+534
+00:26:55,948 --> 00:26:59,283
+And I wanna save it so I'm gonna say contact.save.
+
+535
+00:26:59,285 --> 00:27:00,317
+Now, that looks simple, right,
+
+536
+00:27:00,319 --> 00:27:04,121
+simple little four-letter function name there saved. But
+
+537
+00:27:04,123 --> 00:27:06,156
+actually it's gonna cause me to have to give you two or
+
+538
+00:27:06,158 --> 00:27:09,660
+three slides worth of information about swift, okay?
+
+539
+00:27:09,662 --> 00:27:12,863
+Because, this is the method that I'm showing you in this
+
+540
+00:27:12,865 --> 00:27:17,401
+class that can throw an error, okay?
+
+541
+00:27:17,403 --> 00:27:21,805
+And why might save throw an error? Eh, disk could be full,
+
+542
+00:27:21,807 --> 00:27:24,875
+there could be some problem the database that it can't be
+
+543
+00:27:24,877 --> 00:27:26,377
+saved, there's lots of reasons,
+
+544
+00:27:26,379 --> 00:27:29,079
+okay that it could so, throw an error, but
+
+545
+00:27:29,081 --> 00:27:31,649
+what you need to know is how do I deal with that?
+
+546
+00:27:31,651 --> 00:27:33,784
+Okay, if it throws an error, what do I do,
+
+547
+00:27:33,786 --> 00:27:36,553
+how do I look at the error, etc. And to do that, you need
+
+548
+00:27:36,555 --> 00:27:39,890
+to learn about how throw works in Swift. So let's take
+
+549
+00:27:39,892 --> 00:27:42,559
+a little time out from Core Data, you probably, you're
+
+550
+00:27:42,561 --> 00:27:44,928
+supposed to read about this in your reading assignment, but
+
+551
+00:27:44,930 --> 00:27:46,397
+I'm sure it probably went right over your.
+
+552
+00:27:46,399 --> 00:27:47,898
+How many people in this room feel like yeah,
+
+553
+00:27:47,900 --> 00:27:51,201
+I pretty much understand throw? See, zero.
+
+554
+00:27:51,203 --> 00:27:53,804
+Okay, so that's why I'm gonna take a couple slides here and
+
+555
+00:27:53,806 --> 00:27:56,407
+explain it to you. So all right, this is throwing errors
+
+556
+00:27:56,409 --> 00:27:59,743
+in Swift, a little side, you know, okay. So any function in
+
+557
+00:27:59,745 --> 00:28:03,714
+Swift, like the save method in MSManagedObjectContext if
+
+558
+00:28:03,716 --> 00:28:06,850
+it can throw an error, it will have the word throws,
+
+559
+00:28:06,852 --> 00:28:10,554
+at the end of its declaration, okay? So, the functions,
+
+560
+00:28:10,556 --> 00:28:12,690
+you read that when you're reading the closing,
+
+561
+00:28:12,692 --> 00:28:17,094
+the function save throws, all right?
+
+562
+00:28:17,096 --> 00:28:19,463
+So, if you have a function that throws,
+
+563
+00:28:19,465 --> 00:28:24,501
+you must deal with that. You cannot just ignore the fact
+
+564
+00:28:24,503 --> 00:28:28,305
+that it throws, you must catch the error usually, okay?
+
+565
+00:28:28,307 --> 00:28:29,773
+There's other ways to deal with it, but
+
+566
+00:28:29,775 --> 00:28:33,110
+generally you must catch it. So, how do you catch it? Well,
+
+567
+00:28:33,112 --> 00:28:36,880
+you just put the word try in front of it. The try just
+
+568
+00:28:36,882 --> 00:28:40,584
+means please try this. Because I know it might throw but
+
+569
+00:28:40,586 --> 00:28:44,388
+try it. Okay, so that's why it's called try. And if it's
+
+570
+00:28:44,390 --> 00:28:47,825
+successful fine, if it doesn't then it throws an error.
+
+571
+00:28:47,827 --> 00:28:51,161
+Now when it throws the error you have to catch it and
+
+572
+00:28:51,163 --> 00:28:55,866
+the way you catch it is you put this try inside of a do.
+
+573
+00:28:55,868 --> 00:28:58,736
+See it says do open curly brace closed curly brace?
+
+574
+00:28:58,738 --> 00:29:03,474
+Anything inside this do that you try that throws,
+
+575
+00:29:03,476 --> 00:29:08,345
+will allow you to catch the error right after the do,
+
+576
+00:29:08,347 --> 00:29:11,381
+okay? And so I can take catch let error here,
+
+577
+00:29:11,383 --> 00:29:14,218
+I can actually catch different kinds of errors by having
+
+578
+00:29:14,220 --> 00:29:18,288
+multiple catches here. Catch this, catch that, catch this,
+
+579
+00:29:18,290 --> 00:29:21,225
+as many catches as I want, okay. And
+
+580
+00:29:21,227 --> 00:29:23,560
+when I catch it you see I have this let error,
+
+581
+00:29:23,562 --> 00:29:26,930
+that basically lets this local variable here that's gonna be
+
+582
+00:29:26,932 --> 00:29:32,202
+in this context error, it lets it be equal to the error
+
+583
+00:29:32,204 --> 00:29:36,340
+that was thrown, okay. So now you have this error and
+
+584
+00:29:36,342 --> 00:29:38,709
+you, inside here inside this second curly brace here,
+
+585
+00:29:38,711 --> 00:29:41,211
+you can look at that error and find out what it is and
+
+586
+00:29:41,213 --> 00:29:45,249
+why clean up or try again or whatever you want to do,
+
+587
+00:29:45,251 --> 00:29:48,819
+you can do it in here. Now these errors that get thrown
+
+588
+00:29:48,821 --> 00:29:54,424
+they are all implementors of this protocol ErrorType.
+
+589
+00:29:54,426 --> 00:29:56,527
+And this ErrorType protocol doesn't have much in it.
+
+590
+00:29:56,529 --> 00:29:59,630
+It's mostly just a way to identify that this is an error
+
+591
+00:29:59,632 --> 00:30:04,835
+that got thrown, okay. Now iOS has a very important class
+
+592
+00:30:04,837 --> 00:30:08,539
+called NSError which implements this protocol.
+
+593
+00:30:08,541 --> 00:30:10,908
+When iOS throws an error it's always gonna
+
+594
+00:30:10,910 --> 00:30:15,045
+be an NSError. Okay, and that class you should go look at.
+
+595
+00:30:15,047 --> 00:30:19,049
+Okay, it has methods in there like localized description of
+
+596
+00:30:19,051 --> 00:30:21,485
+the error. Things like that that
+
+597
+00:30:21,487 --> 00:30:24,621
+you can use to put errors up to the user even or certainly
+
+598
+00:30:24,623 --> 00:30:26,723
+put things on the console to say what's going on or
+
+599
+00:30:26,725 --> 00:30:29,793
+just to look at it yourself, like what did that error etc.,
+
+600
+00:30:29,795 --> 00:30:32,963
+okay. So NSError is kind of iOS's thing.
+
+601
+00:30:32,965 --> 00:30:35,833
+But if you had something that you thought
+
+602
+00:30:35,835 --> 00:30:36,633
+would be good to throw an error,
+
+603
+00:30:36,635 --> 00:30:39,870
+you can invent your own thing that gets thrown as long as
+
+604
+00:30:39,872 --> 00:30:42,472
+it implements this ErrorType protocol,
+
+605
+00:30:42,474 --> 00:30:45,042
+okay. Now usually the things that implement the ErrorType
+
+606
+00:30:45,044 --> 00:30:48,812
+protocol are enums. Because when you have something that
+
+607
+00:30:48,814 --> 00:30:51,014
+can throw an error it usually can throw two or
+
+608
+00:30:51,016 --> 00:30:52,616
+three different kinds of things. And so
+
+609
+00:30:52,618 --> 00:30:56,954
+that each of those is an enum case with associated data that
+
+610
+00:30:56,956 --> 00:31:00,324
+goes along with the error. All right, that's the great thing
+
+611
+00:31:00,326 --> 00:31:02,860
+about enums, if you've got this associated data so
+
+612
+00:31:02,862 --> 00:31:05,729
+if there's an error you can, you know, hand along some
+
+613
+00:31:05,731 --> 00:31:08,432
+interesting information about the error. Okay,
+
+614
+00:31:08,434 --> 00:31:13,270
+now if inside the catch you can't deal with this error,
+
+615
+00:31:13,272 --> 00:31:16,740
+you could re-throw it by just saying throw error.
+
+616
+00:31:16,742 --> 00:31:18,575
+In fact in general anytime you wanna throw an error,
+
+617
+00:31:18,577 --> 00:31:20,077
+that's how you do it, you say throw error and
+
+618
+00:31:20,079 --> 00:31:23,447
+again this has to be a type error type protocol there.
+
+619
+00:31:23,449 --> 00:31:24,314
+You can throw it and re-throw it now,
+
+620
+00:31:24,316 --> 00:31:26,950
+the only thing about this is if you're gonna re-throw here
+
+621
+00:31:26,952 --> 00:31:31,622
+maybe then your whole method also has to say throws at
+
+622
+00:31:31,624 --> 00:31:36,827
+the end, because you might be re-throwing, okay? Okay,
+
+623
+00:31:36,829 --> 00:31:39,229
+so that's basically how fundamentally works.
+
+624
+00:31:39,231 --> 00:31:43,200
+Now, there's an extra little interesting thing here which
+
+625
+00:31:43,202 --> 00:31:45,469
+try with an exclamation point.
+
+626
+00:31:45,471 --> 00:31:48,805
+Okay, if you try with an exclamation point, that means
+
+627
+00:31:48,807 --> 00:31:51,341
+forget all this junk. I'm not gonna put in a do.
+
+628
+00:31:51,343 --> 00:31:54,645
+I'm not gonna catch anything. And if this throws,
+
+629
+00:31:54,647 --> 00:31:57,547
+crash my app. Okay, we know that exclamation point
+
+630
+00:31:57,549 --> 00:32:00,550
+usually means force this thing and crash if it doesn't work.
+
+631
+00:32:00,552 --> 00:32:03,787
+That's what for implicit for Optional unwrapping right,
+
+632
+00:32:03,789 --> 00:32:06,924
+we do exclamation point boom that means crash if this thing
+
+633
+00:32:06,926 --> 00:32:10,460
+is nil. So same thing here you can say try and it'll crash.
+
+634
+00:32:10,462 --> 00:32:13,230
+Now you would never wanna do that with context save because
+
+635
+00:32:13,232 --> 00:32:16,767
+context save can get errors unpredictably right.
+
+636
+00:32:16,769 --> 00:32:17,834
+So you never wanna do that here but
+
+637
+00:32:17,836 --> 00:32:20,871
+other methods sometimes it's like this method has to
+
+638
+00:32:20,873 --> 00:32:24,074
+succeed or I'm just doomed. So I'm going to
+
+639
+00:32:24,076 --> 00:32:26,977
+try exclamation point. There's one other way which I'm going
+
+640
+00:32:26,979 --> 00:32:29,579
+to talk about in a few slides which is try question mark.
+
+641
+00:32:29,581 --> 00:32:34,551
+Okay? Try question mark means try this, I'm not going to
+
+642
+00:32:34,553 --> 00:32:38,755
+catch the error, but return nil if there was a thrown
+
+643
+00:32:38,757 --> 00:32:41,391
+error. Okay? That's right, question mark and I'm gonna
+
+644
+00:32:41,393 --> 00:32:43,694
+show you an example of that in a couple slides. Okay, so
+
+645
+00:32:43,696 --> 00:32:46,930
+that's throwing errors. You got that. There's not
+
+646
+00:32:46,932 --> 00:32:48,498
+a lot of things that throw errors, but
+
+647
+00:32:48,500 --> 00:32:52,536
+you are gonna run across them. Both in some of the homeworks
+
+648
+00:32:52,538 --> 00:32:56,506
+and also certainly in your final project. Okay, so let's
+
+649
+00:32:56,508 --> 00:33:01,478
+get back to core data here. Now, calling valueForKey and
+
+650
+00:33:01,480 --> 00:33:04,047
+setValue(forKey:) is pretty ugly. Okay,
+
+651
+00:33:04,049 --> 00:33:06,917
+there's no type-checking there, because it's any object
+
+652
+00:33:06,919 --> 00:33:08,352
+is the type of the argument. Okay, and
+
+653
+00:33:08,354 --> 00:33:12,255
+you've got all these literal strings [LAUGH] like text and
+
+654
+00:33:12,257 --> 00:33:16,994
+created and id inside your code, which
+
+655
+00:33:16,996 --> 00:33:20,564
+you probably are gonna put in a struct static let like you
+
+656
+00:33:20,566 --> 00:33:23,000
+do all your constants. But it's just a mess, okay.
+
+657
+00:33:23,002 --> 00:33:26,370
+What you really want is vars. You want these Tweets,
+
+658
+00:33:26,372 --> 00:33:28,638
+you wanna be able to have a var on there called text.
+
+659
+00:33:28,640 --> 00:33:31,441
+And you just wanna say that tweet.text equals,
+
+660
+00:33:31,443 --> 00:33:33,343
+that's what you want, okay? An object-oriented.
+
+661
+00:33:33,345 --> 00:33:36,747
+So, of course, we can do that. And the way we do that is
+
+662
+00:33:36,749 --> 00:33:41,118
+we're gonna create a sub class of ns managed object. Okay? So
+
+663
+00:33:41,120 --> 00:33:43,620
+for each thing a tweet, Twitter user whatever, we're
+
+664
+00:33:43,622 --> 00:33:46,223
+gonna create a sub class of ns object managed object for
+
+665
+00:33:46,225 --> 00:33:50,193
+it and it's gonna have vars which are all the properties.
+
+666
+00:33:50,195 --> 00:33:52,796
+Okay? Couldn't be easier. Really simply.
+
+667
+00:33:52,798 --> 00:33:56,833
+And x code will even generate this sub class for
+
+668
+00:33:56,835 --> 00:33:59,569
+us. Okay, so let's look at how you do that. So I'm
+
+669
+00:33:59,571 --> 00:34:02,239
+gonna select the entities that I wanna generate these little
+
+670
+00:34:02,241 --> 00:34:05,375
+sub classes for. Okay, so I'm selecting both in this case
+
+671
+00:34:05,377 --> 00:34:08,478
+right here. Then I go up to the editor menu and
+
+672
+00:34:08,480 --> 00:34:14,551
+I pick Create NSManagedObject Subclass. When I do
+
+673
+00:34:14,553 --> 00:34:17,254
+that it's gonna say okay for which of your models do you
+
+674
+00:34:17,256 --> 00:34:19,456
+want to do that because you might have multiple models,
+
+675
+00:34:19,458 --> 00:34:22,492
+so I'll pick the only model I have here.
+
+676
+00:34:22,494 --> 00:34:24,428
+Then it says okay which entities?
+
+677
+00:34:24,430 --> 00:34:27,164
+Well, I selected both so it's got these both pre-selected.
+
+678
+00:34:27,166 --> 00:34:31,201
+I wanna create a menus managed object subclass for tweet and
+
+679
+00:34:31,203 --> 00:34:34,204
+one for twitter users. It can be two different classes.
+
+680
+00:34:34,206 --> 00:34:37,140
+Okay now, it's saying where do you wanna put it, it's also
+
+681
+00:34:37,142 --> 00:34:39,509
+asking what language? Be careful right here sometimes
+
+682
+00:34:39,511 --> 00:34:42,379
+this comes up Objective-C even if you're in a Swift project.
+
+683
+00:34:42,381 --> 00:34:44,414
+So make sure that says Swift otherwise you're gonna get an
+
+684
+00:34:44,416 --> 00:34:49,653
+Objective- C class. Which is a subclass of that's a swift.
+
+685
+00:34:49,655 --> 00:34:52,189
+The other thing is there's this uscaler properties for
+
+686
+00:34:52,191 --> 00:34:55,258
+primitive data types. Be careful of this one,
+
+687
+00:34:55,260 --> 00:34:56,460
+if you turn this on, then for
+
+688
+00:34:56,462 --> 00:34:59,830
+example NSDate, the property it creates, or the var,
+
+689
+00:34:59,832 --> 00:35:01,031
+is going to be an NSTime interval.
+
+690
+00:35:01,033 --> 00:35:05,235
+Which is going to be the number of seconds since 1970,
+
+691
+00:35:05,237 --> 00:35:08,138
+okay. So you probably don't want that most of the time,
+
+692
+00:35:08,140 --> 00:35:11,708
+right, you want it to be an NSDate object. Also you're
+
+693
+00:35:11,710 --> 00:35:14,211
+gonna put it, this is gonna say where you're gonna put it.
+
+694
+00:35:14,213 --> 00:35:16,780
+By default it usually says to put it at the very top
+
+695
+00:35:16,782 --> 00:35:19,249
+level, but you usually actually want it down where
+
+696
+00:35:19,251 --> 00:35:22,853
+all the rest of your files are down here like in core data
+
+697
+00:35:22,855 --> 00:35:23,954
+example, right?
+
+698
+00:35:23,956 --> 00:35:26,690
+So make sure you get that right too. So, be,
+
+699
+00:35:26,692 --> 00:35:28,158
+pay attention to this thing and
+
+700
+00:35:28,160 --> 00:35:29,926
+answer all these questions the way you want. Okay?
+
+701
+00:35:29,928 --> 00:35:33,196
+It's not one that you can just click Create and just move on
+
+702
+00:35:33,198 --> 00:35:35,365
+through or you won't get what you want, I don't think.
+
+703
+00:35:35,367 --> 00:35:39,870
+All right, so it created these things. Here they are,
+
+704
+00:35:39,872 --> 00:35:41,705
+you can see them on the side here. There's one,
+
+705
+00:35:41,707 --> 00:35:45,675
+Tweet.swift, okay? There's TwitterUser.swift.
+
+706
+00:35:45,677 --> 00:35:48,645
+And it's just a class tweet as promised.
+
+707
+00:35:48,647 --> 00:35:51,281
+Look at that, it inherits from NSManagedObject, and
+
+708
+00:35:51,283 --> 00:35:54,651
+you could put any code you want in here to do
+
+709
+00:35:54,653 --> 00:35:57,220
+tweet specific stuff. Because the fact
+
+710
+00:35:57,222 --> 00:35:58,989
+that the tweet is stored in the database is great but
+
+711
+00:35:58,991 --> 00:36:01,391
+it might also have some other behavior that you want to add.
+
+712
+00:36:01,393 --> 00:36:04,561
+It's just a class, right, you're using it in your app so
+
+713
+00:36:04,563 --> 00:36:06,863
+you might want to put some code in there, okay, so
+
+714
+00:36:06,865 --> 00:36:10,734
+it's perfectly good for that. Here's TwitterUser,
+
+715
+00:36:10,736 --> 00:36:15,138
+right Okay, put all your Twitter user stuff here. But
+
+716
+00:36:15,140 --> 00:36:16,873
+what about those vars? Okay,
+
+717
+00:36:16,875 --> 00:36:19,876
+I thought there was going to be vars for text and
+
+718
+00:36:19,878 --> 00:36:22,746
+created and the screen name for, where are those? Well,
+
+719
+00:36:22,748 --> 00:36:25,549
+it turns out those are put in extensions, you see them right
+
+720
+00:36:25,551 --> 00:36:27,651
+here, there's two of them, that one and that one, so
+
+721
+00:36:27,653 --> 00:36:30,353
+let's look at those, okay. This file right here,
+
+722
+00:36:30,355 --> 00:36:34,925
+this extension. This is creating a property of R for
+
+723
+00:36:34,927 --> 00:36:37,661
+each of the things, the attributes and
+
+724
+00:36:37,663 --> 00:36:40,830
+relationships to in my Tweet object.
+
+725
+00:36:40,832 --> 00:36:43,867
+Now, why does it put them off in an extension here? Why
+
+726
+00:36:43,869 --> 00:36:46,203
+didn't it just put it in the other class? Can anyone think
+
+727
+00:36:46,205 --> 00:36:50,340
+of a reason why this would be an extension? It's a good
+
+728
+00:36:50,342 --> 00:36:54,211
+reason actually which is that, you might wanna change these
+
+729
+00:36:54,213 --> 00:36:56,680
+attributes in relationship over time that you're working
+
+730
+00:36:56,682 --> 00:36:58,982
+on your app. You decide you need a new property, okay?
+
+731
+00:36:58,984 --> 00:37:02,953
+Well you gonna regenerate this file. When you do that, you
+
+732
+00:37:02,955 --> 00:37:05,689
+don't wanna blow away in the other code that you wrote for
+
+733
+00:37:05,691 --> 00:37:08,458
+tweet. Right, so it keeps all the stuff that's being
+
+734
+00:37:08,460 --> 00:37:13,296
+generated by x code when you do that create subclass,
+
+735
+00:37:13,298 --> 00:37:15,131
+it's keeping it all in one file so it can be constantly
+
+736
+00:37:15,133 --> 00:37:19,502
+overwritten. Make sense? See, that's why we put an extension
+
+737
+00:37:19,504 --> 00:37:22,739
+there. Now lets look at this wacky extension here,
+
+738
+00:37:22,741 --> 00:37:25,275
+what's going on here? Well these are obvious,
+
+739
+00:37:25,277 --> 00:37:29,045
+text, ID and created, why are they optional? Because they're
+
+740
+00:37:29,047 --> 00:37:31,915
+nil when you first create a tweet it's empty those things
+
+741
+00:37:31,917 --> 00:37:35,452
+are all nil so it has to be an optional, and then look at
+
+742
+00:37:35,454 --> 00:37:39,089
+this one. Tweeter has promised again twitter users.
+
+743
+00:37:39,091 --> 00:37:41,825
+Now I told you that tweeter since it's a relationship
+
+744
+00:37:41,827 --> 00:37:45,295
+would be an NS managed object But the system is smart enough
+
+745
+00:37:45,297 --> 00:37:47,530
+to say, well not only is it an NSManaged object,
+
+746
+00:37:47,532 --> 00:37:49,432
+but I know it's a TwitterUser. Okay,
+
+747
+00:37:49,434 --> 00:37:52,702
+which is this other class over here that it created.
+
+748
+00:37:52,704 --> 00:37:54,537
+By the way, sometimes when you generate a whole
+
+749
+00:37:54,539 --> 00:37:58,742
+bunch of things at once, it will miss that. Okay,
+
+750
+00:37:58,744 --> 00:38:02,145
+it will notice, it will just have this NSManaged object,
+
+751
+00:38:02,147 --> 00:38:06,283
+just regenerate them again if that happens. Okay?
+
+752
+00:38:06,285 --> 00:38:07,384
+It's just like, cause it's like a one,
+
+753
+00:38:07,386 --> 00:38:10,220
+instead of being a two phase generation, it's like a one
+
+754
+00:38:10,222 --> 00:38:12,522
+phase generation; if it does one class before the other.
+
+755
+00:38:12,524 --> 00:38:14,758
+It didn't know that twitter user existed by the time it
+
+756
+00:38:14,760 --> 00:38:18,161
+did tweet. So, I don't know, hopefully they'll fix that
+
+757
+00:38:18,163 --> 00:38:20,330
+someday. Might already be fixed in the latest version,
+
+758
+00:38:20,332 --> 00:38:23,867
+but just regenerate if you get that problem. So
+
+759
+00:38:23,869 --> 00:38:25,368
+anyway, Tweeter is a Twitter user,
+
+760
+00:38:25,370 --> 00:38:27,404
+that makes sense, right? That's what a Tweeter is,
+
+761
+00:38:27,406 --> 00:38:29,639
+it's a Twitter user. Let's go look at Tweet,
+
+762
+00:38:29,641 --> 00:38:32,742
+it's the same thing here. Here's the screen name and
+
+763
+00:38:32,744 --> 00:38:35,145
+the name, those are string. Now look at tweets,
+
+764
+00:38:35,147 --> 00:38:39,716
+it's an NS set and inside this NS set is going to be,
+
+765
+00:38:39,718 --> 00:38:44,921
+what? Tweet objects, right because that's what this is,
+
+766
+00:38:44,923 --> 00:38:47,490
+the Tweets that this Twitter user has Tweeted. So
+
+767
+00:38:47,492 --> 00:38:50,627
+this NS set is gonna have Tweet, Tweet objects.
+
+768
+00:38:50,629 --> 00:38:54,264
+See this class right up here. Okay,
+
+769
+00:38:54,266 --> 00:38:58,868
+now what about this @NSManaged thing? What the heck,
+
+770
+00:38:58,870 --> 00:39:00,737
+we never seen that before. What is that?
+
+771
+00:39:00,739 --> 00:39:04,174
+Okay, well, that's basically just some magic that says
+
+772
+00:39:04,176 --> 00:39:07,644
+the system is gonna take of that, of this bar, okay?
+
+773
+00:39:07,646 --> 00:39:10,547
+Because otherwise, where is this bar stored?
+
+774
+00:39:10,549 --> 00:39:13,149
+It can't just be a normal stored property because
+
+775
+00:39:13,151 --> 00:39:15,985
+when it changes, it needs to change in the database, so
+
+776
+00:39:15,987 --> 00:39:18,254
+it's got to be code going on there.
+
+777
+00:39:18,256 --> 00:39:21,191
+It kind of could be a computer property but you certainly
+
+778
+00:39:21,193 --> 00:39:24,027
+don't want the computer property code in here. So,
+
+779
+00:39:24,029 --> 00:39:28,698
+this NSManage basically says that it's a dynamic, bar and
+
+780
+00:39:28,700 --> 00:39:33,603
+when it gets accessed it causes other code in core data
+
+781
+00:39:33,605 --> 00:39:33,837
+to be executed.
+
+782
+00:39:33,839 --> 00:39:37,107
+And that's basically going to do value and value for key and
+
+783
+00:39:37,109 --> 00:39:40,210
+set value for key for you. Yeah.
+
+784
+00:39:40,212 --> 00:39:43,480
+>> A name like "TwitterUser",
+
+785
+00:39:43,482 --> 00:39:45,982
+would it change every time >> [INAUDIBLE] Yeah, so
+
+786
+00:39:45,984 --> 00:39:49,018
+the question is what if I change the key like like
+
+787
+00:39:49,020 --> 00:39:52,122
+if I rename screen name to be an ampersand name or
+
+788
+00:39:52,124 --> 00:39:54,624
+something like that. No, you have to go back and
+
+789
+00:39:54,626 --> 00:39:57,227
+regenerate them okay they will always have to regenerate.
+
+790
+00:39:57,229 --> 00:40:00,196
+This is not captain sync with the visual map you have to
+
+791
+00:40:00,198 --> 00:40:04,067
+regenerate all the time. Again that's why you want this to be
+
+792
+00:40:04,069 --> 00:40:05,902
+a separate file from the other thing.
+
+793
+00:40:05,904 --> 00:40:09,539
+Okay, so ns manage is just magic that core data uses.
+
+794
+00:40:09,541 --> 00:40:13,410
+You don't even have to worry about it, you're never gonna
+
+795
+00:40:13,412 --> 00:40:14,811
+have to actually type this in or anything.
+
+796
+00:40:14,813 --> 00:40:19,883
+It's always just in this generated thing. Okay, so,
+
+797
+00:40:19,885 --> 00:40:25,155
+how do I access these entities using these sub classes and
+
+798
+00:40:25,157 --> 00:40:28,458
+get the properties. Okay, so, it's pretty simple.
+
+799
+00:40:28,460 --> 00:40:30,160
+Let's say I get my manage of the context.
+
+800
+00:40:30,162 --> 00:40:32,362
+Here, I'm getting it from my UI managed document,
+
+801
+00:40:32,364 --> 00:40:35,165
+but I could have got it from my app delegate, whatever,
+
+802
+00:40:35,167 --> 00:40:35,932
+I got my context.
+
+803
+00:40:35,934 --> 00:40:39,002
+I'm gonna create one by saying insert new object for
+
+804
+00:40:39,004 --> 00:40:41,204
+a different name, same as before. Except for
+
+805
+00:40:41,206 --> 00:40:46,142
+look at the yellow text, I'm gonna cast it, downcast it
+
+806
+00:40:46,144 --> 00:40:50,246
+to be a tweet. Because I know that these tweet entities have
+
+807
+00:40:50,248 --> 00:40:55,118
+this associated subclass with them. Got it? So that's
+
+808
+00:40:55,120 --> 00:40:59,122
+the magic right there. That's the thing that turns this
+
+809
+00:40:59,124 --> 00:41:01,491
+Tweet that you're creating into a tweet so that now
+
+810
+00:41:01,493 --> 00:41:04,961
+that it's a tweet you can say things like tweet.tweeter = or
+
+811
+00:41:04,963 --> 00:41:09,499
+tweet.created = or tweet.text =, tweet.tweeter.name =,
+
+812
+00:41:09,501 --> 00:41:12,836
+you can even do. Okay, see what's happened here?
+
+813
+00:41:12,838 --> 00:41:13,937
+Tweet.tweeter.name.
+
+814
+00:41:13,939 --> 00:41:17,106
+I'm actually just using properties. To go through,
+
+815
+00:41:17,108 --> 00:41:19,809
+we know the type of Tweeter is a Twitter user, and
+
+816
+00:41:19,811 --> 00:41:25,915
+we know the twitter user has a bar which is the name.
+
+817
+00:41:27,085 --> 00:41:30,920
+So, this is a lot nicer than saying set value, this,
+
+818
+00:41:30,922 --> 00:41:33,957
+comma, for key, text.
+
+819
+00:41:37,028 --> 00:41:39,996
+Swift code, and also Swift can type check all of this to make
+
+820
+00:41:39,998 --> 00:41:45,535
+sure you're providing the right types, all right? Okay,
+
+821
+00:41:45,537 --> 00:41:48,338
+so now let's talk about deletion briefly.
+
+822
+00:41:48,340 --> 00:41:53,309
+You can delete objects from the database. It's very easy,
+
+823
+00:41:53,311 --> 00:41:57,514
+it's almost too easy. You just call deleteObject, okay?
+
+824
+00:41:57,516 --> 00:41:59,182
+And it will delete from the database.
+
+825
+00:41:59,184 --> 00:42:02,385
+There's a little bit of a question, if I delete a tweet,
+
+826
+00:42:02,387 --> 00:42:02,919
+does it delete the Twitter user who tweeted it?
+
+827
+00:42:02,921 --> 00:42:05,622
+Probably not. If I delete a Twitter user, does it delete
+
+828
+00:42:11,563 --> 00:42:14,831
+all the tweets that the Twitter user tweeted? Maybe
+
+829
+00:42:14,833 --> 00:42:19,836
+so, okay? So you can determine that rule for what happens
+
+830
+00:42:19,838 --> 00:42:23,106
+when something is deleted back in the Visual Mapper. You just
+
+831
+00:42:23,108 --> 00:42:26,109
+inspect the relationship and you can put the delete rule in
+
+832
+00:42:26,111 --> 00:42:29,145
+there. You can read all about what the settings are,
+
+833
+00:42:29,147 --> 00:42:33,316
+in the documentation. But you can basically have cascading
+
+834
+00:42:33,318 --> 00:42:35,218
+deletes that delete, like that's probably what
+
+835
+00:42:35,220 --> 00:42:37,487
+you would have if you deleted a Twitter user.
+
+836
+00:42:37,489 --> 00:42:37,620
+It would cascade and
+
+837
+00:42:37,622 --> 00:42:40,823
+delete all the tweets. And you can have just a nilling one,
+
+838
+00:42:40,825 --> 00:42:43,960
+where if you deleted a certain tweet, it's just going to
+
+839
+00:42:43,962 --> 00:42:47,764
+remove it from the set, and the Twitter user's set will be
+
+840
+00:42:47,766 --> 00:42:52,835
+automatically updated, okay? One thing, once you delete
+
+841
+00:42:52,837 --> 00:42:55,538
+this tweet, make sure you don't keep a strong pointer to
+
+842
+00:42:55,540 --> 00:42:58,274
+it because it now points to something that's invalid.
+
+843
+00:42:58,276 --> 00:43:01,044
+Cuz you deleted it from the database so you can't set any
+
+844
+00:43:01,046 --> 00:43:03,680
+of its attributes or do anything cuz it's gone.
+
+845
+00:43:03,682 --> 00:43:06,482
+So it kinda gets into a weird state here [COUGH].
+
+846
+00:43:06,484 --> 00:43:10,753
+Just make sure you don't do anything with that. All right,
+
+847
+00:43:10,755 --> 00:43:14,023
+one thing that's kind of fun about deletion here is that
+
+848
+00:43:14,025 --> 00:43:16,893
+your NsMangedObject subclass like tweet or
+
+849
+00:43:16,895 --> 00:43:21,331
+TwitterUser will be sent this method, prepareForDeletion,
+
+850
+00:43:21,333 --> 00:43:24,901
+when someone tries to delete it, and in there you can
+
+851
+00:43:24,903 --> 00:43:28,137
+do a lot of things. You could decrement some count for
+
+852
+00:43:28,139 --> 00:43:30,239
+example if you're keeping a track of a count or
+
+853
+00:43:30,241 --> 00:43:33,509
+something like that. One thing you don't have to do in here
+
+854
+00:43:33,511 --> 00:43:36,012
+though is modify in a relationships.
+
+855
+00:43:36,014 --> 00:43:37,614
+That happens for you automatically.
+
+856
+00:43:37,616 --> 00:43:42,418
+So if I delete a tweet k? From the database, it automatically
+
+857
+00:43:42,420 --> 00:43:46,456
+gets removed from any ns sets that Twitter users point to,
+
+858
+00:43:46,458 --> 00:43:50,560
+even if I go into an NS set, okay, of tweets and
+
+859
+00:43:50,562 --> 00:43:54,864
+I delete a tweet out of there, it will [INAUDIBLE] you know,
+
+860
+00:43:54,866 --> 00:43:58,267
+any, both sides of every relationship get updated. So
+
+861
+00:43:58,269 --> 00:44:00,703
+you never have to update either side of a relationship.
+
+862
+00:44:00,705 --> 00:44:03,439
+You touch one, the other side stays in synch.
+
+863
+00:44:03,441 --> 00:44:05,942
+That's one of the really cool things about core data. So
+
+864
+00:44:05,944 --> 00:44:07,343
+you don't have to do that in a prepare for
+
+865
+00:44:07,345 --> 00:44:10,113
+deletion. Prepare for deletion lets you do other things,
+
+866
+00:44:10,115 --> 00:44:12,649
+other things you might be counting or
+
+867
+00:44:12,651 --> 00:44:15,785
+doing other things.
+
+868
+00:44:15,787 --> 00:44:19,288
+So now we know how to create our database, set all the data
+
+869
+00:44:19,290 --> 00:44:22,925
+in there, it's awesome. Now we get to the real value of
+
+870
+00:44:22,927 --> 00:44:25,762
+having the data in there which is querying, okay. So
+
+871
+00:44:25,764 --> 00:44:28,064
+now we wanna go and look in the database and
+
+872
+00:44:28,066 --> 00:44:32,769
+get the objects we want based on certain criteria, okay. And
+
+873
+00:44:32,771 --> 00:44:37,140
+how do we do that? The main
+
+874
+00:44:37,142 --> 00:44:40,943
+Piece of this is this class called NSFETCH request,
+
+875
+00:44:40,945 --> 00:44:44,380
+okay? And in NSFETCH request we're going to specify
+
+876
+00:44:44,382 --> 00:44:46,349
+which objects we want out of the database, and
+
+877
+00:44:46,351 --> 00:44:49,018
+they're going to come back in an array, it's as simple as
+
+878
+00:44:49,020 --> 00:44:52,855
+that, okay? So, how do we create an NSFETCH request?
+
+879
+00:44:52,857 --> 00:44:56,259
+We need four things. One, the entity to fetch.
+
+880
+00:44:56,261 --> 00:44:58,995
+This is very important to understand. Okay. You can only
+
+881
+00:44:58,997 --> 00:45:02,732
+fetch one kind of thing with a fetch request. There's no
+
+882
+00:45:02,734 --> 00:45:05,835
+fetch request in the world that's gonna give you an array
+
+883
+00:45:05,837 --> 00:45:08,738
+of some tweets and some Twitter users.
+
+884
+00:45:08,740 --> 00:45:11,674
+It's always gonna give you an array of all the same thing,
+
+885
+00:45:11,676 --> 00:45:14,877
+all tweets, or all Twitter users. Okay?
+
+886
+00:45:14,879 --> 00:45:18,648
+So, you specify the entity, the one entity that's going to
+
+887
+00:45:18,650 --> 00:45:22,418
+be in this fetch request. All right? Second thing is
+
+888
+00:45:22,420 --> 00:45:26,255
+how many objects you want to limit your fetch to,
+
+889
+00:45:26,257 --> 00:45:28,224
+like maybe you only want to fetch 100 or
+
+890
+00:45:28,226 --> 00:45:30,793
+you want to fetch them in groups of 20 or 40 or
+
+891
+00:45:30,795 --> 00:45:34,831
+something like that. You can specify that in the request.
+
+892
+00:45:34,833 --> 00:45:37,700
+You can specify how to sort the result because I told you
+
+893
+00:45:37,702 --> 00:45:41,738
+the result comes back as an array, arrays are ordered. So
+
+894
+00:45:41,740 --> 00:45:44,874
+you can specify what order the things you're fetching come
+
+895
+00:45:44,876 --> 00:45:48,578
+back in. All right? And then lastly and most importantly,
+
+896
+00:45:48,580 --> 00:45:50,079
+you're gonna specify the predicate.
+
+897
+00:45:50,081 --> 00:45:55,818
+This is the description of which objects you want. Okay?
+
+898
+00:45:55,820 --> 00:45:59,088
+So, let's look at all of this things. Here's what the code
+
+899
+00:45:59,090 --> 00:46:01,157
+looks like. Basically to create a request right here.
+
+900
+00:46:01,159 --> 00:46:02,458
+So, let's look at all parts of this.
+
+901
+00:46:02,460 --> 00:46:03,559
+So, we're creating a request for
+
+902
+00:46:03,561 --> 00:46:06,562
+the certain entity. Here I'm saying the BatchSize and
+
+903
+00:46:06,564 --> 00:46:08,664
+fetchLimits and then the sortDescriptors and
+
+904
+00:46:08,666 --> 00:46:10,299
+predicate, we'll talk about it in the next slide.
+
+905
+00:46:10,301 --> 00:46:15,171
+So the batch size of 20 here, just means that when I fetch
+
+906
+00:46:15,173 --> 00:46:18,040
+it's gonna look like it returns all the objects, but
+
+907
+00:46:18,042 --> 00:46:21,444
+it's actually only fetch them at 20 at a time.
+
+908
+00:46:21,446 --> 00:46:23,679
+This is really great for things like table views,
+
+909
+00:46:23,681 --> 00:46:26,883
+where you know the person's scrolling through it, so
+
+910
+00:46:26,885 --> 00:46:28,451
+you don't wanna fetch all million item.
+
+911
+00:46:28,453 --> 00:46:30,586
+You know that you can fetch them in batches as they go
+
+912
+00:46:30,588 --> 00:46:33,289
+along. Okay. We're gonna talk a little bit about another
+
+913
+00:46:33,291 --> 00:46:35,458
+important thing called faulting, which it so you can
+
+914
+00:46:35,460 --> 00:46:37,560
+have a million items on the table and it's still pretty
+
+915
+00:46:37,562 --> 00:46:41,430
+lightweight even if you don't set a batch limit but you can.
+
+916
+00:46:41,432 --> 00:46:43,499
+Also you might have something where there's thousands of
+
+917
+00:46:43,501 --> 00:46:46,035
+objects but maybe your UI can only show a hundred,
+
+918
+00:46:46,037 --> 00:46:47,603
+it's just the maximum you can show.
+
+919
+00:46:47,605 --> 00:46:50,807
+Well then you can say only give me the first hundred.
+
+920
+00:46:50,809 --> 00:46:54,544
+Okay that's also Allowed. Alright so
+
+921
+00:46:54,546 --> 00:46:56,179
+let's talk about the two most important ones,
+
+922
+00:46:56,181 --> 00:46:58,447
+you don't really use these very much, but
+
+923
+00:46:58,449 --> 00:46:59,115
+the sortdescriptor and
+
+924
+00:46:59,117 --> 00:47:00,483
+the predicate you are going to use a lot.
+
+925
+00:47:00,485 --> 00:47:04,287
+Let's talk about those in detail. The sortdescriptor is,
+
+926
+00:47:04,289 --> 00:47:09,492
+is an array of descriptions of things to sort by.
+
+927
+00:47:09,494 --> 00:47:12,428
+Okay? And it's gonna use those sort by things
+
+928
+00:47:12,430 --> 00:47:14,831
+to sort the things that come out of the array, or
+
+929
+00:47:14,833 --> 00:47:16,299
+come out of the database when it puts them
+
+930
+00:47:16,301 --> 00:47:19,168
+in the array. Okay? So here's what it's like to create
+
+931
+00:47:19,170 --> 00:47:22,705
+a sort descriptor. It has a few different initializers,
+
+932
+00:47:22,707 --> 00:47:26,576
+but here's kind of one of it's most, verbose ones.
+
+933
+00:47:26,578 --> 00:47:30,413
+First is the key that you're going to be sorting by. So
+
+934
+00:47:30,415 --> 00:47:33,216
+if I'm looking for Twitter users, I might want the array
+
+935
+00:47:33,218 --> 00:47:36,819
+to come back sorted by the screen name, okay, at sign,
+
+936
+00:47:36,821 --> 00:47:38,020
+whatever. Okay, I wanna sort it so
+
+937
+00:47:38,022 --> 00:47:41,224
+I would create a descriptor where the key is screenName,
+
+938
+00:47:41,226 --> 00:47:42,725
+cuz that's what I want it to sort by.
+
+939
+00:47:42,727 --> 00:47:45,494
+Ascending is whether it's you know the @ sign
+
+940
+00:47:45,496 --> 00:47:48,531
+A people come first or the @ sign Z people come first
+
+941
+00:47:48,533 --> 00:47:52,235
+right? So [INAUDIBLE] is it an ascending list or a descending
+
+942
+00:47:52,237 --> 00:47:55,571
+list? And then this selector which is usually optional,
+
+943
+00:47:55,573 --> 00:47:57,773
+you don't usually need it, is interesting.
+
+944
+00:47:57,775 --> 00:48:02,044
+It's basically something that just says, how do I sort?
+
+945
+00:48:02,046 --> 00:48:05,348
+These strings, okay? Do I just sort them alphabetically?
+
+946
+00:48:05,350 --> 00:48:08,684
+Well, what does it mean to sort alphabetically? Okay,
+
+947
+00:48:08,686 --> 00:48:10,820
+this localized standard compare means
+
+948
+00:48:10,822 --> 00:48:13,689
+alphabetically in the way that people are used to seeing it
+
+949
+00:48:13,691 --> 00:48:16,726
+in the finder on the Mac, basically, so it's kind of
+
+950
+00:48:16,728 --> 00:48:20,963
+like user-sensible alphabetical order.
+
+951
+00:48:20,965 --> 00:48:23,866
+Okay, there's other alphabetical orders that
+
+952
+00:48:23,868 --> 00:48:26,068
+are more like strict alphabet order.
+
+953
+00:48:26,070 --> 00:48:28,938
+But maybe they don't deal with diacritics, you know?
+
+954
+00:48:28,940 --> 00:48:31,774
+They don't look, they don't sort diacritics properly,
+
+955
+00:48:31,776 --> 00:48:35,211
+things like, or capitalization they might not do right. So
+
+956
+00:48:35,213 --> 00:48:37,113
+this is a good one. And this is the default, so
+
+957
+00:48:37,115 --> 00:48:39,282
+you probably don't need to put this in here. But
+
+958
+00:48:39,284 --> 00:48:41,350
+this can basically be, if this is a string, okay,
+
+959
+00:48:41,352 --> 00:48:44,754
+if screenName is a string, which it is, then this can be,
+
+960
+00:48:44,756 --> 00:48:48,357
+any string method. Now there are some string methods that
+
+961
+00:48:48,359 --> 00:48:51,894
+are magic and are actually done on the database side.
+
+962
+00:48:51,896 --> 00:48:53,229
+So they're super efficient, okay. And
+
+963
+00:48:53,231 --> 00:48:55,598
+you can read the documentation to find out which ones.
+
+964
+00:48:55,600 --> 00:48:58,434
+This is definitely one of them. Okay, so
+
+965
+00:48:58,436 --> 00:49:01,504
+this method is not actually being called on every single
+
+966
+00:49:01,506 --> 00:49:04,407
+screen name in the database. You know, in other words, it,
+
+967
+00:49:04,409 --> 00:49:06,142
+it's not fetching them calling that method,
+
+968
+00:49:06,144 --> 00:49:07,977
+fetching the next one, calling it, comparing them,
+
+969
+00:49:07,979 --> 00:49:11,948
+trying to sort it. No, this is happening in the database.
+
+970
+00:49:11,950 --> 00:49:15,351
+Okay, the database knows how to do the sort. All right, so
+
+971
+00:49:15,353 --> 00:49:19,322
+that's the sort descriptor. Now, notice that, we,
+
+972
+00:49:19,324 --> 00:49:21,791
+when we create our fetch request,
+
+973
+00:49:21,793 --> 00:49:25,728
+we actually provide an array of sort descriptors.
+
+974
+00:49:25,730 --> 00:49:28,831
+We don't just give one sort descriptor, we do an array.
+
+975
+00:49:28,833 --> 00:49:29,498
+Why would we need an array?
+
+976
+00:49:29,500 --> 00:49:32,001
+Well, sometimes you, maybe you're searching for names,
+
+977
+00:49:32,003 --> 00:49:35,538
+people by name, and you wanna search by last name first and
+
+978
+00:49:35,540 --> 00:49:40,409
+then by first name, right, the common thing to do. So
+
+979
+00:49:40,411 --> 00:49:42,278
+you can give an array of sort descriptors.
+
+980
+00:49:42,280 --> 00:49:45,114
+The first sort descriptor is the last name sort descriptor,
+
+981
+00:49:45,116 --> 00:49:48,617
+and the second one is the first name sort descriptor,
+
+982
+00:49:48,820 --> 00:49:53,089
+okay? That's why it's an array. All right, now,
+
+983
+00:49:53,091 --> 00:49:56,592
+NSPredicate, the real gut of how we do all this.
+
+984
+00:49:56,594 --> 00:50:00,529
+The predicate is a really flexible object, okay, you,
+
+985
+00:50:00,531 --> 00:50:03,165
+this is one where you really have to go read NSPredicate
+
+986
+00:50:03,167 --> 00:50:05,968
+documentation. Okay, it would take me, I could have a whole
+
+987
+00:50:05,970 --> 00:50:08,304
+lecture on all of the things NSPredicate can do.
+
+988
+00:50:08,306 --> 00:50:12,408
+The format of NSPredicate is NSPredicate is basically you
+
+989
+00:50:12,410 --> 00:50:15,011
+have a constructor here, an initializer,
+
+990
+00:50:15,013 --> 00:50:19,281
+which takes a format string, like this, with little percent
+
+991
+00:50:19,283 --> 00:50:21,784
+at signs in it that you put then at the end.
+
+992
+00:50:21,786 --> 00:50:24,687
+See, here's two %@ signs, you put them at the end, joe and
+
+993
+00:50:24,689 --> 00:50:29,258
+aDate, right? And these values get put into this spot.
+
+994
+00:50:29,260 --> 00:50:32,628
+It's like printdef, okay, you all know printdef.
+
+995
+00:50:32,630 --> 00:50:34,764
+It's, who, who doesn't, does everyone know, who,
+
+996
+00:50:34,766 --> 00:50:36,232
+if you don't know what printdef is,
+
+997
+00:50:36,234 --> 00:50:37,366
+raise your hand. Okay, so
+
+998
+00:50:37,368 --> 00:50:39,802
+everyone knows what printdef is, just like printdef,
+
+999
+00:50:39,804 --> 00:50:43,839
+in that way. But of course, this is, has meaning, okay,
+
+1000
+00:50:43,841 --> 00:50:46,642
+meaning in terms of what you can search in the database.
+
+1001
+00:50:46,644 --> 00:50:49,111
+So, here's just some examples. Here, for example,
+
+1002
+00:50:49,113 --> 00:50:51,580
+I'm searching the database to find all the tweet,
+
+1003
+00:50:51,582 --> 00:50:54,216
+these are all searches for tweets by the way,
+
+1004
+00:50:54,218 --> 00:50:55,351
+all these things you're seeing right here,
+
+1005
+00:50:55,353 --> 00:50:57,887
+searches for tweets. So here I'm trying to find a tweet
+
+1006
+00:50:57,889 --> 00:51:00,790
+whose text contains case insensitively,
+
+1007
+00:51:00,792 --> 00:51:03,993
+that's what that square bracket [c] means, this text,
+
+1008
+00:51:03,995 --> 00:51:07,663
+and the text is the search string, okay? So I have some
+
+1009
+00:51:07,665 --> 00:51:11,600
+search string, I'm trying to find all the tweets, that,
+
+1010
+00:51:11,602 --> 00:51:16,472
+contain that text, okay? Or here's another one down here,
+
+1011
+00:51:16,474 --> 00:51:20,276
+I wanna find all the tweets that were tweeted by Joe and
+
+1012
+00:51:20,278 --> 00:51:24,847
+were created before or after some date, aDate right there.
+
+1013
+00:51:24,849 --> 00:51:30,286
+See that? And then here is, an interesting one,
+
+1014
+00:51:30,288 --> 00:51:34,256
+I'm saying give me all the tweets, not Twitter users,
+
+1015
+00:51:34,258 --> 00:51:39,829
+tweets whose Twitter screen name is CS193p. So
+
+1016
+00:51:39,831 --> 00:51:43,199
+this is all of CS19 p's tweets,
+
+1017
+00:51:43,201 --> 00:51:47,336
+okay? So even though this says tweeter.screenName,
+
+1018
+00:51:47,338 --> 00:51:51,407
+this is a tweet query. You see that?
+
+1019
+00:51:51,409 --> 00:51:55,277
+Okay, now here's interesting, th, this is only the tip of
+
+1020
+00:51:55,279 --> 00:51:58,147
+the iceberg, you can do some pretty powerful things. Here,
+
+1021
+00:51:58,149 --> 00:51:58,948
+for example, I'm doing a tweet u,
+
+1022
+00:51:58,950 --> 00:52:02,318
+TwitterUser request down here at the bottom, and
+
+1023
+00:52:02,320 --> 00:52:06,088
+I'm trying to find all the Twitter users that have tweets
+
+1024
+00:52:06,090 --> 00:52:10,893
+that contain the search string, okay? So
+
+1025
+00:52:10,895 --> 00:52:13,696
+that's pretty powerful, since tweets is a too many
+
+1026
+00:52:13,698 --> 00:52:18,834
+relationship, but it can do that. All right, so you gotta
+
+1027
+00:52:18,836 --> 00:52:21,537
+read up on NSPredicate to know what you can do.
+
+1028
+00:52:21,539 --> 00:52:23,339
+In your homework, I'm gonna ask you to do something
+
+1029
+00:52:23,341 --> 00:52:25,641
+pretty straightforward. So don't worry too much,
+
+1030
+00:52:25,643 --> 00:52:28,911
+but you're gonna need to not skip the step of going and
+
+1031
+00:52:28,913 --> 00:52:32,748
+reading this. You can also make compound predicates.
+
+1032
+00:52:32,750 --> 00:52:35,050
+Basically, you have this NSCompoundPredicate.
+
+1033
+00:52:35,052 --> 00:52:37,786
+You can make an AND predicate or an OR predicate. And
+
+1034
+00:52:37,788 --> 00:52:41,423
+you just give it an alid, an array of other predicates,
+
+1035
+00:52:41,425 --> 00:52:41,957
+and you'll AND them together.
+
+1036
+00:52:41,959 --> 00:52:44,860
+Now you don't need to do that because you could put OR and
+
+1037
+00:52:44,862 --> 00:52:47,863
+AND in the predicate string. But sometimes,
+
+1038
+00:52:47,865 --> 00:52:51,333
+you wanna like calculate which ones you want, okay,
+
+1039
+00:52:51,335 --> 00:52:54,370
+you will by some if thens or something, you wanna decide
+
+1040
+00:52:54,372 --> 00:52:56,839
+which ones are there, and so this is a good way to AND
+
+1041
+00:52:56,841 --> 00:53:02,011
+them together. All right, or and or or. Okay, I'm
+
+1042
+00:53:02,013 --> 00:53:04,480
+not really gonna talk about this whole slide actually,
+
+1043
+00:53:04,482 --> 00:53:10,920
+advanced querying, but there are some kind of weird little,
+
+1044
+00:53:10,922 --> 00:53:14,523
+things you can put in your predicate, like @average,
+
+1045
+00:53:14,525 --> 00:53:18,794
+which will assume that this is returning an array, and it'll
+
+1046
+00:53:18,796 --> 00:53:23,699
+average all of these keys in that array. Okay, so here for
+
+1047
+00:53:23,701 --> 00:53:28,404
+example, I have tweets.tweet, I'm basically looking at all
+
+1048
+00:53:28,406 --> 00:53:32,274
+of the tweets that this Twitter user has tweeted.
+
+1049
+00:53:32,276 --> 00:53:33,876
+And I'm averaging the latitude,
+
+1050
+00:53:33,878 --> 00:53:37,580
+assuming they had a latitude and longitude on the tweet.
+
+1051
+00:53:37,582 --> 00:53:40,549
+I'm averaging the latitude to find the average latitude at
+
+1052
+00:53:40,551 --> 00:53:42,885
+which someone tweets. Okay, that's kinda weird,
+
+1053
+00:53:42,887 --> 00:53:46,355
+but you can do that. So same thing with counts, okay?
+
+1054
+00:53:46,357 --> 00:53:49,391
+Now you're seeing counts here, but in, in your homework,
+
+1055
+00:53:49,393 --> 00:53:52,761
+you're gonna be asked to do a count, but not with this.
+
+1056
+00:53:52,763 --> 00:53:53,462
+Okay, this won't work for
+
+1057
+00:53:53,464 --> 00:53:54,897
+the kind of counting I'm asking you to do.
+
+1058
+00:53:54,899 --> 00:53:58,000
+You're just gonna have to have code that counts for that.
+
+1059
+00:53:58,002 --> 00:53:59,268
+Okay, so don't get confused by this.
+
+1060
+00:53:59,270 --> 00:54:03,272
+Do not use @count in your homework, all right. And
+
+1061
+00:54:03,274 --> 00:54:06,275
+down here, it's talking about this class NSExpression,
+
+1062
+00:54:06,277 --> 00:54:09,478
+which lets you create these arbitrary expressions to
+
+1063
+00:54:09,480 --> 00:54:13,015
+search for. Again, I'm not gonna talk about it,
+
+1064
+00:54:13,017 --> 00:54:14,416
+you don't need to do it for your homework.
+
+1065
+00:54:14,418 --> 00:54:16,719
+You can certainly take a look at the class NSExpression.
+
+1066
+00:54:16,721 --> 00:54:21,590
+It's pretty amazing what's in there. Okay, all right, so
+
+1067
+00:54:21,592 --> 00:54:23,859
+let's put this all together, all this querying business,
+
+1068
+00:54:23,861 --> 00:54:25,628
+so I'm gonna create this fetch request for
+
+1069
+00:54:25,630 --> 00:54:29,498
+a Twitter user. Okay, I wanna have all the tweets
+
+1070
+00:54:29,500 --> 00:54:33,569
+that this Twitter user has created in the last 24 hours.
+
+1071
+00:54:33,571 --> 00:54:37,473
+So how do I do that? Okay, I'm gonna fetch into, actually
+
+1072
+00:54:37,475 --> 00:54:40,509
+I know I'm gonna create all the, sorry, be clear here.
+
+1073
+00:54:40,511 --> 00:54:44,079
+I'm fetching all the Twitter users who have tweeted in
+
+1074
+00:54:44,081 --> 00:54:47,049
+the last 24 hours. Okay, so I'm fetching Twitter users.
+
+1075
+00:54:47,051 --> 00:54:50,886
+So that's my entity, I'm gonna create the time yesterday,
+
+1076
+00:54:50,888 --> 00:54:54,223
+which is just the time interval since now of minus 24
+
+1077
+00:54:54,225 --> 00:54:56,191
+hours. This is in seconds, okay?
+
+1078
+00:54:56,193 --> 00:54:58,560
+Then I'm gonna create the predicate,
+
+1079
+00:54:58,562 --> 00:55:02,364
+which is any tweets that were created after yesterday,
+
+1080
+00:55:02,366 --> 00:55:06,935
+24 hours ago, okay? See that predicate? Pretty fun. And
+
+1081
+00:55:06,937 --> 00:55:10,739
+then I'm gonna sort the result by the name of the Twitter
+
+1082
+00:55:10,741 --> 00:55:14,176
+user, not a screen name, but the actual name.
+
+1083
+00:55:14,178 --> 00:55:15,411
+And ascending is true, so
+
+1084
+00:55:15,413 --> 00:55:19,615
+I want the As at the beginning and the Zs at the end, okay?
+
+1085
+00:55:19,617 --> 00:55:23,285
+So this, I create this request. Now I have request,
+
+1086
+00:55:23,287 --> 00:55:28,524
+how do I get the array, which is all of these things, okay?
+
+1087
+00:55:28,526 --> 00:55:31,960
+We do that with a method in your managedObjectContext.
+
+1088
+00:55:31,962 --> 00:55:33,662
+I told you you need a managedObjectContext for
+
+1089
+00:55:33,664 --> 00:55:35,431
+everything, and you do, creating, and
+
+1090
+00:55:35,433 --> 00:55:38,701
+also for fetching. You're gonna use this method in your
+
+1091
+00:55:38,703 --> 00:55:40,869
+context called executeFetchRequest, and
+
+1092
+00:55:40,871 --> 00:55:43,505
+you just give it the NSFetchRequest.
+
+1093
+00:55:43,507 --> 00:55:46,408
+It returns an NSArray, okay, or an array,
+
+1094
+00:55:46,410 --> 00:55:50,646
+a bridge to an array, okay, of all the things.
+
+1095
+00:55:50,648 --> 00:55:52,915
+Now if that array is empty, not nil,
+
+1096
+00:55:52,917 --> 00:55:56,752
+but empty, that means nothing matches your request.
+
+1097
+00:55:56,754 --> 00:55:58,053
+There's nothing in the database that matched that.
+
+1098
+00:55:58,055 --> 00:56:00,622
+In other words, in the, using the previous slide, there
+
+1099
+00:56:00,624 --> 00:56:03,459
+are no Twitter users who have tweeted in the last 24 hours.
+
+1100
+00:56:03,461 --> 00:56:07,262
+That's empty array. Otherwise it's gonna return a sorted
+
+1101
+00:56:07,264 --> 00:56:10,666
+array of all the Twitter users, sorted by their name,
+
+1102
+00:56:10,668 --> 00:56:13,669
+who have tweeted in the last 24 hours. Okay?
+
+1103
+00:56:13,671 --> 00:56:15,137
+And the objects in there, in that array,
+
+1104
+00:56:15,139 --> 00:56:18,507
+will be Twitter user, instances of Twitter user.
+
+1105
+00:56:18,509 --> 00:56:20,242
+Okay, cuz that's what I searched for.
+
+1106
+00:56:20,244 --> 00:56:24,546
+Now notice that I have to try, okay, context try, okay,
+
+1107
+00:56:24,548 --> 00:56:30,719
+that's because this method throws. Now, if this throws,
+
+1108
+00:56:30,721 --> 00:56:33,889
+it probably means there£s some problem with your database.
+
+1109
+00:56:33,891 --> 00:56:36,892
+Okay? Like maybe your database is not opened, maybe tried to
+
+1110
+00:56:36,894 --> 00:56:40,729
+send this to a UI managed object manage documents
+
+1111
+00:56:40,731 --> 00:56:42,731
+context and you never opened it, so it£s not open or
+
+1112
+00:56:42,733 --> 00:56:48,570
+something like that. You could ignore the throw, by doing
+
+1113
+00:56:48,572 --> 00:56:52,074
+tri question mark. The thing that tri question mark does
+
+1114
+00:56:52,076 --> 00:56:55,077
+that you have to realize is, it turns whatever this is,
+
+1115
+00:56:55,079 --> 00:56:58,080
+this method call. Whatever it returns, it turns it into
+
+1116
+00:56:58,082 --> 00:57:03,285
+an optional. So execute fetch request returns an NS array,
+
+1117
+00:57:03,287 --> 00:57:07,189
+or an array. So, by putting tri question mark, it makes
+
+1118
+00:57:07,191 --> 00:57:11,560
+this now return an optional array. And why is that?
+
+1119
+00:57:11,562 --> 00:57:16,765
+That's because if it throws it's gonna return nill. Okay?
+
+1120
+00:57:16,767 --> 00:57:19,568
+So it's a little funky to realize this but
+
+1121
+00:57:19,570 --> 00:57:23,305
+this just gonna turn this into an optional array, and so
+
+1122
+00:57:23,307 --> 00:57:27,009
+let users, users right there, is going to be of type,
+
+1123
+00:57:27,011 --> 00:57:31,513
+optional array. Okay optional array of And
+
+1124
+00:57:31,515 --> 00:57:34,650
+his managed object actually, to be exact. All right so
+
+1125
+00:57:34,652 --> 00:57:38,253
+a lot of times we do do try question mark here because we
+
+1126
+00:57:38,255 --> 00:57:42,324
+don't really know what to do to handle an error so if we do
+
+1127
+00:57:42,326 --> 00:57:46,428
+a fetch and it comes back nil, and there was some problem,
+
+1128
+00:57:46,430 --> 00:57:49,498
+it's kind of like [SOUND] we're reporting error
+
+1129
+00:57:49,500 --> 00:57:53,402
+to the user or something but it's not like much we can do.
+
+1130
+00:57:53,404 --> 00:57:57,172
+Okay, so sometimes, this is a case where we might do try
+
+1131
+00:57:57,174 --> 00:58:01,577
+question mark there. Okay, so that's it, very simple and
+
+1132
+00:58:01,579 --> 00:58:02,978
+now you have the array of objects back,
+
+1133
+00:58:02,980 --> 00:58:06,215
+you can do whatever you want with them.
+
+1134
+00:58:06,217 --> 00:58:09,651
+I want to talk a little about performance. What if you had
+
+1135
+00:58:09,653 --> 00:58:12,321
+a million objects and you said show me all the Twitter user,
+
+1136
+00:58:12,323 --> 00:58:15,224
+a million tweets or something or a million Twitter users and
+
+1137
+00:58:15,226 --> 00:58:18,894
+you said, show me all the Twitter users that tweeted in
+
+1138
+00:58:18,896 --> 00:58:22,965
+the last 24 hours. And there were 750, or 7,000 of them.
+
+1139
+00:58:22,967 --> 00:58:26,168
+Are you really gonna get an array with 7,000 objects
+
+1140
+00:58:26,170 --> 00:58:28,971
+all of, each of which has a screen name and the name and
+
+1141
+00:58:28,973 --> 00:58:32,174
+whatever else it. I mean, that would be massive, right.
+
+1142
+00:58:32,176 --> 00:58:34,142
+And the answer is no, you don't get that.
+
+1143
+00:58:34,144 --> 00:58:38,113
+You get this kind of magical thing which is an array of
+
+1144
+00:58:38,115 --> 00:58:42,684
+husks of those objects if you want to think of it that way.
+
+1145
+00:58:42,686 --> 00:58:43,886
+So they're not really there and
+
+1146
+00:58:43,888 --> 00:58:46,922
+in fact if you tried to print them, if you used print to
+
+1147
+00:58:46,924 --> 00:58:50,025
+print them, it would just say this is an NS managed object,
+
+1148
+00:58:50,027 --> 00:58:51,994
+it wouldn't show you the screen name or the name or
+
+1149
+00:58:51,996 --> 00:58:55,297
+anything else about it because it doesn't actually pull that
+
+1150
+00:58:55,299 --> 00:59:00,502
+data Until you ask for it. Until you ask specifically for
+
+1151
+00:59:00,504 --> 00:59:03,705
+a Twitter user's name or his screen name.
+
+1152
+00:59:03,707 --> 00:59:05,641
+It doesn't get that out of the database.
+
+1153
+00:59:05,643 --> 00:59:09,077
+This is called faulting. The objects live in this kind of
+
+1154
+00:59:09,079 --> 00:59:11,280
+husk state where they don't actually have their data. And
+
+1155
+00:59:11,282 --> 00:59:14,416
+when you ask for them the data gets faulted in. Now when that
+
+1156
+00:59:14,418 --> 00:59:17,185
+faulting happens, it might be happening in big bunches,
+
+1157
+00:59:17,187 --> 00:59:18,086
+because it might be more efficient for
+
+1158
+00:59:18,088 --> 00:59:21,757
+the database to fault in a hundred at a time. Okay? But
+
+1159
+00:59:21,759 --> 00:59:22,958
+it's all happening behind the scenes.
+
+1160
+00:59:22,960 --> 00:59:25,160
+The only reason I even mention it is because you might be
+
+1161
+00:59:25,162 --> 00:59:28,497
+trying to print these things out, and you're like, what?
+
+1162
+00:59:28,499 --> 00:59:31,400
+Where's my name and screen name? Okay? And you'll know
+
+1163
+00:59:31,402 --> 00:59:34,670
+why it's because it's not been faulted yet. Okay? So
+
+1164
+00:59:34,672 --> 00:59:36,371
+if you really want the name or screen name, you want,
+
+1165
+00:59:36,373 --> 00:59:42,210
+you have to .name so it faults it in, and can see it. Okay?
+
+1166
+00:59:42,646 --> 00:59:45,380
+All right let's talk about thread safety with core data.
+
+1167
+00:59:45,382 --> 00:59:50,619
+Okay, NSManagedObjectContext is not thread safe. So
+
+1168
+00:59:50,621 --> 00:59:54,289
+you cannot have a context fork off some
+
+1169
+00:59:54,291 --> 00:59:56,592
+closure on another thread with dispatch and
+
+1170
+00:59:56,594 --> 01:00:00,195
+access it. Okay? So that sounds really bad. Because
+
+1171
+01:00:00,197 --> 01:00:03,365
+a database you can imagine I'd want to have another thread
+
+1172
+01:00:03,367 --> 01:00:05,500
+doing some heavy intensive database thing.
+
+1173
+01:00:05,502 --> 01:00:06,802
+Like loading the database up or
+
+1174
+01:00:06,804 --> 01:00:09,404
+doing some complicated queries or something like that.
+
+1175
+01:00:09,406 --> 01:00:11,506
+And you're telling me I can't do it?
+
+1176
+01:00:11,508 --> 01:00:14,543
+Because it's not thread same? Well no of course you can do
+
+1177
+01:00:14,545 --> 01:00:18,480
+it. And the way you have to do it is ns managed object each
+
+1178
+01:00:18,482 --> 01:00:24,119
+NSManagedObejct instance has to have its own thread. Okay.
+
+1179
+01:00:24,121 --> 01:00:26,622
+Now, the cool thing is you can have multiple
+
+1180
+01:00:26,624 --> 01:00:30,826
+NSManagedObjectContext on the same database. Okay? So, how
+
+1181
+01:00:30,828 --> 01:00:34,062
+does that work? So, you have this NSManagedObjectContext.
+
+1182
+01:00:34,064 --> 01:00:35,631
+It's writing into the database.
+
+1183
+01:00:35,633 --> 01:00:39,201
+When you hit save that save goes out to the database and
+
+1184
+01:00:39,203 --> 01:00:43,805
+other ManagedObjectContext will start seeing it. Okay?
+
+1185
+01:00:43,807 --> 01:00:45,774
+When they do fetches they'll see it.
+
+1186
+01:00:45,776 --> 01:00:47,743
+So it basically works through the saves.
+
+1187
+01:00:47,745 --> 01:00:50,912
+When you save through one context boom the other ones
+
+1188
+01:00:50,914 --> 01:00:53,749
+start seeing it. Automatically as soon as they, next time
+
+1189
+01:00:53,751 --> 01:00:56,952
+they fetch they're gonna automatically see it. Okay, so
+
+1190
+01:00:56,954 --> 01:01:00,355
+it's really kind of cool that it just uses threads,
+
+1191
+01:01:00,357 --> 01:01:02,190
+okay, queues, to do this.
+
+1192
+01:01:02,192 --> 01:01:04,826
+Now that does mean that the cues to use them on, they have
+
+1193
+01:01:04,828 --> 01:01:07,896
+to be serial queues, can't have concurrent queues because
+
+1194
+01:01:07,898 --> 01:01:10,365
+then you'd have one manage object in different threads,
+
+1195
+01:01:10,367 --> 01:01:13,502
+because a concurrent queue can fire off multiple threads to
+
+1196
+01:01:13,504 --> 01:01:15,937
+go execute its little blocks. All right?
+
+1197
+01:01:15,939 --> 01:01:19,775
+So it has to be serial queue. Now the kind of,
+
+1198
+01:01:19,777 --> 01:01:23,011
+NSMangedObjectContext that you get by doing that app delegate
+
+1199
+01:01:23,013 --> 01:01:26,615
+thing and the one you get from doing UI manage documents,
+
+1200
+01:01:26,617 --> 01:01:31,086
+those are both main cue in this managed object context.
+
+1201
+01:01:31,088 --> 01:01:35,023
+It could only be used in the main cue so don't ever like,
+
+1202
+01:01:35,025 --> 01:01:37,426
+fork those off and start using those on another queue.
+
+1203
+01:01:37,428 --> 01:01:40,195
+Now you can create your own NSManagedObjectContext on
+
+1204
+01:01:40,197 --> 01:01:43,365
+other queues if you want. There's an initializer for it.
+
+1205
+01:01:43,367 --> 01:01:44,266
+I'm not really gonna talk about that.
+
+1206
+01:01:44,268 --> 01:01:46,735
+You're not gonna need to do that for this class.
+
+1207
+01:01:46,737 --> 01:01:51,306
+But that's how you would do concurrency, okay?
+
+1208
+01:01:51,308 --> 01:01:53,642
+Now when you have, because of this, because
+
+1209
+01:01:53,644 --> 01:01:56,511
+you can have this multiple context, you gotta know about
+
+1210
+01:01:56,513 --> 01:01:58,880
+this method right here, performBlock.
+
+1211
+01:01:58,882 --> 01:02:02,584
+Very important method in manage ManageObjectContext.
+
+1212
+01:02:02,586 --> 01:02:05,987
+And it basically takes a closure here. Closure that
+
+1213
+01:02:05,989 --> 01:02:09,925
+take no arguments, returns nothing, and inside this block
+
+1214
+01:02:09,927 --> 01:02:13,361
+you always know with 100% certainty whatever code you're
+
+1215
+01:02:13,363 --> 01:02:17,966
+executing in here is going to be performed on this context,
+
+1216
+01:02:17,968 --> 01:02:22,871
+safe queue. Okay, the queue that it was created on,
+
+1217
+01:02:22,873 --> 01:02:24,406
+the queue that it's running on,
+
+1218
+01:02:24,408 --> 01:02:27,309
+the queue that won't cause any problems, always.
+
+1219
+01:02:27,311 --> 01:02:31,646
+Okay, so really anytime you do anything with core data
+
+1220
+01:02:31,648 --> 01:02:34,549
+any time you access an NSManagedObjectContext,
+
+1221
+01:02:34,551 --> 01:02:38,153
+or any of the NSManagedObjects you get out of it, you want to
+
+1222
+01:02:38,155 --> 01:02:42,224
+do it inside a performBlock. Did you hear what I just said?
+
+1223
+01:02:42,226 --> 01:02:45,427
+I'm going to say it again. performBlock wants to be
+
+1224
+01:02:45,429 --> 01:02:50,298
+wrapped around every access to any NSManagedObjectContext or
+
+1225
+01:02:50,300 --> 01:02:54,369
+NSManagedObject of any kind. Okay. Now
+
+1226
+01:02:54,371 --> 01:02:57,405
+in your homework you're only ever gonna have one context or
+
+1227
+01:02:57,407 --> 01:02:59,574
+you might say what a waste. Why do you put these
+
+1228
+01:02:59,576 --> 01:03:01,109
+stupid perform blocks around everything?
+
+1229
+01:03:01,111 --> 01:03:02,778
+I know everything's in the main context.
+
+1230
+01:03:02,780 --> 01:03:05,080
+Well the answer you'll want to get used to doing this.
+
+1231
+01:03:05,082 --> 01:03:08,683
+Okay? Because maybe down the road you do add another thread
+
+1232
+01:03:08,685 --> 01:03:10,752
+that loads up the database with more tweets or
+
+1233
+01:03:10,754 --> 01:03:13,922
+something like that and also, it starts breaking if
+
+1234
+01:03:13,924 --> 01:03:17,659
+you're not performing things on the right context, okay.
+
+1235
+01:03:17,661 --> 01:03:18,660
+So just get in the habit of doing this.
+
+1236
+01:03:18,662 --> 01:03:22,130
+So you can also perform block and wait, which will cause
+
+1237
+01:03:22,132 --> 01:03:24,566
+this code to be executed on the safe queue and
+
+1238
+01:03:24,568 --> 01:03:29,104
+wait till it's done and then continue on this queue, okay.
+
+1239
+01:03:29,106 --> 01:03:33,575
+So you can do that as well. So, always wrap perform block
+
+1240
+01:03:33,577 --> 01:03:39,447
+around anything you do in core data.
+
+1241
+01:03:39,817 --> 01:03:44,753
+All right? Quick thing on the parent context. Most context,
+
+1242
+01:03:44,755 --> 01:03:48,456
+most management contexts have a parentContext, all right?
+
+1243
+01:03:48,458 --> 01:03:51,159
+That parentContext is either the context that actually
+
+1244
+01:03:51,161 --> 01:03:54,296
+writing it to the database, or in some cases, it's another,
+
+1245
+01:03:54,298 --> 01:03:57,365
+and it's may context. So that when you save, it's actually
+
+1246
+01:03:57,367 --> 01:04:00,302
+saving to another context, and then that context saves again.
+
+1247
+01:04:00,304 --> 01:04:02,938
+UI manage document works this way.
+
+1248
+01:04:02,940 --> 01:04:06,241
+Okay, and what's kinda cool is that that parent context is
+
+1249
+01:04:06,243 --> 01:04:08,643
+almost always on a different queue.
+
+1250
+01:04:08,645 --> 01:04:12,247
+So if you're using UI managed documents you can actually
+
+1251
+01:04:12,249 --> 01:04:15,317
+do a little trick which is if you wanna run something for
+
+1252
+01:04:15,319 --> 01:04:19,621
+that database on another queue just performBlock
+
+1253
+01:04:19,623 --> 01:04:20,622
+on the parentContext.
+
+1254
+01:04:20,624 --> 01:04:24,359
+ParentContext is just a method in ManagedObject context,
+
+1255
+01:04:24,361 --> 01:04:27,829
+right or for a property. Just do performBlock on that.
+
+1256
+01:04:27,831 --> 01:04:30,765
+Now you'll be performing it on a different queue off the main
+
+1257
+01:04:30,767 --> 01:04:33,168
+queue, okay. And it'll be in that database.
+
+1258
+01:04:33,170 --> 01:04:35,570
+Everything will be fine so it's kind of a trick.
+
+1259
+01:04:35,572 --> 01:04:37,806
+Okay, again, you won't need that for your assignment,
+
+1260
+01:04:37,808 --> 01:04:40,909
+but just understand that you can do that.
+
+1261
+01:04:41,511 --> 01:04:44,946
+All right, so there's so much more to Core Data, no wait,
+
+1262
+01:04:44,948 --> 01:04:48,583
+I mean we've already been here an hour so and barely covered
+
+1263
+01:04:48,585 --> 01:04:51,586
+the basics. So there's optimistic locking in there,
+
+1264
+01:04:51,588 --> 01:04:55,290
+it has full Undo/Redo which is incredible. Specify thing like
+
+1265
+01:04:55,292 --> 01:04:57,859
+staleness, you know, when I have to refetch this thing,
+
+1266
+01:04:57,861 --> 01:04:59,728
+how much time goes by before I have to refetch.
+
+1267
+01:04:59,730 --> 01:05:02,731
+All that stuff. You have to go look at the documentation for
+
+1268
+01:05:02,733 --> 01:05:05,700
+NS Managed Object Context. Okay, that's really the core
+
+1269
+01:05:05,702 --> 01:05:08,069
+of where this stuff is all happening.
+
+1270
+01:05:08,071 --> 01:05:10,605
+Eh, to find out more about it. Again,
+
+1271
+01:05:10,607 --> 01:05:11,873
+I'm not gonna ask you to do any of this for
+
+1272
+01:05:11,875 --> 01:05:15,243
+your homework but you gotta know that it's out there or
+
+1273
+01:05:15,245 --> 01:05:16,111
+when you get in the real world and
+
+1274
+01:05:16,113 --> 01:05:18,680
+start doing this you'll be missing opportunities to do
+
+1275
+01:05:18,682 --> 01:05:22,317
+cool features. All right, the last thing I wanna talk about
+
+1276
+01:05:22,319 --> 01:05:25,654
+is the interrelationship between Core Data and
+
+1277
+01:05:25,656 --> 01:05:27,889
+UITableView. As you can imagine,
+
+1278
+01:05:27,891 --> 01:05:31,092
+if you got this huge database of stuff,
+
+1279
+01:05:31,094 --> 01:05:35,530
+a great place to show it is in a TableView. Okay, in fact,
+
+1280
+01:05:35,532 --> 01:05:38,400
+99% of the time, either a TableView or a CollectionView
+
+1281
+01:05:38,402 --> 01:05:42,404
+is how you're gonna show the stuff in a big database, okay.
+
+1282
+01:05:42,406 --> 01:05:47,108
+And that's so common that iOS provides this awesome class
+
+1283
+01:05:47,110 --> 01:05:51,680
+NSFetchedResultsController okay, which is a call which
+
+1284
+01:05:51,682 --> 01:05:56,885
+will hook up an NSFetchRequest to a UITableView.
+
+1285
+01:05:56,887 --> 01:06:00,822
+And not just hook it up once but hook it up so that if
+
+1286
+01:06:00,824 --> 01:06:03,458
+the database changes in any way that the FetchRequest
+
+1287
+01:06:03,460 --> 01:06:08,330
+would return different results it updates the table. Okay, so
+
+1288
+01:06:08,332 --> 01:06:10,332
+the database can be changing behind the scenes.
+
+1289
+01:06:10,334 --> 01:06:12,701
+The table is just always staying in sync with it.
+
+1290
+01:06:12,703 --> 01:06:13,068
+So that fetch request and
+
+1291
+01:06:13,070 --> 01:06:16,104
+that table are always in sync, okay, which is really,
+
+1292
+01:06:16,106 --> 01:06:18,273
+really cool. Okay, it makes it really easy for
+
+1293
+01:06:18,275 --> 01:06:21,276
+you to implement your table views with stuff
+
+1294
+01:06:21,278 --> 01:06:22,844
+out of the database. Okay, so
+
+1295
+01:06:22,846 --> 01:06:27,048
+how do you use this NSFetch, FetchedResultsController?
+
+1296
+01:06:27,050 --> 01:06:28,483
+Well, first of all, let's talk about how,
+
+1297
+01:06:28,485 --> 01:06:30,051
+how FetchResultsController actually works.
+
+1298
+01:06:30,053 --> 01:06:33,788
+It's very simple. It provides methods to implement all those
+
+1299
+01:06:33,790 --> 01:06:36,458
+UITableView delegate methods like number of sections and
+
+1300
+01:06:36,460 --> 01:06:39,327
+tables, number of rows and sections. The only one it
+
+1301
+01:06:39,329 --> 01:06:41,730
+doesn't implement is self row and index path.
+
+1302
+01:06:41,732 --> 01:06:43,565
+You still have to implement that. Because of course,
+
+1303
+01:06:43,567 --> 01:06:47,202
+self row and index path knows about, you know, the custom UI
+
+1304
+01:06:47,204 --> 01:06:50,271
+cells or whatever, so, you have to be the one who's
+
+1305
+01:06:50,273 --> 01:06:53,241
+putting that data on screen in the right way. But in terms of
+
+1306
+01:06:53,243 --> 01:06:56,611
+all the other, things in the UITableView data source
+
+1307
+01:06:56,613 --> 01:06:59,447
+even things like section hea- headers and all that stuff,
+
+1308
+01:06:59,449 --> 01:07:01,850
+NSFetchedResultsController will do all that for you.
+
+1309
+01:07:01,852 --> 01:07:03,418
+It has methods to implement all those things.
+
+1310
+01:07:03,420 --> 01:07:06,254
+So here's a couple examples for what it looks like here.
+
+1311
+01:07:06,256 --> 01:07:09,324
+Okay? The other thing you can do, which is kinda cool,
+
+1312
+01:07:09,326 --> 01:07:11,960
+well, I'll talk about that in a second. Let's talk about
+
+1313
+01:07:11,962 --> 01:07:13,928
+cellForRowAtIndexPath, since you're responsible for
+
+1314
+01:07:13,930 --> 01:07:17,198
+im- implementing that. The key method you need to know from
+
+1315
+01:07:17,200 --> 01:07:19,801
+FetchedResultsController is object and
+
+1316
+01:07:19,803 --> 01:07:22,637
+index path, okay. This is a method that you can send
+
+1317
+01:07:22,639 --> 01:07:25,673
+to it. You give it an index path into the table and
+
+1318
+01:07:25,675 --> 01:07:30,378
+it will return you the NSManagedObject at that row.
+
+1319
+01:07:30,380 --> 01:07:33,415
+Okay, now this might be a subclass of NSManagedObject
+
+1320
+01:07:33,417 --> 01:07:34,682
+like Tweet or Twitter User, but
+
+1321
+01:07:34,684 --> 01:07:37,886
+it's gonna return it to you so in your cellForRowAtIndexPath,
+
+1322
+01:07:37,888 --> 01:07:42,824
+you're gonna call this, okay, of this index path
+
+1323
+01:07:42,826 --> 01:07:45,493
+to get the object that's at that row and then you're gonna
+
+1324
+01:07:45,495 --> 01:07:49,097
+use that object to fill out the information in that row.
+
+1325
+01:07:49,099 --> 01:07:51,433
+Okay, that's what cellForRowAtIndexPath does.
+
+1326
+01:07:51,435 --> 01:07:54,669
+Everyone understand this? Super important you understand
+
+1327
+01:07:54,671 --> 01:07:56,638
+this cuz otherwise, you'll be like, how do I, okay,
+
+1328
+01:07:56,640 --> 01:08:00,775
+cellForRowAtIndexPath? This is how you do it. Okay. So
+
+1329
+01:08:00,777 --> 01:08:03,845
+this FetchedResultsController is probably gonna be a var in
+
+1330
+01:08:03,847 --> 01:08:06,714
+your UITableViewController. Okay, that you're going to
+
+1331
+01:08:06,716 --> 01:08:09,951
+have created with a fetched results, with the NS fetched
+
+1332
+01:08:09,953 --> 01:08:13,154
+request. And then with your cellForRowAtIndexPath you're
+
+1333
+01:08:13,156 --> 01:08:15,690
+gonna find out each of the things that are in
+
+1334
+01:08:15,692 --> 01:08:19,861
+the database that match your fetch. One per row, and
+
+1335
+01:08:19,863 --> 01:08:25,533
+this is gonna return it. Okay? All right, so how do we create
+
+1336
+01:08:25,535 --> 01:08:28,770
+an NSFetchedResultsController by the way? All you do,
+
+1337
+01:08:28,772 --> 01:08:31,706
+really all you have to do is create that NS fetch request
+
+1338
+01:08:31,708 --> 01:08:34,142
+that's it, okay? So for example
+
+1339
+01:08:34,144 --> 01:08:36,177
+here I'm going to create a FetchResultsController.
+
+1340
+01:08:36,179 --> 01:08:38,980
+You can see that its initializer takes the fetch
+
+1341
+01:08:38,982 --> 01:08:42,383
+request. Obviously the context, and
+
+1342
+01:08:42,385 --> 01:08:47,155
+then this is kind of a cool thing, the sectionNameKeyPath,
+
+1343
+01:08:47,157 --> 01:08:49,691
+if all of the objects in your database, okay,
+
+1344
+01:08:49,693 --> 01:08:53,995
+know the section they should be in, they have some key in
+
+1345
+01:08:53,997 --> 01:08:55,630
+there that is the section they're supposed to be in.
+
+1346
+01:08:55,632 --> 01:08:59,334
+Then you can specify that sec that key right here and it'll
+
+1347
+01:08:59,336 --> 01:09:02,604
+automatically do the sections for you. Okay. The only
+
+1348
+01:09:02,606 --> 01:09:05,673
+thing is you gotta make sure you sort the result of your
+
+1349
+01:09:05,675 --> 01:09:10,245
+fetched sort in the same order as those sections sort. But
+
+1350
+01:09:10,247 --> 01:09:12,914
+it'll do that for you. And then there's cache right here.
+
+1351
+01:09:12,916 --> 01:09:16,451
+It'll actually cache the results on disk, okay.
+
+1352
+01:09:16,453 --> 01:09:19,053
+So if you have a really complicated fetch that might
+
+1353
+01:09:19,055 --> 01:09:21,389
+take a lot of resources, it will cache the result.
+
+1354
+01:09:21,391 --> 01:09:26,394
+The only thing about this is you cannot change the request.
+
+1355
+01:09:26,396 --> 01:09:28,229
+The data can be changing all the time but
+
+1356
+01:09:28,231 --> 01:09:29,964
+the request itself, the predicate and
+
+1357
+01:09:29,966 --> 01:09:32,200
+the source scrubbers has to be the same.
+
+1358
+01:09:32,202 --> 01:09:32,467
+If you ever change it,
+
+1359
+01:09:32,469 --> 01:09:35,236
+then this cache obviously becomes kinda useless. All
+
+1360
+01:09:35,238 --> 01:09:38,573
+right, so how would we create a FetchResultsController doing
+
+1361
+01:09:38,575 --> 01:09:41,075
+this? I'm gonna create the request. So like I'm gonna
+
+1362
+01:09:41,077 --> 01:09:43,378
+fetch Tweets here. I'm gonna put Tweets in my TableView.
+
+1363
+01:09:43,380 --> 01:09:46,314
+So each row of my TableView is gonna be a different Tweet.
+
+1364
+01:09:46,316 --> 01:09:48,383
+I'm gonna sort by the created so
+
+1365
+01:09:48,385 --> 01:09:50,952
+the newer tweets maybe are gonna be at the beginning.
+
+1366
+01:09:50,954 --> 01:09:54,522
+Ad then my predicate is going to be all Tweeters who
+
+1367
+01:09:54,524 --> 01:09:56,891
+whose Tweeter's name equals a certain name.
+
+1368
+01:09:56,893 --> 01:09:59,928
+So I'm looking for all the tweets by a certain tweeter
+
+1369
+01:09:59,930 --> 01:10:01,162
+who has a certain name, okay.
+
+1370
+01:10:01,164 --> 01:10:04,265
+And when it gets this result, each row in my TableView
+
+1371
+01:10:04,267 --> 01:10:07,802
+is going to be that tweet that matches. Okay? And
+
+1372
+01:10:07,804 --> 01:10:10,672
+FetchResultsController's gonna make sure that's always true,
+
+1373
+01:10:10,674 --> 01:10:13,308
+even if I added in another tweet to the database
+
+1374
+01:10:13,310 --> 01:10:14,576
+that matched it, the TableView would
+
+1375
+01:10:14,578 --> 01:10:17,111
+add in another row at the bottom automatically.
+
+1376
+01:10:17,113 --> 01:10:22,684
+Okay, yeah I talked about the cacheName. And yeah, this key
+
+1377
+01:10:22,686 --> 01:10:25,386
+that says which attribute is the section name has to sort
+
+1378
+01:10:25,388 --> 01:10:30,792
+in the same order as the sort descripter. Sort descripters.
+
+1379
+01:10:30,794 --> 01:10:35,163
+Okay, all right. The FetchResultsController also
+
+1380
+01:10:35,165 --> 01:10:38,866
+while it's watching the database, okay, the, well,
+
+1381
+01:10:38,868 --> 01:10:40,568
+I told you it watches the database and
+
+1382
+01:10:40,570 --> 01:10:40,735
+keeps them in sync.
+
+1383
+01:10:40,737 --> 01:10:42,570
+The way it does that is it has a delegate,
+
+1384
+01:10:42,572 --> 01:10:45,406
+the FetchResultsController has a delegate, okay?
+
+1385
+01:10:45,408 --> 01:10:47,609
+So here's one of its delegate methods.
+
+1386
+01:10:47,611 --> 01:10:49,110
+Controller did change object and
+
+1387
+01:10:49,112 --> 01:10:52,680
+index paths forChangeType: newIndexPath. Okay, here,
+
+1388
+01:10:52,682 --> 01:10:55,049
+see how it's basically noticing the database change,
+
+1389
+01:10:55,051 --> 01:10:58,186
+telling you what changed, tell you what index paths changed
+
+1390
+01:10:58,188 --> 01:11:00,655
+in the TableView. It's basically telling you exactly
+
+1391
+01:11:00,657 --> 01:11:05,126
+what to do cuz the database changed. Now in here you're
+
+1392
+01:11:05,128 --> 01:11:08,329
+supposed to call all the UI TableView methods that will be
+
+1393
+01:11:08,331 --> 01:11:11,299
+appropriate to cause this to update the table, okay.
+
+1394
+01:11:11,301 --> 01:11:15,570
+Insert a row, put something there, whatever, delete a row,
+
+1395
+01:11:15,572 --> 01:11:15,837
+all that. Well,
+
+1396
+01:11:15,839 --> 01:11:17,939
+now you're probably starting to think hey I thought
+
+1397
+01:11:17,941 --> 01:11:21,342
+this NSFetchResultsController was supposed to be easy. But
+
+1398
+01:11:21,344 --> 01:11:23,344
+I gotta implement all this? In here? For
+
+1399
+01:11:23,346 --> 01:11:26,281
+all these delegate methods, eh that's just too hard. Okay,
+
+1400
+01:11:26,283 --> 01:11:29,584
+well lucky for you, we're gonna provide a class for
+
+1401
+01:11:29,586 --> 01:11:31,819
+you called CoreDataTableViewController,
+
+1402
+01:11:31,821 --> 01:11:36,991
+something we wrote that does all that for you. Okay, this,
+
+1403
+01:11:36,993 --> 01:11:39,827
+all that stuff it does for you, you can actually see all
+
+1404
+01:11:39,829 --> 01:11:43,097
+that in the documentation for NSFetchResultsController right
+
+1405
+01:11:43,099 --> 01:11:45,366
+at the top. It actually shows you the code
+
+1406
+01:11:45,368 --> 01:11:45,733
+that you want to use.
+
+1407
+01:11:45,735 --> 01:11:48,069
+Unfortunately it's in Objective-C, so
+
+1408
+01:11:48,071 --> 01:11:49,404
+we've written it all in Swift for
+
+1409
+01:11:49,406 --> 01:11:52,740
+you, and provided this class CoreDataTableViewController so
+
+1410
+01:11:52,742 --> 01:11:55,810
+you're just going to make this TableViewController be your
+
+1411
+01:11:55,812 --> 01:11:59,747
+subclass or your super class of your TableViewController so
+
+1412
+01:11:59,749 --> 01:12:04,319
+that you'll inherit all this NSFetchResultsController
+
+1413
+01:12:04,321 --> 01:12:04,819
+functionality. And
+
+1414
+01:12:04,821 --> 01:12:08,923
+all you need to do to make it work is, it has a var, this
+
+1415
+01:12:08,925 --> 01:12:12,226
+CoreDataTableViewController only has one public thing
+
+1416
+01:12:12,228 --> 01:12:15,229
+which is a var which is a FetchResultsController,
+
+1417
+01:12:15,231 --> 01:12:18,099
+you just need to create this FetchResultsController
+
+1418
+01:12:18,101 --> 01:12:22,036
+which means creating the NSFetchResult fetch request,
+
+1419
+01:12:22,038 --> 01:12:23,304
+and then set this var.
+
+1420
+01:12:23,306 --> 01:12:25,206
+And once you set this var, it's automatically going to
+
+1421
+01:12:25,208 --> 01:12:28,309
+start updating your table. Okay now of course you're
+
+1422
+01:12:28,311 --> 01:12:30,278
+gonna have to implement cellForRowAtIndexPath,
+
+1423
+01:12:30,280 --> 01:12:32,914
+because you gotta load up your thing however you're gonna
+
+1424
+01:12:32,916 --> 01:12:35,450
+load it up. But that's all you have to do.
+
+1425
+01:12:35,452 --> 01:12:40,421
+cellForRowAtIndexPath, set this var, you're winning.
+
+1426
+01:12:40,423 --> 01:12:46,894
+Okay. Now that's it for Core Data. Remember that
+
+1427
+01:12:46,896 --> 01:12:50,365
+Assignment Four has nothing to do with Core Data. Okay.
+
+1428
+01:12:50,367 --> 01:12:54,102
+So do not do anything with Core Data in Assignment Four.
+
+1429
+01:12:54,104 --> 01:12:56,871
+Assignment Five is gonna be a lot of core data.
+
+1430
+01:12:56,873 --> 01:12:59,173
+Okay. So I mean I have to teach you this
+
+1431
+01:12:59,175 --> 01:13:01,209
+stuff before I give it to you, like I did for Assignment
+
+1432
+01:13:01,211 --> 01:13:02,643
+Four, but then I have to teach you the stuff for
+
+1433
+01:13:02,645 --> 01:13:04,912
+the next thing and sometimes people get confused and they
+
+1434
+01:13:04,914 --> 01:13:07,014
+think the thing I'm teaching now goes into the assignment
+
+1435
+01:13:07,016 --> 01:13:09,517
+that went out a couple days ago, but no. Okay so, A4,
+
+1436
+01:13:09,519 --> 01:13:14,589
+Assignment Four, no Core Data. A5, all Core Data basically.
+
+1437
+01:13:14,591 --> 01:13:18,359
+Okay, so next day, week I'll do a demo on this, okay?
+
+1438
+01:13:18,361 --> 01:13:19,994
+On Monday I'm gonna do a big old demo where
+
+1439
+01:13:19,996 --> 01:13:22,330
+we're gonna do all of the stuff I talked about today, so
+
+1440
+01:13:22,332 --> 01:13:24,932
+you can see how it all works in action as always. And
+
+1441
+01:13:24,934 --> 01:13:26,834
+then you'll have A5 go out that's on Monday, and
+
+1442
+01:13:26,836 --> 01:13:30,772
+that's gonna be due the next Monday. On Wednesday, I'm
+
+1443
+01:13:30,774 --> 01:13:33,207
+gonna do Auto Layout because I've kind of been hinting at
+
+1444
+01:13:33,209 --> 01:13:35,343
+Auto Layout, showing you a little bit here and
+
+1445
+01:13:35,345 --> 01:13:36,778
+there but now I'm gonna talk about really how
+
+1446
+01:13:36,780 --> 01:13:40,148
+Auto Layout works to lay out you're, user interface.
+
+1447
+01:13:40,150 --> 01:13:42,583
+You can use stack view for a lot of things but sometimes
+
+1448
+01:13:42,585 --> 01:13:44,952
+you need a little bit of extra layout capabilities and
+
+1449
+01:13:44,954 --> 01:13:47,555
+next week I'm also gonna talk about the requirements for
+
+1450
+01:13:47,557 --> 01:13:51,726
+your final project, okay? What you are required to do
+
+1451
+01:13:51,728 --> 01:13:53,494
+to have a successful final project.
+
+1452
+01:13:53,496 --> 01:13:56,197
+And, so it's time, now, for you to start thinking a little
+
+1453
+01:13:56,199 --> 01:13:59,233
+bit about what you might want to do for a final project. And
+
+1454
+01:13:59,235 --> 01:14:02,203
+certainly, as soon as I give this lecture next week
+
+1455
+01:14:02,205 --> 01:14:05,273
+on final project requirements, right away you're gonna wanna
+
+1456
+01:14:05,275 --> 01:14:07,942
+nail down what you want to do because you only get three
+
+1457
+01:14:07,944 --> 01:14:10,845
+weeks to do it so that only gives you a week or so to
+
+1458
+01:14:10,847 --> 01:14:14,882
+think of what you want to do. Okay? So be ready to kinda go
+
+1459
+01:14:14,884 --> 01:14:20,054
+outta the gate with that next week. Okay, that's it!
+
+1460
+01:14:20,056 --> 01:14:22,857
+I will see you next week. >> For
+
+1461
+01:14:22,859 --> 01:14:22,890
+more, please visit us at Stanford.edu.
+

@@ -1,0 +1,5820 @@
+﻿1
+00:00:00,001 --> 00:00:03,535
+[MUSIC]
+
+2
+00:00:03,537 --> 00:00:07,373
+Stanford University. >> All right.
+
+3
+00:00:07,375 --> 00:00:13,412
+Welcome to Lecture Number 11 of CS193P, the Spring of 2016.
+
+4
+00:00:13,414 --> 00:00:17,783
+Today it's all demo, okay. All demo all the time. We're gonna
+
+5
+00:00:17,785 --> 00:00:22,788
+do a core data demo. And just to let you know what's coming
+
+6
+00:00:22,790 --> 00:00:26,558
+up since I, cuz I won't come back to the slides obviously.
+
+7
+00:00:26,560 --> 00:00:29,728
+On Wednesday, we'll be talking about Auto Layout, and also,
+
+8
+00:00:29,730 --> 00:00:31,930
+we'll be talking about the final project requirements on
+
+9
+00:00:31,932 --> 00:00:35,267
+Wednesday, okay? No Friday section this week.
+
+10
+00:00:35,269 --> 00:00:38,637
+And then, next week, we'll start talking about animation.
+
+11
+00:00:38,639 --> 00:00:42,975
+You have an assignment that's out now which is Number Five.
+
+12
+00:00:42,977 --> 00:00:44,343
+Which is a core data assignment. And
+
+13
+00:00:44,345 --> 00:00:46,512
+then there will be Assignment Six which will be an animation
+
+14
+00:00:46,514 --> 00:00:50,482
+assignment which will probably go out next Monday and
+
+15
+00:00:50,484 --> 00:00:54,086
+due the Monday after maybe next Wednesday,
+
+16
+00:00:54,088 --> 00:00:55,054
+due the Wednesday after. I'm not sure, but
+
+17
+00:00:55,056 --> 00:00:57,222
+probably next Monday and then that'll be your last
+
+18
+00:00:57,224 --> 00:01:02,428
+assignment before the final project. Okay. All right,
+
+19
+00:01:02,430 --> 00:01:06,532
+so let's talk about this core data demo that we're gonna do.
+
+20
+00:01:06,534 --> 00:01:08,534
+We're gonna continue with Smashtag,
+
+21
+00:01:08,536 --> 00:01:10,803
+leave off where we were before. Okay so here's
+
+22
+00:01:10,805 --> 00:01:16,141
+the user interface that we had at the end of Lecture Nine.
+
+23
+00:01:16,143 --> 00:01:19,611
+And you're probably very familiar with it because your
+
+24
+00:01:19,613 --> 00:01:21,213
+homework builds on this. And
+
+25
+00:01:21,215 --> 00:01:24,983
+we're gonna build on this as well with this core data demo.
+
+26
+00:01:24,985 --> 00:01:28,087
+What I'm gonna do is add another, table view
+
+27
+00:01:28,089 --> 00:01:30,522
+controller, here. In fact let's just drag it out.
+
+28
+00:01:30,524 --> 00:01:35,861
+So here it is. And I'm going to segue to this table
+
+29
+00:01:35,863 --> 00:01:40,499
+view controller from a bar button item in this existing
+
+30
+00:01:40,501 --> 00:01:42,334
+table view controller. Which is a little different,
+
+31
+00:01:42,336 --> 00:01:44,670
+like in your homework you're segueing from the row.
+
+32
+00:01:44,672 --> 00:01:49,308
+Here I'm actually gonna segue from a little bar button item.
+
+33
+00:01:49,310 --> 00:01:50,275
+Now most of you have figured
+
+34
+00:01:50,277 --> 00:01:52,878
+out that if you wanna add a button to the navigation bar
+
+35
+00:01:52,880 --> 00:01:56,615
+up here you can't use this regular button that's up here.
+
+36
+00:01:56,617 --> 00:01:59,284
+You have to use these bar buttons that are down towards
+
+37
+00:01:59,286 --> 00:02:02,488
+the bottom. Here's one right here, a bar button item so
+
+38
+00:02:02,490 --> 00:02:05,657
+you're just gonna drag it out and see if you drag it up at,
+
+39
+00:02:05,659 --> 00:02:10,229
+up at top of a navigation bar, then it'll jump in there. And,
+
+40
+00:02:10,231 --> 00:02:13,899
+what we're gonna have this UI do is, I'm gonna call
+
+41
+00:02:13,901 --> 00:02:17,703
+this button Tweeters, and we're gonna have this MVC,
+
+42
+00:02:17,705 --> 00:02:19,638
+this new one we're gonna write today, it's
+
+43
+00:02:19,640 --> 00:02:25,511
+gonna show a list of all the tweeters who tweeted a tweet
+
+44
+00:02:25,513 --> 00:02:29,148
+that we've ever downloaded with the search term that's in
+
+45
+00:02:29,150 --> 00:02:34,319
+this MBC. Right? Our main MBC. So we type #Stanford here and
+
+46
+00:02:34,321 --> 00:02:36,588
+search for some tweets and then we hit Tweeters.
+
+47
+00:02:36,590 --> 00:02:40,692
+Over here, we would see a list of all the Twitter users who
+
+48
+00:02:40,694 --> 00:02:43,529
+tweeted those tweets with #Stanford in there.
+
+49
+00:02:43,531 --> 00:02:47,432
+Okay, not just in the most, latest search of #Stanford,
+
+50
+00:02:47,434 --> 00:02:49,801
+but ever. And we're gonna do this by having us
+
+51
+00:02:49,803 --> 00:02:52,371
+coordinate a database where every time we get a tweet,
+
+52
+00:02:52,373 --> 00:02:54,339
+we're gonna put it in the database, okay?
+
+53
+00:02:54,341 --> 00:02:57,142
+And so, we then, we can query those tweets and
+
+54
+00:02:57,144 --> 00:02:58,010
+get all the information we want,
+
+55
+00:02:58,012 --> 00:03:02,814
+including getting a list of the users who have tweeted. So
+
+56
+00:03:02,816 --> 00:03:06,618
+of course we will need a custom subclass of UITableView
+
+57
+00:03:06,620 --> 00:03:10,355
+for this guy, so let's go ahead and create that. File,
+
+58
+00:03:10,357 --> 00:03:11,623
+New File as usual, iOS source,
+
+59
+00:03:11,625 --> 00:03:15,394
+it's a Cocoa Touch class. It's a UITableView controller also.
+
+60
+00:03:15,396 --> 00:03:19,064
+We'll call this our Tweeter's TableView controller,
+
+61
+00:03:19,066 --> 00:03:19,665
+cuz that's what's gonna be in here,
+
+62
+00:03:19,667 --> 00:03:23,001
+tweeters. We'll put it in the same group we put all the rest
+
+63
+00:03:23,003 --> 00:03:25,871
+of our stuff there. Okay, here's our tweeters.
+
+64
+00:03:25,873 --> 00:03:28,340
+We're not actually going to keep any of this except,
+
+65
+00:03:28,342 --> 00:03:31,510
+actually I'll keep myself a row and index path here. But
+
+66
+00:03:31,512 --> 00:03:36,381
+we'll get rid of the rest of this boiler plate that we get.
+
+67
+00:03:36,383 --> 00:03:41,520
+Okay, there's our tweeters table view
+
+68
+00:03:41,522 --> 00:03:44,356
+controller. And we always want to make sure we go back into
+
+69
+00:03:44,358 --> 00:03:48,026
+our storyboard and set with the identity inspector this to
+
+70
+00:03:48,028 --> 00:03:50,028
+be our tweeter's table view controller.
+
+71
+00:03:50,030 --> 00:03:50,829
+This guy right here. And
+
+72
+00:03:50,831 --> 00:03:53,465
+let's go ahead and wire up this segue right here too.
+
+73
+00:03:53,467 --> 00:03:58,203
+I'm just gonna select this guy and control drag over to here.
+
+74
+00:03:58,205 --> 00:04:00,005
+We're in a navigation controller so
+
+75
+00:04:00,007 --> 00:04:01,974
+we won't show if we were in a split view,
+
+76
+00:04:01,976 --> 00:04:03,542
+we'd be show detail maybe but
+
+77
+00:04:03,544 --> 00:04:05,844
+here we're in navigation se we're gonna show.
+
+78
+00:04:05,846 --> 00:04:10,315
+Here's our segue, let's give it an identifier, we'll call
+
+79
+00:04:10,317 --> 00:04:16,388
+this the tweeter's, we'll make this very verbose,
+
+80
+00:04:16,390 --> 00:04:21,159
+Tweeters Mentioning Search Term segue. Okay, so
+
+81
+00:04:21,161 --> 00:04:23,629
+that's what this segue does. When you click tweeters,
+
+82
+00:04:23,631 --> 00:04:27,399
+it shows you all the tweeters that mention this particular
+
+83
+00:04:27,401 --> 00:04:30,202
+search term whatever that'll be that be, #Stanford or
+
+84
+00:04:30,204 --> 00:04:35,274
+whatever. Okay. So that's pretty much setup our UI right
+
+85
+00:04:35,276 --> 00:04:41,713
+there. One thing that we need here is core data, we wanna be
+
+86
+00:04:41,715 --> 00:04:43,282
+able to access a core data database, so
+
+87
+00:04:43,284 --> 00:04:45,083
+we need that manage object context,
+
+88
+00:04:45,085 --> 00:04:47,586
+remember that's the hook that let's us in there.
+
+89
+00:04:47,588 --> 00:04:49,588
+And I've told you there is two ways to do that,
+
+90
+00:04:49,590 --> 00:04:52,557
+one is UI manage document, I'm not gonna demo that,
+
+91
+00:04:52,559 --> 00:04:55,327
+that's extra credit by the way in Assignment Number Five,
+
+92
+00:04:55,329 --> 00:04:56,461
+if you wanna try and tackle that.
+
+93
+00:04:56,463 --> 00:04:59,231
+Only thing difficult about that is the asynchronous stuff
+
+94
+00:04:59,233 --> 00:05:01,600
+but if you're got it comfortable now with
+
+95
+00:05:01,602 --> 00:05:04,670
+asynchrony, it shouldn't be very difficult at all.
+
+96
+00:05:04,672 --> 00:05:07,973
+The other way was to use code that would get generated for
+
+97
+00:05:07,975 --> 00:05:09,107
+you when you create a new project and
+
+98
+00:05:09,109 --> 00:05:12,244
+turn on the core data button and that's what I'm gonna use.
+
+99
+00:05:12,246 --> 00:05:16,748
+We started this project and if we look in our app delegate
+
+100
+00:05:16,750 --> 00:05:20,052
+Okay? This is Smashtags, AppDelegate here.
+
+101
+00:05:20,054 --> 00:05:22,988
+You can see that it's got some empty methods in here,
+
+102
+00:05:22,990 --> 00:05:25,223
+basically with some comments about them.
+
+103
+00:05:25,225 --> 00:05:26,391
+We'll be covering this stuff, by the way.
+
+104
+00:05:26,393 --> 00:05:28,927
+This is part of what we call the Application Life Cycle,
+
+105
+00:05:28,929 --> 00:05:31,530
+these methods. But there's nothing in here about core
+
+106
+00:05:31,532 --> 00:05:33,498
+data because, when we created Smashtag, we didn't
+
+107
+00:05:33,500 --> 00:05:35,534
+think we were building a core data app at that time,
+
+108
+00:05:35,536 --> 00:05:38,637
+so we didn't switch that button. So no problem though,
+
+109
+00:05:38,639 --> 00:05:41,239
+I'm just gonna create a new project. Go to File, New,
+
+110
+00:05:41,241 --> 00:05:46,078
+Project. Okay, and again, iOS application, single view like
+
+111
+00:05:46,080 --> 00:05:48,647
+we usually do, and you can call it anything you want.
+
+112
+00:05:48,649 --> 00:05:52,384
+I'm gonna call mine Foo, okay. And just make sure that this
+
+113
+00:05:52,386 --> 00:05:55,220
+button right here is switched, Use Core Data, okay, and
+
+114
+00:05:55,222 --> 00:05:58,156
+probably also wanna make sure it's Swift unless you're
+
+115
+00:05:58,158 --> 00:05:59,458
+building something Objective C.
+
+116
+00:05:59,460 --> 00:06:02,961
+And then when you click Next put it anywhere you want.
+
+117
+00:06:02,963 --> 00:06:06,365
+I'll put mine in my same place as always developer here.
+
+118
+00:06:06,367 --> 00:06:09,034
+And it makes this Foo, now this Foo is just a blank
+
+119
+00:06:09,036 --> 00:06:12,537
+app right? It's got a blank view controller here.
+
+120
+00:06:12,539 --> 00:06:13,372
+But we don't care about any of that.
+
+121
+00:06:13,374 --> 00:06:16,241
+All we care about is in its app delegate, we look
+
+122
+00:06:16,243 --> 00:06:20,612
+down it's got all those same methods but starting here,
+
+123
+00:06:20,614 --> 00:06:23,148
+Core Data stack it's got a whole bunch of other code,
+
+124
+00:06:23,150 --> 00:06:26,485
+okay. And we just basically want to pick this code up.
+
+125
+00:06:26,487 --> 00:06:29,287
+So I'm just going to select it all, okay.
+
+126
+00:06:29,289 --> 00:06:32,190
+Starting from this Mark Core Data stack going down to
+
+127
+00:06:32,192 --> 00:06:34,793
+the end. And I'm just gonna cut it out of here.
+
+128
+00:06:34,795 --> 00:06:38,063
+Copy or cut it. And I'm gonna go to my AppDelegate back in
+
+129
+00:06:38,065 --> 00:06:42,501
+Smashtag here. And I'm just going to paste it in.
+
+130
+00:06:42,503 --> 00:06:45,070
+Okay. Now it's not quite that easy there's two more things
+
+131
+00:06:45,072 --> 00:06:47,472
+we gotta think about. You can see there are errors here.
+
+132
+00:06:47,474 --> 00:06:49,674
+Okay there's an error there, error here.
+
+133
+00:06:49,676 --> 00:06:53,178
+That's because Core Data is in a separate framework just like
+
+134
+00:06:53,180 --> 00:06:56,381
+the Twitter stuff you had is in a separate framework, so
+
+135
+00:06:56,383 --> 00:06:56,915
+is Core Data. So you have to,
+
+136
+00:06:56,917 --> 00:06:59,951
+at the top, anywhere you're going to be using Core Data,
+
+137
+00:06:59,953 --> 00:07:03,922
+say import CoreData. Okay? So that'll get rid
+
+138
+00:07:03,924 --> 00:07:04,890
+of all of our errors okay,
+
+139
+00:07:04,892 --> 00:07:08,160
+because of the types like in this manage object model, and
+
+140
+00:07:08,162 --> 00:07:11,229
+in this persistent core coordinator, things like that.
+
+141
+00:07:11,231 --> 00:07:13,265
+But there's one more thing we have to be careful of here.
+
+142
+00:07:13,267 --> 00:07:15,534
+And, you're really going to want to be careful of this
+
+143
+00:07:15,536 --> 00:07:17,702
+in your homework assignment, which is that,
+
+144
+00:07:17,704 --> 00:07:21,339
+this code that gets generated, it actually uses the name of
+
+145
+00:07:21,341 --> 00:07:24,709
+the app as the name of the data model. You know, you know
+
+146
+00:07:24,711 --> 00:07:27,946
+that visual map we're gonna make with all the entities and
+
+147
+00:07:27,948 --> 00:07:30,081
+attributes? Things I showed you in the slides.
+
+148
+00:07:30,083 --> 00:07:32,684
+It calls that thing the name of the app so, in this case,
+
+149
+00:07:32,686 --> 00:07:34,653
+Foo, because that's what I called that other app.
+
+150
+00:07:34,655 --> 00:07:37,122
+So you're gonna wanna change this to whatever you're
+
+151
+00:07:37,124 --> 00:07:38,223
+gonna call your mapping model and
+
+152
+00:07:38,225 --> 00:07:40,759
+you get to choose, so you can pick anything you want.
+
+153
+00:07:40,761 --> 00:07:44,396
+The default happens to be Model, okay, but you could
+
+154
+00:07:44,398 --> 00:07:47,199
+also put the name of your app or whatever you want in here.
+
+155
+00:07:47,201 --> 00:07:50,435
+Just make sure that whatever you put in here Is the same
+
+156
+00:07:50,437 --> 00:07:53,271
+thing as the name you pick when you create the mapping
+
+157
+00:07:53,273 --> 00:07:55,907
+okay, which we're gonna do next. Okay, so that's it.
+
+158
+00:07:55,909 --> 00:07:59,711
+So once you do that you're gonna get a few vars in here
+
+159
+00:07:59,713 --> 00:08:03,315
+but the main one that's Import here is this one.
+
+160
+00:08:03,317 --> 00:08:05,450
+Manage object context, so that's the thing,
+
+161
+00:08:05,452 --> 00:08:08,587
+that's the hook that you're gonna get into your database,
+
+162
+00:08:08,589 --> 00:08:13,225
+right. Okay, so let's go ahead and create the schema for
+
+163
+00:08:13,227 --> 00:08:18,330
+that database. And we do that with File > New > File. But
+
+164
+00:08:18,332 --> 00:08:20,398
+here instead of doing iOS source,
+
+165
+00:08:20,400 --> 00:08:23,768
+we're gonna go down to iOS Core Data. Okay? And
+
+166
+00:08:23,770 --> 00:08:27,205
+in here there's three things. And this is the one you want,
+
+167
+00:08:27,207 --> 00:08:28,607
+Data Model, cuz that's what we're gonna be doing,
+
+168
+00:08:28,609 --> 00:08:31,810
+that's our description of raw enti, entities and attributes,
+
+169
+00:08:31,812 --> 00:08:33,578
+our Data Model. Don't accidentally pick
+
+170
+00:08:33,580 --> 00:08:37,215
+Mapping Model. It sounds similar, but it's different,
+
+171
+00:08:37,217 --> 00:08:38,617
+okay? So Data Model's what you want.
+
+172
+00:08:38,619 --> 00:08:41,453
+So we'll double-click on that. Okay, you're gonna get this,
+
+173
+00:08:41,455 --> 00:08:44,122
+so you can see the default is Model. Just make sure this is
+
+174
+00:08:44,124 --> 00:08:46,491
+the same as whatever you put in your app delegate,
+
+175
+00:08:46,493 --> 00:08:49,160
+that code that you copied in and, make sure you put it
+
+176
+00:08:49,162 --> 00:08:52,097
+where you want. Like, I really don't want this in supporting
+
+177
+00:08:52,099 --> 00:08:54,533
+files or I don't want it down here in supporting files,
+
+178
+00:08:54,535 --> 00:08:57,202
+I want it up at a higher level here at the smash tag level,
+
+179
+00:08:57,204 --> 00:09:00,305
+okay? So let me put that there, hit Create and
+
+180
+00:09:00,307 --> 00:09:03,775
+it creates this empty map, okay. It has no entities yet,
+
+181
+00:09:03,777 --> 00:09:08,780
+no attributes. Now our app is going to have some Twitter
+
+182
+00:09:08,782 --> 00:09:10,782
+users. It's gonna show Twitter users for,
+
+183
+00:09:10,784 --> 00:09:13,785
+that have tweeted a certain mention in a bunch of tweets.
+
+184
+00:09:13,787 --> 00:09:17,589
+So clearly we're gonna need an entity which is a Twitter user
+
+185
+00:09:17,591 --> 00:09:19,758
+and we're probably gonna need an entity which is a tweet.
+
+186
+00:09:19,760 --> 00:09:22,861
+So let's create our entities and see where it takes us.
+
+187
+00:09:22,863 --> 00:09:23,995
+So I clicked this button down here,
+
+188
+00:09:23,997 --> 00:09:28,199
+Add Entity, and I added this entity called, Entity. And
+
+189
+00:09:28,201 --> 00:09:29,434
+I'm gonna double-click on it to rename it.
+
+190
+00:09:29,436 --> 00:09:33,238
+I'm gonna call it TwitterUser. Okay, so this is gonna be
+
+191
+00:09:33,240 --> 00:09:36,708
+the entity that represents a Twitter user in my database.
+
+192
+00:09:36,710 --> 00:09:39,110
+Okay, gonna add another entity, clicking down here,
+
+193
+00:09:39,112 --> 00:09:42,647
+okay? This one I'm gonna call Tweet, so it's gonna represent
+
+194
+00:09:42,649 --> 00:09:46,184
+a tweet. Now, once we have these entities,
+
+195
+00:09:46,186 --> 00:09:49,721
+we obviously need attributes on them. So Tweet, we're going
+
+196
+00:09:49,723 --> 00:09:53,491
+to add text, which is, every tweet has a text, 140
+
+197
+00:09:53,493 --> 00:09:57,095
+characters worth. You can see I have an error right up here.
+
+198
+00:09:57,097 --> 00:09:59,598
+It says, Tweet text must have a defined type.
+
+199
+00:09:59,600 --> 00:10:02,667
+And it's right now undefined. So I'm gonna pick it to be
+
+200
+00:10:02,669 --> 00:10:05,103
+a string and I could add other things here.
+
+201
+00:10:05,105 --> 00:10:08,974
+Maybe one thing that'd be really important with tweet,
+
+202
+00:10:08,976 --> 00:10:11,109
+with a tweet, when I'm fetching these tweets,
+
+203
+00:10:11,111 --> 00:10:14,045
+if I typed #Stanford and fetched 100 tweets, and
+
+204
+00:10:14,047 --> 00:10:16,548
+then I typed #Stanford and fetched another 100 tweets,
+
+205
+00:10:16,550 --> 00:10:19,317
+it would probably be mostly the same tweets, maybe one or
+
+206
+00:10:19,319 --> 00:10:22,320
+two new ones. So I need some kind of unique identifier in
+
+207
+00:10:22,322 --> 00:10:24,255
+the database to identify a tweet so
+
+208
+00:10:24,257 --> 00:10:26,257
+I don't get all kinds of duplicates. I don't want,
+
+209
+00:10:26,259 --> 00:10:28,426
+you know, the same Tweet in there tons of times.
+
+210
+00:10:28,428 --> 00:10:32,163
+So I'm gonna call it Unique. Luckily, we're gonna find that
+
+211
+00:10:32,165 --> 00:10:35,433
+the Twitter, framework provides a nice unique ID that
+
+212
+00:10:35,435 --> 00:10:38,336
+we can use to be, to uni, to unique our tweets so
+
+213
+00:10:38,338 --> 00:10:40,872
+that's good. And I can put other things in here, like,
+
+214
+00:10:40,874 --> 00:10:44,309
+maybe, you know, the created date of the tweet,
+
+215
+00:10:44,311 --> 00:10:46,845
+maybe I would call that posted and you see I'm making
+
+216
+00:10:46,847 --> 00:10:50,515
+the type here be date. These names don't have to match
+
+217
+00:10:50,517 --> 00:10:51,783
+the names in the Twitter framework at all.
+
+218
+00:10:51,785 --> 00:10:54,319
+In fact, the Twitter framework is completely separate.
+
+219
+00:10:54,321 --> 00:10:55,987
+It has nothing to do with core data.
+
+220
+00:10:55,989 --> 00:10:57,756
+It just gets the data from Twitter. Okay,
+
+221
+00:10:57,758 --> 00:11:00,392
+it's our responsibility to take that data from Twitter
+
+222
+00:11:00,394 --> 00:11:02,927
+and put it into this database with whatever attributes and
+
+223
+00:11:02,929 --> 00:11:06,431
+entities we want. Okay, now we happen to call this tweet and
+
+224
+00:11:06,433 --> 00:11:09,634
+we also have a class in our Twitter framework called tweet
+
+225
+00:11:09,636 --> 00:11:12,704
+also and we're gonna have to be careful about that. But
+
+226
+00:11:12,706 --> 00:11:13,772
+they're totally different. Okay,
+
+227
+00:11:13,774 --> 00:11:15,607
+they represent the same thing conceptually, a tweet,
+
+228
+00:11:15,609 --> 00:11:19,377
+but they're different classes. All right, our Twitter user,
+
+229
+00:11:19,379 --> 00:11:21,846
+what does a Twitter user have? Well, a screen name,
+
+230
+00:11:21,848 --> 00:11:23,948
+obviously, that's the most important thing,
+
+231
+00:11:23,950 --> 00:11:26,484
+that's your Twitter handle, you know, @whatever,
+
+232
+00:11:26,486 --> 00:11:30,055
+that's a string. You know, the, we don't really need much
+
+233
+00:11:30,057 --> 00:11:33,224
+else for our app here, but maybe there's the actual name,
+
+234
+00:11:33,226 --> 00:11:36,027
+we could have other attributes of a user, put whatever we
+
+235
+00:11:36,029 --> 00:11:40,365
+want in here. Okay? Now, as time goes by, as you enhance
+
+236
+00:11:40,367 --> 00:11:42,600
+your app, you're gonna be adding more attribute,
+
+237
+00:11:42,602 --> 00:11:44,769
+more entities, and that's perfectly fine.
+
+238
+00:11:44,771 --> 00:11:47,372
+The only thing to notice is every time you change your
+
+239
+00:11:47,374 --> 00:11:50,842
+model here, okay? The database that's on your simulator or
+
+240
+00:11:50,844 --> 00:11:55,146
+on your device is now invalid, okay? Now, there is a way to
+
+241
+00:11:55,148 --> 00:11:57,982
+make compatible changes, I'm not really gonna talk about
+
+242
+00:11:57,984 --> 00:12:01,286
+that. But there is a way to do that. Once you, if you started
+
+243
+00:12:01,288 --> 00:12:03,021
+shipping an app on the app store, then that would start
+
+244
+00:12:03,023 --> 00:12:05,623
+to matter to you because you wanna ship a new version.
+
+245
+00:12:05,625 --> 00:12:06,858
+Maybe it has some new attributes, you
+
+246
+00:12:06,860 --> 00:12:10,595
+want all the data the user's created to still be good. But
+
+247
+00:12:10,597 --> 00:12:12,430
+when you're in development and you're changing things,
+
+248
+00:12:12,432 --> 00:12:15,500
+what you can do is just go on to your device, or
+
+249
+00:12:15,502 --> 00:12:16,234
+your, simulator, and
+
+250
+00:12:16,236 --> 00:12:20,004
+delete your app. Okay, every time you change your schema,
+
+251
+00:12:20,006 --> 00:12:22,073
+you're gonna have to delete your app and then run again.
+
+252
+00:12:22,075 --> 00:12:24,576
+Of course, you'll lose all your data in the database too,
+
+253
+00:12:24,578 --> 00:12:27,912
+but, that's just, you're doing development cycles anyway, so
+
+254
+00:12:27,914 --> 00:12:31,182
+it shouldn't, probably shouldn't matter. Okay.
+
+255
+00:12:31,184 --> 00:12:33,184
+All right, so we have this great thing.
+
+256
+00:12:33,186 --> 00:12:35,253
+Let's take a look at it in the graphical view,
+
+257
+00:12:35,255 --> 00:12:36,888
+clicking this little button down here, and
+
+258
+00:12:36,890 --> 00:12:39,457
+you can see here's our two things. Notice if I move one,
+
+259
+00:12:39,459 --> 00:12:42,961
+the other one kind of moves around to keep it all,
+
+260
+00:12:42,963 --> 00:12:43,795
+in a nice space here.
+
+261
+00:12:43,797 --> 00:12:46,364
+And you can see here's my attributes, the name,
+
+262
+00:12:46,366 --> 00:12:49,434
+the screen name, you can see that the inspector over here
+
+263
+00:12:49,436 --> 00:12:52,570
+is showing us things like the type of it. All right?
+
+264
+00:12:52,572 --> 00:12:55,774
+Click on this one, type. You can even set some things like
+
+265
+00:12:55,776 --> 00:12:58,243
+minimum and maximums for dates and things like that.
+
+266
+00:12:58,245 --> 00:13:00,712
+I'm not really gonna talk about this inspector. You can
+
+267
+00:13:00,714 --> 00:13:03,047
+play around with it, certainly read the documentation and
+
+268
+00:13:03,049 --> 00:13:06,384
+find out all the things you can do over here. But
+
+269
+00:13:06,386 --> 00:13:09,420
+what I'm interested now is the relationship between Twitter
+
+270
+00:13:09,422 --> 00:13:10,789
+users and Tweets, okay. And
+
+271
+00:13:10,791 --> 00:13:14,459
+we know that a Twitter user Tweets and creates a bunch of
+
+272
+00:13:14,461 --> 00:13:16,161
+these things, okay, creates a bunch of Tweets.
+
+273
+00:13:16,163 --> 00:13:18,897
+So there's a relationship between these two, and anytime
+
+274
+00:13:18,899 --> 00:13:21,599
+there's a relationship between entities in your data model,
+
+275
+00:13:21,601 --> 00:13:25,270
+you just go to this graphical view, hold down Ctrl, and
+
+276
+00:13:25,272 --> 00:13:28,740
+drag between them, okay? When you let go, you're gonna get
+
+277
+00:13:28,742 --> 00:13:31,609
+these new things. These are also gonna be vars ju-, in
+
+278
+00:13:31,611 --> 00:13:35,213
+your code, just like these are vars, which is a relationship
+
+279
+00:13:35,215 --> 00:13:38,950
+between the two. And each side has a relationship, okay? And
+
+280
+00:13:38,952 --> 00:13:40,552
+you'll, first thing you'll want to do
+
+281
+00:13:40,554 --> 00:13:42,887
+is rename these to be more meaningful names than
+
+282
+00:13:42,889 --> 00:13:44,889
+newRelationship. So a Twitter user,
+
+283
+00:13:44,891 --> 00:13:48,827
+Twitter user's relationship to their tweets is probably gonna
+
+284
+00:13:48,829 --> 00:13:51,529
+be called tweets. It's the tweets that they've tweeted,
+
+285
+00:13:51,531 --> 00:13:54,599
+right? And similarly a tweet, the relationship it has
+
+286
+00:13:54,601 --> 00:13:57,402
+to the Twitter user who tweeted it is probably,
+
+287
+00:13:57,404 --> 00:13:59,237
+you could call it user, or poster, or
+
+288
+00:13:59,239 --> 00:14:02,607
+I'm gonna call it tweeter, but it doesn't really matter,
+
+289
+00:14:02,609 --> 00:14:06,044
+it's just the name of a var, that we're gonna have in our
+
+290
+00:14:06,046 --> 00:14:09,447
+code, that represents the relationship between the two.
+
+291
+00:14:09,449 --> 00:14:12,784
+Now, as we talked about in the slides about core data,
+
+292
+00:14:12,786 --> 00:14:15,987
+there's something special about this relationship,
+
+293
+00:14:15,989 --> 00:14:19,624
+this tweet's relationship to tweet, which is that a Twitter
+
+294
+00:14:19,626 --> 00:14:23,394
+user can have multiple tweets, could have hundreds of tweets
+
+295
+00:14:23,396 --> 00:14:27,899
+possibly, okay? A given tweet only has one tweeter. But
+
+296
+00:14:27,901 --> 00:14:31,236
+a good, a twitter user could have hundreds of tweets. So
+
+297
+00:14:31,238 --> 00:14:32,403
+this relationship's a little different. So
+
+298
+00:14:32,405 --> 00:14:36,207
+when we click on it here and look at it in the inspector,
+
+299
+00:14:36,209 --> 00:14:37,876
+and see the inspector is pretty smart.
+
+300
+00:14:37,878 --> 00:14:40,478
+It knows there's an inverse relationship tweeter
+
+301
+00:14:40,480 --> 00:14:42,914
+over here. That's the inverse of tweets. And
+
+302
+00:14:42,916 --> 00:14:45,817
+it also knows the type of connection here is To one and
+
+303
+00:14:45,819 --> 00:14:49,754
+we want to tell it no. This is a To many, To many connection,
+
+304
+00:14:49,756 --> 00:14:54,125
+okay, meaning there are many tweets per Twitter user. And
+
+305
+00:14:54,127 --> 00:14:57,262
+when we do that to To many, you can see that the arrow
+
+306
+00:14:57,264 --> 00:14:59,931
+here gets double arrowed in this direction. Only this
+
+307
+00:14:59,933 --> 00:15:02,901
+direction, it's still single To one in that direction, but
+
+308
+00:15:02,903 --> 00:15:05,536
+it's To many in this direction. Okay, and
+
+309
+00:15:05,538 --> 00:15:07,505
+that's perfectly fine for one to be a To one and
+
+310
+00:15:07,507 --> 00:15:10,074
+one to be a To many, as you can see here. You can also
+
+311
+00:15:10,076 --> 00:15:13,645
+have both of them be To many. That's legal as well.
+
+312
+00:15:13,647 --> 00:15:17,048
+All right, and we also know from the slides that what this
+
+313
+00:15:17,050 --> 00:15:21,352
+means is that tweets var, okay, on our Twitter user,
+
+314
+00:15:21,354 --> 00:15:23,187
+is gonna be an ns set. And
+
+315
+00:15:23,189 --> 00:15:25,823
+in that ns set are gonna be ns managed objects.
+
+316
+00:15:25,825 --> 00:15:29,594
+This is an ns managed object. This is an ns managed object.
+
+317
+00:15:29,596 --> 00:15:33,698
+This var, that points this way in Tweet, is gonna be an ns
+
+318
+00:15:33,700 --> 00:15:37,835
+managed object, okay, because it's only a single one.
+
+319
+00:15:37,837 --> 00:15:40,705
+Every single entity in the database is represented by
+
+320
+00:15:40,707 --> 00:15:43,875
+an ns managed object. Now, that's a little bit kind
+
+321
+00:15:43,877 --> 00:15:46,377
+of hard to use, to have every single thing,
+
+322
+00:15:46,379 --> 00:15:49,147
+Twitter users and tweets be NS managed object.
+
+323
+00:15:49,149 --> 00:15:50,782
+Because the only way we can set the attributes
+
+324
+00:15:50,784 --> 00:15:53,685
+is using that set value for key. And get the attributes
+
+325
+00:15:53,687 --> 00:15:57,055
+with value for key. It's a little unwieldy. So of course,
+
+326
+00:15:57,057 --> 00:15:59,791
+we want to have subclasses of NS managed object for
+
+327
+00:15:59,793 --> 00:16:02,427
+each of our entities. So a class called tweet, which
+
+328
+00:16:02,429 --> 00:16:05,063
+is a subclass of NS managed object that represents these
+
+329
+00:16:05,065 --> 00:16:07,932
+things, and has vars for all this. And the same thing for
+
+330
+00:16:07,934 --> 00:16:12,070
+Twitter user. Okay. And again, remember from the slides we
+
+331
+00:16:12,072 --> 00:16:14,539
+can go up here and have, in the editor menu,
+
+332
+00:16:14,541 --> 00:16:17,709
+Xcode generate those sub classes for us. One thing I'll
+
+333
+00:16:17,711 --> 00:16:20,578
+remind you if you're gonna do this, see where it says model
+
+334
+00:16:20,580 --> 00:16:23,948
+dot x c model. Do you see how that's selected? This menu,
+
+335
+00:16:23,950 --> 00:16:26,184
+the editor menu is contact sensitive,
+
+336
+00:16:26,186 --> 00:16:28,486
+it depends on what thing you have selected.
+
+337
+00:16:28,488 --> 00:16:29,087
+So for example if I go over here and
+
+338
+00:16:29,089 --> 00:16:32,390
+pick Story Board, look this menu£s completely different,
+
+339
+00:16:32,392 --> 00:16:34,292
+it£s doing Story Board things over here,
+
+340
+00:16:34,294 --> 00:16:36,094
+okay like embedding and stuff like that. So
+
+341
+00:16:36,096 --> 00:16:38,730
+you wanna make sure you have this data model selected so
+
+342
+00:16:38,732 --> 00:16:41,466
+that you get the data model editor menu.
+
+343
+00:16:41,468 --> 00:16:45,737
+So we're gonna pick Create NS managed sub class here.
+
+344
+00:16:45,739 --> 00:16:46,170
+So NS Managed sub class,
+
+345
+00:16:46,172 --> 00:16:49,007
+it's saying which of these do you wanna create it for?
+
+346
+00:16:49,009 --> 00:16:51,876
+We only have one okay, so it's obviously selected.
+
+347
+00:16:51,878 --> 00:16:54,345
+But you can actually have multiple of these mappings and
+
+348
+00:16:54,347 --> 00:16:57,281
+have multiple databases. Here it's saying which of
+
+349
+00:16:57,283 --> 00:16:59,817
+the entities do you wanna generate sub classes for and
+
+350
+00:16:59,819 --> 00:17:03,388
+I'm gonna click them both. Okay? I want both of these.
+
+351
+00:17:03,390 --> 00:17:06,557
+Click next. And be very careful of this one, okay?
+
+352
+00:17:06,559 --> 00:17:09,260
+This is asking you where you want to put these things.
+
+353
+00:17:09,262 --> 00:17:10,661
+Well, look where it wanted to put it.
+
+354
+00:17:10,663 --> 00:17:13,564
+Right at the very top of my work space.
+
+355
+00:17:13,566 --> 00:17:14,632
+I definitely don't want it there.
+
+356
+00:17:14,634 --> 00:17:17,335
+I definitely want it somewhere in my Smash Tag project.
+
+357
+00:17:17,337 --> 00:17:20,204
+Probably right at this level. Not in supporting files, but
+
+358
+00:17:20,206 --> 00:17:23,608
+right here. Make sure you set this you'll be unhappy if you
+
+359
+00:17:23,610 --> 00:17:25,977
+put it up in your top work space level,
+
+360
+00:17:25,979 --> 00:17:29,547
+files won't be in the right place it'll be bad.
+
+361
+00:17:29,549 --> 00:17:31,682
+Also make sure you're language is right of course.
+
+362
+00:17:31,684 --> 00:17:35,286
+This scaler remember that's, all the things that,
+
+363
+00:17:35,288 --> 00:17:38,056
+integers and doubles are represented as NS numbers,
+
+364
+00:17:38,058 --> 00:17:40,892
+okay? And if you do the use scalers the Vars
+
+365
+00:17:40,894 --> 00:17:41,692
+that it will create will be
+
+366
+00:17:41,694 --> 00:17:44,228
+not be NS numbers will be instant doubles. And
+
+367
+00:17:44,230 --> 00:17:49,300
+fortunately, in this time intervals. I don't want that.
+
+368
+00:17:49,302 --> 00:17:51,969
+I have it in this date right here posted. So
+
+369
+00:17:51,971 --> 00:17:54,539
+I'm not going to switch this, but if you change your mind
+
+370
+00:17:54,541 --> 00:17:57,308
+on this you can always go back and regenerate these. Okay,
+
+371
+00:17:57,310 --> 00:17:59,243
+it's not like you generate these once and you're done,
+
+372
+00:17:59,245 --> 00:18:01,779
+you can always go back. All right. So I'm going to
+
+373
+00:18:01,781 --> 00:18:04,515
+hit create to create this thing. We'll see the files
+
+374
+00:18:04,517 --> 00:18:09,120
+are created, okay. You can see right here this first one is
+
+375
+00:18:09,122 --> 00:18:10,421
+tweet okay? Tweet.swift.
+
+376
+00:18:10,423 --> 00:18:13,624
+It's a sub class of NS managed object as we would expect. And
+
+377
+00:18:13,626 --> 00:18:15,927
+this is just a place we can put any code we want,
+
+378
+00:18:15,929 --> 00:18:18,796
+okay? Any code that in an object oriented design sense
+
+379
+00:18:18,798 --> 00:18:22,100
+would make sense to be in the tweet, class.
+
+380
+00:18:22,102 --> 00:18:24,936
+Okay this is a bizarre place to do thing. If we go back and
+
+381
+00:18:24,938 --> 00:18:30,174
+regenerate these this file will not get changed. Okay? So
+
+382
+00:18:30,176 --> 00:18:33,578
+it won't stomp our, whatever code we put in here. Okay,
+
+383
+00:18:33,580 --> 00:18:39,016
+similar we have TwitterUser, okay, right here. Same thing,
+
+384
+00:18:39,018 --> 00:18:40,284
+okay? Just a place to put a TwitterUser.
+
+385
+00:18:40,286 --> 00:18:41,953
+It's a sub-class of NSManagedObject. And
+
+386
+00:18:41,955 --> 00:18:45,323
+then there are these, these two really cool extensions
+
+387
+00:18:45,325 --> 00:18:47,959
+that were created for us, okay, one for TwitterUser and
+
+388
+00:18:47,961 --> 00:18:51,896
+one for Tweet that have vars that represent each of our
+
+389
+00:18:51,898 --> 00:18:53,564
+attributes, so we don't have to use set value for
+
+390
+00:18:53,566 --> 00:18:56,167
+a key, okay? You can see its screenName is a string,
+
+391
+00:18:56,169 --> 00:18:59,403
+name is a string, tweet, as promised, is an NSSet.
+
+392
+00:18:59,405 --> 00:19:02,373
+And in that NSSet, we NSManage objects, in fact,
+
+393
+00:19:02,375 --> 00:19:06,644
+they'll be tweets, okay? A subclass of NSManagedObject.
+
+394
+00:19:06,646 --> 00:19:07,912
+Notice that they are all optional,
+
+395
+00:19:07,914 --> 00:19:10,948
+that's because when we create a twitter user in this
+
+396
+00:19:10,950 --> 00:19:14,285
+case in the database all the. Okay,
+
+397
+00:19:14,287 --> 00:19:19,490
+we can set them to whatever we want and similar for tweet.
+
+398
+00:19:19,492 --> 00:19:23,127
+Okay, it's got an extension as well as you can see, and
+
+399
+00:19:23,129 --> 00:19:25,463
+notice it's tweeter relationship
+
+400
+00:19:25,465 --> 00:19:30,134
+is a pointer to a TwitterUser If you do this, and
+
+401
+00:19:30,136 --> 00:19:34,605
+you find this to be managed object, okay? It could be
+
+402
+00:19:34,607 --> 00:19:37,341
+because your Tweet and Twitter user files got generated
+
+403
+00:19:37,343 --> 00:19:39,810
+in the wrong order, so that twitter user hadn't been
+
+404
+00:19:39,812 --> 00:19:43,147
+generated at the time tweet was, and so it gets object.
+
+405
+00:19:43,149 --> 00:19:46,484
+The fix is just go back and regenerate them again, okay?
+
+406
+00:19:46,486 --> 00:19:50,755
+Cuz it takes into account what is generated in the past.
+
+407
+00:19:50,757 --> 00:19:53,591
+Okay? Otherwise this is all pretty straightforward.
+
+408
+00:19:53,593 --> 00:19:54,792
+Now these files you never edit.
+
+409
+00:19:54,794 --> 00:19:57,929
+These files get regenerated every time you go into that
+
+410
+00:19:57,931 --> 00:20:01,632
+create ns manage object thing. So as you change your schema
+
+411
+00:20:01,634 --> 00:20:06,003
+these might change. All right now I like to take all of
+
+412
+00:20:06,005 --> 00:20:10,041
+these core data things, okay, including my model file and
+
+413
+00:20:10,043 --> 00:20:11,275
+I like to put them in their own groups.
+
+414
+00:20:11,277 --> 00:20:14,445
+I'll select them all and say new group from selection and
+
+415
+00:20:14,447 --> 00:20:18,482
+call it core data. So this is my core data group.
+
+416
+00:20:18,484 --> 00:20:18,549
+Inside this group,
+
+417
+00:20:18,551 --> 00:20:21,452
+I've got all my stuff that has to do with core data, and
+
+418
+00:20:21,454 --> 00:20:25,156
+we're going to add a little bit more to that in a minute.
+
+419
+00:20:26,192 --> 00:20:29,594
+Alright, so back to our app and
+
+420
+00:20:29,596 --> 00:20:31,195
+what we're trying to accomplish here.
+
+421
+00:20:31,197 --> 00:20:32,630
+All right, so here's what our app looks like,
+
+422
+00:20:32,632 --> 00:20:34,599
+right? Just got this thing that's gonna segue,
+
+423
+00:20:34,601 --> 00:20:39,003
+there's really two parts to making this new NVC work.
+
+424
+00:20:39,005 --> 00:20:41,339
+One is we have to put data in the database,
+
+425
+00:20:41,341 --> 00:20:44,242
+that's actually something this NVC does, cuz it's the thing
+
+426
+00:20:44,244 --> 00:20:46,510
+that does the fetching. When we type #Stanford,
+
+427
+00:20:46,512 --> 00:20:48,145
+it's the thing that goes out and gets them.
+
+428
+00:20:48,147 --> 00:20:51,816
+So this is going to load up the database with Tweet and
+
+429
+00:20:51,818 --> 00:20:52,283
+tweeter users. And
+
+430
+00:20:52,285 --> 00:20:55,286
+then this one is going to look in the database, okay,
+
+431
+00:20:55,288 --> 00:20:57,488
+to find things out. So let's do this part first,
+
+432
+00:20:57,490 --> 00:21:00,124
+let's go to our existing tweet table view controller and
+
+433
+00:21:00,126 --> 00:21:03,828
+have it update the database every time we do a fetch.
+
+434
+00:21:03,830 --> 00:21:05,696
+All right, so here's our code for
+
+435
+00:21:05,698 --> 00:21:08,733
+our tweet table view hopefully your you i remember this where
+
+436
+00:21:08,735 --> 00:21:11,369
+you intimately famil, familiar with it as our search text.
+
+437
+00:21:11,371 --> 00:21:14,238
+Here's where we're doing our search for tweets, right.
+
+438
+00:21:14,240 --> 00:21:16,040
+Here's where we find new tweets and
+
+439
+00:21:16,042 --> 00:21:18,509
+insert them in the table. So I'm just gonna,
+
+440
+00:21:18,511 --> 00:21:20,144
+in addition here to putting them in the table,
+
+441
+00:21:20,146 --> 00:21:24,682
+I'm gonna call some method, let's say updateDatabase and
+
+442
+00:21:24,684 --> 00:21:29,954
+pass along these new tweets to go put them in the database,
+
+443
+00:21:29,956 --> 00:21:34,191
+all right. Now, we're gonna be doing CoreData here, so
+
+444
+00:21:34,193 --> 00:21:37,828
+I wanna make sure I import CoreData up at the top here,
+
+445
+00:21:37,830 --> 00:21:43,467
+okay? And then I have to write this method here, private func
+
+446
+00:21:43,469 --> 00:21:48,372
+updateDatabase, okay? It takes the new tweets that it got,
+
+447
+00:21:48,374 --> 00:21:50,741
+which is an array of tweet, but
+
+448
+00:21:50,743 --> 00:21:52,810
+now I have to be careful here, okay?
+
+449
+00:21:52,812 --> 00:21:56,614
+Cuz which tweet is this? Is that the tweet in the Twitter
+
+450
+00:21:56,616 --> 00:22:00,785
+framework, or is that this tweet right here that's an ns
+
+451
+00:22:00,787 --> 00:22:05,089
+managed object? Hm, okay we have to be careful here. And
+
+452
+00:22:05,091 --> 00:22:07,591
+the way we distinguish the two is by putting the framework
+
+453
+00:22:07,593 --> 00:22:11,929
+name in front. So this update database takes Twitter tweets
+
+454
+00:22:11,931 --> 00:22:15,399
+and we're gonna put them, turn them into, in [INAUDIBLE]
+
+455
+00:22:15,401 --> 00:22:17,902
+tweets and put ' in the database so be careful if you
+
+456
+00:22:17,904 --> 00:22:20,905
+do that. Now when you do your homework, you're welcome to
+
+457
+00:22:20,907 --> 00:22:24,575
+not call this thing in your database tweet.
+
+458
+00:22:24,577 --> 00:22:27,111
+If you don't wanna have to deal with twitter.tweet.
+
+459
+00:22:27,113 --> 00:22:30,881
+Okay you can call it something else. But it, if you do call
+
+460
+00:22:30,883 --> 00:22:33,751
+it tweet, then you wanna make sure to distinguish which ones
+
+461
+00:22:33,753 --> 00:22:37,555
+you're talking about at any given time. All right? Now,
+
+462
+00:22:37,557 --> 00:22:40,091
+to update our database, here's where we need that
+
+463
+00:22:40,093 --> 00:22:43,227
+object context, right? That little hook that lets us put
+
+464
+00:22:43,229 --> 00:22:45,262
+things in the database, search through the database, etc ect.
+
+465
+00:22:45,264 --> 00:22:50,067
+I'm actually gonna make that part of the model of this NVC,
+
+466
+00:22:50,069 --> 00:22:52,169
+because if you think about what this NVC does, yeah,
+
+467
+00:22:52,171 --> 00:22:55,306
+it lets you search, but it also updates that database.
+
+468
+00:22:55,308 --> 00:22:58,442
+Which database it updates is really part of
+
+469
+00:22:58,444 --> 00:23:00,111
+describing its model. Okay, so
+
+470
+00:23:00,113 --> 00:23:04,014
+I'm gonna have a var here called managedObjectContext.
+
+471
+00:23:04,016 --> 00:23:07,451
+It's gonna be an NSManagedObjectContext, and
+
+472
+00:23:07,453 --> 00:23:09,587
+it'll be optional. And if this is nil,
+
+473
+00:23:09,589 --> 00:23:12,556
+this is not set to anything, then I just won't update any
+
+474
+00:23:12,558 --> 00:23:15,192
+database. Okay, so I'm gonna write my code, so if this is
+
+475
+00:23:15,194 --> 00:23:17,862
+nil I'm not gonna update it. I'll still do my searching,
+
+476
+00:23:17,864 --> 00:23:19,797
+but I'm not gonna update any database. So
+
+477
+00:23:19,799 --> 00:23:24,101
+if anyone wants me to update a database they better set this,
+
+478
+00:23:24,103 --> 00:23:26,237
+okay, to the database they want me to update.
+
+479
+00:23:26,239 --> 00:23:28,939
+Now especially for demo purposes, I'm actually gonna
+
+480
+00:23:28,941 --> 00:23:32,176
+have this have a default which is that App delegate thing.
+
+481
+00:23:32,178 --> 00:23:35,146
+Remember that code that we just copied over into app
+
+482
+00:23:35,148 --> 00:23:37,915
+delegate over here? This manage object context?
+
+483
+00:23:37,917 --> 00:23:42,620
+I wanna call this property, access this property on my
+
+484
+00:23:42,622 --> 00:23:45,489
+app delegate, to get the managed object context. Again,
+
+485
+00:23:45,491 --> 00:23:48,292
+if you're using a UI managed document, you'd be doing this
+
+486
+00:23:48,294 --> 00:23:50,828
+differently. Okay? So I got a call then.
+
+487
+00:23:50,830 --> 00:23:53,764
+If you remember how that code goes, we're gonna get
+
+488
+00:23:53,766 --> 00:23:56,167
+UI applications, shared applications.
+
+489
+00:23:56,169 --> 00:23:58,836
+So this is just an instance of UI application that's shared.
+
+490
+00:23:58,838 --> 00:24:01,739
+So outta your whole app, it's the only one you're ever
+
+491
+00:24:01,741 --> 00:24:04,308
+gonna use. Now I'm gonna get its delegate.
+
+492
+00:24:04,310 --> 00:24:08,712
+Okay, now its delegate is of type UI application delegate.
+
+493
+00:24:08,714 --> 00:24:11,182
+Right, it's a protocol. You know how delegates work,
+
+494
+00:24:11,184 --> 00:24:13,517
+it's always a protocol. And we don't want that, okay?
+
+495
+00:24:13,519 --> 00:24:17,188
+We want it to be this particular app delegate class
+
+496
+00:24:17,190 --> 00:24:21,358
+right here. Okay. This app class app delegate, kind of
+
+497
+00:24:21,360 --> 00:24:24,628
+a generic name app delegate. It happens to implement the UI
+
+498
+00:24:24,630 --> 00:24:27,364
+application delegate protocol so that's good. Okay. So
+
+499
+00:24:27,366 --> 00:24:32,770
+that means I can go over here and say as AppDelegate, okay?
+
+500
+00:24:32,772 --> 00:24:35,606
+So now I have a hold of that AppDelegate
+
+501
+00:24:35,608 --> 00:24:39,043
+instance, all right? And all I need to do now is send it
+
+502
+00:24:39,045 --> 00:24:41,145
+ManagedObjectContext. So let's go ahead and do that.
+
+503
+00:24:41,147 --> 00:24:42,746
+I had to put a parentheses around here.
+
+504
+00:24:42,748 --> 00:24:46,317
+Now this might be nil, okay? What if the delegate is for
+
+505
+00:24:46,319 --> 00:24:49,253
+some reason not set, or what if it isn't this class
+
+506
+00:24:49,255 --> 00:24:52,823
+AppDelegate for some reason? You change it mid-flight,
+
+507
+00:24:52,825 --> 00:24:57,027
+okay? Then I'm gonna optional chain here and get the managed
+
+508
+00:24:57,029 --> 00:25:01,699
+object content. Okay. So this all might come out nil,
+
+509
+00:25:01,701 --> 00:25:05,436
+that's okay because this is an optional. We just won't do,
+
+510
+00:25:05,438 --> 00:25:07,571
+put in anything in the database in that case.
+
+511
+00:25:07,573 --> 00:25:11,175
+All right, now it's a little weird to have this default.
+
+512
+00:25:11,177 --> 00:25:13,644
+More likely you would just have this be nil and
+
+513
+00:25:13,646 --> 00:25:15,846
+someone would have to explicitly set it, but
+
+514
+00:25:15,848 --> 00:25:19,116
+that would require probably to create a little subclass of
+
+515
+00:25:19,118 --> 00:25:22,119
+tweet table view called root tweet table view, and
+
+516
+00:25:22,121 --> 00:25:23,621
+it would do this line of code, and
+
+517
+00:25:23,623 --> 00:25:26,757
+then call super.manage.object context equals this.
+
+518
+00:25:26,759 --> 00:25:28,826
+Okay, and then we would go in our storyboard and
+
+519
+00:25:28,828 --> 00:25:31,562
+we would set the identity inspector for this table view
+
+520
+00:25:31,564 --> 00:25:33,631
+to be root table, Tweet table view controller.
+
+521
+00:25:33,633 --> 00:25:35,866
+So that's a little more than I wanna go through in the demo
+
+522
+00:25:35,868 --> 00:25:38,669
+here, so we're just going to kinda go cheap mode here and
+
+523
+00:25:38,671 --> 00:25:43,007
+just make it default to be this managedObjectContext. All
+
+524
+00:25:43,009 --> 00:25:45,743
+right, so this is where we're gonna store our database when
+
+525
+00:25:45,745 --> 00:25:48,846
+we, or our information when we do this update database.
+
+526
+00:25:48,848 --> 00:25:51,849
+Okay. Now remember, any time we access the database,
+
+527
+00:25:51,851 --> 00:25:54,685
+we have to do it with that perform block because these
+
+528
+00:25:54,687 --> 00:25:57,254
+database, these managedObjectContext, are only
+
+529
+00:25:57,256 --> 00:26:00,024
+thread safe within the thread they were created on.
+
+530
+00:26:00,026 --> 00:26:02,359
+And I'm gonna write all my code in this demo as
+
+531
+00:26:02,361 --> 00:26:05,462
+if I don't know what thread these managedObjectContexts
+
+532
+00:26:05,464 --> 00:26:09,233
+are created on. Even though we know that that AppDelegate one
+
+533
+00:26:09,235 --> 00:26:12,136
+is always a main queue one. But I'm not gonna write my
+
+534
+00:26:12,138 --> 00:26:15,105
+code assuming that, just so you can see what it looks like
+
+535
+00:26:15,107 --> 00:26:18,809
+to write multi-threaded managedObject, code, okay? So,
+
+536
+00:26:18,811 --> 00:26:22,846
+that means we always have to have our managedObjectContext
+
+537
+00:26:22,848 --> 00:26:27,017
+and do performBlock, okay? Now if this is nil,
+
+538
+00:26:27,019 --> 00:26:31,021
+what happens here? Nothing, good, that's what I want.
+
+539
+00:26:31,023 --> 00:26:33,924
+Okay, I, I've, if I don't have a managedObjectContext,
+
+540
+00:26:33,926 --> 00:26:34,992
+I don't wanna update the database.
+
+541
+00:26:34,994 --> 00:26:36,894
+So this is perfect so far, all right?
+
+542
+00:26:36,896 --> 00:26:39,697
+So we're gonna perform a block here. Inside this block,
+
+543
+00:26:39,699 --> 00:26:42,499
+all we gotta do is put these newTweets, okay,
+
+544
+00:26:42,501 --> 00:26:45,869
+into the database. So, that's pretty straightforward.
+
+545
+00:26:45,871 --> 00:26:46,570
+I'm just gonna have a little for
+
+546
+00:26:46,572 --> 00:26:49,807
+loop that goes through those tweets. Let's say for
+
+547
+00:26:49,809 --> 00:26:55,446
+twitterInfo in the newTweets. And then here,
+
+548
+00:26:55,448 --> 00:27:00,818
+I have to, you know, create a new but unique Tweet,
+
+549
+00:27:00,820 --> 00:27:06,023
+in the N-S managed objects sense. With that, you know,
+
+550
+00:27:06,025 --> 00:27:10,060
+Twitter info. Okay, so that's what I need to do in here. So
+
+551
+00:27:10,062 --> 00:27:13,297
+I need a method to do that. Now that method doesn't really
+
+552
+00:27:13,299 --> 00:27:16,367
+want to go in this Tweet table view controller,
+
+553
+00:27:16,369 --> 00:27:19,903
+okay. That's really something that wants to go in the Tweet
+
+554
+00:27:19,905 --> 00:27:25,242
+class. Okay. A tweet class is one stop shop for
+
+555
+00:27:25,244 --> 00:27:27,611
+everything tweet when it comes to the database. So
+
+556
+00:27:27,613 --> 00:27:30,614
+if you had a method that takes Twitter info from the network
+
+557
+00:27:30,616 --> 00:27:32,082
+and turns it into a tweet in the database,
+
+558
+00:27:32,084 --> 00:27:35,753
+that needs to believe, live in the one stop shop. Okay.
+
+559
+00:27:35,755 --> 00:27:40,090
+So we're gonna actually put that code some method that
+
+560
+00:27:40,092 --> 00:27:41,258
+does this in tweet.
+
+561
+00:27:41,260 --> 00:27:43,927
+Okay, remember Tweet is this subclass of NSObject, so
+
+562
+00:27:43,929 --> 00:27:46,664
+we're gonna do exactly what that comment just said and
+
+563
+00:27:46,666 --> 00:27:50,234
+insert the code we want in here. Now this code,
+
+564
+00:27:50,236 --> 00:27:53,470
+what is this method gonna do? Well, this method is going to
+
+565
+00:27:53,472 --> 00:27:56,774
+look in the database and if there's already a tweet there
+
+566
+00:27:56,776 --> 00:28:00,978
+with that unique ID, then it's just gonna just return that.
+
+567
+00:28:00,980 --> 00:28:03,514
+If not, it's gonna create one and load it up with
+
+568
+00:28:03,516 --> 00:28:06,316
+the Twitter information, okay that it got from from,
+
+569
+00:28:06,318 --> 00:28:10,120
+from over the network and then, it's gonna return that.
+
+570
+00:28:10,122 --> 00:28:12,356
+So, it either looks it up and returns it or
+
+571
+00:28:12,358 --> 00:28:15,859
+create it if necessary. Okay. I'm gonna call this thing,
+
+572
+00:28:15,861 --> 00:28:18,095
+first of all, it's gonna be a class function,
+
+573
+00:28:18,097 --> 00:28:20,698
+meaning I'm gonna send this to the tweet class
+
+574
+00:28:20,700 --> 00:28:22,199
+because I'm creating an instance here,
+
+575
+00:28:22,201 --> 00:28:23,701
+I can't really send it to an instance yet,
+
+576
+00:28:23,703 --> 00:28:26,470
+I haven't created one. I'm gonna call this thing
+
+577
+00:28:26,472 --> 00:28:31,942
+tweetWithTwitterInfo and it's gonna take some Twitter info
+
+578
+00:28:31,944 --> 00:28:37,047
+which is gonna be a Twitter.Tweet, okay? So I have
+
+579
+00:28:37,049 --> 00:28:41,051
+to import Twitter here. So then making a Twitter.Tweet.
+
+580
+00:28:41,053 --> 00:28:44,455
+And the other thing I gotta have if I'm gonna create
+
+581
+00:28:44,457 --> 00:28:48,125
+something in the database is inManagedObjectContext.
+
+582
+00:28:48,127 --> 00:28:51,762
+Okay, I have to have the NS ManagedObjectContext that you
+
+583
+00:28:51,764 --> 00:28:53,997
+want to create this thing in, or, or
+
+584
+00:28:53,999 --> 00:28:56,200
+it just can't create it, okay.
+
+585
+00:28:56,202 --> 00:29:00,104
+And this thing is gonna return a tweet. Okay, it's either
+
+586
+00:29:00,106 --> 00:29:02,973
+gonna return the tweet that it found in the database by
+
+587
+00:29:02,975 --> 00:29:05,576
+looking at the unique ID of this Twitter.Tweet, or
+
+588
+00:29:05,578 --> 00:29:08,378
+it's gonna create one in the database and return that.
+
+589
+00:29:08,380 --> 00:29:13,150
+Okay, so let's have it return nil. Actually, let's just make
+
+590
+00:29:13,152 --> 00:29:15,419
+it so it returns an optional tweet in case for
+
+591
+00:29:15,421 --> 00:29:16,987
+some reason we can't create one.
+
+592
+00:29:16,989 --> 00:29:21,058
+We'll have it return nil by default. Okay, we'll get back
+
+593
+00:29:21,060 --> 00:29:23,761
+to how we're going to implement this in a second. I,
+
+594
+00:29:23,763 --> 00:29:26,430
+I want to go back to the code that calls this,
+
+595
+00:29:26,432 --> 00:29:29,633
+which is here. Okay, this update database. And use it
+
+596
+00:29:29,635 --> 00:29:32,903
+here. And so you just call, you know how you call class
+
+597
+00:29:32,905 --> 00:29:36,440
+functions, you just have the name of the class, tweet, and
+
+598
+00:29:36,442 --> 00:29:42,446
+then this is tweet, what's it called? TweetWithTwitterInfo,
+
+599
+00:29:42,448 --> 00:29:45,649
+and we're gonna pass the Twitter info along.
+
+600
+00:29:45,651 --> 00:29:49,119
+Okay, this is the Twitter info that we're pulling out of this
+
+601
+00:29:49,121 --> 00:29:53,257
+array of Twitter.Tweets, right? In a for loop here.
+
+602
+00:29:53,259 --> 00:29:58,028
+And ininManagedObjectContext, we're gonna pass our own
+
+603
+00:29:58,030 --> 00:30:02,332
+managed object context. And we can go ahead and unwrap it,
+
+604
+00:30:02,334 --> 00:30:04,868
+because we know we wouldn't, have made it into this block
+
+605
+00:30:04,870 --> 00:30:08,872
+if this were not nil. All right? And notice that it's
+
+606
+00:30:08,874 --> 00:30:12,409
+complaining here about you gotta put self in, sorry,
+
+607
+00:30:12,411 --> 00:30:16,180
+you've gotta put self in front of this because this right
+
+608
+00:30:16,182 --> 00:30:20,651
+here is a block, okay? So we gotta make sure we avoid any
+
+609
+00:30:20,653 --> 00:30:25,289
+loops, you know, any any memory cycles and
+
+610
+00:30:25,291 --> 00:30:29,326
+what else is it complaining about here? Cannot,
+
+611
+00:30:29,328 --> 00:30:36,033
+I must have typed that wrong. Let's go back here. All right,
+
+612
+00:30:36,035 --> 00:30:41,505
+go back here to tweet. I must have, yes,
+
+613
+00:30:41,507 --> 00:30:46,109
+I forgot to put context okay in this iManagedObjectContext
+
+614
+00:30:46,111 --> 00:30:49,847
+there. All right, back. All right, so we got this,
+
+615
+00:30:49,849 --> 00:30:52,649
+so this, now one thing that's interesting about this
+
+616
+00:30:52,651 --> 00:30:55,552
+tweetWithTwitterInfo, it returns a value, right,
+
+617
+00:30:55,554 --> 00:30:57,888
+it returns a tweet. Now I don't care.
+
+618
+00:30:57,890 --> 00:31:00,724
+I don't want the tweet here, I'm just creating it, I'm just
+
+619
+00:31:00,726 --> 00:31:03,460
+the guy loading the database, so I don't want that tweet. So
+
+620
+00:31:03,462 --> 00:31:06,029
+notice that swift doesn't complain, even though I'm
+
+621
+00:31:06,031 --> 00:31:10,634
+ignoring it. But some would say it's pretty good code to
+
+622
+00:31:10,636 --> 00:31:15,105
+say_ = here, okay. That tells someone reading this code,
+
+623
+00:31:15,107 --> 00:31:18,275
+yeah, I understand that this returns to a value but
+
+624
+00:31:18,277 --> 00:31:19,276
+I'm not interested in it.
+
+625
+00:31:19,278 --> 00:31:22,246
+Remember the underbar in Swift is the universal,
+
+626
+00:31:22,248 --> 00:31:25,749
+I don't care about this thing, okay. So, looks a little odd
+
+627
+00:31:25,751 --> 00:31:28,318
+to do this but, some would say this is a little bit better
+
+628
+00:31:28,320 --> 00:31:31,121
+coding style, it's just looks, it makes it a little clearer
+
+629
+00:31:31,123 --> 00:31:35,125
+to people reading your code that this is what you intend.
+
+630
+00:31:35,294 --> 00:31:39,229
+Okay? Now this will, once we implement this,
+
+631
+00:31:39,231 --> 00:31:42,232
+this'll load up the database with these tweets, but it's
+
+632
+00:31:42,234 --> 00:31:46,203
+not gonna save that database. Okay, now if we're using a UI
+
+633
+00:31:46,205 --> 00:31:49,706
+managed document, okay, then it would all be autosaving,
+
+634
+00:31:49,708 --> 00:31:51,942
+fine. But here we use an app delegate one and
+
+635
+00:31:51,944 --> 00:31:55,012
+even if we're not sure which one we're using, it can't hurt
+
+636
+00:31:55,014 --> 00:31:58,548
+to save, okay, the context in the UI managed document case.
+
+637
+00:31:58,550 --> 00:32:00,817
+So how do we save? Well, it's simple.
+
+638
+00:32:00,819 --> 00:32:03,854
+We just say inManagedObjectContext, save.
+
+639
+00:32:03,856 --> 00:32:07,090
+Okay? But of course, we're gonna have an error here,
+
+640
+00:32:07,092 --> 00:32:09,526
+because it's gonna say hold on a second, well,
+
+641
+00:32:09,528 --> 00:32:12,629
+first it's saying we're inside a block so we have to do self,
+
+642
+00:32:12,631 --> 00:32:16,366
+so we'll do that. And we still have another error, which it
+
+643
+00:32:16,368 --> 00:32:21,204
+says this call can throw, but it's not marked with try. So
+
+644
+00:32:21,206 --> 00:32:23,941
+it's to say hey, pay attention, this can throw.
+
+645
+00:32:23,943 --> 00:32:26,643
+So we need to put try in front And of course if we're going
+
+646
+00:32:26,645 --> 00:32:30,080
+to try something we need to put it inside of a do loop.
+
+647
+00:32:30,082 --> 00:32:33,750
+And catch any errors that come out. Okay, and
+
+648
+00:32:33,752 --> 00:32:35,652
+we'll put it in a local variable we'll call error.
+
+649
+00:32:35,654 --> 00:32:38,088
+This is going to be an N-S error instance,
+
+650
+00:32:38,090 --> 00:32:40,724
+okay. We could look at the error code etcetera.
+
+651
+00:32:40,726 --> 00:32:42,192
+I'm just going to go ahead and print it out.
+
+652
+00:32:42,194 --> 00:32:46,463
+I'm going to say core data error. Error,
+
+653
+00:32:46,465 --> 00:32:47,664
+something like that. This is bad,
+
+654
+00:32:47,666 --> 00:32:49,333
+you wouldn't want to do this in your real code, okay.
+
+655
+00:32:49,335 --> 00:32:53,003
+This is just demo ware here, you would want to decide what
+
+656
+00:32:53,005 --> 00:32:55,472
+you wanted to do if you tried to save and it failed for
+
+657
+00:32:55,474 --> 00:33:01,378
+some reason. Okay? So, anyway, so this is gonna save it.
+
+658
+00:33:01,380 --> 00:33:03,547
+So this will work again, even if you were in an autosave and
+
+659
+00:33:03,549 --> 00:33:07,184
+you iManage document, it's gonna work just fine. Okay?
+
+660
+00:33:07,186 --> 00:33:11,888
+All right, let's jump back to where we were over here.
+
+661
+00:33:11,890 --> 00:33:17,361
+Tweet. And implement this thing, TweetWithTwitterInfo.
+
+662
+00:33:17,363 --> 00:33:20,030
+So I said that what TweetWithTwitterInfo's gonna
+
+663
+00:33:20,032 --> 00:33:22,165
+do is first it's gonna look in the database and
+
+664
+00:33:22,167 --> 00:33:25,402
+see if it can find this Twitter.Tweet. Okay.
+
+665
+00:33:25,404 --> 00:33:28,005
+In the database already and if so it's gonna return it. So,
+
+666
+00:33:28,007 --> 00:33:31,575
+how do we look in the database and find something? Well,
+
+667
+00:33:31,577 --> 00:33:34,845
+we use this NSFetchRequest thing. Okay?
+
+668
+00:33:34,847 --> 00:33:37,881
+So, we're gonna make a Fetch Request, okay? It always wants
+
+669
+00:33:37,883 --> 00:33:42,119
+to know the entity name. So, here we're looking for Tweet
+
+670
+00:33:42,121 --> 00:33:45,222
+in the database. Okay. So we've got this fetch request.
+
+671
+00:33:45,224 --> 00:33:47,090
+I am going to sign that to a local variable here.
+
+672
+00:33:47,092 --> 00:33:51,461
+Let request equal. And this request needs a predicate
+
+673
+00:33:51,463 --> 00:33:55,032
+that says which tweet do you want. So I am gonna say okay,
+
+674
+00:33:55,034 --> 00:33:59,536
+my predicate is NSPredicate with a format.
+
+675
+00:33:59,538 --> 00:34:03,740
+And I am gonna say that the unique ID of this tweet
+
+676
+00:34:03,742 --> 00:34:06,676
+equals something And what is that something?
+
+677
+00:34:06,678 --> 00:34:11,314
+Well, it's the whatever the unique ID is in twitter.tweet.
+
+678
+00:34:11,316 --> 00:34:13,450
+K? Which happens to be called ID. So
+
+679
+00:34:13,452 --> 00:34:18,155
+I'm going to get my twitter info.id. K? So that, this
+
+680
+00:34:18,157 --> 00:34:22,459
+is just a property and you might have used it with your
+
+681
+00:34:22,461 --> 00:34:25,562
+homework number four but it's just a property that uniquely
+
+682
+00:34:25,564 --> 00:34:28,131
+identifies this tweet. Okay, so i'm gonna go look in
+
+683
+00:34:28,133 --> 00:34:32,469
+the database and see if i can find that, and the way we look
+
+684
+00:34:32,471 --> 00:34:37,741
+in the database is we say, let query results.
+
+685
+00:34:37,743 --> 00:34:38,942
+Just a local variable,
+
+686
+00:34:38,944 --> 00:34:42,679
+equal the context that we are supposed to look in here,
+
+687
+00:34:42,681 --> 00:34:48,185
+that's this context up here dot execute fetch request.
+
+688
+00:34:48,187 --> 00:34:50,754
+And then, you give it that request, okay?
+
+689
+00:34:50,756 --> 00:34:52,089
+So that's how we look in the database,
+
+690
+00:34:52,091 --> 00:34:54,791
+but there's some problems with this. As you can see,
+
+691
+00:34:54,793 --> 00:34:59,830
+little errors over here. One is that this thing throws,
+
+692
+00:34:59,832 --> 00:35:03,300
+okay? Execute fetch request throws. So I need to say, try,
+
+693
+00:35:03,302 --> 00:35:06,870
+okay? So that's problem number one of this. And
+
+694
+00:35:06,872 --> 00:35:09,172
+if I'm going to try, then of course, I need to.
+
+695
+00:35:09,174 --> 00:35:14,344
+Do a little do loop here and catch any errors.
+
+696
+00:35:14,346 --> 00:35:17,948
+Now, if I'm actually getting this fetch request to look for
+
+697
+00:35:17,950 --> 00:35:21,785
+this tweet and it's not there, what am I gonna Gonna do?
+
+698
+00:35:21,787 --> 00:35:23,320
+There really nothing I can do.
+
+699
+00:35:23,322 --> 00:35:25,355
+I just continue and try to create it.
+
+700
+00:35:25,357 --> 00:35:27,891
+I'm gonna assume it's not there. Right if I search for
+
+701
+00:35:27,893 --> 00:35:29,993
+it and I don't find it, I'm gonna assume it's not there.
+
+702
+00:35:29,995 --> 00:35:33,063
+So basically when I catch an error I'm just gonna ignore
+
+703
+00:35:33,065 --> 00:35:37,901
+the error and move on down here to keep trying to
+
+704
+00:35:37,903 --> 00:35:42,739
+create it. But if I am able to find it right here, okay,
+
+705
+00:35:42,741 --> 00:35:45,175
+if I do get a result there from,
+
+706
+00:35:45,177 --> 00:35:48,879
+from doing this fetch. Then I'm going to say if I can let
+
+707
+00:35:48,881 --> 00:35:52,682
+the tweet that's in there equal the query results,
+
+708
+00:35:52,684 --> 00:35:55,585
+now remember the query results are an array of tweets.
+
+709
+00:35:55,587 --> 00:35:58,855
+All the tweets that match my predicate My predicate is
+
+710
+00:35:58,857 --> 00:36:02,359
+unique, so there should only be one in there. Either one or
+
+711
+00:36:02,361 --> 00:36:04,628
+zero, okay? There's one in there if it found it.
+
+712
+00:36:04,630 --> 00:36:08,465
+There's zero of them in there if it didn't find it, right?
+
+713
+00:36:08,467 --> 00:36:14,704
+So, I'm gonna go use this method in array called first.
+
+714
+00:36:14,706 --> 00:36:18,341
+Okay, that returned to the first item in the array,
+
+715
+00:36:18,343 --> 00:36:19,676
+or nil, if the array is empty.
+
+716
+00:36:19,678 --> 00:36:22,345
+So it never does array index out of bounds, so it's kind of
+
+717
+00:36:22,347 --> 00:36:25,649
+a cool, there's also last, but first is kind of a cool one.
+
+718
+00:36:25,651 --> 00:36:27,250
+And when I pull it out of there, of course,
+
+719
+00:36:27,252 --> 00:36:29,519
+it needs to be a tweet. Okay, so
+
+720
+00:36:29,521 --> 00:36:33,456
+if I can pull the first thing out of this result array and
+
+721
+00:36:33,458 --> 00:36:37,394
+it's a tweet, I'm good to go. I can just return that tweet.
+
+722
+00:36:37,396 --> 00:36:40,030
+Okay? Otherwise, I couldn't find the thing in there.
+
+723
+00:36:40,032 --> 00:36:42,232
+I got to go create it in the data base.
+
+724
+00:36:42,234 --> 00:36:44,935
+Everybody cool with this code? Now this is unfortunate
+
+725
+00:36:44,937 --> 00:36:47,671
+a lot of code, okay? Seven lines of code here.
+
+726
+00:36:47,673 --> 00:36:50,707
+This can all be done in one line. LIne of code, okay?
+
+727
+00:36:50,709 --> 00:36:53,343
+So let's look at that. How can we do that? And in this is,
+
+728
+00:36:53,345 --> 00:36:55,645
+requires you to start getting more and more familiar
+
+729
+00:36:55,647 --> 00:36:58,181
+with optional chaining, okay. >> Cuz we got a lot of things
+
+730
+00:36:58,183 --> 00:37:00,217
+that can go wrong here, okay? Things can be nil,
+
+731
+00:37:00,219 --> 00:37:03,420
+all kinds of things happening right here. So believe it or
+
+732
+00:37:03,422 --> 00:37:05,889
+not we can do this just by doing this.
+
+733
+00:37:05,891 --> 00:37:10,760
+If let tweet = we're gonna try,
+
+734
+00:37:10,762 --> 00:37:14,531
+and if we fail, return nill. Try? means try it, and if it
+
+735
+00:37:14,533 --> 00:37:18,969
+fails return nill. To ask our context to execute this fetch
+
+736
+00:37:18,971 --> 00:37:23,440
+request. Okay, this same fetch request we just did, okay.
+
+737
+00:37:23,442 --> 00:37:27,811
+If that is successful, then go on to get the first thing in
+
+738
+00:37:27,813 --> 00:37:34,517
+the array. And see if you can cast it to a tweet, okay.
+
+739
+00:37:35,721 --> 00:37:40,090
+That is identical to this, okay. And
+
+740
+00:37:40,092 --> 00:37:43,326
+it reads a little more simply a little more like English,
+
+741
+00:37:43,328 --> 00:37:47,464
+okay. Try to use the context to execute this Fetch request.
+
+742
+00:37:47,466 --> 00:37:49,399
+Get the first thing, a-and if you can get this
+
+743
+00:37:49,401 --> 00:37:53,670
+first thing as a tweet, Then return it. Okay? So
+
+744
+00:37:53,672 --> 00:37:57,007
+it's actually better code, I believe more readable than
+
+745
+00:37:57,009 --> 00:37:57,574
+the other. Yeah? >> So
+
+746
+00:37:57,576 --> 00:38:01,478
+where would we link the catch? >> Yeah, so
+
+747
+00:38:01,480 --> 00:38:03,880
+we can't do this if we're gonna catch.
+
+748
+00:38:03,882 --> 00:38:06,650
+If we're gonna catch and do something we ignore so,
+
+749
+00:38:06,652 --> 00:38:08,318
+we didn't do that, but if we're gonna catch and
+
+750
+00:38:08,320 --> 00:38:11,755
+do something then we would have to use this more verbose
+
+751
+00:38:12,190 --> 00:38:13,957
+Good question there.
+
+752
+00:38:13,959 --> 00:38:18,828
+Alright, so we got that, okay. So, what if we can't? Okay?
+
+753
+00:38:18,830 --> 00:38:22,265
+What if we could not find the tweet in the database?
+
+754
+00:38:22,267 --> 00:38:24,567
+Now we need to create the tweet, okay?
+
+755
+00:38:24,569 --> 00:38:27,270
+So here I'm gonna say, okay I couldnt it so
+
+756
+00:38:27,272 --> 00:38:30,740
+I couldn't look it up. So if I can create it which is,
+
+757
+00:38:30,742 --> 00:38:34,144
+if you'll remember from the slide, NS entity
+
+758
+00:38:34,146 --> 00:38:40,350
+description.insert, insert new object for
+
+759
+00:38:40,352 --> 00:38:43,286
+entity for name, okay? We're creating a tweet.
+
+760
+00:38:43,288 --> 00:38:47,590
+The manage object context is context, okay, and
+
+761
+00:38:47,592 --> 00:38:53,697
+we obviously want it to be a tweet. Okay?
+
+762
+00:38:53,932 --> 00:38:55,832
+So here we've created the tweet.
+
+763
+00:38:55,834 --> 00:38:59,302
+If we£re able to, okay if let, so we£re gonna see if we can
+
+764
+00:38:59,304 --> 00:39:02,372
+create it by inserting something in the database.
+
+765
+00:39:02,374 --> 00:39:06,242
+Everybody cool with that line of code.
+
+766
+00:39:06,244 --> 00:39:09,746
+All right, now we've created a tweet, but it£s empty, okay.
+
+767
+00:39:09,748 --> 00:39:10,914
+It£s all everything£s nill in there,
+
+768
+00:39:10,916 --> 00:39:13,416
+so we need to start setting some of the values like really
+
+769
+00:39:13,418 --> 00:39:16,019
+importantly we better set that unique equal to the Twitter
+
+770
+00:39:16,021 --> 00:39:19,956
+info£s ID. Okay, make sure it's unique, we also wanna set
+
+771
+00:39:19,958 --> 00:39:26,196
+the tweets text equal to the Twitter info's text. I think
+
+772
+00:39:26,198 --> 00:39:29,499
+we also had the tweet posted which would be the Twitter
+
+773
+00:39:29,501 --> 00:39:33,870
+info's created, okay? So we just wanna go through here and
+
+774
+00:39:33,872 --> 00:39:36,506
+grab the information that we got from it network, and
+
+775
+00:39:36,508 --> 00:39:38,675
+put it in the database that's basically what we're doing
+
+776
+00:39:38,677 --> 00:39:41,311
+here. Okay? Now, what about this one,
+
+777
+00:39:41,313 --> 00:39:47,917
+tweet.tweeter =? Ooh, what do we, how do we do that?
+
+778
+00:39:47,919 --> 00:39:50,820
+Gotta set up that relationship between [LAUGH] tweeter and
+
+779
+00:39:50,822 --> 00:39:52,789
+tweets, okay? Well, to do that,
+
+780
+00:39:52,791 --> 00:39:56,092
+we have to create the Twitter user. That goes for this,
+
+781
+00:39:56,094 --> 00:39:59,796
+okay, and by that I mean this Twitter user right here.
+
+782
+00:39:59,798 --> 00:40:04,000
+This managed object Twitter user. Okay. And to create
+
+783
+00:40:04,002 --> 00:40:07,103
+a twitter user, I'm going to use the exact same kind of
+
+784
+00:40:07,105 --> 00:40:10,440
+code that I just was in the middle of typing and tweet.
+
+785
+00:40:10,442 --> 00:40:12,942
+I'm going to type it in really fast because
+
+786
+00:40:12,944 --> 00:40:17,447
+it's exactly the same, okay. So I'll go through it here but
+
+787
+00:40:17,449 --> 00:40:17,781
+it's exactly the same.
+
+788
+00:40:17,783 --> 00:40:20,984
+So I need to import twitter, just like I did in that one.
+
+789
+00:40:20,986 --> 00:40:24,354
+So here we're in twitter user. Okay? And this one's called
+
+790
+00:40:24,356 --> 00:40:27,157
+Twitter user with Twitter info. This time the Twitter
+
+791
+00:40:27,159 --> 00:40:30,760
+info is not a Twitter, tweet, it's a Twitter.user. Okay,
+
+792
+00:40:30,762 --> 00:40:32,829
+and we still have to pass the the manage object context.
+
+793
+00:40:32,831 --> 00:40:36,833
+And it returns a Twitter user if it can find one or create.
+
+794
+00:40:36,835 --> 00:40:40,537
+Okay, now for Twitter user the unique is the screen name.
+
+795
+00:40:40,539 --> 00:40:43,239
+Every Twitter user has their own unique screen name, so
+
+796
+00:40:43,241 --> 00:40:43,673
+we don't have a unique
+
+797
+00:40:43,675 --> 00:40:46,009
+we just use the screen name as the unique thing. Here,
+
+798
+00:40:46,011 --> 00:40:48,678
+we're doing that try to see if we can find it, if we can, we
+
+799
+00:40:48,680 --> 00:40:52,882
+return it. If we can't, we're inserting a new one, okay, and
+
+800
+00:40:52,884 --> 00:40:56,686
+setting the screen name and the name, and returning it.
+
+801
+00:40:56,688 --> 00:41:01,157
+Okay? Now, notice that I'm not setting the tweet's NS set.
+
+802
+00:41:01,159 --> 00:41:05,161
+I'm not adding anything to the tweet NS set here. Okay,
+
+803
+00:41:05,163 --> 00:41:05,261
+at this point I don't know any tweets that are in a set.
+
+804
+00:41:05,263 --> 00:41:08,598
+that's because I,
+
+805
+00:41:08,600 --> 00:41:10,233
+So I'm just creating a twitter user that so
+
+806
+00:41:10,235 --> 00:41:16,005
+far, has no tweets in the database, okay, when I create.
+
+807
+00:41:16,608 --> 00:41:19,275
+Alright? Now let's go back here to where we're creating
+
+808
+00:41:19,277 --> 00:41:22,946
+the tweet, and now to set this tweet.tweeter all we need to
+
+809
+00:41:22,948 --> 00:41:29,152
+do is say twitter user Twitter user with Twitter info.
+
+810
+00:41:29,154 --> 00:41:35,925
+And now we pass the user, which is the Twitterinfo.user
+
+811
+00:41:35,927 --> 00:41:40,163
+in inManagedObjectContext.
+
+812
+00:41:40,165 --> 00:41:45,835
+The context, okay? This creates that Twitter user.
+
+813
+00:41:45,837 --> 00:41:50,173
+Okay, and sets it to this bar which is that relationship.
+
+814
+00:41:50,175 --> 00:41:53,576
+The NS Set in the Twitter user, will have this tweet
+
+815
+00:41:53,578 --> 00:41:56,246
+auto, tweet automatically added to it, okay.
+
+816
+00:41:56,248 --> 00:41:58,481
+You don't have to do both sides, if you do one side,
+
+817
+00:41:58,483 --> 00:42:01,184
+it does the other, if I'd put a tweet in the Twitter user
+
+818
+00:42:01,186 --> 00:42:05,588
+NS Set, the Twitter would have been set to it. Okay? If you
+
+819
+00:42:05,590 --> 00:42:08,791
+do, if you touch one side, the other side gets kept in sync,
+
+820
+00:42:08,793 --> 00:42:10,493
+that's the awesome thing about Core Data. So
+
+821
+00:42:10,495 --> 00:42:12,428
+you never have to worry about database integrity,
+
+822
+00:42:12,430 --> 00:42:15,465
+it manages the integrity all the time for you, okay?
+
+823
+00:42:15,467 --> 00:42:19,569
+Very important to understand. All right, so we got it.
+
+824
+00:42:19,571 --> 00:42:21,437
+So as long as we were able to do,
+
+825
+00:42:21,439 --> 00:42:25,208
+either look it up or create it, we can return it okay?
+
+826
+00:42:25,210 --> 00:42:29,212
+Whoops. Return the tweet, otherwise if we couldn£t do
+
+827
+00:42:29,214 --> 00:42:32,282
+either of those things then we£ll just return nill.
+
+828
+00:42:32,984 --> 00:42:36,185
+Okay very unlikely cuz this almost never fails. Inserting
+
+829
+00:42:36,187 --> 00:42:42,091
+a new object, it£s gonna work for G1 100% of the time. Okay?
+
+830
+00:42:42,093 --> 00:42:47,664
+Got that? All right. So back to where we were calling this.
+
+831
+00:42:48,099 --> 00:42:49,299
+Right here. Everybody cool with this?
+
+832
+00:42:49,301 --> 00:42:53,937
+You can see how this is going to put this array of tweets,
+
+833
+00:42:53,939 --> 00:43:00,043
+okay, into the database. All right.
+
+834
+00:43:00,045 --> 00:43:07,016
+Now, let's go ahead and before we do our new mvc
+
+835
+00:43:07,018 --> 00:43:08,851
+let's just make sure this is working okay?
+
+836
+00:43:08,853 --> 00:43:12,088
+I'm gonna write a little function here that prints out
+
+837
+00:43:12,090 --> 00:43:12,689
+what's in the database.
+
+838
+00:43:12,691 --> 00:43:14,624
+How many Twitter users, how many tweets.
+
+839
+00:43:14,626 --> 00:43:17,493
+Let's just see if this working okay? So let's write,
+
+840
+00:43:17,495 --> 00:43:19,429
+let's write that function, see what that would look like.
+
+841
+00:43:19,431 --> 00:43:22,098
+So I'm gonna have a private funk. I'm gonna call
+
+842
+00:43:22,100 --> 00:43:26,402
+it PrintDatabaseStatistics cuz it's basically going just
+
+843
+00:43:26,404 --> 00:43:31,608
+print how many, Twitter users are and how many, of the,
+
+844
+00:43:31,610 --> 00:43:36,179
+how many tweets and how many Twitter users, so of course we
+
+845
+00:43:36,181 --> 00:43:42,619
+have to perform this in a block Okay, cuz we always
+
+846
+00:43:42,621 --> 00:43:47,857
+have to do that when we're doing manage object context
+
+847
+00:43:47,859 --> 00:43:50,927
+stuff and I'm going to watch this,
+
+848
+00:43:50,929 --> 00:43:55,865
+if let results equal try to execute on our context and
+
+849
+00:43:55,867 --> 00:44:00,403
+actually we can exclamation point that.
+
+850
+00:44:00,405 --> 00:44:01,671
+Execute fetch request. Now watch.
+
+851
+00:44:01,673 --> 00:44:04,207
+I'm going to create a fetch request on the fly here.
+
+852
+00:44:04,209 --> 00:44:07,710
+Fetch request with an entity name and what am I looking for
+
+853
+00:44:07,712 --> 00:44:10,380
+here? Okay, let's count the Twitter users first. So
+
+854
+00:44:10,382 --> 00:44:14,250
+Twitter user. Now, notice I have a fetch request here with
+
+855
+00:44:14,252 --> 00:44:17,186
+now predicate. I just created an quest
+
+856
+00:44:17,188 --> 00:44:20,890
+with no predicate set on it. That gets all twitter users.
+
+857
+00:44:20,892 --> 00:44:23,693
+If you have a without a predicate, that means give me
+
+858
+00:44:23,695 --> 00:44:26,529
+all of them, all of whatever the entity is
+
+859
+00:44:26,531 --> 00:44:31,200
+that you're looking for. Okay, so if I'm able to do that and
+
+860
+00:44:31,202 --> 00:44:34,337
+get the results, then I'm just going to print that we have
+
+861
+00:44:34,339 --> 00:44:40,376
+Result.count how ever many we go here.
+
+862
+00:44:40,378 --> 00:44:44,847
+Twitter users. Okay so, that£s this little code right
+
+863
+00:44:44,849 --> 00:44:47,450
+here, we£ll print out how many Twitter users are in
+
+864
+00:44:47,452 --> 00:44:50,720
+the database. Alright, now there£s actually a better
+
+865
+00:44:50,722 --> 00:44:53,589
+way to do this because this is a bit of a problem, when I
+
+866
+00:44:53,591 --> 00:44:56,259
+execute that vet request it gives me every single
+
+867
+00:44:56,261 --> 00:44:58,094
+Twitter user out of the database and
+
+868
+00:44:58,096 --> 00:45:01,764
+into my memory. Now, there just husks because remember I
+
+869
+00:45:01,766 --> 00:45:05,535
+talked about the faulting thing. So, the attributes like
+
+870
+00:45:05,537 --> 00:45:08,504
+the Twitter user screen name and name those aren't pulled
+
+871
+00:45:08,506 --> 00:45:11,941
+from the database. But, like a little husk is there and
+
+872
+00:45:11,943 --> 00:45:13,509
+if I had thousands thousands of Twitter users,
+
+873
+00:45:13,511 --> 00:45:16,112
+that would be unnecessarily thousands of bytes
+
+874
+00:45:16,114 --> 00:45:18,715
+being pulled into my memory. Okay. So there's a better way
+
+875
+00:45:18,717 --> 00:45:22,318
+to do this. There's actually an execute equivalent, which
+
+876
+00:45:22,320 --> 00:45:24,921
+only counts how many things there are, and it counts it on
+
+877
+00:45:24,923 --> 00:45:27,356
+the database side without pulling everything over and
+
+878
+00:45:27,358 --> 00:45:31,794
+counting it in an array. So for the tweets I'll use that
+
+879
+00:45:31,796 --> 00:45:36,999
+way of doing it and that looks like this. I'm gonna let tweet
+
+880
+00:45:37,001 --> 00:45:41,971
+count equal our context-managed object,
+
+881
+00:45:41,973 --> 00:45:46,075
+countForFetchRequest, it's called. Okay? Instead of
+
+882
+00:45:46,077 --> 00:45:48,511
+execute fetch request it calls count for fetch request.
+
+883
+00:45:48,513 --> 00:45:51,814
+I'm still gonna create a fetch request on the fly here, and
+
+884
+00:45:51,816 --> 00:45:57,353
+this time, I am, In this fetch request entity name.
+
+885
+00:45:57,355 --> 00:46:01,124
+This time I'm searching for tweets, not Twitter users.
+
+886
+00:46:01,126 --> 00:46:02,792
+Notice there's this little error pointer right here.
+
+887
+00:46:02,794 --> 00:46:06,496
+You see this error pointer? This is an interesting method.
+
+888
+00:46:06,498 --> 00:46:06,896
+I'm not sure why it does
+
+889
+00:46:06,898 --> 00:46:08,564
+it this way. But instead of throwing the error,
+
+890
+00:46:08,566 --> 00:46:10,633
+it actually returns it through a pointer.
+
+891
+00:46:10,635 --> 00:46:13,669
+And if you're not interested, you can just say, nil. Say,
+
+892
+00:46:13,671 --> 00:46:17,373
+I don't want any error information. Okay?
+
+893
+00:46:17,375 --> 00:46:20,710
+So it's kind of an odd little method in that way.
+
+894
+00:46:20,712 --> 00:46:22,278
+That's going to return the tweet count.
+
+895
+00:46:22,280 --> 00:46:26,983
+And now, I can just print. The tweetCount,
+
+896
+00:46:26,985 --> 00:46:32,221
+Tweets. So this is better code right here than this, okay?
+
+897
+00:46:32,223 --> 00:46:33,456
+It's gonna be much more efficient.
+
+898
+00:46:33,458 --> 00:46:36,492
+I'll leave them both in here so that when I post the demo,
+
+899
+00:46:36,494 --> 00:46:37,360
+you can see the difference.
+
+900
+00:46:37,362 --> 00:46:41,664
+Here, I'll even put a comment in here. A more efficient way
+
+901
+00:46:41,666 --> 00:46:47,436
+to count objects. Okay, but they're both just counting.
+
+902
+00:46:47,438 --> 00:46:48,638
+This is counting the number of Twitter users,
+
+903
+00:46:48,640 --> 00:46:51,808
+this is counting the number of tweets. Okay, so
+
+904
+00:46:51,810 --> 00:46:55,578
+let's call this print every time we update the database,
+
+905
+00:46:55,580 --> 00:46:55,745
+let's go ahead and
+
+906
+00:46:55,747 --> 00:46:58,414
+call this print database statistics thing, and I'm
+
+907
+00:46:58,416 --> 00:47:02,385
+actually gonna put a little print in here saying, done
+
+908
+00:47:02,387 --> 00:47:06,255
+printing database statistics. Okay, I'm gonna put
+
+909
+00:47:06,257 --> 00:47:09,258
+this in here because something interesting is going to happen
+
+910
+00:47:09,260 --> 00:47:14,130
+with that print. Okay? All right,
+
+911
+00:47:14,132 --> 00:47:16,199
+let's go ahead and run. Now we should be
+
+912
+00:47:16,201 --> 00:47:19,168
+loading up the database with Twitter users and tweets every
+
+913
+00:47:19,170 --> 00:47:21,204
+time we search for something, hashtag Stanford.
+
+914
+00:47:21,206 --> 00:47:24,407
+We're not showing any of it but hopefully we'll be loading
+
+915
+00:47:24,409 --> 00:47:30,346
+up the database. Okay, we have to,
+
+916
+00:47:30,348 --> 00:47:32,682
+we'll set our prototypes here when we get to that.
+
+917
+00:47:32,684 --> 00:47:36,085
+So, here's our segue. You can see our table here is empty.
+
+918
+00:47:36,087 --> 00:47:38,154
+We haven't done anything to implement that MVC, so
+
+919
+00:47:38,156 --> 00:47:43,192
+it's just a blank MVC. But if we do #stanford,
+
+920
+00:47:43,194 --> 00:47:48,064
+okay, it searches and we'll see down here in our console
+
+921
+00:47:48,466 --> 00:47:51,100
+that it had a hundred tweets, which is right,
+
+922
+00:47:51,102 --> 00:47:53,502
+because remember here in our code,
+
+923
+00:47:53,504 --> 00:47:55,771
+we fetch a hundred tweets, okay?
+
+924
+00:47:55,773 --> 00:47:59,375
+So, that's doing that properly and it's only 75 users,
+
+925
+00:47:59,377 --> 00:48:02,712
+why is that? Well, probably there are people in here who
+
+926
+00:48:02,714 --> 00:48:04,080
+are tweeting more than ones, okay?
+
+927
+00:48:04,082 --> 00:48:07,016
+Numerous fill like here, this guy, I am not the clone. Okay?
+
+928
+00:48:07,018 --> 00:48:10,152
+He tweeted twice right there, so you only count it once.
+
+929
+00:48:10,154 --> 00:48:12,688
+So that sounds right that there's something,
+
+930
+00:48:12,690 --> 00:48:15,725
+75 and 100. Now, here's a very important test
+
+931
+00:48:15,727 --> 00:48:16,559
+to make sure things are working.
+
+932
+00:48:16,561 --> 00:48:19,629
+I'm gonna look for hashtag Stanford again and
+
+933
+00:48:19,631 --> 00:48:25,201
+I better not get 200 tweets. There it is, only 100.
+
+934
+00:48:25,203 --> 00:48:27,803
+So nobody even tweeted to Stanford,
+
+935
+00:48:27,805 --> 00:48:32,875
+one of you maybe tweeted, make it work for us here. Okay,
+
+936
+00:48:32,877 --> 00:48:34,443
+let me try something else.
+
+937
+00:48:34,445 --> 00:48:38,080
+How about #SFGiants, believe they're playing right now.
+
+938
+00:48:38,082 --> 00:48:40,883
+Okay, now we have 200 tweets because we searched for
+
+939
+00:48:40,885 --> 00:48:44,654
+something different, okay. So we've got the 100 tweets from
+
+940
+00:48:44,656 --> 00:48:46,322
+Stanford, and hundreds of tweets from Giants, so
+
+941
+00:48:46,324 --> 00:48:49,926
+I'm gonna do Giants again. Still nobody tweeting.
+
+942
+00:48:49,928 --> 00:48:51,260
+Nobody's interested in the Giants or
+
+943
+00:48:51,262 --> 00:48:56,432
+in Stanford currently, I guess. There we go.
+
+944
+00:48:56,434 --> 00:48:59,402
+Somebody finally tweeted something new for the Giants.
+
+945
+00:48:59,404 --> 00:49:00,503
+Okay. So now, we have 201 tweets,
+
+946
+00:49:00,505 --> 00:49:04,573
+okay. Doesn't sound like things are going well for
+
+947
+00:49:04,575 --> 00:49:09,011
+the Giants. Hope I didn't spoil it for anybody. Okay.
+
+948
+00:49:09,013 --> 00:49:11,247
+So, we got our thing working right here.
+
+949
+00:49:11,249 --> 00:49:14,884
+Look at this though, dome printing database statistics,
+
+950
+00:49:14,886 --> 00:49:20,256
+that's printing out before it prints, isn't that weird?
+
+951
+00:49:20,258 --> 00:49:23,659
+This print is definitely after print database statistics, so
+
+952
+00:49:23,661 --> 00:49:28,130
+why is this printing out before? Anyone have an idea?
+
+953
+00:49:30,101 --> 00:49:34,103
+It begins with an A. Asynchronous,
+
+954
+00:49:34,105 --> 00:49:37,940
+yeah. Okay, this stuff, these performed blocks both this
+
+955
+00:49:37,942 --> 00:49:40,476
+performed block right here, and also this performed block
+
+956
+00:49:40,478 --> 00:49:44,013
+up here happen asynchronously. These blocks just get put onto
+
+957
+00:49:44,015 --> 00:49:46,015
+their queue, and in this case it's the main queue, but
+
+958
+00:49:46,017 --> 00:49:48,217
+that doesn't matter, whatever the queue is and
+
+959
+00:49:48,219 --> 00:49:48,751
+they get put on that.
+
+960
+00:49:48,753 --> 00:49:50,886
+So, when I do printdatabase for statistics,
+
+961
+00:49:50,888 --> 00:49:54,123
+it does this line of code which returns immediately.
+
+962
+00:49:54,125 --> 00:49:56,993
+It instantly returns, it puts that block on some queue and
+
+963
+00:49:56,995 --> 00:49:59,562
+returns immediately. It doesn't wait to execute
+
+964
+00:49:59,564 --> 00:50:02,064
+this code because this is not perform block and wait, it's
+
+965
+00:50:02,066 --> 00:50:05,634
+just perform block. So this goes, returns immediately, and
+
+966
+00:50:05,636 --> 00:50:08,304
+then this prints out immediately. Then later, this
+
+967
+00:50:08,306 --> 00:50:11,440
+block gets pulled off onto the queue, the main queue, and
+
+968
+00:50:11,442 --> 00:50:16,746
+run does its thing which causes this output. Okay,
+
+969
+00:50:16,748 --> 00:50:17,813
+see why I put this in here so
+
+970
+00:50:17,815 --> 00:50:20,850
+you understand that? This is happening asynchronously
+
+971
+00:50:20,852 --> 00:50:23,452
+unless you say perform block and wait. It's asynchronous.
+
+972
+00:50:23,454 --> 00:50:30,359
+All right, now we got the data in our database. Excellent,
+
+973
+00:50:30,361 --> 00:50:33,562
+now we can go on back to our storyboard right here.
+
+974
+00:50:33,564 --> 00:50:39,135
+And we can implement this NBC, this new NBC of ours.
+
+975
+00:50:39,137 --> 00:50:41,704
+We need to do some things to do that.
+
+976
+00:50:41,873 --> 00:50:45,007
+We need to make sure that we have for example,
+
+977
+00:50:45,009 --> 00:50:48,844
+reuse identifier for this cell. So what is that cell?
+
+978
+00:50:48,846 --> 00:50:51,947
+It's basically a Twitter user, so I'll call it Twitter user
+
+979
+00:50:51,949 --> 00:50:56,285
+cell. We want these probably to be subtitle,
+
+980
+00:50:56,287 --> 00:50:57,053
+okay, instead of custom cell.
+
+981
+00:50:57,055 --> 00:50:59,822
+We don't need custom cells for any reason.
+
+982
+00:50:59,824 --> 00:51:03,492
+Whoops. We can make sure we have our identities for
+
+983
+00:51:03,494 --> 00:51:05,761
+the whole table. We do. That's all looking good.
+
+984
+00:51:05,763 --> 00:51:09,098
+We can make sure we have this set, okay? Which we do. Okay?
+
+985
+00:51:09,100 --> 00:51:12,201
+So it's all good, all right? So we're all ready to.
+
+986
+00:51:12,203 --> 00:51:16,405
+Basically implement this guy's class his custom sub class.
+
+987
+00:51:16,407 --> 00:51:19,141
+So let's go take a look at that, that's right here.
+
+988
+00:51:19,143 --> 00:51:22,445
+Whenever we implement a new mvc, a great thing to do
+
+989
+00:51:22,447 --> 00:51:25,014
+I think, it's the fourth time I've said it in this class.
+
+990
+00:51:25,016 --> 00:51:27,983
+Come up with this model first, try to understand what this
+
+991
+00:51:27,985 --> 00:51:31,554
+thing is actually doing by understanding its model. Now,
+
+992
+00:51:31,556 --> 00:51:35,324
+this is a very simple NVC, it takes some mention,
+
+993
+00:51:35,326 --> 00:51:39,395
+like hashtag stamper and it searches for all the users,
+
+994
+00:51:39,397 --> 00:51:44,166
+okay, who have tweeted that, okay, in, in our database.
+
+995
+00:51:44,168 --> 00:51:48,838
+So a clear, very important part is that mention. Okay,
+
+996
+00:51:48,840 --> 00:51:50,639
+whatever that mention is, hashtag Stanford,
+
+997
+00:51:50,641 --> 00:51:53,209
+that clearly needs to be part of our model. Okay,
+
+998
+00:51:53,211 --> 00:51:54,944
+without that we can't do anything. But
+
+999
+00:51:54,946 --> 00:51:59,115
+another really important part of the model is that database.
+
+1000
+00:51:59,117 --> 00:52:01,050
+Okay? Without that database I can't look
+
+1001
+00:52:01,052 --> 00:52:03,953
+this mention up. Okay? So another one is
+
+1002
+00:52:03,955 --> 00:52:07,857
+a managed object model just like our other one, actually,
+
+1003
+00:52:07,859 --> 00:52:09,525
+had part of its model as well. Okay,
+
+1004
+00:52:09,527 --> 00:52:14,263
+that's an NSManaged not models and NSManagedObjectContext,
+
+1005
+00:52:14,265 --> 00:52:19,235
+NSManagedObjectContext, okay? I'll have that be optional,
+
+1006
+00:52:19,237 --> 00:52:22,471
+but to be frank, if that's nil I'm not gonna, I'm gonna have
+
+1007
+00:52:22,473 --> 00:52:27,810
+an empty table, okay? Because this time really demands that.
+
+1008
+00:52:27,812 --> 00:52:31,080
+If either of these change I'm gonna do a did set here and
+
+1009
+00:52:31,082 --> 00:52:33,782
+update my ui, which basically means I'm gonna have to reload
+
+1010
+00:52:33,784 --> 00:52:40,089
+my table, okay? So, I'll do for either of these, and
+
+1011
+00:52:40,091 --> 00:52:41,290
+then of course I need a private,
+
+1012
+00:52:41,292 --> 00:52:46,529
+private funk update ui. Okay,
+
+1013
+00:52:46,531 --> 00:52:49,832
+and in here we're gonna have to use this information. Okay,
+
+1014
+00:52:49,834 --> 00:52:54,336
+it's complaining here because we have to import core data.
+
+1015
+00:52:54,338 --> 00:52:58,807
+Okay. Notice that this particular NBC does not import
+
+1016
+00:52:58,809 --> 00:53:04,346
+Twitter. Okay. Because it's purely using the database,
+
+1017
+00:53:04,815 --> 00:53:07,383
+the other MVC uses Twitter and the database, this one
+
+1018
+00:53:07,385 --> 00:53:09,685
+only uses the database, so it doesn't import Twitter,
+
+1019
+00:53:09,687 --> 00:53:12,555
+just core data. All right, so we'll get to
+
+1020
+00:53:12,557 --> 00:53:15,357
+update U-I. A second one thing I wanted to do before that is
+
+1021
+00:53:15,359 --> 00:53:18,561
+do our prepare for Segway and set these two things,
+
+1022
+00:53:18,563 --> 00:53:21,030
+okay, so we have to be prepared for Segway
+
+1023
+00:53:21,032 --> 00:53:25,901
+back in this MVC over here. So let's go back to that NBC,
+
+1024
+00:53:25,903 --> 00:53:28,671
+we'll put it, right here, prepare for segue this prepare
+
+1025
+00:53:28,673 --> 00:53:33,108
+for segue, by now prepare for segue should be old
+
+1026
+00:53:33,110 --> 00:53:35,811
+hat for you guys. You've done so many segues, but we're just
+
+1027
+00:53:35,813 --> 00:53:39,415
+going to check to see if the segue's identifier is right.
+
+1028
+00:53:39,417 --> 00:53:42,351
+That's going to be, what did I call that thing?
+
+1029
+00:53:42,353 --> 00:53:42,685
+I can't even remember now,
+
+1030
+00:53:42,687 --> 00:53:47,289
+let's look in our story board. This was called, copy and
+
+1031
+00:53:47,291 --> 00:53:51,360
+paste. Tweeters mentioning search term, okay?
+
+1032
+00:53:51,362 --> 00:53:53,562
+So, if it's the tweeters mentioning search term segue,
+
+1033
+00:53:53,564 --> 00:53:58,000
+then I need to get the destination view controller as
+
+1034
+00:53:58,002 --> 00:54:03,105
+a tweeter table u controller. So I'm gonna say if I can let,
+
+1035
+00:54:03,107 --> 00:54:07,176
+the tweeters TVC we'll call it,
+
+1036
+00:54:07,178 --> 00:54:10,679
+equal the segue.destinationViewContro-
+
+1037
+00:54:10,681 --> 00:54:14,450
+ller as a TweetersTableViewController.
+
+1038
+00:54:14,452 --> 00:54:15,384
+Okay, so I've got a hold of it.
+
+1039
+00:54:15,386 --> 00:54:19,521
+Now I can just set the public API the model of this, so
+
+1040
+00:54:19,523 --> 00:54:25,094
+it's got the mention which is just our search text, and
+
+1041
+00:54:25,096 --> 00:54:26,595
+actually don't even need to do that.
+
+1042
+00:54:26,597 --> 00:54:31,800
+This is our search text and tweeters.tvc.managedobjectsco-
+
+1043
+00:54:31,802 --> 00:54:36,138
+ntext is our managed objects context, okay, so
+
+1044
+00:54:36,140 --> 00:54:36,272
+we just prepare.
+
+1045
+00:54:36,274 --> 00:54:41,543
+That's all we're doing here is preparing. Now that's okay,
+
+1046
+00:54:41,545 --> 00:54:44,613
+now back to here. Update U-I. So, how are we going to update
+
+1047
+00:54:44,615 --> 00:54:46,015
+this U-I? We need to have this table,
+
+1048
+00:54:46,017 --> 00:54:49,885
+and we need to have it full of Twitter users who have Tweeted
+
+1049
+00:54:49,887 --> 00:54:53,289
+a Tweet that has this mention hashtag Stanford in there or
+
+1050
+00:54:53,291 --> 00:54:56,358
+whatever, okay. How are we going to do that? Well,
+
+1051
+00:54:56,360 --> 00:54:59,061
+we're gonna use an NS fetched results controller,
+
+1052
+00:54:59,063 --> 00:55:01,730
+that really cool object I told you about the end of the last
+
+1053
+00:55:01,732 --> 00:55:05,267
+lecture. And that is an object that basically just glues
+
+1054
+00:55:05,269 --> 00:55:07,636
+an NS fetch request to a table view,
+
+1055
+00:55:07,638 --> 00:55:09,138
+and that's exactly what we want here.
+
+1056
+00:55:09,140 --> 00:55:10,306
+We're gonna create an NS fetch request,
+
+1057
+00:55:10,308 --> 00:55:12,875
+which fetches the twitterings, we want, then we're
+
+1058
+00:55:12,877 --> 00:55:16,412
+gonna glue it on this table, okay? And in that way, anytime
+
+1059
+00:55:16,414 --> 00:55:19,515
+the database changes in a way that those users would change,
+
+1060
+00:55:19,517 --> 00:55:21,450
+it's gonna automatically update the table, and
+
+1061
+00:55:21,452 --> 00:55:23,819
+we don't have to do anything else, okay?
+
+1062
+00:55:23,821 --> 00:55:27,656
+Now, let's remind ourselves how NS Fetch Request,
+
+1063
+00:55:27,658 --> 00:55:32,695
+NS Fetch Request, NS Fetch Request Controller How
+
+1064
+00:55:32,697 --> 00:55:35,864
+it works, okay? It's got two pieces to it, and
+
+1065
+00:55:35,866 --> 00:55:38,334
+I'm gonna have both of those pieces implemented for
+
+1066
+00:55:38,336 --> 00:55:41,470
+you using this class that you're gonna be able to use
+
+1067
+00:55:41,472 --> 00:55:44,073
+for your homework, it's right over here,
+
+1068
+00:55:44,075 --> 00:55:46,842
+called core data table view controller.
+
+1069
+00:55:46,844 --> 00:55:48,644
+So let's drag this core data view controller.
+
+1070
+00:55:48,646 --> 00:55:51,480
+I'm gonna put it in my core data group right here and
+
+1071
+00:55:51,482 --> 00:55:56,118
+copy it in, okay. All right so let's take a look at this
+
+1072
+00:55:56,120 --> 00:56:00,122
+thing and see how ns fetched results controller works.
+
+1073
+00:56:00,124 --> 00:56:02,558
+So, here's core data table view controller,
+
+1074
+00:56:02,560 --> 00:56:04,727
+it's a sub class of ui table view controller,
+
+1075
+00:56:04,729 --> 00:56:07,863
+you're gonna make it be a sub class, you're gonna make it
+
+1076
+00:56:07,865 --> 00:56:10,833
+be the super class of your ui table view controller.
+
+1077
+00:56:10,835 --> 00:56:12,735
+So back here in our TweetersTableView,
+
+1078
+00:56:12,737 --> 00:56:15,471
+instead of inheriting from UITableViewController,
+
+1079
+00:56:15,473 --> 00:56:19,007
+I'm going to inherit from CoreDateTableViewController.
+
+1080
+00:56:19,009 --> 00:56:21,944
+That way, I'll get everything you get from
+
+1081
+00:56:21,946 --> 00:56:22,277
+UITableViewController.
+
+1082
+00:56:22,279 --> 00:56:25,314
+But I'm also going to get this NS Fetch results controller
+
+1083
+00:56:25,316 --> 00:56:28,317
+stuff, okay? So let's look at that some more. There's two
+
+1084
+00:56:28,319 --> 00:56:32,654
+parts to the NS Fetch results controller. One is that
+
+1085
+00:56:32,656 --> 00:56:37,226
+I can use the [INAUDIBLE] to implement my entire UI table
+
+1086
+00:56:37,228 --> 00:56:39,862
+view data source except for its self erodement index
+
+1087
+00:56:39,864 --> 00:56:42,698
+path, okay? You still have to implement that. But all
+
+1088
+00:56:42,700 --> 00:56:45,567
+the other ones look numbers of sections in table view,
+
+1089
+00:56:45,569 --> 00:56:46,769
+numbers of rows in section,
+
+1090
+00:56:46,771 --> 00:56:48,837
+even the section header titers, titles,
+
+1091
+00:56:48,839 --> 00:56:52,741
+right the header titles, and footer titles section indexes.
+
+1092
+00:56:52,743 --> 00:56:54,176
+All this stuff, it implements all that stuff.
+
+1093
+00:56:54,178 --> 00:56:57,079
+See how the implementation of these is all using the fetch
+
+1094
+00:56:57,081 --> 00:57:00,649
+results controller? So that's part A of how the NS
+
+1095
+00:57:00,651 --> 00:57:03,786
+fetch results controller works. Part B is that
+
+1096
+00:57:03,788 --> 00:57:07,823
+the fetch results controller has a delegate, okay? And
+
+1097
+00:57:07,825 --> 00:57:11,193
+that delegate can implement these methods.
+
+1098
+00:57:11,195 --> 00:57:14,730
+That will be called anytime the database changes. So
+
+1099
+00:57:14,732 --> 00:57:17,933
+anytime anything happens in the database that might affect
+
+1100
+00:57:17,935 --> 00:57:20,602
+this NS fetch request, okay? The delegate,
+
+1101
+00:57:20,604 --> 00:57:24,039
+the NS Fetch delegate is going to be called and
+
+1102
+00:57:24,041 --> 00:57:27,543
+sent these messages. And look what these things do. They
+
+1103
+00:57:27,545 --> 00:57:30,746
+just update the table view, see? Table view, insert rows,
+
+1104
+00:57:30,748 --> 00:57:34,450
+delete rows. You know, reload rows, that's because you know,
+
+1105
+00:57:34,452 --> 00:57:36,485
+this is because something got deleted from the database,
+
+1106
+00:57:36,487 --> 00:57:37,853
+this is something got inserted in the database,
+
+1107
+00:57:37,855 --> 00:57:42,791
+this something changed in the database. Okay? So that's part
+
+1108
+00:57:42,793 --> 00:57:46,662
+two is this, delegate of the NSFetchedResultsController.
+
+1109
+00:57:46,664 --> 00:57:50,232
+So I've given you the codes to do both those things. Okay,
+
+1110
+00:57:50,234 --> 00:57:51,300
+to implement this delegate, and
+
+1111
+00:57:51,302 --> 00:57:55,537
+also to implement all of this UI table view data source.
+
+1112
+00:57:55,539 --> 00:57:57,906
+All you have to do is set this var
+
+1113
+00:57:57,908 --> 00:57:59,274
+in the CoreDataTableViewController,
+
+1114
+00:57:59,276 --> 00:58:01,577
+which is an NSFetchedResultsController.
+
+1115
+00:58:01,579 --> 00:58:06,181
+And all that happens when you set this var in didSet is,
+
+1116
+00:58:06,183 --> 00:58:07,850
+it sets itself as the delegate, so
+
+1117
+00:58:07,852 --> 00:58:10,319
+that all these methods down here at the bottom will work.
+
+1118
+00:58:10,321 --> 00:58:14,490
+Okay, then it tries to perform the fetch. Okay, if it
+
+1119
+00:58:14,492 --> 00:58:17,092
+catches it, it will report an error if there is any.
+
+1120
+00:58:17,094 --> 00:58:20,028
+And then it reloads the table and that's it, okay.
+
+1121
+00:58:20,030 --> 00:58:22,264
+The fetch results are always going to automatically
+
+1122
+00:58:22,266 --> 00:58:26,068
+be linked now. So all you have to do to use Core Data table
+
+1123
+00:58:26,070 --> 00:58:28,203
+controller is set this fetch results controller.
+
+1124
+00:58:28,205 --> 00:58:31,006
+You have to create and set one of these and then it will just
+
+1125
+00:58:31,008 --> 00:58:35,978
+work by magic. Okay. So let's go back here. Do exactly that.
+
+1126
+00:58:35,980 --> 00:58:40,382
+In our update UI, we need to say self dot fetched results
+
+1127
+00:58:40,384 --> 00:58:43,385
+controller equals. We do not actually need to say self
+
+1128
+00:58:43,387 --> 00:58:46,088
+dot, but I just wanted to ehm emphasize that it is something
+
+1129
+00:58:46,090 --> 00:58:49,491
+we are inheriting from core table core data tableview.
+
+1130
+00:58:49,493 --> 00:58:51,159
+Okay, we can just set our fetch results control or
+
+1131
+00:58:51,161 --> 00:58:54,863
+something. So we are going to create a new fetch result
+
+1132
+00:58:54,865 --> 00:58:58,267
+controller. Okay.
+
+1133
+00:58:58,269 --> 00:59:02,037
+And here are all of what the things in the initializer
+
+1134
+00:59:02,039 --> 00:59:05,207
+look like. Okay. First, there's the request.
+
+1135
+00:59:05,209 --> 00:59:08,243
+This is the NSFetchRequest that is going to
+
+1136
+00:59:08,245 --> 00:59:09,344
+glue on to the table view. Okay.
+
+1137
+00:59:09,346 --> 00:59:13,115
+We'll have to create that in a second. Second is the context.
+
+1138
+00:59:13,117 --> 00:59:15,918
+So we have to go what context? What database are we looking
+
+1139
+00:59:15,920 --> 00:59:19,888
+in? Next is this section named key path. Okay. N.S.
+
+1140
+00:59:19,890 --> 00:59:23,058
+Spec Controller results will do the section titles,
+
+1141
+00:59:23,060 --> 00:59:26,962
+if you have an attribute in the entities that here in
+
+1142
+00:59:26,964 --> 00:59:30,666
+the table that you're looking up here which is the section.
+
+1143
+00:59:30,668 --> 00:59:33,135
+Okay? The string the represents the section.
+
+1144
+00:59:33,137 --> 00:59:35,304
+Can I call that actually with anything you want. And
+
+1145
+00:59:35,306 --> 00:59:38,941
+you put the name of it here, whatever name the section
+
+1146
+00:59:38,943 --> 00:59:41,376
+attributes here. The only thing about this, and
+
+1147
+00:59:41,378 --> 00:59:43,278
+you can put Neil if you don't section, if we don't.
+
+1148
+00:59:43,280 --> 00:59:46,348
+The only thing about this is that your table must sort
+
+1149
+00:59:46,350 --> 00:59:50,085
+in the same order as these sections would sort.
+
+1150
+00:59:50,087 --> 00:59:50,485
+When you think about it,
+
+1151
+00:59:50,487 --> 00:59:53,121
+if you're going to have them grouped by section
+
+1152
+00:59:53,123 --> 00:59:54,623
+the things need to be in the same order.
+
+1153
+00:59:54,625 --> 00:59:57,225
+Otherwise you'd have some sec-, things in section here,
+
+1154
+00:59:57,227 --> 00:59:58,961
+some in a different section, another different section.
+
+1155
+00:59:58,963 --> 01:00:01,597
+You can't have that, they have to sort in the same order.
+
+1156
+01:00:01,599 --> 01:00:03,532
+Okay, so sometimes you'll have you're sort descriptors of
+
+1157
+01:00:03,534 --> 01:00:06,668
+your effect request. Maybe sort by the section first and
+
+1158
+01:00:06,670 --> 01:00:08,804
+then sort by whatever you want to do.
+
+1159
+01:00:08,806 --> 01:00:11,139
+That's an easy way to make it work. And
+
+1160
+01:00:11,141 --> 01:00:14,743
+then there's the cash which we're also not using. Okay?
+
+1161
+01:00:14,745 --> 01:00:18,013
+Not just a name. It's a string that it represents it.
+
+1162
+01:00:18,015 --> 01:00:19,748
+So, I'm even gonna put this so
+
+1163
+01:00:19,750 --> 01:00:24,786
+you can really see this four arguments right here. Okay.
+
+1164
+01:00:24,788 --> 01:00:29,257
+So, we need to do a request right here and
+
+1165
+01:00:29,259 --> 01:00:29,858
+we need to do the context.
+
+1166
+01:00:29,860 --> 01:00:32,160
+Well, the context is easy, that's part of our motto.
+
+1167
+01:00:32,162 --> 01:00:35,530
+So I'm just going to say if I can let the context equal
+
+1168
+01:00:35,532 --> 01:00:39,835
+my own managed object context, K? Then this
+
+1169
+01:00:39,837 --> 01:00:43,271
+will get to go here. Otherwise I'm gonna set my fetch results
+
+1170
+01:00:43,273 --> 01:00:46,308
+controller to nil. If you set your fetch results controller
+
+1171
+01:00:46,310 --> 01:00:49,011
+to nil, core data table view control will clear your
+
+1172
+01:00:49,013 --> 01:00:52,381
+table okay. Which is what I want if I don't have a manage
+
+1173
+01:00:52,383 --> 01:00:55,484
+object context because I don't know what database to look in.
+
+1174
+01:00:55,486 --> 01:00:58,220
+Okay. So now what we need to do is request, okay?
+
+1175
+01:00:58,222 --> 01:01:03,025
+We just need to have a request which is an NSFetchRequest.
+
+1176
+01:01:03,293 --> 01:01:04,126
+Okay. It's going to be what?
+
+1177
+01:01:04,128 --> 01:01:08,930
+What entity is going to be in this table? What is this NBC
+
+1178
+01:01:08,932 --> 01:01:14,136
+show What kind of things? Twitter users, right? Showing
+
+1179
+01:01:14,138 --> 01:01:16,505
+all the Twitter users that are mentioned in this tweet.
+
+1180
+01:01:16,507 --> 01:01:22,277
+So this is twitter user, okay. Now, how about the predicates,
+
+1181
+01:01:22,279 --> 01:01:26,381
+okay. We need a predicate of this for this thing. And so
+
+1182
+01:01:26,383 --> 01:01:30,152
+that's in this predicate. Predicate with format here.
+
+1183
+01:01:30,154 --> 01:01:32,821
+Okay so what is gonna be our predicate for this?
+
+1184
+01:01:32,823 --> 01:01:35,757
+Well this is a little kind of complicated actually if
+
+1185
+01:01:35,759 --> 01:01:38,860
+you think about it. We really wanna get all the Twitter
+
+1186
+01:01:38,862 --> 01:01:42,497
+users who have a tweet that contains that string.
+
+1187
+01:01:42,499 --> 01:01:46,134
+And it turns out you can do that very straightforwardly
+
+1188
+01:01:46,136 --> 01:01:48,570
+within this predicate, you're just gonna say any
+
+1189
+01:01:48,572 --> 01:01:53,942
+Tweets whose text contains, case insensitively, please,
+
+1190
+01:01:53,944 --> 01:01:58,346
+that mention, okay. Now I have to do %@ whenever
+
+1191
+01:01:58,348 --> 01:02:01,616
+anything that I'm doing here is not a reserved keyword. So
+
+1192
+01:02:01,618 --> 01:02:05,454
+I have to do %@ and then put it here in this VarArgs.
+
+1193
+01:02:05,456 --> 01:02:10,792
+So this is our mention right there Now that's an optional.
+
+1194
+01:02:10,794 --> 01:02:13,028
+So I need to exclamation point here.
+
+1195
+01:02:13,030 --> 01:02:16,698
+But I need to be careful here. What if this mention is nil?
+
+1196
+01:02:16,700 --> 01:02:19,868
+This is gonna crash. And mention is part of my public
+
+1197
+01:02:19,870 --> 01:02:23,205
+API. You should not have objects where people can set
+
+1198
+01:02:23,207 --> 01:02:27,442
+your public API to something that will crash internally.
+
+1199
+01:02:27,444 --> 01:02:30,979
+Okay, that's a bad API design, so
+
+1200
+01:02:30,981 --> 01:02:35,951
+I wanna check right here, by saying where, this mention and
+
+1201
+01:02:35,953 --> 01:02:40,989
+actually I also don't want to look up if the mention is
+
+1202
+01:02:42,025 --> 01:02:45,327
+empty string. That doesn't make any sense either.
+
+1203
+01:02:45,329 --> 01:02:48,864
+So I'm gonna say mention?.characters.count > 0.
+
+1204
+01:02:48,866 --> 01:02:52,467
+So I'm using where here with this if, and this is kind of
+
+1205
+01:02:52,469 --> 01:02:55,303
+interesting look mention characters count. If mention
+
+1206
+01:02:55,305 --> 01:02:58,540
+is nil this whole thing is gonna be nil and the greater
+
+1207
+01:02:58,542 --> 01:03:03,879
+sign operator knows that nil is never greater than zero.
+
+1208
+01:03:04,181 --> 01:03:06,414
+It also knows nil is never less than zero nor
+
+1209
+01:03:06,416 --> 01:03:09,985
+if nil equal to zero okay so it knows all those things.
+
+1210
+01:03:09,987 --> 01:03:11,920
+So it's kind of fun you can put nils.
+
+1211
+01:03:11,922 --> 01:03:13,054
+On the sides of these greater than's or
+
+1212
+01:03:13,056 --> 01:03:18,093
+less than's really kinda makes your code pretty nicely here.
+
+1213
+01:03:18,095 --> 01:03:21,263
+Okay? Now the thing we need to do is sort. Okay so we
+
+1214
+01:03:21,265 --> 01:03:24,633
+need our sort descriptors, and remember that's an array of
+
+1215
+01:03:24,635 --> 01:03:27,402
+sort descriptors because we can sort by last name first,
+
+1216
+01:03:27,404 --> 01:03:29,404
+and then first name or by section name and
+
+1217
+01:03:29,406 --> 01:03:30,539
+then by something else. But
+
+1218
+01:03:30,541 --> 01:03:33,842
+here we only have one sort descriptor okay.
+
+1219
+01:03:33,844 --> 01:03:38,647
+The sort descriptor has numerous things that you can
+
+1220
+01:03:38,649 --> 01:03:43,552
+specify in its initialize. What if you used the simplest
+
+1221
+01:03:43,554 --> 01:03:46,388
+one here which is I'm going to search by the key screen
+
+1222
+01:03:46,390 --> 01:03:51,059
+sort by the key screen name. So we're gonna list our users
+
+1223
+01:03:51,061 --> 01:03:53,562
+by their screen name, you know their at sign, whatever.
+
+1224
+01:03:53,564 --> 01:03:56,798
+That's gonna be the order of this table and
+
+1225
+01:03:56,800 --> 01:03:59,568
+I'm going to have it be ascending true.
+
+1226
+01:03:59,570 --> 01:04:03,271
+So A capital A will be first always to capital Z
+
+1227
+01:04:03,273 --> 01:04:05,774
+then all the way to a all the way down from there. Okay?
+
+1228
+01:04:05,776 --> 01:04:10,245
+So that's the only thing I'm gonna search by, so this one,
+
+1229
+01:04:10,247 --> 01:04:12,714
+or sort by this one sort to script Okay?
+
+1230
+01:04:12,716 --> 01:04:16,651
+So now, that's it. The only thing I have to do now is
+
+1231
+01:04:16,653 --> 01:04:20,789
+implement my self row at index path and I'm good to go. Okay?
+
+1232
+01:04:20,791 --> 01:04:24,025
+Because this is going to always be keeping the Twitter
+
+1233
+01:04:24,027 --> 01:04:27,462
+users associated with the rows. All right so self for
+
+1234
+01:04:27,464 --> 01:04:29,364
+row index path of course we need to set
+
+1235
+01:04:29,366 --> 01:04:33,702
+our reuse identifier which I think was Twitter user cell.
+
+1236
+01:04:33,704 --> 01:04:35,837
+All right. And it says configure the cell.
+
+1237
+01:04:35,839 --> 01:04:38,740
+Now, obviously, to configure the cell in any row,
+
+1238
+01:04:38,742 --> 01:04:42,878
+I need to know what Twitter user is in that row, okay. So,
+
+1239
+01:04:42,880 --> 01:04:47,849
+how do I do that, let twitterUser equal and
+
+1240
+01:04:47,851 --> 01:04:51,920
+I'm gonna ask my fetched results controller, okay.
+
+1241
+01:04:51,922 --> 01:04:54,856
+I'm gonna say, what is the object that act this
+
+1242
+01:04:54,858 --> 01:04:58,627
+index path? Okay, remember this is cellForRowAtIndexPath,
+
+1243
+01:04:58,629 --> 01:05:02,397
+so indexPath is what, the row we're talking about here. And
+
+1244
+01:05:02,399 --> 01:05:03,698
+I'm just gonna ask the Twitter, the,
+
+1245
+01:05:03,700 --> 01:05:06,902
+I'm gonna ask my fetchedResultsController
+
+1246
+01:05:06,904 --> 01:05:06,968
+what it is.
+
+1247
+01:05:06,970 --> 01:05:09,137
+And of course, it better be a TwitterUser. So
+
+1248
+01:05:09,139 --> 01:05:15,243
+I'm gonna put as TwitterUser there and say if let, okay?
+
+1249
+01:05:15,245 --> 01:05:18,113
+So if I'm able to get to twitterUser here,
+
+1250
+01:05:18,115 --> 01:05:23,485
+then I can just do for example cell.TextLabel.text
+
+1251
+01:05:23,487 --> 01:05:30,091
+= the twitterUser's screenName let's say. Okay?
+
+1252
+01:05:30,093 --> 01:05:32,727
+Now there's a problem with this line of code right here.
+
+1253
+01:05:32,729 --> 01:05:37,933
+Can anyone guess what this problem is right here? Looks
+
+1254
+01:05:37,935 --> 01:05:44,239
+perfectly fine, right? This is accessing the database,
+
+1255
+01:05:44,241 --> 01:05:47,976
+okay? And we know that anytime we access the database,
+
+1256
+01:05:47,978 --> 01:05:51,246
+we gotta put it inside performBlock, okay? So
+
+1257
+01:05:51,248 --> 01:05:57,452
+we actually have to put some context here, performBlock.
+
+1258
+01:05:57,454 --> 01:06:02,524
+Okay, around this code. Now, what context are we gonna
+
+1259
+01:06:02,526 --> 01:06:05,994
+use here? We could use our manage object context.
+
+1260
+01:06:05,996 --> 01:06:07,495
+That's true. And that would be fine.
+
+1261
+01:06:07,497 --> 01:06:09,331
+I'm actually gonna use a different context.
+
+1262
+01:06:09,333 --> 01:06:15,704
+I'm gonna use the Twitter user's manage object context.
+
+1263
+01:06:16,540 --> 01:06:20,208
+Every NS managed object, this is a Twitter user. Okay?
+
+1264
+01:06:20,210 --> 01:06:22,911
+But we also have Tweet. Every NS managed object
+
+1265
+01:06:22,913 --> 01:06:26,081
+knows the managed object context it's in. And
+
+1266
+01:06:26,083 --> 01:06:29,818
+you can ask it. That will often keep you from having to
+
+1267
+01:06:29,820 --> 01:06:33,288
+have var ManagedObjectContext as public var.
+
+1268
+01:06:33,290 --> 01:06:36,658
+Because you'll have some other var which is a Twitter user or
+
+1269
+01:06:36,660 --> 01:06:40,028
+a tweet or something like that and when that gets passed to
+
+1270
+01:06:40,030 --> 01:06:42,430
+you now you know the managed object context.
+
+1271
+01:06:42,432 --> 01:06:45,533
+Got it? So that makes it so that you don't have to
+
+1272
+01:06:45,535 --> 01:06:48,069
+pass both of managed object context and a Twitter user or
+
+1273
+01:06:48,071 --> 01:06:50,939
+something. Cuz if you pass in a Twitter user you're passing
+
+1274
+01:06:50,941 --> 01:06:54,542
+the context along. Okay. So I'm just gonna use that down
+
+1275
+01:06:54,544 --> 01:06:55,944
+in here. I'm doing this intentionally so
+
+1276
+01:06:55,946 --> 01:06:57,612
+that you know that this method exists.
+
+1277
+01:06:57,614 --> 01:07:01,383
+It's a really cool var on an ms managed object.
+
+1278
+01:07:01,385 --> 01:07:05,987
+Now this is still no good, okay? What's wrong here?
+
+1279
+01:07:05,989 --> 01:07:12,260
+What's going on right there? That's accessing the ui.
+
+1280
+01:07:12,262 --> 01:07:16,297
+That can only happen on the main queue. Okay? This,
+
+1281
+01:07:16,299 --> 01:07:20,502
+I happen to know, is the main queue, okay? I know, but
+
+1282
+01:07:20,504 --> 01:07:23,805
+what if I was writing my code to truly be multi-threaded and
+
+1283
+01:07:23,807 --> 01:07:28,309
+ms managed conduct? I couldn't count on that. Okay? So,
+
+1284
+01:07:28,311 --> 01:07:31,212
+I can't do that, so instead, I'm gonna create a little var
+
+1285
+01:07:31,214 --> 01:07:35,583
+here screen name, okay. Which is going to be a string. And
+
+1286
+01:07:35,585 --> 01:07:38,920
+inside here I'm going to get rid of this and say
+
+1287
+01:07:38,922 --> 01:07:44,025
+screen name equals that and then out here I'm going to set
+
+1288
+01:07:44,027 --> 01:07:47,395
+this equal to screen name. Okay. But
+
+1289
+01:07:47,397 --> 01:07:50,598
+there is still a problem with this. Anyone can guess what
+
+1290
+01:07:50,600 --> 01:07:56,871
+this problem is? You're a quiet crowd today. This
+
+1291
+01:07:56,873 --> 01:08:00,942
+is a synchronic. Okay, that screen name is going to happen
+
+1292
+01:08:00,944 --> 01:08:06,047
+some other time. Certainly not in time for this. Okay, so
+
+1293
+01:08:06,049 --> 01:08:10,418
+we need to perform block and wait here. Okay.
+
+1294
+01:08:10,420 --> 01:08:15,156
+We have to wait for this to happen before we can do this.
+
+1295
+01:08:16,293 --> 01:08:20,829
+Got it? Okay, so that's it, let's go ahead and run and
+
+1296
+01:08:20,831 --> 01:08:29,904
+see what this looks like. All right,
+
+1297
+01:08:29,906 --> 01:08:35,143
+let's look for Stanford again. Okay, we got 206 tweets,
+
+1298
+01:08:35,145 --> 01:08:36,344
+we got this many Twitter users.
+
+1299
+01:08:36,346 --> 01:08:38,480
+'m going to click this Tweeters right here, and
+
+1300
+01:08:38,482 --> 01:08:42,450
+sure enough, look! Her's all the people who tweeted hashtag
+
+1301
+01:08:42,452 --> 01:08:46,287
+Stanford that w've ever seen. Now, this is not
+
+1302
+01:08:46,289 --> 01:08:50,024
+quite exactly what we want. I's close, okay? Notice
+
+1303
+01:08:50,026 --> 01:08:53,795
+our alphabetization. You see, all the capital letters first.
+
+1304
+01:08:53,797 --> 01:08:56,898
+Then [LAUGH] all the lowercase letters. Really,
+
+1305
+01:08:56,900 --> 01:09:01,102
+I want interspersed, right? I want case insensitive.
+
+1306
+01:09:01,104 --> 01:09:03,271
+Lowercase. Or, sorry, case insensitive so,
+
+1307
+01:09:03,273 --> 01:09:06,641
+sorting as well. [SOUND] what else is going on here? Also,
+
+1308
+01:09:06,643 --> 01:09:09,911
+maybe some of these I don't like. Like, look at this guy.
+
+1309
+01:09:09,913 --> 01:09:13,615
+Darksidedub16. Okay, that sounds kind of evil, so
+
+1310
+01:09:13,617 --> 01:09:17,752
+I don't even want Darkside to appear in my results. Okay?
+
+1311
+01:09:17,754 --> 01:09:19,120
+So, let's fix both of those things,
+
+1312
+01:09:19,122 --> 01:09:19,521
+let's fix the sorting and
+
+1313
+01:09:19,523 --> 01:09:23,158
+let's make sure dark side does not appear in our results,
+
+1314
+01:09:23,160 --> 01:09:27,328
+okay? So, how do we do those things? First, the sorting,
+
+1315
+01:09:27,330 --> 01:09:30,165
+case intensively is quite easy, okay? Here is where our
+
+1316
+01:09:30,167 --> 01:09:32,934
+sort descriptor is right here, here is the key and
+
+1317
+01:09:32,936 --> 01:09:35,370
+here is the ascending, right there. We can just add
+
+1318
+01:09:35,372 --> 01:09:38,840
+another argument here, which is the selector. To use, okay?
+
+1319
+01:09:38,842 --> 01:09:43,244
+We'll use the hashtag selector here. Selector.
+
+1320
+01:09:43,246 --> 01:09:45,980
+And the selector I'm going to use is NF strings,
+
+1321
+01:09:45,982 --> 01:09:49,817
+I've got one called localizedcaseinsentivecompare
+
+1322
+01:09:49,819 --> 01:09:56,191
+right here, okay? And so you guys remember this format for
+
+1323
+01:09:56,193 --> 01:09:58,326
+specifying a selector, right? So
+
+1324
+01:09:58,328 --> 01:10:00,328
+I'm just gonna use this instead of the standard one,
+
+1325
+01:10:00,330 --> 01:10:02,263
+which is compare, which is not case insensitive.
+
+1326
+01:10:02,265 --> 01:10:05,733
+So that's gonna effect our, case insensitive sorting.
+
+1327
+01:10:05,735 --> 01:10:08,603
+Okay, it's just how we specify our sort descriptor.
+
+1328
+01:10:08,605 --> 01:10:11,105
+How about getting the dark side out of there? Well,
+
+1329
+01:10:11,107 --> 01:10:14,809
+what appears in that table is determined by this predicate.
+
+1330
+01:10:14,811 --> 01:10:22,717
+Okay? Any tweets containing this currently, but I can say,
+
+1331
+01:10:22,719 --> 01:10:28,089
+and the screen name does not begin with,
+
+1332
+01:10:28,091 --> 01:10:32,660
+case insensitivity, the darkside.
+
+1333
+01:10:32,662 --> 01:10:35,730
+Okay, and again I can't put anything but keywords in here,
+
+1334
+01:10:35,732 --> 01:10:40,835
+so I have to put it out here Okay? Like that.
+
+1335
+01:10:40,837 --> 01:10:43,438
+I just wanted to do this to show you that you can update
+
+1336
+01:10:43,440 --> 01:10:45,974
+this predicate to change what shows up in your table,
+
+1337
+01:10:45,976 --> 01:10:50,979
+this what controls within the table. So, now when we run.
+
+1338
+01:10:53,950 --> 01:10:57,452
+Let me do #stanford. Okay, and
+
+1339
+01:10:57,454 --> 01:11:01,389
+now Tweeters, we can see that the sorting is right,
+
+1340
+01:11:01,391 --> 01:11:06,694
+you see? Capitals and lower case and look, no dark sides.
+
+1341
+01:11:06,696 --> 01:11:11,399
+Okay, this is only a light side query here. All right.
+
+1342
+01:11:11,401 --> 01:11:14,269
+Now I have five minutes left, I'll show you one
+
+1343
+01:11:14,271 --> 01:11:18,439
+last other fun thing. See this subtitle right here? What if
+
+1344
+01:11:18,441 --> 01:11:22,377
+instead of saying subtitle I wanted to say how many tweets
+
+1345
+01:11:22,379 --> 01:11:26,014
+this guys has tweeted, right? So we're show,
+
+1346
+01:11:26,016 --> 01:11:29,050
+these are all the people who have tweeted #stanford,
+
+1347
+01:11:29,052 --> 01:11:31,286
+you know, had mentioned #stanford in their tweets.
+
+1348
+01:11:31,288 --> 01:11:34,389
+I wanna know how many, so tell me how many each of these,
+
+1349
+01:11:34,391 --> 01:11:36,958
+how many tweets this guy does, have done. All right?
+
+1350
+01:11:36,960 --> 01:11:39,727
+So, to do that, I need another little function, okay?
+
+1351
+01:11:39,729 --> 01:11:43,464
+It's going to be a private func. I'm going to call it
+
+1352
+01:11:43,466 --> 01:11:47,969
+tweetCountWithMentionByTwitte- rUser.
+
+1353
+01:11:47,971 --> 01:11:51,539
+And it's going to take a Twitter user.
+
+1354
+01:11:51,541 --> 01:11:54,709
+And it's going to return an int.
+
+1355
+01:11:54,711 --> 01:11:58,146
+Optional with how many times how many tweets, a tweet
+
+1356
+01:11:58,148 --> 01:12:01,015
+count, where that Twitter user has mentioned that. So it's
+
+1357
+01:12:01,017 --> 01:12:03,785
+gonna return the number that I want to show there. Okay.
+
+1358
+01:12:03,787 --> 01:12:06,454
+So what is this little guy gonna look like right here?
+
+1359
+01:12:06,456 --> 01:12:08,890
+Well I'm gonna have a local variable which is
+
+1360
+01:12:08,892 --> 01:12:11,993
+the count which I am going to return at the end, K? It's
+
+1361
+01:12:11,995 --> 01:12:14,729
+optional because maybe I won't be able to find the results,
+
+1362
+01:12:14,731 --> 01:12:18,266
+we'll see. And I'm going to get the users managed
+
+1363
+01:12:18,268 --> 01:12:21,936
+object context again and perform black. And
+
+1364
+01:12:21,938 --> 01:12:26,574
+I'd better perform block and wait, k? Because this
+
+1365
+01:12:26,576 --> 01:12:29,177
+a method that's being called, it needs to return, it can't,
+
+1366
+01:12:29,179 --> 01:12:32,847
+it's got to do the work and have the result come back. So,
+
+1367
+01:12:32,849 --> 01:12:34,649
+I'm just gonna create a fetch request here,
+
+1368
+01:12:34,651 --> 01:12:38,353
+NSFetchRequest. And this time I'm searching for
+
+1369
+01:12:38,355 --> 01:12:41,956
+tweets. Okay. Even though I'm inside the infiltration of
+
+1370
+01:12:41,958 --> 01:12:44,158
+the twitter user table, I'm now counting tweets.
+
+1371
+01:12:44,160 --> 01:12:47,295
+So, when I'm doing a different fetch inside there for tweets.
+
+1372
+01:12:47,297 --> 01:12:49,564
+This is not the same fetch that's filling the table.
+
+1373
+01:12:49,566 --> 01:12:50,498
+This is kind of a little side
+
+1374
+01:12:50,500 --> 01:12:54,802
+fetch, that I'm doing and the predicate for that is. And
+
+1375
+01:12:54,804 --> 01:12:59,207
+then there's predicate, format,
+
+1376
+01:12:59,209 --> 01:13:03,778
+and text. I want the text of the Tweet to contain, case
+
+1377
+01:13:03,780 --> 01:13:08,883
+insensitively, the mention that we're talking about. And
+
+1378
+01:13:08,885 --> 01:13:13,454
+I want the Tweeter to equal this user. Okay,
+
+1379
+01:13:13,456 --> 01:13:17,191
+just passed in here. So I need to have the mentions.
+
+1380
+01:13:17,193 --> 01:13:20,061
+So that's our mention. Self.mention we'll need so
+
+1381
+01:13:20,063 --> 01:13:22,864
+.mention. And I'm just gonna go ahead and
+
+1382
+01:13:22,866 --> 01:13:25,333
+unwrap that. I'm pretty sure this is not new
+
+1383
+01:13:25,335 --> 01:13:27,935
+because I don't think this method would be called if I
+
+1384
+01:13:27,937 --> 01:13:30,271
+match it with milk because we never would've got
+
+1385
+01:13:30,273 --> 01:13:30,571
+into all the self.
+
+1386
+01:13:30,573 --> 01:13:33,107
+And xpath and all this stuff we never would've gotten here.
+
+1387
+01:13:33,109 --> 01:13:34,709
+Some would say protect against this. But,
+
+1388
+01:13:34,711 --> 01:13:37,145
+I actually think it's good to crash here because you'll find
+
+1389
+01:13:37,147 --> 01:13:40,181
+this bug if you ever call this when mentioned is nil,
+
+1390
+01:13:40,183 --> 01:13:41,816
+which it never should be at this point. And
+
+1391
+01:13:41,818 --> 01:13:45,720
+then the Tweeter is just this argument user. So you Tweeter
+
+1392
+01:13:45,722 --> 01:13:50,558
+equals user and pass a Twitter user, okay? And restrict your
+
+1393
+01:13:50,560 --> 01:13:53,327
+results to that, so that's our results. So now I'm
+
+1394
+01:13:53,329 --> 01:13:56,097
+going to use that count thing that we talked about before.
+
+1395
+01:13:56,099 --> 01:14:01,536
+That's the user's managed object context. Count for
+
+1396
+01:14:01,538 --> 01:14:05,273
+fetch request. The request. Don't care about errors,it
+
+1397
+01:14:05,275 --> 01:14:06,140
+will come back zero. That's fine.
+
+1398
+01:14:06,142 --> 01:14:10,678
+And I'm going to return the count. Okay? Everyone see what
+
+1399
+01:14:10,680 --> 01:14:14,215
+I did there? Just found the, the request that I wanted.
+
+1400
+01:14:14,217 --> 01:14:16,951
+So now that I have this nice little guy right here,
+
+1401
+01:14:16,953 --> 01:14:21,422
+I can go here and say that my cell. I can actually say if
+
+1402
+01:14:21,424 --> 01:14:25,927
+let the count equal the tweet count mentioned by
+
+1403
+01:14:25,929 --> 01:14:29,831
+this twitter user. Okay? So if I got an account,
+
+1404
+01:14:29,833 --> 01:14:34,535
+then I'm gonna have the cells detail TextLabel, text= and
+
+1405
+01:14:34,537 --> 01:14:37,371
+let's even be kinda be cute and say if the count is one.
+
+1406
+01:14:37,373 --> 01:14:42,944
+I'm gonna say 1 tweet otherwise I'm gonna say count
+
+1407
+01:14:42,946 --> 01:14:47,548
+tweets, plural. If I wasn't able to get it then I'm just
+
+1408
+01:14:47,550 --> 01:14:52,453
+gonna say that the cell detail text label text to empty,
+
+1409
+01:14:53,289 --> 01:15:03,097
+okay. Let's run that. All right. Hashtag stanford again.
+
+1410
+01:15:03,099 --> 01:15:07,268
+Seems to be our favorite. Here it is right here.
+
+1411
+01:15:07,270 --> 01:15:12,073
+Okay tweeters and there it is. Okay, a lot of people with one
+
+1412
+01:15:12,075 --> 01:15:14,041
+tweet, but here's someone with three tweets.
+
+1413
+01:15:14,043 --> 01:15:16,244
+Okay there's someone with four tweets right there.
+
+1414
+01:15:16,246 --> 01:15:17,311
+Now there were four tweets.
+
+1415
+01:15:17,313 --> 01:15:19,780
+Now, the next obvious thing is to say,
+
+1416
+01:15:19,782 --> 01:15:23,618
+awesome. I want to sort this table by the people's numbers
+
+1417
+01:15:23,620 --> 01:15:26,254
+of tweets, so the people who tweet a lot are at the top.
+
+1418
+01:15:26,256 --> 01:15:29,724
+Wouldn't that be a lot better than alphabetical?
+
+1419
+01:15:29,726 --> 01:15:30,791
+It sure would. But
+
+1420
+01:15:30,793 --> 01:15:35,563
+to do that, we would need a different schema. Okay.
+
+1421
+01:15:35,565 --> 01:15:37,632
+This is important because in your homework you're going to
+
+1422
+01:15:37,634 --> 01:15:39,967
+be sorting by a numb numerical value right here. And
+
+1423
+01:15:39,969 --> 01:15:42,703
+you gotta make sure you have a schema that supports it.
+
+1424
+01:15:42,705 --> 01:15:44,839
+Why would we need a different schema to sort
+
+1425
+01:15:44,841 --> 01:15:48,509
+to sort this by the number of tweets? It's because of this.
+
+1426
+01:15:48,511 --> 01:15:50,044
+Okay, if we go back up here and
+
+1427
+01:15:50,046 --> 01:15:55,383
+look at our sort descriptor. Okay. For this table.
+
+1428
+01:15:55,385 --> 01:16:00,221
+It's sorting by the screen name. This always has to be
+
+1429
+01:16:00,223 --> 01:16:05,226
+an attribute in this entity. Okay,
+
+1430
+01:16:05,228 --> 01:16:06,994
+the sort descriptor cannot be anything but
+
+1431
+01:16:06,996 --> 01:16:09,363
+an attribute in this entity. Well, Twitter user
+
+1432
+01:16:09,365 --> 01:16:12,567
+does not have an attribute which is that number. So
+
+1433
+01:16:12,569 --> 01:16:16,504
+I cannot sort by it. You see? And not only that.
+
+1434
+01:16:16,506 --> 01:16:19,106
+It would be very difficult for me to keep a number
+
+1435
+01:16:19,108 --> 01:16:22,476
+on my Twitter user that would be that. Because
+
+1436
+01:16:22,478 --> 01:16:25,413
+it depends on the mention. I'd have to have a different
+
+1437
+01:16:25,415 --> 01:16:26,447
+Twitter user for every mention.
+
+1438
+01:16:26,449 --> 01:16:31,152
+So this schema that we've designed right here,
+
+1439
+01:16:31,154 --> 01:16:35,690
+which I will show you this schema, is insufficient.
+
+1440
+01:16:35,692 --> 01:16:38,626
+To have that table sorted by a number, you need
+
+1441
+01:16:38,628 --> 01:16:41,929
+a different schema. A slightly more powerful schema and
+
+1442
+01:16:41,931 --> 01:16:44,899
+really the hardest thing about semi five for you is probably
+
+1443
+01:16:44,901 --> 01:16:47,234
+design that schema. Once you design that schema,
+
+1444
+01:16:47,236 --> 01:16:49,837
+look how incredibly it is easy to load these tables over
+
+1445
+01:16:49,839 --> 01:16:53,074
+that coordinated table it's just like, it's trivial. Okay?
+
+1446
+01:16:53,076 --> 01:16:56,410
+So, make sure you spend your brainpower on assignment five,
+
+1447
+01:16:56,412 --> 01:16:57,011
+getting a good schema,
+
+1448
+01:16:57,013 --> 01:16:58,412
+understanding what you're being asked to do,
+
+1449
+01:16:58,414 --> 01:17:03,150
+and then getting a good schema that supports that, okay?
+
+1450
+01:17:03,152 --> 01:17:05,620
+You'll, you'll find the rest of assignment five is very,
+
+1451
+01:17:05,622 --> 01:17:10,324
+is straightforward, okay? All right, that's it.
+
+1452
+01:17:10,326 --> 01:17:13,461
+I will see you on Wednesday we'll talk about the final
+
+1453
+01:17:13,463 --> 01:17:16,197
+project requirements among other things.
+
+1454
+01:17:17,667 --> 01:17:17,932
+>> For more,
+
+1455
+01:17:17,934 --> 01:17:17,965
+please visit us at stanford.edu.
+

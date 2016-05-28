@@ -1,0 +1,6108 @@
+﻿1
+00:00:00,001 --> 00:00:04,436
+[MUSIC]
+
+2
+00:00:04,438 --> 00:00:08,507
+Stanford University. >> Okay well
+
+3
+00:00:08,509 --> 00:00:13,846
+welcome to lecture number nine of CS193P. This is spring of
+
+4
+00:00:13,848 --> 00:00:16,548
+2016. Today, we're gonna talk all about Table View that's
+
+5
+00:00:16,550 --> 00:00:20,185
+the only topic for today. It's basically a way to create,
+
+6
+00:00:20,187 --> 00:00:22,721
+apps that are looking at large data sets.
+
+7
+00:00:22,723 --> 00:00:24,523
+And our demo is gonna be a Twitter client, and
+
+8
+00:00:24,525 --> 00:00:26,859
+of course Twitter is this humongous data set,
+
+9
+00:00:26,861 --> 00:00:28,794
+bunch of tweets out there and more all the time.
+
+10
+00:00:28,796 --> 00:00:33,499
+And so a Table View is a great way to, show tweets. So what
+
+11
+00:00:33,501 --> 00:00:38,270
+is Table View? UITableView is a sub class of UIView, okay.
+
+12
+00:00:38,272 --> 00:00:42,374
+It displays data in a big table, okay? And
+
+13
+00:00:42,376 --> 00:00:45,210
+there's really two different looks to it, all right?
+
+14
+00:00:45,212 --> 00:00:48,547
+There's the plain style which you see here on the left,
+
+15
+00:00:48,549 --> 00:00:51,717
+which is basically just all of the things it's showing in
+
+16
+00:00:51,719 --> 00:00:55,254
+a big, long straight list. And then there's group style
+
+17
+00:00:55,256 --> 00:00:58,991
+on the right, which is also a bunch of rows of data, but
+
+18
+00:00:58,993 --> 00:01:04,630
+grouped. A little more obviously into little groups
+
+19
+00:01:04,632 --> 00:01:08,467
+and this ones in the right, okay, are usually more for
+
+20
+00:01:08,469 --> 00:01:12,571
+static tables, okay, where the stuff that in there is fixed.
+
+21
+00:01:12,573 --> 00:01:16,075
+It's kinda fixed in your storyboard usually even,
+
+22
+00:01:16,077 --> 00:01:18,510
+whereas on the left is more for data that
+
+23
+00:01:18,512 --> 00:01:20,712
+changing every changing coming like even here.
+
+24
+00:01:20,714 --> 00:01:24,450
+If you know anything about NFL you'll know that this this
+
+25
+00:01:24,452 --> 00:01:28,921
+list has changed dramatically since I made this little list.
+
+26
+00:01:28,923 --> 00:01:31,056
+So dynamic data on the left basically and
+
+27
+00:01:31,058 --> 00:01:34,159
+more static data on the right. Is not exclusively that but
+
+28
+00:01:34,161 --> 00:01:36,462
+that's generally how we use these two styles,
+
+29
+00:01:36,464 --> 00:01:41,066
+okay. Now let's talk about all the parts of a UITableView so
+
+30
+00:01:41,068 --> 00:01:42,201
+we know the terminology, all right?
+
+31
+00:01:42,203 --> 00:01:44,837
+I'm gonna show this to you in plain style, but then I'll
+
+32
+00:01:44,839 --> 00:01:47,573
+show you the grouped style version of it afterwards.
+
+33
+00:01:47,575 --> 00:01:49,808
+So there's a Table Header at the top.
+
+34
+00:01:49,810 --> 00:01:52,678
+This is just a UIView. It can be any UIView you want.
+
+35
+00:01:52,680 --> 00:01:54,113
+In our demo we're gonna have one of these,
+
+36
+00:01:54,115 --> 00:01:56,348
+it's gonna be a UITextField, okay? But it can be,
+
+37
+00:01:56,350 --> 00:01:59,151
+it can be your own custom view with subviews in there.
+
+38
+00:01:59,153 --> 00:02:00,552
+It can be absolutely anything, and
+
+39
+00:02:00,554 --> 00:02:02,888
+it always lives at the top of the header and as
+
+40
+00:02:02,890 --> 00:02:05,691
+the table scrolls around it'll scroll off the top, right?
+
+41
+00:02:05,693 --> 00:02:08,727
+It's at the very top of this thing you're scrolling on. And
+
+42
+00:02:08,729 --> 00:02:11,630
+similarly there's a footer, also some UIView.
+
+43
+00:02:11,632 --> 00:02:12,664
+Notice at the bottom I'm showing you
+
+44
+00:02:12,666 --> 00:02:16,001
+a little bit of code like var tableViewFooter: UIView,
+
+45
+00:02:16,003 --> 00:02:18,337
+that's basically telling you the function or
+
+46
+00:02:18,339 --> 00:02:20,572
+the property where you set this thing. Okay,
+
+47
+00:02:20,574 --> 00:02:23,609
+these would be functions or properties in UITableView.
+
+48
+00:02:23,611 --> 00:02:29,114
+Okay? Next is a bunch of stuff that's, we grouped together,
+
+49
+00:02:29,116 --> 00:02:33,051
+we call it a section, okay? So the data that's in the table
+
+50
+00:02:33,053 --> 00:02:36,388
+can be sectioned off into little, pieces.
+
+51
+00:02:36,390 --> 00:02:37,489
+And you'll see in the next slide
+
+52
+00:02:37,491 --> 00:02:41,260
+a little more of an example of that. Each section, okay,
+
+53
+00:02:41,262 --> 00:02:45,197
+has a header, this is usually a string but it could also
+
+54
+00:02:45,199 --> 00:02:48,600
+be UIView if you wanted a complicated looking header,
+
+55
+00:02:48,602 --> 00:02:50,669
+maybe with images or something like that. But,
+
+56
+00:02:50,671 --> 00:02:53,605
+usually this is just a string. And also a section footer.
+
+57
+00:02:53,607 --> 00:02:55,607
+Okay, so that's every section has a header and footer,
+
+58
+00:02:55,609 --> 00:02:59,077
+header and footer, header and footer. Okay. And then inside
+
+59
+00:02:59,079 --> 00:03:02,281
+the sections there's the rows. Now these roads like Row 0,
+
+60
+00:03:02,283 --> 00:03:05,417
+Row 1, these two sections each have two rows,
+
+61
+00:03:05,419 --> 00:03:07,719
+but there can be any number of rows and it doesn't have to be
+
+62
+00:03:07,721 --> 00:03:09,421
+the same number of rows in every section.
+
+63
+00:03:09,423 --> 00:03:12,791
+One section might have zero rows or five rows and
+
+64
+00:03:12,793 --> 00:03:16,595
+another one might have 100 rows okay. This
+
+65
+00:03:16,597 --> 00:03:20,432
+row is basically represented in the table by a UIView. It's
+
+66
+00:03:20,434 --> 00:03:25,437
+actually a subclass of UIView called UITableViewCell. And
+
+67
+00:03:25,439 --> 00:03:29,875
+this method right here it's gonna get called in your code,
+
+68
+00:03:29,877 --> 00:03:32,878
+cellForRowAtIndexPath and it returns
+
+69
+00:03:32,880 --> 00:03:36,148
+one of these UITableViewCells. Okay, this is probably
+
+70
+00:03:36,150 --> 00:03:39,184
+the most important method in implementing Table View,
+
+71
+00:03:39,186 --> 00:03:40,586
+is this cellForRowAtIndexPath.
+
+72
+00:03:40,588 --> 00:03:44,056
+We'll be coming back to this again and again okay. So
+
+73
+00:03:44,058 --> 00:03:46,992
+those are all the names of the parts of a Table View.
+
+74
+00:03:46,994 --> 00:03:49,394
+So when I was talking about it you know what they are.
+
+75
+00:03:49,396 --> 00:03:50,829
+So that's what it looks in plain style.
+
+76
+00:03:50,831 --> 00:03:55,234
+Here's the exact same thing in group style. Okay, so
+
+77
+00:03:55,236 --> 00:03:57,736
+it has the same thing, headers, cells, footers,
+
+78
+00:03:57,738 --> 00:04:01,106
+it's just that it displays them a little bit differently.
+
+79
+00:04:01,208 --> 00:04:04,443
+Okay. All right, sections or not? What does it look like to
+
+80
+00:04:04,445 --> 00:04:08,080
+have sections or not? Now this is visible sections, so
+
+81
+00:04:08,082 --> 00:04:12,618
+look here on the right you see I have some cities in Japan
+
+82
+00:04:12,620 --> 00:04:15,053
+for example and this little gray bar right there.
+
+83
+00:04:15,055 --> 00:04:17,289
+I don't know how well you can see that, actually,
+
+84
+00:04:17,291 --> 00:04:18,323
+but there's a gray bar there,
+
+85
+00:04:18,325 --> 00:04:21,860
+it says Japan, that's a section header, okay?
+
+86
+00:04:21,862 --> 00:04:23,662
+So there's one section, the Japan section,
+
+87
+00:04:23,664 --> 00:04:25,998
+it's got three rows. Here's a Mexico section,
+
+88
+00:04:26,000 --> 00:04:28,867
+it's got three rows. Here's Italy section,
+
+89
+00:04:28,869 --> 00:04:30,869
+it's got at least two rows there at the top.
+
+90
+00:04:30,871 --> 00:04:34,139
+Okay, this one over here doesn't have any sections.
+
+91
+00:04:34,141 --> 00:04:36,208
+Now, it actually might have sections, but
+
+92
+00:04:36,210 --> 00:04:39,278
+no section headers. Okay, if you have sections but
+
+93
+00:04:39,280 --> 00:04:43,482
+no section headers, it looks like you have no sections. But
+
+94
+00:04:43,484 --> 00:04:47,185
+this is what we mean by sections, so just groups of
+
+95
+00:04:47,187 --> 00:04:53,925
+things in the table. The type of cell, those little rows,
+
+96
+00:04:53,927 --> 00:04:56,128
+there are five types of cells. Here are four of
+
+97
+00:04:56,130 --> 00:04:59,798
+them that are built into the system. The subtitle has
+
+98
+00:04:59,800 --> 00:05:02,701
+a piece of text and then a small little piece under it,
+
+99
+00:05:02,703 --> 00:05:05,570
+okay? This is called the title and the subtitle, or
+
+100
+00:05:05,572 --> 00:05:08,740
+the text and the detail text, sometimes we call it.
+
+101
+00:05:08,742 --> 00:05:12,444
+The basic one, the second one has no detail text,
+
+102
+00:05:12,446 --> 00:05:15,480
+only has the primary text. The right and
+
+103
+00:05:15,482 --> 00:05:18,383
+left are similar to the subtitle but it puts the text
+
+104
+00:05:18,385 --> 00:05:21,219
+in a little different place with a little different color.
+
+105
+00:05:21,221 --> 00:05:23,755
+Okay? So you can see that the basic
+
+106
+00:05:23,757 --> 00:05:26,725
+cell types that come with the system, pretty limited.
+
+107
+00:05:26,727 --> 00:05:28,727
+Okay? It also can pl, display an image,
+
+108
+00:05:28,729 --> 00:05:32,831
+turns out, but they're pretty limited. There's a fifth type,
+
+109
+00:05:32,833 --> 00:05:35,734
+which is custom cell, which let's you build any UI
+
+110
+00:05:35,736 --> 00:05:38,470
+you want inside the cell. You can drag buttons,
+
+111
+00:05:38,472 --> 00:05:40,572
+text fields, images, anything you want in there. And
+
+112
+00:05:40,574 --> 00:05:44,743
+we're going to talk about and demo that today. All right.
+
+113
+00:05:44,745 --> 00:05:50,082
+So, how do I use a table view in my application?
+
+114
+00:05:50,084 --> 00:05:52,451
+And the answer is, 99% of the time you're gonna
+
+115
+00:05:52,453 --> 00:05:56,755
+use a table view controller. Okay? TableViewController,
+
+116
+00:05:56,757 --> 00:05:59,991
+it's a UIViewController. A sub class of UIViewController.
+
+117
+00:05:59,993 --> 00:06:03,695
+That sub class is called UITableViewController. And,
+
+118
+00:06:03,697 --> 00:06:05,364
+just like when you use a UIViewController,
+
+119
+00:06:05,366 --> 00:06:07,933
+you sub class it to make a class you can hook
+
+120
+00:06:07,935 --> 00:06:10,001
+your outlets and actions up to. Same thing here.
+
+121
+00:06:10,003 --> 00:06:12,971
+You're gonna sub class UITableViewController so
+
+122
+00:06:12,973 --> 00:06:16,675
+you can wire up things if you want inside your controller.
+
+123
+00:06:16,677 --> 00:06:19,711
+Okay? Now it is possible to use a UITableView without
+
+124
+00:06:19,713 --> 00:06:22,914
+the UITableViewController but like I said we almost never
+
+125
+00:06:22,916 --> 00:06:26,952
+do. 99% of the time we're going to use UIViewController.
+
+126
+00:06:26,954 --> 00:06:29,488
+Okay, and so if you drag the UIViewController
+
+127
+00:06:29,490 --> 00:06:32,257
+out into your storyboard, UITableViewController,
+
+128
+00:06:32,259 --> 00:06:34,693
+sorry. If you drag UITableViewController out,
+
+129
+00:06:34,695 --> 00:06:36,628
+you're gonna get this thing right here,
+
+130
+00:06:36,630 --> 00:06:38,663
+that's gonna be a UITableViewController.
+
+131
+00:06:38,665 --> 00:06:41,466
+And the view, remember the view property
+
+132
+00:06:41,468 --> 00:06:43,769
+in a UIViewController is that top level view?
+
+133
+00:06:43,771 --> 00:06:47,072
+It's going to be of type UITableView. Okay. The very
+
+134
+00:06:47,074 --> 00:06:51,309
+top top level is a table view. So this, UITableViewController
+
+135
+00:06:51,311 --> 00:06:54,446
+the entire view is just one big table view.
+
+136
+00:06:54,448 --> 00:06:57,783
+Now it is possible to drag out your own UIViewController and
+
+137
+00:06:57,785 --> 00:07:00,085
+make the table view only be a part of the view.
+
+138
+00:07:00,087 --> 00:07:03,321
+Like be a subview of the main view, but again very rare
+
+139
+00:07:03,323 --> 00:07:05,557
+to do that. Not even really gonna talk about doing that.
+
+140
+00:07:05,559 --> 00:07:08,527
+But you could. Requires a little more work on your part.
+
+141
+00:07:08,529 --> 00:07:11,263
+This is kind of a nice pre-packaged way to use
+
+142
+00:07:11,265 --> 00:07:15,801
+TableView here. Okay? Of course when you sub class
+
+143
+00:07:15,803 --> 00:07:19,771
+UITableViewController up here, you create your own class.
+
+144
+00:07:19,773 --> 00:07:21,840
+We'll call it MyTableView Controller or
+
+145
+00:07:21,842 --> 00:07:22,307
+something like that.
+
+146
+00:07:22,309 --> 00:07:24,976
+You're going to want to remember to go to the identity
+
+147
+00:07:24,978 --> 00:07:28,180
+inspector and set that as the type just like you would any
+
+148
+00:07:28,182 --> 00:07:31,149
+other UIViewController. If you right click on
+
+149
+00:07:31,151 --> 00:07:33,885
+it, okay, if you right click on the thing that represents
+
+150
+00:07:33,887 --> 00:07:36,254
+the TableViewController, you'll see that, look,
+
+151
+00:07:36,256 --> 00:07:39,057
+here's view, it's hooked up to a UITableview. And
+
+152
+00:07:39,059 --> 00:07:42,093
+then down farther, you see dataSource and delegate.
+
+153
+00:07:42,095 --> 00:07:44,329
+Those are both delegates, okay, for
+
+154
+00:07:44,331 --> 00:07:49,334
+delegation. They are protocol based communication outlets,
+
+155
+00:07:49,336 --> 00:07:52,771
+communication portals. From the Table View,
+
+156
+00:07:52,773 --> 00:07:55,607
+to the Table View Controller. And you can see look,
+
+157
+00:07:55,609 --> 00:07:57,342
+they're automatically hooked up for you. And
+
+158
+00:07:57,344 --> 00:08:00,779
+what that means is that your UITableViewController subclass
+
+159
+00:08:00,781 --> 00:08:04,049
+Just has to implement any and all of the data source and
+
+160
+00:08:04,051 --> 00:08:06,117
+delegate methods that it wants. Okay?
+
+161
+00:08:06,119 --> 00:08:08,720
+To make things work. Just like we do with scroll view, right?
+
+162
+00:08:08,722 --> 00:08:10,288
+We set ourselves as a scroll view delegate.
+
+163
+00:08:10,290 --> 00:08:12,724
+We implement that view for zooming in scroll view.
+
+164
+00:08:12,726 --> 00:08:15,026
+Now we can zoom. Same thing with table view,
+
+165
+00:08:15,028 --> 00:08:17,996
+except for we're automatically hooked up as the delegate and
+
+166
+00:08:17,998 --> 00:08:18,263
+We'll talk about these, the difference between these two.
+
+167
+00:08:18,265 --> 00:08:19,865
+data source.
+
+168
+00:08:19,867 --> 00:08:22,601
+And there's just a bunch of methods in there like and
+
+169
+00:08:22,603 --> 00:08:25,637
+index path for us to implement the table,
+
+170
+00:08:25,639 --> 00:08:29,674
+all right? You can, of course, click on this table and
+
+171
+00:08:29,676 --> 00:08:33,144
+inspect it in the inspector, just like anything else there.
+
+172
+00:08:33,146 --> 00:08:36,181
+You can see things like, plain style and stuff. I'll show you
+
+173
+00:08:36,183 --> 00:08:39,651
+some of that. Remember when you have a table view,
+
+174
+00:08:39,653 --> 00:08:43,188
+you're gonna remember, wanna remember Ctrl+Shift click. If
+
+175
+00:08:43,190 --> 00:08:46,758
+you remember ctrl-shift-click. It lets you, kind of, cli-,
+
+176
+00:08:46,760 --> 00:08:48,560
+pick what's under the mouth,mouse,
+
+177
+00:08:48,562 --> 00:08:49,995
+if there are multiple things under there.
+
+178
+00:08:49,997 --> 00:08:52,597
+Mm-kay? That's really valuable here because you've got
+
+179
+00:08:52,599 --> 00:08:55,600
+the cell, under that you've got the table view, under that
+
+180
+00:08:55,602 --> 00:08:57,903
+you've got the controller. And if you had a custom cell,
+
+181
+00:08:57,905 --> 00:08:59,871
+you might have buttons and text fields in here.
+
+182
+00:08:59,873 --> 00:09:02,607
+So, kind of drilling down to which of those things you want
+
+183
+00:09:02,609 --> 00:09:08,013
+to chose. Ctrl-shift-click. Okay, you want that. So
+
+184
+00:09:08,015 --> 00:09:10,849
+here I'm gonna, switch the table view from being
+
+185
+00:09:10,851 --> 00:09:14,619
+plain style to being grouped, okay? You can see that,
+
+186
+00:09:14,621 --> 00:09:16,555
+when I switched a group, it changes a little bit and
+
+187
+00:09:16,557 --> 00:09:19,257
+looks a little bit different, okay? Another thing I can
+
+188
+00:09:19,259 --> 00:09:23,628
+switch is dynamic and static, okay? Now, grouped in plain,
+
+189
+00:09:23,630 --> 00:09:25,964
+I told you the plain was usually dynamic data, and
+
+190
+00:09:25,966 --> 00:09:28,767
+grouped is static. They don't have to be that way, okay?
+
+191
+00:09:28,769 --> 00:09:34,139
+You choose the dynamic versus static with this other pop up,
+
+192
+00:09:34,141 --> 00:09:37,208
+right here. But again, usually if it's grouped you're gonna
+
+193
+00:09:37,210 --> 00:09:38,143
+pick static from this one, and
+
+194
+00:09:38,145 --> 00:09:40,745
+if it's plain your gonna be picking dynamic. So
+
+195
+00:09:40,747 --> 00:09:43,748
+I'm gonna switch to static right here. When I switch to
+
+196
+00:09:43,750 --> 00:09:48,420
+static, all of this, these little rows in here,
+
+197
+00:09:48,422 --> 00:09:49,888
+now they become fully editable.
+
+198
+00:09:49,890 --> 00:09:52,424
+You can drag buttons out. You can drag text fields.
+
+199
+00:09:52,426 --> 00:09:55,360
+Whatever. And whatever you put in your story board,
+
+200
+00:09:55,362 --> 00:09:58,196
+that's what's gonna appear in your app, okay?
+
+201
+00:09:58,198 --> 00:09:59,731
+However many rows there are here,
+
+202
+00:09:59,733 --> 00:10:01,700
+that's how many rows are gonna be in the app.
+
+203
+00:10:01,702 --> 00:10:03,668
+Whatever buttons and stuff you put in here,
+
+204
+00:10:03,670 --> 00:10:04,903
+that's how many are gonna be in the app.
+
+205
+00:10:04,905 --> 00:10:08,173
+You can wire up outlets in these static ones directly
+
+206
+00:10:08,175 --> 00:10:11,309
+to your controller, just like if this were a view and
+
+207
+00:10:11,311 --> 00:10:13,244
+you dragged a button down to it, okay? So
+
+208
+00:10:13,246 --> 00:10:16,448
+think of static as really just normal view,
+
+209
+00:10:16,450 --> 00:10:19,584
+but grouped, okay? Grouped in these little sections.
+
+210
+00:10:19,586 --> 00:10:21,419
+Really great for things like settings like settings, like,
+
+211
+00:10:21,421 --> 00:10:25,690
+you know, the settings app in iOS is just a big table view,
+
+212
+00:10:25,692 --> 00:10:28,393
+a static grouped table view. So, it's really great for
+
+213
+00:10:28,395 --> 00:10:31,730
+that. It's not good at all for dynamic data.
+
+214
+00:10:31,732 --> 00:10:34,199
+It doesn't, grouped is not good for
+
+215
+00:10:34,201 --> 00:10:37,602
+that. And if you have this set to static content,
+
+216
+00:10:37,604 --> 00:10:39,938
+then you can't even do dynamic data, okay? So
+
+217
+00:10:39,940 --> 00:10:42,540
+static, you edit it all in the story board. Very different
+
+218
+00:10:42,542 --> 00:10:45,944
+from dynamic, okay? So let's go back to talk about dynamic,
+
+219
+00:10:45,946 --> 00:10:49,114
+though, cuz that's really the more interesting one here,
+
+220
+00:10:49,116 --> 00:10:51,616
+okay? We're also gonna switch back to plain style for
+
+221
+00:10:51,618 --> 00:10:56,421
+dynamic. Now, these rows are prototypes, or
+
+222
+00:10:56,423 --> 00:11:00,225
+templates, okay? Because I've got three rows here, but I can
+
+223
+00:11:00,227 --> 00:11:04,696
+have hundreds of rows in my app when I load my data up. So
+
+224
+00:11:04,698 --> 00:11:06,698
+these are just the different templates you can have.
+
+225
+00:11:06,700 --> 00:11:08,166
+And you could have different kinds of templates.
+
+226
+00:11:08,168 --> 00:11:10,902
+Like, in your homework, you're gonna have two different
+
+227
+00:11:10,904 --> 00:11:14,305
+kinds of rows in one of your table views. One shows image,
+
+228
+00:11:14,307 --> 00:11:17,709
+one's showing text. So you're gonna have one prototype for
+
+229
+00:11:17,711 --> 00:11:20,178
+images, and you're gonna have another prototype for text,
+
+230
+00:11:20,180 --> 00:11:25,316
+okay? And these prototypes are copied hundreds of times,
+
+231
+00:11:25,318 --> 00:11:27,986
+or however many times is necessary for all the data.
+
+232
+00:11:27,988 --> 00:11:30,655
+Now, it doesn't actually copy it hundreds of times, cuz
+
+233
+00:11:30,657 --> 00:11:33,958
+it's really smart. It reuses them, so it only uses them for
+
+234
+00:11:33,960 --> 00:11:36,528
+visible cells, okay? Table view's very efficient,
+
+235
+00:11:36,530 --> 00:11:39,798
+as you can imagine. If you had 100,000 items in there,
+
+236
+00:11:39,800 --> 00:11:42,400
+and you were making 100,000 UITableView cells,
+
+237
+00:11:42,402 --> 00:11:44,769
+it would be pretty inefficient so it doesn't do that.
+
+238
+00:11:44,771 --> 00:11:47,772
+It reuses them. But these prototypes are a template
+
+239
+00:11:47,774 --> 00:11:50,408
+that get, you know, essentially copied.
+
+240
+00:11:51,645 --> 00:11:55,180
+So, the cells can be inspected just like the table view.
+
+241
+00:11:55,182 --> 00:11:55,780
+So, here I'm gonna change,
+
+242
+00:11:55,782 --> 00:11:58,216
+I'm gonna pick this first cell, this first proto-type,
+
+243
+00:11:58,218 --> 00:11:59,451
+and I'm gonna change it to be subtitle.
+
+244
+00:11:59,453 --> 00:12:01,786
+And you can see it looks like this in the storyboard,
+
+245
+00:12:01,788 --> 00:12:04,122
+just to remind you that it's subtitle. Of course,
+
+246
+00:12:04,124 --> 00:12:06,491
+this is not gonna say subtitle and title when I launch.
+
+247
+00:12:06,493 --> 00:12:09,461
+It's gonna be replaced by the data that I load into that
+
+248
+00:12:09,463 --> 00:12:12,731
+cell, okay? Cuz I'm gonna have hundreds of these rows.
+
+249
+00:12:12,733 --> 00:12:16,601
+All right. You can also set a little
+
+250
+00:12:16,603 --> 00:12:19,270
+thing to appear on the right hand side of a row.
+
+251
+00:12:19,272 --> 00:12:22,107
+For example, I picked a detailed disclosure which is
+
+252
+00:12:22,109 --> 00:12:26,811
+this little greater than sign, and then this little round
+
+253
+00:12:26,813 --> 00:12:31,483
+circled i. This little gray, greater than sign means that
+
+254
+00:12:31,485 --> 00:12:35,353
+if I press on this row, it's gonna segue, okay? So, anytime
+
+255
+00:12:35,355 --> 00:12:37,989
+you set up a segue from a row, which we're gonna talk about,
+
+256
+00:12:37,991 --> 00:12:40,925
+you're always gonna wanna have your accessory be either
+
+257
+00:12:40,927 --> 00:12:42,994
+detail disclosure or just disclosure.
+
+258
+00:12:42,996 --> 00:12:45,730
+Detail disclosure means you have this little blue i, and
+
+259
+00:12:45,732 --> 00:12:48,366
+I'll talk about what that means in a second, okay?
+
+260
+00:12:48,368 --> 00:12:51,669
+So I'm gonna turn that off for now. All right.
+
+261
+00:12:51,671 --> 00:12:55,373
+So, another style that you can choose is the custom style.
+
+262
+00:12:55,375 --> 00:12:59,711
+So I'm gonna switch my style here to custom, okay? Now,
+
+263
+00:12:59,713 --> 00:13:02,347
+this custom area, I can resize it, okay?
+
+264
+00:13:02,349 --> 00:13:07,085
+Make it bigger. I can go over to my object pallet down here.
+
+265
+00:13:07,087 --> 00:13:09,654
+I can pick up a label or a button or something.
+
+266
+00:13:09,656 --> 00:13:12,991
+I can drag it out. I can use the blue lines.
+
+267
+00:13:12,993 --> 00:13:17,195
+I can use stack views. I can control drag to the edges.
+
+268
+00:13:17,197 --> 00:13:20,732
+I can build whatever UI I want in here. And remember, it took
+
+269
+00:13:20,734 --> 00:13:24,035
+prototype. So every row that's gonna use this prototype
+
+270
+00:13:24,037 --> 00:13:27,739
+is gonna have all those labels and buttons in each row, okay?
+
+271
+00:13:27,741 --> 00:13:33,311
+So there's a, when you have this kind of mechanism,
+
+272
+00:13:33,313 --> 00:13:36,381
+you might well ask yourself, well, how am I gonna hook up
+
+273
+00:13:36,383 --> 00:13:38,616
+to that label? How am I gonna control drag?
+
+274
+00:13:38,618 --> 00:13:41,352
+I can't really control drag an outlet to my table view
+
+275
+00:13:41,354 --> 00:13:44,656
+controller because my table view controller's just one
+
+276
+00:13:44,658 --> 00:13:47,692
+controller, and I've got hundreds of rows. So,
+
+277
+00:13:47,694 --> 00:13:49,227
+which row is the outlet hooked to?
+
+278
+00:13:49,229 --> 00:13:53,331
+So you can't hook your outlets up to dynamic prototype like,
+
+279
+00:13:53,333 --> 00:13:57,168
+rows like this. You have to hook it up to outlets in
+
+280
+00:13:57,170 --> 00:14:02,807
+a sub-classed UI table view cell, okay?
+
+281
+00:14:02,809 --> 00:14:05,643
+So we're gonna create a custom subclass of UITableViewCell.
+
+282
+00:14:05,645 --> 00:14:08,313
+And it's gonna have outlets in it. And we're gonna wire this
+
+283
+00:14:08,315 --> 00:14:11,749
+to it. And we know that, for all the visible cells anyway,
+
+284
+00:14:11,751 --> 00:14:14,552
+there's another TableUIViewCell that's hooked
+
+285
+00:14:14,554 --> 00:14:16,254
+up. So, we're gonna have all these UITableViewCells,
+
+286
+00:14:16,256 --> 00:14:20,024
+they're gonna all each have outlets to whatever is showing
+
+287
+00:14:20,026 --> 00:14:22,627
+in their custom cell, okay? So
+
+288
+00:14:22,629 --> 00:14:25,063
+you do this with the identity inspector in the same way.
+
+289
+00:14:25,065 --> 00:14:26,464
+So you're gonna do new file, right?
+
+290
+00:14:26,466 --> 00:14:29,734
+You're gonna go over to new file, and when you do new file
+
+291
+00:14:29,736 --> 00:14:33,204
+you're gonna say Tableview Cell as the superview class.
+
+292
+00:14:33,206 --> 00:14:35,240
+And then you're gonna go up here to the identity inspector
+
+293
+00:14:35,242 --> 00:14:38,009
+with this selected, with this cell selected, and
+
+294
+00:14:38,011 --> 00:14:41,479
+say that it's a my Tableview cell. And the reason you're
+
+295
+00:14:41,481 --> 00:14:43,648
+gonna do that sub-class is so that you can have outlets and
+
+296
+00:14:43,650 --> 00:14:45,650
+stuff. Just like the same reason you do it for
+
+297
+00:14:45,652 --> 00:14:47,418
+a controller, but this is not a controller,
+
+298
+00:14:47,420 --> 00:14:49,087
+this is a UI View subclass, actually.
+
+299
+00:14:49,089 --> 00:14:53,124
+UI TableView cell is a UI view subclass. All right. So now
+
+300
+00:14:53,126 --> 00:14:56,294
+once you have that, you can wire up all the outlets and
+
+301
+00:14:56,296 --> 00:14:57,095
+actions you want, okay?
+
+302
+00:14:57,097 --> 00:14:58,263
+And we're gonna do this in the demo and
+
+303
+00:14:58,265 --> 00:15:00,431
+make maybe a lot more sense. So, here's an example.
+
+304
+00:15:00,433 --> 00:15:04,369
+I'm creating an outlet to this label in my UI table view cell
+
+305
+00:15:04,371 --> 00:15:11,476
+subclass, you see that? Okay? All right. And again,
+
+306
+00:15:11,478 --> 00:15:13,578
+remember it's a prototype, it's gonna be duplicated.
+
+307
+00:15:13,580 --> 00:15:17,081
+All your label, this label and all the stuff and, it's
+
+308
+00:15:17,083 --> 00:15:20,418
+gonna be a different instance of this for every row, okay?
+
+309
+00:15:20,420 --> 00:15:24,122
+All right. So, let's talk about those protocols that
+
+310
+00:15:24,124 --> 00:15:26,824
+we're talking about dataSource and delegate, okay?
+
+311
+00:15:26,826 --> 00:15:30,295
+There's two of them because the delegate controls how
+
+312
+00:15:30,297 --> 00:15:34,432
+the table is displayed, okay? The dataSource controls what
+
+313
+00:15:34,434 --> 00:15:38,236
+data is in the table, okay? What's in the rows, okay?
+
+314
+00:15:38,238 --> 00:15:40,705
+So that's the difference between the two delegates.
+
+315
+00:15:40,707 --> 00:15:44,242
+Now, the UITableViewController automatically sets itself as
+
+316
+00:15:44,244 --> 00:15:47,478
+the delegate, and as the data source. So, it's all preset
+
+317
+00:15:47,480 --> 00:15:50,148
+up. And as I told you, the view, the top level view,
+
+318
+00:15:50,150 --> 00:15:54,252
+is a UITableView. There's also a var called TableView which,
+
+319
+00:15:54,254 --> 00:15:56,921
+the computed var, that just returns the view.
+
+320
+00:15:56,923 --> 00:15:59,757
+Okay, so that usually will access the table view,
+
+321
+00:15:59,759 --> 00:16:01,693
+because it's typed to be UITableView,
+
+322
+00:16:01,695 --> 00:16:03,861
+that's how we access our table view inside of
+
+323
+00:16:03,863 --> 00:16:07,899
+our table view controller sub class code. All right.
+
+324
+00:16:07,901 --> 00:16:10,435
+All right, so when do we need to implement the data source?
+
+325
+00:16:10,437 --> 00:16:14,072
+Only if we're doing dynamic cells. If we're doing static,
+
+326
+00:16:14,074 --> 00:16:15,673
+like, you know, the settings example, the group
+
+327
+00:16:15,675 --> 00:16:17,909
+settings thing. Then you just do it in your storyboard,
+
+328
+00:16:17,911 --> 00:16:20,545
+you don't need to do anything in the dataSource protocol to
+
+329
+00:16:20,547 --> 00:16:24,682
+make that work. Okay? But if you're doing dynamic,
+
+330
+00:16:24,684 --> 00:16:26,751
+you need to do it. And there are three very important
+
+331
+00:16:26,753 --> 00:16:28,920
+methods in the dataSource protocol, there's a bunch of
+
+332
+00:16:28,922 --> 00:16:31,422
+methods in there, but there's three really important ones.
+
+333
+00:16:31,424 --> 00:16:34,092
+One is how many sections are in this table?
+
+334
+00:16:34,094 --> 00:16:36,461
+How many rows are in each of the sections?
+
+335
+00:16:36,463 --> 00:16:37,462
+It's gonna ask for every section,
+
+336
+00:16:37,464 --> 00:16:39,430
+how many rows in this section? How many rows in this section?
+
+337
+00:16:39,432 --> 00:16:42,767
+How many rows in this section? And then, give me a view,
+
+338
+00:16:42,769 --> 00:16:46,871
+a UI table view cell subclass to draw this row, okay?
+
+339
+00:16:46,873 --> 00:16:49,207
+And that's when you're gonna implement cell for
+
+340
+00:16:49,209 --> 00:16:51,476
+row at index path and give it your sub class,
+
+341
+00:16:51,478 --> 00:16:52,577
+an instance of your sub class. And
+
+342
+00:16:52,579 --> 00:16:56,014
+I'm going to show exactly how you do that in a second here.
+
+343
+00:16:56,549 --> 00:16:56,714
+to skip the two easy ones, the number of sections and rows,
+
+344
+00:16:56,716 --> 00:16:59,117
+So we're going
+
+345
+00:16:59,119 --> 00:17:01,953
+and go straight to cell for row at index path. Okay?
+
+346
+00:17:01,955 --> 00:17:05,156
+So this method looks like this. Okay?
+
+347
+00:17:05,158 --> 00:17:09,193
+I already talked about the fact that it's reusing here.
+
+348
+00:17:09,662 --> 00:17:11,796
+And the method's called cell for row at index path,
+
+349
+00:17:11,798 --> 00:17:16,167
+you can see that it returns a UITablViewCell, right here.
+
+350
+00:17:16,169 --> 00:17:19,837
+This index path is really just the section and
+
+351
+00:17:19,839 --> 00:17:23,207
+row, section and the row in that section, okay? They could
+
+352
+00:17:23,209 --> 00:17:27,478
+have called this cell for row at section in row, two
+
+353
+00:17:27,480 --> 00:17:29,414
+separate arguments, but they decided to call it cell for
+
+354
+00:17:29,416 --> 00:17:31,449
+row and index path and they just made a thing called
+
+355
+00:17:31,451 --> 00:17:33,851
+NSIndexPath that's got the section row in it, okay?
+
+356
+00:17:33,853 --> 00:17:37,789
+And in fact, if you wanted to, like, get your data, you would
+
+357
+00:17:37,791 --> 00:17:41,192
+just say let the data equal my internal data structure,
+
+358
+00:17:41,194 --> 00:17:44,262
+whatever that is. IndexPath subsection, indexPath.row,
+
+359
+00:17:44,264 --> 00:17:46,831
+that will tell your internal data structure where an array
+
+360
+00:17:46,833 --> 00:17:50,001
+of arrays, where the sections were in there in the rows,
+
+361
+00:17:50,003 --> 00:17:52,036
+you can just do this. So this is how you get the section,
+
+362
+00:17:52,038 --> 00:17:55,773
+and this is how you get the row, okay? So
+
+363
+00:17:55,775 --> 00:17:57,075
+then you have to take the data
+
+364
+00:17:57,077 --> 00:17:58,776
+that corresponds to that section and row, and
+
+365
+00:17:58,778 --> 00:18:03,247
+you have to load it up into a UITableViewCell. Okay, so
+
+366
+00:18:03,249 --> 00:18:05,183
+let's talk about how that works. And
+
+367
+00:18:05,185 --> 00:18:08,352
+while I'm doing this, I'm gonna move this code on top of
+
+368
+00:18:08,354 --> 00:18:11,622
+the storyboard so that we can see the storyboard at the same
+
+369
+00:18:11,624 --> 00:18:14,959
+time we're looking at the code, okay? So here's how you
+
+370
+00:18:14,961 --> 00:18:19,097
+get the cell, okay? You call this table view method, okay?
+
+371
+00:18:19,099 --> 00:18:21,966
+This is the table view here that's passed along, table
+
+372
+00:18:21,968 --> 00:18:26,170
+view first argument. Dequeued reusable cell with identifier.
+
+373
+00:18:26,172 --> 00:18:30,208
+That's the thing that's reusing these cells. Okay?
+
+374
+00:18:30,210 --> 00:18:33,144
+As things go off screen, they get put back into this reuse
+
+375
+00:18:33,146 --> 00:18:35,947
+queue, and when people call this they get pulled out.
+
+376
+00:18:35,949 --> 00:18:39,450
+Okay? If there's not one available in the reuse queue,
+
+377
+00:18:39,452 --> 00:18:42,720
+it makes one. It copies your prototype to make one.
+
+378
+00:18:42,722 --> 00:18:47,225
+Okay? This says which prototype to use. Each of
+
+379
+00:18:47,227 --> 00:18:50,561
+these prototypes can have a different identifier. You just
+
+380
+00:18:50,563 --> 00:18:54,599
+select the row, and go into your storyboard, okay? And
+
+381
+00:18:54,601 --> 00:18:57,068
+you set the identifier. Just like when you do with a segue,
+
+382
+00:18:57,070 --> 00:18:59,770
+right? In a segue you set the identifier? Same thing here.
+
+383
+00:18:59,772 --> 00:19:01,839
+You're just saying what the name of this is so
+
+384
+00:19:01,841 --> 00:19:04,942
+that in your code, you can dequeue the kind of
+
+385
+00:19:04,944 --> 00:19:07,044
+one you want. So if you have multiple prototypes
+
+386
+00:19:07,046 --> 00:19:10,448
+you'll dequeue the right one here. And maybe some sections
+
+387
+00:19:10,450 --> 00:19:13,151
+use one kind of thing, and some sections use a different.
+
+388
+00:19:13,153 --> 00:19:14,585
+That's probably going to be in your homework, right?
+
+389
+00:19:14,587 --> 00:19:16,888
+You're gonna have a section using one of the prototypes
+
+390
+00:19:16,890 --> 00:19:19,824
+and a different section uses a different one, okay? Perfectly
+
+391
+00:19:19,826 --> 00:19:24,162
+fine. So after you get the cell, which I call dequeued
+
+392
+00:19:24,164 --> 00:19:29,133
+here by referencing that, you are going to load this cell
+
+393
+00:19:29,135 --> 00:19:33,938
+up with the data from your internal data structure.
+
+394
+00:19:33,940 --> 00:19:37,141
+See, data is this data right here, okay? And
+
+395
+00:19:37,143 --> 00:19:40,444
+I'm just gonna put this in this title, in subtitle.
+
+396
+00:19:40,446 --> 00:19:42,647
+Now you have to go look at the documentation for
+
+397
+00:19:42,649 --> 00:19:46,184
+UITableVIewCell, this is not a custom cell, right?
+
+398
+00:19:46,186 --> 00:19:48,886
+This is of type subtitle. So it's just a built
+
+399
+00:19:48,888 --> 00:19:51,956
+in one, it only has these two things. If you'll look at
+
+400
+00:19:51,958 --> 00:19:53,424
+the documentation for UITableViewCell,
+
+401
+00:19:53,426 --> 00:19:56,594
+you'll see that it has a property called text label,
+
+402
+00:19:56,596 --> 00:19:59,664
+which corresponds to that title thing, and detail text
+
+403
+00:19:59,666 --> 00:20:03,568
+label, which corresponds to this little text label. Okay?
+
+404
+00:20:03,570 --> 00:20:07,438
+So you can set the text of those things here.
+
+405
+00:20:07,440 --> 00:20:10,875
+To whatever information, important information or
+
+406
+00:20:10,877 --> 00:20:13,477
+less important information, from your data,
+
+407
+00:20:13,479 --> 00:20:16,847
+internal data structure. Then you just return the cell and
+
+408
+00:20:16,849 --> 00:20:20,518
+that's it. Okay so you dequeue the cell, load it up with
+
+409
+00:20:20,520 --> 00:20:21,452
+the information at that section and
+
+410
+00:20:21,454 --> 00:20:25,189
+row in your data structure, and return it. Any question
+
+411
+00:20:25,191 --> 00:20:28,626
+about that? Okay, now let's talk about the custom case.
+
+412
+00:20:28,628 --> 00:20:30,661
+Let's say you have a custom cell, okay? So
+
+413
+00:20:30,663 --> 00:20:33,698
+now my type here is custom, I got this label, but I could
+
+414
+00:20:33,700 --> 00:20:36,601
+have all kinds of buttons and stuff in here. In this
+
+415
+00:20:36,603 --> 00:20:39,971
+case you do the same thing, dequeueReusableCell, okay?
+
+416
+00:20:39,973 --> 00:20:42,773
+Probably has a different identifier here.
+
+417
+00:20:42,775 --> 00:20:47,445
+Okay, then instead of doing that textLabel.text equals
+
+418
+00:20:47,447 --> 00:20:50,715
+detailtextLabel.whatever equals, you just
+
+419
+00:20:50,717 --> 00:20:55,386
+call some public API in your subclass of TableViewCell that
+
+420
+00:20:55,388 --> 00:20:58,656
+passes the information to it. Then it's gonna take that and
+
+421
+00:20:58,658 --> 00:21:03,728
+put it in all of its outlets. Okay? Make sense?
+
+422
+00:21:03,730 --> 00:21:06,564
+So it's very very simple. Notice that I'm having to take
+
+423
+00:21:06,566 --> 00:21:11,435
+the cell which gets dequeued as a UITableViewCell and
+
+424
+00:21:11,437 --> 00:21:15,506
+I'm having to cast it here to be MyTableViewCell so
+
+425
+00:21:15,508 --> 00:21:19,010
+I can call this public function in MyTableViewCell.
+
+426
+00:21:19,012 --> 00:21:21,779
+See? Otherwise I wouldn't be able to call it because
+
+427
+00:21:21,781 --> 00:21:22,813
+dequeued would be a UITableViewCell,
+
+428
+00:21:22,815 --> 00:21:30,054
+not a subclass of it. Everybody got that? Okay.
+
+429
+00:21:30,056 --> 00:21:31,856
+The UITableViewlDataSource that cell for
+
+430
+00:21:31,858 --> 00:21:34,558
+row at index path is the most important thing in it.
+
+431
+00:21:34,560 --> 00:21:37,762
+The other two here, number of sections in TableView and
+
+432
+00:21:37,764 --> 00:21:41,966
+TableView's number of rows and section are the other two.
+
+433
+00:21:41,968 --> 00:21:44,835
+The number of sections by default is one. So if
+
+434
+00:21:44,837 --> 00:21:47,972
+you don't implement number of sections in table view at all,
+
+435
+00:21:47,974 --> 00:21:50,308
+you just don't even implement it, it'll be one,
+
+436
+00:21:50,310 --> 00:21:54,478
+okay? But the other one has to be implemented because
+
+437
+00:21:54,480 --> 00:21:57,148
+the TableView has to know how many rows there are.
+
+438
+00:21:57,150 --> 00:21:59,317
+TableView cannot survive unless it knows how many rows
+
+439
+00:21:59,319 --> 00:22:02,420
+there are. So you have to implement this number of rows
+
+440
+00:22:02,422 --> 00:22:04,722
+in section right here. And it's simple, it's just gives
+
+441
+00:22:04,724 --> 00:22:06,691
+you the section. You return how many rows are in that
+
+442
+00:22:06,693 --> 00:22:09,627
+section, okay? And it's gonna call that repeatedly, once for
+
+443
+00:22:09,629 --> 00:22:12,897
+every section. Okay, what about in a static table?
+
+444
+00:22:12,899 --> 00:22:15,199
+You don't have to do any of this, okay? Static table,
+
+445
+00:22:15,201 --> 00:22:19,103
+it's fixed in your storyboard. All right? So that's how our
+
+446
+00:22:19,105 --> 00:22:22,940
+table dataSource works. The section titles like you
+
+447
+00:22:22,942 --> 00:22:24,742
+remember I showed you the section had Japan and
+
+448
+00:22:24,744 --> 00:22:27,478
+the Japan things, and then Mexico and the Mexico cities?
+
+449
+00:22:27,480 --> 00:22:30,247
+Well those titles like Japan, those are considered part of
+
+450
+00:22:30,249 --> 00:22:33,451
+the data, as you might imagine. So there's another
+
+451
+00:22:33,453 --> 00:22:36,153
+TableView dataSource method called TableView,
+
+452
+00:22:36,155 --> 00:22:39,090
+titleForHeader or FooterInSection. Okay?
+
+453
+00:22:39,092 --> 00:22:40,991
+You give it this section and you return to string.
+
+454
+00:22:40,993 --> 00:22:44,528
+Or there's another one that you can return a view,
+
+455
+00:22:44,530 --> 00:22:45,796
+a UI view, okay? So
+
+456
+00:22:45,798 --> 00:22:49,133
+that's how you set the headers of your tables. There's
+
+457
+00:22:49,135 --> 00:22:51,602
+a number of other methods in here that have to do with
+
+458
+00:22:51,604 --> 00:22:54,238
+editing and moving rows because when you're deleting
+
+459
+00:22:54,240 --> 00:22:56,140
+rows you're affecting your data source, right?
+
+460
+00:22:56,142 --> 00:22:57,508
+Your deleting the data out of your data source.
+
+461
+00:22:57,510 --> 00:23:00,144
+So those can get involved, I'm not going to talk about those.
+
+462
+00:23:00,146 --> 00:23:03,013
+But this is the kind of thing you probably want to do either
+
+463
+00:23:03,015 --> 00:23:06,584
+for the extra credit or in your final project.
+
+464
+00:23:06,586 --> 00:23:08,319
+You're almost certainly going to want to have a table.
+
+465
+00:23:08,321 --> 00:23:10,087
+At least one where you can delete the rows or
+
+466
+00:23:10,089 --> 00:23:12,423
+move them around. Or something, or insert rows.
+
+467
+00:23:12,425 --> 00:23:17,628
+Etc. Okay? Now, what about segueing from TableView cells?
+
+468
+00:23:17,630 --> 00:23:20,898
+How do you do that? Exactly as you might imagine [LAUGH], you
+
+469
+00:23:20,900 --> 00:23:24,168
+just control drag from them to the MVC you want to segue to,
+
+470
+00:23:24,170 --> 00:23:27,138
+and when you do you're gonna get to choose what kind of
+
+471
+00:23:27,140 --> 00:23:28,906
+segue you want, show or show detail,
+
+472
+00:23:28,908 --> 00:23:31,976
+or eventually we'll talk about these other kinds of segues.
+
+473
+00:23:31,978 --> 00:23:36,414
+Okay, if you have that little blue i, told you I'd get back
+
+474
+00:23:36,416 --> 00:23:40,584
+to that, here it is, you can control+drag from it, over,
+
+475
+00:23:40,586 --> 00:23:44,321
+and when you choose your segue, you choose it from this
+
+476
+00:23:44,323 --> 00:23:48,058
+part that says Accessory Action down here. And when you
+
+477
+00:23:48,060 --> 00:23:51,328
+have a little i here, if you click on the row it will do
+
+478
+00:23:51,330 --> 00:23:55,733
+whatever segue is specified by the top selection segue thing.
+
+479
+00:23:55,735 --> 00:23:57,902
+And if you Click just on the blue i,
+
+480
+00:23:57,904 --> 00:24:02,072
+you'll get whatever segue is hooked up here, okay? So
+
+481
+00:24:02,074 --> 00:24:04,108
+you can basically have a row that has two different segues,
+
+482
+00:24:04,110 --> 00:24:07,545
+one if you click on the i and one if you click on the row.
+
+483
+00:24:08,414 --> 00:24:11,882
+All right, you set your segue identifier as usual,
+
+484
+00:24:11,884 --> 00:24:12,850
+nothing special there. But
+
+485
+00:24:12,852 --> 00:24:15,953
+to prepareForSegue obviously is gonna be a little different
+
+486
+00:24:15,955 --> 00:24:17,087
+when you're segueing from a row. So
+
+487
+00:24:17,089 --> 00:24:19,657
+let's look at prepareForSegue. And the difference is all
+
+488
+00:24:19,659 --> 00:24:22,793
+about who the sender is. Normally, the sender in
+
+489
+00:24:22,795 --> 00:24:24,528
+prepareForSegue is like the UI button you clicked
+
+490
+00:24:24,530 --> 00:24:26,430
+on that caused the segue to happen. Well, here,
+
+491
+00:24:26,432 --> 00:24:30,367
+of course, the sender is the UITableViewCell you clicked
+
+492
+00:24:30,369 --> 00:24:34,138
+on, okay. So you're gonna have to get that UITableViewCell,
+
+493
+00:24:34,140 --> 00:24:36,941
+and since this is any object, you're gonna have to convert
+
+494
+00:24:36,943 --> 00:24:39,376
+it to either MyTableViewCell if it's custom,
+
+495
+00:24:39,378 --> 00:24:42,680
+or UITableViewCell if it's not custom. Then you're gonna call
+
+496
+00:24:42,682 --> 00:24:47,151
+this very important method in tableView.indexPathforCell,
+
+497
+00:24:47,153 --> 00:24:49,620
+okay. It's gonna give you an NSIndexPath that's
+
+498
+00:24:49,622 --> 00:24:52,990
+basically gonna tell you which row in which section
+
+499
+00:24:52,992 --> 00:24:55,593
+you're segueing from. Cuz if you're preparing,
+
+500
+00:24:55,595 --> 00:24:57,828
+you gotta know which row it came from so you know
+
+501
+00:24:57,830 --> 00:25:00,531
+how to prepare with the guy you're segueing to. Okay, so
+
+502
+00:25:00,533 --> 00:25:04,368
+then you just take, you get your destinationViewController
+
+503
+00:25:04,370 --> 00:25:04,435
+Okay, this is just like in any other, prepareForSegue.
+
+504
+00:25:04,437 --> 00:25:07,371
+as usual.
+
+505
+00:25:07,373 --> 00:25:11,008
+And then you get your data out of your model, okay,
+
+506
+00:25:11,010 --> 00:25:14,311
+in your TableViewController, in that section and row. Okay,
+
+507
+00:25:14,313 --> 00:25:16,580
+however, you might have to call a function to do that or
+
+508
+00:25:16,582 --> 00:25:19,416
+however you do it, and then you just assign that
+
+509
+00:25:19,418 --> 00:25:22,219
+to the public API of the thing you are segueing to just like
+
+510
+00:25:22,221 --> 00:25:25,422
+you normally would in any prepareForSegue.
+
+511
+00:25:25,424 --> 00:25:27,658
+Okay, so the magic is just this little thing,
+
+512
+00:25:27,660 --> 00:25:30,094
+indexPathForCell, don't forget about that,
+
+513
+00:25:30,096 --> 00:25:32,830
+okay. That's how you figure out which row you're segueing
+
+514
+00:25:32,832 --> 00:25:36,767
+from. All right, how about the UITableViewDelegate,
+
+515
+00:25:36,769 --> 00:25:38,702
+not the dataSource but the delegate?
+
+516
+00:25:38,704 --> 00:25:41,805
+It has a lot of stuff for how the table view works.
+
+517
+00:25:41,807 --> 00:25:43,274
+I'm not gonna talk a lot about it but
+
+518
+00:25:43,276 --> 00:25:46,277
+I'll talk about a couple of interesting one.
+
+519
+00:25:46,279 --> 00:25:49,146
+Usually the dataSource and the delegate are the same object,
+
+520
+00:25:49,148 --> 00:25:50,147
+namely your controller,
+
+521
+00:25:50,149 --> 00:25:52,983
+your TableViewController. The delegate lets you
+
+522
+00:25:52,985 --> 00:25:56,353
+observe what's going on inside the table, okay?
+
+523
+00:25:56,355 --> 00:25:58,255
+It has a lot of will do something,
+
+524
+00:25:58,257 --> 00:26:00,257
+did do something kind of methods in it.
+
+525
+00:26:00,259 --> 00:26:03,093
+It has a very interesting one which is to let you know when
+
+526
+00:26:03,095 --> 00:26:06,096
+the user selects a row, when a user touches on a row. Now
+
+527
+00:26:06,098 --> 00:26:08,532
+normally when they touch on a row, you're just gonna segue,
+
+528
+00:26:08,534 --> 00:26:10,601
+but sometimes you might wanna touch on a row in a table and
+
+529
+00:26:10,603 --> 00:26:12,603
+not segue. You wanna do something else, okay?
+
+530
+00:26:12,605 --> 00:26:14,538
+And so this gives you, kind of, ta,
+
+531
+00:26:14,540 --> 00:26:18,008
+TableView Target/Action, okay. The way you do that,
+
+532
+00:26:18,010 --> 00:26:20,578
+is you implement this method in your controller,
+
+533
+00:26:20,580 --> 00:26:25,349
+didSelectRowAtIndexPath, okay. And the table view will send
+
+534
+00:26:25,351 --> 00:26:28,485
+you this whenever someone touches on a row, and
+
+535
+00:26:28,487 --> 00:26:33,724
+this is just telling you which row they touched on, okay,
+
+536
+00:26:33,726 --> 00:26:37,227
+simple. Another interesting one is if they
+
+537
+00:26:37,229 --> 00:26:40,564
+press on that little i, the little circled blue i,
+
+538
+00:26:40,566 --> 00:26:43,300
+you'll get this method, accessory button tapped for
+
+539
+00:26:43,302 --> 00:26:47,104
+row with index path. Okay, so you can find out that the i
+
+540
+00:26:47,106 --> 00:26:50,307
+button was pressed. Again, you might be segueing instead,
+
+541
+00:26:50,309 --> 00:26:53,877
+but you can do, you can get notified if you want
+
+542
+00:26:53,879 --> 00:26:56,213
+alternatively. Lots of other methods,
+
+543
+00:26:56,215 --> 00:27:00,184
+I'm not really have time to talk about them all. So, you,
+
+544
+00:27:00,186 --> 00:27:03,020
+providing the UIView for headers and
+
+545
+00:27:03,022 --> 00:27:08,926
+footers is kind of a drawing thing so they do that.
+
+546
+00:27:08,928 --> 00:27:09,760
+Editing and moving the rows,
+
+547
+00:27:09,762 --> 00:27:11,395
+there's not just a data source element to it,
+
+548
+00:27:11,397 --> 00:27:14,331
+there's actually the visual moving the rows.
+
+549
+00:27:14,333 --> 00:27:17,434
+It gets involved in that, that kind of thing, okay?
+
+550
+00:27:17,436 --> 00:27:21,372
+Now what if your model changes in your table view controller,
+
+551
+00:27:21,374 --> 00:27:22,640
+right, the underlying data? Well,
+
+552
+00:27:22,642 --> 00:27:25,442
+you need all those sections and rows to change, right?
+
+553
+00:27:25,444 --> 00:27:27,044
+You might have a different number of sections and
+
+554
+00:27:27,046 --> 00:27:28,612
+a different number of rows in each section.
+
+555
+00:27:28,614 --> 00:27:30,280
+So you're gonna call this method and
+
+556
+00:27:30,282 --> 00:27:31,615
+table you'll call it reloadData.
+
+557
+00:27:31,617 --> 00:27:33,817
+And that causes the table view to go back and
+
+558
+00:27:33,819 --> 00:27:36,820
+call all those methods, numberOfSectionsInTable,
+
+559
+00:27:36,822 --> 00:27:38,822
+number of rows in each section, cell or
+
+560
+00:27:38,824 --> 00:27:40,824
+row at indexPath for all the visible cells,
+
+561
+00:27:40,826 --> 00:27:44,294
+call them all again, okay, to get your table view reset up.
+
+562
+00:27:44,296 --> 00:27:45,629
+Now that might seem kinda heavy weight, and
+
+563
+00:27:45,631 --> 00:27:48,632
+for a large table, maybe it would be. So if you know how
+
+564
+00:27:48,634 --> 00:27:52,302
+your model changed such that you know which index paths,
+
+565
+00:27:52,304 --> 00:27:54,738
+which sections and which sections and rows,
+
+566
+00:27:54,740 --> 00:27:58,575
+like maybe only one section would have been changed. Then
+
+567
+00:27:58,577 --> 00:28:03,781
+you can try this more fine tuned reloadRowsAtIndexPaths,
+
+568
+00:28:03,783 --> 00:28:09,520
+which is just like reloadData but only certain index paths,
+
+569
+00:28:09,522 --> 00:28:11,789
+okay? How about the height of rows,
+
+570
+00:28:11,791 --> 00:28:13,991
+how tall are rows? Rows are a fixed width.
+
+571
+00:28:13,993 --> 00:28:15,659
+They're the entire width of of the table, but
+
+572
+00:28:15,661 --> 00:28:18,696
+what about the height? Normally the height is
+
+573
+00:28:18,698 --> 00:28:21,932
+just set in the inspector in your storyboard and
+
+574
+00:28:21,934 --> 00:28:24,601
+it's fixed. All of the rows are exactly the same height
+
+575
+00:28:24,603 --> 00:28:27,071
+rows of a certain prototype, all the rows that ma, or
+
+576
+00:28:27,073 --> 00:28:28,439
+of a certain prototype the same height.
+
+577
+00:28:28,441 --> 00:28:31,975
+But it is possible to let the system calculate the proper
+
+578
+00:28:31,977 --> 00:28:36,113
+height, and have the rows be different heights, okay.
+
+579
+00:28:36,115 --> 00:28:37,181
+So it'll use autolayout,
+
+580
+00:28:37,183 --> 00:28:40,317
+right, inside the area of custom cell to figure out how
+
+581
+00:28:40,319 --> 00:28:42,920
+high it should be, and then make it that high, and
+
+582
+00:28:42,922 --> 00:28:45,322
+it'll do that for every row. But if you're doing that and
+
+583
+00:28:45,324 --> 00:28:48,559
+you had a thousand rows, think about is really,
+
+584
+00:28:48,561 --> 00:28:50,661
+the system's gonna load up a cell for
+
+585
+00:28:50,663 --> 00:28:53,697
+every single one of those 10,000 rows? Do the autolayout
+
+586
+00:28:53,699 --> 00:28:56,400
+on each one to figure how big the table is? No way,
+
+587
+00:28:56,402 --> 00:28:58,402
+that would be horrendously inefficient. So
+
+588
+00:28:58,404 --> 00:29:01,972
+instead, it asks you to tell it an estimated height and
+
+589
+00:29:01,974 --> 00:29:05,175
+uses the estimated height just to estimate the total size
+
+590
+00:29:05,177 --> 00:29:08,178
+of the table view. But then as one comes on screen,
+
+591
+00:29:08,180 --> 00:29:10,681
+it makes it to be the actual height based on using
+
+592
+00:29:10,683 --> 00:29:14,184
+the autolayout. And the way you make it do the autolayout
+
+593
+00:29:14,186 --> 00:29:17,588
+is with this height UITableViewAutomaticDimension.
+
+594
+00:29:17,590 --> 00:29:19,857
+That's a special height which means calculate it for
+
+595
+00:29:19,859 --> 00:29:24,762
+me using autolayout. Okay, you can also control the height.
+
+596
+00:29:24,764 --> 00:29:26,497
+And you're probably gonna do this, hint hint,
+
+597
+00:29:26,499 --> 00:29:28,632
+you probably gonna do this in your homework assignment.
+
+598
+00:29:28,634 --> 00:29:32,302
+You control that height right here with a method that'll get
+
+599
+00:29:32,304 --> 00:29:33,203
+sent to you, okay.
+
+600
+00:29:33,205 --> 00:29:34,671
+The table view will send you this message,
+
+601
+00:29:34,673 --> 00:29:37,708
+heightForRowAtIndexPath. It'll give you the indexPath,
+
+602
+00:29:37,710 --> 00:29:40,410
+and it's asking you to tell it the height, okay.
+
+603
+00:29:40,412 --> 00:29:43,113
+And in here, you could calculate the height. So maybe
+
+604
+00:29:43,115 --> 00:29:45,215
+you don't want autolayout to make the decision about the
+
+605
+00:29:45,217 --> 00:29:49,620
+height, you wanna calculate it based on something else, okay,
+
+606
+00:29:49,622 --> 00:29:51,855
+some information that you might have about what's in
+
+607
+00:29:51,857 --> 00:29:55,292
+that cell, okay? So you don't wanna use autolayout to it,
+
+608
+00:29:55,294 --> 00:29:58,395
+that's fine, you can calculate it here. So here's a big hint,
+
+609
+00:29:58,397 --> 00:30:00,330
+you're gonna wanna do this in your homework,
+
+610
+00:30:00,332 --> 00:30:04,968
+okay? All right, so there's, in the TableView itself, we're
+
+611
+00:30:04,970 --> 00:30:07,404
+talking about its delegate methods, in the TableView
+
+612
+00:30:07,406 --> 00:30:09,773
+itself, there are tons and tons of methods, okay?
+
+613
+00:30:09,775 --> 00:30:11,942
+Can't go over them all, you're gonna wanna look to them,
+
+614
+00:30:11,944 --> 00:30:15,712
+look for them. But, you know, things like scrolling around
+
+615
+00:30:15,714 --> 00:30:17,681
+in there. The UITableView actually turns out to be
+
+616
+00:30:17,683 --> 00:30:21,318
+a subclass of UIScrollView, so it inherits all the ability
+
+617
+00:30:21,320 --> 00:30:24,588
+UIScrollView can to scroll around and stuff like that. So
+
+618
+00:30:24,590 --> 00:30:27,191
+you're gonna go take a look at UITableView and understand
+
+619
+00:30:27,193 --> 00:30:29,193
+what it can do. But you're controlling the TableView
+
+620
+00:30:29,195 --> 00:30:32,262
+mostly by these delegates, okay. But you can also send
+
+621
+00:30:32,264 --> 00:30:35,265
+messages directly to TableView to make it do things.
+
+622
+00:30:35,267 --> 00:30:38,335
+All right, so that's it on the slides for TableView.
+
+623
+00:30:38,337 --> 00:30:42,339
+Assignment 4 out, okay, it's basically going to be to do
+
+624
+00:30:42,341 --> 00:30:45,309
+a better version of the demo I'm doing today.
+
+625
+00:30:45,311 --> 00:30:47,344
+So you're gonna start with what I have today and
+
+626
+00:30:47,346 --> 00:30:50,280
+you're gonna improve it, okay? It's gonna be due in a week,
+
+627
+00:30:50,282 --> 00:30:54,151
+next Monday. On Wednesday, we're gonna start a two day
+
+628
+00:30:54,153 --> 00:30:58,255
+lecture on Core Data, which is object oriented database.
+
+629
+00:30:58,257 --> 00:31:01,258
+And next week's assignment is going to be enhance what
+
+630
+00:31:01,260 --> 00:31:04,962
+you're building this week to include an object oriented
+
+631
+00:31:04,964 --> 00:31:06,096
+database in there, okay.
+
+632
+00:31:06,098 --> 00:31:08,232
+Obviously, we're dealing with big data sets,
+
+633
+00:31:08,234 --> 00:31:10,267
+it would make sense to put it in a database so
+
+634
+00:31:10,269 --> 00:31:11,668
+we can query on it, things like that.
+
+635
+00:31:11,670 --> 00:31:14,705
+On Friday, if there's enough interest, which is still to be
+
+636
+00:31:14,707 --> 00:31:18,008
+determined, watch the bulletin boards in the class to find
+
+637
+00:31:18,010 --> 00:31:19,710
+out, we might have UICollectionView.
+
+638
+00:31:19,712 --> 00:31:22,713
+Now UICollectionView is just like TableView, except for
+
+639
+00:31:22,715 --> 00:31:25,382
+it's much more flexible. It's not just rows,
+
+640
+00:31:25,384 --> 00:31:28,352
+it can lay things out in almost any arrangement.
+
+641
+00:31:28,354 --> 00:31:31,021
+But it's still the same kind of thing, with the number of
+
+642
+00:31:31,023 --> 00:31:33,824
+sections, number of rows, all that. It's just that they're
+
+643
+00:31:33,826 --> 00:31:36,126
+not called rows, they're just number of items, okay,
+
+644
+00:31:36,128 --> 00:31:38,929
+because they can be laid out in different ways.
+
+645
+00:31:38,931 --> 00:31:42,132
+So now I'm going to do a demo, okay, it's a TableView demo.
+
+646
+00:31:42,134 --> 00:31:46,336
+We're going to build a Twitter client, okay. I'm calling
+
+647
+00:31:46,338 --> 00:31:50,507
+it Smash Tag because hashtags are at the middle of it, and
+
+648
+00:31:50,509 --> 00:31:55,279
+so Smash Tag is kind of a fun name for it. So let's go here.
+
+649
+00:31:55,281 --> 00:31:55,946
+I'm just gonna go to Xcode,
+
+650
+00:31:55,948 --> 00:31:58,415
+we're gonna start from scratch, as a brand new app,
+
+651
+00:31:58,417 --> 00:32:00,651
+okay. This is an iOS application as usual,
+
+652
+00:32:00,653 --> 00:32:04,388
+single view as always. We'll call it Smashtag here.
+
+653
+00:32:04,390 --> 00:32:07,858
+This one's gonna be iPhone only, okay, this app's gonna
+
+654
+00:32:07,860 --> 00:32:09,826
+be iPhone only. You will only be required
+
+655
+00:32:09,828 --> 00:32:11,428
+to do iPhone as well. You don't have to do,
+
+656
+00:32:11,430 --> 00:32:14,898
+you've already kind of learned your split view doing it on
+
+657
+00:32:14,900 --> 00:32:16,867
+multiple, so you don't have to do that again. So
+
+658
+00:32:16,869 --> 00:32:18,201
+we'll put it in the same place we put everything,
+
+659
+00:32:18,203 --> 00:32:22,472
+home directory developer, okay. Here it is. I'm gonna
+
+660
+00:32:22,474 --> 00:32:25,809
+clean up a little bit by going to my storyboard right here.
+
+661
+00:32:25,811 --> 00:32:28,745
+Here's my storyboard, and I'll zoom out so you can see it. It
+
+662
+00:32:28,747 --> 00:32:31,615
+comes with this pre-packaged freebie view controller.
+
+663
+00:32:31,617 --> 00:32:34,751
+I don't even want that, so I'm just gonna delete that
+
+664
+00:32:34,753 --> 00:32:36,420
+okay and ditto the code that came with
+
+665
+00:32:36,422 --> 00:32:39,289
+it too right here. I'm just gonna delete this, get that
+
+666
+00:32:39,291 --> 00:32:42,426
+out of there and move it to the trash. We'll go ahead and
+
+667
+00:32:42,428 --> 00:32:45,595
+put all these other things into, not our storyboard, but
+
+668
+00:32:45,597 --> 00:32:48,799
+these things into this little supporting files like we
+
+669
+00:32:48,801 --> 00:32:54,338
+usually do. Supporting 14 files. Okay,
+
+670
+00:32:54,340 --> 00:32:57,407
+so we're left with really a pretty much a blank app here.
+
+671
+00:32:57,409 --> 00:33:00,344
+Okay, storyboard's got nothing in it, and we're gonna have
+
+672
+00:33:00,346 --> 00:33:03,013
+one view controller in this app to start. You're gonna add
+
+673
+00:33:03,015 --> 00:33:05,482
+more view controllers in yours, but we're gonna start
+
+674
+00:33:05,484 --> 00:33:07,884
+one and, of course, it's gonna be a table view controller.
+
+675
+00:33:07,886 --> 00:33:08,752
+So let's drag it out, okay.
+
+676
+00:33:08,754 --> 00:33:11,755
+Well go down here. Go down to table view controller,
+
+677
+00:33:11,757 --> 00:33:15,625
+it's like 4th of 5th one down. I'm just gonna drag it out.
+
+678
+00:33:15,627 --> 00:33:18,195
+As promised, if you do the identity inspector, you can
+
+679
+00:33:18,197 --> 00:33:21,031
+see this view controller is a UITableViewController.
+
+680
+00:33:21,033 --> 00:33:25,502
+And if I click inside on the view that's inside this thing,
+
+681
+00:33:25,504 --> 00:33:30,073
+okay, you'll see that it's class is UITableView, okay.
+
+682
+00:33:30,075 --> 00:33:34,144
+If I click here, on a row, you'll see it's class is
+
+683
+00:33:34,146 --> 00:33:37,848
+a UITableViewCell. Does everyone got the parts here?
+
+684
+00:33:37,850 --> 00:33:40,751
+Have the parts all put together? Well,
+
+685
+00:33:40,753 --> 00:33:43,887
+we obviously need to have our own custom subclass of UI,
+
+686
+00:33:43,889 --> 00:33:47,257
+TableViewController, okay, just like we do with anything.
+
+687
+00:33:47,259 --> 00:33:49,259
+So let's go ahead an do that right off the bat.
+
+688
+00:33:49,261 --> 00:33:51,762
+File, New File. Okay, it's gonna be a Cocoa Touch class,
+
+689
+00:33:51,764 --> 00:33:54,097
+it's gonna be a subclass of UITableViewController.
+
+690
+00:33:54,099 --> 00:33:56,500
+I'm gonna call it TweetTableViewController,
+
+691
+00:33:56,502 --> 00:34:00,170
+because it's gonna be a table view full of tweets. Okay, so,
+
+692
+00:34:00,172 --> 00:34:01,972
+it's a tweet table view controller, or
+
+693
+00:34:01,974 --> 00:34:04,674
+a TweetTableViewController, whichever, you want to look at
+
+694
+00:34:04,676 --> 00:34:06,543
+it there, all right. So we got that, here it is,
+
+695
+00:34:06,545 --> 00:34:09,012
+we'll put it in the same place as everything else.
+
+696
+00:34:09,014 --> 00:34:10,547
+Okay, here's my TweetTableViewController,
+
+697
+00:34:10,549 --> 00:34:12,582
+we'll look at that in a second. Let's go back to our
+
+698
+00:34:12,584 --> 00:34:15,886
+story board and make sure we set our custom class, okay.
+
+699
+00:34:15,888 --> 00:34:16,987
+This is a easy thing to forget,
+
+700
+00:34:16,989 --> 00:34:19,289
+I'm sure a lot of you have. Let's go in here and
+
+701
+00:34:19,291 --> 00:34:20,857
+make sure it's a TweetTableViewController.
+
+702
+00:34:20,859 --> 00:34:22,426
+So, this is a TweetTableViewController right
+
+703
+00:34:22,428 --> 00:34:25,495
+here. Let's go look at the code that it generated for us.
+
+704
+00:34:25,497 --> 00:34:28,065
+This is a little more than we get when we normally
+
+705
+00:34:28,067 --> 00:34:30,734
+Make a UIViewController, okay? Because, of course,
+
+706
+00:34:30,736 --> 00:34:33,570
+we're getting table view specific stuff here. So,
+
+707
+00:34:33,572 --> 00:34:34,905
+here's our viewDidLoad, it has a couple
+
+708
+00:34:34,907 --> 00:34:38,875
+comments in here that you can look at when you go build your
+
+709
+00:34:38,877 --> 00:34:41,411
+app. Has to do with selection being cleared and
+
+710
+00:34:41,413 --> 00:34:44,815
+whether there's an Edit button for editing this thing. We're
+
+711
+00:34:44,817 --> 00:34:47,050
+not gonna be doing that in this demo, so get rid of that.
+
+712
+00:34:47,052 --> 00:34:48,652
+And we're not gonna have to worry about memory, so
+
+713
+00:34:48,654 --> 00:34:54,191
+we get rid of that. Here is our UITableViewDataSource
+
+714
+00:34:54,193 --> 00:34:58,528
+right here. Here's the number of sections in the table,
+
+715
+00:34:58,530 --> 00:35:00,464
+here's the numberOfRowsInSection,
+
+716
+00:35:00,466 --> 00:35:01,865
+here's cellForRowAtIndexPath.
+
+717
+00:35:01,867 --> 00:35:03,233
+Okay, and we know we're gonna want that, so
+
+718
+00:35:03,235 --> 00:35:05,368
+I'm even gonna uncomment that. Okay,
+
+719
+00:35:05,370 --> 00:35:08,038
+this is the heart of a dynamic table.
+
+720
+00:35:08,040 --> 00:35:09,940
+Okay? So, we'll implement that in a little bit.
+
+721
+00:35:09,942 --> 00:35:12,709
+Here's a bunch of other stuff that has to do with editing
+
+722
+00:35:12,711 --> 00:35:15,479
+the table, okay, deleting rows, things like that.
+
+723
+00:35:15,481 --> 00:35:17,114
+You really want to look at this stuff if,
+
+724
+00:35:17,116 --> 00:35:19,850
+again you're doing extra credit or the final project,
+
+725
+00:35:19,852 --> 00:35:21,485
+you want to make the rows editable,
+
+726
+00:35:21,487 --> 00:35:24,321
+but we'll clear it out of here to make it, clean. And
+
+727
+00:35:24,323 --> 00:35:27,824
+then here's our navigation, okay? I'll leave it in here.
+
+728
+00:35:27,826 --> 00:35:30,560
+Because you're gonna be doing a navigation,
+
+729
+00:35:30,562 --> 00:35:33,530
+but I'm not doing navigation in my demo, okay.
+
+730
+00:35:33,532 --> 00:35:37,000
+Tense, all right, that's our tweet controller.
+
+731
+00:35:37,002 --> 00:35:42,939
+So we, any time we have a new view controller, we probably
+
+732
+00:35:42,941 --> 00:35:46,710
+want to think about what our model is. Right? It's a really
+
+733
+00:35:46,712 --> 00:35:48,578
+good start for any time you're building a view controller,
+
+734
+00:35:48,580 --> 00:35:53,350
+what's it's model? And so, this is a table that contains
+
+735
+00:35:53,352 --> 00:35:57,487
+tweets, right? So, could say our model probably looks
+
+736
+00:35:57,489 --> 00:36:02,859
+something like an array of Tweet or something like that.
+
+737
+00:36:02,861 --> 00:36:04,127
+Okay? Where this is a class yet
+
+738
+00:36:04,129 --> 00:36:06,329
+to be determined. I'm actually going to make,
+
+739
+00:36:06,331 --> 00:36:09,032
+and I could even say, you know, equals an array of Tweet
+
+740
+00:36:09,034 --> 00:36:11,301
+to make an empty array of them to start off.
+
+741
+00:36:11,303 --> 00:36:13,036
+But I'm actually going to do a little bit trickier.
+
+742
+00:36:13,038 --> 00:36:16,873
+I'm actually going to have this be and array of and
+
+743
+00:36:16,875 --> 00:36:21,511
+array of Tweets. Okay, and the reason I'm gonna do this
+
+744
+00:36:21,513 --> 00:36:24,381
+is because I'm gonna go fetch a bunch of tweets and
+
+745
+00:36:24,383 --> 00:36:26,750
+put it in one section in my table and then later
+
+746
+00:36:26,752 --> 00:36:29,486
+I'm gonna let the use of fetch more tweets, and I'll put that
+
+747
+00:36:29,488 --> 00:36:32,088
+in another section, okay. And I'm gonna add the other
+
+748
+00:36:32,090 --> 00:36:35,392
+section by just adding another array of tweets. So this array
+
+749
+00:36:35,394 --> 00:36:40,063
+of array of tweets each array inside is just a fetch. Okay?
+
+750
+00:36:40,065 --> 00:36:42,899
+So that's why I'm doing an array of an array of tweets,
+
+751
+00:36:42,901 --> 00:36:46,136
+so I can just adding sections, okay? So this is really
+
+752
+00:36:46,138 --> 00:36:48,538
+nice, having an array of array of something is really
+
+753
+00:36:48,540 --> 00:36:51,708
+nice for table views, because this really makes it easy to
+
+754
+00:36:51,710 --> 00:36:54,477
+implement all the table view methods. Because it's really
+
+755
+00:36:54,479 --> 00:36:56,546
+clear, the section is the outer part of the array, and
+
+756
+00:36:56,548 --> 00:37:00,584
+then the row is in the inner part. Okay, everybody cool?
+
+757
+00:37:00,586 --> 00:37:02,419
+Clear why I'm doing that? Now,
+
+758
+00:37:02,421 --> 00:37:06,823
+of course, if anyone sets my model, I'm going to need to
+
+759
+00:37:06,825 --> 00:37:11,428
+reload my table, which I do with TableView.reloadData().
+
+760
+00:37:11,430 --> 00:37:16,399
+Okay, that's gonna call all these methods down here to get
+
+761
+00:37:16,401 --> 00:37:19,002
+called again. Okay. Make sense? Now,
+
+762
+00:37:19,004 --> 00:37:21,972
+my model is actually gonna be a little more than that.
+
+763
+00:37:21,974 --> 00:37:25,909
+I'm gonna have another part of my model which is searchText,
+
+764
+00:37:25,911 --> 00:37:28,612
+which is gonna be a string, okay? I'm gonna allow people
+
+765
+00:37:28,614 --> 00:37:32,115
+to set this part of my model. And I'm gonna go search for
+
+766
+00:37:32,117 --> 00:37:35,585
+those tweets, tweets that match that search text and
+
+767
+00:37:35,587 --> 00:37:38,755
+load up the other part of my model with it. Okay, so
+
+768
+00:37:38,757 --> 00:37:40,257
+its kinda part of my model as well,
+
+769
+00:37:40,259 --> 00:37:42,492
+even though they're related in that way,
+
+770
+00:37:42,494 --> 00:37:44,661
+they're both part of the model. Now in this one,
+
+771
+00:37:44,663 --> 00:37:48,765
+if someone set this one, okay, I'm gonna remove all
+
+772
+00:37:48,767 --> 00:37:52,836
+the tweets I got, okay, using the removeAll method in array,
+
+773
+00:37:52,838 --> 00:37:55,905
+just wipe out all my tweets that I have. And then I'm
+
+774
+00:37:55,907 --> 00:37:58,475
+gonna call searchForTweets or something like that,
+
+775
+00:37:58,477 --> 00:38:00,877
+that's gonna actually have to go do a search. By the way,
+
+776
+00:38:00,879 --> 00:38:05,181
+I'm also gonna set my title to whatever that searchText is.
+
+777
+00:38:05,183 --> 00:38:07,617
+So if I'm in a navigation controller or something,
+
+778
+00:38:07,619 --> 00:38:11,288
+the title up there will be whatever the search text was.
+
+779
+00:38:11,290 --> 00:38:12,822
+So I need to search teets,
+
+780
+00:38:12,824 --> 00:38:17,694
+Tweets here, so we'll private func searchForTweets, and
+
+781
+00:38:17,696 --> 00:38:22,165
+we're gonna have to implement that. So that's my model,
+
+782
+00:38:22,167 --> 00:38:25,101
+all right, and I can also, here in my viewDidLoad,
+
+783
+00:38:25,103 --> 00:38:28,305
+maybe I would maybe even say something like searchText
+
+784
+00:38:28,307 --> 00:38:32,208
+equals, I don't know, #stanford or something. Just,
+
+785
+00:38:32,210 --> 00:38:34,077
+I'll, in viewDidLoad for testing purposes,
+
+786
+00:38:34,079 --> 00:38:37,113
+I'll just have a initial thing that I'm gonna search for,
+
+787
+00:38:37,115 --> 00:38:39,549
+okay? And when I set this it's gonna call this.
+
+788
+00:38:39,551 --> 00:38:42,118
+It's gonna remove all the tweet, it's gonna search for
+
+789
+00:38:42,120 --> 00:38:45,021
+new tweets, okay? Eventually this thing's gonna find
+
+790
+00:38:45,023 --> 00:38:48,058
+the tweets and call this. That's gonna reload the data,
+
+791
+00:38:48,060 --> 00:38:51,394
+that's gonna call these. Okay, these are gonna load up
+
+792
+00:38:51,396 --> 00:38:56,833
+the table and start making cells to, put the tweets.
+
+793
+00:38:57,169 --> 00:38:59,669
+Everybody understand that flow? All right,
+
+794
+00:38:59,671 --> 00:39:02,806
+let's talk about tweet, this class tweet right here.
+
+795
+00:39:02,808 --> 00:39:05,008
+I just typed that. What is that, okay?
+
+796
+00:39:05,010 --> 00:39:09,679
+Well I could make you go and learn how to query Twitter and
+
+797
+00:39:09,681 --> 00:39:12,082
+get tweets down and all that stuff.
+
+798
+00:39:12,084 --> 00:39:14,718
+But I really want you to learn about table views here, so
+
+799
+00:39:14,720 --> 00:39:17,554
+I'm gonna provide a framework for you that will do that.
+
+800
+00:39:17,556 --> 00:39:20,790
+Will go out and you give it a search text, it'll,
+
+801
+00:39:20,792 --> 00:39:22,125
+search text of some sort,
+
+802
+00:39:22,127 --> 00:39:23,426
+it'll just go do the tweets and
+
+803
+00:39:23,428 --> 00:39:26,763
+give it back to you as an array of these tweet objects,
+
+804
+00:39:26,765 --> 00:39:29,032
+okay? Now I'm gonna give that to you
+
+805
+00:39:29,034 --> 00:39:32,202
+as a framework. Now we haven't really talked about frameworks
+
+806
+00:39:32,204 --> 00:39:34,838
+too much. The only time I ever mentioned frameworks actually
+
+807
+00:39:34,840 --> 00:39:37,774
+was when I talked about public and private. Remember that? I
+
+808
+00:39:37,776 --> 00:39:42,879
+said there's private, there's public, and there's nothing.
+
+809
+00:39:42,881 --> 00:39:47,217
+And nothing means kind of public within your app,
+
+810
+00:39:47,219 --> 00:39:51,154
+right? And the word public, which we never use, that means
+
+811
+00:39:51,156 --> 00:39:54,424
+public outside of my app or in the case I'm gonna do it,
+
+812
+00:39:54,426 --> 00:39:57,994
+outside of my framework. So I've made a framework for you,
+
+813
+00:39:57,996 --> 00:40:01,531
+and it has public methods, methods marked public, okay.
+
+814
+00:40:01,533 --> 00:40:03,166
+Actually public put on the line there, and
+
+815
+00:40:03,168 --> 00:40:05,568
+that means that you can call those methods,
+
+816
+00:40:05,570 --> 00:40:09,239
+use those classes outside of the framework, okay?
+
+817
+00:40:09,241 --> 00:40:13,810
+So to make a framework work, though, okay, you have to
+
+818
+00:40:13,812 --> 00:40:16,813
+create a higher level project than your project,
+
+819
+00:40:16,815 --> 00:40:19,849
+called a workspace, that has both the framework and your
+
+820
+00:40:19,851 --> 00:40:24,788
+project in it, okay? So let's do that right away, let's go
+
+821
+00:40:24,790 --> 00:40:28,057
+over here to Xcode, and I'm gonna say New > Workspace.
+
+822
+00:40:28,059 --> 00:40:28,625
+We've never done this, okay,
+
+823
+00:40:28,627 --> 00:40:31,428
+this is a new kind of project-like thing, but
+
+824
+00:40:31,430 --> 00:40:33,897
+it's really just a collection of other projects. So
+
+825
+00:40:33,899 --> 00:40:37,167
+I hit New > Workspace. It says what do you wanna call it and
+
+826
+00:40:37,169 --> 00:40:37,734
+where do you wanna put it?
+
+827
+00:40:37,736 --> 00:40:40,270
+So I'm gonna put it in my home directory Developer here.
+
+828
+00:40:40,272 --> 00:40:43,173
+I'm gonna call it Lecture9. I could call it anything.
+
+829
+00:40:43,175 --> 00:40:45,575
+I could even call it Smashtag if I want, but
+
+830
+00:40:45,577 --> 00:40:46,042
+it can be kind of confusing.
+
+831
+00:40:46,044 --> 00:40:49,279
+So I'm gonna call it Lecture9, okay, and it creates this.
+
+832
+00:40:49,281 --> 00:40:51,915
+And look, it looks kinda like an empty project.
+
+833
+00:40:51,917 --> 00:40:55,151
+Okay, it has no files over here, and what you
+
+834
+00:40:55,153 --> 00:40:58,855
+put over here are other projects. So in a workspace,
+
+835
+00:40:58,857 --> 00:41:01,124
+this is gonna have other projects. And in fact,
+
+836
+00:41:01,126 --> 00:41:05,495
+I'm just gonna go grab my Smashtag, here it is right
+
+837
+00:41:05,497 --> 00:41:10,433
+here. You take the xcodeproj, okay, and you drag it in.
+
+838
+00:41:10,435 --> 00:41:14,904
+Boom, I've added this to my workspace. Now, I can work on
+
+839
+00:41:14,906 --> 00:41:18,775
+my project here just as easily as working at it directly,
+
+840
+00:41:18,777 --> 00:41:22,779
+by double-clicking it to xcodeproj, okay? And, in fact,
+
+841
+00:41:22,781 --> 00:41:25,615
+better, because when I put this other framework in there,
+
+842
+00:41:25,617 --> 00:41:27,984
+that framework will work here. If I don't,
+
+843
+00:41:27,986 --> 00:41:30,019
+work here then that framework's not gonna be
+
+844
+00:41:30,021 --> 00:41:33,256
+visible, okay. So what about this Twitter framework?
+
+845
+00:41:33,258 --> 00:41:36,326
+Where's that? Well, that turns out to be right here, okay?
+
+846
+00:41:36,328 --> 00:41:37,360
+Here's my little Twitter project.
+
+847
+00:41:37,362 --> 00:41:39,195
+This will be available to you obviously when you're doing
+
+848
+00:41:39,197 --> 00:41:42,165
+your homework. And I'm just gonna drag it's Xcode project
+
+849
+00:41:42,167 --> 00:41:46,236
+in here too. Now, when I do, be very careful not to put it
+
+850
+00:41:46,238 --> 00:41:49,272
+inside the Smashtag project. You see how this is trying to
+
+851
+00:41:49,274 --> 00:41:52,575
+put it inside? You want it to be a sibling of sash,
+
+852
+00:41:52,577 --> 00:41:54,611
+SmashTags. So put it right up at the top so
+
+853
+00:41:54,613 --> 00:41:57,280
+the two of them are siblings in this workspace.
+
+854
+00:41:57,282 --> 00:42:02,452
+Oops, in this workspace right here, okay? See what I'm
+
+855
+00:42:02,454 --> 00:42:05,421
+saying by that? Question. >> If you make
+
+856
+00:42:05,423 --> 00:42:08,391
+changes to Smashtag in your workspace,
+
+857
+00:42:08,393 --> 00:42:10,627
+do they stay? >> Yeah, so the questions is
+
+858
+00:42:10,629 --> 00:42:14,264
+if I change my framework or my project here in the workspace,
+
+859
+00:42:14,266 --> 00:42:16,933
+do they effect the project? Absolutely, here you
+
+860
+00:42:16,935 --> 00:42:19,869
+are actually working on those projects in this workspace.
+
+861
+00:42:19,871 --> 00:42:22,105
+But it's those projects you are working on, okay?
+
+862
+00:42:22,107 --> 00:42:24,541
+Putting in the workspace, just relates them,
+
+863
+00:42:24,543 --> 00:42:27,443
+it just gets them in the same grouping. So
+
+864
+00:42:27,445 --> 00:42:29,512
+here's our Twitter project right here.
+
+865
+00:42:29,514 --> 00:42:31,748
+And we still have to say that this
+
+866
+00:42:31,750 --> 00:42:35,184
+Smashtag uses this framework, and we do that, right,
+
+867
+00:42:35,186 --> 00:42:39,122
+by clicking on our Smashtag project. We need to drag
+
+868
+00:42:39,124 --> 00:42:42,358
+our Twitter framework in here to let Smashtag know,
+
+869
+00:42:42,360 --> 00:42:45,061
+yeah, I want you to use Twitter. So what do we,
+
+870
+00:42:45,063 --> 00:42:47,864
+where do we do that? We do it right here where it says
+
+871
+00:42:47,866 --> 00:42:50,900
+products Twitter framework, okay, this right here.
+
+872
+00:42:50,902 --> 00:42:55,238
+We're just gonna take this guy, and pick it up and
+
+873
+00:42:55,240 --> 00:42:58,274
+drag it in here. Now before I do that, when you
+
+874
+00:42:58,276 --> 00:43:01,811
+download this you might find this to be red, okay.
+
+875
+00:43:01,813 --> 00:43:04,647
+That means it's not built. So to build it, you're
+
+876
+00:43:04,649 --> 00:43:07,450
+gonna wanna go up to the top here, you can see now that in
+
+877
+00:43:07,452 --> 00:43:10,119
+the workspace I have two choices of things I can build.
+
+878
+00:43:10,121 --> 00:43:13,823
+You're gonna go to Twitter. Very importantly, you want to
+
+879
+00:43:13,825 --> 00:43:17,427
+pick generic iOS device, because this is a framework.
+
+880
+00:43:17,429 --> 00:43:21,164
+And you wanna build it as a generic framework, okay, for
+
+881
+00:43:21,166 --> 00:43:24,300
+all iOS devices, okay. So do that and then it'll probably
+
+882
+00:43:24,302 --> 00:43:26,336
+automatically build when you do that. But if not,
+
+883
+00:43:26,338 --> 00:43:29,238
+you can hit Play to build and it'll build Twitter, and
+
+884
+00:43:29,240 --> 00:43:30,807
+then this will stop being red, okay.
+
+885
+00:43:30,809 --> 00:43:33,076
+Very important, if this is red and you drag it in,
+
+886
+00:43:33,078 --> 00:43:35,845
+it's not gonna work. This has to be black, okay?
+
+887
+00:43:35,847 --> 00:43:40,249
+So I'm gonna drag it in, okay, okay, to Smashtags1.
+
+888
+00:43:40,251 --> 00:43:43,920
+Okay, so here I picked Smashtag, drag this down here,
+
+889
+00:43:43,922 --> 00:43:48,224
+it adds it. Notice it shows in Smashtag inside Smashtag's
+
+890
+00:43:48,226 --> 00:43:51,160
+project, it shows it right there as well. If you're doing
+
+891
+00:43:51,162 --> 00:43:53,796
+that objective C, by the way, there's some headers right
+
+892
+00:43:53,798 --> 00:43:56,532
+here because even though I wrote this in Swift, you could
+
+893
+00:43:56,534 --> 00:44:00,303
+use an objective C using these headers right here, okay.
+
+894
+00:44:00,305 --> 00:44:03,006
+If you're in Swift, you don't care about those headers,
+
+895
+00:44:03,008 --> 00:44:07,443
+all right? But now inside of our code of our Smashtag, we
+
+896
+00:44:07,445 --> 00:44:12,548
+can reference that framework by saying import Twitter,
+
+897
+00:44:12,550 --> 00:44:16,252
+which is the name of this framework, okay.
+
+898
+00:44:16,254 --> 00:44:18,921
+And once we import Twitter, look, this, in fact,
+
+899
+00:44:18,923 --> 00:44:21,591
+if we go back here, which is where it is. And then we're
+
+900
+00:44:21,593 --> 00:44:24,694
+gonna build this one for, iPhone 6. If you go back here,
+
+901
+00:44:24,696 --> 00:44:27,597
+you'll see that Tweet no longer generates an error, and
+
+902
+00:44:27,599 --> 00:44:29,966
+it turns purple, cuz it's recognized.
+
+903
+00:44:29,968 --> 00:44:33,202
+Now this is the only Tweet in our namespace, but the full
+
+904
+00:44:33,204 --> 00:44:36,873
+name of this thing is actually Twitter.Tweet. Okay, and
+
+905
+00:44:36,875 --> 00:44:39,676
+you can either specify full name or if there's no other
+
+906
+00:44:39,678 --> 00:44:41,611
+Tweets around, you could leave this off.
+
+907
+00:44:41,613 --> 00:44:43,746
+I'll put it in there just so you're reminded, okay,
+
+908
+00:44:43,748 --> 00:44:48,017
+that that's coming from that framework. Got it? Now let's
+
+909
+00:44:48,019 --> 00:44:50,620
+go look at this Twitter.Tweet and see what it is. Okay, so
+
+910
+00:44:50,622 --> 00:44:53,189
+I'm gonna look at my Twitter framework right here, here's
+
+911
+00:44:53,191 --> 00:44:55,925
+Tweet. You can see Tweet is really just a collection of
+
+912
+00:44:55,927 --> 00:44:59,462
+information about a Tweet. The text in the Tweet, the user
+
+913
+00:44:59,464 --> 00:45:03,566
+who Tweeted it, when it was created, a unique identifier,
+
+914
+00:45:03,568 --> 00:45:07,203
+images that are attached to it, and hashtags, URLs and
+
+915
+00:45:07,205 --> 00:45:10,873
+users that are mentioned in the Tweet. And you're homework
+
+916
+00:45:10,875 --> 00:45:13,910
+is gonna be about showing me these Mentions. Okay,
+
+917
+00:45:13,912 --> 00:45:16,579
+I'm not gonna do that in my demo, that's for you to do.
+
+918
+00:45:16,581 --> 00:45:18,915
+Okay, so that's what a Tweet is. Now we have user,
+
+919
+00:45:18,917 --> 00:45:21,951
+which is you know, the name, screenName of the user.
+
+920
+00:45:21,953 --> 00:45:24,287
+MediaItem, this is for attached images.
+
+921
+00:45:24,289 --> 00:45:28,124
+Notice it has the aspectRatio, that'll be very valuable to
+
+922
+00:45:28,126 --> 00:45:30,760
+you as you try to build your table view, okay.
+
+923
+00:45:30,762 --> 00:45:32,729
+This is just an image that's attached with the Tweet.
+
+924
+00:45:32,731 --> 00:45:34,664
+When people tweet, sometimes they attach an image or
+
+925
+00:45:34,666 --> 00:45:37,867
+whatever. And then there's this very important class
+
+926
+00:45:37,869 --> 00:45:40,937
+called Request, okay, Twitter.Request. And
+
+927
+00:45:40,939 --> 00:45:45,975
+I'm gonna look at the public API of this actually. Let's go
+
+928
+00:45:45,977 --> 00:45:49,512
+over here, look at generated interface, here it is.
+
+929
+00:45:49,514 --> 00:45:51,781
+You can see that I've marked a lot of these things public,
+
+930
+00:45:51,783 --> 00:45:55,551
+you see public, public class. Here's all the public API.
+
+931
+00:45:55,553 --> 00:45:57,854
+The things you're gonna, we're gonna use is this
+
+932
+00:45:57,856 --> 00:46:01,958
+public initializer which gives the search String to search on
+
+933
+00:46:01,960 --> 00:46:05,962
+Twitter and then how many results you want, okay.
+
+934
+00:46:05,964 --> 00:46:08,798
+And then this guy fetchTweets, and what
+
+935
+00:46:08,800 --> 00:46:12,068
+fetchTweets does is it uses that search String to go fetch
+
+936
+00:46:12,070 --> 00:46:16,439
+Tweets. And it calls a little function here, this function,
+
+937
+00:46:16,441 --> 00:46:19,342
+okay, a function of this type. It just hands you an array of
+
+938
+00:46:19,344 --> 00:46:21,778
+the Tweets when they come back. Now this is
+
+939
+00:46:21,780 --> 00:46:24,947
+asynchronous, okay, obviously. We're gonna go to the network
+
+940
+00:46:24,949 --> 00:46:28,351
+here. So this is coming back and the thread that this comes
+
+941
+00:46:28,353 --> 00:46:31,821
+back and calls you on is not necessarily the main thread.
+
+942
+00:46:31,823 --> 00:46:34,757
+So we will wanna be sure to dispatch async outta here,
+
+943
+00:46:34,759 --> 00:46:37,727
+back to the main thread if we're gonna be doing any UI.
+
+944
+00:46:37,729 --> 00:46:39,829
+Everyone understand that?
+
+945
+00:46:39,831 --> 00:46:42,498
+Okay, so that's it. This is a really easy class to use,
+
+946
+00:46:42,500 --> 00:46:45,401
+right? We just initialize it with the search we want and
+
+947
+00:46:45,403 --> 00:46:48,171
+then just fetch the Tweets, okay? It's also got this
+
+948
+00:46:48,173 --> 00:46:49,572
+little thing down here, which is kinda fun,
+
+949
+00:46:49,574 --> 00:46:52,675
+requestFromNewer, ForNewer. If you have a request that was
+
+950
+00:46:52,677 --> 00:46:55,878
+successfully got you some Tweets, you can call this
+
+951
+00:46:55,880 --> 00:46:59,682
+requestForNewer and it'll give you a new request that will
+
+952
+00:46:59,684 --> 00:47:03,052
+request only more new Tweets. Tweets you didn't get in
+
+953
+00:47:03,054 --> 00:47:05,788
+the last request. See what I'm saying? Cuz people are alway
+
+954
+00:47:05,790 --> 00:47:07,857
+Tweeting all the time, so sometimes you just want
+
+955
+00:47:07,859 --> 00:47:09,458
+the ones that were Tweeted since the last time
+
+956
+00:47:09,460 --> 00:47:14,063
+you got it. So we'll use this as well, okay, in our demo.
+
+957
+00:47:14,065 --> 00:47:17,633
+All right, everyone understand this Twitter thing? Pretty
+
+958
+00:47:17,635 --> 00:47:21,003
+simple to use, all right? >> One more thing.
+
+959
+00:47:21,005 --> 00:47:21,204
+>> Yeah.
+
+960
+00:47:21,206 --> 00:47:22,138
+>> So it looked like it was
+
+961
+00:47:22,140 --> 00:47:24,407
+returning a void. Do you have to type cast
+
+962
+00:47:24,409 --> 00:47:28,878
+that to a Tweet array- >> On the previous one?
+
+963
+00:47:28,880 --> 00:47:29,145
+>> Down here?
+
+964
+00:47:29,147 --> 00:47:33,216
+It returns void, but remember, this is a function that takes
+
+965
+00:47:33,218 --> 00:47:35,952
+an array of Tweets as the argument. So
+
+966
+00:47:35,954 --> 00:47:37,520
+you're gonna pass a closure here,
+
+967
+00:47:37,522 --> 00:47:40,056
+and that closure is going to take that array and
+
+968
+00:47:40,058 --> 00:47:41,624
+do something with it. Okay, it does,
+
+969
+00:47:41,626 --> 00:47:43,893
+it can't return the array because it's asynchronous.
+
+970
+00:47:43,895 --> 00:47:46,295
+It has to go off and on that, it has to call you back.
+
+971
+00:47:46,297 --> 00:47:49,332
+Okay, with this function, when it's got the tweets, so
+
+972
+00:47:49,334 --> 00:47:52,869
+that's a good question. All right, back here,
+
+973
+00:47:52,871 --> 00:47:55,738
+we're in our tweets, let's get to the heart of this,
+
+974
+00:47:55,740 --> 00:47:57,406
+which is this guy, searchForTweets.
+
+975
+00:47:57,408 --> 00:47:59,675
+That's the thing that's gonna use the Twitter,
+
+976
+00:47:59,677 --> 00:48:03,312
+framework to search for tweets. So how's this thing,
+
+977
+00:48:03,314 --> 00:48:06,649
+gonna do what it does basically, to do the tweets.
+
+978
+00:48:06,651 --> 00:48:08,918
+Well I'm actually going to create a little private var
+
+979
+00:48:08,920 --> 00:48:12,355
+which I'm going to call my twitterRequest. It's going to
+
+980
+00:48:12,357 --> 00:48:17,159
+be of type Twitter.Request. Okay, and it's going to be
+
+981
+00:48:17,161 --> 00:48:20,763
+computed, and this is just going to be a little way I can
+
+982
+00:48:20,765 --> 00:48:24,166
+have a little var which is the request I want to make.
+
+983
+00:48:24,168 --> 00:48:29,105
+And I'm going to say if, I can let query = searchText,
+
+984
+00:48:29,107 --> 00:48:34,110
+okay that's this thing right here, okay. And
+
+985
+00:48:34,112 --> 00:48:36,212
+I also don't want it to be empty so
+
+986
+00:48:36,214 --> 00:48:39,282
+I'm gonna say where the query is not empty.
+
+987
+00:48:39,284 --> 00:48:40,983
+Okay, there's that where clause again. So
+
+988
+00:48:40,985 --> 00:48:44,287
+here I'm checking to see if it's not null with if let, and
+
+989
+00:48:44,289 --> 00:48:46,689
+then I'm also making sure it's not empty, so,
+
+990
+00:48:46,691 --> 00:48:49,892
+because I don't wanna do a Twitter request for empty,
+
+991
+00:48:49,894 --> 00:48:52,261
+that like asking for all Tweets. That makes no sense,
+
+992
+00:48:52,263 --> 00:48:55,197
+there's gotta be at least something to search for. So
+
+993
+00:48:55,199 --> 00:48:57,600
+if that's okay, then I'm just gonna return your request by
+
+994
+00:48:57,602 --> 00:49:01,203
+saying Twitter.Request. I'm gonna call that initializer
+
+995
+00:49:01,205 --> 00:49:04,040
+that we were talking about. Search, we can search for
+
+996
+00:49:04,042 --> 00:49:07,376
+the query as its own but maybe I wanna add some other stuff
+
+997
+00:49:07,378 --> 00:49:11,147
+like I don't want retweets. So there if
+
+998
+00:49:11,149 --> 00:49:16,118
+you can in the API for doing, for looking for
+
+999
+00:49:16,120 --> 00:49:18,754
+tweets you can specify things like filter out retweets I
+
+1000
+00:49:18,756 --> 00:49:21,958
+don't want them, so I'm gonna do that. And then count,
+
+1001
+00:49:21,960 --> 00:49:24,627
+let's get a hundred at a time. So we'll get a hundred tweets
+
+1002
+00:49:24,629 --> 00:49:30,132
+at a time, okay. Otherwise I'm just going to return nil here.
+
+1003
+00:49:30,134 --> 00:49:32,835
+Okay, so if, if some, if I want to do
+
+1004
+00:49:32,837 --> 00:49:35,771
+a ter, twitter request, but I don't have any search text
+
+1005
+00:49:35,773 --> 00:49:36,505
+then I'm just going to return nil,
+
+1006
+00:49:36,507 --> 00:49:38,574
+Ill know not actually do any kind of search.
+
+1007
+00:49:38,576 --> 00:49:41,344
+Okay, do you understand what that var is?
+
+1008
+00:49:41,346 --> 00:49:43,980
+It's just giving me the request that I'm gonna do. So
+
+1009
+00:49:43,982 --> 00:49:47,817
+let's use that request. I'm just gonna say if I can let
+
+1010
+00:49:47,819 --> 00:49:52,722
+the request = TwitterRequest, so it's gonna call that
+
+1011
+00:49:52,724 --> 00:49:57,560
+little computed var up there, okay. Then I'm going to use
+
+1012
+00:49:57,562 --> 00:50:02,198
+that request to fetch tweets, okay. So here's fetchTweets,
+
+1013
+00:50:02,200 --> 00:50:03,866
+here's that argument which is the handler.
+
+1014
+00:50:03,868 --> 00:50:06,769
+By the way a really fun way when you're doing closures
+
+1015
+00:50:06,771 --> 00:50:10,806
+is to do the escape completion til it shows this in blue, and
+
+1016
+00:50:10,808 --> 00:50:11,674
+then double click on it.
+
+1017
+00:50:11,676 --> 00:50:15,277
+You see, cuz then it'll put the closure out there for
+
+1018
+00:50:15,279 --> 00:50:17,513
+you with the right argument type here.
+
+1019
+00:50:17,515 --> 00:50:22,418
+Now I like closing, close, trailing, closure syntax.
+
+1020
+00:50:22,420 --> 00:50:25,221
+So I'm just gonna get rid of my parentheses and put this
+
+1021
+00:50:25,223 --> 00:50:29,125
+closure at the end. Okay, so that's kinda cool right?
+
+1022
+00:50:29,127 --> 00:50:32,128
+Fetch tweets, it's gonna call this closure.
+
+1023
+00:50:32,130 --> 00:50:34,296
+Here's the tweets that it's gonna give back,
+
+1024
+00:50:34,298 --> 00:50:38,100
+an array of tweets, I'll call this newTweets, okay. And
+
+1025
+00:50:38,102 --> 00:50:40,169
+then in this code I can use the new tweets,
+
+1026
+00:50:40,171 --> 00:50:43,372
+add them to my table basically is really easy. But
+
+1027
+00:50:43,374 --> 00:50:46,275
+of course I have to dispatch async, okay,
+
+1028
+00:50:46,277 --> 00:50:50,913
+because this closure is being executed off the main queue
+
+1029
+00:50:50,915 --> 00:50:53,883
+when those tweets come back sometime in the future. So
+
+1030
+00:50:53,885 --> 00:50:57,486
+I've got to dispatch async. So, for my queue right here
+
+1031
+00:50:57,488 --> 00:51:00,022
+I'm going to dispatch back to the main queue, so
+
+1032
+00:51:00,024 --> 00:51:04,894
+that's dispatc_ge_mai_queue and here's my block.
+
+1033
+00:51:04,896 --> 00:51:06,695
+Again I'm going to double click it, okay.
+
+1034
+00:51:06,697 --> 00:51:11,700
+Again I'm going closing, trailing closure syntax,
+
+1035
+00:51:11,702 --> 00:51:14,270
+okay, and so this is now dispatched to the main queue.
+
+1036
+00:51:14,272 --> 00:51:17,606
+So all I need to do here is just say if the new tweets
+
+1037
+00:51:17,608 --> 00:51:21,010
+are not empty, in others words I got some back, then I'm just
+
+1038
+00:51:21,012 --> 00:51:25,147
+going to insert to my to my tweets at the beginning,
+
+1039
+00:51:25,783 --> 00:51:28,350
+these new tweets at index 0.
+
+1040
+00:51:28,352 --> 00:51:31,454
+Okay, cuz I want the new tweet at the top of my table so
+
+1041
+00:51:31,456 --> 00:51:34,323
+I'm putting it at the beginning of my array, okay.
+
+1042
+00:51:34,325 --> 00:51:38,861
+Make sense? Now I've got a red error there,
+
+1043
+00:51:38,863 --> 00:51:43,766
+anyone know what that is? It's pointing to right here.
+
+1044
+00:51:43,768 --> 00:51:49,939
+Any ideas? Don't be shy. >> Self.
+
+1045
+00:51:49,941 --> 00:51:50,940
+>> Self, absolutely.
+
+1046
+00:51:50,942 --> 00:51:54,844
+We need self here. That's Swift trying to remind us,
+
+1047
+00:51:54,846 --> 00:51:59,715
+hey, this closure, this closure right here is keeping,
+
+1048
+00:51:59,717 --> 00:52:02,952
+and actually this one out here too, okay, is keeping this
+
+1049
+00:52:02,954 --> 00:52:05,254
+self in the heap. Now I don't think we want
+
+1050
+00:52:05,256 --> 00:52:07,756
+that here cuz what if we make some Twitter request and
+
+1051
+00:52:07,758 --> 00:52:11,026
+it takes forever and meanwhile the user just navigates away
+
+1052
+00:52:11,028 --> 00:52:11,060
+from this thing.
+
+1053
+00:52:11,062 --> 00:52:13,729
+We want this thing to be able to leave the heap. So
+
+1054
+00:52:13,731 --> 00:52:17,733
+we're going to fix this using weak.
+
+1055
+00:52:17,735 --> 00:52:21,303
+weak weakSelf = self.
+
+1056
+00:52:21,305 --> 00:52:24,039
+So I'm just creating a new variable here called weakSelf.
+
+1057
+00:52:24,041 --> 00:52:27,543
+It's weak so it don't won't hold anything in a heap and
+
+1058
+00:52:27,545 --> 00:52:28,878
+I'm gonna set it equal to self.
+
+1059
+00:52:28,880 --> 00:52:31,647
+So it's a weak version of self. And then down here I'm
+
+1060
+00:52:31,649 --> 00:52:34,850
+gonna use weak self, okay, but this is an optional because it
+
+1061
+00:52:34,852 --> 00:52:36,886
+gets set to nil if this thing leaves the heap.
+
+1062
+00:52:36,888 --> 00:52:39,788
+So I have to do question mark there so that this will just
+
+1063
+00:52:39,790 --> 00:52:42,591
+not happen if it leaves the heap. And that's perfect,
+
+1064
+00:52:42,593 --> 00:52:45,528
+that's exactly what I want. If those tweets come back and
+
+1065
+00:52:45,530 --> 00:52:49,798
+this thing has left the heap, just ignore this. Okay,
+
+1066
+00:52:49,800 --> 00:52:52,568
+perfect. Now there's another problem here,
+
+1067
+00:52:52,570 --> 00:52:55,738
+multi-threading problem we gotta think about, okay,
+
+1068
+00:52:55,740 --> 00:52:58,374
+which is what if this takes a long time and by the time it
+
+1069
+00:52:58,376 --> 00:53:02,378
+comes back the user has issued a different Tweet request?
+
+1070
+00:53:02,380 --> 00:53:04,780
+They type something else in to search for, okay.
+
+1071
+00:53:04,782 --> 00:53:06,282
+You don't wanna show them these tweets,
+
+1072
+00:53:06,284 --> 00:53:07,516
+they were from some old thing. So
+
+1073
+00:53:07,518 --> 00:53:10,119
+just like we did in the image view controller here,
+
+1074
+00:53:10,121 --> 00:53:11,287
+we're gonna have to have a var,
+
+1075
+00:53:11,289 --> 00:53:13,889
+we'll have some private var,
+
+1076
+00:53:14,225 --> 00:53:18,627
+which is our lastTwitterRequest, okay,
+
+1077
+00:53:18,629 --> 00:53:21,797
+which is gonna be a Twitter.Request,
+
+1078
+00:53:21,799 --> 00:53:24,300
+okay. And, we're gonna have to keep track of
+
+1079
+00:53:24,302 --> 00:53:26,869
+this, okay. When we go off and do this fetch, right, before
+
+1080
+00:53:26,871 --> 00:53:30,105
+we do it I'm gonna remember what that last Twitter request
+
+1081
+00:53:30,107 --> 00:53:33,108
+was, okay, which is the request we're doing. And
+
+1082
+00:53:33,110 --> 00:53:38,614
+then down here I'm gonna say, if the request that we did
+
+1083
+00:53:38,616 --> 00:53:41,450
+is the last one that we requested,
+
+1084
+00:53:41,452 --> 00:53:42,685
+then we can do this.
+
+1085
+00:53:42,687 --> 00:53:46,622
+Otherwise just ignore these tweets coming back. Okay,
+
+1086
+00:53:46,624 --> 00:53:51,860
+this needs weakSelf in front of it as well. Okay, everyone
+
+1087
+00:53:51,862 --> 00:53:54,463
+see that? I really want you to start understanding,
+
+1088
+00:53:54,465 --> 00:53:56,465
+this is really gonna be important in your homework.
+
+1089
+00:53:56,467 --> 00:53:58,934
+Okay cuz in your homework you're going to be
+
+1090
+00:53:58,936 --> 00:54:01,670
+doing multi-thread stuff. And stuff's gonna come back and
+
+1091
+00:54:01,672 --> 00:54:04,340
+this is a table view that's gonna be scrolling up and
+
+1092
+00:54:04,342 --> 00:54:05,741
+down, reusing the cells.
+
+1093
+00:54:05,743 --> 00:54:08,644
+It might come back to a cell that's no longer displaying
+
+1094
+00:54:08,646 --> 00:54:10,112
+the same row as it was before cuz
+
+1095
+00:54:10,114 --> 00:54:13,415
+it got reused, okay. So you really got to understand this
+
+1096
+00:54:13,417 --> 00:54:16,385
+thing about understanding the world when you come back from
+
+1097
+00:54:16,387 --> 00:54:19,588
+all asynchronous requests, okay. The three things,
+
+1098
+00:54:19,590 --> 00:54:23,259
+the two things really to understand about asynchrony.
+
+1099
+00:54:23,261 --> 00:54:24,360
+One is memory cycles,
+
+1100
+00:54:24,362 --> 00:54:27,263
+make sure you break them when appropriate. And number two is
+
+1101
+00:54:27,265 --> 00:54:29,164
+understanding that these things take time and
+
+1102
+00:54:29,166 --> 00:54:32,201
+when they come back things might not be the same. Okay,
+
+1103
+00:54:32,203 --> 00:54:33,902
+those are the two things to make sure you understand when
+
+1104
+00:54:33,904 --> 00:54:38,607
+you're doing asynchronous programming. All righty then,
+
+1105
+00:54:38,609 --> 00:54:42,778
+we have our, this is all we need to do to build our model,
+
+1106
+00:54:42,780 --> 00:54:43,579
+build our data structure up.
+
+1107
+00:54:43,581 --> 00:54:46,682
+Okay, this thing is now built up. Okay, this tweets,
+
+1108
+00:54:46,684 --> 00:54:50,452
+when we add, when we insert more tweets to it, that's
+
+1109
+00:54:50,454 --> 00:54:54,089
+gonna cause didSet to happen because this is a value type.
+
+1110
+00:54:54,091 --> 00:54:55,457
+Okay, so didSet is gonna happen and boom,
+
+1111
+00:54:55,459 --> 00:54:58,794
+reload data's gonna happen. So now we gotta make sure that
+
+1112
+00:54:58,796 --> 00:55:02,197
+when reload data happens down here, that these things all do
+
+1113
+00:55:02,199 --> 00:55:05,234
+what they're supposed to, right. So let's talk about
+
+1114
+00:55:05,236 --> 00:55:10,239
+number of sections. That one's real easy. Tweets.count,
+
+1115
+00:55:10,241 --> 00:55:16,545
+okay, cuz our tweet is an array of arrays.
+
+1116
+00:55:16,547 --> 00:55:17,346
+The number of arrays in the top
+
+1117
+00:55:17,348 --> 00:55:22,685
+level is how many sections we have, okay. So that's good.
+
+1118
+00:55:22,687 --> 00:55:25,988
+Got that warning out of there. How about this one? This one
+
+1119
+00:55:25,990 --> 00:55:32,061
+is tweets(section).count. So now we're looking at our array
+
+1120
+00:55:32,063 --> 00:55:35,564
+of arrays, finding the array that is, that is this section,
+
+1121
+00:55:35,566 --> 00:55:38,867
+and looking at how many rows are in it. Everybody got that?
+
+1122
+00:55:38,869 --> 00:55:42,504
+This is really cool to have really simple implementations
+
+1123
+00:55:42,506 --> 00:55:46,608
+of these by designing our data structure to make this simple.
+
+1124
+00:55:46,610 --> 00:55:48,877
+Hint, hint, hint, I strongly recommend that for
+
+1125
+00:55:48,879 --> 00:55:52,014
+your homework as well. Try to design your data structure
+
+1126
+00:55:52,016 --> 00:55:53,882
+using all you've learned about Swift,
+
+1127
+00:55:53,884 --> 00:55:56,418
+Swift is really awesome at being able to design
+
+1128
+00:55:56,420 --> 00:55:58,954
+sophisticated flexible data structures.
+
+1129
+00:55:58,956 --> 00:56:02,191
+Design a data structure, you can have one liners like this,
+
+1130
+00:56:02,193 --> 00:56:06,061
+okay. Now you have a different thing going on. Your table's
+
+1131
+00:56:06,063 --> 00:56:08,330
+gonna have mixed things, different kinds of things,
+
+1132
+00:56:08,332 --> 00:56:09,331
+I have all the same kind of thing,
+
+1133
+00:56:09,333 --> 00:56:11,266
+all mine are all tweaked. You have mixed things so its
+
+1134
+00:56:11,268 --> 00:56:14,136
+a little more complicated for you, but it still can be done.
+
+1135
+00:56:14,138 --> 00:56:18,941
+All right so now we have to do this self wrote index pass we
+
+1136
+00:56:18,943 --> 00:56:23,112
+have to make a cell. Well the first thing we want to
+
+1137
+00:56:23,114 --> 00:56:26,115
+do is this reuse identifier right here. So I'm actually
+
+1138
+00:56:26,117 --> 00:56:29,184
+going to make a private struct called storyboard, just like I
+
+1139
+00:56:29,186 --> 00:56:34,957
+did in the last demo. And it's gonna have a static let called
+
+1140
+00:56:35,693 --> 00:56:39,495
+TweetCellIdentifier and we'll call it- we'll just call it
+
+1141
+00:56:39,497 --> 00:56:42,364
+Tweet. So this is gonna be the identifier,
+
+1142
+00:56:42,366 --> 00:56:44,133
+of the cells in the storyboard.
+
+1143
+00:56:44,135 --> 00:56:48,237
+So I'm gonna replace this reuse identifier with
+
+1144
+00:56:48,239 --> 00:56:51,807
+Storyboard.TweetCellIdentif- ier. Okay?
+
+1145
+00:56:51,809 --> 00:56:54,743
+So that's specifying it. Now I need to do that same thing in
+
+1146
+00:56:54,745 --> 00:56:58,414
+my storyboard. Okay, here's my row right here,
+
+1147
+00:56:58,416 --> 00:57:02,451
+my prototype row. I'm gonna start off by making it be
+
+1148
+00:57:02,453 --> 00:57:04,586
+a subtitle row, we'll eventually make it custom, but
+
+1149
+00:57:04,588 --> 00:57:07,523
+let's make it be a subtitle role. And I gotta make sure my
+
+1150
+00:57:07,525 --> 00:57:10,893
+reuse identifier is the same, so I'll make it be Tweet.
+
+1151
+00:57:10,895 --> 00:57:14,163
+See the two things I did there? So that makes it so
+
+1152
+00:57:14,165 --> 00:57:18,634
+this code matches up with my storyboard. All right?
+
+1153
+00:57:18,636 --> 00:57:22,371
+So now, here I've dequeued this reusable cell, might have
+
+1154
+00:57:22,373 --> 00:57:25,140
+reused it, might have made one from my prototype in there
+
+1155
+00:57:25,142 --> 00:57:28,043
+which is a subtitle cell. So now I'm just gonna get
+
+1156
+00:57:28,045 --> 00:57:32,981
+the tweet that corresponds to this index path right here.
+
+1157
+00:57:32,983 --> 00:57:35,818
+Again, super simple because of our data structure,
+
+1158
+00:57:35,820 --> 00:57:44,393
+tweets[indexPath.section] [indexPath.row].
+
+1159
+00:57:44,395 --> 00:57:49,431
+Got it? Okay, cuz this is an array of arrays, right?
+
+1160
+00:57:49,433 --> 00:57:52,067
+So now I just need to load this cell up so I'll,
+
+1161
+00:57:52,069 --> 00:57:55,604
+in its text label, which is that main label of the thing,
+
+1162
+00:57:55,606 --> 00:57:59,341
+I'll put the text which is the tweets text. Okay,
+
+1163
+00:57:59,343 --> 00:58:05,447
+that's the text of the tweet, and then in the detail,
+
+1164
+00:58:05,449 --> 00:58:10,552
+TextLabel, we'll put the tweet user's name,
+
+1165
+00:58:10,554 --> 00:58:16,592
+okay? All right, so that's it. Loaded our table up,
+
+1166
+00:58:16,594 --> 00:58:21,396
+should just work fine. Here we go. This is where we cross our
+
+1167
+00:58:21,398 --> 00:58:24,566
+fingers in the live demo we didn't forget anything.
+
+1168
+00:58:27,771 --> 00:58:31,707
+All right, here we go. It's running, and black, and
+
+1169
+00:58:31,709 --> 00:58:33,876
+what do we got down here in the console?
+
+1170
+00:58:33,878 --> 00:58:36,378
+Failed to instantiate the default view controller Main,
+
+1171
+00:58:36,380 --> 00:58:40,182
+perhaps the designated entry point not set? Yeah,
+
+1172
+00:58:40,184 --> 00:58:43,552
+let's go look at that. Main storyboard,
+
+1173
+00:58:43,554 --> 00:58:48,290
+Zoom out, there's no little arrow going in here, okay.
+
+1174
+00:58:48,292 --> 00:58:51,093
+I'm sure your guys have experienced that as well. So
+
+1175
+00:58:51,095 --> 00:58:54,930
+let's go here and just slack this, View Controller and
+
+1176
+00:58:54,932 --> 00:58:57,499
+say that it is the initial View Controller and
+
+1177
+00:58:57,501 --> 00:59:02,838
+now we have this arrow. Okay? Excellent.
+
+1178
+00:59:02,840 --> 00:59:07,843
+Party on. All right. So look at that, it worked perfectly.
+
+1179
+00:59:07,845 --> 00:59:11,013
+Okay, look at that, we can look at all these tweets,
+
+1180
+00:59:11,015 --> 00:59:13,916
+who tweeted them, okay, we're looking at Stanford here,
+
+1181
+00:59:13,918 --> 00:59:16,385
+fantastic, scrolling up and down. Okay,
+
+1182
+00:59:16,387 --> 00:59:19,555
+this is about the ugliest Twitter client I've ever seen.
+
+1183
+00:59:19,557 --> 00:59:20,088
+>> [LAUGH]
+
+1184
+00:59:20,090 --> 00:59:22,157
+>> Okay? This is,
+
+1185
+00:59:22,159 --> 00:59:24,526
+if you put this in the app store you've,
+
+1186
+00:59:24,528 --> 00:59:28,130
+the ridicule would be, would be unending for this.
+
+1187
+00:59:28,132 --> 00:59:31,633
+Now how we gonna fix this, though? Really there's no way,
+
+1188
+00:59:31,635 --> 00:59:34,670
+none of these standard cells are gonna make it look good.
+
+1189
+00:59:34,672 --> 00:59:37,306
+We need to build a custom cell, obviously,
+
+1190
+00:59:37,308 --> 00:59:37,873
+to make this look good.
+
+1191
+00:59:37,875 --> 00:59:40,909
+So it's doing the right thing, it just looks terrible. So
+
+1192
+00:59:40,911 --> 00:59:43,779
+instead of using this subtitle cell right here,
+
+1193
+00:59:43,781 --> 00:59:46,582
+we're gonna do a custom cell. All right, so
+
+1194
+00:59:46,584 --> 00:59:50,018
+how do we do that? First thing we need to do is, let's change
+
+1195
+00:59:50,020 --> 00:59:54,489
+this from subtitle to custom. Then we're gonna be a, need to
+
+1196
+00:59:54,491 --> 00:59:59,027
+go here and change the, the, the identity inspector,
+
+1197
+00:59:59,029 --> 01:00:01,863
+need to change this to be some subclass of UITableViewCell
+
+1198
+01:00:01,865 --> 01:00:03,865
+because obviously we're gonna have some labels and
+
+1199
+01:00:03,867 --> 01:00:07,202
+stuff in here that we need to have outlets to, okay? So
+
+1200
+01:00:07,204 --> 01:00:10,772
+let's go up here, new, file, okay.
+
+1201
+01:00:10,774 --> 01:00:11,740
+Cocoa Touch Class,
+
+1202
+01:00:11,742 --> 01:00:13,508
+this time instead of UITableViewController,
+
+1203
+01:00:13,510 --> 01:00:17,245
+it's gonna be UITableViewCell subclass. And we'll call
+
+1204
+01:00:17,247 --> 01:00:20,182
+this a TweetTableViewCell cuz that's what it is, shows
+
+1205
+01:00:20,184 --> 01:00:23,719
+a Tweet. Okay, click that, put it in the same place we put
+
+1206
+01:00:23,721 --> 01:00:27,255
+everything. [SOUND] Here we go, there's our TableViewCell,
+
+1207
+01:00:27,257 --> 01:00:28,056
+we'll look at that in a second.
+
+1208
+01:00:28,058 --> 01:00:31,727
+In our storyboard, we're gonna change the custom class here
+
+1209
+01:00:31,729 --> 01:00:34,630
+to be TweetTableViewCell, okay. And
+
+1210
+01:00:34,632 --> 01:00:37,499
+here's our TweetTableViewCell. We don't need to wait for
+
+1211
+01:00:37,501 --> 01:00:38,767
+a nib, you all remember what that is and
+
+1212
+01:00:38,769 --> 01:00:41,703
+we don't need it. Here's an interesting one right here.
+
+1213
+01:00:41,705 --> 01:00:42,671
+This one will get called
+
+1214
+01:00:42,673 --> 01:00:45,207
+in the table view cell if the table view gets selected.
+
+1215
+01:00:45,209 --> 01:00:47,576
+I showed you how you can find out in the controller,
+
+1216
+01:00:47,578 --> 01:00:50,145
+here you can actually find out in the table view cell. But
+
+1217
+01:00:50,147 --> 01:00:51,913
+we don't need either of those things, okay?
+
+1218
+01:00:51,915 --> 01:00:54,216
+We're not gonna do either of those things.
+
+1219
+01:00:54,218 --> 01:00:57,019
+What we really need is just to build our UI. So let's
+
+1220
+01:00:57,021 --> 01:01:00,288
+go back to our storyboard, and build the UI that we want,
+
+1221
+01:01:00,290 --> 01:01:05,560
+eh in here. So what kind of stuff do we need, for
+
+1222
+01:01:05,562 --> 01:01:09,498
+a tweet? Well let's see, we probably need,
+
+1223
+01:01:09,500 --> 01:01:13,268
+want something which is, the Tweets Text.
+
+1224
+01:01:13,270 --> 01:01:15,671
+Okay. The Tweets Text, by the way, is long and
+
+1225
+01:01:15,673 --> 01:01:18,407
+I want it to wrap into multiple lines. So
+
+1226
+01:01:18,409 --> 01:01:20,676
+I'm actually gonna go to the inspector up here and
+
+1227
+01:01:20,678 --> 01:01:24,980
+make the number of lines in this text label be zero.
+
+1228
+01:01:24,982 --> 01:01:28,550
+Zero means keep wrapping. Okay,
+
+1229
+01:01:28,552 --> 01:01:30,952
+don't try to fit it all on one line with dot dot dot.
+
+1230
+01:01:30,954 --> 01:01:33,588
+Remember our display would always say dot dot dot. Zero
+
+1231
+01:01:33,590 --> 01:01:36,992
+means keep wrapping around so we definitely want that.
+
+1232
+01:01:37,461 --> 01:01:40,295
+We also want the tweeter. So lets have one for
+
+1233
+01:01:40,297 --> 01:01:45,167
+the tweeter. Okay, and that we do want to be on one line.
+
+1234
+01:01:45,169 --> 01:01:50,706
+Lets show when the tweet was created. Maybe? And how about,
+
+1235
+01:01:50,708 --> 01:01:54,109
+let's put an image in there. Let's put where's our UI
+
+1236
+01:01:54,111 --> 01:01:58,447
+image view? Here it is. Put an u, image view, out here.
+
+1237
+01:01:58,449 --> 01:02:03,785
+We'll have this be the profile image basically of the user.
+
+1238
+01:02:03,787 --> 01:02:07,656
+Now, some things here we gotta do to arrange this, and I'm
+
+1239
+01:02:07,658 --> 01:02:10,826
+gonna try and keep this mostly in what you already know.
+
+1240
+01:02:10,828 --> 01:02:13,528
+One thing is the font, okay. These things
+
+1241
+01:02:13,530 --> 01:02:17,132
+are very different from like a button in terms of fonts.
+
+1242
+01:02:17,134 --> 01:02:20,802
+These are user data. This is what the user is looking at.
+
+1243
+01:02:20,804 --> 01:02:24,639
+So we need to not use system font here. We need to pick
+
+1244
+01:02:24,641 --> 01:02:28,810
+a different font which is one of the textiles.
+
+1245
+01:02:28,812 --> 01:02:30,412
+Remember I mentioned the textiles? So
+
+1246
+01:02:30,414 --> 01:02:33,949
+tweeter is kind of like a headline. It goes at the top.
+
+1247
+01:02:33,951 --> 01:02:37,519
+Tweet Text is probably like the body. That's the main,
+
+1248
+01:02:37,521 --> 01:02:42,657
+oops, that's the main body of the, of what's showing here.
+
+1249
+01:02:42,659 --> 01:02:44,826
+Created is kind of like a caption.
+
+1250
+01:02:44,828 --> 01:02:46,561
+It's just a little thing on the side. So
+
+1251
+01:02:46,563 --> 01:02:49,931
+we'll say, caption one. And we might play with these various
+
+1252
+01:02:49,933 --> 01:02:54,536
+things to find out what, you know, is the best font that
+
+1253
+01:02:54,538 --> 01:02:57,205
+we want in each circumstance. So, let's say one thing is
+
+1254
+01:02:57,207 --> 01:02:59,941
+a font. Next thing is, we need to arrange them in stack
+
+1255
+01:02:59,943 --> 01:03:02,844
+views. Obviously, we love stack view, so let's do that.
+
+1256
+01:03:02,846 --> 01:03:07,182
+Let's go here and embed these two in a stack view how about,
+
+1257
+01:03:07,184 --> 01:03:11,219
+we'll have them both be filled there.
+
+1258
+01:03:11,221 --> 01:03:15,991
+Let's put these two in a stack view,
+
+1259
+01:03:15,993 --> 01:03:20,996
+thank you. Also we'll fill both directions there so
+
+1260
+01:03:20,998 --> 01:03:23,498
+we got those. Let's put these in a stack view.
+
+1261
+01:03:23,500 --> 01:03:26,668
+You can see a stack view, very powerful.
+
+1262
+01:03:26,670 --> 01:03:31,540
+Now let's put a little spacing between there. Like that.
+
+1263
+01:03:31,542 --> 01:03:34,209
+One thing that's not really very nice about this.
+
+1264
+01:03:34,211 --> 01:03:36,845
+Okay, we probably want this to be fill also. One thing that's
+
+1265
+01:03:36,847 --> 01:03:39,881
+not very nice about this is, look at this space right here.
+
+1266
+01:03:39,883 --> 01:03:43,218
+Look how it's giving so much space to the tweeter. And not
+
+1267
+01:03:43,220 --> 01:03:46,888
+pretty much space to the Tweet text, okay. Well, it turns out
+
+1268
+01:03:46,890 --> 01:03:50,992
+there's a way in auto layout to control that, which is you
+
+1269
+01:03:50,994 --> 01:03:55,063
+can go to something that you want to hug to it's contents,
+
+1270
+01:03:55,065 --> 01:03:58,500
+right. You want to can it, be the smallest possible content.
+
+1271
+01:03:58,502 --> 01:04:01,636
+You can select it, go over to the size inspector over here,
+
+1272
+01:04:01,638 --> 01:04:04,039
+which is where all the constraints are, right here.
+
+1273
+01:04:04,041 --> 01:04:07,209
+And change its content hugging priority. See content hugging
+
+1274
+01:04:07,211 --> 01:04:09,845
+priority? I'm gonna make its content hugging priority in
+
+1275
+01:04:09,847 --> 01:04:13,582
+the vertical direction to be high, higher than the other
+
+1276
+01:04:13,584 --> 01:04:15,750
+one, okay? And when I do that, look what happened,
+
+1277
+01:04:15,752 --> 01:04:19,788
+it hugged, okay? And now it made this one be the big one.
+
+1278
+01:04:19,790 --> 01:04:21,790
+Because this one's content hugging priority is 251,
+
+1279
+01:04:21,792 --> 01:04:25,827
+this one's 300. So, it's more of a priority to hug,
+
+1280
+01:04:25,829 --> 01:04:28,930
+you got it? That's the only kinda special trick I'm gonna
+
+1281
+01:04:28,932 --> 01:04:31,132
+show you today. I am going to do a whole
+
+1282
+01:04:31,134 --> 01:04:34,102
+lecture on autolayout next week. All right, so
+
+1283
+01:04:34,104 --> 01:04:37,339
+we've got this. So now, let's do our thing when we hook it
+
+1284
+01:04:37,341 --> 01:04:41,376
+up to the edges. Leading edge up to top
+
+1285
+01:04:41,378 --> 01:04:46,414
+down here to the bottom and over here to the trailing.
+
+1286
+01:04:46,416 --> 01:04:48,149
+Let's go ahead and click on these, and
+
+1287
+01:04:48,151 --> 01:04:51,219
+see if we can make standard. No? So, let's make this zero,
+
+1288
+01:04:51,221 --> 01:04:56,157
+see if we can make this one a standard. No, make this one
+
+1289
+01:04:56,159 --> 01:05:02,163
+also zero. See if we can make this one a standard. No, make
+
+1290
+01:05:02,165 --> 01:05:06,034
+this one zero. And the top one is probably already zero.
+
+1291
+01:05:06,036 --> 01:05:10,505
+Let's go ahead and look at it in our Spectre. Here, yeah,
+
+1292
+01:05:10,507 --> 01:05:12,941
+the top is already zero. So, it's zero. Now, this is also
+
+1293
+01:05:12,943 --> 01:05:16,645
+not looking like I want. Okay, the image view is dominating.
+
+1294
+01:05:16,647 --> 01:05:19,514
+This is just the image view of the guy who tweeted it.
+
+1295
+01:05:19,516 --> 01:05:22,350
+So, it just wants to be small and in the corner. So,
+
+1296
+01:05:22,352 --> 01:05:25,687
+I'm actually going to fix the size of this. So,
+
+1297
+01:05:25,689 --> 01:05:29,691
+if you control drag to itself, you can set a constraint,
+
+1298
+01:05:29,693 --> 01:05:33,295
+a constraint itself. So it's going to react to controlled
+
+1299
+01:05:33,297 --> 01:05:36,331
+to itself, so I'm going to fix its height and width.
+
+1300
+01:05:36,333 --> 01:05:38,633
+So, that has fixed it's height and width,
+
+1301
+01:05:38,635 --> 01:05:40,936
+of course I don't want it to be this big.
+
+1302
+01:05:40,938 --> 01:05:42,704
+I want it to be like, you know, 60 by 60, let's say.
+
+1303
+01:05:42,706 --> 01:05:47,242
+So, I'm going over here to the inspector, size inspector.
+
+1304
+01:05:47,244 --> 01:05:50,779
+On this thing. And I'm gonna change, this constraint, right
+
+1305
+01:05:50,781 --> 01:05:53,548
+here, just by clicking edit. I'm gonna change it to 60. And
+
+1306
+01:05:53,550 --> 01:05:58,954
+I'm gonna change the height to also be 60. Okay. Now,
+
+1307
+01:05:58,956 --> 01:06:02,590
+we have a much more reasonable layout here, right. The text
+
+1308
+01:06:02,592 --> 01:06:05,894
+is using most of the space. The tweeter's just at the top.
+
+1309
+01:06:05,896 --> 01:06:08,229
+We got the little image for the tweeter up there, and
+
+1310
+01:06:08,231 --> 01:06:12,434
+we've got this created in here. We're good? Okay.
+
+1311
+01:06:12,436 --> 01:06:14,903
+Now let's go and create outlets to all these things.
+
+1312
+01:06:14,905 --> 01:06:17,839
+So, let's make more space here. Now one thing to
+
+1313
+01:06:17,841 --> 01:06:22,577
+be careful of, if I go to, man to automatic here, and
+
+1314
+01:06:22,579 --> 01:06:24,913
+I try to make an outlet look at the class it puts here.
+
+1315
+01:06:24,915 --> 01:06:27,816
+[NOISE] The tableview controller. We know we cannot
+
+1316
+01:06:27,818 --> 01:06:30,518
+hook these outlets up to the tableview controller, because
+
+1317
+01:06:30,520 --> 01:06:33,355
+they have to be different for every cell. So instead, we
+
+1318
+01:06:33,357 --> 01:06:38,293
+have to go to Manual up here, okay, and go not in Twitter.
+
+1319
+01:06:38,295 --> 01:06:40,495
+We need to go, actually we'll, let's go here.
+
+1320
+01:06:40,497 --> 01:06:43,531
+[LAUGH] How do we get to there? Let's see, Manual,
+
+1321
+01:06:43,533 --> 01:06:48,069
+TweetTableView, so here it is. Okay, so let's go here, so
+
+1322
+01:06:48,071 --> 01:06:50,405
+here's our, our TweetTableViewCell right here,
+
+1323
+01:06:50,407 --> 01:06:55,810
+but this is not quite right either. Hold on a second here.
+
+1324
+01:06:55,812 --> 01:07:00,215
+Manual. Automatic.
+
+1325
+01:07:00,217 --> 01:07:03,485
+Level object. Okay.
+
+1326
+01:07:03,487 --> 01:07:05,887
+It's showing me the interface here for some reason.
+
+1327
+01:07:05,889 --> 01:07:09,090
+Lets do something different here. Lets go over here.
+
+1328
+01:07:09,092 --> 01:07:15,463
+[SOUND] Okay, I'm not sure why it's doing that.
+
+1329
+01:07:25,275 --> 01:07:33,581
+Okay, strange let's do TweetTableViewCell.
+
+1330
+01:07:41,658 --> 01:07:42,257
+Very sorry about that.
+
+1331
+01:07:42,259 --> 01:07:43,792
+For some reason you see it's fixed.
+
+1332
+01:07:43,794 --> 01:07:44,926
+It's showing me the interface for
+
+1333
+01:07:44,928 --> 01:07:49,330
+this. I'm not sure exactly why. Okay. Let's try this.
+
+1334
+01:07:49,332 --> 01:07:53,368
+Let's go here, and then over here.
+
+1335
+01:07:53,370 --> 01:08:01,576
+[INAUDIBLE] Okay,
+
+1336
+01:08:01,578 --> 01:08:04,679
+well you know what I'm gonna do, I'm gonna quit this thing
+
+1337
+01:08:04,681 --> 01:08:09,584
+and re-launch. By the way when you go back in,
+
+1338
+01:08:09,586 --> 01:08:11,820
+be careful not to go back in with your Xcode project,
+
+1339
+01:08:11,822 --> 01:08:16,391
+you gotta go back in with your workspace, alright? Alright,
+
+1340
+01:08:16,393 --> 01:08:20,228
+now let's see. All right, we got our storyboard,
+
+1341
+01:08:20,363 --> 01:08:23,298
+manual swift module, that's no good either. Mm.
+
+1342
+01:08:23,300 --> 01:08:28,570
+This, all right, no.
+
+1343
+01:08:33,176 --> 01:08:37,445
+Okay, this. This.
+
+1344
+01:08:39,516 --> 01:08:44,519
+Okay, hm. I better back out there.
+
+1345
+01:08:53,697 --> 01:08:58,633
+Well, weird. Hm,
+
+1346
+01:08:58,635 --> 01:09:03,538
+I guess maybe we can do this, there we go. Okay, so
+
+1347
+01:09:03,540 --> 01:09:07,041
+we are going to, I'll make this wider too,
+
+1348
+01:09:07,043 --> 01:09:10,311
+so we are going to hook up our outlets, okay?
+
+1349
+01:09:10,313 --> 01:09:13,748
+From here to here. So we do that with control drag,
+
+1350
+01:09:13,750 --> 01:09:17,452
+just as we normally would, so here we'll control drag this.
+
+1351
+01:09:17,454 --> 01:09:23,324
+I'm gonna call this one the tweetScreenNameLabel,
+
+1352
+01:09:23,326 --> 01:09:27,328
+okay, because it's showing the screen name of the user.
+
+1353
+01:09:27,330 --> 01:09:34,068
+Well do this one here. We'll call the tweetTextLabel.
+
+1354
+01:09:34,070 --> 01:09:38,840
+We'll do here, this is the TweetCreatedLabel,
+
+1355
+01:09:38,842 --> 01:09:43,211
+and we'll do this one. This is the,
+
+1356
+01:09:43,213 --> 01:09:48,183
+TweetProfileImageView, okay.
+
+1357
+01:09:48,185 --> 01:09:51,319
+And that's a UI image view. Okay, so
+
+1358
+01:09:51,321 --> 01:09:54,022
+I've got these nice outlets right here. And,
+
+1359
+01:09:54,024 --> 01:09:57,325
+let's go back to here, get our Text here all right, so
+
+1360
+01:09:57,327 --> 01:10:00,028
+we got these nice outlets. So, now we need to be able to
+
+1361
+01:10:00,030 --> 01:10:02,964
+load these outlets up. When this cell, okay,
+
+1362
+01:10:02,966 --> 01:10:05,967
+comes on the screen, and we do self-reload index path we need
+
+1363
+01:10:05,969 --> 01:10:09,571
+to be able to tell this cell here is the tweet okay, so
+
+1364
+01:10:09,573 --> 01:10:12,340
+that you can load up all this information about the tweet.
+
+1365
+01:10:12,342 --> 01:10:15,476
+So, I'm gonna have a public var here called tweet,
+
+1366
+01:10:15,478 --> 01:10:19,214
+which is the tweet. And it's a twitter.tweet.
+
+1367
+01:10:19,216 --> 01:10:21,950
+Okay, and when you set that,
+
+1368
+01:10:21,952 --> 01:10:26,955
+I'm going to update my UI to set all of these things. So,
+
+1369
+01:10:26,957 --> 01:10:33,094
+I'm gonna have some private func updateUI here.
+
+1370
+01:10:34,297 --> 01:10:36,598
+Okay, makes sense? Now this is complaining
+
+1371
+01:10:36,600 --> 01:10:40,468
+about twitter.tweet, because I have to import Twitter.
+
+1372
+01:10:40,470 --> 01:10:45,106
+Don't forget, import Twitter, otherwise you're not gonna see
+
+1373
+01:10:45,108 --> 01:10:50,078
+the classes from that in this swift file. Okay, so
+
+1374
+01:10:50,080 --> 01:10:53,481
+we have this update UI right here. In the interest of time,
+
+1375
+01:10:53,483 --> 01:10:57,785
+I'm gonna type this really fast okay, there it is.
+
+1376
+01:10:57,787 --> 01:11:01,889
+okay, you can go look at this at you later offline, but
+
+1377
+01:11:01,891 --> 01:11:02,423
+basically what's it's doing it
+
+1378
+01:11:02,425 --> 01:11:04,726
+firstly just clearing out all the outlets,
+
+1379
+01:11:04,728 --> 01:11:07,996
+okay, then it's one by one going through and
+
+1380
+01:11:07,998 --> 01:11:12,700
+setting each of them based on the tweet, okay.
+
+1381
+01:11:12,702 --> 01:11:16,271
+Tweet that we have. Notice by the way here,
+
+1382
+01:11:16,273 --> 01:11:20,208
+kind of fun thing, in the tweet's text, I add cameras,
+
+1383
+01:11:20,210 --> 01:11:23,878
+a bunch of cameras at the end if the tweet has an image
+
+1384
+01:11:23,880 --> 01:11:26,748
+attached. Okay, that's what this little thing is here. I'm
+
+1385
+01:11:26,750 --> 01:11:29,517
+just going looking at all the images that this tweet has.
+
+1386
+01:11:29,519 --> 01:11:31,886
+That's just media array and for each one, I'm adding
+
+1387
+01:11:31,888 --> 01:11:34,789
+a little camera there just to let us know there's an image.
+
+1388
+01:11:34,791 --> 01:11:37,425
+Okay, tha's being added to the text of the end of
+
+1389
+01:11:37,427 --> 01:11:40,328
+the text, all right? Then her's the created date in
+
+1390
+01:11:40,330 --> 01:11:43,931
+the nice little format. Here's the image view, if it exists.
+
+1391
+01:11:43,933 --> 01:11:47,035
+All right. UI image. Notice this blocks the main
+
+1392
+01:11:47,037 --> 01:11:50,138
+thread. Fix this in your homework because one of your
+
+1393
+01:11:50,140 --> 01:11:52,173
+required tasks is you cannot block the main thread. So
+
+1394
+01:11:52,175 --> 01:11:56,177
+even though I'm not doing the dispatch here, you need to.
+
+1395
+01:11:56,446 --> 01:12:00,381
+Got it? All right so, that's our TweetLabel.
+
+1396
+01:12:00,383 --> 01:12:04,385
+So now to make this work, we just need to set this tweet
+
+1397
+01:12:04,387 --> 01:12:07,789
+var in our cellForRowAtIndexPath.
+
+1398
+01:12:07,791 --> 01:12:10,024
+Okay, so here's our cellForRowAtIndexPath.
+
+1399
+01:12:10,026 --> 01:12:12,694
+Right now, it's doing all this business right here.
+
+1400
+01:12:12,696 --> 01:12:16,664
+We don't want that. Okay, instead we're just gonna say
+
+1401
+01:12:16,666 --> 01:12:20,368
+if we can let a tweetCell equal the cell as one of our
+
+1402
+01:12:20,370 --> 01:12:25,006
+TweetTableViewCells, okay, which this should be, because
+
+1403
+01:12:25,008 --> 01:12:29,477
+all these the tweet prototype in our storyboard over here,
+
+1404
+01:12:29,479 --> 01:12:33,681
+okay, that this is this is the tweet prototype cell right
+
+1405
+01:12:33,683 --> 01:12:38,586
+here if we look at it Type, it is, if I can select it here.
+
+1406
+01:12:38,588 --> 01:12:40,288
+Here's where I wanna use Ctrl+Shift, okay,
+
+1407
+01:12:40,290 --> 01:12:42,690
+Ctrl+Shift lets me pick which, what I want,
+
+1408
+01:12:42,692 --> 01:12:43,858
+which is the TableView cell.
+
+1409
+01:12:43,860 --> 01:12:47,362
+You can see that it's a custom type, right? So this should be
+
+1410
+01:12:47,364 --> 01:12:50,732
+good right here. So if I can get this cell as that,
+
+1411
+01:12:50,734 --> 01:12:53,434
+then I'm just gonna set the cell's tweet equal to
+
+1412
+01:12:53,436 --> 01:12:58,606
+the tweet at that row and index path. Okay, all right,
+
+1413
+01:12:58,608 --> 01:13:03,111
+tweetCell. Okay? Got it? So
+
+1414
+01:13:03,113 --> 01:13:08,015
+that's it. Not that hard to just custom UI.
+
+1415
+01:13:08,017 --> 01:13:13,688
+Let's go take a look, make sure it's working. All right,
+
+1416
+01:13:13,690 --> 01:13:17,959
+here it is! So, well, this looks somewhat better,
+
+1417
+01:13:17,961 --> 01:13:22,630
+I guess. It's really not much better because, one thing is,
+
+1418
+01:13:22,632 --> 01:13:23,931
+look at the heights of the rows.
+
+1419
+01:13:23,933 --> 01:13:26,734
+They're all the same. Even if it's a short little one like
+
+1420
+01:13:26,736 --> 01:13:29,670
+this, it gets all this yucky white space, this extra white
+
+1421
+01:13:29,672 --> 01:13:33,408
+space. Compared to a long one, right? So that's bad. And, and
+
+1422
+01:13:33,410 --> 01:13:37,178
+big ones are not even fitting, okay? Also, where's my profile
+
+1423
+01:13:37,180 --> 01:13:40,548
+image view? Got a couple problems here. So let's talk
+
+1424
+01:13:40,550 --> 01:13:43,317
+about the height first. What's going on with the height?
+
+1425
+01:13:43,319 --> 01:13:46,220
+And remember I said you can have the height be dynamic and
+
+1426
+01:13:46,222 --> 01:13:48,790
+automatically calculated from the tweet by just
+
+1427
+01:13:48,792 --> 01:13:51,592
+setting the height to automatic dimension. And
+
+1428
+01:13:51,594 --> 01:13:54,662
+the place to do that is in your viewDidLoad.
+
+1429
+01:13:54,664 --> 01:13:56,431
+Okay, so here's my viewDidLoad and
+
+1430
+01:13:56,433 --> 01:14:02,236
+I'm just gonna set in here my tableView's row height
+
+1431
+01:14:02,238 --> 01:14:06,507
+equal to this UITableView automatic dimension thing.
+
+1432
+01:14:06,509 --> 01:14:09,043
+Okay, but now what about the estimated height?
+
+1433
+01:14:09,045 --> 01:14:10,678
+I need to give it an estimate height so I'm actually going
+
+1434
+01:14:10,680 --> 01:14:14,882
+to set the tableView's estimated row height equal to
+
+1435
+01:14:14,884 --> 01:14:19,554
+the row height that came out of the storyboard. Okay?
+
+1436
+01:14:19,556 --> 01:14:22,857
+So this is the row height I'm getting now. Same on every
+
+1437
+01:14:22,859 --> 01:14:25,159
+one. I'm gonna make that one just be the estimated one,
+
+1438
+01:14:25,161 --> 01:14:28,463
+and then I'm gonna set the row height to be this automatic.
+
+1439
+01:14:28,465 --> 01:14:29,997
+And that's gonna recalculate it all the time.
+
+1440
+01:14:29,999 --> 01:14:32,300
+How about the fact that I'm not getting those profile
+
+1441
+01:14:32,302 --> 01:14:34,402
+image views? Well look, I have something in my console right
+
+1442
+01:14:34,404 --> 01:14:38,439
+here. You recognize this? App Transport Security, okay?
+
+1443
+01:14:38,441 --> 01:14:40,842
+You all remember that from last time? So let's fix that.
+
+1444
+01:14:40,844 --> 01:14:45,146
+We go into our Info.plist. We're going to add a row here.
+
+1445
+01:14:45,148 --> 01:14:48,115
+It's going to be the App Transport Security row right
+
+1446
+01:14:48,117 --> 01:14:53,754
+there. We're going to go down here and add arbitrary loads,
+
+1447
+01:14:53,756 --> 01:14:56,591
+okay. And we're going to set it to yes. So
+
+1448
+01:14:56,593 --> 01:14:59,594
+we're going to allow arbitrary URLs. Okay?
+
+1449
+01:14:59,596 --> 01:15:03,998
+Makes sense? Get this down out of there.
+
+1450
+01:15:04,267 --> 01:15:07,502
+Okay, let's run again. Hopefully, things will look
+
+1451
+01:15:07,504 --> 01:15:13,674
+really nice. Okay, that does look quite a bit better,
+
+1452
+01:15:13,676 --> 01:15:16,878
+okay. It starts to look like some, I don't know if we could
+
+1453
+01:15:16,880 --> 01:15:20,481
+post it on the abstract quite yet, okay but getting there,
+
+1454
+01:15:20,483 --> 01:15:23,851
+okay. So I want to ask one more thing, which is I wanna
+
+1455
+01:15:23,853 --> 01:15:27,388
+put a search thing at the top here, so we can search. Okay,
+
+1456
+01:15:27,390 --> 01:15:30,424
+for not just always being #Stanford, as much as
+
+1457
+01:15:30,426 --> 01:15:34,095
+we love #Stanford. So the way we're gonna do that is we're
+
+1458
+01:15:34,097 --> 01:15:36,130
+gonna go to our storyboard. One thing is I'm gonna put
+
+1459
+01:15:36,132 --> 01:15:38,599
+it inside of a navigation controller here and
+
+1460
+01:15:38,601 --> 01:15:42,169
+embed this whole thing inside a navigation controller.
+
+1461
+01:15:42,171 --> 01:15:45,439
+That means I can have a nice title on it, right?
+
+1462
+01:15:45,441 --> 01:15:47,241
+Remember I set the title to be what I search for.
+
+1463
+01:15:47,243 --> 01:15:51,746
+So I'm gonna have that there. Then I'm also going to go and
+
+1464
+01:15:51,748 --> 01:15:53,915
+drag out a text field to be my search. So
+
+1465
+01:15:53,917 --> 01:15:56,284
+this is gonna be the editable kind of text field. Which
+
+1466
+01:15:56,286 --> 01:15:59,820
+is right here. And if you drag right up at the top. You have
+
+1467
+01:15:59,822 --> 01:16:01,989
+to be a little bit careful. It has to look like this,
+
+1468
+01:16:01,991 --> 01:16:03,491
+you see where it stretches out.
+
+1469
+01:16:03,493 --> 01:16:05,426
+You can set the tableView's header.
+
+1470
+01:16:05,428 --> 01:16:09,363
+So I've set this text field as the tableView's header. Okay?
+
+1471
+01:16:09,365 --> 01:16:11,532
+And I probably wanna changed some things about it.
+
+1472
+01:16:11,534 --> 01:16:14,936
+Maybe a little bit bigger font. Maybe I wanna use
+
+1473
+01:16:14,938 --> 01:16:19,173
+the place holder here like, Twitter, search,
+
+1474
+01:16:19,175 --> 01:16:21,809
+text, or something like that. That's a little something
+
+1475
+01:16:21,811 --> 01:16:24,612
+that tells what this field is. Okay. That's just always gonna
+
+1476
+01:16:24,614 --> 01:16:27,782
+be in the background til they start typing or whatever.
+
+1477
+01:16:27,784 --> 01:16:30,351
+And I'm gonna need to have an outlet to it. So let's
+
+1478
+01:16:30,353 --> 01:16:33,354
+do that. Okay, this time, I do want automatic, okay,
+
+1479
+01:16:33,356 --> 01:16:35,590
+because this is not in a cell, this is at the top. So
+
+1480
+01:16:35,592 --> 01:16:40,895
+let's Ctrl+Drag down here, let's put this, I don't know,
+
+1481
+01:16:40,897 --> 01:16:44,498
+down at the bottom here. Let's Ctrl-Drag out here, and
+
+1482
+01:16:44,500 --> 01:16:49,503
+call this searchTextField. All right. When,
+
+1483
+01:16:49,505 --> 01:16:55,176
+searchTextField is set, we're gonna set its delegate,
+
+1484
+01:16:55,178 --> 01:16:57,812
+to be ourself. We know that with text fields, we want our
+
+1485
+01:16:57,814 --> 01:17:02,350
+delegate. We're also gonna set the searchTextField's text,
+
+1486
+01:17:02,352 --> 01:17:05,052
+equal to our own search text. Okay.
+
+1487
+01:17:05,054 --> 01:17:09,724
+Everybody understand that? Let's go back here and, so we
+
+1488
+01:17:09,726 --> 01:17:14,095
+can see a little better. Okay it's complaining about self.
+
+1489
+01:17:14,097 --> 01:17:16,931
+It doesn't like self because we are not
+
+1490
+01:17:16,933 --> 01:17:19,600
+a UI text field delegate,
+
+1491
+01:17:19,602 --> 01:17:22,403
+so we better set ourselves to be that. All right,
+
+1492
+01:17:22,405 --> 01:17:26,974
+what else do we got down here? >> The didSet.
+
+1493
+01:17:27,777 --> 01:17:29,310
+>> The didSet, yeah thanks,
+
+1494
+01:17:29,312 --> 01:17:34,382
+didSet. There we go, okay,
+
+1495
+01:17:34,384 --> 01:17:37,785
+so when the searchTextField is set we're gonna do this and
+
+1496
+01:17:37,787 --> 01:17:40,755
+then of course we're gonna implement that method,
+
+1497
+01:17:40,757 --> 01:17:43,124
+the textField method which is the textField,
+
+1498
+01:17:43,126 --> 01:17:46,661
+the textFieldShouldReturn. Okay, and in here,
+
+1499
+01:17:46,663 --> 01:17:50,131
+we're just going to have the textField.resignFirstRespon-
+
+1500
+01:17:50,133 --> 01:17:55,603
+der. Okay, and then we're gonna return true.
+
+1501
+01:17:55,605 --> 01:18:00,775
+And let's, also have the text, let's grab
+
+1502
+01:18:00,777 --> 01:18:06,180
+our search text out of there. searchText = textField.text.
+
+1503
+01:18:06,182 --> 01:18:08,916
+Okay, so when someone hits the return key, we're going to
+
+1504
+01:18:08,918 --> 01:18:12,653
+grab the text out of there and hide the keyboard, okay makes
+
+1505
+01:18:12,655 --> 01:18:16,123
+sense? All right, I believe that's all we need to do,
+
+1506
+01:18:16,125 --> 01:18:18,626
+let's get our Stanford out of there, where's Stanford?
+
+1507
+01:18:18,628 --> 01:18:24,298
+There it is. No more Stanford. Run.
+
+1508
+01:18:28,504 --> 01:18:31,172
+Okay, so we've got our search text up there. So let's try,
+
+1509
+01:18:31,174 --> 01:18:33,974
+let's put Stanford back in there, see if that works.
+
+1510
+01:18:33,976 --> 01:18:36,977
+There it is, that's good. Let's try something else like
+
+1511
+01:18:36,979 --> 01:18:42,650
+NBA. Okay, there's the NBA. Okay, looking good.
+
+1512
+01:18:43,352 --> 01:18:49,857
+Go back to Stanford again, and see that again, okay?
+
+1513
+01:18:49,859 --> 01:18:51,759
+There you go. All right, CS193P mentioned right there.
+
+1514
+01:18:51,761 --> 01:18:54,361
+How about that? Okay, so that's it. Now,
+
+1515
+01:18:54,363 --> 01:18:57,131
+I have a couple more things I wanted to show, but we ran
+
+1516
+01:18:57,133 --> 01:19:00,401
+outta time, so I'm going to post them in this code.
+
+1517
+01:19:00,403 --> 01:19:02,703
+I'll be posting this code, I'll add a couple of things.
+
+1518
+01:19:02,705 --> 01:19:05,106
+The two things I wanna do is. One is
+
+1519
+01:19:05,108 --> 01:19:07,842
+I want to be able to pull down on this tableView and
+
+1520
+01:19:07,844 --> 01:19:10,745
+show more tweets. Okay, so the tableView,
+
+1521
+01:19:10,747 --> 01:19:13,681
+the way to kind of update it, if you pull down on it and
+
+1522
+01:19:13,683 --> 01:19:14,715
+a little spinner comes up on it,
+
+1523
+01:19:14,717 --> 01:19:17,952
+and it's gonna show more, okay. So I'll put that,
+
+1524
+01:19:17,954 --> 01:19:23,390
+I'll basically add that code into what I'm going to post.
+
+1525
+01:19:23,392 --> 01:19:27,995
+That's all I'll show. Okay? That's it, sorry to run long.
+
+1526
+01:19:27,997 --> 01:19:29,764
+See you next time. >> For
+
+1527
+01:19:29,766 --> 01:19:29,797
+more, please visit us at Stanford.edu.
+
