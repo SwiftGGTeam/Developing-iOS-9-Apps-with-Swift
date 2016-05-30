@@ -2622,7 +2622,7 @@ this constructor here. Usually you pass a string in here.
 625
 00:32:07,660 --> 00:32:11,929
 What an attributed string is, it's a string that for every
-一个特征字符串是什么呢？这是一个字符串，它的每一个
+一个特征字符串是什么呢？它是一个字符串，它的每一个
 
 626
 00:32:11,931 --> 00:32:15,832
@@ -2632,259 +2632,322 @@ character has a dictionary of attributes that say how to
 627
 00:32:15,834 --> 00:32:19,903
 draw it. And those attributes are things like, the color of
-画它。
+画它。这些属性就像字符或者曲线的
 
 628
 00:32:19,905 --> 00:32:24,241
 the character or of the glyph, the font to use obviously,
+颜色、使用的字体
 
 629
 00:32:24,243 --> 00:32:25,409
 maybe a background color,
+或者背景颜色
 
 630
 00:32:25,411 --> 00:32:28,545
 those kind of things, right? You have a dictionary that has
+像这些东西。明白？你有一个为每一个字符
 
 631
 00:32:28,547 --> 00:32:30,714
 all those kinds of settings for every single character.
+设置了这些东西的字典
 
 632
 00:32:30,716 --> 00:32:33,417
 Now often you have long runs of characters that have
+通常你有一长串有着同样的
 
 633
 00:32:33,419 --> 00:32:35,752
 exactly the same color and font or whatever, so
+颜色和字体的字符。不论如何
 
 634
 00:32:35,754 --> 00:32:38,789
 you would have one dictionary for all of them. But
+你会有一个包含了这些所有东西的字典
 
 635
 00:32:38,791 --> 00:32:41,725
 that is the basic way that AttributedString works. And
+这就是基本的 AttributedString 的工作原理。而且
 
 636
 00:32:41,727 --> 00:32:44,761
 once you have an attributed string, okay, maybe you've set
+一旦你有一个 attributed string。或许你
 
 637
 00:32:44,763 --> 00:32:47,431
 these dictionaries on the characters, then you draw it
+这些字符上设置了一些字典，然后你使用 text
 
 638
 00:32:47,433 --> 00:32:50,334
 in your drawRect by saying text, that's the attributed
+在你的 drawRect 里面画它，这就是 attributed string
 
 639
 00:32:50,336 --> 00:32:53,737
 string. You send the method here, drawAtPoint,
+在这儿你调用 drawAtPoint
 
 640
 00:32:53,739 --> 00:32:57,674
 and then you give it a point. And it's going to draw that
+然后你给它一个点，它就会以那个点
 
 641
 00:32:57,676 --> 00:33:00,811
 text with the upper left corner being at that point.
+为左上角的坐标把文字画出来
 
 642
 00:33:00,813 --> 00:33:03,480
 So, if I wanted to do that hello and I would have drew
+所以，如果我想画那个 hello 而且我想
 
 643
 00:33:03,482 --> 00:33:07,351
 it right here. The hello would appear like this. Okay,
+就在这里画。那个 hello 就会像这样
 
 644
 00:33:07,353 --> 00:33:09,419
 this is the upper left and it would appear,
+这里是左上角，它就会
 
 645
 00:33:09,421 --> 00:33:13,256
 the text would appear here. Okay, got that? And I could
+这段文字就会在这显示。懂了？而且我能
 
 646
 00:33:13,258 --> 00:33:18,228
 find out how big this is gonna be by using this size method,
+知道这个的大小是多少，用这个 size 方法
 
 647
 00:33:18,230 --> 00:33:22,833
 okay, the size property, actually of attributed string,
+这个 size 属性，纠正下，这个特征字符串的
 
 648
 00:33:22,835 --> 00:33:26,837
 okay? So that's how we draw a text. Now this is a little
+好了吗？所以这就是我们画文字的方法。这是个有点
 
 649
 00:33:26,839 --> 00:33:29,673
 bit of a nasty class to use, to be honest,
+用起来不太好的类，说实话，这个
 
 650
 00:33:29,675 --> 00:33:33,176
 NSAttributedString, for a couple of reasons. But
+NSAttributedString，因为各种原因
 
 651
 00:33:33,178 --> 00:33:36,480
 all the reasons come from the fact this is an Objective-C
+所有的这些原因都是因为这是一个Objective-C
 
 652
 00:33:36,482 --> 00:33:40,517
 class that really didn't get a very good Swift treatment yet,
+的类，目前对 Swift 的适配度并不太好
 
 653
 00:33:40,519 --> 00:33:43,820
 okay? So there's two major differences
+明白吗？所以这里有两个原因，让这个
 
 654
 00:33:43,822 --> 00:33:47,157
 that make using it a kind of complicated in Swift,
+东西在 Swift 里有点复杂
 
 655
 00:33:47,159 --> 00:33:52,129
 okay? One is that mutability is not done with var and
+一个是它的可变性不是用 var 和 let
 
 656
 00:33:52,131 --> 00:33:55,165
 let. Okay, normally if you wanted an array that you can
+来控制的。通常如果你想要一个数组
 
 657
 00:33:55,167 --> 00:33:58,535
 add things to do, you would just say var x array, and
+能给它加东西的话，你直接会说 var x array。然后
 
 658
 00:33:58,537 --> 00:34:00,337
 since it's a var you can add to it. Okay,
+这是个 var，你能给它加东西。
 
 659
 00:34:00,339 --> 00:34:03,974
 if you said let x of an array, then you couldn't add to it.
+如果你说这个 x 是设为 let 的数组，你就不能加东西
 
 660
 00:34:03,976 --> 00:34:05,976
 Well that's not true for NSAttributedString.
+但是这在 NSAttributedString 里不适用
 
 661
 00:34:05,978 --> 00:34:08,078
 You can't say var NSAttributedString,
+你不能把 NSAttributedString 设成 var
 
 662
 00:34:08,080 --> 00:34:11,448
 that's still immutable. The way you do mutability is with
+它仍然是不可变的。你要使用可变性就要
 
 663
 00:34:11,450 --> 00:34:15,185
 NSMutableAttributedString, it's a different class, okay?
+用到 NSMutableAttributedString，这是另一个类，懂？
 
 664
 00:34:15,187 --> 00:34:17,687
 So if you wanna built an attributed string and
+所以如果你想建一个特征数组而且
 
 665
 00:34:17,689 --> 00:34:20,824
 start setting the attributes on it, you need to use
+要给它设置属性的话，你需要用到
 
 666
 00:34:20,826 --> 00:34:23,293
 MutableAttributedString instead, okay?
+MutableAttributedString，懂？
 
 667
 00:34:23,295 --> 00:34:25,362
 You create it the same way with some string but
+你用了同样的创造字符串的方法，但是
 
 668
 00:34:25,364 --> 00:34:27,898
 now you can set the attributes of it or whatever. So
+你能看到它的属性等等。所以
 
 669
 00:34:27,900 --> 00:34:30,634
 that's one thing that's kinda weird, okay? Is this mutable,
+这是里面有点怪的一件事。要用到可变性
 
 670
 00:34:30,636 --> 00:34:33,737
 you have to use this mutable version of it.
+你就需要设置它使用 mutable 的版本
 
 671
 00:34:33,739 --> 00:34:37,307
 By the way, NSAttributedString is not a string, a Swift
+顺便，NSAttributedString 不是 Swift 的
 
 672
 00:34:37,309 --> 00:34:40,811
 string, nor is it an NSString even an object string. It's
+字符串，也不是 NSString，甚至连个对象都不算
 
 673
 00:34:40,813 --> 00:34:44,581
 its own thing. It does have a property string and another
+它就是它自己。它有一个 string 的属性和一个
 
 674
 00:34:44,583 --> 00:34:47,317
 property called mutableString that will give you back
+mutableString 的属性，能在你想
 
 675
 00:34:47,319 --> 00:34:52,389
 a string/NSString using that bridging thing but
+桥接这个东西的时候返回一个 string/NSString，但是
 
 676
 00:34:52,391 --> 00:34:55,625
 it itself is not a string. You can't pass it as an argument
+它本身不是一个字符串。你不能把它当参数传递
 
 677
 00:34:55,627 --> 00:34:57,461
 to something that's accepting a string, okay?
+给某个接收一个字符串的东西，明白？
 
 678
 00:34:57,463 --> 00:35:00,397
 NSAttributedString is a different thing. Now,
+NSAttributedString 是一个不一样的东西
 
 679
 00:35:00,399 --> 00:35:02,933
 the second thing that's difficult with Swift and
+第二事，Swift 处理起来比较困难的
 
 680
 00:35:02,935 --> 00:35:07,337
 attributed string is the range here, okay?
+attributedString 是一个 range
 
 681
 00:35:07,339 --> 00:35:08,505
 You're trying to set attributes.
+当你想设定一些属性的时候
 
 682
 00:35:08,507 --> 00:35:10,774
 This is how you set attributes in the thing.
+这就是你能设定属性的方法
 
 683
 00:35:10,776 --> 00:35:11,007
 Here's the dictionary.
+这时这个字典的问题
 
 684
 00:35:11,009 --> 00:35:13,443
 I'm gonna show you what's in that dictionary in a second.
+我一会儿会说这个字典里的东西
 
 685
 00:35:13,445 --> 00:35:16,113
 And you're trying to set it for a range of characters in
+你要尝试把它理解为一个字符串里的
 
 686
 00:35:16,115 --> 00:35:19,316
 the string. You want the font or a color to be something for
+一段区间的字符，你想让一个颜色或者字体
 
 687
 00:35:19,318 --> 00:35:22,686
 a range of characters. Well, this range is not a Range,
+设成一段字符。实际上这个区段不是个 Range 类型
 
 688
 00:35:22,688 --> 00:35:27,157
 it's an NSRange. Okay, NSRange is different than Range.
+它是个 NSRange，NSRange 和 Range 不一样
 
 689
 00:35:27,159 --> 00:35:29,993
 And NSRange, the index is in here.
+NSRange 呢，这里的这个 index
 
 690
 00:35:29,995 --> 00:35:35,265
 Okay, it's a struct also that has a start in and a range,
+同样，它是个 struct 
 
 691
 00:35:35,267 --> 00:35:38,902
