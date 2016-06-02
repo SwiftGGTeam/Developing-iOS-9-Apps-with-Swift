@@ -1997,766 +1997,957 @@ there are initializers for RGB, red, green, blue. HSB,
 500
 00:25:58,157 --> 00:26:00,891
 that's hue, saturation, and br-brightness. You can even
+代表色相、饱和度和亮度。你甚至可以
 
 501
 00:26:00,893 --> 00:26:05,095
 set, create a color that's a pattern. Okay? It's like some
+设定并创建一个颜色当做模板。了解？这就像
 
 502
 00:26:05,097 --> 00:26:07,097
 image that you have. You'd make a pattern out of it.
+你有一些图片，你能通过它创建一个模板
 
 503
 00:26:07,099 --> 00:26:09,233
 And when it draws, it will be drawing with that pattern.
+并且当它开始画的时候，会以这个模板来画
 
 504
 00:26:09,235 --> 00:26:14,204
 It's kind of cool. Here we see views have background colors.
+这点挺酷的。这里我们看到 view 有背景颜色
 
 505
 00:26:14,206 --> 00:26:16,574
 So you've already seen that. We set the background colors
+你已经看到了。我们在 calculator 里
 
 506
 00:26:16,576 --> 00:26:19,677
 of our buttons in the calculator. You noticed that
+设置里按钮的背景颜色。我们在
 
 507
 00:26:19,679 --> 00:26:21,145
 when we did that in the attributes inspector,
+属性检查器里处理的时候你已经看到了
 
 508
 00:26:21,147 --> 00:26:23,581
 we had to scroll down to the bottom because the attribute
+我们需要滑到底下，因为
 
 509
 00:26:23,583 --> 00:26:26,050
 inspector is object oriented and it was showing all
+属性检查器是面向对象的并且它会显示所有
 
 510
 00:26:26,052 --> 00:26:28,886
 the inherited thing. Well we had to go down to The UIView
+继承的东西。我们需要到 UIView
 
 511
 00:26:28,888 --> 00:26:31,188
 level to set the background color of our buttons, okay,
+这一层去设置我们 button 的背景颜色。
 
 512
 00:26:31,190 --> 00:26:36,594
 cuz button inherits that from UIView. Okay? Interesting
+因为这是 button 从 UIView 那里继承来的。没问题？
 
 513
 00:26:36,596 --> 00:26:40,130
 thing about colors, they can have transparency.
+关于颜色有趣的是，它们有透明度。
 
 514
 00:26:40,132 --> 00:26:42,833
 Okay, meaning they kind of show through. That's called
+好的，这意味着他们能够显示背后的东西，这个属性
 
 515
 00:26:42,835 --> 00:26:45,436
 alpha. How many people have heard the term alpha when it
+叫做 alpha，有多少人在碰到绘图的时候
 
 516
 00:26:45,438 --> 00:26:48,639
 comes to drawing? Okay, so less than half of you.
+听到过 alpha 这个术语？好吧，不到一半
 
 517
 00:26:48,641 --> 00:26:51,208
 So alpha just means how transparent it is.
+所以 alpha 表示的就是它有多透明
 
 518
 00:26:51,210 --> 00:26:53,544
 An alpha of zero means fully transparent.
+alpha 值为0表示完全透明
 
 519
 00:26:53,546 --> 00:26:56,380
 So if you had bright red but it was alpha zero
+所以如果你有个亮红色，但是 alpha 为0的话
 
 520
 00:26:56,382 --> 00:26:58,582
 you wouldn't see anything because its fully transparent.
+你什么也看不到，以为它是完全透明的
 
 521
 00:26:58,584 --> 00:27:01,352
 You're seeing completely through it with no blocking.
+你会看到它后面所有的东西，没有任何阻碍
 
 522
 00:27:01,354 --> 00:27:04,355
 Alpha of 1 means fully opaque, meaning you would not
+Alpha 值为1表示完全不透明，意味着
 
 523
 00:27:04,357 --> 00:27:07,191
 see a single pixel of anything behind something that was
+当一个东西完全不透明的时候，你看不到它后面的
 
 524
 00:27:07,193 --> 00:27:10,728
 fully opaque. And between 0 and 1 is various degrees
+任何东西。值在0和1之间就是不同层次
 
 525
 00:27:10,730 --> 00:27:14,465
 of being able to see through. Okay, that's called alpha. And
+的透明程度。好的，这就叫做 alpha
 
 526
 00:27:14,467 --> 00:27:16,667
 you can create colors, like here's a yellow.
+你能够创建颜色，像这里有个黄色
 
 527
 00:27:16,669 --> 00:27:20,337
 By sending this message colorWithAlphaComponent, okay,
+通过使用这个方法 colorWithAlphaComponent，请问
 
 528
 00:27:20,339 --> 00:27:21,639
 is this a type method or
+这是个类方法还是
 
 529
 00:27:21,641 --> 00:27:26,243
 an instance method? Raise your hand if you think it's a type
+个实例方法？认为是类方法的请
 
 530
 00:27:26,245 --> 00:27:31,048
 method. Raise your hand if you think it's an instance method.
+举手。认为是实例方法的请举手
 
 531
 00:27:31,050 --> 00:27:32,583
 Hardly anyone raised their hand for either of them.
+看来两边都没什么人举手啊
 
 532
 00:27:32,585 --> 00:27:34,518
 That's great. But if you were to raise your hand for
+没问题。但是如果你举手并觉得是
 
 533
 00:27:34,520 --> 00:27:36,186
 instance method you are correct. Okay.
+实例方法的话，你对了。好的
 
 534
 00:27:36,188 --> 00:27:38,989
 This is an instance method. That's because we use this
+这时一个实例方法。那是因为我们用这个
 
 535
 00:27:38,991 --> 00:27:42,760
 type method yellow color to get an instance of a color and
+yellowColor() 方法去获取一个颜色的实例
 
 536
 00:27:42,762 --> 00:27:45,396
 then we sent it this instance method
+然后我们在后面写这个实例方法
 
 537
 00:27:45,398 --> 00:27:49,199
 to get a half transparent version of yellow. So
+去获取这个黄色的半透明的版本。所以说
 
 538
 00:27:49,201 --> 00:27:51,568
 this is half transparent yellow right here, and
+这里是一个半透明的黄色，并且
 
 539
 00:27:51,570 --> 00:27:54,872
 if we drew with it it would draw yellow in our view, but
+如果我们用它来画的话，它会在 view 中画出黄色，但是
 
 540
 00:27:54,874 --> 00:27:57,274
 we would be able to see through, to things behind,
+我们能够看到它后面，它后面的那些东西
 
 541
 00:27:57,276 --> 00:28:01,845
 perhaps even to other views, like our super view, behind.
+或者甚至看到其他的视图，比如后面的父视图
 
 542
 00:28:02,581 --> 00:28:05,282
 If you want to draw with transparency in your view.
+如果你想在 view 里画有透明度的图
 
 543
 00:28:05,284 --> 00:28:07,651
 If you want to draw with colors that are transparent.
+如果你想使用有透明度的颜色
 
 544
 00:28:07,653 --> 00:28:13,424
-You have to set in your view this far opaque to be false.
+You have to set in your view this var opaque to be false.
+你需要在你的 view 里面设置这个 opaque 的变量为 false
 
 545
 00:28:13,426 --> 00:28:17,061
 As a performance optimization the system has to assume
+为了最优化显示效果，系统必须假定
 
 546
 00:28:17,063 --> 00:28:18,429
 the view is opaque okay?
+view 是不透明的，明白？
 
 547
 00:28:18,431 --> 00:28:21,065
 That it doesn't draw with transparency. That's because
+所以它画的时候不会带透明度。那是因为
 
 548
 00:28:21,067 --> 00:28:23,667
 you can imagine things that are transparent overlapping,
+你们想一下当各种有透明度的东西重叠在一起的时候
 
 549
 00:28:23,669 --> 00:28:26,904
 think about the work that the system has to do to figure out
+想象一下系统需要去处理在后面显示的
 
 550
 00:28:26,906 --> 00:28:28,906
 what's showing through from behind.
+那些东西的时候需要的工作量
 
 551
 00:28:28,908 --> 00:28:31,008
 Okay? That kind of compositing,
+懂得？那是件有点庞杂的事
 
 552
 00:28:31,010 --> 00:28:33,877
 it's called, takes processor power and memory.
+这叫做提高处理效率，节约内存
 
 553
 00:28:33,879 --> 00:28:37,414
 Okay? So, it's gonna assume that everything is opaque. So
+懂了吗？所以说系统会假定所有东西都是不透明的
 
 554
 00:28:37,416 --> 00:28:40,050
 it doesn't have to do that, but if you are drawing with
+虽然没有必要，但是你在画有透明度的东西
 
 555
 00:28:40,052 --> 00:28:42,953
 transparency, that's fine, just set this opaque to false,
+的时候，好吧，把 opaque 设成 false 就是了
 
 556
 00:28:42,955 --> 00:28:46,356
 to let the system know, no I'm not opaque. I'm gonna draw
+让系统知道，现在不是不透明的，我要画
 
 557
 00:28:46,358 --> 00:28:49,293
 with transparency. Now another thing that's cool,
+有透明度的图了。然后另外一件挺酷的事是
 
 558
 00:28:49,295 --> 00:28:52,529
 is you can make your entire view transparent,
+你能让你的整个 view 带有透明度
 
 559
 00:28:52,531 --> 00:28:56,533
 by setting the alpha property on the view itself, okay? So
+通过在 view 自身上设定 alpha 属性，明白？所以说
 
 560
 00:28:56,535 --> 00:28:59,002
 you could draw your whole view, your triangle,
+你能画出你的整个视图，三角形
 
 561
 00:28:59,004 --> 00:29:01,038
 let's say, set the transparency to 0.5, and
+然后，来吧，把透明度设为0.5，然后
 
 562
 00:29:01,040 --> 00:29:02,906
 you'd have a half transparent triangle,
+你就会有一个半透明的三角形
 
 563
 00:29:02,908 --> 00:29:04,842
 even though you drew all with opaque colors,
+即使你全部画的不透明的颜色
 
 564
 00:29:04,844 --> 00:29:07,711
 you'd still have a half transparent triangle because
+你仍然会有一个半透明的三角形，因为
 
 565
 00:29:07,713 --> 00:29:11,381
 you set your alpha to 0.5. Okay? Using alpha is
+你把 alpha 设成了0.5。懂了？当我们
 
 566
 00:29:11,383 --> 00:29:15,686
 really cool for doing effects like fading views out. Okay,
+需要例如把视图渐隐的效果时，用 alpha 挺不错的。好的
 
 567
 00:29:15,688 --> 00:29:18,422
 sometimes you want a view just to fade out over time,
+有时候，你想让一个 view 在一段时间内渐隐
 
 568
 00:29:18,424 --> 00:29:19,790
 you want to animate that,
+你想要做它的一个动画
 
 569
 00:29:19,792 --> 00:29:21,158
 alpha is one of the things you can animate,
+alpha 是你能用来做动画的东西之一
 
 570
 00:29:21,160 --> 00:29:23,560
 we'll talk about animate in a couple of weeks, so
+我们将在几周之后谈到动画。所以
 
 571
 00:29:23,562 --> 00:29:27,131
 alpha is cool for doing that. All right,
+alpha 用来做这事儿挺不错的。好的
 
 572
 00:29:27,133 --> 00:29:29,633
 now let's talk about this view transparency and
+现在我们来讨论一下这个视图透明度以及
 
 573
 00:29:29,635 --> 00:29:31,835
 how that works when you're drawing with transparency.
+当你用透明度绘图的时候，它的工作原理
 
 574
 00:29:31,837 --> 00:29:34,938
 If you have non-opaque views, okay, say they're drawn with
+如果你没有不透明的视图，也就是说是带有
 
 575
 00:29:34,940 --> 00:29:38,375
 transparency, then what happens is that sub views list
+透明度的。然后就是，当子视图列表的第一个东西
 
 576
 00:29:38,377 --> 00:29:41,311
 that shows all of the sub views is in order
+显示在后面的时候，显示所有子视图的那个子视图列表
 
 577
 00:29:41,313 --> 00:29:45,149
 where the first thing in the sub views list is in the back
+依然是井井有条的。
 
 578
 00:29:45,284 --> 00:29:46,550
 okay. The next thing is in front of that,
+下一个东西在它前面，
 
 579
 00:29:46,552 --> 00:29:48,285
 and the next one's in front of that, the next one's in front
+下一个又在这一个前面，下一个又在前面
 
 580
 00:29:48,287 --> 00:29:52,189
 of that and so it's gonna show through like that, get it? So
+所以，这就是它透视的原理。懂了吗？
 
 581
 00:29:52,191 --> 00:29:53,690
 the sub views list matters okay.
+子视图列表是很重要的，明白？
 
 582
 00:29:53,692 --> 00:29:57,928
 The sub views list is built by add subview, everything is
+子视图列表是通过添加子视图建立的。当你调用
 
 583
 00:29:57,930 --> 00:30:00,330
 always put in the front when you call add subview. But,
+addSubview() 方法时，东西都是放在前面的。但是
 
 584
 00:30:00,332 --> 00:30:03,767
-there's another method called insert subviewat, that let you
+there's another method called insert subview at, that let you
+有另一个方法叫insertSubview at，让你
 
 585
 00:30:03,769 --> 00:30:06,370
 put it anywhere you want. You put a subview in the back.
+能再任何位置添加子视图。你在后面添加一个子视图
 
 586
 00:30:06,372 --> 00:30:08,038
 Like if you say, insert subview at zero,
+假设如果说，在索引值为0处插入子视图
 
 587
 00:30:08,040 --> 00:30:11,675
 it will put it up at the back. Okay. So, just note that,
+它就会在后面添加这个子视图。好的，这里记住
 
 588
 00:30:11,677 --> 00:30:16,180
 that subviews orders obviously matters. You can
+子视图的秩序真的很重要。通过
 
 589
 00:30:16,182 --> 00:30:20,484
 completely hide a view by setting it's hidden to true.
+设置一个 view 的 hidden 为 true，你能完全隐藏它
 
 590
 00:30:20,486 --> 00:30:24,087
 If you set it's hidden to true, it will not receive any
+如果你把它的 hidden 值设为 true 了，它不会接受任何的
 
 591
 00:30:24,089 --> 00:30:27,257
 events, no touch events. Nor will it draw what it draws.
+事件，没有触摸事件。也不会画出它的图像
 
 592
 00:30:27,259 --> 00:30:29,560
 It will still be in view hierarchy, okay, but
+它仍然会在这一层视图，但是
 
 593
 00:30:29,562 --> 00:30:32,129
 it's as if it's not there. Now why would you want this? Well
+看起来就像它没在那儿一样。好的，你什么时候会想要这样？
 
 594
 00:30:32,131 --> 00:30:34,431
 you might have a view that only appears when a certain
+比如，或许你有一个视图，只在一个按钮
 
 595
 00:30:34,433 --> 00:30:37,568
 button is in a certain state. So you put it there.
+处在确定的状态时才显示。所以你把它放在在那儿
 
 596
 00:30:37,570 --> 00:30:39,903
 You set it hidden. When the button goes to that state you
+设成隐藏。当那个按钮到那个状态的时候你
 
 597
 00:30:39,905 --> 00:30:44,341
 unhide it and it'll appear. Now to be frank you probably
+取消隐藏，然后它显示出来。实际上呢，你可能
 
 598
 00:30:44,343 --> 00:30:46,944
 animate it's appearance with alpha okay so
+会使用动画，设置透明度，把它渐渐显示出来。所以
 
 599
 00:30:46,946 --> 00:30:48,111
 it would zooooo appear like that.
+看起来就像 zoooo 的一下出来了。
 
 600
 00:30:48,113 --> 00:30:51,648
-Instead of jumping on screen that's kind of disconcerting.
+Instead of jumping on screen that's kind of disconsidering.
+而不是一下子跳到屏幕上，那看起来有点欠考虑。
 
 601
 00:30:51,650 --> 00:30:53,784
 But you still would probably use hidden to have it hidden
+但是你最开始的时候可能要用 hidden 去
 
 602
 00:30:53,786 --> 00:30:55,319
 in the first place. Because you wouldn't want it for
+把它隐藏掉。因为，举个例子，在它完全显示之前
 
 603
 00:30:55,321 --> 00:30:57,688
 example getting a touch of answer on like that until
+你不会想让它对任何点击
 
 604
 00:30:57,690 --> 00:31:02,359
 it was shown. What about drawing text.
+做出回应。那么画文字呢？
 
 605
 00:31:02,361 --> 00:31:07,164
 You do not draw text using a UiBezier path. Text is
+我们不用 UIBezierPath 却画文字。文字算是
 
 606
 00:31:07,166 --> 00:31:12,069
 really just a bunch of Bezier paths in a font. A font really
+在一种字体中的一大堆的贝塞尔线条。一种字体实际上
 
 607
 00:31:12,071 --> 00:31:14,905
 defines a bunch of Bezier paths for each character,
+为每一个字符、每一条曲线都定义了一堆的
 
 608
 00:31:14,907 --> 00:31:19,943
 each gliff. It's called. So we have higher level ways of
+贝塞尔线条。这是它的原理。所以说我们有更高级的方法去
 
 609
 00:31:19,945 --> 00:31:22,880
 drawing text by basically saying here's a string,
+画文字。基本来说就是，来，这里有个字符串
 
 610
 00:31:22,882 --> 00:31:25,883
 draw it. Okay that's a high level way to get all those
+画出来。这是一种更高级的方法去把这些
 
 611
 00:31:25,885 --> 00:31:28,452
 bezier paths drawn, you don't want to be dealing with that
+线条画出来，你不会想要在 UIBezierPath 这一层
 
 612
 00:31:28,454 --> 00:31:31,588
 at the UI bezier path level for sure. But most the time,
+去画文字的，相信我。但是大多数时候
 
 613
 00:31:31,590 --> 00:31:35,325
 we don't draw text even in our drawRect. We draw it by using
+我们甚至不用 drawRect 去画文字。我们通过使用
 
 614
 00:31:35,327 --> 00:31:37,728
 UILabel which you're used to all ready, okay?
+你已经完全熟悉的 UILabel 去画它。了解？
 
 615
 00:31:37,730 --> 00:31:39,997
 We just have a rectangle? Boom, we put it on here.
+我们有一个矩形。当 ~ 我们把它放在这儿
 
 616
 00:31:39,999 --> 00:31:42,432
 If we wanted to say hello on this guy's forehead,
+如果我们想在这个家伙额头上画个 "hello"
 
 617
 00:31:42,434 --> 00:31:45,969
 we might put a UILabel right there say hello. Okay, but
+我们会在那儿放个 UILabel 然后写上 hello。好的，但是
 
 618
 00:31:45,971 --> 00:31:48,305
 what if we did want in our draw rect.
+假如我们想让它在 drawRect 里面
 
 619
 00:31:48,307 --> 00:31:51,241
 What if we wanted to put some text in here and
+假如我们想在这里放点文本
 
 620
 00:31:51,243 --> 00:31:53,343
 we didn't want to put it as a subview,
+但是我们不想把它弄成 UILabel
 
 621
 00:31:53,345 --> 00:31:57,214
 a UILabel subview on our face view. And the way you do that
+这样一个子视图，然后放在我们的 faceView 上。做这个的方法
 
 622
 00:31:57,216 --> 00:32:00,584
 is with a class called NS attributed string Okay,
+是用一个类，叫做 NSAtrributedString，明白？
 
 623
 00:32:00,586 --> 00:32:03,587
-NSAttributedString. And you create it by,
+NSAttributedString. And you create it by
+NSAttributedString。并且你要通过这里
 
 624
 00:32:03,589 --> 00:32:07,658
 this constructor here. Usually you pass a string in here.
+这个构造器来创建它。通常来说，你在这里传一个字符串
 
 625
 00:32:07,660 --> 00:32:11,929
 What an attributed string is, it's a string that for every
+一个特征字符串是什么呢？它是一个字符串，它的每一个
 
 626
 00:32:11,931 --> 00:32:15,832
 character has a dictionary of attributes that say how to
+字符，在字典中都有一个对应的属性，来说明怎么去
 
 627
 00:32:15,834 --> 00:32:19,903
 draw it. And those attributes are things like, the color of
+画它。这些属性就像字符或者曲线的
 
 628
 00:32:19,905 --> 00:32:24,241
 the character or of the glyph, the font to use obviously,
+颜色、使用的字体
 
 629
 00:32:24,243 --> 00:32:25,409
 maybe a background color,
+或者背景颜色
 
 630
 00:32:25,411 --> 00:32:28,545
 those kind of things, right? You have a dictionary that has
+像这些东西。明白？你有一个为每一个字符
 
 631
 00:32:28,547 --> 00:32:30,714
 all those kinds of settings for every single character.
+设置了这些东西的字典
 
 632
 00:32:30,716 --> 00:32:33,417
 Now often you have long runs of characters that have
+通常你有一长串有着同样的
 
 633
 00:32:33,419 --> 00:32:35,752
 exactly the same color and font or whatever, so
+颜色和字体的字符。不论如何
 
 634
 00:32:35,754 --> 00:32:38,789
 you would have one dictionary for all of them. But
+你会有一个包含了这些所有东西的字典
 
 635
 00:32:38,791 --> 00:32:41,725
 that is the basic way that AttributedString works. And
+这就是基本的 AttributedString 的工作原理。而且
 
 636
 00:32:41,727 --> 00:32:44,761
 once you have an attributed string, okay, maybe you've set
+一旦你有一个 attributed string。或许你
 
 637
 00:32:44,763 --> 00:32:47,431
 these dictionaries on the characters, then you draw it
+这些字符上设置了一些字典，然后你使用 text
 
 638
 00:32:47,433 --> 00:32:50,334
 in your drawRect by saying text, that's the attributed
+在你的 drawRect 里面画它，这就是 attributed string
 
 639
 00:32:50,336 --> 00:32:53,737
 string. You send the method here, drawAtPoint,
+在这儿你调用 drawAtPoint
 
 640
 00:32:53,739 --> 00:32:57,674
 and then you give it a point. And it's going to draw that
+然后你给它一个点，它就会以那个点
 
 641
 00:32:57,676 --> 00:33:00,811
 text with the upper left corner being at that point.
+为左上角的坐标把文字画出来
 
 642
 00:33:00,813 --> 00:33:03,480
 So, if I wanted to do that hello and I would have drew
+所以，如果我想画那个 hello 而且我想
 
 643
 00:33:03,482 --> 00:33:07,351
 it right here. The hello would appear like this. Okay,
+就在这里画。那个 hello 就会像这样
 
 644
 00:33:07,353 --> 00:33:09,419
 this is the upper left and it would appear,
+这里是左上角，它就会
 
 645
 00:33:09,421 --> 00:33:13,256
 the text would appear here. Okay, got that? And I could
+这段文字就会在这显示。懂了？而且我能
 
 646
 00:33:13,258 --> 00:33:18,228
 find out how big this is gonna be by using this size method,
+知道这个的大小是多少，用这个 size 方法
 
 647
 00:33:18,230 --> 00:33:22,833
 okay, the size property, actually of attributed string,
+这个 size 属性，纠正下，这个特征字符串的
 
 648
 00:33:22,835 --> 00:33:26,837
 okay? So that's how we draw a text. Now this is a little
+好了吗？所以这就是我们画文字的方法。这是个有点
 
 649
 00:33:26,839 --> 00:33:29,673
 bit of a nasty class to use, to be honest,
+用起来不太好的类，说实话，这个
 
 650
 00:33:29,675 --> 00:33:33,176
 NSAttributedString, for a couple of reasons. But
+NSAttributedString，因为各种原因
 
 651
 00:33:33,178 --> 00:33:36,480
 all the reasons come from the fact this is an Objective-C
+所有的这些原因都是因为这是一个Objective-C
 
 652
 00:33:36,482 --> 00:33:40,517
 class that really didn't get a very good Swift treatment yet,
+的类，目前对 Swift 的适配度并不太好
 
 653
 00:33:40,519 --> 00:33:43,820
 okay? So there's two major differences
+明白吗？所以这里有两个原因，让这个
 
 654
 00:33:43,822 --> 00:33:47,157
 that make using it a kind of complicated in Swift,
+东西在 Swift 里有点复杂
 
 655
 00:33:47,159 --> 00:33:52,129
 okay? One is that mutability is not done with var and
+一个是它的可变性不是用 var 和 let
 
 656
 00:33:52,131 --> 00:33:55,165
 let. Okay, normally if you wanted an array that you can
+来控制的。通常如果你想要一个数组
 
 657
 00:33:55,167 --> 00:33:58,535
 add things to do, you would just say var x array, and
+能给它加东西的话，你直接会说 var x array。然后
 
 658
 00:33:58,537 --> 00:34:00,337
 since it's a var you can add to it. Okay,
+这是个 var，你能给它加东西。
 
 659
 00:34:00,339 --> 00:34:03,974
 if you said let x of an array, then you couldn't add to it.
+如果你说这个 x 是设为 let 的数组，你就不能加东西
 
 660
 00:34:03,976 --> 00:34:05,976
 Well that's not true for NSAttributedString.
+但是这在 NSAttributedString 里不适用
 
 661
 00:34:05,978 --> 00:34:08,078
 You can't say var NSAttributedString,
+你不能把 NSAttributedString 设成 var
 
 662
 00:34:08,080 --> 00:34:11,448
 that's still immutable. The way you do mutability is with
+它仍然是不可变的。你要使用可变性就要
 
 663
 00:34:11,450 --> 00:34:15,185
 NSMutableAttributedString, it's a different class, okay?
+用到 NSMutableAttributedString，这是另一个类，懂？
 
 664
 00:34:15,187 --> 00:34:17,687
 So if you wanna built an attributed string and
+所以如果你想建一个特征数组而且
 
 665
 00:34:17,689 --> 00:34:20,824
 start setting the attributes on it, you need to use
+要给它设置属性的话，你需要用到
 
 666
 00:34:20,826 --> 00:34:23,293
 MutableAttributedString instead, okay?
+MutableAttributedString，懂？
 
 667
 00:34:23,295 --> 00:34:25,362
 You create it the same way with some string but
+你用了同样的创造字符串的方法，但是
 
 668
 00:34:25,364 --> 00:34:27,898
 now you can set the attributes of it or whatever. So
+你能看到它的属性等等。所以
 
 669
 00:34:27,900 --> 00:34:30,634
 that's one thing that's kinda weird, okay? Is this mutable,
+这是里面有点怪的一件事。要用到可变性
 
 670
 00:34:30,636 --> 00:34:33,737
 you have to use this mutable version of it.
+你就需要设置它使用 mutable 的版本
 
 671
 00:34:33,739 --> 00:34:37,307
 By the way, NSAttributedString is not a string, a Swift
+顺便，NSAttributedString 不是 Swift 的
 
 672
 00:34:37,309 --> 00:34:40,811
 string, nor is it an NSString even an object string. It's
+字符串，也不是 NSString，甚至连个对象都不算
 
 673
 00:34:40,813 --> 00:34:44,581
 its own thing. It does have a property string and another
+它就是它自己。它有一个 string 的属性和一个
 
 674
 00:34:44,583 --> 00:34:47,317
 property called mutableString that will give you back
+mutableString 的属性，能在你想
 
 675
 00:34:47,319 --> 00:34:52,389
 a string/NSString using that bridging thing but
+桥接这个东西的时候返回一个 string/NSString，但是
 
 676
 00:34:52,391 --> 00:34:55,625
 it itself is not a string. You can't pass it as an argument
+它本身不是一个字符串。你不能把它当参数传递
 
 677
 00:34:55,627 --> 00:34:57,461
 to something that's accepting a string, okay?
+给某个接收一个字符串的东西，明白？
 
 678
 00:34:57,463 --> 00:35:00,397
 NSAttributedString is a different thing. Now,
+NSAttributedString 是一个不一样的东西
 
 679
 00:35:00,399 --> 00:35:02,933
 the second thing that's difficult with Swift and
+第二事，Swift 处理起来比较困难的
 
 680
 00:35:02,935 --> 00:35:07,337
 attributed string is the range here, okay?
+attributedString 是一个 range
 
 681
 00:35:07,339 --> 00:35:08,505
 You're trying to set attributes.
+当你想设定一些属性的时候
 
 682
 00:35:08,507 --> 00:35:10,774
 This is how you set attributes in the thing.
+这就是你能设定属性的方法
 
 683
 00:35:10,776 --> 00:35:11,007
 Here's the dictionary.
+这时这个字典的问题
 
 684
 00:35:11,009 --> 00:35:13,443
 I'm gonna show you what's in that dictionary in a second.
+我一会儿会说这个字典里的东西
 
 685
 00:35:13,445 --> 00:35:16,113
 And you're trying to set it for a range of characters in
+你要尝试把它理解为一个字符串里的
 
 686
 00:35:16,115 --> 00:35:19,316
 the string. You want the font or a color to be something for
+一段区间的字符，你想让一个颜色或者字体
 
 687
 00:35:19,318 --> 00:35:22,686
 a range of characters. Well, this range is not a Range,
+设成一段字符。实际上这个区段不是个 Range 类型
 
 688
 00:35:22,688 --> 00:35:27,157
 it's an NSRange. Okay, NSRange is different than Range.
+它是个 NSRange，NSRange 和 Range 不一样
 
 689
 00:35:27,159 --> 00:35:29,993
 And NSRange, the index is in here.
+NSRange 呢，这里的这个 index
 
 690
 00:35:29,995 --> 00:35:35,265
 Okay, it's a struct also that has a start in and a range,
+同样，它是个 struct 
 
 691
 00:35:35,267 --> 00:35:38,902
