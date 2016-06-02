@@ -16,27 +16,27 @@ This is spring quarter 2016. And today we
 4
 00:00:17,410 --> 00:00:22,140
 are going to mostly talk about the layer under the UI.
-今天我们主要会介绍UI层
+今天我们主要会介绍UI 层
 
 5
 00:00:22,150 --> 00:00:24,450
 Okay, so we're gonna talk about Swift the language.
-我们会讨论 Swift 这门语言
+我们会讨论Swift 这门语言
 
 6
 00:00:24,450 --> 00:00:26,950
 We're gonna talk about this foundation framework that
-我们将会讨论位于核心服务层顶部的 foundation 框架
+我们将会讨论位于核心服务层顶部的foundation 框架
 
 7
 00:00:26,950 --> 00:00:29,550
 lives on top of Core services. So we're not going to be
-所以我们不会讨论一整天非常多关于 UI 的内容
+所以我们不会讨论一整天非常多关于UI 的内容
 
 8
 00:00:29,550 --> 00:00:32,920
 talking about the UI very much at all today. I do have a demo
-我有一个用演示作为结束
+在接近尾声的时候会有一个demo
 
 9
 00:00:32,920 --> 00:00:36,490
@@ -111,7 +111,7 @@ type. And we know that to be the case. We can have
 23
 00:01:14,000 --> 00:01:17,000
 Optional strings or Optional even Optional optionals.
-我们可以有可选字符串或者任何可选类型
+我们可以有Optional sting 甚至是Optional 的 Optional
 
 24
 00:01:17,000 --> 00:01:19,530
@@ -131,12 +131,12 @@ None 情况是没有设置东西，其它情况是设置了一些东西的
 27
 00:01:25,710 --> 00:01:27,780
 And in the Some case it has an associated value. And you
-在一些情况下它有相关的值
+在一些情况下它有关联值
 
 28
 00:01:27,780 --> 00:01:31,450
 learned all about enums last time. So this, syntax should
-你们最近学过的关于枚举的内容
+你们上次学了的关于枚举的内容
 
 29
 00:01:31,450 --> 00:01:37,220
@@ -151,12 +151,12 @@ of the little question mark, exclamation point stuff. And
 31
 00:01:40,260 --> 00:01:43,060
 what that means in terms of optional behind the scenes. So
-在这些场景背后它们和 optional 的关系是什么
+在这些场景背后它们和optional 的关系是什么
 
 32
 00:01:43,060 --> 00:01:47,060
 if you had a constant x which was of type optional string,
-如果你有一个常量 x 它的类型是 optionl 字符串
+如果你有一个常量 x 它的类型是optionl 字符串
 
 33
 00:01:47,060 --> 00:01:48,460
@@ -166,7 +166,7 @@ right, string question mark.
 34
 00:01:48,470 --> 00:01:53,330
 And I set it to nil, then that's the same as saying that
-然后我把它设置为 nil ，这等同于是说 x = Optional<s>.None</s>
+然后我把它设置为nil ，这等同于是说 x = Optional<s>.None</s>
 
 35
 00:01:53,340 --> 00:01:58,310
@@ -176,17 +176,17 @@ x = Optional<s>.None, right? Obviously, and same</s>
 36
 00:01:58,310 --> 00:02:00,940
 thing if I had an optional string that was set to hello,
-如果我有一个可选字符串设置成 hello
+如果我有一个可选字符串设置成hello
 
 37
 00:02:00,940 --> 00:02:04,880
 that'd be the same as x=Optional<s>.Some</s>
-那就等于 x=Optional<s>.Some</s>
+那就等于x=Optional<s>.Some</s>
 
 38
 00:02:04,880 --> 00:02:07,150
 with the associated value, hello. Okay,
-关联的值是 hello。 好的
+关联的值是hello。 好的
 
 39
 00:02:07,150 --> 00:02:10,690
@@ -196,22 +196,22 @@ everybody cool with that? And similarly, if I unwrap,
 40
 00:02:10,690 --> 00:02:15,120
 if I said, var y=x unwrapped, that just means switch x,
-如果我说，var y=x 拆包，那就意味着开关 x
+如果我说，var y=x!，就等于switch x
 
 41
 00:02:15,130 --> 00:02:17,390
 because we know that the way we unwrap Optionals and
-因为我们知道我们那样子拆包 Optionals
+因为我们知道我们那样子拆包Optionals
 
 42
 00:02:17,390 --> 00:02:19,560
 get their associated value is with switch, so
-所以我会打开 x 并用开关得到相关的值
+所以我会打开x 并用开关得到相关的值
 
 43
 00:02:19,560 --> 00:02:22,400
 I'm gonna switch on x. And in the case of Some, I'm gonna
-在一些情况下，我会用 let 值
+在一些情况下，我会用let 值
 
 44
 00:02:22,400 --> 00:02:25,670
@@ -221,12 +221,12 @@ do that let value thing so I can grab the associated value.
 45
 00:02:25,670 --> 00:02:28,470
 And then I'm just gonna set y equal to that value.
-然后我要设置 y 等于那个值
+然后我要设置y 等于那个值
 
 46
 00:02:28,470 --> 00:02:30,100
 In the case None, I'm gonna crash.
-在空的情况下，我的程序会 crash
+在空的情况下，我的程序会crash
 
 47
 00:02:30,110 --> 00:02:32,740
@@ -236,7 +236,7 @@ I'm gonna raise an exception, okay, because that's what
 48
 00:02:32,740 --> 00:02:35,540
 unwrapping an Optional that's not said is supposed to do,
-因为拆包一个 Optional 不意味着它应该这么做
+因为拆包一个Optional 不意味着它应该这么做
 
 49
 00:02:35,550 --> 00:02:40,450
@@ -246,41 +246,42 @@ it's supposed to crash, okay? And of course, in the case
 50
 00:02:40,450 --> 00:02:44,420
 where I'm doing if let, then I'm just gonna switch on x,
-如果我用 let 这么做，然后我去 switch x
+如果我用let 这么做，然后我去switch x
 
 51
 00:02:44,420 --> 00:02:47,190
 and I'm, the case of .Some, I'm gonna grab that y, and
-在 .Some 情况下我用 y 拿出 x 的值
+在 .Some 情况下我用y 拿出 x 的值
 
 52
 00:02:47,190 --> 00:02:49,720
 then I'm just gonna put some code, whatever my code is in
 然后就会执行我放在下面的代码
+
 53
 00:02:43,731 --> 00:02:46,899
 there, and if let to happen there. And in the case None,
-然而在 None 的情况下
+然而在None 的情况下
 
 53
 00:02:52,900 --> 00:02:54,660
 I just break out of the switch, I do nothing.
-我会直接跳出 switch 什么都不做
+我会直接跳出switch 什么都不做
 
 54
 00:02:54,660 --> 00:02:59,700
 Okay, sound good? All right, so that's Optionals.
-听起来不错？ 这就是 Optionals
+听起来不错？ 这就是Optionals
 
 55
 00:02:59,700 --> 00:03:01,370
 Hopefully Optional now should start feeling very,
-希望现在开始对 Optional 的感觉好点了
+希望现在开始对Optional 的感觉好点了
 
 56
 00:03:01,370 --> 00:03:03,340
 very comfortable to you cuz, as you found out,
-在这些 API 里面
+在这些API 里面
 
 57
 00:03:03,340 --> 00:03:07,640
@@ -290,7 +291,7 @@ it's everywhere in these, in the API. Now Optionals have
 58
 00:03:07,640 --> 00:03:10,710
 some more syntax, okay. That question mark and exclamation
-现在 Optionl 有更多的语法了。你看见的那些问号和感叹号
+现在Optionl 有更多的语法了。你看见的那些问号和感叹号
 
 59
 00:03:10,710 --> 00:03:13,880
@@ -310,7 +311,7 @@ look nicer. It has a little bit more syntactic sugar.
 62
 00:03:20,590 --> 00:03:24,660
 One thing is that Optionals can be chained. Okay, so
-比如 OPtional 可以是链式的
+比如Optional 可以是链式的
 
 63
 00:03:24,660 --> 00:03:26,460
@@ -350,12 +351,12 @@ if let label equal display to unwrap the display. And
 70
 00:03:47,180 --> 00:03:50,020
 they we would say if let text equal the labels text,
-然后我们会让 text 等于 label 的 text
+然后我们会让text 等于label 的 text
 
 71
 00:03:50,020 --> 00:03:54,020
 and unwrap that. Then we would say let x equal the text hash
-拆包之后，我们在让 x 等于 text 哈希后的值
+拆包之后，我们在让x 等于text 哈希后的值
 
 72
 00:03:54,020 --> 00:03:56,820
@@ -370,12 +371,12 @@ Well there is a lot easy way to do it which is this,
 74
 00:03:59,730 --> 00:04:02,700
 you just say display?.text?.hashvalue,
-你可以这样 display?.text?.hashvalue
+你可以这样display?.text?.hashvalue
 
 75
 00:04:02,700 --> 00:04:08,540
 okay? So if you use question marks when you're, not when
-如果你在这个时候用 ？ 而不是在声明 optional 类型时使用
+如果你在这个时候用 ？ 而不是在声明optional 类型时使用
 
 76
 00:04:08,540 --> 00:04:11,640
@@ -395,47 +396,47 @@ if you can then use that value to go to the next thing.
 79
 00:04:18,380 --> 00:04:21,650
 If you can't, just return nil from this whole expression.
-如果不行，整个表达是就返回 nil
+如果不行，整个表达是就返回nil
 
 80
 00:04:21,650 --> 00:04:23,150
 Okay, this whole display question mark,
-这个 dispaly 后面所有的问号，
+这个dispaly 后面所有的问号，
 
 81
 00:04:23,150 --> 00:04:24,590
 that typed question mark, that hash value,
-那个 哈希 值
+那个哈希值
 
 82
 00:04:24,590 --> 00:04:27,790
 that whole expression will return nil if at any point
-如果它们当中有任何一点在拆包的时候返回了 nil
+如果它们当中有任何一点在拆包的时候返回了nil
 
 83
 00:04:27,790 --> 00:04:31,630
 any of these things that were changing unwrap turns out to
-这整个表达式就会返回 nil
+这整个表达式就会返回nil
 
 84
 00:04:31,630 --> 00:04:35,000
 be nil. So, if the display is nil or if the display's text
-所以，如果 display 是空的，或者 display 的 text 是空的
+所以，如果display 是空的，或者display 的text 是空的
 
 85
 00:04:35,000 --> 00:04:37,470
 is nil then this whole thing is gonna be nil.
-那这整个就会变成 nil
+那这整个就会变成nil
 
 86
 00:04:37,470 --> 00:04:41,870
 So you see let x equal up there? What type do you think
-所以你看见让 x 等于它们
+所以你看见让x 等于它们
 
 87
 00:04:41,870 --> 00:04:46,970
 x is right there? >> [INAUDIBLE].
-这里的 x 是什么类型的 [讨论]
+这里的x 是什么类型的 [讨论]
 
 88
 00:04:46,980 --> 00:04:48,780
@@ -445,22 +446,22 @@ x is right there? >> [INAUDIBLE].
 89
 00:04:48,780 --> 00:04:51,780
 Optional int, exactly. It has to be optional int, because
-对，可选 int 类型
+对，是optional int 类型
 
 90
 00:04:51,780 --> 00:04:54,520
 any of those things could fail and it would return nil.
-因为任何其它东西都可能失败并返回 nil
+因为任何其它东西都可能失败并返回nil
 
 91
 00:04:54,520 --> 00:04:55,520
 So it has to be able to take nil. So
-所以它可以是 nil 值
+所以它可以是nil 值
 
 92
 00:04:55,520 --> 00:04:59,320
 that would be an optional int, cuz hash value returns an int,
-因为它可以返回一个 int 的哈希值，所以它是一个可选 int
+因为它可以返回一个int 的哈希值，所以它是一个可选int
 
 93
 00:04:59,320 --> 00:05:03,120
@@ -485,7 +486,7 @@ them so much. Okay, but there's more.
 97
 00:05:11,630 --> 00:05:14,640
 Here's another Optional syntaxtiture which is ??
-这里是 Optional 的另一种用法叫做 ？？
+这里是Optional 的另一种用法叫做 ？？
 
 98
 00:05:14,640 --> 00:05:18,970
@@ -495,17 +496,17 @@ Okay, and this is basically providing a default value
 99
 00:05:18,980 --> 00:05:22,640
 in case something is nil. Okay, so let's add an optional
-来添加一个可选字符串 s
+来添加一个可选字符串s
 
 100
 00:05:22,650 --> 00:05:27,380
 string here s, okay. I could say if s is not nil,
-我可以说，如果 s 不是空
+我可以说，如果s 不是空
 
 101
 00:05:27,380 --> 00:05:30,120
 then I'm gonna set my display to be s, okay.
-然后我会把我的 display 设置成 s
+然后我会把我的display 设置成 s
 
 102
 00:05:30,120 --> 00:05:32,920
@@ -540,7 +541,7 @@ its size will go to zero. Okay,
 108
 00:05:45,670 --> 00:05:50,070
 cuz there's no text in there to have a natural size for. So
-因为没有文本它就不会有一个天生的尺寸
+因为没有文本它就不会有一个默认的尺寸
 
 109
 00:05:50,070 --> 00:05:52,870
@@ -550,7 +551,7 @@ sometimes you might want to have a code like this where if
 110
 00:05:52,880 --> 00:05:54,310
 you want to put nothing in the display,
-如果你往 display 里面放了空的东西
+如果你往display 里面放了空的东西
 
 111
 00:05:54,310 --> 00:05:57,080
@@ -560,17 +561,17 @@ you put a space character, so at least there's something in
 112
 00:05:57,080 --> 00:06:00,920
 there for it to have a height, okay? Otherwise your display
-否则你设置成 nil 的话
+否则你设置成nil 的话
 
 113
 00:06:00,920 --> 00:06:03,980
 would keep disappearing if you kept setting it to nil. So
-你的 display 可能会消失
+你的display 可能会消失
 
 114
 00:06:03,990 --> 00:06:06,890
 we can do this, if s does not equal nil then display equals
-那么我们可以这样，如果 s 不等于 nil 就让 display 等于 s
+那么我们可以这样，如果s 不等于nil 就让display 等于s
 
 115
 00:06:06,890 --> 00:06:09,460
@@ -590,12 +591,12 @@ a much simpler way to put that is with this,
 118
 00:06:15,000 --> 00:06:19,430
 defaulting operator, which is to say the display.text
-让 display.text = s
+让display.text = s
 
 119
 00:06:19,440 --> 00:06:24,170
 = s Okay? And that means if s is not nil then unwrap it and
-这表示如果 s 不为空，就把它拆包
+这表示如果s 不为空，就把它拆包
 
 120
 00:06:24,170 --> 00:06:27,680
@@ -610,7 +611,7 @@ Got that? Everyone understand? I don't see any nodding heads
 122
 00:06:31,850 --> 00:06:34,680
 on that one. Make sense, okay? So this is, again, just
-理解它，好吗？ 在说一遍
+懂了吗？再说一遍
 
 123
 00:06:34,680 --> 00:06:38,920
@@ -620,12 +621,12 @@ a simple way to have a default value in case an optional is
 124
 00:06:38,920 --> 00:06:43,490
 nil. All right so let's talk about another thing, tuples.
-继续介绍另一东西，元祖。
+继续介绍另一东西，元组。
 
 125
 00:06:43,490 --> 00:06:47,960
 All right tuples are a type, okay? In Swift they're really,
-元祖是一种类型，在 Swift 中它们非常酷
+元组是一种类型，在 Swift 中它们非常酷
 
 126
 00:06:47,960 --> 00:06:51,670
@@ -645,32 +646,32 @@ you can use it anywhere you can use a type, a tuple can be
 129
 00:06:56,840 --> 00:07:01,640
 used anywhere types are valid, okay? So, here's an example.
-一个元祖在任何地方使用都是可以的，好的。这里有一个例子
+一个元组在任何地方使用都是可以的，好的。这里有一个例子
 
 130
 00:07:01,640 --> 00:07:06,010
 I'm going to create x, okay? This let x, x is a constant.
-我要生成一个 x 好的。这是 let x ，x 是一个常量
+我要生成一个x 好的。这是let x，x 是一个常量
 
 131
 00:07:06,020 --> 00:07:09,950
 It's type is a tuple, with a string, int, and
-这是一个元祖类型，含有 string, int, 和 double
+这是一个元组类型，含有 string, int, 和 double
 
 132
 00:07:09,950 --> 00:07:14,020
-double. So, even though tuple has the sound, to, in it,
-尽管元祖听起来有 two 的声音
+double. So, even though tuple has the sound, two, in it,
+尽管元组听起来有two 的声音
 
 133
 00:07:14,020 --> 00:07:17,190
 it's just not two things. Any number of things can be in
-但并不是他有只有两个东西。一个元祖里面可以有任何数量的东西
+但并不是他有只有两个东西。一个元组里面可以有任何数量的东西
 
 134
 00:07:17,190 --> 00:07:22,460
 a tuple okay? So x there is a tuple with string int and
-好的，所以 x 是一个含有 string int double 的元祖
+好的，所以 x 是一个含有 string int double 的元组
 
 135
 00:07:22,470 --> 00:07:24,700
@@ -685,7 +686,7 @@ which is just parenthesis, a string, an int, and a double,
 137
 00:07:28,240 --> 00:07:33,070
 okay? Now how do I get those values out of the tuple?
-好的。现在我该如何从这个元祖里面获得值呢
+好的。现在我该如何从这个元组里面获得值呢
 
 138
 00:07:33,080 --> 00:07:34,480
@@ -695,7 +696,7 @@ Well there is two ways to do it.
 139
 00:07:34,480 --> 00:07:38,950
 One is to say, let and then three, identifiers. These
-一种，分配三个身份
+一种，分配三个id
 
 140
 00:07:38,950 --> 00:07:41,920
@@ -715,7 +716,7 @@ assign them to word, number, and value, which are gonna
 143
 00:07:48,320 --> 00:07:51,330
 be local variables in this context, okay? Now, if you
-它们会在这个上下文里得到蹦迪变量。好的，现在
+它们会在这个上下文里得到本地变量。好的，现在
 
 144
 00:07:51,330 --> 00:07:55,730
@@ -730,7 +731,7 @@ equal x, the compiler will complain, because word, comma,
 146
 00:08:00,170 --> 00:08:04,040
 number can't match a string in double tuples. Okay? So
-应为 word, number 无法和元祖里的 double 关键字匹配。好的
+应为 word, number 无法和元组里的 double 关键字匹配。好的
 
 147
 00:08:04,040 --> 00:08:07,610
@@ -740,12 +741,12 @@ this particular syntax is just putting names on the things in
 148
 00:08:07,610 --> 00:08:11,510
 the Tuple so you can use them, so now you can print them out.
-你可以这样使用元祖，所以你现在可以把它们打印出来了
+你可以这样使用元组，所以你现在可以把它们打印出来了
 
 149
 00:08:11,510 --> 00:08:12,580
 Print word. Print number. Print value.
-打印 word。打印 number。打印 value。
+Print word. Print number. Print value.
 
 150
 00:08:12,580 --> 00:08:16,520
@@ -760,22 +761,22 @@ and value would be of type double. Okay,
 152
 00:08:18,120 --> 00:08:22,090
 another way to do it is when you create the tuple, okay,
-另一种这么做的方法是，当你在生成元祖时，好的。
+另一种这么做的方法是，当你在生成元组时
 
 153
 00:08:22,090 --> 00:08:24,830
 you can name each of the things in the tuple. So
-你可以为元祖里的每个东西命名。
+你可以为元组里的每个东西命名。
 
 154
 00:08:24,830 --> 00:08:31,070
 here I'm letting x, this time be w: String i: Int v: Double.
-这里我对 x 的 string 命名为 w，Int 命名为 i，Double 为 v
+这里我对x 的string 命名为w，Int 命名为i，Double 为v
 
 155
 00:08:31,070 --> 00:08:34,640
 I'm giving the names w, i and v to the things inside
-我在元祖里面分别起了几个名字叫 w，i 和 v
+我在元组里面分别起了几个名字叫w，i 和 v
 
 156
 00:08:34,640 --> 00:08:37,240
@@ -790,7 +791,7 @@ the version above. But now if I want to get at the values,
 158
 00:08:40,340 --> 00:08:45,550
 I can just say x.w, x.i, and x.v to get at the tuple
-我可以直接说 x.w，x.i，还有 x.v 来获得元祖中的值
+我可以直接说 x.w，x.i，还有 x.v 来获得元组中的值
 
 159
 00:08:45,550 --> 00:08:48,250
@@ -800,12 +801,12 @@ values. See the difference between those two cases?
 160
 00:08:48,250 --> 00:08:51,090
 One, you're kind of naming it when you declare the tuple,
-一种，在你声明元祖的时候定义一种命名
+一种，在你声明元组的时候定义一种命名
 
 161
 00:08:51,090 --> 00:08:53,920
 the other one is you're taking a tuple that you got and
-另一种是你拿到一个元祖
+另一种是你拿到一个元组
 
 162
 00:08:53,920 --> 00:08:56,620
@@ -874,7 +875,7 @@ can you ignore some of the values?
 
 175
 00:09:30,560 --> 00:09:33,590
-Absolutely you can, if you use under bar. Underbar and
+Absolutely you can, if you use underbar. Underbar and
 显然是可以的，你可以使用 underbar
 
 176
@@ -890,7 +891,7 @@ so you can put underbar in there. So yeah, so
 178
 00:09:41,670 --> 00:09:44,070
 here I'm returning this tuple weight and
-返回一个有宽度和高度的 tuple
+返回一个有宽度和高度的tuple
 
 179
 00:09:44,070 --> 00:09:47,210
@@ -900,7 +901,7 @@ height, obviously straight forward how we do that.
 180
 00:09:47,210 --> 00:09:50,010
 So tuples are perfectly valid return values, okay? So
-所以 tuople 用来返回值是非常有效的，好的。
+所以tuople 用来返回值是非常有效的，好的。
 
 181
 00:09:50,010 --> 00:09:52,910
@@ -910,7 +911,7 @@ you can return multiple things from functions. All right,
 182
 00:09:52,920 --> 00:09:56,850
 range. So range is quite important, actually,
-好的，range 。 range 在 Swift 里是非常重要的
+好的，range 。range 在Swift 里是非常重要的
 
 183
 00:09:56,850 --> 00:10:00,960
@@ -960,17 +961,17 @@ it would be a range of ints,
 192
 00:10:28,880 --> 00:10:30,950
 because an array is indexed by ints.
-因为数组的索引是根据 int 来的
+因为数组的索引是根据int 来的
 
 193
 00:10:30,950 --> 00:10:34,220
 So you would have a range of ints. In fact you know,
-所以你应该有一个 int 的 range。
+所以你应该有一个int 的range。
 
 194
 00:10:34,220 --> 00:10:36,720
 you, there are methods in array where you can say, give
-实际上你知道，在 array 里你可以调用一些方法
+实际上你知道，在array 里你可以调用一些方法
 
 195
 00:10:36,730 --> 00:10:41,900
@@ -980,17 +981,17 @@ me this range of yourself, and you specify it as a Range.
 196
 00:10:41,900 --> 00:10:47,600
 A string's range is not Int. Okay, if you wanna substring,
-一个字符串的范围不是 Int。 好的，若果你想要子字符串
+一个字符串的范围不是Int。 好的，若果你想要子字符串
 
 197
 00:10:47,600 --> 00:10:50,440
 you cannot use a range of Int. It's actually a range of
-你不能使用 Int 的 range。它实际上是一个 String.Index 的range
+你不能使用Int 的range。它实际上是一个String.Index 的range
 
 198
 00:10:50,440 --> 00:10:53,740
 String.Index, which is a different type than Int. And
-它有着和 Int 不同的类型
+它有着和Int 不同的类型
 
 199
 00:10:53,740 --> 00:10:57,680
@@ -1030,7 +1031,7 @@ so you could go look at it. Okay? Now, there's special,
 206
 00:11:10,830 --> 00:11:12,790
 just like with optionals we've got question marks and
-有点特殊，想好像 optional 的问号和叹号
+有点特殊，想好像optional 的问号和叹号
 
 207
 00:11:12,800 --> 00:11:16,360
@@ -1080,17 +1081,17 @@ So if you wanted to go for I equals 1, 2, 10 I plus plus or
 216
 00:11:50,500 --> 00:11:54,000
 whatever you would so that with these, ranges like this,
-你就可以这样使用 range
+你就可以这样使用range
 
 217
 00:11:54,000 --> 00:11:58,810
 okay, for IN 27 to 104 or whatever. Okay? And
-好的，总 27 遍历到 104 或者任何其他范围。好的
+好的，从27 遍历到104 或者任何其他范围。好的
 
 218
 00:11:58,810 --> 00:12:03,040
 you can make ranges that are more powerful than just direct
-比起直接使用 range 你可以用更有力的方法起使用 range
+比起直接使用range 你可以用更有力的方法起使用range
 
 219
 00:12:03,050 --> 00:12:06,510
@@ -1100,7 +1101,7 @@ ranges. I can't talk about that really on time wise, but
 220
 00:12:06,520 --> 00:12:09,080
 again check the documentation and
-但是在次检查文档的时候你会看到 range 的超出
+但是在次检查文档的时候你会看到range 的超出
 
 221
 00:12:09,090 --> 00:12:13,050
@@ -1110,12 +1111,12 @@ you'll see out of the ranges, okay? So that's when you see
 222
 00:12:13,060 --> 00:12:17,120
 that. Okay, let's talk about data structures in Swift.
-好的，来谈一谈 Swift 中的结构体
+好的，来谈一谈Swift 中的结构体
 
 223
 00:12:17,130 --> 00:12:19,160
 I'm talking about classes, structures and enums.
-我讨论类，结构体，和枚举
+我在讨论类，结构体，和枚举
 
 224
 00:12:19,160 --> 00:12:22,500
@@ -1130,7 +1131,7 @@ talk about the similarities and the differences.
 226
 00:12:25,030 --> 00:12:27,500
 So what's similar between class, struct and enum,
-所以，在 class，struct 和 enum 之间有什么相似之处呢
+所以，在class，struct 和enum 之间有什么相似之处呢
 
 227
 00:12:27,500 --> 00:12:30,270
@@ -1175,12 +1176,12 @@ properties but enums can have computer properties. Okay?
 235
 00:12:50,160 --> 00:12:52,830
 The storage of an enum remember is the cases.
-enum 存储的是 case
+enum 存储的是case
 
 236
 00:12:52,830 --> 00:12:55,730
 It's a discrete value thing so it's the cases and
-所以它的 case 和它们的相关值
+所以它的case 和它们的相关值
 
 237
 00:12:55,730 --> 00:12:58,530
@@ -1205,12 +1206,12 @@ We're gonna get that today. Eh, so they're all allowed
 241
 00:13:07,540 --> 00:13:09,910
 to have initializers except enum. Okay,
-所以它们除了 enum 都可以初始化
+所以它们除了enum 都可以初始化
 
 242
 00:13:09,910 --> 00:13:12,280
 obviously enum doesn't need an initializer because you just
-显然 enum 不需要初始化
+显然enum 不需要初始化
 
 243
 00:13:12,280 --> 00:13:16,320
@@ -1220,7 +1221,7 @@ set it to the discrete value with its associated values.
 244
 00:13:16,320 --> 00:13:20,450
 Okay? All right. Differences. One, inheritance. Okay?
-好的。当然，不同之处，继承。对吗
+好的。当然，不同之处，一：继承
 
 245
 00:13:20,460 --> 00:13:24,860
@@ -1265,22 +1266,22 @@ it also copies when you assign it to another variable.
 253
 00:13:50,490 --> 00:13:54,250
 If I say varx=y if y is a value type,
-如果我说 var x = y 如果 y 是一个值类型
+如果我说var x = y 如果y 是一个值类型
 
 254
 00:13:54,260 --> 00:13:55,560
 x will be a copy of y.
-x 会是一个 y 的拷贝
+x 会是一个y 的拷贝
 
 255
 00:13:55,560 --> 00:14:00,260
 A copy, so if y is an array y might be an array. Okay? And
-所以如果 y 是一个 array
+所以如果y 是一个array
 
 256
 00:14:00,260 --> 00:14:04,430
 you say, x equals y. And then you say, x append this thing,
-然后你说 x = y 接着用 x 拼接一些东西
+然后你说x = y 接着用x 拼接一些东西
 
 257
 00:14:04,430 --> 00:14:07,370
@@ -1305,7 +1306,7 @@ Even just assigning them, is a copy of them. A value symantec
 261
 00:14:17,880 --> 00:14:22,780
 thing is immutable if it's signed to a let variable.
-一个用 let 分配的值是不可变的
+一个用let 分配的值是不可变的
 
 262
 00:14:22,790 --> 00:14:24,480
@@ -1315,12 +1316,12 @@ Okay? So if you have an array okay,
 263
 00:14:24,490 --> 00:14:26,990
 since that value symmentic cuz an array is a struct.
-因为 array 是一个 strut
+因为array 是一个 strut
 
 264
 00:14:26,990 --> 00:14:30,220
 If you assigned to a let, let x equal an array you cannot
-如果你给一个 let 赋值， let x 等于一个数组
+如果你给一个let 赋值，让let x 等于一个数组
 
 265
 00:14:30,230 --> 00:14:33,930
@@ -1345,12 +1346,12 @@ of course you'd copy them into there, you can't modify them.
 269
 00:14:45,110 --> 00:14:48,580
 Because of the way copy symmentics work, Swift makes
-由于 copy 的工作方式
+由于copy 的工作方式
 
 270
 00:14:48,580 --> 00:14:52,650
 you when you do have a struct or enum you have to mark all
-Swift 会让你在那些 struct 或者 enum 里面
+Swift 会让你在那些struct 或者enum 里面
 
 271
 00:14:52,650 --> 00:14:55,920
@@ -1360,7 +1361,7 @@ functions that might change that thing. Mutating functions
 272
 00:14:55,920 --> 00:15:00,590
 with the keyword mutating. So like mutating func whatever.
-用 mutating 关键子来表示可变方法。
+用mutating 关键字来表示可变方法。
 
 273
 00:15:00,590 --> 00:15:02,820
@@ -1370,7 +1371,7 @@ Okay? If that function could change that struct.
 274
 00:15:02,830 --> 00:15:05,790
 And the reason for that is when Swift copies it
-当 Swift 拷贝它的时候
+当Swift 拷贝它的时候
 
 275
 00:15:05,790 --> 00:15:08,430
@@ -1390,7 +1391,7 @@ mutate it then it's gonna have to copy it. You see? So
 278
 00:15:15,370 --> 00:15:17,640
 it's kind of a performance enhancement. So
-所以这是一种增强的执行方式
+所以这是一种性能提升
 
 279
 00:15:17,640 --> 00:15:20,310
@@ -1430,7 +1431,7 @@ You have a reference to them. Those references are counted
 286
 00:15:35,790 --> 00:15:39,730
 automatically. That means there's no garbage collection
-这意味着在 Swift 中是没有垃圾回收机制的
+这意味着在Swift 中是没有垃圾回收机制的
 
 287
 00:15:39,730 --> 00:15:42,430
@@ -1515,7 +1516,7 @@ there's only one way that you participate in that, which is
 303
 00:16:19,200 --> 00:16:22,740
 the weak and strong, which I'll be talking about later,
-使用 weak 和 strong。我过会向你们解释
+使用weak 和strong。我过会向你们解释
 
 304
 00:16:24,370 --> 00:16:26,970
@@ -1535,7 +1536,7 @@ obviously it's a pointer, so you're still mutating it,
 307
 00:16:31,680 --> 00:16:35,520
 right? It's not like a struct where if I say var y = x and
-对吗？ 这不像我说的 var y = x 的那种结构
+对吗？ 这不像我说的var y = x 的那种结构
 
 308
 00:16:35,520 --> 00:16:38,190
@@ -1560,12 +1561,12 @@ the same thing. Right they, that same thing lives in
 312
 00:16:46,630 --> 00:16:50,700
 the heat. There's no copying, so let, all let means is that
-没有拷贝，所以 let
+没有拷贝，所以let
 
 313
 00:16:50,700 --> 00:16:53,430
 pointer's not going to change. It doesn't
-所有的 let 意味着那个指针是无法被修改的
+所有的let 意味着那个指针是无法被修改的
 
 314
 00:16:53,440 --> 00:16:56,370
@@ -1620,7 +1621,7 @@ Struct 更多被用作基础类型
 324
 00:17:22,360 --> 00:17:25,370
 Okay, things like strings and doubles, and ints and arrays
-向是 string 和 double ， int 和 array 在 diction 里
+向是string 和double ，int 和array 在diction 里
 
 325
 00:17:25,370 --> 00:17:28,500
@@ -1650,7 +1651,7 @@ reason for choosing struct as you want values
 330
 00:17:38,110 --> 00:17:41,950
 semantics when you're passing this thing around. Otherwise,
-会成为你选在 struct 的主要原因
+会成为你选在struct 的主要原因
 
 331
 00:17:41,950 --> 00:17:45,090
@@ -2052,12 +2053,12 @@ Here I have a var d which is a double, okay?
 411
 00:22:20,900 --> 00:22:24,460
 And it's set to some value. So this d is an instance of
-然和我给它设置一些值，所以这个 d 是一个 double 的实例
+然和我给它设置一些值，所以这个d 是一个double 的实例
 
 412
 00:22:24,470 --> 00:22:26,830
 a double. It is an actual double that has some value,
-这个 double 实际上有一些值
+这个double 实际上有一些值
 
 413
 00:22:26,840 --> 00:22:30,740
@@ -2082,16 +2083,17 @@ if it's signed is the minus sign, I'm just making this up,
 417
 00:22:41,380 --> 00:22:43,820
 there's probably not even such a method on double.
-在 double 里面可能没有这样一个方法
+在double 里面可能没有这样一个方法
 
 418
 00:22:43,820 --> 00:22:47,920
 But that would be an instance property or method and
-我会向 D 的属性或对象发送消息
+这会是属性或对象
 
 419
 00:22:47,920 --> 00:22:48,760
 I would be sending it to D,
+并且我会把他发给D
 
 420
 00:22:48,760 --> 00:22:52,260
@@ -2216,7 +2218,7 @@ understand that there is a difference between these two
 444
 00:24:10,810 --> 00:24:13,470
 and this static that makes a difference on declaration,
-这个 static 在声明的时候是不同的
+这个static 在声明的时候是不同的
 
 445
 00:24:13,480 --> 00:24:16,380
@@ -2241,7 +2243,7 @@ properties, okay. Properties are really cool.
 449
 00:24:25,420 --> 00:24:27,890
 In Swift we're only just scratching the surface so
-在 Swift 里我们才刚刚揭开它的表面远不及它所能做的
+在Swift 里我们才刚刚揭开它的表面远不及它所能做的
 
 450
 00:24:27,890 --> 00:24:31,220
@@ -2266,7 +2268,7 @@ a stored property, this is not a computed property,
 454
 00:24:41,570 --> 00:24:45,310
 it's stored, okay. It stores in ints, its value is 42. But
-它存在 int 里，这个值是 42。
+它存在int 里，这个值是 42。
 
 455
 00:24:45,310 --> 00:24:47,970
@@ -2281,12 +2283,12 @@ gonna do get and set, I'm not computing it. But
 457
 00:24:51,010 --> 00:24:56,150
 I'm gonna add willSet and/or didSet, okay. So willSet and
-但是我会使用 willSet 和 didSet。好的
+但是我会使用willSet 和didSet。好的
 
 458
 00:24:56,150 --> 00:24:59,050
 didSet, this is just code in here that's gonna get called
-willSet 和 didSet，当调用 get 和 set 时就会调用者两个方法
+willSet 和didSet，当调用get 和set 时就会调用者两个方法
 
 459
 00:24:59,050 --> 00:25:04,260
@@ -2296,17 +2298,17 @@ whenever this thing gets set. Okay, before and after. Before
 460
 00:25:04,260 --> 00:25:08,230
 it gets set, after it's been set, okay. And inside there
-这 get 之前和 set 之后，好的
+这get 之前和set 之后，好的
 
 461
 00:25:08,230 --> 00:25:11,100
 newValue is going to be the value it's going to be set to
-在设置到 willset 的时候 newValue 就是要设置的值
+在设置到willset 的时候newValue 就是要设置的值
 
 462
 00:25:11,100 --> 00:25:14,500
 in willSet. And oldValue is this value it used to have in
-当你执行 didSet， oldValue 就是已经存储着的值
+当你执行didSet，oldValue 就是已经存储着的值
 
 463
 00:25:14,500 --> 00:25:19,770
