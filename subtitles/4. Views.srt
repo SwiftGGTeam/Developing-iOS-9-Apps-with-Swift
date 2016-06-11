@@ -4192,218 +4192,272 @@ the other thing I needed, is the center of my skull, so
 1001
 00:51:25,283 --> 00:51:29,518
 I'm gonna call that skullCenter. Okay, and
+这里我就命名为 skullCenter. 
 
 1002
 00:51:29,520 --> 00:51:34,690
 what is the center? Well, can I say center? Is that good?
+那么这里的中心指的是什么？ 我这里可以直接写 center 吗？ 
 
 1003
 00:51:34,692 --> 00:51:38,427
 No, center is my center in my superviews coordinates.
+当然不可以，这里的 center 指的是父视图坐标系的中心。
 
 1004
 00:51:38,429 --> 00:51:41,831
 That's where I am, okay, not the center. Now here's two
+而这个真是我所在的地方， 所以不能用 center 。  
 
 1005
 00:51:41,833 --> 00:51:45,101
 interesting ways to get the actual center of my bounds.
+这里有两种方式获得当前坐标系的 center 。
 
 1006
 00:51:45,103 --> 00:51:49,205
 Okay, one is, believe it or not, is I can say,
+信不信由你， 其中一种是通过 convertPoint 方法获得。
 
 1007
 00:51:49,207 --> 00:51:53,909
 convertPoint. This is a UIView method, convertPoint,
+这是一个 UIView 的方法, convertPoint,
 
 1008
 00:51:53,911 --> 00:51:57,746
 convert center, this point's center, from view,
+将 center 从父视图的坐标系转换获得。
 
 1009
 00:51:57,748 --> 00:52:01,183
 my superview, okay? [LAUGH] So I would be converting that
+这样我就可以通过 center 来获得
 
 1010
 00:52:01,185 --> 00:52:03,953
 point, the center, from my superviews coordinates to my
+从父视图的坐标系转换到当前视图的坐标系的坐标。
 
 1011
 00:52:03,955 --> 00:52:06,622
 coordinate system. This would be right. This would work,
+这样做就能获得正确的结果， 这样做就能生效，
 
 1012
 00:52:06,624 --> 00:52:09,825
 cuz now I'm in my coordinates system. Same point, but
+因为现在是在当前视图的坐标系。 同一个点， 但是
 
 1013
 00:52:09,827 --> 00:52:10,826
 it's in my coordinate system.
+是在当前视图的坐标系中的表示。
 
 1014
 00:52:10,828 --> 00:52:12,294
 So that's one way we could do it.
+这就是其中一种方法。
 
 1015
 00:52:12,296 --> 00:52:14,029
 We probably wouldn't do it that way. Instead,
+我们通常不使用这种方法。 取而代之的是，
 
 1016
 00:52:14,031 --> 00:52:18,334
 we'd probably use some of the vars that are on CGRect. For
+我们经常用 CGRect 中的属性来获得。 
 
 1017
 00:52:18,336 --> 00:52:21,570
 example, I'd probably say something like
+例如， 我们经常说脸的骨架的中心
 
 1018
 00:52:21,572 --> 00:52:26,442
 the skull center is a CGPoint whose x, okay, x and
+是一个 CGPoint， 一个通过 x 和 y组成的 CGPoint 。
 
 1019
 00:52:26,444 --> 00:52:30,913
 y of CGPoint, right, whose x is probably my bounds.midX and
+在这里我们的 x 应该是 bounds.midX ，
 
 1020
 00:52:30,915 --> 00:52:36,986
 my y is my bounds.midY. Okay, so midX is just a property
+y 应该是 bounds.midY 。 这里的 midX 只是一个
 
 1021
 00:52:36,988 --> 00:52:40,890
 on CGRect which tells you the x that's midway across this,
+CGRect 的属性， 这个属性可以告诉我们水平方向行的中点，
 
 1022
 00:52:40,892 --> 00:52:45,261
 the rectangle. Same thing midY. Okay, so
+当然这里指的是这个矩形中， 同理可以说明 midY 。
 
 1023
 00:52:45,263 --> 00:52:48,264
 I've got my radius and my center. I put these as vars,
+这样我就获得骨架的半径。 我这里通过变量进行存储，
 
 1024
 00:52:48,266 --> 00:52:50,533
 but really they probably wanna be lets,
+当时它们更应该用常亮进行存储。
 
 1025
 00:52:50,535 --> 00:52:51,567
 okay, cuz I'm, I've calculated,
+毕竟这个是通过我们计算获得的，
 
 1026
 00:52:51,569 --> 00:52:54,904
 I'm not gonna change them after this. All right, so
+并且在之后的代码中也不会修改。 这样我就有了
 
 1027
 00:52:54,906 --> 00:52:59,475
 now that I have this, I need to create a Bezier path for
+一些信息， 我需要创建一个 Bezier Path 来绘制出骨架， 
 
 1028
 00:52:59,477 --> 00:53:02,578
 my skull, for the circle here. So I'm just going to
+这里通过一个圆来表示， 这里我通过
 
 1029
 00:53:02,580 --> 00:53:05,681
 create a local variable here called skull. It's going to be
+一个名为 skull 的局部变量进行存储。 它的类型
 
 1030
 00:53:05,683 --> 00:53:10,286
 of type UIBezierPath, and so UIBezierPath. And
+应该是 UIBezierPath 。
 
 1031
 00:53:10,288 --> 00:53:13,923
 you can see UIBezierPath has a bunch of initializers here.
+你可以看到 UIbezierPath 有非常多的初始化的函数。
 
 1032
 00:53:13,925 --> 00:53:16,859
 I could use this one, ovalInRect, because a circle
+当然我这里可以使用 ovalInRect 这个函数， 因为
 
 1033
 00:53:16,861 --> 00:53:20,329
 is an oval. But I'm gonna use this one arcCenter because
+圆也是一个椭圆。 但是我这里更愿意用另一个名为 arcCenter 的初始化函数，
 
 1034
 00:53:20,331 --> 00:53:25,201
 I have the radius in center. I don't I don't wanna create
+因为我这里有半径和中心点。而我这里也不需要再
 
 1035
 00:53:25,203 --> 00:53:26,335
 an oval in my entire bound.
+我的整个矩形中画一个椭圆。
 
 1036
 00:53:26,337 --> 00:53:29,505
 I'd have to create just some kinda rectangle that gets my,
+我这里希望根据矩形绘制出我的脸型的轮廓。
 
 1037
 00:53:29,507 --> 00:53:32,441
 only my skull. So I'm gonna use this one, arcCenter, which
+所以我这里用 arcCenter 这个初始化的函数， 
 
 1038
 00:53:32,443 --> 00:53:35,477
 takes a radius and a center, which I have right here.
+而这个函数需要半径和中心点作为参数， 而这些参数我已经在上面获得了。
 
 1039
 00:53:35,479 --> 00:53:38,547
 And then a start angle and an end angle as it goes around
+另外还需要一个起始角度和结束角度来绘制这个弧度，
 
 1040
 00:53:38,549 --> 00:53:42,151
 the arc, and either clockwise or counterclockwise. Okay, so
+并且同时还需要配置是通过顺时针还是逆时针来绘制。
 
 1041
 00:53:42,153 --> 00:53:46,422
 let's do that. So what is the center of my arc? skullCenter,
+那么我们开始绘制吧。 那么这个弧线的中心点是什么？ 当然是 skullCenter ,
 
 1042
 00:53:46,424 --> 00:53:49,625
 okay, that's the center of this arc I'm gonna draw that's
+这是我们即将绘制的轮廓弧线的中心点，
 
 1043
 00:53:49,627 --> 00:53:53,395
 gonna be my skull. The radius is the skullRadius, right,
+而这里的半径应该是 skullRadius, 
 
 1044
 00:53:53,397 --> 00:53:55,664
 that's the radius I'm going around.
+在上面获得的半径。
 
 1045
 00:53:55,666 --> 00:53:59,802
 Now startAngle to endAngle, that's in radians.
+接下来是弧线的其实角度和结束角度。
 
 1046
 00:53:59,804 --> 00:54:00,903
 Does everyone know what radians?
+有人知道关于弧度的内容吗？
 
 1047
 00:54:00,905 --> 00:54:04,707
 Raise your hands if you know what radians are. Okay,
+如果知道弧度的请举手。
 
 1048
 00:54:04,709 --> 00:54:06,342
 almost everybody, good. So radians,
+很好，大部分的人都知道。 那么弧度是从 0 到 2π
 
 1049
 00:54:06,344 --> 00:54:09,845
 0 to 2pi radians to go all the way around the circle.
+将会获得一个完整的圆形。
 
 1050
 00:54:09,847 --> 00:54:14,350
-So I'm gonna go from 0 to *_PI, okay.
+So I'm gonna go from 0 to 2*_PI, okay.
+那么这里我就知道为从 0 到 2π。
 
 1051
 00:54:14,352 --> 00:54:16,852
 And then I can either go clockwise around or I can go
+这里我可以选择顺时针也可以选择逆时针。
 
 1052
 00:54:16,854 --> 00:54:19,688
 counterclockwise. In this case I'm going all the way around,
+因为在这里我需要绘制出完整的圆形，
 
 1053
 00:54:19,690 --> 00:54:23,058
 so it doesn't matter. So I'll just go counterclockwise,
+所以选择哪一个都没问题。 这里我就先选择逆时针。
 
 1054
 00:54:23,060 --> 00:54:27,930
 whatever, okay? So you can see how this has drawn an arc, so
+这样你就可以看到如何绘制一个弧线了。
 
 1055
 00:54:27,932 --> 00:54:29,798
