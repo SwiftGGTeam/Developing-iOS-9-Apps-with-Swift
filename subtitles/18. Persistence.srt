@@ -1,0 +1,5536 @@
+﻿1
+00:00:00,001 --> 00:00:03,469
+[MUSIC]
+
+2
+00:00:03,471 --> 00:00:07,806
+Stanford University. >> Okay, well,
+
+3
+00:00:07,808 --> 00:00:12,711
+welcome to Stanford CSI93P Spring of 2016.
+
+4
+00:00:12,713 --> 00:00:14,947
+This is our last normal lecture.
+
+5
+00:00:14,949 --> 00:00:18,217
+The only lecture we have left is our alternate final, next
+
+6
+00:00:18,219 --> 00:00:23,088
+week. Today we are going to have a demo of all the stuff I
+
+7
+00:00:23,090 --> 00:00:27,760
+talked about on Monday. So, mostly that's segues.
+
+8
+00:00:27,762 --> 00:00:33,298
+Including ma, modal segue, popover segue, unwind segue.
+
+9
+00:00:33,300 --> 00:00:35,868
+And even we'll talk about the adaptive presentation,
+
+10
+00:00:35,870 --> 00:00:39,671
+how we adapt to horizontally compact, all that stuff. And
+
+11
+00:00:39,673 --> 00:00:40,672
+I'll throw a little bit of bonus in there.
+
+12
+00:00:40,674 --> 00:00:43,442
+We'll talk a little about visual effects, like Blur.
+
+13
+00:00:43,444 --> 00:00:47,513
+You'll see a lot of Blur in the UI occasionally and
+
+14
+00:00:47,515 --> 00:00:50,682
+I'll show you how to basically do that. And
+
+15
+00:00:50,684 --> 00:00:53,952
+I think that's gonna take most of the time but
+
+16
+00:00:53,954 --> 00:00:55,854
+if I have any time left like maybe five or
+
+17
+00:00:55,856 --> 00:00:58,590
+ten minutes left I'll try to do a quick tour through
+
+18
+00:00:58,592 --> 00:01:01,393
+persistence because creating files in the file system,
+
+19
+00:01:01,395 --> 00:01:03,962
+stuff like that is something a lot of people are gonna wanna
+
+20
+00:01:03,964 --> 00:01:06,031
+do in their final project. So I'll try and cover that. No
+
+21
+00:01:06,033 --> 00:01:08,901
+demo for that unfortunately, but at least maybe I can get
+
+22
+00:01:08,903 --> 00:01:14,006
+through the slides if the demo goes on a good pace, okay?
+
+23
+00:01:14,008 --> 00:01:17,443
+So here's our demo those all the things we're gonna cover.
+
+24
+00:01:17,445 --> 00:01:20,345
+So it's quite a quick demo, it, it, or
+
+25
+00:01:20,347 --> 00:01:24,850
+quite a involved demo. It's gonna be an extension of Trax,
+
+26
+00:01:24,852 --> 00:01:27,920
+okay, the thing that we left off with last time.
+
+27
+00:01:27,922 --> 00:01:29,655
+I'll run that really quick just to remind yourself,
+
+28
+00:01:29,657 --> 00:01:34,693
+in the last two days, what it did. So, remember that it went
+
+29
+00:01:34,695 --> 00:01:37,162
+out on the Internet, it grabbed a GPX file, which is
+
+30
+00:01:37,164 --> 00:01:40,099
+just basically a file that contains a bunch of waypoints
+
+31
+00:01:40,101 --> 00:01:43,035
+and possibly hyperlinks attached to the waypoints.
+
+32
+00:01:43,037 --> 00:01:44,670
+And it puts them on the map here so
+
+33
+00:01:44,672 --> 00:01:48,207
+we can scroll around and zoom in and out on them. And
+
+34
+00:01:48,209 --> 00:01:49,675
+we made it so that if we clicked on them,
+
+35
+00:01:49,677 --> 00:01:52,678
+the callout had a left accessory callout
+
+36
+00:01:52,680 --> 00:01:55,114
+view right here, this left accessory callout view.
+
+37
+00:01:55,116 --> 00:01:59,785
+And put a thumbnail that it found in the GPX file for
+
+38
+00:01:59,787 --> 00:02:03,455
+each waypoint, okay? So now, what we'll do today,
+
+39
+00:02:03,457 --> 00:02:06,024
+the next thing we're gonna do is learn how to segue from
+
+40
+00:02:06,026 --> 00:02:08,660
+a map, because it's a little unusual trying to segue from
+
+41
+00:02:08,662 --> 00:02:12,131
+a map because when you look at it in the storyboard it's
+
+42
+00:02:12,133 --> 00:02:13,899
+just blank, this big blank map view,
+
+43
+00:02:13,901 --> 00:02:15,868
+so that you can't, it's not like a table view where you
+
+44
+00:02:15,870 --> 00:02:18,670
+got a row you can Ctrl+drag from or something. So
+
+45
+00:02:18,672 --> 00:02:21,540
+we're gonna have to do this segueing from a map in code.
+
+46
+00:02:21,542 --> 00:02:23,809
+And what we're gonna do is make it so that when we
+
+47
+00:02:23,811 --> 00:02:27,079
+click on this little thumbnail button right here, it segues,
+
+48
+00:02:27,081 --> 00:02:31,083
+okay. And puts an image view controller that will show you
+
+49
+00:02:31,085 --> 00:02:36,088
+the full large image of this. And we're gonna get the UI for
+
+50
+00:02:36,090 --> 00:02:36,455
+doing that imagery control,
+
+51
+00:02:36,457 --> 00:02:38,357
+we're just gonna steal that right out of Cassini. I mean,
+
+52
+00:02:38,359 --> 00:02:41,026
+you're gonna see the advantage of building these MVCs that
+
+53
+00:02:41,028 --> 00:02:44,530
+have very clear public models. It makes them quite reuseable.
+
+54
+00:02:44,532 --> 00:02:47,833
+So we can reuse that MVC we made in Cassini with
+
+55
+00:02:47,835 --> 00:02:50,235
+absolutely no changes. Gonna just drag it in and
+
+56
+00:02:50,237 --> 00:02:53,205
+set up its public API and it'll work perfectly. So
+
+57
+00:02:53,207 --> 00:02:56,441
+let's go do that right now, let's go over to Cassini.
+
+58
+00:02:56,443 --> 00:03:02,147
+And where is Cassini? It's here in Developer > Cassini.
+
+59
+00:03:02,149 --> 00:03:04,683
+We open Cassi, Cassini here. So remember, you'll
+
+60
+00:03:04,685 --> 00:03:07,853
+remember Cassini here. And we, it's the one that showed the,
+
+61
+00:03:07,855 --> 00:03:10,155
+the image of Cassini, what it was doing. So
+
+62
+00:03:10,157 --> 00:03:12,457
+I'm just gonna grab this ImageViewController,
+
+63
+00:03:12,459 --> 00:03:15,127
+right here, this class ImageViewController. And
+
+64
+00:03:15,129 --> 00:03:18,664
+I'm gonna pick it up and drag it into my app over here and
+
+65
+00:03:18,666 --> 00:03:22,034
+I'm gonna copy it in, okay? But I can do actually more
+
+66
+00:03:22,036 --> 00:03:24,169
+than that, more than just grabbing that MVC,
+
+67
+00:03:24,171 --> 00:03:26,738
+I can actually go to the storyboard and find the place
+
+68
+00:03:26,740 --> 00:03:29,441
+in the storyboard, down here actually, where Casini is
+
+69
+00:03:29,443 --> 00:03:33,512
+using the ImageViewController. And I can copy that scene from
+
+70
+00:03:33,514 --> 00:03:39,184
+Casini and then bring it on over to our storyboard here.
+
+71
+00:03:39,186 --> 00:03:43,589
+We'll zoom out so you can see this. Okay, and we can paste.
+
+72
+00:03:43,591 --> 00:03:46,024
+And that actually dropped an ImageViewController there,
+
+73
+00:03:46,026 --> 00:03:49,328
+with the scroll view already in it and wired up. And
+
+74
+00:03:49,330 --> 00:03:52,364
+it has the proper identity, right, ImageViewController, so
+
+75
+00:03:52,366 --> 00:03:55,367
+it's all really nice. So don't forget that, in storyboards
+
+76
+00:03:55,369 --> 00:03:58,170
+you can copy and paste scenes between storyboards and
+
+77
+00:03:58,172 --> 00:03:58,604
+it'll bring it all.
+
+78
+00:03:58,606 --> 00:04:00,439
+And it brings it all by name, remember, so
+
+79
+00:04:00,441 --> 00:04:02,441
+you have to have the classes with the same name or
+
+80
+00:04:02,443 --> 00:04:07,012
+outlets with the same name for it all to work. Okay, so let's
+
+81
+00:04:07,014 --> 00:04:10,649
+go ahead and build the rest of our UI that we have here.
+
+82
+00:04:10,651 --> 00:04:14,186
+We want to segue from this map view over to this scroll
+
+83
+00:04:14,188 --> 00:04:17,322
+view, but we don't really anything to Ctrl+drag from
+
+84
+00:04:17,324 --> 00:04:20,092
+here cuz of the callouts and things like that are all come
+
+85
+00:04:20,094 --> 00:04:22,995
+up from programmatically. So we're gonna do a manual
+
+86
+00:04:22,997 --> 00:04:25,631
+segue, which we've already seen and the way we do that is
+
+87
+00:04:25,633 --> 00:04:28,433
+we Ctrl+drag from the View Controller itself just to
+
+88
+00:04:28,435 --> 00:04:31,370
+create a segue with a certain identifier, okay, between
+
+89
+00:04:31,372 --> 00:04:36,074
+the two MVCs. So let's just get these both on screen here.
+
+90
+00:04:36,076 --> 00:04:39,578
+And I'm gonna Ctrl+drag from here over to here.
+
+91
+00:04:39,580 --> 00:04:41,780
+We're gonna put this inside the navigation controller.
+
+92
+00:04:41,782 --> 00:04:45,083
+So this is gonna be a show segue right here.
+
+93
+00:04:45,085 --> 00:04:48,620
+And we'll give it a name. This is gonna show an image, so
+
+94
+00:04:48,622 --> 00:04:51,957
+we'll call this Show Image segue. Let's be sure to go
+
+95
+00:04:51,959 --> 00:04:57,462
+ahead and embed this in a Navigation Controller. Okay,
+
+96
+00:04:57,464 --> 00:05:00,899
+oops, so let's zoom out and take a look at our UI. So
+
+97
+00:05:00,901 --> 00:05:03,735
+here's our UI. We could even do some other things like here
+
+98
+00:05:03,737 --> 00:05:06,505
+I'd maybe this, we wanna give it a title, we'll call it
+
+99
+00:05:06,507 --> 00:05:09,541
+Trax, or something like that. And this title we'll set
+
+100
+00:05:09,543 --> 00:05:11,943
+programmatically depending on which waypoint we're
+
+101
+00:05:11,945 --> 00:05:15,447
+looking at, we'll put whatever the name of that waypoint is
+
+102
+00:05:15,449 --> 00:05:15,714
+so we'll do that in the code. All right, so how are we gonna
+
+103
+00:05:15,716 --> 00:05:20,052
+in at the top,
+
+104
+00:05:20,054 --> 00:05:23,455
+fire off this segue right here from the code?
+
+105
+00:05:23,457 --> 00:05:24,823
+Where's a good place to do it in the code? Well,
+
+106
+00:05:24,825 --> 00:05:29,728
+we know we wanna do it when we click on that left accessory
+
+107
+00:05:29,730 --> 00:05:32,764
+view button right there. And if you'll remember from
+
+108
+00:05:32,766 --> 00:05:36,702
+lecture, there's a really cool map view, MKMapViewDelegate
+
+109
+00:05:36,704 --> 00:05:39,571
+method, I'm just back here in GPXViewController
+
+110
+00:05:39,573 --> 00:05:42,174
+here. So this is a really cool MapViewDelegate method
+
+111
+00:05:42,176 --> 00:05:45,844
+that will get called when an accessory view is tapped on
+
+112
+00:05:45,846 --> 00:05:48,513
+and that accessory view is a UI control like
+
+113
+00:05:48,515 --> 00:05:51,249
+a UI button, for example. All right, so let's put that in
+
+114
+00:05:51,251 --> 00:05:54,986
+here. That thing is called a callout accessory, there it
+
+115
+00:05:54,988 --> 00:06:00,258
+is, MapView, annotationView, calloutAccessory view Tapped,
+
+116
+00:06:00,260 --> 00:06:02,961
+okay? Let's give ourselves a lot more room here.
+
+117
+00:06:02,963 --> 00:06:06,331
+This is this method. And all we need to do here is look at
+
+118
+00:06:06,333 --> 00:06:09,368
+the control that was tapped, and see if it's our left
+
+119
+00:06:09,370 --> 00:06:13,105
+AccessoryView, okay? So if the control == our views,
+
+120
+00:06:13,107 --> 00:06:17,609
+leftCalloutAccessoryView, okay, then we know someone
+
+121
+00:06:17,611 --> 00:06:21,580
+tapped on that left side. And we wanna do this segue, and
+
+122
+00:06:21,582 --> 00:06:24,383
+we know how to perform a segue from clo, from code.
+
+123
+00:06:24,385 --> 00:06:27,686
+We just do performSegueWithIdentifier.
+
+124
+00:06:27,688 --> 00:06:30,288
+Okay, the identifier is that "Show Image", I actually
+
+125
+00:06:30,290 --> 00:06:32,691
+created a constant for that right here, okay just so
+
+126
+00:06:32,693 --> 00:06:37,863
+my code would be nice. So constants.ShowImageSegue.
+
+127
+00:06:37,865 --> 00:06:40,766
+And what about the sender? Well, when this segue happens,
+
+128
+00:06:40,768 --> 00:06:44,236
+we're gonna need to know which of our many waypoints we wanna
+
+129
+00:06:44,238 --> 00:06:47,973
+show the image of, okay. So we need to pass a sender on
+
+130
+00:06:47,975 --> 00:06:50,809
+to prepareForSegue that can identify it.
+
+131
+00:06:50,811 --> 00:06:53,945
+And a simple thing to do here, okay, this argument
+
+132
+00:06:53,947 --> 00:06:57,282
+that we get right here is the annotationView. Okay,
+
+133
+00:06:57,284 --> 00:07:01,286
+that was, that this callout has a left accessory view
+
+134
+00:07:01,288 --> 00:07:02,554
+for, so we'll just pass that along.
+
+135
+00:07:02,556 --> 00:07:05,090
+So we'll just pass that as the sender, which makes sense,
+
+136
+00:07:05,092 --> 00:07:05,991
+the annotationView is the sender.
+
+137
+00:07:05,993 --> 00:07:08,727
+And from the annotationView, we're gonna be able to get
+
+138
+00:07:08,729 --> 00:07:11,463
+the waypoint that we want. Okay, so that couldn't
+
+139
+00:07:11,465 --> 00:07:15,300
+be simpler right there. Now what about the navigation? So
+
+140
+00:07:15,302 --> 00:07:18,103
+let's put in some navigation here, the prepareForSegue.
+
+141
+00:07:18,105 --> 00:07:20,372
+Because any segue needs to be prepared. In this case,
+
+142
+00:07:20,374 --> 00:07:23,608
+we're going to have to prepare that ImageViewController with
+
+143
+00:07:23,610 --> 00:07:25,610
+its public API, which, if you'll remember,
+
+144
+00:07:25,612 --> 00:07:29,247
+is an image URL. We have to give it the URL of an image,
+
+145
+00:07:29,249 --> 00:07:32,150
+okay? So prepareForSegue, let's do that,
+
+146
+00:07:32,152 --> 00:07:36,288
+prepareForSegue. And what do we need for prepareForSegue?
+
+147
+00:07:36,290 --> 00:07:38,623
+Well, first of all, let's collect some information here,
+
+148
+00:07:38,625 --> 00:07:40,525
+like, let's get the destinationViewController.
+
+149
+00:07:40,527 --> 00:07:43,762
+That's the segue's destinationViewController.
+
+150
+00:07:43,764 --> 00:07:47,165
+And actually, I'm gonna do that contentViewController
+
+151
+00:07:47,167 --> 00:07:50,802
+trick that we did where we have a little extension,
+
+152
+00:07:50,804 --> 00:07:52,437
+contentViewController here,
+
+153
+00:07:52,439 --> 00:07:54,739
+a little extension to UIViewController.
+
+154
+00:07:54,741 --> 00:07:57,108
+So that if the thing is in a Navigation Controller,
+
+155
+00:07:57,110 --> 00:07:58,443
+we return the visibleViewController,
+
+156
+00:07:58,445 --> 00:08:01,112
+otherwise we just return self. You remember this from From
+
+157
+00:08:01,114 --> 00:08:03,648
+before, this is so that if we're in a split view and
+
+158
+00:08:03,650 --> 00:08:05,717
+we happen to put the detail, for example,
+
+159
+00:08:05,719 --> 00:08:06,985
+inside a navigation controller,
+
+160
+00:08:06,987 --> 00:08:09,955
+we can get the thing that's inside. All right, so
+
+161
+00:08:09,957 --> 00:08:13,625
+we'll do the content view controller. Here, so
+
+162
+00:08:13,627 --> 00:08:17,195
+that's the destination of, this, segue.
+
+163
+00:08:17,197 --> 00:08:19,931
+Let's get the annotation view, which is the sender,
+
+164
+00:08:19,933 --> 00:08:23,301
+okay this sender any object, should be an annotation view,
+
+165
+00:08:23,303 --> 00:08:24,469
+so let's go ahead and get that.
+
+166
+00:08:24,471 --> 00:08:29,541
+By saying the sender as an MKAnnotationView. Okay.
+
+167
+00:08:29,543 --> 00:08:33,078
+Let's also get the waypoint that we're talking about here.
+
+168
+00:08:33,080 --> 00:08:35,981
+Okay, all these segues are gonna be segueing from
+
+169
+00:08:35,983 --> 00:08:38,517
+something that has a waypoint. So what is that?
+
+170
+00:08:38,519 --> 00:08:43,355
+That's gonna be the annotationViews annotation.
+
+171
+00:08:43,557 --> 00:08:45,924
+And it has to be a gpx waypoint, which they all
+
+172
+00:08:45,926 --> 00:08:50,028
+should be. All the annotations that we add to our map view
+
+173
+00:08:50,030 --> 00:08:53,665
+implement the MK protocol, so they're all gpx waypoint.
+
+174
+00:08:53,667 --> 00:08:55,667
+So this should always come out true.
+
+175
+00:08:55,669 --> 00:08:58,537
+So we kinda got these little things that we need.
+
+176
+00:08:58,539 --> 00:09:03,241
+So now lets just say if the segway identifier equals
+
+177
+00:09:03,243 --> 00:09:08,079
+the Constants.ShowSegue, ShowImageSegue, okay?
+
+178
+00:09:08,081 --> 00:09:11,850
+So we know we're going the show image. Then if we can get
+
+179
+00:09:11,852 --> 00:09:14,886
+an ImageViewController as the destination, so
+
+180
+00:09:14,888 --> 00:09:18,290
+if the destination is an ImageViewController,
+
+181
+00:09:18,525 --> 00:09:23,028
+then we can just load it up by saying it's imageURL equals
+
+182
+00:09:23,030 --> 00:09:24,829
+the waypoints.
+
+183
+00:09:25,766 --> 00:09:29,301
+Image URL, right remember image URL,
+
+184
+00:09:29,303 --> 00:09:32,671
+we added that when we put this little extension on here that
+
+185
+00:09:32,673 --> 00:09:36,107
+did the thumbnail URL we also added the image URL. Its just
+
+186
+00:09:36,109 --> 00:09:40,045
+gonna look in the gpx file information to find an image
+
+187
+00:09:40,047 --> 00:09:44,282
+url that's got the type large verse the type thumbnail.
+
+188
+00:09:44,284 --> 00:09:46,885
+Okay? Cuz we obviously wanna show the large image,
+
+189
+00:09:46,887 --> 00:09:50,522
+when we segue to it. All right? All right, so
+
+190
+00:09:50,524 --> 00:09:52,290
+that's good. While we're here, let's go ahead and
+
+191
+00:09:52,292 --> 00:09:57,662
+set the title of this, thing to be the waypoint's name. So
+
+192
+00:09:57,664 --> 00:10:00,031
+that'll give us a nice title at the top,
+
+193
+00:10:00,033 --> 00:10:06,571
+of our MVC. Okay? Makes sense? All right so
+
+194
+00:10:06,573 --> 00:10:11,476
+let's go to run see what this does. See if it works for us?
+
+195
+00:10:17,017 --> 00:10:20,218
+All right, so here is all of our little waypoints here. So
+
+196
+00:10:20,220 --> 00:10:24,422
+let's click on waypoint, like this one, still working okay,
+
+197
+00:10:24,424 --> 00:10:26,524
+we got the picture in here but now hopefully if we click on
+
+198
+00:10:26,526 --> 00:10:30,729
+this, we'll seque. Sure enough here we go. My image view
+
+199
+00:10:30,731 --> 00:10:32,130
+controller is not quite as nice as the one you did in
+
+200
+00:10:32,132 --> 00:10:35,233
+your homework in terms of the white space management but
+
+201
+00:10:35,235 --> 00:10:37,636
+it works. Notice it's got the title up here as well.
+
+202
+00:10:37,638 --> 00:10:39,471
+The title of this thing, Panorama,
+
+203
+00:10:39,473 --> 00:10:45,377
+got passed along there. Okay, so that was pretty easy.
+
+204
+00:10:45,746 --> 00:10:47,679
+The next thing we're gonna do is make it so
+
+205
+00:10:47,681 --> 00:10:51,816
+that in our map here, we can add a waypoint.
+
+206
+00:10:51,818 --> 00:10:54,719
+Now, this is a demo, I'm not gonna go so far as to actually
+
+207
+00:10:54,721 --> 00:10:58,356
+rewrite the gpx file to add this waypoint to it, but I'm
+
+208
+00:10:58,358 --> 00:11:02,260
+gonna show you how to at least add the waypoint to the map.
+
+209
+00:11:02,262 --> 00:11:05,563
+Now, the UI I'm gonna use here is long press.
+
+210
+00:11:05,565 --> 00:11:08,166
+I don't know if you've seen a long press gesture, but
+
+211
+00:11:08,168 --> 00:11:10,368
+basically if you just press with your finger and
+
+212
+00:11:10,370 --> 00:11:11,169
+you hold it down long enough,
+
+213
+00:11:11,171 --> 00:11:14,839
+it'll start looking like a long press, to iOS.
+
+214
+00:11:14,841 --> 00:11:17,442
+And when you long press, I'm gonna drop another pin there.
+
+215
+00:11:17,444 --> 00:11:21,780
+A new pin. It's gonna be a new we, new waypoint. All right so
+
+216
+00:11:21,782 --> 00:11:23,348
+let's put that in our UI first,
+
+217
+00:11:23,350 --> 00:11:26,851
+let's go, back here to our story board and
+
+218
+00:11:26,853 --> 00:11:30,221
+we're just gonna add a long press gesture to this map, so
+
+219
+00:11:30,223 --> 00:11:34,092
+i'm gonna go over here down to this, I'll even search for it
+
+220
+00:11:34,094 --> 00:11:36,594
+and make it even easier, long press. Here it is right here,
+
+221
+00:11:36,596 --> 00:11:39,497
+so I'm gonna add this long press the map view is the one
+
+222
+00:11:39,499 --> 00:11:44,102
+that is gonna recognize it right there, to it.
+
+223
+00:11:44,104 --> 00:11:48,373
+And now we're go ahead and make this long press send
+
+224
+00:11:48,375 --> 00:11:51,009
+action to our con, view controller. So let's get them
+
+225
+00:11:51,011 --> 00:11:55,780
+on the screen at the same time here. All right go automatic.
+
+226
+00:11:56,049 --> 00:12:01,119
+Okay we'll put it let's put it right down here. Okay? So
+
+227
+00:12:01,121 --> 00:12:03,755
+I'm just gonna Ctrl+drag from the long press gesture
+
+228
+00:12:03,757 --> 00:12:07,792
+into here. Its going to be an action, we will call this Add
+
+229
+00:12:07,794 --> 00:12:10,829
+wayPoint because that is what this gesture is going to do,
+
+230
+00:12:10,831 --> 00:12:15,166
+its going to add a waypoint. OK, lets go ahead and
+
+231
+00:12:15,168 --> 00:12:19,871
+go back here. All right, so we have got Add waypoint right
+
+232
+00:12:19,873 --> 00:12:22,674
+here. What do we need to do when we add a waypoint?
+
+233
+00:12:22,676 --> 00:12:27,712
+Well, first we're going to do it as soon as we
+
+234
+00:12:27,714 --> 00:12:32,484
+recognize the long press. So soon as it
+
+235
+00:12:32,486 --> 00:12:35,019
+starts recognizing this long press, we're going to do it.
+
+236
+00:12:35,021 --> 00:12:37,622
+Now a long press is actually a continuous gesture.
+
+237
+00:12:37,624 --> 00:12:39,157
+If you hold the long town press down,
+
+238
+00:12:39,159 --> 00:12:41,693
+it'll keep firing. Okay fire over and over and
+
+239
+00:12:41,695 --> 00:12:43,027
+over. We don't want that we don't want to add
+
+240
+00:12:43,029 --> 00:12:44,662
+a whole bunch of waypoints we just want the first one.
+
+241
+00:12:44,664 --> 00:12:46,898
+So as soon as we recognize that it's a long press
+
+242
+00:12:46,900 --> 00:12:48,900
+we're gonna drop the waypoint and we don't care what happens
+
+243
+00:12:48,902 --> 00:12:52,637
+with the press after that we're ignoring. Okay?
+
+244
+00:12:52,639 --> 00:12:54,472
+So we've got to get the coordinate
+
+245
+00:12:54,474 --> 00:12:57,408
+okay that CL coordinate 2d right the latitude and
+
+246
+00:12:57,410 --> 00:13:01,246
+longitude of this thing that's dropped. And to do that,
+
+247
+00:13:01,248 --> 00:13:03,648
+we're gonna have to take the coordinate from the gesture,
+
+248
+00:13:03,650 --> 00:13:06,751
+which is a view coordinate, and turn it into longitude and
+
+249
+00:13:06,753 --> 00:13:09,621
+latitude. Well luckily Mapview knows how to do that,
+
+250
+00:13:09,623 --> 00:13:13,024
+Mapview has a method called convertPoint,
+
+251
+00:13:13,026 --> 00:13:14,793
+two coordinate from view, you see it right there,
+
+252
+00:13:14,795 --> 00:13:17,762
+the first one, Convert point to coordinate from view. So
+
+253
+00:13:17,764 --> 00:13:22,767
+the point it wants to convert is the gesture recognizers
+
+254
+00:13:22,769 --> 00:13:27,172
+location in view, okay. And what view?
+
+255
+00:13:27,174 --> 00:13:28,373
+The map view itself. So
+
+256
+00:13:28,375 --> 00:13:30,708
+we're gonna get the location to gesture in the map view and
+
+257
+00:13:30,710 --> 00:13:34,712
+we're going to turn it into a coordinate and the coordinates
+
+258
+00:13:34,714 --> 00:13:40,084
+we're, converting from is the map view also. Okay.
+
+259
+00:13:40,086 --> 00:13:43,454
+So now we've got the latitude and longitude that the long
+
+260
+00:13:43,456 --> 00:13:46,457
+press happened at. So now let's create a wave point, and
+
+261
+00:13:46,459 --> 00:13:50,628
+we're going to do that by just saying GPX.wavepoint, latitude
+
+262
+00:13:50,630 --> 00:13:53,832
+and longitude. Right? So the latitude is the coordinates
+
+263
+00:13:53,834 --> 00:13:59,304
+latitude, and longitude is the coordinates longitude. Right?
+
+264
+00:13:59,306 --> 00:13:59,704
+This coordinate right here,
+
+265
+00:13:59,706 --> 00:14:02,807
+that's this coordinate we just created. All right. So we got
+
+266
+00:14:02,809 --> 00:14:06,211
+a waypoint and we can give the waypoint a name, let's give it
+
+267
+00:14:06,213 --> 00:14:08,847
+a default name. We'll call it Dropped since we just dropped
+
+268
+00:14:08,849 --> 00:14:12,417
+this waypoint onto of the map. Now let's go and add that as
+
+269
+00:14:12,419 --> 00:14:17,355
+an annotation, to the map, and we know that this is legal for
+
+270
+00:14:17,357 --> 00:14:21,025
+us to do because addAnnotation takes an MKAnnotation and
+
+271
+00:14:21,027 --> 00:14:22,160
+we know that GPS. Way,
+
+272
+00:14:22,162 --> 00:14:25,230
+GPX.Waypoint implements the MKAnnotation protocol, so
+
+273
+00:14:25,232 --> 00:14:29,868
+this is perfectly legal for us to do, right? All right, so
+
+274
+00:14:29,870 --> 00:14:37,542
+let's go take a look see if this works. All right,
+
+275
+00:14:37,544 --> 00:14:40,645
+so here we are. I'm just going to let's say right up here is
+
+276
+00:14:40,647 --> 00:14:43,514
+a little airport here, so let's hold it down and
+
+277
+00:14:43,516 --> 00:14:45,216
+drop and sure enough, it dropped a pin there, okay.
+
+278
+00:14:45,218 --> 00:14:48,219
+We drop another one over here, another one over here. Now,
+
+279
+00:14:48,221 --> 00:14:51,923
+if I click on this, I'm just gonna get dropped. Okay?
+
+280
+00:14:51,925 --> 00:14:54,425
+Also, what if I put this in the wrong spot and
+
+281
+00:14:54,427 --> 00:14:57,061
+I wanted to pick it up? 'Kay, there's no way to pick it up
+
+282
+00:14:57,063 --> 00:15:02,100
+and move it and that's because these pins are not "dragable."
+
+283
+00:15:02,102 --> 00:15:04,669
+And if you remember from the, la a, slides,
+
+284
+00:15:04,671 --> 00:15:07,438
+to make a pin dragable you have to take that coordinate,
+
+285
+00:15:07,440 --> 00:15:10,608
+ma, var, you know we have this coordinate var that we added
+
+286
+00:15:10,610 --> 00:15:13,912
+when we were implementing MKannotation we added this.
+
+287
+00:15:13,914 --> 00:15:16,948
+This has to be read and write. To make these things
+
+288
+00:15:16,950 --> 00:15:19,183
+obviously dragable if they're going to be dragable when they
+
+289
+00:15:19,185 --> 00:15:21,653
+drop into a new place we need to set the new coordinates.
+
+290
+00:15:21,655 --> 00:15:24,722
+So we need to have a editable or
+
+291
+00:15:24,724 --> 00:15:27,225
+one of these that has a get and a set. So
+
+292
+00:15:27,227 --> 00:15:30,995
+I'm actually going to do that by creating a subclass of
+
+293
+00:15:30,997 --> 00:15:36,601
+GPX Waypoint called editable ed it a ble waypoint,
+
+294
+00:15:36,603 --> 00:15:40,905
+okay. It's just gonna sub class GPX.waypoint and
+
+295
+00:15:40,907 --> 00:15:43,508
+in that sub class I'm gonna make coordinate.
+
+296
+00:15:43,510 --> 00:15:48,680
+B read right VAR. So coordinate, CL location,
+
+297
+00:15:48,682 --> 00:15:50,882
+coordinate 2D is gonna have a get and
+
+298
+00:15:50,884 --> 00:15:54,152
+it's also gonna have the set. Now for the get, I'm just
+
+299
+00:15:54,154 --> 00:15:58,022
+gonna do super. coordinate. Okay? We should note
+
+300
+00:15:58,024 --> 00:16:02,527
+that we are overriding this bar from gpx waypoint, okay.
+
+301
+00:16:02,529 --> 00:16:05,830
+And for the set, we've got this new value which is
+
+302
+00:16:05,832 --> 00:16:09,400
+a coordinate and I need to put that into the GPXs data
+
+303
+00:16:09,402 --> 00:16:13,137
+structure which is latitude and longitude right?
+
+304
+00:16:13,139 --> 00:16:15,807
+So, I'm just gonna say here that,
+
+305
+00:16:15,809 --> 00:16:19,978
+our latitude equals the new value's latitude and
+
+306
+00:16:19,980 --> 00:16:24,082
+our longitude equals the new value's longitude.
+
+307
+00:16:24,084 --> 00:16:27,585
+Okay, so we're setting the latitude and the longitude in
+
+308
+00:16:27,587 --> 00:16:31,622
+the GPX waypoint from this new coordinate value that we got.
+
+309
+00:16:31,624 --> 00:16:35,526
+Okay. So, we'll do that. Everybody get that.
+
+310
+00:16:35,528 --> 00:16:36,627
+Everyone understand what I what I did there?
+
+311
+00:16:36,629 --> 00:16:38,930
+So, I have this new class now, EditableWaypoint.
+
+312
+00:16:38,932 --> 00:16:41,165
+Yeah, I probably could have done that here,
+
+313
+00:16:41,167 --> 00:16:44,002
+put in the extension but it's actually nice as you're
+
+314
+00:16:44,004 --> 00:16:46,771
+gonna see to have a whole class that we know that this
+
+315
+00:16:46,773 --> 00:16:49,140
+is an editable waypoint by looking at its class,
+
+316
+00:16:49,142 --> 00:16:53,745
+actually. All right? Okay, so let's go back now to here, and
+
+317
+00:16:53,747 --> 00:16:57,148
+instead of creating a GPX waypoint here now when we add
+
+318
+00:16:57,150 --> 00:17:02,086
+waypoint, I'm gonna create an editable waypoint. Okay.
+
+319
+00:17:02,088 --> 00:17:04,389
+So that, so that it can be moved around.
+
+320
+00:17:04,391 --> 00:17:07,892
+Now, the other thing I need to do to make it an draggable
+
+321
+00:17:07,894 --> 00:17:11,629
+is to go here to where I create my annotation view for
+
+322
+00:17:11,631 --> 00:17:13,131
+annotation which remember,
+
+323
+00:17:13,133 --> 00:17:15,900
+is kind of self row index path for map view.
+
+324
+00:17:15,902 --> 00:17:17,602
+Here's where I create the left call it accessory.
+
+325
+00:17:17,604 --> 00:17:21,806
+I also need to say whether it's draggable. Okay?
+
+326
+00:17:21,808 --> 00:17:25,643
+And that's just going to be, whether or not the annotation
+
+327
+00:17:25,645 --> 00:17:29,647
+that we passed on here is an editable waypoint. Okay?
+
+328
+00:17:29,649 --> 00:17:31,783
+If annotation is of class editable waypoint,
+
+329
+00:17:31,785 --> 00:17:34,352
+then we know it's editable, and so it's dragable.
+
+330
+00:17:34,354 --> 00:17:37,188
+See how giving that in a separate class was kind of
+
+331
+00:17:37,190 --> 00:17:39,724
+cool? Makes our code read kind of nice there.
+
+332
+00:17:39,726 --> 00:17:42,527
+All right, so we should be able to drag this around, so
+
+333
+00:17:42,529 --> 00:17:49,801
+let's see if it works. All right,
+
+334
+00:17:49,803 --> 00:17:51,836
+so you going to drop one right here, here it is,
+
+335
+00:17:51,838 --> 00:17:54,338
+we can see this is dropped. Can we pick it up and drag it?
+
+336
+00:17:54,340 --> 00:17:59,377
+Let's see. Yes, we can put it somewhere else pick it
+
+337
+00:17:59,379 --> 00:18:02,947
+up again put it over here. Okay so
+
+338
+00:18:02,949 --> 00:18:06,050
+that's kind of cool. So, now what are we gonna do? Well,
+
+339
+00:18:06,052 --> 00:18:09,353
+it's kind of annoying that this just says dropped, okay.
+
+340
+00:18:09,355 --> 00:18:10,788
+We don't want it to say dropped,
+
+341
+00:18:10,790 --> 00:18:11,923
+we wanna actually edit it and so,
+
+342
+00:18:11,925 --> 00:18:13,891
+you know if I put it over here on top of this little
+
+343
+00:18:13,893 --> 00:18:17,328
+airport right here, I probably wanna put airport in there.
+
+344
+00:18:17,330 --> 00:18:20,431
+Okay? And so how are we gonna do that? Well,
+
+345
+00:18:20,433 --> 00:18:23,334
+this is a good opportunity to show you a modal segue.
+
+346
+00:18:23,336 --> 00:18:27,138
+Okay, cuz what we're gonna do is we're gonna create a little
+
+347
+00:18:27,140 --> 00:18:29,807
+MVC to edit the name and the description there of
+
+348
+00:18:29,809 --> 00:18:33,244
+the waypoint and we're going to modally present that MVC,
+
+349
+00:18:33,246 --> 00:18:37,448
+okay? So, how we're gonna do that? Pretty straightforward.
+
+350
+00:18:37,450 --> 00:18:40,985
+Let's start here by figuring out how we're gonna get
+
+351
+00:18:40,987 --> 00:18:42,120
+that modal MVC to appear and
+
+352
+00:18:42,122 --> 00:18:44,956
+what I'm gonna do is you see how I'm using over here
+
+353
+00:18:44,958 --> 00:18:48,326
+at the left accessory view. Now, I'm gonna use the right
+
+354
+00:18:48,328 --> 00:18:50,928
+accessory view on these and I'm gonna put a detail
+
+355
+00:18:50,930 --> 00:18:54,132
+disclosure button in there. That's the little blue kinda
+
+356
+00:18:54,134 --> 00:18:57,101
+looks like a blue round circle with a carrot in it. So,
+
+357
+00:18:57,103 --> 00:18:59,804
+I'm gonna put that kind of button in here and only on
+
+358
+00:18:59,806 --> 00:19:02,173
+that editable way points will I put it there. And
+
+359
+00:19:02,175 --> 00:19:05,309
+when you click on that, it's going to bring up this modal
+
+360
+00:19:05,311 --> 00:19:09,714
+panel that lets you edit the name and info. Okay. So, let's
+
+361
+00:19:09,716 --> 00:19:15,219
+go ahead and do that, let's change our UI to make our UI,
+
+362
+00:19:15,221 --> 00:19:17,822
+that's how we gonna do that.
+
+363
+00:19:17,824 --> 00:19:20,358
+We're gonna have to add a RightCalloutAccessoryView.
+
+364
+00:19:20,360 --> 00:19:22,760
+Just like we added a leftCalloutAccessoryView here,
+
+365
+00:19:22,762 --> 00:19:25,329
+so I'm gonna do the same thing where I clear it out first
+
+366
+00:19:25,331 --> 00:19:27,698
+because if it's not at an editable waypoint we don't
+
+367
+00:19:27,700 --> 00:19:30,301
+want it in there. And remember we're reusing these things,
+
+368
+00:19:30,303 --> 00:19:33,538
+right? DQ reusable. So, we have to clear it out from
+
+369
+00:19:33,540 --> 00:19:37,141
+previous uses. And so, here I'm just gonna say,
+
+370
+00:19:37,143 --> 00:19:41,479
+if the waypoint is an EditableWaypoint,then I need
+
+371
+00:19:41,481 --> 00:19:46,017
+to add this rightCallout AccessoryView which is just
+
+372
+00:19:46,019 --> 00:19:51,022
+going to be a UIButton(type: .DetailDisclosure).
+
+373
+00:19:51,024 --> 00:19:51,923
+Okay, so I'm just going to put it on.
+
+374
+00:19:51,925 --> 00:19:54,792
+This is only going to appear on editable ones which is
+
+375
+00:19:54,794 --> 00:19:58,196
+exactly what we want. Now, how do we make it so that it's
+
+376
+00:19:58,198 --> 00:20:01,866
+going to Do this modal segue whenever we're gonna do it.
+
+377
+00:20:01,868 --> 00:20:03,801
+We're gonna do the exact same way that we did for
+
+378
+00:20:03,803 --> 00:20:06,637
+the left call-out accessory, which is what we're gonna do
+
+379
+00:20:06,639 --> 00:20:08,639
+it in this call-out accessory control tapped.
+
+380
+00:20:08,641 --> 00:20:11,375
+Okay, cuz now this the right side one. So, I'm gonna say
+
+381
+00:20:11,377 --> 00:20:15,813
+else if the control equals the right call-out accessory view.
+
+382
+00:20:15,815 --> 00:20:21,552
+Okay? Then, I need to perform a segue, the different one.
+
+383
+00:20:22,121 --> 00:20:25,756
+This one's gonna be called, let's see what I call down
+
+384
+00:20:25,758 --> 00:20:28,759
+here in the constance. I call it edit way points,
+
+385
+00:20:28,761 --> 00:20:32,830
+the Edit user way points segway, right? Edit user way
+
+386
+00:20:32,832 --> 00:20:36,000
+points and the sender still gonna be the view because we
+
+387
+00:20:36,002 --> 00:20:39,003
+still wanna know which way point we're editing, okay? And
+
+388
+00:20:39,005 --> 00:20:42,540
+of course, we have to fix or prepare for segway to do that
+
+389
+00:20:42,542 --> 00:20:47,311
+as well. Let's take a time out from doing our prepare for
+
+390
+00:20:47,313 --> 00:20:51,315
+segue and go into our storyboard and add that new
+
+391
+00:20:51,317 --> 00:20:54,552
+MVC. All right, so here we are, I'm going to make this
+
+392
+00:20:54,554 --> 00:20:56,053
+a little zoomed out a little bit. So,
+
+393
+00:20:56,055 --> 00:20:58,823
+I'm going to put this new view controller just by dragging
+
+394
+00:20:58,825 --> 00:21:01,158
+out an empty view controller on to the top up here.
+
+395
+00:21:01,160 --> 00:21:02,226
+This is where we're going to put this thing.
+
+396
+00:21:02,228 --> 00:21:05,896
+It's of course, going to need it's own Custom Class so lets
+
+397
+00:21:05,898 --> 00:21:10,635
+go file New. Create a subclass of UI View Controller. Okay.
+
+398
+00:21:10,637 --> 00:21:13,371
+We'll call this our Edit Waypoint View Controller
+
+399
+00:21:13,373 --> 00:21:16,674
+because that's what it does. Edit a waypoint.
+
+400
+00:21:16,676 --> 00:21:19,343
+I'll put it same place as everything as usual.
+
+401
+00:21:19,345 --> 00:21:22,980
+Here it is, we'll go ahead and get rid of all this stuff.
+
+402
+00:21:23,950 --> 00:21:26,484
+Yeah, so that's clean. Let's go ahead and build the ui of
+
+403
+00:21:26,486 --> 00:21:30,321
+it, okay what's the ui of this thing gonna look like here?
+
+404
+00:21:30,323 --> 00:21:32,290
+Well, it's gonna be a pretty simple UI,
+
+405
+00:21:32,292 --> 00:21:33,591
+it's gonna have two fields, one for
+
+406
+00:21:33,593 --> 00:21:36,527
+the name of the waypoint and one for like the info, right,
+
+407
+00:21:36,529 --> 00:21:38,429
+the little description of the waypoint. So,
+
+408
+00:21:38,431 --> 00:21:41,565
+that's gonna be easy to build, let's just go down here and
+
+409
+00:21:41,567 --> 00:21:44,068
+grab a text field or two, there's one text field,
+
+410
+00:21:44,070 --> 00:21:47,471
+there's another one, let's grab a couple labels okay for
+
+411
+00:21:47,473 --> 00:21:50,141
+our name and description. So, all right so
+
+412
+00:21:50,143 --> 00:21:51,442
+this is the name of the waypoint.
+
+413
+00:21:51,444 --> 00:21:56,347
+This is the description of it which is called the info field
+
+414
+00:21:56,349 --> 00:22:00,084
+in the GPX structure. So, we'll right align these
+
+415
+00:22:00,086 --> 00:22:02,887
+because they're gonna be names. We'll go ahead and
+
+416
+00:22:02,889 --> 00:22:06,724
+put these in a stack view here. So, let's embed these in
+
+417
+00:22:06,726 --> 00:22:08,893
+a stack view. Hopefully it'll figure out it's horizontal.
+
+418
+00:22:08,895 --> 00:22:11,495
+It does. We'll put a little spacing in there,
+
+419
+00:22:11,497 --> 00:22:13,264
+maybe eight or something like that.
+
+420
+00:22:13,266 --> 00:22:16,534
+Same thing here, let's put those in. Okay.
+
+421
+00:22:16,536 --> 00:22:22,973
+Also, eight. Now, let's put these in vertical stack view.
+
+422
+00:22:26,079 --> 00:22:29,113
+Okay, maybe we'll also do 8 here as well.
+
+423
+00:22:29,115 --> 00:22:32,783
+Okay. Now, these aren't quite looking like what we want,
+
+424
+00:22:32,785 --> 00:22:35,152
+this, this kind of, this is in the center.
+
+425
+00:22:35,154 --> 00:22:37,421
+We don't really want center alignment here,
+
+426
+00:22:37,423 --> 00:22:39,490
+we'd like it to fill the entire space. Also,
+
+427
+00:22:39,492 --> 00:22:42,560
+we'd really want this and this lined up, which really means
+
+428
+00:22:42,562 --> 00:22:45,296
+we want Name and Description to be the same width. So,
+
+429
+00:22:45,298 --> 00:22:48,966
+I'm actually going to control drag between these two and
+
+430
+00:22:48,968 --> 00:22:52,069
+make them be equal widths, okay? Make name and
+
+431
+00:22:52,071 --> 00:22:55,973
+description be equal widths and also it's gonna,
+
+432
+00:22:55,975 --> 00:22:59,477
+let me take it back in a second here I think.
+
+433
+00:22:59,479 --> 00:23:00,911
+Let's also put it in position.
+
+434
+00:23:00,913 --> 00:23:05,282
+We're gonna put this leading edge, we're gonna put this
+
+435
+00:23:05,284 --> 00:23:09,253
+the top edge, we'll put this to the trailing edge and
+
+436
+00:23:09,255 --> 00:23:13,924
+we'll put this to the bottom edge. Okay? Now, where we
+
+437
+00:23:13,926 --> 00:23:17,995
+put these is a little weird. Okay, this one is our standard
+
+438
+00:23:17,997 --> 00:23:21,899
+thing here where we want this to be zero or standard value.
+
+439
+00:23:21,901 --> 00:23:23,701
+So, there's no standard value so we'll make it zero.
+
+440
+00:23:23,703 --> 00:23:27,138
+That makes it nice and wide. That's good. This one right
+
+441
+00:23:27,140 --> 00:23:30,374
+here, I actually don't want this one to be zero cuz
+
+442
+00:23:30,376 --> 00:23:33,244
+I really want name and description to sit at the top.
+
+443
+00:23:33,246 --> 00:23:35,746
+So, you might argue I don't even need a constraint on
+
+444
+00:23:35,748 --> 00:23:38,716
+the bottom here, but here's the thing when I put this
+
+445
+00:23:38,718 --> 00:23:41,952
+on screen, okay the size is gonna change I always wanna
+
+446
+00:23:41,954 --> 00:23:45,122
+make sure there's at least the standard issue thing from
+
+447
+00:23:45,124 --> 00:23:47,391
+the bottom. Get a standard space from the bottom and
+
+448
+00:23:47,393 --> 00:23:49,527
+you'll see why that is a little bit later. So,
+
+449
+00:23:49,529 --> 00:23:53,197
+I'm actually have the constant here be greater than or
+
+450
+00:23:53,199 --> 00:23:54,932
+equal to the standard value. Okay,
+
+451
+00:23:54,934 --> 00:23:57,535
+so just remember that I put a constraint on the bottom to
+
+452
+00:23:57,537 --> 00:24:00,971
+make sure it's greater than or equal to the standard value.
+
+453
+00:24:00,973 --> 00:24:03,641
+We we'll see that later. So,
+
+454
+00:24:03,643 --> 00:24:08,078
+equal widths. Thought I had done that. Okay, anyway, so
+
+455
+00:24:08,080 --> 00:24:12,850
+this looks pretty good for our UI, okay? Using the space,
+
+456
+00:24:12,852 --> 00:24:15,853
+etc. It's kind of lining things up nicely. So
+
+457
+00:24:15,855 --> 00:24:18,456
+let's go ahead and create a couple of outlets to pl,
+
+458
+00:24:18,458 --> 00:24:23,494
+plug into these two things, all right. Let's
+
+459
+00:24:23,496 --> 00:24:26,730
+make sure we set the right class for this. We don't want
+
+460
+00:24:26,732 --> 00:24:29,567
+to be in GPS Waypoint view controller, we wanted to be in
+
+461
+00:24:29,569 --> 00:24:32,536
+Edit Waypoint view controller. That's why we're not getting
+
+462
+00:24:32,538 --> 00:24:36,240
+the right class here when we try to do our list.
+
+463
+00:24:36,242 --> 00:24:37,575
+Let us drag our outlay here.
+
+464
+00:24:37,577 --> 00:24:41,979
+This outlay is going to be NameTextField. And
+
+465
+00:24:41,981 --> 00:24:47,017
+this one is going to be, call this the infoTextField.
+
+466
+00:24:47,854 --> 00:24:53,457
+All right? And so we kinda set up our UI here how we want it.
+
+467
+00:24:53,459 --> 00:24:58,128
+What do we wanna do here in terms of a let's
+
+468
+00:24:58,130 --> 00:25:01,932
+make this over here. Let's look at our edit wave.
+
+469
+00:25:01,934 --> 00:25:05,402
+Okay, what do we want to do in terms of a public model here,
+
+470
+00:25:05,404 --> 00:25:05,703
+so that people can set it?
+
+471
+00:25:05,705 --> 00:25:09,507
+Well, that's obvious, we want the a- waypoint to edit. 'Kay?
+
+472
+00:25:09,509 --> 00:25:14,478
+GPX, sorry, editable waypoint. Let it be optional.
+
+473
+00:25:14,480 --> 00:25:17,214
+So that's the public API. If someone sets this waypoint
+
+474
+00:25:17,216 --> 00:25:20,017
+then obviously we're going to have our UI show it. And when
+
+475
+00:25:20,019 --> 00:25:23,487
+the UI is changing, it's going to be changing this way point.
+
+476
+00:25:23,489 --> 00:25:26,524
+So, when it gets set, we're gonna have to update your,
+
+477
+00:25:26,526 --> 00:25:29,693
+our UI. So we'll call updateUI and make a method that does
+
+478
+00:25:29,695 --> 00:25:34,765
+that. Probably here when these well we'll talk about
+
+479
+00:25:34,767 --> 00:25:40,204
+that in a second, so let's get our private funk update ui.
+
+480
+00:25:40,640 --> 00:25:41,939
+So what do we do to update the ui?
+
+481
+00:25:41,941 --> 00:25:47,478
+I'm just gonna have the name, text fields, text equal
+
+482
+00:25:47,480 --> 00:25:52,116
+the waypoint to edit name.
+
+483
+00:25:52,818 --> 00:25:57,187
+And similarly the info text field Text equals
+
+484
+00:25:57,189 --> 00:26:02,226
+the Way PointTo Edit info. Okay. So
+
+485
+00:26:02,228 --> 00:26:05,996
+that's updating that. Probably also we should View Did Load.
+
+486
+00:26:05,998 --> 00:26:12,403
+And View Did Load will also update our UI.
+
+487
+00:26:12,405 --> 00:26:14,805
+That way when we're sequeway to it or
+
+488
+00:26:14,807 --> 00:26:18,442
+something if we set this before our outlets are set,
+
+489
+00:26:18,444 --> 00:26:23,714
+later on or. Now this is great for transferring information
+
+490
+00:26:23,716 --> 00:26:26,183
+from the waypoint to our text fields.
+
+491
+00:26:26,185 --> 00:26:28,986
+What about the other way? We edit in the text fields,
+
+492
+00:26:28,988 --> 00:26:31,956
+we have to edit our waypoint. So how are we going to that?
+
+493
+00:26:31,958 --> 00:26:33,591
+Well, there's actually a number of ways
+
+494
+00:26:33,593 --> 00:26:34,558
+to do that. I already showed you
+
+495
+00:26:34,560 --> 00:26:36,961
+in textfield how to do that with delegate messages.
+
+496
+00:26:36,963 --> 00:26:40,064
+I'm gonna show you how to do it now with radio stations.
+
+497
+00:26:40,066 --> 00:26:43,000
+Okay? Text fields actually broadcast on a radio station,
+
+498
+00:26:43,002 --> 00:26:46,236
+and one of the things they'll broadcast is my text changed.
+
+499
+00:26:46,238 --> 00:26:48,172
+So you can listen to that radio station, and
+
+500
+00:26:48,174 --> 00:26:51,108
+every time the text changes you can update whatever
+
+501
+00:26:51,110 --> 00:26:55,946
+thing you want to update. Now, before we do that, we
+
+502
+00:26:55,948 --> 00:26:58,616
+also need some things from the text fields delegate, however.
+
+503
+00:26:58,618 --> 00:27:01,218
+Like, I'd like to control the keyboard a little bit.
+
+504
+00:27:01,220 --> 00:27:03,954
+So, every time you press return in the keyboard,
+
+505
+00:27:03,956 --> 00:27:05,255
+I'd like to remove the keyboard,
+
+506
+00:27:05,257 --> 00:27:07,858
+just to clear it out of your way. So, how may I do that?
+
+507
+00:27:07,860 --> 00:27:13,831
+I'm gonna make sure that I am the main text fields delegate.
+
+508
+00:27:15,301 --> 00:27:15,933
+Okay so let's go ahead and
+
+509
+00:27:15,935 --> 00:27:19,903
+make sure we are a UI text field delegate.
+
+510
+00:27:20,673 --> 00:27:25,509
+Do the same thing with the info text field here.
+
+511
+00:27:25,511 --> 00:27:29,213
+All right, so now with the delegate.
+
+512
+00:27:29,215 --> 00:27:32,016
+What are we going to do here on that famous text
+
+513
+00:27:32,018 --> 00:27:35,586
+field should return target method right here.
+
+514
+00:27:35,588 --> 00:27:39,857
+I'm just gonna say text field, resign your first responder.
+
+515
+00:27:39,859 --> 00:27:43,360
+'Kay. And I'll return true,
+
+516
+00:27:43,362 --> 00:27:45,229
+'cause it can do whatever it wants there.
+
+517
+00:27:45,231 --> 00:27:47,064
+We don't have, you're not gonna have any action setups.
+
+518
+00:27:47,066 --> 00:27:49,433
+That's not gonna matter anyway. And, in fact,
+
+519
+00:27:49,435 --> 00:27:52,469
+another thing I'd like is when this NDC first appears,
+
+520
+00:27:52,471 --> 00:27:55,606
+I'd like to keyboard to appear. Okay I wanted it to
+
+521
+00:27:55,608 --> 00:27:58,842
+come up don't want to make the person touch in there.
+
+522
+00:27:58,844 --> 00:28:03,547
+So I'm gonna say let's do the name text field. Become
+
+523
+00:28:03,549 --> 00:28:07,851
+first response responder. Okay so that means when we reload,
+
+524
+00:28:07,853 --> 00:28:09,620
+we're gonna become the first responders.
+
+525
+00:28:09,622 --> 00:28:11,121
+Question. >> Sir,
+
+526
+00:28:11,123 --> 00:28:12,523
+did you say that the textfield should
+
+527
+00:28:12,525 --> 00:28:15,025
+return because this one said the textfieldShouldReturn?
+
+528
+00:28:15,027 --> 00:28:15,359
+>> Good catch, okay so
+
+529
+00:28:15,361 --> 00:28:17,161
+this is not supposed to be textfieldShouldClear,
+
+530
+00:28:17,163 --> 00:28:18,395
+this should be textfieldShouldReturn.
+
+531
+00:28:18,397 --> 00:28:23,100
+Okay, good catch, that's why you guys are here to catch
+
+532
+00:28:23,102 --> 00:28:27,671
+these mistakes. Yeah, so there we go, textfieldShouldReturn.
+
+533
+00:28:28,741 --> 00:28:31,809
+All right, so that's gonna manage our keyboard, but
+
+534
+00:28:31,811 --> 00:28:35,345
+now what about those radio stations? So let's go ahead,
+
+535
+00:28:35,347 --> 00:28:39,650
+and when, our view appears on screen, okay?
+
+536
+00:28:39,652 --> 00:28:40,184
+When we get viewDisappear,
+
+537
+00:28:40,186 --> 00:28:42,386
+we're gonna start listening to those radio stations. And
+
+538
+00:28:42,388 --> 00:28:45,856
+when we get viewWillDisappear, then we'll stop listening, all
+
+539
+00:28:45,858 --> 00:28:50,594
+right? So viewWillappear, or else you can do viewDidappear.
+
+540
+00:28:50,596 --> 00:29:00,704
+Super.viewDidAppear(animated).
+
+541
+00:29:00,706 --> 00:29:04,908
+All right. So we got viewDidAppear,
+
+542
+00:29:04,910 --> 00:29:09,279
+and so I am just going to say listenToTextFields Okay,
+
+543
+00:29:09,281 --> 00:29:17,321
+we'll make a little private func that does that. Okay,
+
+544
+00:29:17,323 --> 00:29:20,257
+so how we gonna listen to the text fields? Let's go ahead
+
+545
+00:29:20,259 --> 00:29:24,361
+and get ourselves the center, okay, the NSNotification,
+
+546
+00:29:24,363 --> 00:29:29,633
+NotificationCenter.defaultCen- ter. And
+
+547
+00:29:29,635 --> 00:29:31,802
+let's get the q that we want, we're going to do all of this
+
+548
+00:29:31,804 --> 00:29:36,774
+on the main Q. So ns operation q dot main q. All right now
+
+549
+00:29:36,776 --> 00:29:39,810
+that we have those two things, two little variables here,
+
+550
+00:29:39,812 --> 00:29:43,046
+I'm going to ask the center to listen to this radio station.
+
+551
+00:29:43,048 --> 00:29:47,584
+So I'm going to add observer for name. Return here, so
+
+552
+00:29:47,586 --> 00:29:50,854
+you can see this again, this is what we did last time.
+
+553
+00:29:50,856 --> 00:29:54,758
+All right, what's the name of the radio station?
+
+554
+00:29:54,760 --> 00:29:59,797
+It's UITextFieldTextDidChange, you can see it's got a couple
+
+555
+00:29:59,799 --> 00:30:03,367
+of other radio stations there too for begin end editing, but
+
+556
+00:30:03,369 --> 00:30:05,969
+I'm gonna get the one where every time the text change.
+
+557
+00:30:05,971 --> 00:30:08,338
+Every single character It's going to update.
+
+558
+00:30:08,340 --> 00:30:12,276
+The object here okay this one I'm gonna be listening to
+
+559
+00:30:12,278 --> 00:30:13,911
+the Name text field. Okay, and
+
+560
+00:30:13,913 --> 00:30:18,882
+we'll do it on the main queue. And here's the block.
+
+561
+00:30:18,884 --> 00:30:23,387
+So what's our block going to do here? We actually don't
+
+562
+00:30:23,389 --> 00:30:25,322
+even need to look at the notification, because we know
+
+563
+00:30:25,324 --> 00:30:28,325
+this is the Name text field right here this change. So
+
+564
+00:30:28,327 --> 00:30:32,563
+I'm just gonna say here, if I can let waypoint equal our
+
+565
+00:30:32,565 --> 00:30:36,667
+waypointToEdit, so if our waypointToEdit is not nil,
+
+566
+00:30:36,669 --> 00:30:38,101
+basically, then let's go ahead and
+
+567
+00:30:38,103 --> 00:30:43,874
+have the waypoint's name equal the nameTextFields.text,
+
+568
+00:30:43,876 --> 00:30:48,412
+all right? So every time this nameTextField changes,
+
+569
+00:30:48,414 --> 00:30:52,282
+we're going to update, our name. Okay. And
+
+570
+00:30:52,284 --> 00:30:56,320
+this needs to be self, because we're inside of closure here.
+
+571
+00:30:56,322 --> 00:31:00,424
+Okay, we'll do the exact same thing for the info text field.
+
+572
+00:31:00,426 --> 00:31:03,961
+One thing we could have done by the way, is have the object
+
+573
+00:31:03,963 --> 00:31:07,464
+we're listening to be nil and get all UI text and
+
+574
+00:31:07,466 --> 00:31:10,167
+then look at the text field that is sending it to us and
+
+575
+00:31:10,169 --> 00:31:13,170
+find out which one it is. But, what if we had other text
+
+576
+00:31:13,172 --> 00:31:15,505
+fields, other places in our UI that were listening, and
+
+577
+00:31:15,507 --> 00:31:18,075
+maybe they weren't good and that they kept listening even
+
+578
+00:31:18,077 --> 00:31:21,645
+when they were off screen, and all that getting all these.
+
+579
+00:31:21,647 --> 00:31:24,381
+This is a little bit more code in terms of alliance
+
+580
+00:31:24,383 --> 00:31:26,750
+right here, but it makes these closers really,
+
+581
+00:31:26,752 --> 00:31:30,320
+really, really simple. Okay? So, this is gonna be
+
+582
+00:31:30,322 --> 00:31:35,292
+the inform text field, update, now in viewDidAppear here,
+
+583
+00:31:35,294 --> 00:31:41,164
+we're listing the textfields, in viewWillDisappear,
+
+584
+00:31:43,302 --> 00:31:47,204
+We need to stop listening to these, okay so how do we do
+
+585
+00:31:47,206 --> 00:31:50,874
+that, okay we just ask the notification center.
+
+586
+00:31:50,876 --> 00:31:55,412
+DefaultCenter() to remove the Observer,
+
+587
+00:31:55,414 --> 00:31:58,615
+okay, that is this guy right here.
+
+588
+00:31:58,617 --> 00:32:01,551
+And same thing, we'll have to do another one for this.
+
+589
+00:32:01,553 --> 00:32:04,821
+So this is where we have to use the return value of this
+
+590
+00:32:04,823 --> 00:32:07,891
+addObserverForName. It actually returns something.
+
+591
+00:32:07,893 --> 00:32:09,793
+We'll call this one ntfObserver.
+
+592
+00:32:09,795 --> 00:32:12,829
+And this is just basically a cookie that represents
+
+593
+00:32:12,831 --> 00:32:14,298
+this radio station going here. So
+
+594
+00:32:14,300 --> 00:32:18,201
+we'll need a couple of private vars here. ntfObserver.
+
+595
+00:32:18,203 --> 00:32:21,505
+These things are of type NSObjectProtocol. Which
+
+596
+00:32:21,507 --> 00:32:25,008
+basically just means they're Objective-C compatible things,
+
+597
+00:32:25,010 --> 00:32:28,779
+they're part, they're visible to the Objective-C runtime.
+
+598
+00:32:28,781 --> 00:32:33,317
+Okay, and so we'll have info text field observer also.
+
+599
+00:32:35,955 --> 00:32:38,922
+Okay, so we'll let the ntfObserver equal that,
+
+600
+00:32:38,924 --> 00:32:41,892
+we'll have the itfObserver equal this. Okay, now
+
+601
+00:32:41,894 --> 00:32:45,495
+that we have these cookies, we, we wanna remove them here,
+
+602
+00:32:45,497 --> 00:32:48,098
+okay? We can just put them in here. But we wanna make sure
+
+603
+00:32:48,100 --> 00:32:51,034
+they're not nil, so I'm gonna say if I can let observer
+
+604
+00:32:51,036 --> 00:32:58,442
+equal the ntfObserver, then I will remove that observer.
+
+605
+00:32:58,811 --> 00:33:04,781
+And same thing down here. If I can let observer
+
+606
+00:33:04,783 --> 00:33:08,919
+equal to itfObserver,
+
+607
+00:33:08,921 --> 00:33:12,990
+then I will move that. Probably
+
+608
+00:33:12,992 --> 00:33:14,725
+could have made a nice little function that did this, so
+
+609
+00:33:14,727 --> 00:33:19,096
+that I don't have this kind of same repeated code style here.
+
+610
+00:33:19,098 --> 00:33:21,898
+Also, actually probably want to put these in another
+
+611
+00:33:21,900 --> 00:33:25,936
+private func. Maybe call it private func
+
+612
+00:33:25,938 --> 00:33:31,008
+stopListeningToTextFields. Put that in there, and
+
+613
+00:33:31,010 --> 00:33:37,047
+we'll call that from here. Okay? Arrange this
+
+614
+00:33:37,049 --> 00:33:41,685
+a little bit better. Put this down here. Okay, so basically,
+
+615
+00:33:41,687 --> 00:33:44,021
+listening and stop listening. So everyone understand that?
+
+616
+00:33:44,023 --> 00:33:46,323
+See how we're using radio stations to find out what's
+
+617
+00:33:46,325 --> 00:33:46,990
+happening in the text fields?
+
+618
+00:33:46,992 --> 00:33:50,627
+So it's kind of a, a fun way to do that. All right,
+
+619
+00:33:50,629 --> 00:33:54,331
+so the last thing we need to do here is our prepare for
+
+620
+00:33:54,333 --> 00:33:57,901
+segue, right? Over here, we, when we do this other segue,
+
+621
+00:33:57,903 --> 00:34:02,472
+this segue, this modal segue, we need to prepare for it. So
+
+622
+00:34:02,474 --> 00:34:09,713
+let's do that. Say else if segue.identifier ==
+
+623
+00:34:09,715 --> 00:34:15,919
+EditUserWaypoint. Okay, that's the name of that, identifier.
+
+624
+00:34:15,921 --> 00:34:19,056
+Then in here we just wanna get that editable waypoint.
+
+625
+00:34:19,058 --> 00:34:20,057
+So I'm gonna see if I can
+
+626
+00:34:20,059 --> 00:34:22,592
+let the editableWaypoint equal the waypoint as
+
+627
+00:34:22,594 --> 00:34:26,063
+an EditableWaypoint, so make sure it's editable. It always
+
+628
+00:34:26,065 --> 00:34:29,866
+should be or we wouldn't be here. Let's put a comma here.
+
+629
+00:34:29,868 --> 00:34:33,336
+Then we can let our editable Waypoint view controller
+
+630
+00:34:33,338 --> 00:34:38,675
+equal the destination as EditWaypointViewController.
+
+631
+00:34:38,677 --> 00:34:43,447
+Okay, then we just set the EWVC's waypointToEdit, which
+
+632
+00:34:43,449 --> 00:34:50,420
+is its public model there, to the editableWaypoint, okay?
+
+633
+00:34:50,422 --> 00:34:52,022
+Now let's go back to our storyboard here and
+
+634
+00:34:52,024 --> 00:34:54,658
+take a look at how we're going to create the segue
+
+635
+00:34:54,660 --> 00:34:56,493
+right here. Because right now, there's no segue,
+
+636
+00:34:56,495 --> 00:35:00,997
+this thing is free as a bird out here flying around, okay?
+
+637
+00:35:00,999 --> 00:35:04,201
+So we want to edit it, so we're gonna do the same thing
+
+638
+00:35:04,203 --> 00:35:07,304
+we did here when we created this one, which is,
+
+639
+00:35:07,306 --> 00:35:11,875
+to drag from the, view controller, oops,
+
+640
+00:35:11,877 --> 00:35:15,479
+not that one, from this view controller right here.
+
+641
+00:35:15,481 --> 00:35:20,717
+We're gonna drag from this guy up to our new MVC.
+
+642
+00:35:20,719 --> 00:35:23,620
+So let's do that. Ctrl+drag up here. Now, this time though,
+
+643
+00:35:23,622 --> 00:35:26,890
+we're gonna do something new. This one's gonna be presented
+
+644
+00:35:26,892 --> 00:35:28,859
+modally. So instead of saying show and
+
+645
+00:35:28,861 --> 00:35:31,261
+having it appear inside this navigation controller,
+
+646
+00:35:31,263 --> 00:35:33,463
+we're gonna do present modally and it's gonna take over
+
+647
+00:35:33,465 --> 00:35:35,932
+the whole screen while we're editing the waypoint.
+
+648
+00:35:35,934 --> 00:35:38,135
+So we do present modally. Now let's go ahead and
+
+649
+00:35:38,137 --> 00:35:40,737
+take a look at this, sorry, let's make this a little
+
+650
+00:35:40,739 --> 00:35:45,442
+easier to see here. Okay. Let's go ahead and take a look
+
+651
+00:35:45,444 --> 00:35:48,645
+at this segue that was just created in the inspector.
+
+652
+00:35:48,647 --> 00:35:52,282
+Okay, so you obviously will need an identifier.
+
+653
+00:35:52,284 --> 00:35:55,919
+I think I called this one Edit Waypoint.
+
+654
+00:35:55,921 --> 00:35:59,523
+I hope that's what I called it. Let's go take a quick
+
+655
+00:35:59,525 --> 00:36:02,292
+look, make sure we get it right in our constants. Yes,
+
+656
+00:36:02,294 --> 00:36:05,962
+Edit Waypoint. That's what we called this segue right there.
+
+657
+00:36:06,732 --> 00:36:09,599
+And you can see it's got Present Modally here,
+
+658
+00:36:09,601 --> 00:36:13,570
+okay? And we'll take a look at these presentation styles down
+
+659
+00:36:13,572 --> 00:36:17,207
+here a little bit later. Okay? But for right now,
+
+660
+00:36:17,209 --> 00:36:19,209
+we just wanna present modally. So let's go ahead and
+
+661
+00:36:19,211 --> 00:36:26,082
+see what this does. All right, so
+
+662
+00:36:26,084 --> 00:36:29,052
+here we go, we're gonna drop an editable waypoint, okay?
+
+663
+00:36:29,054 --> 00:36:33,089
+It says Dropped, we can pick it up and move it, okay,
+
+664
+00:36:33,091 --> 00:36:35,892
+to anywhere we want, like to that airport again. And
+
+665
+00:36:35,894 --> 00:36:38,328
+hopefully, we press this i, we're gonna get this
+
+666
+00:36:38,330 --> 00:36:42,032
+modal segue to this new MVC. So hit the i, there we go,
+
+667
+00:36:42,034 --> 00:36:44,100
+modal segue. Now, we've got some problems here.
+
+668
+00:36:44,102 --> 00:36:46,736
+Looks like we've got a little problem with our
+
+669
+00:36:46,738 --> 00:36:49,973
+auto layout there. We'll have to take a look at that. And
+
+670
+00:36:49,975 --> 00:36:54,511
+in fact, we've gotta fix that, or we're not gonna be able to,
+
+671
+00:36:54,513 --> 00:36:57,714
+to edit this. So let's go back to our storyboard here and
+
+672
+00:36:57,716 --> 00:36:58,715
+take a look at what the problem,
+
+673
+00:36:58,717 --> 00:37:01,184
+probably was that thing where I said same width.
+
+674
+00:37:01,186 --> 00:37:04,821
+Somebody has the same width who shouldn't, I believe.
+
+675
+00:37:04,823 --> 00:37:06,823
+Maybe one of these stack views.
+
+676
+00:37:06,825 --> 00:37:09,559
+Let's take a look at this guy. So I'm just gonna,
+
+677
+00:37:09,561 --> 00:37:12,362
+when you get a problem with your auto layout,
+
+678
+00:37:12,364 --> 00:37:16,132
+it's kind of a good idea to make a little tour through
+
+679
+00:37:16,134 --> 00:37:16,733
+your various things.
+
+680
+00:37:16,735 --> 00:37:19,769
+You can even see, I've got red here, conflicting constraints,
+
+681
+00:37:19,771 --> 00:37:22,405
+so we know there's problems. And sure enough, look at this.
+
+682
+00:37:22,407 --> 00:37:26,109
+When I said, tried to make the description equal to the name,
+
+683
+00:37:26,111 --> 00:37:28,612
+I made this whole stack view equal to the name.
+
+684
+00:37:28,614 --> 00:37:31,615
+You see that? Equal width to name, this whole stack view,
+
+685
+00:37:31,617 --> 00:37:35,185
+so that's not good. So I don't want this, so I'm just gonna
+
+686
+00:37:35,187 --> 00:37:38,288
+delete that constraint. And now this has probably fixed
+
+687
+00:37:38,290 --> 00:37:40,357
+the problem, because you see I have no more warning
+
+688
+00:37:40,359 --> 00:37:44,227
+of conflicting constraints. Okay? So let's go try again,
+
+689
+00:37:44,229 --> 00:37:50,800
+see if that makes our UI look a little better. All right.
+
+690
+00:37:50,802 --> 00:37:56,172
+We'll drop here. Edit. That looks a lot better.
+
+691
+00:37:56,174 --> 00:37:59,743
+Okay. And you can see that it passed from the prepare for
+
+692
+00:37:59,745 --> 00:38:02,279
+segue, it passed our existing name and info,
+
+693
+00:38:02,281 --> 00:38:04,981
+which is just dropped with no info, into here. And
+
+694
+00:38:04,983 --> 00:38:07,784
+it also put the keyboard up, was nice. And if I get rid of,
+
+695
+00:38:07,786 --> 00:38:10,020
+hit return, it makes the keyboard go away. And
+
+696
+00:38:10,022 --> 00:38:13,290
+if I make one of these first responder, it comes back.
+
+697
+00:38:13,292 --> 00:38:14,891
+All right. And I can edit this.
+
+698
+00:38:14,893 --> 00:38:21,231
+Let's say, I'll say, I love it when people, do something,
+
+699
+00:38:21,233 --> 00:38:27,437
+okay. And how about, the fact is your name.
+
+700
+00:38:27,439 --> 00:38:31,408
+Okay, so here's our basically name of our waypoint and
+
+701
+00:38:31,410 --> 00:38:34,678
+the description. And so, uh-oh, how do we get out of
+
+702
+00:38:34,680 --> 00:38:38,615
+here? It's like, we can't get out. So this is a problem I
+
+703
+00:38:38,617 --> 00:38:41,818
+was telling you about. Modal, you have to provide a way for
+
+704
+00:38:41,820 --> 00:38:44,621
+your user to escape once they've edited whatever they
+
+705
+00:38:44,623 --> 00:38:47,757
+want to edit. Okay? So how are we gonna do that? Let's go
+
+706
+00:38:47,759 --> 00:38:49,993
+back to our storyboard. The simple way to do it
+
+707
+00:38:49,995 --> 00:38:53,029
+is to put this inside a navigation controller and
+
+708
+00:38:53,031 --> 00:38:57,000
+put a done button up there like we saw in the slides.
+
+709
+00:38:57,002 --> 00:38:58,201
+So let's do that. Let's go here,
+
+710
+00:38:58,203 --> 00:39:00,270
+Edit > Embed In > Navigation Controller,
+
+711
+00:39:00,272 --> 00:39:03,440
+it puts it in a navigation controller right here. And
+
+712
+00:39:03,442 --> 00:39:04,741
+we're just gonna put a Done button right there.
+
+713
+00:39:04,743 --> 00:39:09,145
+So let's go down here. We'll search for bar button item.
+
+714
+00:39:09,147 --> 00:39:11,815
+Here it is, a Bar Button Item. We'll put it right up here.
+
+715
+00:39:11,817 --> 00:39:15,919
+I think there's even a standard system one for that,
+
+716
+00:39:15,921 --> 00:39:20,824
+maybe. Yeah, there's a Done button right there, okay, for
+
+717
+00:39:20,826 --> 00:39:21,124
+clicking Done.
+
+718
+00:39:21,126 --> 00:39:24,594
+And then we'll just make this done button call a method
+
+719
+00:39:24,596 --> 00:39:26,229
+in this view controller, by the way, so
+
+720
+00:39:26,231 --> 00:39:29,165
+you can see our stack view frames are a little off now.
+
+721
+00:39:29,167 --> 00:39:32,235
+We can fix that clicking on here and
+
+722
+00:39:32,237 --> 00:39:35,372
+doing a update frames, moves that down. But
+
+723
+00:39:35,374 --> 00:39:38,875
+let's make this so that it sends a message to ourselves,
+
+724
+00:39:38,877 --> 00:39:41,578
+and then we'll dismiss ourselves. Okay, so
+
+725
+00:39:41,580 --> 00:39:46,149
+let's do that. We get here, we'll put this.
+
+726
+00:39:46,151 --> 00:39:48,585
+Let's make it a little more space for you there. Okay,
+
+727
+00:39:48,587 --> 00:39:52,856
+we'll put that dismiss, how about, I don't know,
+
+728
+00:39:52,858 --> 00:39:56,259
+right up after our view controller lifecycle here.
+
+729
+00:39:56,261 --> 00:39:59,062
+Okay? So I'm just gonna Ctrl+drag right in here. This
+
+730
+00:39:59,064 --> 00:40:02,932
+is gonna be an action. This is my done action, I'll call it.
+
+731
+00:40:02,934 --> 00:40:07,137
+Okay, BarButtonitem is gonna be the argument. Here it is.
+
+732
+00:40:07,139 --> 00:40:08,972
+Now remember, again,
+
+733
+00:40:08,974 --> 00:40:13,943
+let's go twofold width here. Remember, here,
+
+734
+00:40:13,945 --> 00:40:18,214
+we don't want to say just dismissViewControllerAnimated.
+
+735
+00:40:18,216 --> 00:40:23,353
+We want to get our presentingViewController.
+
+736
+00:40:23,355 --> 00:40:28,091
+That's the view controller that presented us and
+
+737
+00:40:28,093 --> 00:40:32,195
+ask it to dismiss us, okay. And we don't care when that
+
+738
+00:40:32,197 --> 00:40:34,864
+happens. Okay, so don't forget that.
+
+739
+00:40:34,866 --> 00:40:38,301
+I'm kind of putting this self here just to let you know I'm
+
+740
+00:40:38,303 --> 00:40:41,805
+talking about my self's presentingViewController but
+
+741
+00:40:41,807 --> 00:40:43,773
+you don't need self there obviously,
+
+742
+00:40:43,775 --> 00:40:46,810
+okay? Understand that? All right, so let's see that.
+
+743
+00:40:46,812 --> 00:40:54,150
+See how that makes this work. All right,
+
+744
+00:40:54,152 --> 00:40:58,922
+so we'll drop this. Go here, we'll edit it. Comes up,
+
+745
+00:40:58,924 --> 00:41:00,623
+we've got our Navigation Controller, it's there.
+
+746
+00:41:00,625 --> 00:41:03,460
+We probably should have put a title called edit waypoint or
+
+747
+00:41:03,462 --> 00:41:06,696
+something like that. So let's go ahead and edit this again.
+
+748
+00:41:06,698 --> 00:41:12,235
+So let's say the best thing. Okay, that's what our name is.
+
+749
+00:41:12,237 --> 00:41:17,740
+And the description is, the only way. All right, so we got
+
+750
+00:41:17,742 --> 00:41:21,177
+the best thing and the only way there. And we hit Done.
+
+751
+00:41:21,179 --> 00:41:25,048
+And it still says, Dropped, okay? Now why is that?
+
+752
+00:41:25,050 --> 00:41:27,851
+Well, that's because that callout was put up, and
+
+753
+00:41:27,853 --> 00:41:30,954
+when it's put up, it's loaded up with the waypoint's
+
+754
+00:41:30,956 --> 00:41:34,090
+information. And it stays that way all the time,
+
+755
+00:41:34,092 --> 00:41:37,894
+okay? The only time it changes is if it goes away and
+
+756
+00:41:37,896 --> 00:41:42,232
+comes back. When it comes back, it came back, okay?
+
+757
+00:41:42,234 --> 00:41:45,201
+Now we got a bug somewhere in our code cuz it should have
+
+758
+00:41:45,203 --> 00:41:49,706
+our subtitle there. But that was really annoying for
+
+759
+00:41:49,708 --> 00:41:51,474
+our user that they went and edited this and
+
+760
+00:41:51,476 --> 00:41:54,244
+when they came back it still said Dropped, okay.
+
+761
+00:41:54,246 --> 00:41:56,479
+So let's fix the bug so that this the only way,
+
+762
+00:41:56,481 --> 00:42:01,684
+which I think was the info was yeah, so here we go.
+
+763
+00:42:01,686 --> 00:42:05,755
+This should be info = the infoTextField,
+
+764
+00:42:05,757 --> 00:42:10,360
+okay? So how are we gonna fix that? Well, one thing about it
+
+765
+00:42:10,362 --> 00:42:16,165
+right off the bat is that when we click on this little i,
+
+766
+00:42:16,167 --> 00:42:19,402
+I'm gonna take this callout off the screen. Because I know
+
+767
+00:42:19,404 --> 00:42:22,572
+it's pretty much invalid right away because if I go over here
+
+768
+00:42:22,574 --> 00:42:23,673
+and change this to anything else,
+
+769
+00:42:23,675 --> 00:42:26,576
+that thing is no good anymore. So let's do that as step one.
+
+770
+00:42:26,578 --> 00:42:29,646
+Let's just take that callout away when we do this
+
+771
+00:42:29,648 --> 00:42:31,948
+performForSeg, performSegue. So
+
+772
+00:42:31,950 --> 00:42:33,516
+let's find where we do that performSegue,
+
+773
+00:42:33,518 --> 00:42:38,588
+it's in this funny little calloutAccessoryTapped, right?
+
+774
+00:42:38,590 --> 00:42:40,089
+Here's where we perform that segue.
+
+775
+00:42:40,091 --> 00:42:41,558
+And when we perform that segue,
+
+776
+00:42:41,560 --> 00:42:45,128
+we're going to remove that callout when we do that. And
+
+777
+00:42:45,130 --> 00:42:50,099
+so, we do that by saying mapView.deselectAnnotation
+
+778
+00:42:50,101 --> 00:42:52,735
+because the reason that callout is up is because this
+
+779
+00:42:52,737 --> 00:42:55,805
+annotation is selected. So, if we deselect this annotation,
+
+780
+00:42:55,807 --> 00:42:59,042
+it will remove that callout. And what do we wanna do?
+
+781
+00:42:59,044 --> 00:43:02,078
+We wanna remove the annotation in the view that our
+
+782
+00:43:02,080 --> 00:43:05,348
+callout is currently accessory control tapping.
+
+783
+00:43:05,350 --> 00:43:07,550
+And sure, we'll, we'll animate it, although it probably
+
+784
+00:43:07,552 --> 00:43:09,752
+doesn't matter that it's animated because we're gonna
+
+785
+00:43:09,754 --> 00:43:10,853
+put a modal thing right on top of it. But
+
+786
+00:43:10,855 --> 00:43:13,756
+maybe it'll be fading out as that's sliding in, that might
+
+787
+00:43:13,758 --> 00:43:18,428
+be kinda nice. Okay, so let's see if that fixes our problem.
+
+788
+00:43:22,233 --> 00:43:25,068
+All right, here we go. Put this on the airport here.
+
+789
+00:43:25,070 --> 00:43:27,704
+We'll click there, there's Dropped. We click.
+
+790
+00:43:27,706 --> 00:43:31,341
+Okay, we go to Dropped. And we'll put something in here.
+
+791
+00:43:31,343 --> 00:43:36,412
+Say I'm so excited, that's good.
+
+792
+00:43:36,414 --> 00:43:40,083
+Description, the fact is. Okay, and
+
+793
+00:43:40,085 --> 00:43:44,253
+we'll hit Done and hopefully, it's not showing it.
+
+794
+00:43:44,255 --> 00:43:45,855
+So at least it's not saying dropped, so
+
+795
+00:43:45,857 --> 00:43:49,192
+that's the improvement, right? But if we click on it, it's
+
+796
+00:43:49,194 --> 00:43:52,829
+showing it. So really what we'd like is when we come back
+
+797
+00:43:52,831 --> 00:43:55,732
+from that modal segue, we'd like it to put this thing back
+
+798
+00:43:55,734 --> 00:43:58,968
+up with the new information. Okay, so how are we gonna do
+
+799
+00:43:58,970 --> 00:44:02,839
+that, cuz we don't know when that modal thing goes away,
+
+800
+00:44:02,841 --> 00:44:05,708
+okay. It's just getting dismissed, right? So this is
+
+801
+00:44:05,710 --> 00:44:09,679
+a good opportunity to show you unwind. Okay, so we're gonna,
+
+802
+00:44:09,681 --> 00:44:12,915
+instead of hitting Done and having it dismiss ourselves,
+
+803
+00:44:12,917 --> 00:44:14,917
+we're going to do an unwind segue back to
+
+804
+00:44:14,919 --> 00:44:17,387
+our GPXController. And when it gets that message,
+
+805
+00:44:17,389 --> 00:44:20,657
+that special message, it'll know I'm gonna put this thing
+
+806
+00:44:20,659 --> 00:44:23,826
+back up, okay. So let's do that, so how do we do that?
+
+807
+00:44:23,828 --> 00:44:27,330
+We know that when we unwind, we always wanna create one of
+
+808
+00:44:27,332 --> 00:44:31,401
+this special methods, okay? And those special methods,
+
+809
+00:44:31,403 --> 00:44:34,904
+first of all, they're always IBActions, okay?
+
+810
+00:44:34,906 --> 00:44:38,141
+They can have any name that we want, so we'll call ours
+
+811
+00:44:38,143 --> 00:44:42,045
+updatedUserWaypoint because that's what happened, okay?
+
+812
+00:44:42,047 --> 00:44:44,414
+When the unwind happens, the user update waypoint
+
+813
+00:44:44,416 --> 00:44:48,785
+got updated. And the other thing that's special about it,
+
+814
+00:44:48,787 --> 00:44:52,288
+the argument has to be a UIStoryboardSegue, okay?
+
+815
+00:44:52,290 --> 00:44:54,957
+So this is the special method and this is all we need to do
+
+816
+00:44:54,959 --> 00:44:57,794
+to create one of these special message, methods.
+
+817
+00:44:57,796 --> 00:44:59,829
+We'll call it a func. All right, and
+
+818
+00:44:59,831 --> 00:45:03,599
+so now anybody can unwind to this as long as there's
+
+819
+00:45:03,601 --> 00:45:06,669
+something we presented. Any MVC that we've presented or
+
+820
+00:45:06,671 --> 00:45:09,672
+that was presented by somebody we presented,
+
+821
+00:45:09,674 --> 00:45:12,408
+etc., can now unwind back to us here.
+
+822
+00:45:12,410 --> 00:45:14,644
+Now what are we gonna do when we unbind back to here?
+
+823
+00:45:14,646 --> 00:45:18,314
+Well, we're gonna reselect that annotation that we
+
+824
+00:45:18,316 --> 00:45:22,452
+deselected when we left. So let's do that.
+
+825
+00:45:22,454 --> 00:45:25,054
+I'll create a little function to do that called sec,
+
+826
+00:45:25,056 --> 00:45:31,094
+selectWaypoint. Okay, and selectWaypoint, we gotta get
+
+827
+00:45:31,096 --> 00:45:34,030
+the waypoint we selected, it's a little tricky, watch this.
+
+828
+00:45:34,032 --> 00:45:38,668
+I'm gonna get the segue's sourceViewController. That's
+
+829
+00:45:38,670 --> 00:45:41,237
+the view controller that is sending us this unwind.
+
+830
+00:45:41,239 --> 00:45:43,272
+So that's gonna be the modal segue, right?
+
+831
+00:45:43,274 --> 00:45:45,274
+That's the source of the unwind. So
+
+832
+00:45:45,276 --> 00:45:46,776
+we're gonna get that sourceViewController.
+
+833
+00:45:46,778 --> 00:45:49,479
+And actually we'll get its contentViewController,
+
+834
+00:45:49,481 --> 00:45:55,451
+okay? And it has to be an EditWaypointViewController.
+
+835
+00:45:55,453 --> 00:45:57,253
+And if we're able to find that,
+
+836
+00:45:57,255 --> 00:46:00,223
+then we'll just get its waypointToEdit. Okay,
+
+837
+00:46:00,225 --> 00:46:03,659
+that's obviously the waypoint that we want to select.
+
+838
+00:46:03,661 --> 00:46:07,463
+So we need to, this method selectWaypoint. Let's do that.
+
+839
+00:46:07,465 --> 00:46:12,502
+func selectWaypoint takes a waypoint
+
+840
+00:46:12,504 --> 00:46:17,240
+which is at GPX.Waypoint, point. We'll
+
+841
+00:46:17,242 --> 00:46:19,675
+even make it optional if you wanna pass it in there. And
+
+842
+00:46:19,677 --> 00:46:24,614
+we'll just say if the waypoint != nil then we are gonna go
+
+843
+00:46:24,616 --> 00:46:29,786
+to the mapView and tell it to select an annotation, which is
+
+844
+00:46:29,788 --> 00:46:34,991
+the waypoint. Okay, remember that all of our waypoints
+
+845
+00:46:34,993 --> 00:46:37,827
+are annotations, so we can directly ask the mapView. This
+
+846
+00:46:37,829 --> 00:46:40,797
+is what's really nice about having some data structure
+
+847
+00:46:40,799 --> 00:46:43,866
+that we already have in our app, like a GPX waypoint,
+
+848
+00:46:43,868 --> 00:46:45,735
+implement that MK annotation protocol.
+
+849
+00:46:45,737 --> 00:46:48,704
+Because we're not having to constantly create these other
+
+850
+00:46:48,706 --> 00:46:51,774
+little things that contain all the waypoint in you know,
+
+851
+00:46:51,776 --> 00:46:54,777
+the MK notation information, we just get it directly from
+
+852
+00:46:54,779 --> 00:46:57,346
+our waypoints. Okay, so this is gonna select it.
+
+853
+00:46:57,348 --> 00:47:01,017
+So now we have to unwind to this instead of doing Done.
+
+854
+00:47:01,019 --> 00:47:03,653
+So let's go back to our storyboard here. Okay,
+
+855
+00:47:03,655 --> 00:47:06,622
+we've got this Done. I'm gonna disconnect Done
+
+856
+00:47:06,624 --> 00:47:09,525
+from this done method, right. So I'm just going here and
+
+857
+00:47:09,527 --> 00:47:12,395
+disconnecting it. So now it's not gonna send Done. And
+
+858
+00:47:12,397 --> 00:47:16,065
+in fact, if we go back to our EditWaypointViewController,
+
+859
+00:47:16,067 --> 00:47:19,368
+we can just delete this done method entirely whenever it
+
+860
+00:47:19,370 --> 00:47:22,905
+is, oops, there it is. Okay, we're not even gonna use that
+
+861
+00:47:22,907 --> 00:47:25,808
+anymore. Instead of doing that, we are going to unwind.
+
+862
+00:47:25,810 --> 00:47:28,878
+So let's go back here and unwind. So, how do we unwind?
+
+863
+00:47:28,880 --> 00:47:33,583
+Everyone remember? Ctrl+drag to this Exit button. Okay,
+
+864
+00:47:33,585 --> 00:47:36,519
+this is how you unwind. This is saying I want this Done
+
+865
+00:47:36,521 --> 00:47:39,021
+button to unwind, okay? To exit this MVC and
+
+866
+00:47:39,023 --> 00:47:41,624
+go back to one of its presenters. And look, when we
+
+867
+00:47:41,626 --> 00:47:44,861
+click, look what we see in the list! updatedUserWaypoint.
+
+868
+00:47:44,863 --> 00:47:46,796
+That method we put there with the special
+
+869
+00:47:46,798 --> 00:47:49,065
+IBAction in this segue as an argument,
+
+870
+00:47:49,067 --> 00:47:51,601
+okay? And every method in every MVC we ever
+
+871
+00:47:51,603 --> 00:47:54,203
+would've put in our entire app that was like that would
+
+872
+00:47:54,205 --> 00:47:57,173
+appear here. Yeah, question. >> Does the unwind only work
+
+873
+00:47:57,175 --> 00:47:59,342
+in a Navigation Controller? >> So the question,
+
+874
+00:47:59,344 --> 00:48:01,844
+does unwind only work inside a Navigation Controller?
+
+875
+00:48:01,846 --> 00:48:03,379
+And the answer is no, it works anywhere.
+
+876
+00:48:03,381 --> 00:48:06,616
+So you could have just a non-navigation controller MBC
+
+877
+00:48:06,618 --> 00:48:09,719
+present another one modally which presents another one
+
+878
+00:48:09,721 --> 00:48:13,055
+modally, and then you unwind back to either of those two.
+
+879
+00:48:13,057 --> 00:48:15,358
+So it has nothing to do with navigation controller.
+
+880
+00:48:15,360 --> 00:48:17,860
+This is not pop you now back or anything.
+
+881
+00:48:17,862 --> 00:48:21,664
+This is really just take this MBCs off until you get back to
+
+882
+00:48:21,666 --> 00:48:24,166
+the guy who implements this method, okay?
+
+883
+00:48:24,168 --> 00:48:26,535
+Now it would work in a navigation controller as well.
+
+884
+00:48:26,537 --> 00:48:29,772
+It would pop back from that as well, but it works in any
+
+885
+00:48:29,774 --> 00:48:33,476
+any environment basically. All right so I'm gonna click that
+
+886
+00:48:33,478 --> 00:48:37,113
+and that's gonna make the done button unwind to that method.
+
+887
+00:48:37,115 --> 00:48:42,618
+Okay so that method is gonna get called. So let's ugh. We
+
+888
+00:48:42,620 --> 00:48:47,256
+looking at this method when it happens. Let's go over here.
+
+889
+00:48:51,529 --> 00:48:55,665
+All right so drop the pin right here gonna click.
+
+890
+00:48:55,667 --> 00:48:59,435
+It says dropped right here. We're gonna go edit it.
+
+891
+00:48:59,437 --> 00:49:03,339
+Change it to something here,
+
+892
+00:49:03,341 --> 00:49:08,511
+how about the fact that you have to,
+
+893
+00:49:08,513 --> 00:49:11,747
+and we'll call this I'm so
+
+894
+00:49:11,749 --> 00:49:15,785
+happy, okay? So we're gonna hit done here and hopefully,
+
+895
+00:49:15,787 --> 00:49:18,187
+we're gonna see that call out, show up,
+
+896
+00:49:18,189 --> 00:49:20,056
+without having to click on anything and, sure enough,
+
+897
+00:49:20,058 --> 00:49:24,226
+it does. Okay because it unwind back, called this code
+
+898
+00:49:24,228 --> 00:49:26,529
+right here which selected that annotation.
+
+899
+00:49:26,531 --> 00:49:31,667
+This is back in our TPX view controller here, see? Okay,
+
+900
+00:49:31,669 --> 00:49:34,036
+everybody got the unwind there? All right,
+
+901
+00:49:34,038 --> 00:49:37,974
+the next segue we're gonna look at is popovers. Okay,
+
+902
+00:49:37,976 --> 00:49:41,110
+let's take a look at our app on iPad. And
+
+903
+00:49:41,112 --> 00:49:44,280
+to do this I'm actually gonna do it on my device over here.
+
+904
+00:49:44,282 --> 00:49:49,819
+So let's go up here, this is device and run this.
+
+905
+00:49:54,559 --> 00:49:57,760
+We made this to a universal app so it should work fine
+
+906
+00:49:57,762 --> 00:50:01,097
+over here. Sure enough there it is, zooming in to where we
+
+907
+00:50:01,099 --> 00:50:05,167
+are, okay. Here's our stuff we can zoom in here and
+
+908
+00:50:05,169 --> 00:50:08,304
+we can click on these things just like we could before. And
+
+909
+00:50:08,306 --> 00:50:14,643
+we can segue to see this. Okay all that stuff is nice.
+
+910
+00:50:14,645 --> 00:50:18,314
+And we can also add new pins, so I'm just long pressing.
+
+911
+00:50:18,316 --> 00:50:21,684
+There's a pin. Okay, let's click there, okay dropped.
+
+912
+00:50:21,686 --> 00:50:27,390
+We're going to edit it. Whoa. Okay this is pretty ugly UI.
+
+913
+00:50:27,392 --> 00:50:29,325
+Okay do not do this in your final project.
+
+914
+00:50:29,327 --> 00:50:31,660
+I cannot tell you how many final projects
+
+915
+00:50:31,662 --> 00:50:35,031
+think I've made it work on the iPad with this kind of UI.
+
+916
+00:50:35,033 --> 00:50:37,099
+Okay, this kind of UI looks ridiculous.
+
+917
+00:50:37,101 --> 00:50:39,568
+You're never going to have the name and description be that
+
+918
+00:50:39,570 --> 00:50:43,506
+long, okay. So you don't want that. There are other ways of
+
+919
+00:50:43,508 --> 00:50:45,608
+presenting modal NBC's that look a lot
+
+920
+00:50:45,610 --> 00:50:49,345
+better on iPad. So let's go pick one of them, let's go
+
+921
+00:50:49,347 --> 00:50:53,482
+back to our storyboard here, oops. Let's go back to our
+
+922
+00:50:53,484 --> 00:50:57,553
+storyboard and we're just gonna change our segue here,
+
+923
+00:50:57,555 --> 00:51:00,890
+this is the modal segue okay. That puts this thing up,
+
+924
+00:51:00,892 --> 00:51:03,893
+okay we're gonna inspect it and I'm gonna try a different
+
+925
+00:51:03,895 --> 00:51:07,396
+presentation like for example form sheet. So form sheet is
+
+926
+00:51:07,398 --> 00:51:10,399
+much more appropriate for the iPad. So let's go ahead and
+
+927
+00:51:10,401 --> 00:51:12,935
+run this. See what form sheet looks like. The form sheet
+
+928
+00:51:12,937 --> 00:51:16,472
+modal presentation. It's just a different presentation than
+
+929
+00:51:16,474 --> 00:51:17,540
+take over the whole screen.
+
+930
+00:51:17,542 --> 00:51:18,574
+It still takes over the whole screen,
+
+931
+00:51:18,576 --> 00:51:21,877
+it just does it a little more space efficiently here.
+
+932
+00:51:21,879 --> 00:51:24,013
+All right, so I'm dropping a pin there and
+
+933
+00:51:24,015 --> 00:51:24,580
+we're gonna edit it. And
+
+934
+00:51:24,582 --> 00:51:28,617
+you can see this gives a much more sensible looking space.
+
+935
+00:51:28,619 --> 00:51:32,154
+Now the background here on the side, the grey on the side,
+
+936
+00:51:32,156 --> 00:51:34,423
+okay, is not active. I can't do anything with it so
+
+937
+00:51:34,425 --> 00:51:36,525
+it's still modal, it's still completely taking over,
+
+938
+00:51:36,527 --> 00:51:40,029
+it just presenting it a little nicer here. Okay, and I can
+
+939
+00:51:40,031 --> 00:51:44,767
+still do all the things that I would do here. Ya know, hello.
+
+940
+00:51:44,769 --> 00:51:49,271
+Okay so, that's nice but, really on the iPad, what would
+
+941
+00:51:49,273 --> 00:51:53,776
+be really cool is to do it in a little pop over right there.
+
+942
+00:51:53,778 --> 00:51:57,179
+Okay to have the name, and info just be in that small,
+
+943
+00:51:57,181 --> 00:52:00,249
+little pop over pointing right at that little pin,
+
+944
+00:52:00,251 --> 00:52:03,352
+that would be a much better UI. And so it's great because
+
+945
+00:52:03,354 --> 00:52:06,222
+we can learn how to do pop overs. So lets do that, how
+
+946
+00:52:06,224 --> 00:52:11,393
+are we gonna do popovers? So a, and when we have a popover
+
+947
+00:52:11,395 --> 00:52:14,630
+we're not gonna want this Navigation Controller in here,
+
+948
+00:52:14,632 --> 00:52:17,032
+okay? We'll zoom out so you can see it.
+
+949
+00:52:17,034 --> 00:52:20,069
+Okay if when we have a popover to do this we wanna get
+
+950
+00:52:20,071 --> 00:52:21,303
+rid of this Navigation Controller here.
+
+951
+00:52:21,305 --> 00:52:24,140
+So I'm gonna delete that. So we have this, okay?
+
+952
+00:52:24,142 --> 00:52:27,276
+Now, I'm just gonnato create a popover in the same way,
+
+953
+00:52:27,278 --> 00:52:28,677
+as we created all the other ones, okay?
+
+954
+00:52:28,679 --> 00:52:32,781
+Which is control drag from here up to here. But
+
+955
+00:52:32,783 --> 00:52:36,285
+this time, I'm gonna choose present as popover. Okay and
+
+956
+00:52:36,287 --> 00:52:40,422
+this creates this right here and you can see here's the pop
+
+957
+00:52:40,424 --> 00:52:43,659
+over segue. Now we of course need an identifier for it.
+
+958
+00:52:43,661 --> 00:52:45,728
+We're going to do the same identifier cause we're
+
+959
+00:52:45,730 --> 00:52:47,630
+going to have the same prepare segue as we have for
+
+960
+00:52:47,632 --> 00:52:52,168
+the mog modal one which was edit waypoint. All right.
+
+961
+00:52:52,170 --> 00:52:55,771
+Notice popover has some extra things down here. Okay, and
+
+962
+00:52:55,773 --> 00:52:58,741
+this mostly has to do with when I put this popover up,
+
+963
+00:52:58,743 --> 00:53:01,911
+okay, where do you want it to appear? And part of where
+
+964
+00:53:01,913 --> 00:53:04,380
+it wants to appear is where you are going to allow
+
+965
+00:53:04,382 --> 00:53:07,583
+the Popovers little arrow to point, point up, or left, or
+
+966
+00:53:07,585 --> 00:53:10,920
+down, or right that's gonna to kind of position it a little
+
+967
+00:53:10,922 --> 00:53:13,689
+bit. In our case we'll let it point any direction.
+
+968
+00:53:13,691 --> 00:53:17,526
+So, depending on whether your weight point is up in the left
+
+969
+00:53:17,528 --> 00:53:18,761
+corner, in the right corner,
+
+970
+00:53:18,763 --> 00:53:20,362
+we'll let the pop over be above it, below it,
+
+971
+00:53:20,364 --> 00:53:24,300
+whatever the system thinks is best. But the popover also
+
+972
+00:53:24,302 --> 00:53:26,936
+needs needs an anchor, which is when I come up I've gotta
+
+973
+00:53:26,938 --> 00:53:29,471
+point at something. And we're not bringing this up with
+
+974
+00:53:29,473 --> 00:53:32,308
+a bar button, or something we can point to. We're bringing
+
+975
+00:53:32,310 --> 00:53:35,311
+it up by clicking on this little annotation thing. So,
+
+976
+00:53:35,313 --> 00:53:39,748
+we really want the anchor to be those pins. Okay so
+
+977
+00:53:39,750 --> 00:53:42,218
+those pins are in the map view so
+
+978
+00:53:42,220 --> 00:53:45,754
+I'm going to have the anchor right here be the map view and
+
+979
+00:53:45,756 --> 00:53:48,591
+then in code I'm going to specify a rectangle in the map
+
+980
+00:53:48,593 --> 00:53:51,794
+view which contains that little annotation view. So
+
+981
+00:53:51,796 --> 00:53:55,731
+the way I make the map view be anchor is I Ctrl+Drag
+
+982
+00:53:55,733 --> 00:53:59,168
+over to this. Okay, from the little circle. Like that and
+
+983
+00:53:59,170 --> 00:54:01,070
+you can see it puts the map view in there.
+
+984
+00:54:01,072 --> 00:54:03,272
+So now it's saying okay, I understand that
+
+985
+00:54:03,274 --> 00:54:06,342
+I'm gonna point up pointing to somewhere in the map view.
+
+986
+00:54:06,344 --> 00:54:08,010
+In your code you better tell me where and
+
+987
+00:54:08,012 --> 00:54:11,480
+we're gonna tell you, tell it where, okay?
+
+988
+00:54:13,551 --> 00:54:16,785
+Okay, okay, all right.
+
+989
+00:54:16,787 --> 00:54:20,022
+So where are we gonna set that little rectangle, okay?
+
+990
+00:54:20,024 --> 00:54:23,659
+We're gonna set that in our prepareforsegue, for
+
+991
+00:54:23,661 --> 00:54:26,862
+this segue, that's where you set up all your popover stuff,
+
+992
+00:54:26,864 --> 00:54:28,831
+is in the prepareforsegue for that segue.
+
+993
+00:54:28,833 --> 00:54:32,635
+So here is that part of this prepareforsegue,
+
+994
+00:54:32,637 --> 00:54:35,871
+write the edit user waypoint, part of the prepareforsegue.
+
+995
+00:54:35,873 --> 00:54:39,241
+All we're gonna do here is get the popover presentation
+
+996
+00:54:39,243 --> 00:54:43,178
+controller. So if we can get that, we get it from the MBC
+
+997
+00:54:43,180 --> 00:54:47,983
+we're presenting. So in this case it's the EWVC, the edit
+
+998
+00:54:47,985 --> 00:54:50,719
+wavepoint view controller. We get it from that.
+
+999
+00:54:50,721 --> 00:54:51,720
+And we get it from this method,
+
+1000
+00:54:51,722 --> 00:54:55,257
+pop over presentation controller. Now if we're now
+
+1001
+00:54:55,259 --> 00:54:58,427
+popping over this would be null. This code won't execute,
+
+1002
+00:54:58,429 --> 00:55:01,230
+excellent, okay? But if we're doing a popover, then it will
+
+1003
+00:55:01,232 --> 00:55:04,800
+not be null. So in here we configure the popover
+
+1004
+00:55:04,802 --> 00:55:06,535
+presentation controller and you can go look at the doc,
+
+1005
+00:55:06,537 --> 00:55:10,506
+but one of the things you can do is the source rectangle
+
+1006
+00:55:10,508 --> 00:55:14,710
+that it's gonna point to in your anchor view, okay? And
+
+1007
+00:55:14,712 --> 00:55:16,278
+what is this gonna be? Well that's easy for
+
+1008
+00:55:16,280 --> 00:55:20,683
+us, that's just gonna be the annotation view's frame. Okay,
+
+1009
+00:55:20,685 --> 00:55:21,650
+the frame of the little pin,
+
+1010
+00:55:21,652 --> 00:55:26,355
+that's where we want the popover to point. Make sense?
+
+1011
+00:55:26,357 --> 00:55:29,091
+All right so, so, let's run this, see what it looks like.
+
+1012
+00:55:39,270 --> 00:55:43,939
+All right? So, we'll drop this here, click on it and
+
+1013
+00:55:43,941 --> 00:55:47,710
+whoa! Well, hm, okay we're makin progress but I
+
+1014
+00:55:47,712 --> 00:55:52,581
+don't think we're quite there. So what's wrong with this?
+
+1015
+00:55:52,583 --> 00:55:54,883
+Well, one thing is that thing is huge!
+
+1016
+00:55:54,885 --> 00:55:57,753
+Way bigger than it needs to be! Why is it so big?
+
+1017
+00:55:57,755 --> 00:56:00,456
+The answer is because no one told it what size it was
+
+1018
+00:56:00,458 --> 00:56:03,826
+supposed to be. Okay, and you remember from the slides,
+
+1019
+00:56:03,828 --> 00:56:05,594
+we do this in an object-oriented way.
+
+1020
+00:56:05,596 --> 00:56:09,164
+The system wants the MVC that's being put up to say,
+
+1021
+00:56:09,166 --> 00:56:13,669
+what size do you want to be? Now, what's really cool is,
+
+1022
+00:56:13,671 --> 00:56:18,207
+I'm gonna calculate that size using Auto Layout, okay?
+
+1023
+00:56:18,209 --> 00:56:21,110
+I'm basically gonna say, make yourself as small as you can
+
+1024
+00:56:21,112 --> 00:56:23,746
+and still obey the Auto Layout rules, okay? And you can do
+
+1025
+00:56:23,748 --> 00:56:26,482
+that with one line of code. So it's really cool. All right,
+
+1026
+00:56:26,484 --> 00:56:28,884
+so where am I gonna do that? So I'm gonna do that in my
+
+1027
+00:56:28,886 --> 00:56:30,185
+EditWaypointViewController. Okay,
+
+1028
+00:56:30,187 --> 00:56:32,955
+this is the view controller that's coming up there. So
+
+1029
+00:56:32,957 --> 00:56:33,655
+it's the one responsible for
+
+1030
+00:56:33,657 --> 00:56:37,159
+setting its preferred size. And I'm gonna do it in
+
+1031
+00:56:37,161 --> 00:56:42,231
+the view controller life cycle method viewWillLayoutSubviews.
+
+1032
+00:56:42,233 --> 00:56:45,334
+Okay, so, I know that in viewWillLayOutSubviews,
+
+1033
+00:56:45,336 --> 00:56:49,071
+my balance is gonna be set to whatever the latest thing is.
+
+1034
+00:56:49,073 --> 00:56:53,375
+So I know I'm gonna have some good, bounds situation.
+
+1035
+00:56:53,377 --> 00:56:55,677
+So I'm just gonna, in here, I'm gonna set my,
+
+1036
+00:56:55,679 --> 00:57:02,151
+preferred content size, that's the size that I prefer to be,
+
+1037
+00:57:02,153 --> 00:57:04,119
+to be the following thing,
+
+1038
+00:57:04,121 --> 00:57:09,825
+view dot, okay, and all views implement this cool method,
+
+1039
+00:57:09,827 --> 00:57:17,299
+systemLayoutSizeFittingSize, okay.
+
+1040
+00:57:17,301 --> 00:57:20,402
+So that's basically saying, use Auto Layout and
+
+1041
+00:57:20,404 --> 00:57:20,803
+tell me what size will
+
+1042
+00:57:20,805 --> 00:57:25,407
+fit in this size the best. And there's a really cool size,
+
+1043
+00:57:25,409 --> 00:57:29,845
+predefined size, called the UILayoutFittingSize.
+
+1044
+00:57:29,847 --> 00:57:33,282
+There's a ExpandedSize, which means, make me as big as you
+
+1045
+00:57:33,284 --> 00:57:36,852
+can and obey Auto Layout, and then there's CompressedSize,
+
+1046
+00:57:36,854 --> 00:57:40,389
+which is, make me as small as you can. Okay, so, I'm gonna
+
+1047
+00:57:40,391 --> 00:57:43,559
+go for CompressedSize, okay, and it's going to give me
+
+1048
+00:57:43,561 --> 00:57:46,962
+a size that fits as small as possible using Auto Layout.
+
+1049
+00:57:46,964 --> 00:57:48,931
+Okay, so this is a really cool little method,
+
+1050
+00:57:48,933 --> 00:57:52,534
+it's how you get Auto Layout to calculate a size for you.
+
+1051
+00:57:52,536 --> 00:57:55,637
+All right, so let's see, now that the size is right,
+
+1052
+00:57:55,639 --> 00:57:58,974
+let's go see if that's going to fix things. I don't think
+
+1053
+00:57:58,976 --> 00:58:02,544
+it's gonna be quite right, but it's gonna be close.
+
+1054
+00:58:07,485 --> 00:58:11,854
+All right, here we go, drop a pin. We're gonna click on it,
+
+1055
+00:58:11,856 --> 00:58:16,658
+oops, I clicked on the side of it. Okay, and edit it. Okay,
+
+1056
+00:58:16,660 --> 00:58:19,828
+now, this is really close. Okay, it's really nice.
+
+1057
+00:58:19,830 --> 00:58:22,364
+See how it's making it just the right size?
+
+1058
+00:58:22,366 --> 00:58:25,868
+The problem is, the text editing part is pretty small.
+
+1059
+00:58:25,870 --> 00:58:29,972
+Because look what it did, it sized it to the word Dropped.
+
+1060
+00:58:29,974 --> 00:58:33,175
+Okay, and why did it do that? Because in our Auto Layout,
+
+1061
+00:58:33,177 --> 00:58:36,111
+we didn't tell anything else about what size it should be.
+
+1062
+00:58:36,113 --> 00:58:37,346
+So it put the contents in there, and
+
+1063
+00:58:37,348 --> 00:58:39,882
+it made it as small as possible and fit the contents.
+
+1064
+00:58:39,884 --> 00:58:43,886
+So we actually wanna go back to our storyboard and put
+
+1065
+00:58:43,888 --> 00:58:47,289
+a minimum, reasonable minimum size for those text fields so
+
+1066
+00:58:47,291 --> 00:58:50,459
+that they will give the person room to type something in.
+
+1067
+00:58:50,461 --> 00:58:53,729
+Okay? The other thing is, the background is white.
+
+1068
+00:58:53,731 --> 00:58:56,698
+This may be hard for you to see on that screen. But if you
+
+1069
+00:58:56,700 --> 00:59:00,769
+look where the little arrow is pointing next to the word
+
+1070
+00:59:00,771 --> 00:59:04,540
+description there, that's actually semitransparent.
+
+1071
+00:59:04,542 --> 00:59:06,041
+And then also where the name and
+
+1072
+00:59:06,043 --> 00:59:09,077
+description is is a white box. Okay, so it's actually
+
+1073
+00:59:09,079 --> 00:59:12,781
+possible to have the whole thing be this semitransparent,
+
+1074
+00:59:12,783 --> 00:59:15,284
+so that we can kind of see that we're on top of a map.
+
+1075
+00:59:15,286 --> 00:59:19,221
+It won't feel so kind of obnoxious, this white box. And
+
+1076
+00:59:19,223 --> 00:59:21,657
+the way to do that is just to make this MVC have
+
+1077
+00:59:21,659 --> 00:59:25,894
+a background of clear. Okay, then it's just going to appear
+
+1078
+00:59:25,896 --> 00:59:28,730
+clear on top of the popover's background,
+
+1079
+00:59:28,732 --> 00:59:30,399
+which is semitransparent.
+
+1080
+00:59:30,401 --> 00:59:32,034
+Okay, so we're gonna fix both those things at once.
+
+1081
+00:59:32,036 --> 00:59:35,370
+So we're going back to our storyboard here. Okay, so
+
+1082
+00:59:35,372 --> 00:59:38,674
+we're gonna make it so that these text fields right here,
+
+1083
+00:59:38,676 --> 00:59:41,343
+okay, are a reasonable minimal, minimum size.
+
+1084
+00:59:41,345 --> 00:59:43,645
+So what would be a reasonable minimum size?
+
+1085
+00:59:43,647 --> 00:59:48,483
+Let's go here to our width here and height. And so
+
+1086
+00:59:48,485 --> 00:59:52,354
+we could say a width of maybe, I don't know, 250 points?
+
+1087
+00:59:52,356 --> 00:59:54,289
+This is something that you could play with in your UI.
+
+1088
+00:59:54,291 --> 00:59:57,025
+I really only need to set one of these, because these
+
+1089
+00:59:57,027 --> 00:59:59,194
+are already gonna be the same width. And so
+
+1090
+00:59:59,196 --> 01:00:02,130
+that's gonna force these to be the same width. But actually,
+
+1091
+01:00:02,132 --> 01:00:06,835
+I don't want it to be exactly 250. I want it to be at least
+
+1092
+01:00:06,837 --> 01:00:11,106
+250, okay. Because if the name is really long, and
+
+1093
+01:00:11,108 --> 01:00:14,176
+it'll fit without going off the edge of the screen, sure,
+
+1094
+01:00:14,178 --> 01:00:18,714
+you can do it. So I add the constraint here to be 250.
+
+1095
+01:00:18,716 --> 01:00:21,149
+And you can see that it makes it exactly 250, but
+
+1096
+01:00:21,151 --> 01:00:23,785
+I don't want that. So I'm gonna go over here to my
+
+1097
+01:00:23,787 --> 01:00:27,889
+dimensions inspector and look at this width 250. I'm gonna
+
+1098
+01:00:27,891 --> 01:00:32,427
+edit it and change it to greater than or equal to 250,
+
+1099
+01:00:32,429 --> 01:00:38,266
+okay? So understand that Auto Layout is pretty configurable.
+
+1100
+01:00:38,268 --> 01:00:40,836
+You don't have to make things always be exactly certain
+
+1101
+01:00:40,838 --> 01:00:47,109
+sizes, okay? So we'll go ahead and adjust our frames here.
+
+1102
+01:00:47,111 --> 01:00:52,147
+Okay, got that? Okay, now what about the clear? That's really
+
+1103
+01:00:52,149 --> 01:00:54,616
+simple. I'm just gonna click the background view here,
+
+1104
+01:00:54,618 --> 01:00:56,451
+and instead of having it be white, okay,
+
+1105
+01:00:56,453 --> 01:00:58,987
+this background view, I'm gonna have it be the default,
+
+1106
+01:00:58,989 --> 01:01:04,192
+which is clear. Okay? So let's run it again.
+
+1107
+01:01:13,671 --> 01:01:14,870
+Okay, yes, so that's working.
+
+1108
+01:01:14,872 --> 01:01:16,938
+All right, so let's drop a pin. Okay.
+
+1109
+01:01:16,940 --> 01:01:22,310
+We're gonna edit it, here we go. Boom. Perfect. Okay,
+
+1110
+01:01:22,312 --> 01:01:24,680
+give us a little extra space to work with.
+
+1111
+01:01:24,682 --> 01:01:25,614
+We can see, can you see that?
+
+1112
+01:01:25,616 --> 01:01:26,648
+Yeah, you can see it's kind of a little bit see through.
+
+1113
+01:01:26,650 --> 01:01:30,318
+You can see it's a little bit green behind that, looks a,
+
+1114
+01:01:30,320 --> 01:01:34,189
+a lot nicer. Okay so, excellent.
+
+1115
+01:01:34,191 --> 01:01:37,659
+Wow, popovers are great. I'm sure this didn't do any damage
+
+1116
+01:01:37,661 --> 01:01:40,896
+on the iPhone side. Let's go take a look, okay?
+
+1117
+01:01:40,898 --> 01:01:47,436
+iPhone. Sure the iPhone looks just great.
+
+1118
+01:01:50,307 --> 01:01:53,709
+All right, here it is. We'll drop a pin.
+
+1119
+01:01:53,711 --> 01:01:56,912
+All right, there it is, all right, here we go. Oops.
+
+1120
+01:01:56,914 --> 01:02:00,215
+Ugh. Okay, well, clearly we totally broke, and
+
+1121
+01:02:00,217 --> 01:02:03,118
+understandably, broke our iPhone side of this.
+
+1122
+01:02:03,120 --> 01:02:05,787
+So what's wrong here, what's going on? Well, first of all,
+
+1123
+01:02:05,789 --> 01:02:07,456
+we took it out of the navigation controller, so
+
+1124
+01:02:07,458 --> 01:02:09,925
+we lost our done button, okay? So we're done, okay?
+
+1125
+01:02:09,927 --> 01:02:13,261
+[LAUGH] Second one is, we made the background clear, so
+
+1126
+01:02:13,263 --> 01:02:17,065
+it's looking into the void. Because, we know that when
+
+1127
+01:02:17,067 --> 01:02:20,502
+it adapts, okay, first of all, why is it coming up this way?
+
+1128
+01:02:20,504 --> 01:02:23,338
+Well, the system knows this is horizontally compact, so
+
+1129
+01:02:23,340 --> 01:02:26,074
+it adapted from popover to full screen modal, okay.
+
+1130
+01:02:26,076 --> 01:02:30,245
+Full screen modal completely covers
+
+1131
+01:02:30,247 --> 01:02:32,514
+the thing underneath it, doesn't show anything,
+
+1132
+01:02:32,516 --> 01:02:34,616
+doesn't show through, it completely covers it.
+
+1133
+01:02:34,618 --> 01:02:38,420
+And it covers it with the void, the great void, okay.
+
+1134
+01:02:38,422 --> 01:02:41,656
+And since we're looking clear into the void, it's black,
+
+1135
+01:02:41,658 --> 01:02:44,126
+okay, the void happens to be black. All right, so that's
+
+1136
+01:02:44,128 --> 01:02:47,028
+why this looks so terrible. So what are we gonna do about
+
+1137
+01:02:47,030 --> 01:02:51,066
+this, okay? There's a number of things that we can do
+
+1138
+01:02:51,068 --> 01:02:55,704
+to make this a lot better. So, actually, before we do this,
+
+1139
+01:02:55,706 --> 01:02:58,907
+let's do one other quick thing. I wanna show you one
+
+1140
+01:02:58,909 --> 01:03:01,910
+other quick thing. Let's go back over to our,
+
+1141
+01:03:01,912 --> 01:03:07,215
+look at our iPad here, okay? We're back on the iPad there.
+
+1142
+01:03:07,217 --> 01:03:11,319
+Okay, so when I change this, let's say I change something
+
+1143
+01:03:11,321 --> 01:03:15,857
+here, like, you know, let's change it to, I'm not going,
+
+1144
+01:03:15,859 --> 01:03:19,194
+okay, I'm not going, and I hit return. And now,
+
+1145
+01:03:19,196 --> 01:03:22,397
+how do we dismiss a popover? We just hit somewhere else,
+
+1146
+01:03:22,399 --> 01:03:26,535
+right? So here we go, tap. Look at that. It didn't
+
+1147
+01:03:26,537 --> 01:03:29,838
+show it to us. Remember, when we had it on the iPhone,
+
+1148
+01:03:29,840 --> 01:03:33,008
+when I clicked Done, it showed it. Now it's not showing.
+
+1149
+01:03:33,010 --> 01:03:36,511
+Now, if I click on it, okay, it worked, that's great. But
+
+1150
+01:03:36,513 --> 01:03:39,815
+no, we want it to show just like it did on the iPhone.
+
+1151
+01:03:39,817 --> 01:03:44,085
+So how are we gonna fix that? That's pretty easy to fix.
+
+1152
+01:03:44,087 --> 01:03:47,455
+We're gonna use, over here in our GPX controller,
+
+1153
+01:03:47,457 --> 01:03:50,625
+this same popover presentation controller.
+
+1154
+01:03:50,627 --> 01:03:53,595
+We're going to implement one of its delegate methods.
+
+1155
+01:03:53,597 --> 01:03:55,931
+Okay, so we're going to set ourself as the delegate
+
+1156
+01:03:55,933 --> 01:03:58,767
+of this pop-over presentation controller, which means,
+
+1157
+01:03:58,769 --> 01:04:02,370
+of course, we have to go up here. And say that we
+
+1158
+01:04:02,372 --> 01:04:07,475
+are a UIPopoverPresentationControll-
+
+1159
+01:04:07,477 --> 01:04:11,880
+erDeligate, okay? And that, all right. So we're
+
+1160
+01:04:11,882 --> 01:04:14,216
+PopoverPresentationController- Deligate. Which
+
+1161
+01:04:14,218 --> 01:04:16,685
+PopoverPresentationController- Deligate method are we gonna
+
+1162
+01:04:16,687 --> 01:04:20,522
+implement here? We're gonna implement the one where we
+
+1163
+01:04:20,524 --> 01:04:26,595
+find out that it dismissed, dismiss pop over.
+
+1164
+01:04:26,597 --> 01:04:28,096
+Okay, so this message gets sent to
+
+1165
+01:04:28,098 --> 01:04:29,898
+the pop over presentation controller's delegate,
+
+1166
+01:04:29,900 --> 01:04:31,933
+when the pop over is dismissed. A perfect time for
+
+1167
+01:04:31,935 --> 01:04:35,370
+us to reselect that waypoint. Okay, we have that method
+
+1168
+01:04:35,372 --> 01:04:37,539
+still, stay select waypoint, so let's go ahead and
+
+1169
+01:04:37,541 --> 01:04:39,774
+do it. How do we get it this time? Well, we're going to
+
+1170
+01:04:39,776 --> 01:04:42,777
+get this from the pop over presentation controller. Okay?
+
+1171
+01:04:42,779 --> 01:04:46,648
+We're gonna get it's presented ViewController, okay?
+
+1172
+01:04:46,650 --> 01:04:48,917
+That's the controller its presenting which is our
+
+1173
+01:04:48,919 --> 01:04:52,220
+editable view, waypoint view controller. And it better be
+
+1174
+01:04:52,222 --> 01:04:56,291
+an EditWaypointViewController, okay? And if it is,
+
+1175
+01:04:56,293 --> 01:05:01,363
+then we can just get the waypoint to edit, okay? So
+
+1176
+01:05:01,365 --> 01:05:07,736
+now, we're on this. Okay. So we'll drop,
+
+1177
+01:05:07,871 --> 01:05:15,043
+click, go up here, change this to something, random words.
+
+1178
+01:05:15,879 --> 01:05:20,048
+The only thing is tip away, and we got it. Okay.
+
+1179
+01:05:20,050 --> 01:05:22,317
+So that's a great use of that little delegate. But
+
+1180
+01:05:22,319 --> 01:05:25,620
+there are even better uses of that little delegate.
+
+1181
+01:05:25,622 --> 01:05:28,256
+And a lot of them have to do with this adaptation
+
+1182
+01:05:28,258 --> 01:05:31,526
+behavior, okay? The way that the system is adopting to that
+
+1183
+01:05:31,528 --> 01:05:33,962
+horizontally compact environment and
+
+1184
+01:05:33,964 --> 01:05:38,199
+putting that thing up on our iPhone
+
+1185
+01:05:38,201 --> 01:05:42,037
+in this really obnoxious way. Okay so let's go and
+
+1186
+01:05:42,039 --> 01:05:45,707
+fix some of these things. One thing we could do to fix this
+
+1187
+01:05:45,709 --> 01:05:50,478
+is we could make it not adapt. Okay? We can make it just so
+
+1188
+01:05:50,480 --> 01:05:53,081
+that it uses popover on iPhone. It doesn't do this
+
+1189
+01:05:53,083 --> 01:05:55,850
+whole putting a modal one up instead. Okay so
+
+1190
+01:05:55,852 --> 01:05:59,321
+how would we do that? All right, that one we're gonna
+
+1191
+01:05:59,323 --> 01:06:01,790
+implement a different delegate method here.
+
+1192
+01:06:01,792 --> 01:06:06,461
+Popover delegate. This one is called the,
+
+1193
+01:06:06,463 --> 01:06:11,066
+note here, adaptivePresentationStyleforP-
+
+1194
+01:06:11,068 --> 01:06:15,870
+resentationController. Okay, this guy right here. Okay,
+
+1195
+01:06:15,872 --> 01:06:19,040
+adapt to presentation style for presentation controller,
+
+1196
+01:06:19,042 --> 01:06:20,208
+actually we want a different one,
+
+1197
+01:06:20,210 --> 01:06:23,645
+we want the one that gives us the trade collection.
+
+1198
+01:06:24,781 --> 01:06:29,951
+AdaptivePresentationStyle, it's this one. Okay?
+
+1199
+01:06:29,953 --> 01:06:32,954
+So this one is basically asking us, let me make it so
+
+1200
+01:06:32,956 --> 01:06:36,324
+you can see it a little better here. Okay?
+
+1201
+01:06:36,326 --> 01:06:39,494
+It has two arguments here and it returns
+
+1202
+01:06:39,496 --> 01:06:42,230
+a ModalPresentationStyle. So this is saying, for
+
+1203
+01:06:42,232 --> 01:06:45,533
+a given trait collection like horizontally compact or
+
+1204
+01:06:45,535 --> 01:06:49,404
+whatever how do you want to present this
+
+1205
+01:06:49,406 --> 01:06:52,607
+thing in when you're adapting. Now if I don't implement this,
+
+1206
+01:06:52,609 --> 01:06:55,276
+what it does is, it looks at this tray collection, says,
+
+1207
+01:06:55,278 --> 01:06:59,748
+is it horizontally compact? Yes? Then return full screen.
+
+1208
+01:06:59,750 --> 01:07:01,916
+That's how this whole adaptation thing works.
+
+1209
+01:07:01,918 --> 01:07:05,387
+Well, I can fix that by just saying return none. Okay,
+
+1210
+01:07:05,389 --> 01:07:10,191
+that means don't adapt, okay? So now we will never adapt,
+
+1211
+01:07:10,193 --> 01:07:12,327
+now if I run on the iPhone,
+
+1212
+01:07:12,329 --> 01:07:16,898
+you'll see that it's not going to adapt because I set
+
+1213
+01:07:16,900 --> 01:07:20,702
+the presentation style for, adapting style, to be none so
+
+1214
+01:07:20,704 --> 01:07:24,406
+it's never going to adapt. Go here, you click this.
+
+1215
+01:07:24,408 --> 01:07:27,809
+Sure enough we get that. Now look how terrible this looks.
+
+1216
+01:07:27,811 --> 01:07:31,346
+Okay? Clearly horizontally compact is not wide enough to
+
+1217
+01:07:31,348 --> 01:07:34,849
+show this popover. Okay? It's, smashed it in there,
+
+1218
+01:07:34,851 --> 01:07:37,986
+tried to obey the 250 point wide for the text field.
+
+1219
+01:07:37,988 --> 01:07:40,855
+The name and description got cut off. It just not you
+
+1220
+01:07:40,857 --> 01:07:44,025
+know couldn't quite point to the [LAUGH] the pin prob
+
+1221
+01:07:44,027 --> 01:07:46,661
+is a big mess. So this is not the solution to this problem.
+
+1222
+01:07:46,663 --> 01:07:48,797
+It seemed like it would be a good solution to this problem.
+
+1223
+01:07:48,799 --> 01:07:52,834
+But it's not. So, lets go try and solve some of those other
+
+1224
+01:07:52,836 --> 01:07:57,405
+problems we had. Okay, one is, we had no done button, okay?
+
+1225
+01:07:57,407 --> 01:07:59,074
+So how can we get the done button back? Well,
+
+1226
+01:07:59,076 --> 01:08:01,876
+we need to put that thing back in a navigation controller,
+
+1227
+01:08:01,878 --> 01:08:06,614
+but only when we're adapting. So, first of all,
+
+1228
+01:08:06,616 --> 01:08:07,749
+I'm going to comment this out so
+
+1229
+01:08:07,751 --> 01:08:10,418
+that we're back to adapting. And I'm gonna input another
+
+1230
+01:08:10,420 --> 01:08:15,423
+delegate method here which is called view controller for
+
+1231
+01:08:15,425 --> 01:08:20,462
+adaptive presentation style. Here it is. Okay,
+
+1232
+01:08:20,464 --> 01:08:26,801
+again I'll show you the arguments here. Okay, now look
+
+1233
+01:08:26,803 --> 01:08:30,505
+what this one returns. This one returns a view controller.
+
+1234
+01:08:30,507 --> 01:08:33,274
+This is basically saying, okay, I'm trying to adapt
+
+1235
+01:08:33,276 --> 01:08:36,144
+to a certain style, that's gonna be the full screen style
+
+1236
+01:08:36,146 --> 01:08:38,880
+here give me a View Controller to show
+
+1237
+01:08:38,882 --> 01:08:41,916
+when I adapt. Now if I don't implement this, it's just
+
+1238
+01:08:41,918 --> 01:08:44,452
+going to use the edit waypoint view controller, okay.
+
+1239
+01:08:44,454 --> 01:08:47,422
+But I'm going to fix this to return a navigational control
+
+1240
+01:08:47,424 --> 01:08:50,325
+that has an edit waypoint controller in it. Okay. So
+
+1241
+01:08:50,327 --> 01:08:53,194
+let's do that. I'm going to say, first I'm gonna let,
+
+1242
+01:08:53,196 --> 01:08:56,831
+well first I'm gonna say, if the style that we're adapting
+
+1243
+01:08:56,833 --> 01:09:01,569
+to is full screen. Okay, then I'm going to create
+
+1244
+01:09:01,571 --> 01:09:05,907
+a navigation controller, let navcon equal a UINavigation.
+
+1245
+01:09:05,909 --> 01:09:09,144
+I'm just creating it with its constructor, right,
+
+1246
+01:09:09,146 --> 01:09:12,614
+its initializer. And the rootViewController of it is
+
+1247
+01:09:12,616 --> 01:09:19,187
+going to be the controllers. PresentedViewController,
+
+1248
+01:09:19,189 --> 01:09:21,723
+remember we used that in the other one, okay,
+
+1249
+01:09:21,725 --> 01:09:22,423
+that is the EditWaypoint,
+
+1250
+01:09:22,425 --> 01:09:25,293
+EditWaypointViewController that we're trying to present,
+
+1251
+01:09:25,295 --> 01:09:28,129
+that's what it is. And so now I'm just gonna return this
+
+1252
+01:09:28,131 --> 01:09:31,266
+navigation controller instead. So it's gonna use
+
+1253
+01:09:31,268 --> 01:09:34,369
+the navigation controller instead of this. If we're not
+
+1254
+01:09:34,371 --> 01:09:36,671
+adapting to full screen then I'm gonna return nil and
+
+1255
+01:09:36,673 --> 01:09:39,507
+let it do whatever it does by default which is you know
+
+1256
+01:09:39,509 --> 01:09:43,144
+use the popover or it's not adapting so it doesn't matter.
+
+1257
+01:09:43,146 --> 01:09:46,214
+All right let's see if that fixes anything here.
+
+1258
+01:09:51,388 --> 01:09:54,656
+All right here we go. Drop it. Click on it,
+
+1259
+01:09:54,658 --> 01:09:58,459
+boom. Wahoo! Look at that we have a done button back.
+
+1260
+01:09:58,461 --> 01:10:00,528
+Now that done button, by the way, you might say,
+
+1261
+01:10:00,530 --> 01:10:00,762
+where'd that come from?
+
+1262
+01:10:00,764 --> 01:10:03,598
+Okay, well that's because we put the done button into that
+
+1263
+01:10:03,600 --> 01:10:06,167
+NBC back when it used to be a navigation controller.
+
+1264
+01:10:06,169 --> 01:10:09,003
+When we removed the navigation controller it kept the done
+
+1265
+01:10:09,005 --> 01:10:11,472
+button. It wasn't able to display it because it wasn't
+
+1266
+01:10:11,474 --> 01:10:14,475
+in a navigation controller until now. Again, but it kept
+
+1267
+01:10:14,477 --> 01:10:17,412
+the Done button. Remember that all the things that appear
+
+1268
+01:10:17,414 --> 01:10:19,647
+in a navigation controllers title bar, the buttons and
+
+1269
+01:10:19,649 --> 01:10:23,384
+stuff are associated with the NBC inside, okay. And
+
+1270
+01:10:23,386 --> 01:10:25,920
+when you remove, put something in, embed in, or
+
+1271
+01:10:25,922 --> 01:10:28,056
+take out of a navigational controller in NBC,
+
+1272
+01:10:28,058 --> 01:10:30,892
+it keeps all it's things so that's why we kept the Done
+
+1273
+01:10:30,894 --> 01:10:33,228
+button. Okay, not only kept the Done button there,
+
+1274
+01:10:33,230 --> 01:10:34,829
+it's still going to unwind. Okay?
+
+1275
+01:10:34,831 --> 01:10:37,565
+Cuz it's still hooked up to that to unwind there. Now,
+
+1276
+01:10:37,567 --> 01:10:40,702
+we still have this black background. That's not so
+
+1277
+01:10:40,704 --> 01:10:43,137
+good. Okay? How are we gonna fix that? Well,
+
+1278
+01:10:43,139 --> 01:10:46,174
+I'm gonna do that in a cool way, which is to stop
+
+1279
+01:10:46,176 --> 01:10:51,079
+having it basically cover up the the thing underneath, and
+
+1280
+01:10:51,081 --> 01:10:52,747
+let it show through. Okay?
+
+1281
+01:10:52,749 --> 01:10:56,451
+I'm gonna have this modal view controller come up. But
+
+1282
+01:10:56,453 --> 01:10:59,220
+not cover up what's behind, okay, and
+
+1283
+01:10:59,222 --> 01:11:01,756
+that's really simple to do. Actually,
+
+1284
+01:11:01,758 --> 01:11:04,959
+we're going to use the same method we did back here, okay,
+
+1285
+01:11:04,961 --> 01:11:07,929
+but instead of saying return none, okay,
+
+1286
+01:11:07,931 --> 01:11:12,700
+we're just going to say let's just return. If the trace
+
+1287
+01:11:12,702 --> 01:11:18,139
+collection here collection, okay trait selection,
+
+1288
+01:11:18,141 --> 01:11:22,644
+horizontal size class, equals compact, then we're gonna
+
+1289
+01:11:22,646 --> 01:11:26,881
+return this new style which is over full screen.
+
+1290
+01:11:26,883 --> 01:11:28,549
+So over full screen is like full screen but
+
+1291
+01:11:28,551 --> 01:11:31,919
+it's over the things so the things shines through. Okay
+
+1292
+01:11:31,921 --> 01:11:33,588
+that's the only difference between full screen and
+
+1293
+01:11:33,590 --> 01:11:38,126
+over full screen. Otherwise, we're just going to not adapt.
+
+1294
+01:11:38,128 --> 01:11:40,762
+Okay, we're only gonna adapt in the horizontalSizeClass
+
+1295
+01:11:40,764 --> 01:11:45,466
+Compact. Okay, so let's see what that looks like.
+
+1296
+01:11:51,074 --> 01:11:56,044
+All right, here it is. Drop one, click, bring it up.
+
+1297
+01:11:56,046 --> 01:12:00,114
+All right! Okay, it brought it up. But, it's kinda weird that
+
+1298
+01:12:00,116 --> 01:12:02,950
+we can see all the way through it kinda makes it think that
+
+1299
+01:12:02,952 --> 01:12:06,521
+we could click on this things. Also having the word
+
+1300
+01:12:06,523 --> 01:12:09,123
+description be on the dark background makes it hard to
+
+1301
+01:12:09,125 --> 01:12:13,895
+see it. Okay. I also noticed that maybe our 250 is a little
+
+1302
+01:12:13,897 --> 01:12:17,598
+too wide of a minimum. Maybe we wanna go down to 200.
+
+1303
+01:12:17,600 --> 01:12:19,734
+But, what were really cool is if we could actually show
+
+1304
+01:12:19,736 --> 01:12:23,137
+what's behind slightly blurred. Just like the popover
+
+1305
+01:12:23,139 --> 01:12:26,641
+one does. Right? The popover one it showed the name and
+
+1306
+01:12:26,643 --> 01:12:29,844
+description, but it was only kinda the slightly see-through
+
+1307
+01:12:29,846 --> 01:12:31,612
+semi-transparent blurred thing.
+
+1308
+01:12:31,614 --> 01:12:34,449
+Well we can do that ourselves. Okay? There's a view, okay,
+
+1309
+01:12:34,451 --> 01:12:37,418
+we can talk about in the slides. But there's a view
+
+1310
+01:12:37,420 --> 01:12:42,457
+which essentially presents whatever's behind it blurred
+
+1311
+01:12:42,459 --> 01:12:45,626
+okay, tha's what the view does. so were gonna poke one
+
+1312
+01:12:45,628 --> 01:12:49,764
+of this views right at the top of the navigation controllers
+
+1313
+01:12:49,766 --> 01:12:52,533
+view hierarchy okay. Even behind the things
+
+1314
+01:12:52,535 --> 01:12:55,036
+like this bar at the top of the navigation control
+
+1315
+01:12:55,038 --> 01:12:57,705
+everything. Okay, we're gonna be really right at the top, so
+
+1316
+01:12:57,707 --> 01:12:58,773
+it's gonna blur everything behind. And
+
+1317
+01:12:58,775 --> 01:13:01,109
+the navigation controller's gonna be on top of this nice,
+
+1318
+01:13:01,111 --> 01:13:04,746
+blurred thing. Okay? So, how do we do that? Well,
+
+1319
+01:13:04,748 --> 01:13:07,281
+we create that navigation controller right here. So
+
+1320
+01:13:07,283 --> 01:13:10,218
+all we need to do is to create this little blurring view
+
+1321
+01:13:10,220 --> 01:13:15,890
+doohickey, which is called a visual effects view. And
+
+1322
+01:13:15,892 --> 01:13:19,594
+also, by the way, we're gonna wanna put here if the style
+
+1323
+01:13:19,596 --> 01:13:24,365
+is OverFullScreen so that we can do it in both cases there.
+
+1324
+01:13:24,768 --> 01:13:27,068
+So, we're gonna create a visual effects view,
+
+1325
+01:13:27,070 --> 01:13:30,938
+visualEffectsView, we'll call it and
+
+1326
+01:13:30,940 --> 01:13:31,973
+it's UIVisualEffectView.
+
+1327
+01:13:31,975 --> 01:13:38,246
+That's the name of the class. VisualEffectView. I guess
+
+1328
+01:13:38,248 --> 01:13:42,083
+it would be VisualEffectView cuz it's a single effect. And
+
+1329
+01:13:42,085 --> 01:13:46,587
+you just specify what kind of effect you want. Effect, and
+
+1330
+01:13:46,589 --> 01:13:51,392
+I want a UIBlurEffect. And the style of
+
+1331
+01:13:51,394 --> 01:13:54,695
+it is I want a ExtraLight okay which is a really
+
+1332
+01:13:54,697 --> 01:13:57,965
+extra light ver, blur. And the reason I want extra light is
+
+1333
+01:13:57,967 --> 01:13:59,801
+cuz I'm gonna be putting black text on top of it and
+
+1334
+01:13:59,803 --> 01:14:02,670
+things like that so I really want that to stand out. So
+
+1335
+01:14:02,672 --> 01:14:05,139
+there's extra light blurring.
+
+1336
+01:14:05,141 --> 01:14:10,445
+Now I'm going to set the visual effects views frame
+
+1337
+01:14:11,247 --> 01:14:14,482
+to equal the navCon bounds. Okay.
+
+1338
+01:14:14,484 --> 01:14:16,150
+So navCon is a view controller. It's just
+
+1339
+01:14:16,152 --> 01:14:17,919
+a regular view controller like any other view controller.
+
+1340
+01:14:17,921 --> 01:14:20,621
+It's got a view which is it's top level view. So I'm gonna
+
+1341
+01:14:20,623 --> 01:14:23,991
+put my visual effects right at the top of its hierarchy, so
+
+1342
+01:14:23,993 --> 01:14:25,893
+I'm gonna have it fill the entire thing. Now,
+
+1343
+01:14:25,895 --> 01:14:28,296
+I'm also gonna do a little bit of magic here which we didn't
+
+1344
+01:14:28,298 --> 01:14:30,164
+talk about at all, which is, there's
+
+1345
+01:14:30,166 --> 01:14:33,734
+a really kind of an old style way of doing auto layout where
+
+1346
+01:14:33,736 --> 01:14:36,604
+you can specify just a couple of things.
+
+1347
+01:14:36,606 --> 01:14:40,608
+And, I'm going to have this visual effect view
+
+1348
+01:14:40,610 --> 01:14:44,445
+always stick to the same size as the nab cons bounds.
+
+1349
+01:14:44,447 --> 01:14:47,315
+And the way I'm gonna do it, is by using these old style
+
+1350
+01:14:47,317 --> 01:14:51,018
+constraints where I basically say that the width and height
+
+1351
+01:14:51,020 --> 01:14:55,122
+of my visual effects view is flexible. So, as things change
+
+1352
+01:14:55,124 --> 01:14:57,859
+it tries to stick to its super view. Okay? Don't worry
+
+1353
+01:14:57,861 --> 01:15:00,628
+too much about this magic It's just a little easier way than
+
+1354
+01:15:00,630 --> 01:15:03,965
+doing this than trying to show you how to do it with
+
+1355
+01:15:03,967 --> 01:15:05,166
+the new way.
+
+1356
+01:15:05,168 --> 01:15:08,870
+So I just basically say that's auto resizing math is flexible
+
+1357
+01:15:08,872 --> 01:15:09,203
+width and flexible height.
+
+1358
+01:15:09,205 --> 01:15:13,374
+If it's superview changes it's size than it sizes with it,
+
+1359
+01:15:13,376 --> 01:15:15,443
+using the rules keep your width and
+
+1360
+01:15:15,445 --> 01:15:16,544
+height flexible. Okay?
+
+1361
+01:15:16,546 --> 01:15:20,815
+So now I'm just going to take that navcon top level view and
+
+1362
+01:15:20,817 --> 01:15:23,551
+insert a subview, which is a visual effects view.
+
+1363
+01:15:23,553 --> 01:15:28,189
+And I'm gonna put it at index zero, which is all the way at
+
+1364
+01:15:28,191 --> 01:15:31,359
+the back. Remember subviews is ordered int he subview list.
+
+1365
+01:15:31,361 --> 01:15:34,762
+All right, so let's take a look at that.
+
+1366
+01:15:39,936 --> 01:15:45,473
+All right. Drop it here. Up. There we go.
+
+1367
+01:15:45,475 --> 01:15:48,209
+Okay, see how it, you can kinda see the,
+
+1368
+01:15:48,211 --> 01:15:51,012
+I don't know how, how good the projection there is, but
+
+1369
+01:15:51,014 --> 01:15:52,513
+you can kinda almost see the valleys here.
+
+1370
+01:15:52,515 --> 01:15:55,783
+The mountains and the valleys. In there. When you get this
+
+1371
+01:15:55,785 --> 01:16:01,455
+we'll go run it at home you'll see it a lot clearer. Okay? So
+
+1372
+01:16:01,457 --> 01:16:03,024
+that's it we only have three minutes so
+
+1373
+01:16:03,026 --> 01:16:08,963
+I'm not going to the slides on that. I will post on
+
+1374
+01:16:08,965 --> 01:16:12,533
+how you can learn a little more about that. And
+
+1375
+01:16:12,535 --> 01:16:14,435
+that's it. So, that's everything there.
+
+1376
+01:16:14,437 --> 01:16:15,903
+You learned a lot about map view and
+
+1377
+01:16:15,905 --> 01:16:17,572
+about all kinds of segways there, so
+
+1378
+01:16:17,574 --> 01:16:18,773
+hopefully that will prepare you for
+
+1379
+01:16:18,775 --> 01:16:20,708
+your final presentation. So,
+
+1380
+01:16:20,710 --> 01:16:22,343
+next week is just the alternate final,
+
+1381
+01:16:22,345 --> 01:16:24,445
+there's a holiday on Monday, so there's no class then,
+
+1382
+01:16:24,447 --> 01:16:26,747
+and Wednesday is the alternate final. And,
+
+1383
+01:16:26,749 --> 01:16:30,718
+if you have any questions I'll help you here as usual. For
+
+1384
+01:16:30,720 --> 01:16:30,751
+more, please visit us at stanford.edu.
+

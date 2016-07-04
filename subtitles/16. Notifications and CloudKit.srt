@@ -1,0 +1,4924 @@
+﻿1
+00:00:00,001 --> 00:00:03,702
+[MUSIC]
+
+2
+00:00:03,704 --> 00:00:08,340
+Stanford University. >> All right, well,
+
+3
+00:00:08,342 --> 00:00:12,711
+welcome to C, Stanford CS193P spring of 2016
+
+4
+00:00:12,713 --> 00:00:15,881
+lecture number 16. And today it's all demo.
+
+5
+00:00:15,883 --> 00:00:18,817
+I'm gonna do a big demo on CloudKit to show you how,
+
+6
+00:00:18,819 --> 00:00:21,286
+how that works. I'm also gonna take a brief little
+
+7
+00:00:21,288 --> 00:00:24,023
+thing at the beginning to show you about notifications, that
+
+8
+00:00:24,025 --> 00:00:27,092
+little radio station thing. We talked about how you can find
+
+9
+00:00:27,094 --> 00:00:28,427
+out about size changes happening and
+
+10
+00:00:28,429 --> 00:00:31,630
+I'm gonna show you how that works. And that's pretty much
+
+11
+00:00:31,632 --> 00:00:34,366
+it for today. It's kinda all demo today.
+
+12
+00:00:34,368 --> 00:00:37,870
+Coming up Friday we're not doing sections anymore.
+
+13
+00:00:37,872 --> 00:00:40,606
+People weren't that interested in sections this quarter,
+
+14
+00:00:40,608 --> 00:00:42,074
+that's fine. And then next week,
+
+15
+00:00:42,076 --> 00:00:44,977
+I'm gonna be covering maps some more segues, and
+
+16
+00:00:44,979 --> 00:00:48,680
+then just some miscellaneous topics, not quite sure yet
+
+17
+00:00:48,682 --> 00:00:52,317
+what I'm gonna do there. All right, so,
+
+18
+00:00:52,319 --> 00:00:57,356
+let's dive right into this demo. Going to launch Xcode
+
+19
+00:00:57,358 --> 00:01:02,127
+here. We're going to make a new project.
+
+20
+00:01:02,129 --> 00:01:04,630
+It's gonna be our standard stuff here. So
+
+21
+00:01:04,632 --> 00:01:08,667
+what I'm gonna do is an app that is a question asking app.
+
+22
+00:01:08,669 --> 00:01:12,604
+So it lets you author questions with answers, and
+
+23
+00:01:12,606 --> 00:01:14,807
+then they're out on the cloud, in iCloud,
+
+24
+00:01:14,809 --> 00:01:16,108
+and people can answer the questions,
+
+25
+00:01:16,110 --> 00:01:18,243
+okay, and then it keeps track of how many answers people had
+
+26
+00:01:18,245 --> 00:01:20,946
+and all that stuff. So today we're just gonna kinda do
+
+27
+00:01:20,948 --> 00:01:23,082
+the start of it, which is, we'll have some UI to make
+
+28
+00:01:23,084 --> 00:01:25,584
+the question and we'll upload the questions to the cloud,
+
+29
+00:01:25,586 --> 00:01:28,020
+and then we'll have another view controller which shows
+
+30
+00:01:28,022 --> 00:01:30,122
+a list of all the questions that you can choose on.
+
+31
+00:01:30,124 --> 00:01:33,325
+And you can click, some UI to make a new question or
+
+32
+00:01:33,327 --> 00:01:35,961
+delete old questions. So we're gonna be able to do all
+
+33
+00:01:35,963 --> 00:01:37,262
+kinds of iCloud stuff there. Deleting,
+
+34
+00:01:37,264 --> 00:01:39,998
+we're gonna do subscriptions with push notifications,
+
+35
+00:01:40,000 --> 00:01:45,070
+all that stuff. Okay, so we're gonna call this app Pollster.
+
+36
+00:01:45,072 --> 00:01:48,640
+I'm also gonna change my unique thing here just to be
+
+37
+00:01:48,642 --> 00:01:52,945
+something different, how about teacher instead of instructor.
+
+38
+00:01:52,947 --> 00:01:55,147
+So Pollster, because you could use it to poll,
+
+39
+00:01:55,149 --> 00:01:57,783
+ask people questions, and get polls. No Core Data,
+
+40
+00:01:57,785 --> 00:02:00,819
+it's gonna be an iPhone-only application. We're just gonna
+
+41
+00:02:00,821 --> 00:02:04,189
+have a couple table views is all. And we'll put it in our
+
+42
+00:02:04,191 --> 00:02:09,128
+standard location here. So here we are in Pollster, and
+
+43
+00:02:09,130 --> 00:02:14,433
+I'm going to kind of clear out my storyboard to start. So
+
+44
+00:02:14,435 --> 00:02:18,637
+let's take this little view controller that it
+
+45
+00:02:18,639 --> 00:02:22,941
+comes with, let's delete its code right here.
+
+46
+00:02:22,943 --> 00:02:26,445
+So I'll do Delete. Move that to the trash.
+
+47
+00:02:26,447 --> 00:02:29,948
+Let's go ahead and put these little guys into a little
+
+48
+00:02:29,950 --> 00:02:33,852
+supporting files thing again, Supporting Files. And notice
+
+49
+00:02:33,854 --> 00:02:36,054
+I'm gonna leave AppDelegate out of the Supporting Files,
+
+50
+00:02:36,056 --> 00:02:38,190
+because of course, we're gonna do push notifications.
+
+51
+00:02:38,192 --> 00:02:40,893
+That involves our AppDelegate, so it's not really
+
+52
+00:02:40,895 --> 00:02:43,862
+a supporting file, it's kind of a main thing this time.
+
+53
+00:02:43,864 --> 00:02:47,833
+And back in the storyboard we can just get rid of this view
+
+54
+00:02:47,835 --> 00:02:51,069
+controller, we don't need it at all, okay.
+
+55
+00:02:51,071 --> 00:02:52,905
+Now, I also have some other files
+
+56
+00:02:52,907 --> 00:02:55,307
+here that are gonna be supporting files for
+
+57
+00:02:55,309 --> 00:02:58,410
+this demo, so I'm gonna drag those in right here.
+
+58
+00:02:58,412 --> 00:03:00,979
+In fact, I'm gonna put them in Supporting Files.
+
+59
+00:03:00,981 --> 00:03:05,317
+Copy them in, let's take a quick look at those.
+
+60
+00:03:05,319 --> 00:03:08,687
+All right, so one is, I just wanted all my structs, with,
+
+61
+00:03:08,689 --> 00:03:11,456
+you know, my constants in there to be pre-typed in so
+
+62
+00:03:11,458 --> 00:03:14,593
+I don't have to type them in all the time. And basically,
+
+63
+00:03:14,595 --> 00:03:18,397
+these constants are gonna be for the push or actually for
+
+64
+00:03:18,399 --> 00:03:21,300
+the local notification, the radio station stuff,
+
+65
+00:03:21,302 --> 00:03:24,436
+this is gonna be the name of our radio station and
+
+66
+00:03:24,438 --> 00:03:25,537
+the key in the dictionary.
+
+67
+00:03:25,539 --> 00:03:27,406
+And then these are the names of the entities and
+
+68
+00:03:27,408 --> 00:03:29,675
+attributes that I'm gonna create in CloudKit, okay?
+
+69
+00:03:29,677 --> 00:03:32,311
+So we're doing QandA, here are questions and answers, and
+
+70
+00:03:32,313 --> 00:03:35,547
+here's a Response to a QandA, and then we've got questions,
+
+71
+00:03:35,549 --> 00:03:36,982
+answers, we got a chosenAnswer, and
+
+72
+00:03:36,984 --> 00:03:40,886
+then we've got a reference qanda. So we got all that.
+
+73
+00:03:40,888 --> 00:03:43,388
+And then I added this little wasCreatedByThisUser.
+
+74
+00:03:43,390 --> 00:03:46,225
+It's a bool on a CKRecord, a CloudKit record, that just
+
+75
+00:03:46,227 --> 00:03:49,027
+says whether this record was created by the currently
+
+76
+00:03:49,029 --> 00:03:52,097
+logged in iCloud user, okay. So that's that.
+
+77
+00:03:52,099 --> 00:03:55,300
+Then, over here, I have this nice class here,
+
+78
+00:03:55,302 --> 00:03:57,236
+QandATableViewController.
+
+79
+00:03:57,238 --> 00:04:00,205
+It is, has nothing to do with iCloud. It's just a table view
+
+80
+00:04:00,207 --> 00:04:03,775
+controller that shows a question, okay, a question and
+
+81
+00:04:03,777 --> 00:04:06,778
+as many answers as you want. Okay, notice that it inherits
+
+82
+00:04:06,780 --> 00:04:09,281
+from TextTableViewController. That's a generic
+
+83
+00:04:09,283 --> 00:04:12,284
+view controller that just shows a table view where all
+
+84
+00:04:12,286 --> 00:04:14,753
+the rows are editable text. Okay, that's all that is.
+
+85
+00:04:14,755 --> 00:04:17,055
+It doesn't know anything about questions and answers,
+
+86
+00:04:17,057 --> 00:04:17,856
+it's just rows of editable text,
+
+87
+00:04:17,858 --> 00:04:21,226
+nothing more. We're not even gonna be accessing this API,
+
+88
+00:04:21,228 --> 00:04:24,129
+we're gonna be focusing totally at this MVC's level.
+
+89
+00:04:24,131 --> 00:04:27,432
+And here's the public API for that, super simple. Okay,
+
+90
+00:04:27,434 --> 00:04:30,736
+it's got this var qanda, which is basically its model,
+
+91
+00:04:30,738 --> 00:04:33,305
+which is of type QandA, that's this struct, and
+
+92
+00:04:33,307 --> 00:04:35,874
+it's a question, which is a String, and answers,
+
+93
+00:04:35,876 --> 00:04:39,011
+which are Strings. Okay, so it couldn't be any simpler,
+
+94
+00:04:39,013 --> 00:04:41,313
+it's the simplest possible data structure for
+
+95
+00:04:41,315 --> 00:04:43,982
+a Q&A. It's got, these other vars here is just whether
+
+96
+00:04:43,984 --> 00:04:46,685
+you're asking the question or answering the question.
+
+97
+00:04:46,687 --> 00:04:47,886
+That's cuz if you're asking the question,
+
+98
+00:04:47,888 --> 00:04:50,289
+you can edit the question, right? You're asking it, so
+
+99
+00:04:50,291 --> 00:04:52,291
+you can add more answers and stuff like that.
+
+100
+00:04:52,293 --> 00:04:53,525
+Whereas, if you're answering the question,
+
+101
+00:04:53,527 --> 00:04:55,627
+you can only choose an answer, okay? And
+
+102
+00:04:55,629 --> 00:04:57,829
+then if you do choose an answer, here's the answer.
+
+103
+00:04:57,831 --> 00:05:01,700
+So you can just get the answer as a string, okay? It might be
+
+104
+00:05:01,702 --> 00:05:03,568
+a nil, because maybe they haven't answered yet.
+
+105
+00:05:03,570 --> 00:05:06,405
+So that's it, that's the entire public API of this, and
+
+106
+00:05:06,407 --> 00:05:09,007
+this is the only API we're gonna use in our cloud one.
+
+107
+00:05:09,009 --> 00:05:12,210
+And our cloud one is just gonna be a subclass of this,
+
+108
+00:05:12,212 --> 00:05:13,979
+because it's gonna be a QandA, but
+
+109
+00:05:13,981 --> 00:05:16,548
+it's a QandA that's stored in the cloud, okay.
+
+110
+00:05:16,550 --> 00:05:19,851
+So let's go ahead and create that subclass of this guy, so
+
+111
+00:05:19,853 --> 00:05:23,255
+I'm just gonna do File > New, okay, > Cocoa Touch Class.
+
+112
+00:05:23,257 --> 00:05:28,827
+It's gonna be a subclass of our QandATableViewController,
+
+113
+00:05:28,829 --> 00:05:33,398
+okay. And we're gonna call it CloudQand, whoops,
+
+114
+00:05:34,601 --> 00:05:36,068
+QandATableViewController, okay?
+
+115
+00:05:36,070 --> 00:05:39,004
+Cuz it's basically just a QandATableViewController that
+
+116
+00:05:39,006 --> 00:05:42,040
+stores its question and answer on the cloud. All right, so
+
+117
+00:05:42,042 --> 00:05:45,644
+here it is. Let's go ahead and blast all this, just so
+
+118
+00:05:45,646 --> 00:05:49,147
+you can clearly see what new stuff we're adding here. So
+
+119
+00:05:49,149 --> 00:05:52,351
+there's our super class being a QandATableViewController.
+
+120
+00:05:52,353 --> 00:05:54,753
+Let's, of course, go to our storyboard and
+
+121
+00:05:54,755 --> 00:05:56,722
+drag out a Table View Controller, okay.
+
+122
+00:05:56,724 --> 00:05:59,958
+And we're gonna set its identity to be one of these
+
+123
+00:05:59,960 --> 00:06:02,160
+CloudQandATableViewControll- ers.
+
+124
+00:06:02,162 --> 00:06:05,197
+What's interesting about the QandATableViewController is,
+
+125
+00:06:05,199 --> 00:06:07,566
+you don't need any prototype cells at all.
+
+126
+00:06:07,568 --> 00:06:09,601
+It creates its prototype cells in code.
+
+127
+00:06:09,603 --> 00:06:11,503
+And so, if you're interested in how to do that for your
+
+128
+00:06:11,505 --> 00:06:13,705
+final project or whatever, you could take a look at that
+
+129
+00:06:13,707 --> 00:06:15,207
+QandATableViewController, actually,
+
+130
+00:06:15,209 --> 00:06:17,142
+you would wanna look at the TextTableViewController,
+
+131
+00:06:17,144 --> 00:06:20,712
+the superclass one for how you might have a table view that
+
+132
+00:06:20,714 --> 00:06:23,348
+creates its cells that way instead of using prototypes.
+
+133
+00:06:23,350 --> 00:06:24,983
+And you can see why it don't use prototypes,
+
+134
+00:06:24,985 --> 00:06:26,518
+because it's such a simple cell,
+
+135
+00:06:26,520 --> 00:06:28,120
+its just has a text view in there, that's it.
+
+136
+00:06:28,122 --> 00:06:30,555
+The entire cell is just a text view, nothing more.
+
+137
+00:06:30,557 --> 00:06:32,290
+So it didn't really need a prototype to do that,
+
+138
+00:06:32,292 --> 00:06:33,558
+and it makes it easier for subclasser too,
+
+139
+00:06:33,560 --> 00:06:37,028
+they don't have to worry about that. All right, so
+
+140
+00:06:37,030 --> 00:06:37,295
+we've got our thing here.
+
+141
+00:06:37,297 --> 00:06:40,365
+Let's also make sure that it's the Initial View Controller,
+
+142
+00:06:40,367 --> 00:06:43,402
+right here, where we have the arrow coming in. And in fact,
+
+143
+00:06:43,404 --> 00:06:48,140
+I'm gonna put this thing into a Navigation Controller, okay?
+
+144
+00:06:48,142 --> 00:06:52,077
+That way I can have titles on things and stuff like that.
+
+145
+00:06:52,079 --> 00:06:54,246
+Okay, so this is our UI to start. And
+
+146
+00:06:54,248 --> 00:06:57,716
+we're gonna start by just having a question up here in
+
+147
+00:06:57,718 --> 00:07:01,720
+this cloud TableViewController right here. So I'm gonna go to
+
+148
+00:07:01,722 --> 00:07:04,322
+the cloud TableViewController. Where did I put that?
+
+149
+00:07:04,324 --> 00:07:06,391
+Right here. I'm gonna take that out of Supporting Files,
+
+150
+00:07:06,393 --> 00:07:09,661
+actually. So I'm gonna go to the cloud TableViewController,
+
+151
+00:07:09,663 --> 00:07:11,129
+and I'm just gonna, in its viewDidLoad,
+
+152
+00:07:11,131 --> 00:07:12,931
+I'm just gonna give it a question. Okay, so,
+
+153
+00:07:12,933 --> 00:07:15,467
+super.viewDidLoad, just so you can see how this thing works.
+
+154
+00:07:15,469 --> 00:07:20,839
+So qanda = a QandA, and here's the constructor for it.
+
+155
+00:07:20,841 --> 00:07:21,239
+It takes a question, you know,
+
+156
+00:07:21,241 --> 00:07:26,144
+"What is your favorite color?" or something like that. And
+
+157
+00:07:26,146 --> 00:07:29,915
+the answer is ["Blue", "Black", "Red"],
+
+158
+00:07:29,917 --> 00:07:34,753
+okay, or however many we want, okay? So let's just run and
+
+159
+00:07:34,755 --> 00:07:37,689
+see what that looks like. We'll go ahead and run I think
+
+160
+00:07:37,691 --> 00:07:42,027
+we'll run this on the device, actually. Let's try that.
+
+161
+00:07:50,804 --> 00:07:54,873
+Okay, so this is an iPad, but it's running here in iPhone
+
+162
+00:07:54,875 --> 00:07:58,043
+Compatibility mode, I'm still sharing an iPad.
+
+163
+00:07:58,045 --> 00:07:59,644
+So here you go, what is your favorite color?
+
+164
+00:07:59,646 --> 00:08:01,179
+It shows to you, you can scroll up and
+
+165
+00:08:01,181 --> 00:08:03,348
+down and you can choose an answer, okay? Now,
+
+166
+00:08:03,350 --> 00:08:06,318
+that's because we're in answering mode, okay? But
+
+167
+00:08:06,320 --> 00:08:11,590
+if we go back to our code over here and say asking = oops,
+
+168
+00:08:11,592 --> 00:08:14,559
+asking = true, okay, and then run,
+
+169
+00:08:14,561 --> 00:08:18,263
+you'll get very similar UI. The only difference being,
+
+170
+00:08:18,265 --> 00:08:20,966
+we can edit it. We can add more answers and
+
+171
+00:08:20,968 --> 00:08:22,667
+move our answers around. Okay, so here we go.
+
+172
+00:08:22,669 --> 00:08:26,371
+Notice that we can reposition them, okay, so if we want one
+
+173
+00:08:26,373 --> 00:08:29,307
+answer to be after another, we could add another answer here,
+
+174
+00:08:29,309 --> 00:08:34,145
+maybe white. Okay, something like that. We can delete
+
+175
+00:08:34,147 --> 00:08:38,416
+an answer just by backspacing out of it. Gets rid of it.
+
+176
+00:08:38,418 --> 00:08:41,653
+Okay, we can change the question too if wanted. Okay,
+
+177
+00:08:41,655 --> 00:08:43,955
+so everyone understand what this QandATableViewController
+
+178
+00:08:43,957 --> 00:08:46,525
+we just inherited from does? That it. That's all it does.
+
+179
+00:08:46,527 --> 00:08:48,226
+Okay, now, it knows nothing about the cloud.
+
+180
+00:08:48,228 --> 00:08:51,530
+And what we're gonna make this Q&A thing here be
+
+181
+00:08:51,532 --> 00:08:53,298
+stored on the cloud. All right, so
+
+182
+00:08:53,300 --> 00:08:56,268
+now we're back in the CloudQandATableViewController.
+
+183
+00:08:56,270 --> 00:08:59,304
+And we want to make this thing work with the cloud. So
+
+184
+00:08:59,306 --> 00:09:02,807
+it's gonna have a different model than its superclass.
+
+185
+00:09:02,809 --> 00:09:06,578
+Its superclass's model is a question and answer, which is
+
+186
+00:09:06,580 --> 00:09:11,016
+good, but our model here is going to be a CKRecord, okay,
+
+187
+00:09:11,018 --> 00:09:11,917
+a CloudKit record.
+
+188
+00:09:11,919 --> 00:09:15,053
+So I'm gonna call this thing CKQandA,
+
+189
+00:09:15,055 --> 00:09:18,957
+okay, called that because it's CloudKit Q&A.
+
+190
+00:09:18,959 --> 00:09:22,327
+Actually, maybe we can even call it CloudKitQandARecord so
+
+191
+00:09:22,329 --> 00:09:26,097
+we're clear that it's a record in CloudKit. And
+
+192
+00:09:26,099 --> 00:09:29,234
+it's gonna be a CKRecord, is all. And of course,
+
+193
+00:09:29,236 --> 00:09:32,470
+if anyone sets it, just like with almost all of our MVC's,
+
+194
+00:09:32,472 --> 00:09:34,372
+when someone sets our model to something,
+
+195
+00:09:34,374 --> 00:09:36,942
+if it's public and we allow people to set it, when we
+
+196
+00:09:36,944 --> 00:09:39,644
+set it, we want to react to that. And what we want to do
+
+197
+00:09:39,646 --> 00:09:42,047
+when someone sets our record is call our superclass,
+
+198
+00:09:42,049 --> 00:09:45,317
+set up our superclass's model, right, that QandA. We're gonna
+
+199
+00:09:45,319 --> 00:09:47,485
+get the question and answer out of the record and put,
+
+200
+00:09:47,487 --> 00:09:52,023
+set it up in our superclass. So we'll just let the question
+
+201
+00:09:52,025 --> 00:09:56,194
+equal the record's, and remember that we access
+
+202
+00:09:56,196 --> 00:10:00,465
+the records just using dictionary-like notation.
+
+203
+00:10:00,467 --> 00:10:04,836
+So I'm gonna use one of those constants that I had there,
+
+204
+00:10:04,838 --> 00:10:06,972
+Attribute.Question. Okay?
+
+205
+00:10:06,974 --> 00:10:10,342
+That's over here, remember, in the CloudKit extensions.
+
+206
+00:10:10,344 --> 00:10:15,180
+So Cloud.Attribute.Question is this key, so that's gonna
+
+207
+00:10:15,182 --> 00:10:19,084
+be a key into my QandA entity right here. Okay, and notice
+
+208
+00:10:19,086 --> 00:10:21,720
+how I'm not going and creating this scheme anywhere first,
+
+209
+00:10:21,722 --> 00:10:24,222
+I'm just writing my code on the fly, and it's just gonna
+
+210
+00:10:24,224 --> 00:10:26,558
+automatically create these things in the database for
+
+211
+00:10:26,560 --> 00:10:30,161
+me as I go. Now, we also know that this ckQandARecord,
+
+212
+00:10:30,163 --> 00:10:31,863
+when you use this dictionary notation,
+
+213
+00:10:31,865 --> 00:10:35,734
+it always returns this type that you have to cast, right.
+
+214
+00:10:35,736 --> 00:10:39,671
+It returns a CKRecord type or something like that.
+
+215
+00:10:39,673 --> 00:10:41,906
+So I'm gonna have to say as a String, cuz I know
+
+216
+00:10:41,908 --> 00:10:44,376
+the question is a string. And by the way, if that's nil,
+
+217
+00:10:44,378 --> 00:10:48,313
+I'm just gonna use an empty string as my question, okay?
+
+218
+00:10:48,315 --> 00:10:50,248
+So that way my question's never nil here.
+
+219
+00:10:50,250 --> 00:10:52,217
+And then it's similar with the answers,
+
+220
+00:10:52,219 --> 00:10:54,886
+that's the QandARecord, using the attribute for
+
+221
+00:10:54,888 --> 00:10:57,455
+the answers, except for, that's not a string,
+
+222
+00:10:57,457 --> 00:11:00,592
+it's an array of strings. And if that's nil, then we'll
+
+223
+00:11:00,594 --> 00:11:03,762
+use an empty array. So now I've gotten my question and
+
+224
+00:11:03,764 --> 00:11:06,731
+my answers out of this record that was given to me.
+
+225
+00:11:06,733 --> 00:11:10,402
+Okay, this is didSet on my public API right here. So now
+
+226
+00:11:10,404 --> 00:11:14,606
+I'm gonna have my superclass qanda equal a QandA, okay,
+
+227
+00:11:14,608 --> 00:11:18,576
+where the question is that question and the answers is
+
+228
+00:11:18,578 --> 00:11:24,049
+that answers. Okay? Now, what about the asking,
+
+229
+00:11:24,051 --> 00:11:25,917
+okay, what about whether I'm asking or not?
+
+230
+00:11:25,919 --> 00:11:28,086
+Okay, this thing of whether it's gonna be editable or
+
+231
+00:11:28,088 --> 00:11:30,822
+not. Well, that depends on whether this record they just
+
+232
+00:11:30,824 --> 00:11:33,491
+gave me was created by me. If it was created by me, them I'm
+
+233
+00:11:33,493 --> 00:11:35,326
+clearly editing it. It was created by someone else,
+
+234
+00:11:35,328 --> 00:11:39,731
+then I'm just choosing it. So I'm just gonna say that that
+
+235
+00:11:39,733 --> 00:11:45,270
+is ckQandARecord.wasCreated, what did I call it,
+
+236
+00:11:45,272 --> 00:11:50,909
+wasCreatedByThisUser, okay? So I'm just using that thing
+
+237
+00:11:50,911 --> 00:11:55,313
+I showed you in that, that little extension over here,
+
+238
+00:11:55,315 --> 00:11:56,915
+okay? So we've got this record, now,
+
+239
+00:11:56,917 --> 00:12:00,885
+a couple of problems here, okay? One thing is right here.
+
+240
+00:12:00,887 --> 00:12:05,590
+Use of undeclared type CKRecord. Why is that? import
+
+241
+00:12:05,592 --> 00:12:09,327
+CloudKit. Okay? CloudKit is a different framework.
+
+242
+00:12:09,329 --> 00:12:10,962
+If you want to use it in any of your files,
+
+243
+00:12:10,964 --> 00:12:13,765
+you have to import CloudKit, okay? Still have an error
+
+244
+00:12:13,767 --> 00:12:16,334
+here. What's this? The old no initializers.
+
+245
+00:12:16,336 --> 00:12:20,105
+Why? Because this is never initialized. Okay, well,
+
+246
+00:12:20,107 --> 00:12:22,974
+this is kind of an interesting case, because I could just,
+
+247
+00:12:22,976 --> 00:12:25,610
+for example, make this be an optional.
+
+248
+00:12:25,612 --> 00:12:29,380
+Then it would start out nil, that's great, but really,
+
+249
+00:12:29,382 --> 00:12:34,018
+I don't want any external person to be giving me
+
+250
+00:12:34,020 --> 00:12:36,721
+an empty record, you know, a nil record. So,
+
+251
+00:12:36,723 --> 00:12:38,890
+I'm gonna do something kind of interesting here that you can
+
+252
+00:12:38,892 --> 00:12:42,927
+do when you want your public API to be non-optional but
+
+253
+00:12:42,929 --> 00:12:44,596
+you still going to allow,
+
+254
+00:12:44,598 --> 00:12:48,166
+internally, the thing to be optional or nil.
+
+255
+00:12:48,168 --> 00:12:50,435
+Okay, what I'm gonna do is, I'm gonna leave this public
+
+256
+00:12:50,437 --> 00:12:54,105
+one to be optional, non-optional, rather. And
+
+257
+00:12:54,107 --> 00:12:59,911
+I'm gonna turn it into a get and set, okay, a computed one.
+
+258
+00:12:59,913 --> 00:13:04,315
+Where it's going to be implementing its get and
+
+259
+00:13:04,317 --> 00:13:09,387
+set by using a private var _ckQandARecord, and this
+
+260
+00:13:09,389 --> 00:13:13,057
+one's going to be optional. Okay, it's gonna do all
+
+261
+00:13:13,059 --> 00:13:15,627
+the same things that it did, it's just gonna be optional.
+
+262
+00:13:15,629 --> 00:13:18,396
+And in the get and set here, the set here is just going to
+
+263
+00:13:18,398 --> 00:13:23,968
+set the ckQandARecord private one to be the new value.
+
+264
+00:13:23,970 --> 00:13:25,270
+Okay, this is always gonna be non-optional,
+
+265
+00:13:25,272 --> 00:13:27,806
+that's going to be great, that's gonna set it there. And
+
+266
+00:13:27,808 --> 00:13:31,342
+here, if someone tries to get the ckQandARecord,
+
+267
+00:13:31,344 --> 00:13:36,214
+okay I'm gonna check to see if my private one is nil.
+
+268
+00:13:36,216 --> 00:13:40,185
+And if it is, I'm gonna set my private one to just be a blank
+
+269
+00:13:40,187 --> 00:13:46,558
+one. Okay, and here I'm gonna use this Entity.QandA.
+
+270
+00:13:46,560 --> 00:13:47,659
+Okay, so I'm gonna create a blank one.
+
+271
+00:13:47,661 --> 00:13:50,862
+And then I can return _ckQandA unwrapped,
+
+272
+00:13:50,864 --> 00:13:53,298
+cuz I know I always at least create it.
+
+273
+00:13:53,300 --> 00:13:56,201
+So this is kind of a little tricky thing here to make sure
+
+274
+00:13:56,203 --> 00:13:59,737
+that it's always this way. And another good thing about this
+
+275
+00:13:59,739 --> 00:14:02,473
+is, sorry, you had a question? >> Could you use
+
+276
+00:14:02,475 --> 00:14:05,710
+a lazy initializer here? >> Yeah, so the question is,
+
+277
+00:14:05,712 --> 00:14:07,045
+can I use a lazy initializer here?
+
+278
+00:14:07,047 --> 00:14:09,414
+Like, could I have said ckQandARecord =
+
+279
+00:14:09,416 --> 00:14:12,050
+CKRecord whatever, or even a lazy one, I wouldn't even have
+
+280
+00:14:12,052 --> 00:14:15,453
+to be lazy. The reason I'm not doing that is the old problem
+
+281
+00:14:15,455 --> 00:14:16,554
+where didSet doesn't
+
+282
+00:14:16,556 --> 00:14:21,092
+get called with the initializer, right? And
+
+283
+00:14:21,094 --> 00:14:22,827
+I want didSet to always get called, and
+
+284
+00:14:22,829 --> 00:14:25,263
+this is gonna cause didSet to always get called.
+
+285
+00:14:25,265 --> 00:14:28,233
+So it's a little bit of a trick there. Okay?
+
+286
+00:14:28,235 --> 00:14:31,502
+All right, so we've got this all set up for
+
+287
+00:14:31,504 --> 00:14:35,240
+our public API here. What do we want to do next?
+
+288
+00:14:35,242 --> 00:14:38,109
+Well, let's go ahead and change our viewDidLoad,
+
+289
+00:14:38,111 --> 00:14:40,245
+instead of setting our superclass thing,
+
+290
+00:14:40,247 --> 00:14:42,780
+let's just test and make sure we're working. So
+
+291
+00:14:42,782 --> 00:14:46,784
+I'm gonna set my ckQandARecord equal to an empty record,
+
+292
+00:14:46,786 --> 00:14:55,393
+just as a test here. Okay? So we're just gonna do that.
+
+293
+00:14:55,395 --> 00:15:00,231
+I just wanna see if this is working. So let's run.
+
+294
+00:15:00,233 --> 00:15:02,500
+And it should come up an empty question, but
+
+295
+00:15:02,502 --> 00:15:05,837
+it should be editable, because I created this CKRecord.
+
+296
+00:15:05,839 --> 00:15:08,640
+Right? So here it is. It's empty, empty question.
+
+297
+00:15:08,642 --> 00:15:12,277
+I could type here, you know, I could say something, you know,
+
+298
+00:15:12,279 --> 00:15:18,416
+like, When, we'll just say When, okay. Answers, Today.
+
+299
+00:15:18,418 --> 00:15:22,654
+Maybe Never, okay.
+
+300
+00:15:22,656 --> 00:15:27,659
+And then Tomorrow. Okay, so I've created this question.
+
+301
+00:15:27,661 --> 00:15:29,994
+Now, as I edit all this stuff, of course,
+
+302
+00:15:29,996 --> 00:15:31,763
+none of this is going on the cloud yet.
+
+303
+00:15:31,765 --> 00:15:34,565
+And in fact, none of it's even going into the CKRecord.
+
+304
+00:15:34,567 --> 00:15:37,535
+It's all just being held in that Q and A, okay. So
+
+305
+00:15:37,537 --> 00:15:40,004
+the next step we need to do is to have this thing
+
+306
+00:15:40,006 --> 00:15:43,374
+write to the cloud. Now, when to write to the cloud is
+
+307
+00:15:43,376 --> 00:15:46,344
+the question here, okay? We could add a button,
+
+308
+00:15:46,346 --> 00:15:48,746
+maybe a bar button item up there that says,
+
+309
+00:15:48,748 --> 00:15:51,416
+Save to Cloud, okay? Or just Save or something like that.
+
+310
+00:15:51,418 --> 00:15:54,986
+So that, that would be one way of it. But I'm actually kind
+
+311
+00:15:54,988 --> 00:15:58,489
+of a fan of UIs that the user doesn't have to take extra
+
+312
+00:15:58,491 --> 00:16:01,960
+steps unnecessarily. So wouldn't it be cool if we just
+
+313
+00:16:01,962 --> 00:16:05,697
+saved this to the cloud every time someone finishes
+
+314
+00:16:05,699 --> 00:16:06,397
+editing one of these fields.
+
+315
+00:16:06,399 --> 00:16:09,133
+Now as soon as the keyboard goes away, any of these times,
+
+316
+00:16:09,135 --> 00:16:11,569
+boom, we'll just save whatever we got to the cloud.
+
+317
+00:16:11,571 --> 00:16:15,239
+Now we might also want another UI which is published,
+
+318
+00:16:15,241 --> 00:16:16,341
+so that it shows it to other users.
+
+319
+00:16:16,343 --> 00:16:19,243
+But for now users can see things in progress, okay,
+
+320
+00:16:19,245 --> 00:16:21,212
+just because we're starting out our app.
+
+321
+00:16:21,214 --> 00:16:23,715
+So that's what I'm gonna do, I'm gonna have it every time
+
+322
+00:16:23,717 --> 00:16:26,751
+that this first responder gets taken away from a text field,
+
+323
+00:16:26,753 --> 00:16:28,319
+I'm gonna have it update the cloud.
+
+324
+00:16:28,321 --> 00:16:31,189
+So how can we find out when a first responder's taken away
+
+325
+00:16:31,191 --> 00:16:33,691
+from the text view? We gonna use the text view's delegate,
+
+326
+00:16:33,693 --> 00:16:36,160
+it's almost identical to the text field delegate
+
+327
+00:16:36,162 --> 00:16:39,630
+that we talked about before. And our super classes, okay,
+
+328
+00:16:39,632 --> 00:16:43,101
+the QandATableViewController, right here.
+
+329
+00:16:43,103 --> 00:16:46,237
+It's super class is the text TableViewController and
+
+330
+00:16:46,239 --> 00:16:50,108
+the text TableViewController already and not surprisingly,
+
+331
+00:16:50,110 --> 00:16:54,012
+is a UITextViewDelegate. So it's already receiving
+
+332
+00:16:54,014 --> 00:16:56,848
+UITextViewDelegate message whenever any of its text
+
+333
+00:16:56,850 --> 00:16:59,717
+views are edited. Okay, so that's great. So all we need
+
+334
+00:16:59,719 --> 00:17:02,553
+to do here is implement a UITextViewDelegate, so
+
+335
+00:17:02,555 --> 00:17:05,990
+I'm gonna implement the one which is DidEndEditing.
+
+336
+00:17:05,992 --> 00:17:08,593
+Okay, TextViewDidEndEditing. Whoops,
+
+337
+00:17:08,595 --> 00:17:13,431
+not did change. DidEndEditing,
+
+338
+00:17:13,433 --> 00:17:18,603
+this one. Okay, and let my super class. He might well be
+
+339
+00:17:18,605 --> 00:17:23,608
+doing something there so, we'll let him do his thing.
+
+340
+00:17:23,610 --> 00:17:27,245
+And now what I'm going to do with just update the Cloud, so
+
+341
+00:17:27,247 --> 00:17:30,448
+I'm going to have some method iCloud update, okay?
+
+342
+00:17:30,450 --> 00:17:33,584
+And it's complaining here because I overrode this so
+
+343
+00:17:33,586 --> 00:17:38,056
+I need to say override. Okay, so this iCloud update is going
+
+344
+00:17:38,058 --> 00:17:40,958
+to take our Q&A, ship it up to the iCloud,
+
+345
+00:17:40,960 --> 00:17:44,495
+to the cloud kit database up there. So let's go ahead and
+
+346
+00:17:44,497 --> 00:17:50,635
+do that. That's private func iCloud update.
+
+347
+00:17:50,637 --> 00:17:53,504
+Okay, so what do we need to do, to write this thing,
+
+348
+00:17:53,506 --> 00:17:55,406
+to the cloud? It's actually really simple.
+
+349
+00:17:55,408 --> 00:17:58,342
+The first thing we're gonna do is get the stuff out of our
+
+350
+00:17:58,344 --> 00:18:02,246
+QnA into our record. Then we're gonna save our record,
+
+351
+00:18:02,248 --> 00:18:05,450
+okay? So let's do the first part of that first.
+
+352
+00:18:05,452 --> 00:18:10,555
+Which is let's take our ckQandARecord, and set,
+
+353
+00:18:10,557 --> 00:18:13,191
+for example, its Question, and
+
+354
+00:18:13,193 --> 00:18:18,596
+we'll set this question equal to be the Q&A question.
+
+355
+00:18:18,598 --> 00:18:23,301
+So we're just grabbing it out of our super
+
+356
+00:18:23,303 --> 00:18:28,639
+classes thing and similarly here the Q&A for
+
+357
+00:18:28,641 --> 00:18:32,577
+the answers equals qanda.answers.
+
+358
+00:18:32,579 --> 00:18:35,980
+One thing, I'd probably don't wanna be polluting the cloud
+
+359
+00:18:35,982 --> 00:18:37,281
+with empty question and answers.
+
+360
+00:18:37,283 --> 00:18:40,551
+So I'm gonna put a little if around this just to say.
+
+361
+00:18:40,553 --> 00:18:44,856
+if my qanda, qanda.question,
+
+362
+00:18:44,858 --> 00:18:48,426
+oops, question.isEmpty and
+
+363
+00:18:48,428 --> 00:18:54,932
+I'm also goinna make sure that my answers, Q and
+
+364
+00:18:54,934 --> 00:18:59,637
+A answers isn't empty either, okay?
+
+365
+00:18:59,639 --> 00:19:02,507
+So, in other words, if I don't have an empty question or
+
+366
+00:19:02,509 --> 00:19:05,843
+answer, then I'll go ahead and do this. Okay, so now that
+
+367
+00:19:05,845 --> 00:19:09,547
+I've updated this record. I need to save it to the cloud.
+
+368
+00:19:09,549 --> 00:19:11,682
+So I'm gonna actually have a different function for that.
+
+369
+00:19:11,684 --> 00:19:14,285
+ICloudSaveRecord I'm gonna call it.
+
+370
+00:19:14,287 --> 00:19:18,089
+I'm gonna pass my CKQandARecord along. Okay,
+
+371
+00:19:18,091 --> 00:19:21,526
+we're gonna have this little function that's going to save
+
+372
+00:19:21,528 --> 00:19:27,198
+things to the cloud. So, private func iCloudSaveRecord,
+
+373
+00:19:27,200 --> 00:19:32,370
+takes a recordToSave, which is a CKRecord. Okay,
+
+374
+00:19:32,372 --> 00:19:35,907
+now what's this guy gonna do? This one also surprisingly
+
+375
+00:19:35,909 --> 00:19:38,576
+straightforward, as you saw from the slides. One thing
+
+376
+00:19:38,578 --> 00:19:41,279
+is any time we're gonna save something into the Cloud,
+
+377
+00:19:41,281 --> 00:19:42,947
+we need a database to work with. So
+
+378
+00:19:42,949 --> 00:19:48,085
+I'm gonna say private let the database equal CKcontainer,
+
+379
+00:19:48,087 --> 00:19:52,423
+remember? Container, whoops, [LAUGH] CKcontainer,
+
+380
+00:19:52,425 --> 00:19:56,060
+defaultContainer public. So we're gonna put this in
+
+381
+00:19:56,062 --> 00:19:58,129
+the public cloud because I want everyone to
+
+382
+00:19:58,131 --> 00:19:59,697
+see everyone else's questions, okay?
+
+383
+00:19:59,699 --> 00:20:02,133
+So if I put it in the private database I'd only be able to
+
+384
+00:20:02,135 --> 00:20:04,702
+see my own questions, so this way I can see everybody's,
+
+385
+00:20:04,704 --> 00:20:08,606
+okay? So we got that. So I'm gonna ask the database here,
+
+386
+00:20:08,608 --> 00:20:14,712
+just to save this record. Okay, the record to save. And
+
+387
+00:20:14,714 --> 00:20:17,515
+here's the completion handler right here. And in this
+
+388
+00:20:17,517 --> 00:20:21,519
+completions handler, we have the saved record basically.
+
+389
+00:20:21,521 --> 00:20:25,723
+Which should be the same thing or nil and the error, okay?
+
+390
+00:20:25,725 --> 00:20:28,526
+And this is asynchronous. Okay, this closure is gonna
+
+391
+00:20:28,528 --> 00:20:31,362
+be called sometime later when this thing is saved.
+
+392
+00:20:31,364 --> 00:20:33,564
+Now, this is a demo so I don't have time for
+
+393
+00:20:33,566 --> 00:20:36,300
+us to go and analyze every realistic error that could
+
+394
+00:20:36,302 --> 00:20:38,669
+happen every single time we do something with the cloud.
+
+395
+00:20:38,671 --> 00:20:40,838
+But I'm gonna show you a few of them just so
+
+396
+00:20:40,840 --> 00:20:43,574
+you kind of get an idea how to handle errors, what kind of
+
+397
+00:20:43,576 --> 00:20:46,210
+errors will come along. So let's look at an interesting
+
+398
+00:20:46,212 --> 00:20:49,313
+error that might happen when you're saving a record, okay.
+
+399
+00:20:49,315 --> 00:20:52,617
+So this error code equals
+
+400
+00:20:52,619 --> 00:20:59,790
+CKErrorCode.ServerRecordChan- ged.
+
+401
+00:20:59,792 --> 00:21:03,060
+Okay, don't forget .rawValue at the end because we're
+
+402
+00:21:03,062 --> 00:21:06,163
+looking at this as an right here.
+
+403
+00:21:06,165 --> 00:21:09,133
+So what is this error? This error means we tried to save
+
+404
+00:21:09,135 --> 00:21:12,303
+a record but that record had already been saved newer
+
+405
+00:21:12,305 --> 00:21:16,007
+by someone else, okay. So now I've got old data that I'm
+
+406
+00:21:16,009 --> 00:21:18,376
+trying to write on top of somebody who wrote newer data.
+
+407
+00:21:18,378 --> 00:21:20,811
+Maybe it was one of my other devices. Maybe it's even me.
+
+408
+00:21:20,813 --> 00:21:24,115
+Maybe I'm writing so fast. I saved three of four records in
+
+409
+00:21:24,117 --> 00:21:25,883
+a row, okay. They all got queued up and
+
+410
+00:21:25,885 --> 00:21:29,053
+one of them got through the network faster than the other,
+
+411
+00:21:29,055 --> 00:21:32,490
+could be. This kind of approach of writing things and
+
+412
+00:21:32,492 --> 00:21:34,892
+just checking when you write them to see
+
+413
+00:21:34,894 --> 00:21:37,194
+if it's newer is called optimistic locking.
+
+414
+00:21:37,196 --> 00:21:40,097
+Okay, it's basically you don't check first before you write,
+
+415
+00:21:40,099 --> 00:21:43,234
+you just try to write and it's newer you fail. Okay?
+
+416
+00:21:43,236 --> 00:21:47,204
+So save record which is this convenous method on database,
+
+417
+00:21:47,206 --> 00:21:50,775
+really has no way to make it overwrite,
+
+418
+00:21:50,777 --> 00:21:52,209
+have an older thing overwrite a newer thing.
+
+419
+00:21:52,211 --> 00:21:53,878
+It's not even clear that's what I'd want here.
+
+420
+00:21:53,880 --> 00:21:57,048
+I probably do want the newer thing, to be what what gets
+
+421
+00:21:57,050 --> 00:22:01,786
+through. If I did wanna do do overwriting of newer things,
+
+422
+00:22:01,788 --> 00:22:02,353
+then I can use that whole
+
+423
+00:22:02,355 --> 00:22:04,388
+operation-based thing I was telling you about in
+
+424
+00:22:04,390 --> 00:22:06,757
+the slides. Much more complicated that this
+
+425
+00:22:06,759 --> 00:22:09,794
+convenience method but it can be done. But anyway for server
+
+426
+00:22:09,796 --> 00:22:13,164
+record change happens there is really nothing we can do or
+
+427
+00:22:13,166 --> 00:22:16,600
+we would want to do. So you know we can just ignore this,
+
+428
+00:22:16,602 --> 00:22:21,072
+okay. We just assume that the newer ones is what we wanted.
+
+429
+00:22:21,074 --> 00:22:22,707
+Okay, what are the kind of stuff going to happen for
+
+430
+00:22:22,709 --> 00:22:28,379
+writing here? How about, let's say if our error is not Nil.
+
+431
+00:22:28,381 --> 00:22:28,579
+Well in other words,
+
+432
+00:22:28,581 --> 00:22:31,315
+we got some other kinds of error. Let's check to see
+
+433
+00:22:31,317 --> 00:22:34,485
+if that error may be has a retry in there for us. Okay,
+
+434
+00:22:34,487 --> 00:22:37,988
+something we can go and retry what we' re doing. Okay? Now,
+
+435
+00:22:37,990 --> 00:22:41,892
+maybe why does that happen? Net, network let, latencies,
+
+436
+00:22:41,894 --> 00:22:44,862
+something like that. Some network problem that might
+
+437
+00:22:44,864 --> 00:22:47,631
+recover with a little bit of time, that kind of thing.
+
+438
+00:22:47,633 --> 00:22:51,469
+So, how do we do this? So, I am just going to call another
+
+439
+00:22:51,471 --> 00:22:56,540
+function to handle this. I am gonna call it retry after
+
+440
+00:22:56,542 --> 00:23:00,444
+error. It's goinna take the error whatever happened and
+
+441
+00:23:00,446 --> 00:23:03,414
+I am just going to give it a selector to call to retry.
+
+442
+00:23:03,416 --> 00:23:06,016
+Okay, and the selector here is going to be in this case since
+
+443
+00:23:06,018 --> 00:23:09,253
+we are saving record. I'm gonna have iCloud update,
+
+444
+00:23:09,255 --> 00:23:14,024
+okay, this thing up here that updates, try to do this again.
+
+445
+00:23:14,026 --> 00:23:17,928
+Okay? Now let's go and put this t retry in there and
+
+446
+00:23:17,930 --> 00:23:20,765
+we'll see what some of these errors that are.
+
+447
+00:23:20,767 --> 00:23:25,102
+So this is a private func retryAfterError,
+
+448
+00:23:25,104 --> 00:23:27,671
+takes an error, do an NSError.
+
+449
+00:23:27,673 --> 00:23:31,409
+And then it takes with selector. We'll have a nice
+
+450
+00:23:31,411 --> 00:23:35,379
+local name for that and this is a selector, okay.
+
+451
+00:23:35,381 --> 00:23:38,716
+So we have errors here, so what is this error. It says,
+
+452
+00:23:38,718 --> 00:23:38,816
+selector refers to
+
+453
+00:23:38,818 --> 00:23:42,219
+a method that does not expose to objective C. That's iCloud.
+
+454
+00:23:42,221 --> 00:23:45,723
+Now why is this iCloud update not exposed to objective C?
+
+455
+00:23:45,725 --> 00:23:47,758
+Well, it's because it's private, okay.
+
+456
+00:23:47,760 --> 00:23:50,394
+This is a class that inherits from in it' s objects, so
+
+457
+00:23:50,396 --> 00:23:52,763
+that's not the problem. The problem is that we have
+
+458
+00:23:52,765 --> 00:23:54,565
+a private method here. So we can expose it
+
+459
+00:23:54,567 --> 00:23:57,668
+either by making it not private or just saying OBJC.
+
+460
+00:23:57,670 --> 00:24:01,672
+That mean, hey, expose this to Objective-C run time. Okay?
+
+461
+00:24:01,674 --> 00:24:06,610
+Make sense? All right, here is now saying the call
+
+462
+00:24:06,612 --> 00:24:12,016
+to the method iCloud update requires explicit self, okay?
+
+463
+00:24:12,018 --> 00:24:15,019
+So that it knows, in our self because we happen to be
+
+464
+00:24:15,021 --> 00:24:17,888
+in a closure right here, okay? All references to
+
+465
+00:24:17,890 --> 00:24:21,792
+things in our selves Have to be explicit. Okay, so
+
+466
+00:24:21,794 --> 00:24:24,862
+that's good. All right, now, retry after or how we gonna
+
+467
+00:24:24,864 --> 00:24:29,233
+retry after. Well, if we can't get that retry interval magic
+
+468
+00:24:29,235 --> 00:24:32,269
+out of the error structure then we cannot do it so
+
+469
+00:24:32,271 --> 00:24:33,103
+that's the first thing we're gonna do.
+
+470
+00:24:33,105 --> 00:24:36,607
+We're gonna say if we can let retry interval
+
+471
+00:24:37,276 --> 00:24:41,011
+equal the errors. User info, okay so
+
+472
+00:24:41,013 --> 00:24:44,582
+user info is this dictionary that comes with an error that
+
+473
+00:24:44,584 --> 00:24:46,317
+gives you kind of interesting info.
+
+474
+00:24:46,319 --> 00:24:51,989
+And, the thing we want is ck error,
+
+475
+00:24:51,991 --> 00:24:55,359
+retry after key, okay? So
+
+476
+00:24:55,361 --> 00:25:00,664
+that should be an ns time interval. So if we're able to
+
+477
+00:25:00,666 --> 00:25:05,135
+get that retry interval, then hey, let's go ahead and retry.
+
+478
+00:25:05,471 --> 00:25:09,340
+And how are we going to retry here? Well I'm just going to
+
+479
+00:25:09,342 --> 00:25:13,777
+do an NSTimer, scheduled timer with time interval,
+
+480
+00:25:13,779 --> 00:25:18,282
+I want this one, let's go ahead and make this
+
+481
+00:25:19,819 --> 00:25:24,054
+have different lines here so you can see little better what
+
+482
+00:25:24,056 --> 00:25:28,359
+we're doing with the timer. Okay, so the time interval
+
+483
+00:25:28,361 --> 00:25:31,829
+here is that retry interval that we got out of the error.
+
+484
+00:25:31,831 --> 00:25:34,532
+The target is going to be our self.
+
+485
+00:25:34,534 --> 00:25:39,270
+The selector is the selector we passed on Here, okay?
+
+486
+00:25:39,272 --> 00:25:42,606
+User info, eh, we don't have any, we're just retrying, so
+
+487
+00:25:42,608 --> 00:25:48,779
+we don't have any extra data, and it does not repeat. Okay,
+
+488
+00:25:48,781 --> 00:25:51,181
+now the problem here we gotta be careful of,
+
+489
+00:25:51,183 --> 00:25:54,051
+we're calling retry after error in this closure,
+
+490
+00:25:54,053 --> 00:25:57,922
+which is executing off the main thread. Okay, so
+
+491
+00:25:57,924 --> 00:26:00,958
+we cannot do NSTimers on other threads. So
+
+492
+00:26:00,960 --> 00:26:08,399
+we need to dispatc_async, to the main queue.
+
+493
+00:26:08,401 --> 00:26:13,103
+Dispatc_Ge_mai_queue.
+
+494
+00:26:13,105 --> 00:26:18,042
+We'll do this, like that. Okay,
+
+495
+00:26:18,044 --> 00:26:23,047
+you got that? Cool, all right so
+
+496
+00:26:23,049 --> 00:26:27,184
+that's just a couple of the errors that we can do.
+
+497
+00:26:27,186 --> 00:26:29,787
+If it succeeds, we actually don't need to do anything.
+
+498
+00:26:29,789 --> 00:26:30,554
+It saved it, we're happy,
+
+499
+00:26:30,556 --> 00:26:35,793
+we can just move on, okay. All right, so let's try and
+
+500
+00:26:35,795 --> 00:26:37,027
+run this, let's just see if it happens,
+
+501
+00:26:37,029 --> 00:26:40,030
+let's see if it can save this thing to the database. So
+
+502
+00:26:40,032 --> 00:26:46,971
+I'm gonna run, all right, here we crashed,
+
+503
+00:26:46,973 --> 00:26:50,874
+now why'd we crash? The first place I'm always gonna
+
+504
+00:26:50,876 --> 00:26:53,611
+look is the console down here. So let's go take a look at
+
+505
+00:26:53,613 --> 00:26:57,948
+the console and see if it has a reason that it crashed and
+
+506
+00:26:57,950 --> 00:26:59,249
+it does have a reason. And the reason is,
+
+507
+00:26:59,251 --> 00:27:02,853
+this application is missing the required entitlement for
+
+508
+00:27:02,855 --> 00:27:03,253
+iCloud services.
+
+509
+00:27:03,255 --> 00:27:05,356
+So this is that thing I was telling you about.
+
+510
+00:27:05,358 --> 00:27:06,523
+We have to go enable iCloud,
+
+511
+00:27:06,525 --> 00:27:09,627
+all right. Because iCloud is server technology. Gee,
+
+512
+00:27:09,629 --> 00:27:11,862
+things are gonna have to be created on a server side for
+
+513
+00:27:11,864 --> 00:27:14,732
+this app, etcetera. So they don't want to create that for
+
+514
+00:27:14,734 --> 00:27:16,967
+every app, only for apps that are actually gonna use it.
+
+515
+00:27:16,969 --> 00:27:20,804
+So how do we do that? We go up here, okay, to our inspector,
+
+516
+00:27:20,806 --> 00:27:23,040
+inspect our project settings here and
+
+517
+00:27:23,042 --> 00:27:24,642
+we'll go to capabilities.
+
+518
+00:27:24,644 --> 00:27:27,578
+And we click iCloud here, okay? So you have to make sure
+
+519
+00:27:27,580 --> 00:27:30,748
+you pick a team, okay, cuz it needs to know who you are so
+
+520
+00:27:30,750 --> 00:27:33,550
+we can set up this iCloud stuff for you, okay?
+
+521
+00:27:33,552 --> 00:27:37,855
+Your, account, your developer account up there. So
+
+522
+00:27:37,857 --> 00:27:40,824
+here we have iCloud enabled, we are going to pick cloud kit
+
+523
+00:27:40,826 --> 00:27:45,963
+as that's the service that we want, we can pick these other
+
+524
+00:27:45,965 --> 00:27:48,899
+ones as well but we're going to focus on CloudKit today.
+
+525
+00:27:48,901 --> 00:27:52,169
+And we'll be looking at the dashboard in a little bit,
+
+526
+00:27:52,171 --> 00:27:55,005
+actually let's go take a look at our dashboard now.
+
+527
+00:27:55,007 --> 00:27:58,409
+Once your at dashboard, of course you have to log in.
+
+528
+00:27:58,711 --> 00:28:00,611
+Here we are, nothing has been created yet and
+
+529
+00:28:00,613 --> 00:28:03,714
+that's because we haven't done any iCloud where we have
+
+530
+00:28:03,716 --> 00:28:08,652
+tried to create any entities, okay? All right, so
+
+531
+00:28:08,654 --> 00:28:10,587
+now that we've done that. Now let's go back and
+
+532
+00:28:10,589 --> 00:28:14,091
+run, and do that. And actually create some entities. So let's
+
+533
+00:28:14,093 --> 00:28:19,063
+get our code back up here so you can see that. And run.
+
+534
+00:28:23,769 --> 00:28:28,105
+All right. So here we go. Blank question and answer.
+
+535
+00:28:28,107 --> 00:28:35,813
+Let's go ahead a put a question answer here again,
+
+536
+00:28:35,815 --> 00:28:40,884
+let's try how about what is your
+
+537
+00:28:40,886 --> 00:28:46,056
+favorite team? Okay,
+
+538
+00:28:46,058 --> 00:28:52,396
+we'll say, maybe the Sharks. Whoops. Sharks,
+
+539
+00:28:52,398 --> 00:28:59,903
+or maybe the Warriors, or maybe it's the Giants. Okay,
+
+540
+00:29:00,106 --> 00:29:02,473
+there are a lot of teams to choose from in the Bay area.
+
+541
+00:29:02,475 --> 00:29:07,377
+All right? So hopefully this is creating on the server
+
+542
+00:29:07,379 --> 00:29:12,116
+because remember every time we went to a new field,
+
+543
+00:29:12,118 --> 00:29:13,884
+it should be riding something up to the Cloud.
+
+544
+00:29:13,886 --> 00:29:18,722
+So let's go back and take a look at our dashboard here, so
+
+545
+00:29:18,724 --> 00:29:23,460
+let's reload, Here it is, look at that,
+
+546
+00:29:23,462 --> 00:29:26,363
+QandA entity got created with answers and questions.
+
+547
+00:29:26,365 --> 00:29:28,732
+So that's great. So that's the entity side of it.
+
+548
+00:29:28,734 --> 00:29:30,400
+And we can actually look at the data,
+
+549
+00:29:30,402 --> 00:29:33,270
+not just the entity, but the data that's been stored by
+
+550
+00:29:33,272 --> 00:29:34,872
+going down here to this Default Zone.
+
+551
+00:29:34,874 --> 00:29:36,840
+Now, we'll notice when we try to look in here for
+
+552
+00:29:36,842 --> 00:29:39,409
+things, it says, records can't be shown because there's no
+
+553
+00:29:39,411 --> 00:29:42,446
+index on the Record ID field. So you can't look at things
+
+554
+00:29:42,448 --> 00:29:46,517
+that aren't indexed. And so let me show you where that is.
+
+555
+00:29:46,519 --> 00:29:49,486
+If you go back here you see metadata indexes,
+
+556
+00:29:49,488 --> 00:29:52,856
+record ID not being indexed. Same thing created by.
+
+557
+00:29:52,858 --> 00:29:55,225
+In fact I want both of those to be searchable.
+
+558
+00:29:55,227 --> 00:29:58,862
+I need created by so I know which Q&As were created by me,
+
+559
+00:29:58,864 --> 00:30:00,297
+and I want record ID so
+
+560
+00:30:00,299 --> 00:30:02,166
+I can go find all the ones out there. And
+
+561
+00:30:02,168 --> 00:30:04,635
+you can actually see here I'm gonna go ahead and save this.
+
+562
+00:30:04,637 --> 00:30:06,703
+I'll show you something real quick here. So
+
+563
+00:30:06,705 --> 00:30:08,772
+I've changed this to have these indexes.
+
+564
+00:30:08,774 --> 00:30:11,275
+Now I can go to the default zone. It can find things and
+
+565
+00:30:11,277 --> 00:30:13,610
+sure enough. What is your favorite team? Sharks and
+
+566
+00:30:13,612 --> 00:30:19,016
+Warriors. I guess we didn't save the Giants one here. When
+
+567
+00:30:19,018 --> 00:30:21,919
+we reload, we'll see that. One thing about the car I
+
+568
+00:30:21,921 --> 00:30:26,690
+wanted to show you the costs thing, which is down here.
+
+569
+00:30:26,692 --> 00:30:31,028
+If you look at uhs where is that uhs
+
+570
+00:30:31,931 --> 00:30:34,865
+usage? If you look at usage right here it is going to show
+
+571
+00:30:34,867 --> 00:30:37,668
+you how much you using how many active users you have,
+
+572
+00:30:37,670 --> 00:30:40,070
+how many request per second, how much transfers you
+
+573
+00:30:40,072 --> 00:30:42,906
+are doing of large files. How much storage you're using. All
+
+574
+00:30:42,908 --> 00:30:46,210
+that stuff. And these things if you go above these lines,
+
+575
+00:30:46,212 --> 00:30:48,478
+start costing you money. See these red lines.
+
+576
+00:30:48,480 --> 00:30:52,416
+Okay, the limits? Usage? So, I'm way, way below everything.
+
+577
+00:30:52,418 --> 00:30:53,917
+[LAUGH] Obviously. But, you know.
+
+578
+00:30:53,919 --> 00:30:58,622
+So, this is basically how you get charged for it, okay?
+
+579
+00:30:58,624 --> 00:31:03,193
+That good? All right. So we've got our nice database is being
+
+580
+00:31:03,195 --> 00:31:06,129
+loaded up, it's excellent, okay? The next thing we're
+
+581
+00:31:06,131 --> 00:31:11,168
+gonna do in our UI here is we are going to have another
+
+582
+00:31:11,170 --> 00:31:15,038
+view controller that has a list of all the question,
+
+583
+00:31:15,040 --> 00:31:16,773
+the Q&A's that are in the database, okay?
+
+584
+00:31:16,775 --> 00:31:20,277
+That we can choose from, and take a look at the Q&A's Okay,
+
+585
+00:31:20,279 --> 00:31:23,513
+so it's just gonna be a simple table view with a list of
+
+586
+00:31:23,515 --> 00:31:26,316
+the QNAs. All right, so how we gonna do that,
+
+587
+00:31:26,318 --> 00:31:29,820
+we gonna have to create a new MVC. So lets go ahead and
+
+588
+00:31:29,822 --> 00:31:34,091
+do that, go file, new, go touch, this one is just going
+
+589
+00:31:34,093 --> 00:31:36,860
+to be a regular UI table view controller,
+
+590
+00:31:36,862 --> 00:31:41,031
+am gonna call it my AllQandAsTableViewController,
+
+591
+00:31:41,033 --> 00:31:42,866
+cuz that's what it's gonna do.
+
+592
+00:31:42,868 --> 00:31:45,402
+It's gonna be the table view controller, shows all my Q and
+
+593
+00:31:45,404 --> 00:31:49,139
+As in it, okay? And we'll put it in the same place
+
+594
+00:31:49,141 --> 00:31:53,777
+as usual here. Here's all Q and As. Let's go ahead and
+
+595
+00:31:53,779 --> 00:32:02,953
+get rid of all of this stuff. Okay,
+
+596
+00:32:02,955 --> 00:32:06,990
+so as always, what's gonna be the model of our new MVC?
+
+597
+00:32:06,992 --> 00:32:10,661
+Well, it shows all Q and A's, so that's gonna be my model,
+
+598
+00:32:10,663 --> 00:32:13,897
+all the Q and A's. And that's just going to be an array of
+
+599
+00:32:13,899 --> 00:32:19,436
+CKRecord, okay. And of course, when that changes,
+
+600
+00:32:19,438 --> 00:32:22,339
+if someone changes that array of records, then I'm going to
+
+601
+00:32:22,341 --> 00:32:26,376
+have the table view reload its data. Hopefully you're all
+
+602
+00:32:26,378 --> 00:32:30,047
+familiar with that after Smashtag experiences. Okay, so
+
+603
+00:32:30,049 --> 00:32:35,285
+it's as simple as that. So how do we get all these Q and A's?
+
+604
+00:32:35,287 --> 00:32:39,489
+Import CloudKit. How do we get them all? Well,
+
+605
+00:32:39,491 --> 00:32:43,327
+in my view, let's do it in viewWillAppear, okay,
+
+606
+00:32:43,329 --> 00:32:48,498
+when I know I'm gonna come on screen. I'm
+
+607
+00:32:48,500 --> 00:32:52,035
+going to call some method to fetchAllQandAs, okay, and
+
+608
+00:32:52,037 --> 00:32:56,440
+that's gonna go out to CloudKit and find them all. So
+
+609
+00:32:56,442 --> 00:33:01,478
+that's private method called fetchAllQAndAs.
+
+610
+00:33:01,480 --> 00:33:06,883
+Oops. Okay, and how's this thing gonna work? Well,
+
+611
+00:33:06,885 --> 00:33:09,853
+this is gonna turn out to be very, very simple. Of course,
+
+612
+00:33:09,855 --> 00:33:12,022
+we need our database here, so let's get that.
+
+613
+00:33:12,024 --> 00:33:15,258
+CKContainer.defaultContainer, again, we're looking in
+
+614
+00:33:15,260 --> 00:33:18,662
+the public database there. All right, we have a database. So
+
+615
+00:33:18,664 --> 00:33:22,332
+fetching all the QandAs really just requires doing a CKQuery.
+
+616
+00:33:22,334 --> 00:33:24,468
+You remember that from the slide CKQuery?
+
+617
+00:33:24,470 --> 00:33:27,871
+So for CKQuery, we need a predicate, okay?
+
+618
+00:33:27,873 --> 00:33:30,974
+And since I'm getting all of the QandA's,
+
+619
+00:33:30,976 --> 00:33:34,845
+every single one, I'm not searching for anything,
+
+620
+00:33:34,847 --> 00:33:38,982
+I'm gonna use the predicate TRUEPREDICATE. Okay, this
+
+621
+00:33:38,984 --> 00:33:42,753
+is a special predicate that means, get them all. Okay,
+
+622
+00:33:42,755 --> 00:33:45,856
+remember, in Core Data, we have nil means get them all,
+
+623
+00:33:45,858 --> 00:33:48,191
+but here, you can't have predicate be nil, so
+
+624
+00:33:48,193 --> 00:33:52,529
+TRUEPREDICATE. It means get them all. Okay? Next,
+
+625
+00:33:52,531 --> 00:33:58,268
+we can just create the query itself. That's a CKQuery,
+
+626
+00:33:58,270 --> 00:34:03,673
+okay? And we'll get its initializer here. So it
+
+627
+00:34:03,675 --> 00:34:05,876
+just wants to know what kind of things are you querying.
+
+628
+00:34:05,878 --> 00:34:08,211
+It's just like when you're doing NSFetchRequest in
+
+629
+00:34:08,213 --> 00:34:10,847
+Core Data. You can only query one kind of thing at a time,
+
+630
+00:34:10,849 --> 00:34:15,819
+one entity at a time. So here we're gonna have Cloud.Entity,
+
+631
+00:34:15,821 --> 00:34:20,390
+Entity.QandA, cuz that's what we're searching for,
+
+632
+00:34:20,392 --> 00:34:22,759
+these QandA entities, entities.
+
+633
+00:34:22,761 --> 00:34:25,162
+And here's the predicate we're gonna use. Now,
+
+634
+00:34:25,164 --> 00:34:28,065
+one thing I forgot to show you in the slides, very important,
+
+635
+00:34:28,067 --> 00:34:30,934
+is sorting. Just like in NSFetchRequest, you can
+
+636
+00:34:30,936 --> 00:34:35,272
+do this here as well. I can say query.sortDescriptors, and
+
+637
+00:34:35,274 --> 00:34:37,340
+I can specify how I want to sort
+
+638
+00:34:37,342 --> 00:34:40,677
+this query that I'm doing. Okay? So I'll have a sort,
+
+639
+00:34:40,679 --> 00:34:42,813
+we'll sort this by the name of the,
+
+640
+00:34:42,815 --> 00:34:44,614
+by the question name, okay. So
+
+641
+00:34:44,616 --> 00:34:49,719
+key is Cloud.Attribute.Question, and
+
+642
+00:34:49,721 --> 00:34:54,524
+we'll have it be ascending. Okay, and of course,
+
+643
+00:34:54,526 --> 00:34:57,260
+this is an array just like it is with fetch request,
+
+644
+00:34:57,262 --> 00:34:59,963
+you can search last name first, then by first name,
+
+645
+00:34:59,965 --> 00:35:04,067
+et cetera. Okay, so that's it. We've created our carry,
+
+646
+00:35:04,069 --> 00:35:07,137
+query, how we wanna sort it, what the predicate is.
+
+647
+00:35:07,139 --> 00:35:11,775
+Now we just ask the database to perform this query.
+
+648
+00:35:11,777 --> 00:35:16,012
+Okay? And the query is query. Now, this inZoneWithID,
+
+649
+00:35:16,014 --> 00:35:18,849
+I told you that there's these zones, that are like subareas
+
+650
+00:35:18,851 --> 00:35:21,618
+of databases. By dividing your database into zone,
+
+651
+00:35:21,620 --> 00:35:23,386
+you can make your queries a lot more efficient.
+
+652
+00:35:23,388 --> 00:35:26,223
+You can see why already, if I only am searching a small part
+
+653
+00:35:26,225 --> 00:35:29,159
+of my database, it makes it a lot faster to search.
+
+654
+00:35:29,161 --> 00:35:32,329
+Here we're not using zones, okay, so we're just
+
+655
+00:35:32,331 --> 00:35:35,565
+putting nil as our zone. But if you have a huge data set,
+
+656
+00:35:35,567 --> 00:35:39,569
+you can look into the zones feature. Okay, so here's my
+
+657
+00:35:39,571 --> 00:35:42,772
+closure, when the results come back sometime later.
+
+658
+00:35:42,774 --> 00:35:46,743
+This is the array of records that it found with that query.
+
+659
+00:35:46,745 --> 00:35:50,680
+And here's the error if any that it found. Okay? Now,
+
+660
+00:35:50,682 --> 00:35:54,951
+what am I gonna do with these records that came back? Well,
+
+661
+00:35:54,953 --> 00:35:58,822
+if the records is not nil, in other words,
+
+662
+00:35:58,824 --> 00:36:03,426
+if it found any records, then I just need to set my
+
+663
+00:36:03,428 --> 00:36:07,631
+allQandAs equal to those records. All right?
+
+664
+00:36:07,633 --> 00:36:12,602
+But be careful. This is not happening on the main queue.
+
+665
+00:36:12,604 --> 00:36:16,206
+So, if we're gonna do this, which is gonna cause this,
+
+666
+00:36:16,208 --> 00:36:20,877
+reloadData to happen, means we have to dispatc_async onto
+
+667
+00:36:20,879 --> 00:36:25,782
+the main queue. Okay?
+
+668
+00:36:25,784 --> 00:36:27,584
+So don't forget that dispatching back to the main
+
+669
+00:36:27,586 --> 00:36:32,889
+queue when you're gonna do UI stuff as a response. Okay? So
+
+670
+00:36:32,891 --> 00:36:34,591
+that's it. Okay, super easy.
+
+671
+00:36:34,593 --> 00:36:38,528
+The only thing we have left to do in this TableViewController
+
+672
+00:36:38,530 --> 00:36:40,697
+is our UITableViewDataSource. So
+
+673
+00:36:40,699 --> 00:36:45,769
+let's mark UITableViewDataSource.
+
+674
+00:36:45,771 --> 00:36:48,205
+Okay, we don't have any sections in this table, okay,
+
+675
+00:36:48,207 --> 00:36:52,943
+it's just all just one big section. The number of rows,
+
+676
+00:36:52,945 --> 00:36:56,413
+okay, let's do the number of rows.
+
+677
+00:36:56,415 --> 00:37:00,116
+That's just the number of things in our array,
+
+678
+00:37:00,118 --> 00:37:04,688
+AllQandAs.count. That's how many rows we have, obviously.
+
+679
+00:37:04,690 --> 00:37:07,157
+And then we also obviously need cellForRowAtIndexPath.
+
+680
+00:37:07,159 --> 00:37:11,561
+cellForRowAtIndexPath. So cellForRowAtIndexPath, which
+
+681
+00:37:11,563 --> 00:37:14,831
+we have, well, here, let's make it a little wider here.
+
+682
+00:37:14,833 --> 00:37:15,799
+Okay, cellForRowAtIndexPath.
+
+683
+00:37:15,801 --> 00:37:22,038
+I'm gonna get the cell by using the tableViews.dequeue,
+
+684
+00:37:22,040 --> 00:37:26,276
+whoops, view's dequeue with identifier.
+
+685
+00:37:26,278 --> 00:37:30,180
+So what identifier should we use? Let's say a QandA Cell.
+
+686
+00:37:30,182 --> 00:37:35,318
+So let's go back to our storyboard. And
+
+687
+00:37:35,320 --> 00:37:39,789
+have the cells of this. First of all, let's put our table
+
+688
+00:37:39,791 --> 00:37:42,892
+view in here. How about that? So here's a table view.
+
+689
+00:37:42,894 --> 00:37:45,595
+This is gonna be in between these two. All right.
+
+690
+00:37:45,597 --> 00:37:48,131
+This one is going to be the root view controller, and we
+
+691
+00:37:48,133 --> 00:37:51,101
+are going to be segueing from this one to this one which
+
+692
+00:37:51,103 --> 00:37:54,170
+shows them. Let's make sure we set our identity of this to be
+
+693
+00:37:54,172 --> 00:37:58,642
+our new allQandAs table here. Here's our cells right here.
+
+694
+00:37:58,644 --> 00:38:01,378
+So these cells, we're gonna have them be basic style,
+
+695
+00:38:01,380 --> 00:38:03,013
+cuz they just have the question.
+
+696
+00:38:03,015 --> 00:38:04,114
+We're just gonna put the question, so
+
+697
+00:38:04,116 --> 00:38:04,714
+they don't have any subtitle.
+
+698
+00:38:04,716 --> 00:38:07,083
+They don't need any custom stuff. And
+
+699
+00:38:07,085 --> 00:38:12,122
+the identifier is the QandA Cell. Okay,
+
+700
+00:38:12,124 --> 00:38:15,058
+hey, while were here, let's go ahead do the segues for this.
+
+701
+00:38:15,060 --> 00:38:17,861
+It's really simple. We're gonna segue from these rows.
+
+702
+00:38:17,863 --> 00:38:19,863
+Okay, anytime someone clicks on these rows,
+
+703
+00:38:19,865 --> 00:38:22,098
+we're gonna segue over to here and do a show segue.
+
+704
+00:38:22,100 --> 00:38:25,969
+And we also want to be able to create new questions as well,
+
+705
+00:38:25,971 --> 00:38:28,271
+right? We're gonna click on questions we got,
+
+706
+00:38:28,273 --> 00:38:29,205
+but we want to create new ones.
+
+707
+00:38:29,207 --> 00:38:31,741
+So I'm gonna do that with some UI in here.
+
+708
+00:38:31,743 --> 00:38:36,446
+I'm gonna create a Bar Button Item right here. And
+
+709
+00:38:36,448 --> 00:38:38,982
+I'll use the standard plus one, which is add, okay,
+
+710
+00:38:38,984 --> 00:38:41,017
+cuz we're gonna add something, this is plus.
+
+711
+00:38:41,019 --> 00:38:43,219
+And then we're just gonna Ctrl+drag from here and
+
+712
+00:38:43,221 --> 00:38:47,223
+make that show. Okay, so this is gonna do a segue, if fact,
+
+713
+00:38:47,225 --> 00:38:48,124
+they can do the same segue,
+
+714
+00:38:48,126 --> 00:38:50,126
+cuz they pretty much do the same thing.
+
+715
+00:38:50,128 --> 00:38:51,227
+They show a Q and A, it's just,
+
+716
+00:38:51,229 --> 00:38:53,863
+one of them shows whatever row is selected and
+
+717
+00:38:53,865 --> 00:38:55,432
+the other one creates a new one. So
+
+718
+00:38:55,434 --> 00:38:58,468
+we'll call this Show QandA. That's a good name for
+
+719
+00:38:58,470 --> 00:39:03,506
+that. And we'll call this one also Show QandA. Now,
+
+720
+00:39:03,508 --> 00:39:05,475
+in our prepare for segue, we're gonna have to be,
+
+721
+00:39:05,477 --> 00:39:08,044
+do a little bit different thing, in those two cases,
+
+722
+00:39:08,046 --> 00:39:11,481
+but that's basically what we're doing. Okay? So
+
+723
+00:39:11,483 --> 00:39:16,586
+let's go back to our code here. allQandAs.
+
+724
+00:39:16,588 --> 00:39:21,391
+So here's our cell index path there. Let's
+
+725
+00:39:21,393 --> 00:39:26,629
+just have our cell's textLabel?.text equal what?
+
+726
+00:39:26,631 --> 00:39:30,233
+allQandAs sub indexPath.row.
+
+727
+00:39:30,235 --> 00:39:34,371
+That's giving me the CKRecord. Now, out of that CKRecord,
+
+728
+00:39:34,373 --> 00:39:37,974
+I've gotta get the Cloud.Attribute.Question,
+
+729
+00:39:37,976 --> 00:39:40,543
+cuz that's what I'm gonna show,
+
+730
+00:39:40,545 --> 00:39:41,811
+inside that row. And of course,
+
+731
+00:39:41,813 --> 00:39:44,080
+we know that comes back as a CKRecord value, so
+
+732
+00:39:44,082 --> 00:39:50,153
+I have to say, as a String. Okay? And then we will
+
+733
+00:39:50,155 --> 00:39:55,392
+return the cell. Okay? Also super simple.
+
+734
+00:39:55,394 --> 00:39:57,660
+All right, make sense? And now let's prepare for segue.
+
+735
+00:39:57,662 --> 00:40:02,332
+So that's mark our Navigation. Prepare for
+
+736
+00:40:02,334 --> 00:40:06,403
+segue. This is also gonna be pretty straightforward. First,
+
+737
+00:40:06,405 --> 00:40:11,141
+we're gonna see if the identifier is our
+
+738
+00:40:11,143 --> 00:40:15,845
+Show QandA. If it is, let's get that MVC.
+
+739
+00:40:15,847 --> 00:40:20,049
+So we'll say, if we can let the cloud Q and, QandA,
+
+740
+00:40:20,051 --> 00:40:24,788
+oops, CloudKit Q and A table view controller equal our
+
+741
+00:40:24,790 --> 00:40:28,224
+segue's destinationViewController as
+
+742
+00:40:28,226 --> 00:40:31,060
+a CloudQandATableViewController,
+
+743
+00:40:31,062 --> 00:40:34,898
+okay, so we're segueing into one of those, so
+
+744
+00:40:34,900 --> 00:40:39,235
+that better be on the other end. If that's true,
+
+745
+00:40:39,237 --> 00:40:41,971
+then we need the cell, if we're segueing from a row,
+
+746
+00:40:41,973 --> 00:40:45,475
+we need the cell, so let's try that. So if we can let cell
+
+747
+00:40:45,477 --> 00:40:49,846
+equal the sender as a UITableViewCell, okay,
+
+748
+00:40:49,848 --> 00:40:52,549
+hopefully you guys are used to doing this, again, from your
+
+749
+00:40:52,551 --> 00:40:56,553
+homework assignment. And then we can let the indexPath equal
+
+750
+00:40:56,555 --> 00:41:01,324
+the tableView's method cell for, or sorry, index path,
+
+751
+00:41:01,326 --> 00:41:05,995
+PathForCell, this cell.
+
+752
+00:41:05,997 --> 00:41:09,232
+Okay, so here is kind of a one-liner that gets the index
+
+753
+00:41:09,234 --> 00:41:14,237
+path of the row that was chosen. And if that works,
+
+754
+00:41:14,239 --> 00:41:19,342
+then we can just say that the CloudQandA, oops,
+
+755
+00:41:19,344 --> 00:41:22,178
+I guess I called it ckQandATVC,
+
+756
+00:41:22,180 --> 00:41:27,550
+we'll set its public API, which is ckQandARecord,
+
+757
+00:41:27,552 --> 00:41:32,288
+okay, equal to allQandAs sub indexPath.row.
+
+758
+00:41:32,290 --> 00:41:36,259
+All right? That's what's, that's the record that
+
+759
+00:41:36,261 --> 00:41:38,962
+was chosen there, obviously. If we can't get the cell,
+
+760
+00:41:38,964 --> 00:41:42,031
+if we can't get the table view cell, that must be because we
+
+761
+00:41:42,033 --> 00:41:45,201
+pressed the + button, right? Because the plus button's not
+
+762
+00:41:45,203 --> 00:41:47,170
+a row in a table. So in that case,
+
+763
+00:41:47,172 --> 00:41:51,608
+I'm just going to set the ckQandARecord equal to a new
+
+764
+00:41:51,610 --> 00:41:56,646
+record, because that's what we want. Creating a new
+
+765
+00:41:56,648 --> 00:42:01,718
+thing here, so that's Cloud.Entity.QandA.
+
+766
+00:42:01,720 --> 00:42:05,989
+Okay, everyone understand that prepareForSegue?
+
+767
+00:42:05,991 --> 00:42:07,724
+Okay, so let's do that.
+
+768
+00:42:17,035 --> 00:42:18,701
+All right, so here's it showing all the ones, and
+
+769
+00:42:18,703 --> 00:42:20,937
+look, it's even showing, what is your favorite team,
+
+770
+00:42:20,939 --> 00:42:22,005
+that we already had from before.
+
+771
+00:42:22,007 --> 00:42:26,109
+I'm gonna touch on that, and it's not showing it to us.
+
+772
+00:42:26,111 --> 00:42:31,247
+Okay. Why is it not showing it to us? When we click on this,
+
+773
+00:42:31,249 --> 00:42:33,483
+it shows a blank one. Why does it show a blank one?
+
+774
+00:42:33,485 --> 00:42:37,153
+Because over here, in our CloudTableViewController,
+
+775
+00:42:37,155 --> 00:42:40,223
+look what we do in our viewDidLoad.
+
+776
+00:42:40,225 --> 00:42:42,458
+No! We always set the record to be nil.
+
+777
+00:42:42,460 --> 00:42:47,397
+So, let's get rid of that. And allow the segue to actually
+
+778
+00:42:47,399 --> 00:42:51,901
+set it. That's a tricky little bug.
+
+779
+00:43:00,812 --> 00:43:02,378
+Okay, so now, when we click on this,
+
+780
+00:43:02,380 --> 00:43:08,084
+we get to see the question out of the database. Okay? And
+
+781
+00:43:08,086 --> 00:43:14,691
+we can hit + and create a new one,
+
+782
+00:43:14,693 --> 00:43:19,462
+maybe like, what is your
+
+783
+00:43:19,464 --> 00:43:24,367
+favorite Stanford class?
+
+784
+00:43:24,369 --> 00:43:29,572
+Okay, and we'll have some answers here,
+
+785
+00:43:29,574 --> 00:43:34,110
+how about CS193p, or if not that,
+
+786
+00:43:34,112 --> 00:43:40,283
+how about iOS development. Okay,
+
+787
+00:43:40,285 --> 00:43:47,223
+that's a great class too. And how about the iPhone and
+
+788
+00:43:47,225 --> 00:43:52,228
+iPad programming course.
+
+789
+00:43:52,230 --> 00:43:54,063
+You can pick whatever Stanford class you'd like.
+
+790
+00:43:54,065 --> 00:43:59,302
+Okay? So that, when we go back now, it's gonna ask for all of
+
+791
+00:43:59,304 --> 00:44:02,805
+those Q&As and it's gonna show that one as well. Okay? So
+
+792
+00:44:02,807 --> 00:44:05,842
+that you can see, very little code we had to write here to
+
+793
+00:44:05,844 --> 00:44:09,779
+have it so that we're creating these things and editing them.
+
+794
+00:44:09,781 --> 00:44:14,317
+What about deleting them? Okay? What if I said, eh,
+
+795
+00:44:14,319 --> 00:44:15,752
+I don't want this one anymore, I wanna delete it.
+
+796
+00:44:15,754 --> 00:44:18,788
+What would be really cool is if I could just swipe on this
+
+797
+00:44:18,790 --> 00:44:20,490
+to delete. You've seen that in table views, right?
+
+798
+00:44:20,492 --> 00:44:23,459
+Where you can swipe to delete, okay? How do we do swipe,
+
+799
+00:44:23,461 --> 00:44:26,095
+swipe to delete? We have never covered that in class.
+
+800
+00:44:26,097 --> 00:44:27,463
+This is a great opportunity to do that.
+
+801
+00:44:27,465 --> 00:44:28,798
+So if you want to do swipe to delete,
+
+802
+00:44:28,800 --> 00:44:32,135
+you have to implement two of your UITableViewDataSource
+
+803
+00:44:32,137 --> 00:44:35,371
+methods. One is, you have to answer whether a row
+
+804
+00:44:35,373 --> 00:44:37,807
+can be deleted or not. Okay? That one is called
+
+805
+00:44:37,809 --> 00:44:42,912
+canEditRowAtIndexPath. Okay, canEditRowAtIndexPath.
+
+806
+00:44:42,914 --> 00:44:46,649
+Now, in our case, as long as we created this, then we can
+
+807
+00:44:46,651 --> 00:44:49,152
+allow it to delete it, but if we didn't create it, we can't.
+
+808
+00:44:49,154 --> 00:44:55,058
+So here I'm gonna return all Q&As at the indexPath.row was
+
+809
+00:44:55,060 --> 00:44:58,828
+created by this user. So if it was created by this user,
+
+810
+00:44:58,830 --> 00:45:02,632
+then I'll allow you to delete it. Okay? The other method you
+
+811
+00:45:02,634 --> 00:45:05,001
+need is the thing that actually commits the delete,
+
+812
+00:45:05,003 --> 00:45:09,338
+that does the delete. That's called commitEditingStyle.
+
+813
+00:45:09,340 --> 00:45:11,407
+Okay, commitEditingStyle right here,
+
+814
+00:45:11,409 --> 00:45:14,477
+TableView.commitEditingStyle. And so here,
+
+815
+00:45:14,479 --> 00:45:17,246
+there's actually two editing styles that you can have.
+
+816
+00:45:17,248 --> 00:45:18,715
+One is deleting and one is inserting.
+
+817
+00:45:18,717 --> 00:45:21,417
+Well, we do our inserting with that plus, so we don't need
+
+818
+00:45:21,419 --> 00:45:25,021
+the inserting style there. We only want the deleting, so
+
+819
+00:45:25,023 --> 00:45:27,957
+I'm gonna say, if the editingStyle == .Delete.
+
+820
+00:45:27,959 --> 00:45:32,895
+Okay, so if the person wants to delete my row or whatever,
+
+821
+00:45:32,897 --> 00:45:36,532
+then all I need to do is delete it from the table. But
+
+822
+00:45:36,534 --> 00:45:40,436
+I also wanna delete it from the database as well, right,
+
+823
+00:45:40,438 --> 00:45:44,107
+both of those. So what's that look like? So let's say,
+
+824
+00:45:44,109 --> 00:45:47,376
+if we're deleting, then I'm gonna let the record to delete
+
+825
+00:45:47,378 --> 00:45:51,948
+equal, my allQandAs indexPath.row.
+
+826
+00:45:51,950 --> 00:45:56,686
+Okay. Then I'm gonna save the database. Please delete this
+
+827
+00:45:56,688 --> 00:46:02,191
+record with an ID, and the ID is the record's recordID,
+
+828
+00:46:02,193 --> 00:46:05,428
+okay. Completion handler here to handle errors.
+
+829
+00:46:05,430 --> 00:46:09,999
+This is the deleted record, if it happened,
+
+830
+00:46:10,001 --> 00:46:14,070
+or error if it didn't. And so, handle errors. I'm, again,
+
+831
+00:46:14,072 --> 00:46:18,908
+short on time. So we're not going to do that. And
+
+832
+00:46:18,910 --> 00:46:21,744
+in either case, even if it didn't, you know,
+
+833
+00:46:21,746 --> 00:46:25,081
+even if it failed to delete, I'm still gonna go ahead and
+
+834
+00:46:25,083 --> 00:46:29,952
+delete it out of allQandAs. So to do that, I just say
+
+835
+00:46:29,954 --> 00:46:36,225
+allQandAs.removeAtIndex the indexPath.row.
+
+836
+00:46:36,227 --> 00:46:38,728
+Okay, so it's just gonna delete it from the thing. Now,
+
+837
+00:46:38,730 --> 00:46:42,131
+hopefully, this was successful and it won't come back later,
+
+838
+00:46:42,133 --> 00:46:45,802
+but it's gonna delete here. So let's take a look at this.
+
+839
+00:46:53,645 --> 00:46:55,845
+All right, so we created both of these, so
+
+840
+00:46:55,847 --> 00:46:58,881
+I can swipe to delete, right, either one I wanted.
+
+841
+00:46:58,883 --> 00:47:01,284
+So let's delete, let's delete this one.
+
+842
+00:47:01,286 --> 00:47:04,687
+It's gone. Okay, and we can make sure it actually deleted
+
+843
+00:47:04,689 --> 00:47:06,322
+it in the database by going away and coming back,
+
+844
+00:47:06,324 --> 00:47:09,225
+cuz it reloads when it does that. It didn't come back, so
+
+845
+00:47:09,227 --> 00:47:10,693
+it actually deleted that from the database.
+
+846
+00:47:10,695 --> 00:47:13,663
+We could also go over and look in our database right here,
+
+847
+00:47:13,665 --> 00:47:15,598
+in our default zone. And we can see, we only have,
+
+848
+00:47:15,600 --> 00:47:19,836
+what is your favorite team. We could reload just to be 100%
+
+849
+00:47:19,838 --> 00:47:22,238
+sure. Default zone. Sure enough, we only have,
+
+850
+00:47:22,240 --> 00:47:26,008
+what is your favorite team? It deleted it. Okay? All right,
+
+851
+00:47:26,010 --> 00:47:29,178
+so that's great. All right. One bad thing about our UI,
+
+852
+00:47:29,180 --> 00:47:32,415
+though is, you see this nice little table view? If I'm just
+
+853
+00:47:32,417 --> 00:47:36,085
+sitting here and someone else creates something, it doesn't
+
+854
+00:47:36,087 --> 00:47:40,790
+show me. So let's go over here on iPhone simulator here,
+
+855
+00:47:40,792 --> 00:47:42,992
+and I'm gonna create a new one.
+
+856
+00:47:42,994 --> 00:47:48,197
+I'm gonna see what happens. Okay, so it's showing,
+
+857
+00:47:48,199 --> 00:47:51,634
+what is your favorite team? So I'll create a new one here,
+
+858
+00:47:51,636 --> 00:47:54,270
+I'll say, what is your favorite color?
+
+859
+00:47:54,272 --> 00:48:00,142
+That's our kind of our favorite one. Red and Blue.
+
+860
+00:48:00,144 --> 00:48:04,213
+And black, okay? Now, I've created this but it's not
+
+861
+00:48:04,215 --> 00:48:07,049
+showing up over here, right? And it's not showing up there
+
+862
+00:48:07,051 --> 00:48:10,286
+because I'm not subscribing to that change. I'm not watching
+
+863
+00:48:10,288 --> 00:48:14,523
+the database. Now, if I go away from this and come back,
+
+864
+00:48:14,525 --> 00:48:16,726
+it is gonna show it. Because when we viewWillAppear,
+
+865
+00:48:16,728 --> 00:48:19,495
+we reload from the database. But it's really annoying for
+
+866
+00:48:19,497 --> 00:48:21,364
+the user to always to have to go away and
+
+867
+00:48:21,366 --> 00:48:23,566
+come back to the see the latest, thing. So,
+
+868
+00:48:23,568 --> 00:48:27,136
+we need to do a subscription, okay? Perfect opportunity to
+
+869
+00:48:27,138 --> 00:48:29,705
+do a subscription. So let's do that.
+
+870
+00:48:29,707 --> 00:48:34,243
+So, how do we do the subscription? Pretty simple,
+
+871
+00:48:34,245 --> 00:48:36,746
+it's two parts really, three parts to doing it.
+
+872
+00:48:36,748 --> 00:48:39,181
+The first one is we need to actually subscribe.
+
+873
+00:48:39,183 --> 00:48:40,549
+So let's do the subscription first.
+
+874
+00:48:40,551 --> 00:48:45,922
+I'll even put this in a little MARK: Subscription place here.
+
+875
+00:48:45,924 --> 00:48:50,159
+One thing is we need to have an ID for our subscription.
+
+876
+00:48:50,161 --> 00:48:51,193
+So, I'm gonna say subscriptionID.
+
+877
+00:48:51,195 --> 00:48:54,430
+And this is just an English language description of what
+
+878
+00:48:54,432 --> 00:48:57,400
+we're gonna subscribe to. And so I'm gonna say,
+
+879
+00:48:57,402 --> 00:49:00,603
+we're gonna get All QandA Creations and Deletions.
+
+880
+00:49:00,605 --> 00:49:04,407
+And this has gotta uniquely identify this subscription in
+
+881
+00:49:04,409 --> 00:49:04,540
+the database and
+
+882
+00:49:04,542 --> 00:49:07,777
+I think that pretty uniquely identifies what we're doing
+
+883
+00:49:07,779 --> 00:49:12,515
+here. So, let me create a private func here
+
+884
+00:49:12,517 --> 00:49:16,652
+called iCloudSubscribeToQandAs, okay?
+
+885
+00:49:16,654 --> 00:49:19,622
+And this thing is going to do the subscription. So
+
+886
+00:49:19,624 --> 00:49:22,858
+when you do a subscription you need a predicate that says,
+
+887
+00:49:22,860 --> 00:49:23,993
+what you're looking for, okay?
+
+888
+00:49:23,995 --> 00:49:27,430
+What you're trying to find out when it changes. So again,
+
+889
+00:49:27,432 --> 00:49:31,233
+we're gonna use pretty much the same one we used before
+
+890
+00:49:31,235 --> 00:49:34,337
+which is true predicate, TRUEPREDICATE, yeah.
+
+891
+00:49:34,339 --> 00:49:37,239
+Because, we are looking for any additions or
+
+892
+00:49:37,241 --> 00:49:40,543
+deletions of Q and A, not, not just the ones we created, or
+
+893
+00:49:40,545 --> 00:49:42,645
+not just ones with certain questions but
+
+894
+00:49:42,647 --> 00:49:42,812
+any of them, so
+
+895
+00:49:42,814 --> 00:49:45,314
+that's why we're using the same predicate. And then,
+
+896
+00:49:45,316 --> 00:49:50,286
+we just create the subscription. Okay,
+
+897
+00:49:50,288 --> 00:49:57,126
+CKSubscription. And, it's, this one right here.
+
+898
+00:49:57,128 --> 00:49:59,528
+And let's go ahead and put this on separate lines,
+
+899
+00:49:59,530 --> 00:50:03,833
+as I am wont to do when there are lots of arguments so
+
+900
+00:50:03,835 --> 00:50:07,136
+you can see what's going on, okay? So the recordType is,
+
+901
+00:50:07,138 --> 00:50:09,872
+what kind of thing we're watching, and of course here,
+
+902
+00:50:09,874 --> 00:50:13,075
+we are watching Entity.QandA. That's what we're looking for
+
+903
+00:50:13,077 --> 00:50:18,447
+searches for. predicate: is our predicate, okay.
+
+904
+00:50:18,449 --> 00:50:20,483
+subscriptionID: is our subscriptionID.
+
+905
+00:50:20,485 --> 00:50:23,452
+I'm putting self in there just to emphasize that
+
+906
+00:50:23,454 --> 00:50:24,353
+it's my subscription ID,
+
+907
+00:50:24,355 --> 00:50:26,789
+okay? And then, the subscription options: are what
+
+908
+00:50:26,791 --> 00:50:29,658
+kind of changes are we looking for? So we want ones that
+
+909
+00:50:29,660 --> 00:50:34,263
+fire when one's created, and we also want to find out when
+
+910
+00:50:34,265 --> 00:50:37,867
+one's deleted. Cuz we're showing a list of the suf,
+
+911
+00:50:37,869 --> 00:50:40,403
+of the Q and As, so we don't care if one gets
+
+912
+00:50:40,405 --> 00:50:43,339
+updated. Although, we might care if it's updated because
+
+913
+00:50:43,341 --> 00:50:44,573
+maybe it changed the question and
+
+914
+00:50:44,575 --> 00:50:45,474
+now the list should change there.
+
+915
+00:50:45,476 --> 00:50:48,544
+But I'm just gonna do creation and deletion here, to show you
+
+916
+00:50:48,546 --> 00:50:51,981
+that. Now, one thing here that I'm not gonna do, but
+
+917
+00:50:51,983 --> 00:50:56,552
+that you can do here, is there is a notification info
+
+918
+00:50:56,554 --> 00:51:00,089
+argument, or, var on subscription that you can use
+
+919
+00:51:00,091 --> 00:51:04,460
+to say, what happens when the push notification comes, when
+
+920
+00:51:04,462 --> 00:51:06,662
+this changes. Does it put up an alert? Does it put a badge?
+
+921
+00:51:06,664 --> 00:51:10,533
+Does it increase the badge, right? On your app icon, okay?
+
+922
+00:51:10,535 --> 00:51:13,169
+Does it play a sound? Bloop, things arrived. Okay, you can
+
+923
+00:51:13,171 --> 00:51:16,138
+set that here. I'm gonna have none of those things happening
+
+924
+00:51:16,140 --> 00:51:18,674
+I'm just going to behind the scenes fix up the table.
+
+925
+00:51:18,676 --> 00:51:20,309
+I'm not gonna put any alerts up or whatever.
+
+926
+00:51:20,311 --> 00:51:23,746
+But I just wanna let you know, you can do that here, okay?
+
+927
+00:51:23,748 --> 00:51:27,349
+So, we got that, so let's just go to our database and
+
+928
+00:51:27,351 --> 00:51:29,652
+tell it to save this subscription, okay.
+
+929
+00:51:29,654 --> 00:51:33,322
+Save our subscription with our completion handler right here,
+
+930
+00:51:33,324 --> 00:51:36,292
+okay. Here is the savedSubscription,
+
+931
+00:51:36,294 --> 00:51:39,695
+if it succeeded, and here's an error if not.
+
+932
+00:51:39,697 --> 00:51:42,698
+I'm gonna take a second to show you an error here because
+
+933
+00:51:42,700 --> 00:51:48,137
+there's a common one that happens. error?.code ==
+
+934
+00:51:48,139 --> 00:51:55,010
+CKErrorCode.ServerRejectedReq- uest,
+
+935
+00:51:55,012 --> 00:51:58,581
+okay? And what happens here sometimes is,
+
+936
+00:51:58,583 --> 00:52:01,417
+if this subscription by its unique name is already on
+
+937
+00:52:01,419 --> 00:52:05,054
+the server, then it will reject your request, okay?
+
+938
+00:52:05,056 --> 00:52:08,157
+So, this usually means that you ran your program,
+
+939
+00:52:08,159 --> 00:52:10,626
+you were developing, you, this code ran,
+
+940
+00:52:10,628 --> 00:52:13,162
+and then you hit stop in the debugger, okay?
+
+941
+00:52:13,164 --> 00:52:15,664
+It killed your app. And then you ran it again, and
+
+942
+00:52:15,666 --> 00:52:18,434
+it tried to do it, it's still there. Okay, the subscriptions
+
+943
+00:52:18,436 --> 00:52:21,637
+live forever, until you actually remove them, okay?
+
+944
+00:52:21,639 --> 00:52:24,773
+So quitting your app has no effect on the subscriptions.
+
+945
+00:52:24,775 --> 00:52:27,843
+So, this is one where usually you'll ignore that
+
+946
+00:52:27,845 --> 00:52:29,979
+ServerRejectedRequest figuring eh, somehow,
+
+947
+00:52:29,981 --> 00:52:33,549
+this thing got got already put in there. That's fine,
+
+948
+00:52:33,551 --> 00:52:36,218
+we'll just use it, okay, it'll continue to work just fine.
+
+949
+00:52:36,220 --> 00:52:39,522
+Okay and else, you know, if there's some error,
+
+950
+00:52:39,524 --> 00:52:40,823
+other kind of error, you know,
+
+951
+00:52:40,825 --> 00:52:44,226
+report that error or whatever you feel like you need to do.
+
+952
+00:52:44,228 --> 00:52:48,597
+Okay, so that's it, that's all that's necessary to get iCloud
+
+953
+00:52:48,599 --> 00:52:53,102
+to start, you know, sending us push notifications when,
+
+954
+00:52:53,104 --> 00:52:56,839
+any of these creations and deletions happen to any Q and
+
+955
+00:52:56,841 --> 00:52:59,208
+A. Now, one thing is we're subscribing here.
+
+956
+00:52:59,210 --> 00:53:02,578
+We also are probably want to unsubscribed and
+
+957
+00:53:02,580 --> 00:53:04,547
+when would we want to do those two things.
+
+958
+00:53:04,549 --> 00:53:08,918
+So I'm gonna have an unsubscribe as well,
+
+959
+00:53:08,920 --> 00:53:12,087
+Unsubscribe. And when do we wanna do this?
+
+960
+00:53:12,089 --> 00:53:14,790
+Probably, we'll want to, when viewWillAppear,
+
+961
+00:53:14,792 --> 00:53:16,825
+we wanna subscribe and when viewDisappears,
+
+962
+00:53:16,827 --> 00:53:19,762
+we unsubscribe. Okay, because it's no use sending these push
+
+963
+00:53:19,764 --> 00:53:21,163
+notifications if we're not even on screen.
+
+964
+00:53:21,165 --> 00:53:24,233
+Okay, especially since when we reappear we reload ourselves
+
+965
+00:53:24,235 --> 00:53:28,070
+anyway. Okay, so there's no reason to do that. So,
+
+966
+00:53:28,072 --> 00:53:31,473
+in viewWillAppear right here,
+
+967
+00:53:31,475 --> 00:53:36,645
+I'm gonna say, iCloudSubscribeToQandAs,
+
+968
+00:53:36,647 --> 00:53:41,784
+and in viewDidDisappear, I'm gonna say,
+
+969
+00:53:41,786 --> 00:53:45,821
+iCloudUnsubscribe, okay? Now,
+
+970
+00:53:45,823 --> 00:53:48,991
+iCloudUnsubscribe, what do we need to do to unsubscribe?
+
+971
+00:53:48,993 --> 00:53:53,295
+Very easy, I'm just gonna say to my database, please
+
+972
+00:53:53,297 --> 00:53:57,199
+deleteSubscriptionWithID, my subscriptionID,
+
+973
+00:53:57,201 --> 00:54:01,537
+okay? Completion handler to handle errors here. So
+
+974
+00:54:01,539 --> 00:54:05,407
+this is, the subscription that we tried to delete.
+
+975
+00:54:05,409 --> 00:54:08,344
+There's an error. We will not handle errors cuz we're
+
+976
+00:54:08,346 --> 00:54:11,947
+running out of time. Handle it, okay? So, we'll just
+
+977
+00:54:11,949 --> 00:54:16,518
+delete those, descriptions there and that's it. Okay, so
+
+978
+00:54:16,520 --> 00:54:20,489
+now we've set up our table here to get those updates but
+
+979
+00:54:20,491 --> 00:54:23,158
+of course, we have to be able to receive push notifications
+
+980
+00:54:23,160 --> 00:54:26,762
+for this to work, okay? And we do that, over in our app
+
+981
+00:54:26,764 --> 00:54:29,898
+delegate. So lets go back to our app delegate right here,
+
+982
+00:54:29,900 --> 00:54:32,067
+and look at that code that we covered in lecture.
+
+983
+00:54:32,069 --> 00:54:34,436
+One, in did finish launching with options,
+
+984
+00:54:34,438 --> 00:54:36,171
+we need to register for
+
+985
+00:54:36,173 --> 00:54:38,307
+the kinds of notifications
+
+986
+00:54:38,309 --> 00:54:40,242
+we're willing to present to our user, okay?
+
+987
+00:54:40,244 --> 00:54:43,112
+And the user actually can choose in settings,
+
+988
+00:54:43,114 --> 00:54:46,248
+the general settings, whether they want alerts or badges or
+
+989
+00:54:46,250 --> 00:54:48,917
+sounds or whatever, but we're going to explain here
+
+990
+00:54:48,919 --> 00:54:52,454
+which ones we think we want to give them, okay? So,
+
+991
+00:54:52,456 --> 00:54:56,859
+we do that by just creating the settings, by that's
+
+992
+00:54:56,861 --> 00:55:01,430
+a UIUserNotificationSettings, and for
+
+993
+00:55:01,432 --> 00:55:04,733
+the types that we want. And this can be like alerts,
+
+994
+00:55:04,735 --> 00:55:09,405
+badges, sounds, okay? And I'll go ahead and register for
+
+995
+00:55:09,407 --> 00:55:11,874
+all of them, although, I'm not gonna use any of them cuz I,
+
+996
+00:55:11,876 --> 00:55:14,043
+that subscription.notification info, remember that?
+
+997
+00:55:14,045 --> 00:55:16,912
+I didn't put that line in, so it's not gonna do any of these
+
+998
+00:55:16,914 --> 00:55:20,215
+things. But, I, I'm gonna tell the user, hey, I wanna do all
+
+999
+00:55:20,217 --> 00:55:22,818
+these things cuz maybe some of my other push notifications
+
+1000
+00:55:22,820 --> 00:55:25,854
+wanted to do it or whatever. But I wouldn't sign up for
+
+1001
+00:55:25,856 --> 00:55:28,490
+these actually if you're not gonna use them cuz it just
+
+1002
+00:55:28,492 --> 00:55:32,861
+creates unnecessary stuff for your user, all right?
+
+1003
+00:55:32,863 --> 00:55:35,297
+So there's the settings, so now I have to register
+
+1004
+00:55:35,299 --> 00:55:39,068
+those settings, so I just say application.registerUserNotif-
+
+1005
+00:55:39,070 --> 00:55:40,669
+icationSettings, those settings.
+
+1006
+00:55:40,671 --> 00:55:44,807
+And now, I need to turn on push notifications, okay?
+
+1007
+00:55:44,809 --> 00:55:47,810
+registerForRemoteNotificati- ons, okay?
+
+1008
+00:55:47,812 --> 00:55:51,013
+Push notifications are called remote notifications, okay?
+
+1009
+00:55:51,015 --> 00:55:53,449
+Boom, so now I've turned on push notifications,
+
+1010
+00:55:53,451 --> 00:55:54,850
+they're gonna start coming, okay?
+
+1011
+00:55:54,852 --> 00:55:58,187
+From Cloudkit, or whatever else ones that I set up.
+
+1012
+00:55:58,189 --> 00:56:02,191
+So now I have to handle them when they arrive, and I do
+
+1013
+00:56:02,193 --> 00:56:06,595
+that with this thing called the remote notification,
+
+1014
+00:56:06,597 --> 00:56:09,498
+didReceiveRemoteNotification, okay?
+
+1015
+00:56:09,500 --> 00:56:12,301
+A remote notification came in, what am I gonna do with it?
+
+1016
+00:56:12,303 --> 00:56:15,671
+Well, I'm gonna assume that it's a CloudKit one here.
+
+1017
+00:56:15,673 --> 00:56:17,740
+I don't have any other ones that I'm expecting, so
+
+1018
+00:56:17,742 --> 00:56:19,641
+that should be fine. If I had other ones,
+
+1019
+00:56:19,643 --> 00:56:23,011
+I'd have to do more code here. But I'm just gonna say,
+
+1020
+00:56:23,013 --> 00:56:27,383
+if I can, or actually, I mean, yeah, if I'm gonna let CQ,
+
+1021
+00:56:27,385 --> 00:56:31,453
+ckqn, that's short for CloudKit query notification,
+
+1022
+00:56:31,455 --> 00:56:35,357
+equals CKQueryNotification, CKQueryNotification,
+
+1023
+00:56:35,359 --> 00:56:40,996
+okay, that's not completing because, import CloudKit.
+
+1024
+00:56:41,866 --> 00:56:43,699
+Okay, so I'm gonna create a query notification.
+
+1025
+00:56:43,701 --> 00:56:47,169
+The only way to create one of these things is to hand
+
+1026
+00:56:47,171 --> 00:56:51,707
+the dictionary that comes with the push notification off to
+
+1027
+00:56:51,709 --> 00:56:55,444
+this constructor, okay, this initializer.
+
+1028
+00:56:55,446 --> 00:56:56,178
+So I'm gonna give it that.
+
+1029
+00:56:56,180 --> 00:56:58,914
+One thing that's unfortunate about that is that it wants
+
+1030
+00:56:58,916 --> 00:57:03,952
+that to be a dictionary where Strings are the keys and
+
+1031
+00:57:03,954 --> 00:57:05,387
+NSObjects are the values,
+
+1032
+00:57:05,389 --> 00:57:09,258
+instead of NSObjects as the keys, AnyObject as the value.
+
+1033
+00:57:09,260 --> 00:57:12,995
+Okay? So, you just have to do this. All right, so
+
+1034
+00:57:12,997 --> 00:57:17,132
+I've got my query notification that came from CloudKit.
+
+1035
+00:57:17,134 --> 00:57:20,369
+Awesome. Now I need to hand it out to all my view controllers
+
+1036
+00:57:20,371 --> 00:57:22,104
+that might be interested. And as we said in lecture,
+
+1037
+00:57:22,106 --> 00:57:24,273
+we're gonna do this with a radio station. Okay, so
+
+1038
+00:57:24,275 --> 00:57:30,612
+let's create a radio station. notification = NSNotification,
+
+1039
+00:57:30,614 --> 00:57:35,984
+all right, we're gonna use this one right here. Again,
+
+1040
+00:57:35,986 --> 00:57:41,323
+I will help you out a little bit. See what's going on.
+
+1041
+00:57:42,159 --> 00:57:44,993
+All right, so name is the name of the radio station, and
+
+1042
+00:57:44,995 --> 00:57:47,062
+as I told you, in that CloudKit extensions,
+
+1043
+00:57:47,064 --> 00:57:50,365
+I created something for that. So I called that
+
+1044
+00:57:50,367 --> 00:57:54,803
+CloudKitNotifications.notific- ation,
+
+1045
+00:57:54,805 --> 00:57:58,440
+what did I call it? So I have to go back and look here.
+
+1046
+00:57:58,442 --> 00:58:02,444
+Supporting Files, extension, CloudKitNotification.
+
+1047
+00:58:02,446 --> 00:58:05,848
+NotificationReceived. That's the name of my radio station,
+
+1048
+00:58:05,850 --> 00:58:09,017
+NotificationReceived. Sorry.
+
+1049
+00:58:13,724 --> 00:58:17,926
+NotificationReceived. Okay, so that's the name. AnyObject,
+
+1050
+00:58:17,928 --> 00:58:19,928
+this object is the sender. Ha, that's self,
+
+1051
+00:58:19,930 --> 00:58:22,064
+that's my AppDelegate. Doesn't really matter too much,
+
+1052
+00:58:22,066 --> 00:58:24,299
+cuz I'm not gonna look at it in the other end. And
+
+1053
+00:58:24,301 --> 00:58:28,337
+then the userInfo, I need to pass this ckqn on.
+
+1054
+00:58:28,339 --> 00:58:30,839
+So I'm gonna create a little dictionary on the fly here.
+
+1055
+00:58:30,841 --> 00:58:35,143
+And the key is gonna be my CloudKitNotifications.Notific-
+
+1056
+00:58:35,145 --> 00:58:41,216
+ationKey. And the value is gonna be that ckqn. Okay?
+
+1057
+00:58:41,218 --> 00:58:44,753
+So this is the thing I'm gonna pass out onto, this is
+
+1058
+00:58:44,755 --> 00:58:48,957
+Received, this is the thing I'm gonna pass out on my radio
+
+1059
+00:58:48,959 --> 00:58:53,462
+station. So let's go ahead and broadcast it by saying
+
+1060
+00:58:53,464 --> 00:58:59,935
+NSNotificationCenter.defaultC- enter, post this notification,
+
+1061
+00:58:59,937 --> 00:59:03,705
+that means broadcast on this radio station.
+
+1062
+00:59:03,707 --> 00:59:06,875
+Okay, now everybody who is signed up to listen is going
+
+1063
+00:59:06,877 --> 00:59:11,013
+to get this push notification forwarded onto them. Okay?
+
+1064
+00:59:11,015 --> 00:59:15,484
+So now let's go back and sign up over here to get that.
+
+1065
+00:59:15,486 --> 00:59:16,718
+And I'm gonna do it in my subscribe,
+
+1066
+00:59:16,720 --> 00:59:19,054
+when I subscribe to the Q and A's, I'm gonna then go and
+
+1067
+00:59:19,056 --> 00:59:22,925
+sign up for that radio station so I can hear the results. And
+
+1068
+00:59:22,927 --> 00:59:26,061
+to do that, I need that little, cookie. So
+
+1069
+00:59:26,063 --> 00:59:31,066
+private var, we'll call it cloudKitObserver. It's gonna
+
+1070
+00:59:31,068 --> 00:59:34,369
+be an NSObjectProtocol optional right there.
+
+1071
+00:59:34,371 --> 00:59:38,040
+Okay, I'm gonna say cloudKitObserver = and
+
+1072
+00:59:38,042 --> 00:59:42,311
+I'm just gonna ask the notification center if I can
+
+1073
+00:59:42,313 --> 00:59:46,181
+please listen to that radio station by saying,
+
+1074
+00:59:46,183 --> 00:59:52,921
+addObserverForName. It's this one. Okay, again.
+
+1075
+00:59:55,826 --> 00:59:58,427
+I'd love if there was a nice little single key to do that
+
+1076
+00:59:58,429 --> 01:00:01,330
+for me. So here's the radio station that I wanna listen
+
+1077
+01:00:01,332 --> 01:00:04,900
+to, which is CloudKitNotifications.Notific-
+
+1078
+01:00:04,902 --> 01:00:08,203
+ationReceived, that's the name of the radio station.
+
+1079
+01:00:08,205 --> 01:00:10,939
+AnyObject, I don't care. And if anybody sends me that, I'm
+
+1080
+01:00:10,941 --> 01:00:12,975
+gonna listen, okay? I could put the AppDelegate here, but
+
+1081
+01:00:12,977 --> 01:00:15,677
+I'm just gonna say anybody. And I'm gonna do some UI here,
+
+1082
+01:00:15,679 --> 01:00:19,715
+so I'd better say [INAUDIBLE] NSOperationQueue.mainQueue,
+
+1083
+01:00:19,717 --> 01:00:21,850
+okay, send me this on the main queue. And
+
+1084
+01:00:21,852 --> 01:00:24,186
+then here's the block, okay? This argument is
+
+1085
+01:00:24,188 --> 01:00:28,490
+the notification that's coming along in the radio station.
+
+1086
+01:00:28,492 --> 01:00:33,662
+And I need to get the ck, ckqn out of the user info
+
+1087
+01:00:33,664 --> 01:00:37,466
+in that notification. Okay, so what does that look like?
+
+1088
+01:00:37,468 --> 01:00:40,168
+Actually, I'm gonna do all that in a different method.
+
+1089
+01:00:40,170 --> 01:00:44,673
+I'm gonna have iCloudHandleSubscriptionNotif-
+
+1090
+01:00:44,675 --> 01:00:50,212
+ication, and I'm just gonna pass ckqn on to that.
+
+1091
+01:00:50,214 --> 01:00:52,648
+So the cq, ckqn here, we can say,
+
+1092
+01:00:52,650 --> 01:00:57,085
+if we can let ckqn equal the notification's userInfo,
+
+1093
+01:00:57,087 --> 01:01:01,456
+which might be nil, you have to be careful about that,
+
+1094
+01:01:01,458 --> 01:01:06,194
+and I'm gonna get the CloudKit notification key here,
+
+1095
+01:01:06,196 --> 01:01:09,698
+notification's NotificationKey, okay.
+
+1096
+01:01:09,700 --> 01:01:13,702
+And that better be a CKQuery notification, or
+
+1097
+01:01:13,704 --> 01:01:15,904
+I don't know what to do with it,
+
+1098
+01:01:15,906 --> 01:01:19,708
+okay? So if I can get that out of the little radio station
+
+1099
+01:01:19,710 --> 01:01:23,712
+broadcast, then I'm gonna handle it. Okay, so
+
+1100
+01:01:23,714 --> 01:01:30,285
+how do I handle it? private func this thing,
+
+1101
+01:01:30,287 --> 01:01:34,723
+okay. And, there, we have a syntax
+
+1102
+01:01:34,725 --> 01:01:39,528
+error right here, this should be NotificationKey,
+
+1103
+01:01:39,530 --> 01:01:42,864
+NotificationKey. So handling it is pretty simple,
+
+1104
+01:01:42,866 --> 01:01:47,636
+actually. First, when handling it, I'm gonna make sure that
+
+1105
+01:01:47,638 --> 01:01:52,441
+this is for me. I'm gonna look at the subscription,
+
+1106
+01:01:52,443 --> 01:01:55,644
+sorry, ckqn is a CKQueryNotification.
+
+1107
+01:01:55,646 --> 01:01:58,480
+Okay, I'm gonna make sure that this thing is for me,
+
+1108
+01:01:58,482 --> 01:02:02,184
+to make sure its subscription ID equals my subscription ID.
+
+1109
+01:02:02,186 --> 01:02:04,386
+Because, remember, you might have lots of different view
+
+1110
+01:02:04,388 --> 01:02:07,122
+controllers getting push notifications from CloudKit,
+
+1111
+01:02:07,124 --> 01:02:09,758
+okay, doing different things. So here I want to make sure
+
+1112
+01:02:09,760 --> 01:02:14,329
+it's this one that I'm getting the answer back from.
+
+1113
+01:02:14,331 --> 01:02:16,832
+All right, so now that I have that, I'm just gonna get
+
+1114
+01:02:16,834 --> 01:02:19,835
+the record that changed, okay, the recordID that changed
+
+1115
+01:02:19,837 --> 01:02:24,473
+is ckqn.recordID, okay, so hopefully some record changed,
+
+1116
+01:02:24,475 --> 01:02:27,976
+deleted or created here, otherwise I wouldn't be here.
+
+1117
+01:02:27,978 --> 01:02:32,013
+I can also find out what changed. So I can say,
+
+1118
+01:02:32,015 --> 01:02:36,084
+what is the reason that I got this notification? And
+
+1119
+01:02:36,086 --> 01:02:38,120
+one reason could be because a record
+
+1120
+01:02:38,122 --> 01:02:42,657
+was created. Another reason might be cuz a record was
+
+1121
+01:02:42,659 --> 01:02:46,361
+deleted, okay? Otherwise, I don't care,
+
+1122
+01:02:46,363 --> 01:02:48,196
+cuz I only handle creations and deletions,
+
+1123
+01:02:48,198 --> 01:02:53,502
+all right? Let's do deletion first. It's a pretty easy one.
+
+1124
+01:02:53,504 --> 01:02:56,705
+Okay, so what happens, if something was deleted? Well,
+
+1125
+01:02:56,707 --> 01:03:00,208
+I'm just gonna dispatc_async back the the main queue and
+
+1126
+01:03:00,210 --> 01:03:02,344
+remove it from my all QAs thing. So
+
+1127
+01:03:02,346 --> 01:03:08,350
+dispatc_ge_mai_queue. And I'm just gonna say,
+
+1128
+01:03:08,352 --> 01:03:14,055
+self.allQandAs equals self.allQandAs,
+
+1129
+01:03:14,057 --> 01:03:18,927
+and I'm just gonna filter out any records
+
+1130
+01:03:18,929 --> 01:03:23,598
+where the $0.recordID does not equal
+
+1131
+01:03:23,600 --> 01:03:27,669
+this recordID that was just deleted.
+
+1132
+01:03:27,671 --> 01:03:30,739
+Okay, so filter goes through all the things in the array,
+
+1133
+01:03:30,741 --> 01:03:31,673
+$0 is each thing in the array,
+
+1134
+01:03:31,675 --> 01:03:34,543
+I'm gonna get the recordID of the thing that's in there.
+
+1135
+01:03:34,545 --> 01:03:35,844
+And if it's not equal to the recordID,
+
+1136
+01:03:35,846 --> 01:03:38,480
+then I'm gonna filter it, if it is equal to the record ID,
+
+1137
+01:03:38,482 --> 01:03:41,516
+then it's not gonna get through the filter.
+
+1138
+01:03:41,718 --> 01:03:44,920
+Everybody got that? Super simple. Created,
+
+1139
+01:03:44,922 --> 01:03:47,155
+slightly more difficult, although only slightly.
+
+1140
+01:03:47,157 --> 01:03:50,625
+So, here, I'm gonna check if I have a record,
+
+1141
+01:03:50,627 --> 01:03:53,795
+if the record okay, let's, first of all,
+
+1142
+01:03:53,797 --> 01:03:57,699
+we have the record ID here. To show this record in our,
+
+1143
+01:03:57,701 --> 01:04:01,236
+in our table, we actually need the record,
+
+1144
+01:04:01,238 --> 01:04:01,670
+not the record ID.
+
+1145
+01:04:01,672 --> 01:04:05,373
+By the way, it is possible in our subscription to have said,
+
+1146
+01:04:05,375 --> 01:04:08,910
+hey when you give this thing, also give me the question.
+
+1147
+01:04:08,912 --> 01:04:11,213
+In other words, you can ask for certain fields so
+
+1148
+01:04:11,215 --> 01:04:13,448
+that I don't have to do what I'm doing right now,
+
+1149
+01:04:13,450 --> 01:04:16,384
+which is I'm going back to my database and
+
+1150
+01:04:16,386 --> 01:04:21,790
+fetching that record. Database. fetchRecordWithID.
+
+1151
+01:04:21,792 --> 01:04:24,626
+Which is kind of unfortunate that I have this record ID and
+
+1152
+01:04:24,628 --> 01:04:27,395
+I'm having to turn around and go back and fetch it.
+
+1153
+01:04:27,397 --> 01:04:29,497
+So, you don't have to do that if you,
+
+1154
+01:04:29,499 --> 01:04:30,665
+in your description say just give me
+
+1155
+01:04:30,667 --> 01:04:34,502
+that right off the bat, okay? You just specify which fields
+
+1156
+01:04:34,504 --> 01:04:37,272
+you want. Okay. So here's the record coming back, hopefully,
+
+1157
+01:04:37,274 --> 01:04:42,510
+not nil, and here's the error. Okay. So, if the record
+
+1158
+01:04:42,512 --> 01:04:46,815
+is not nil, I got it back. Now I need to add it to my Q and
+
+1159
+01:04:46,817 --> 01:04:49,784
+As, now, a slight complication here is when I put it in my
+
+1160
+01:04:49,786 --> 01:04:53,321
+list of Q and As, I obviously need to sort it. Because my
+
+1161
+01:04:53,323 --> 01:04:55,423
+list of Q and As was sorted by the database, but now I'm
+
+1162
+01:04:55,425 --> 01:04:58,593
+getting this one record that I have to put in the list.
+
+1163
+01:04:58,595 --> 01:04:59,060
+So, I have to do sorting.
+
+1164
+01:04:59,062 --> 01:05:00,362
+So, I'll show you a little bit how to do, ahh,
+
+1165
+01:05:00,364 --> 01:05:05,400
+sorting in here. Ahh, so, I'm gonna dispatc_async back to
+
+1166
+01:05:05,402 --> 01:05:10,639
+the main queue. Okay.
+
+1167
+01:05:10,641 --> 01:05:13,808
+And on here, I'm gonna say self.allQandAs, okay?
+
+1168
+01:05:13,810 --> 01:05:18,146
+Get ready for this, equals the self.allQandAs we got so far,
+
+1169
+01:05:18,148 --> 01:05:22,784
+plus this record. Okay. So now, this is the new thing
+
+1170
+01:05:22,786 --> 01:05:25,320
+with it appended on to the end, but the end is no good so
+
+1171
+01:05:25,322 --> 01:05:29,257
+I'm gonna sort. Okay? And when I sort, sort is
+
+1172
+01:05:29,259 --> 01:05:32,727
+gonna pass me dollar zero and dollar one. And I have to say,
+
+1173
+01:05:32,729 --> 01:05:35,297
+if dollar zero is less than or eq, or greater than dollar
+
+1174
+01:05:35,299 --> 01:05:38,667
+one. And that's how it's gonna sort everything. So, let's go
+
+1175
+01:05:38,669 --> 01:05:44,339
+ahead and return here. Dollar zero, which is a record,
+
+1176
+01:05:44,341 --> 01:05:48,043
+a ck record, so I'm gonna get the, Cloud.Attribute.Question,
+
+1177
+01:05:48,045 --> 01:05:52,113
+cuz I'm comparing the questions, quest- question,
+
+1178
+01:05:52,115 --> 01:05:55,750
+all right. But of course, I have to do it as a string,
+
+1179
+01:05:55,752 --> 01:05:59,387
+and I'm gonna see if that's less than $1,
+
+1180
+01:05:59,389 --> 01:06:07,228
+Cloud.Attribute.Question, also as a String.
+
+1181
+01:06:07,230 --> 01:06:10,832
+Okay. So, this is nice but
+
+1182
+01:06:10,834 --> 01:06:14,602
+this is really messy code, it looks absolutely awesome,
+
+1183
+01:06:14,604 --> 01:06:16,905
+awful here. Wouldn't it be cool if in,
+
+1184
+01:06:16,907 --> 01:06:17,872
+like we had in core data,
+
+1185
+01:06:17,874 --> 01:06:19,641
+where we could have the subclass and
+
+1186
+01:06:19,643 --> 01:06:22,344
+we just use vars for these things? Well,
+
+1187
+01:06:22,346 --> 01:06:25,413
+we can't quite do that, but watch this little trick.
+
+1188
+01:06:25,415 --> 01:06:27,682
+I'm going to go back to my supporting files,
+
+1189
+01:06:27,684 --> 01:06:30,618
+this CloudKit extensions thing that I did over here, okay?
+
+1190
+01:06:30,620 --> 01:06:36,124
+And I'm going to do this extension to CKRecord
+
+1191
+01:06:36,426 --> 01:06:43,431
+var question is a String, okay. I'm gonna return self
+
+1192
+01:06:43,433 --> 01:06:50,205
+sub Cloud.Attribute.Question as a String. And
+
+1193
+01:06:50,207 --> 01:06:53,708
+in fact, I want this to not be an optional. So I'm gonna say,
+
+1194
+01:06:53,710 --> 01:06:59,481
+??, empty. So, you see I've added a var question,
+
+1195
+01:06:59,483 --> 01:07:02,617
+to CkRecord that returns this thing.
+
+1196
+01:07:02,619 --> 01:07:07,188
+So now back in my other code over here, all this gunk just
+
+1197
+01:07:07,190 --> 01:07:11,860
+becomes .question. Okay, get rid of all this,
+
+1198
+01:07:11,862 --> 01:07:18,767
+.question. Okay, looks a lot nicer, doesn't it, okay?
+
+1199
+01:07:18,769 --> 01:07:21,236
+And in fact, we could use this .question in other places,
+
+1200
+01:07:21,238 --> 01:07:23,004
+like down here, in cell for row at indexPath,
+
+1201
+01:07:23,006 --> 01:07:27,342
+we do the same. A big mess right here, ,question.
+
+1202
+01:07:27,344 --> 01:07:30,311
+Okay. Now, okay, all your attributes would have to
+
+1203
+01:07:30,313 --> 01:07:32,947
+be unique across all of your entities or you would have to
+
+1204
+01:07:32,949 --> 01:07:35,750
+start putting the entity names somehow, in, in this name in
+
+1205
+01:07:35,752 --> 01:07:38,853
+this bar, but you know, something to consider,
+
+1206
+01:07:38,855 --> 01:07:40,755
+cleans up your code quite a bit.
+
+1207
+01:07:40,757 --> 01:07:44,526
+All right. Everyone, make sense what I did right there?
+
+1208
+01:07:44,528 --> 01:07:47,729
+By the way, if this record couldn't be fetched,
+
+1209
+01:07:47,731 --> 01:07:52,167
+then I'm kind of like, what the heck am I gonna do here?
+
+1210
+01:07:52,169 --> 01:07:53,701
+So, I might wanna do something here like,
+
+1211
+01:07:53,703 --> 01:07:57,005
+go reload my whole table, you know, do a fetch all q and
+
+1212
+01:07:57,007 --> 01:07:58,940
+a's, call fetch, dispatch, async, and all that, but
+
+1213
+01:07:58,942 --> 01:08:02,177
+I'm not gonna do it cuz we're out of time. Ahm, but, that's,
+
+1214
+01:08:02,179 --> 01:08:07,649
+I might want to react to this error somehow here. Okay?
+
+1215
+01:08:07,651 --> 01:08:09,851
+All right, so let's go back and
+
+1216
+01:08:09,853 --> 01:08:17,459
+let's run it on iPhone. And we'll run it on our device.
+
+1217
+01:08:26,570 --> 01:08:33,741
+All right. Okay. So let's go and create a new one here.
+
+1218
+01:08:33,743 --> 01:08:39,647
+Let's try, how do you greet people?
+
+1219
+01:08:40,050 --> 01:08:44,886
+And the answer is you say Hello, or maybe you say Aloha,
+
+1220
+01:08:44,888 --> 01:08:47,489
+and you can see as soon as I typed enough to get this thing
+
+1221
+01:08:47,491 --> 01:08:51,025
+to upload, it appeared here because it got noti, notified
+
+1222
+01:08:51,027 --> 01:08:54,629
+via the push notification. And in fact, I can look at it,
+
+1223
+01:08:54,631 --> 01:08:57,765
+let's see how do you greet people? Here we got hello,
+
+1224
+01:08:57,767 --> 01:09:00,568
+the Aloha has not even, been uploaded yet, so
+
+1225
+01:09:00,570 --> 01:09:05,240
+let's go ahead and hit the Aloha, then we get the Aloha.
+
+1226
+01:09:06,776 --> 01:09:09,110
+Okay? And same thing with delete, if we go back here and
+
+1227
+01:09:09,112 --> 01:09:10,845
+say, well we don't want this to greet people,
+
+1228
+01:09:10,847 --> 01:09:13,248
+hit delete. And it deleted on our iPhone,
+
+1229
+01:09:13,250 --> 01:09:16,818
+we don't have to wait back and forth. Okay,
+
+1230
+01:09:16,820 --> 01:09:21,156
+I will see you next time. >> For more,
+
+1231
+01:09:21,158 --> 01:09:21,189
+please visit us at stanford.edu.
+

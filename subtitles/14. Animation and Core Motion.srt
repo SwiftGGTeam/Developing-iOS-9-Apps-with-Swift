@@ -1,0 +1,5492 @@
+﻿1
+00:00:00,001 --> 00:00:03,635
+[MUSIC]
+
+2
+00:00:03,637 --> 00:00:08,774
+Stanford University. >> Okay well welcome
+
+3
+00:00:08,776 --> 00:00:13,379
+then to Lecture 14 of CS Stanford CS193P,
+
+4
+00:00:13,381 --> 00:00:18,384
+Spring of 2016. Today, we have two topics. One is,
+
+5
+00:00:18,386 --> 00:00:21,587
+I'm gonna continue the dynamic animation we talked about in
+
+6
+00:00:21,589 --> 00:00:24,456
+the last lecture and slides with a big ol' demo. Okay,
+
+7
+00:00:24,458 --> 00:00:28,660
+that really shows a lot of dynamic, animation in action
+
+8
+00:00:28,662 --> 00:00:31,897
+and homework Assignment Six is all about dynamic animation,
+
+9
+00:00:31,899 --> 00:00:34,433
+so be preparing you for that. And then I'm gonna do a new
+
+10
+00:00:34,435 --> 00:00:37,336
+topic. I had said last time it was probably gonna be Alerts,
+
+11
+00:00:37,338 --> 00:00:40,172
+but actually I'm gonna do CoreMotion now, okay.
+
+12
+00:00:40,174 --> 00:00:43,842
+And we'll, I'm gonna redo some slides on CoreMation,
+
+13
+00:00:43,844 --> 00:00:46,645
+Core Motion, and then I'll also do a demo. Hopefully I'll
+
+14
+00:00:46,647 --> 00:00:50,849
+have enough time to do all of that today, all right. Okay,
+
+15
+00:00:50,851 --> 00:00:54,386
+so let's dive right into this demo. It's called Dropit. It's
+
+16
+00:00:54,388 --> 00:00:57,756
+basically as if I were gonna go write a Tetris app, okay,
+
+17
+00:00:57,758 --> 00:01:00,259
+with the little falling blocks that you put in place and
+
+18
+00:01:00,261 --> 00:01:02,761
+then you complete a row and the row would disappear and
+
+19
+00:01:02,763 --> 00:01:04,730
+then more blocks would come down. Kinda like that,
+
+20
+00:01:04,732 --> 00:01:06,732
+but this is a demo. We're starting from scratch.
+
+21
+00:01:06,734 --> 00:01:08,300
+So we're just gonna have little individuals
+
+22
+00:01:08,302 --> 00:01:11,070
+blocks come down and when they all make a row then it'll
+
+23
+00:01:11,072 --> 00:01:14,606
+disappear. So we're not gonna do the L-shaped and T-shaped
+
+24
+00:01:14,608 --> 00:01:17,509
+blocks from Tetris. We're just gonna do squares only. Okay,
+
+25
+00:01:17,511 --> 00:01:20,279
+so it's kind of like we're getting started on Tetris.
+
+26
+00:01:20,281 --> 00:01:23,515
+So I'm not calling it Tetris because it doesn't look enough
+
+27
+00:01:23,517 --> 00:01:23,782
+like Tetris for that.
+
+28
+00:01:23,784 --> 00:01:25,984
+I'll call it DropIt because we're gonna dropping,
+
+29
+00:01:25,986 --> 00:01:30,055
+little squares. Okay, so I'm gonna create a new project
+
+30
+00:01:30,057 --> 00:01:34,426
+here. It's an iOS application as always. Single view..
+
+31
+00:01:34,428 --> 00:01:39,531
+I'm gonna call it Dropit. Okay, we don't need core data.
+
+32
+00:01:39,533 --> 00:01:40,766
+Okay it can be universal app,
+
+33
+00:01:40,768 --> 00:01:42,267
+I don't see any reason why this app wouldn't be
+
+34
+00:01:42,269 --> 00:01:45,270
+universal as you'll see. Okay. So here's Dropit,
+
+35
+00:01:45,272 --> 00:01:48,640
+we'll put it where we always put everything. Here it is.
+
+36
+00:01:48,642 --> 00:01:51,009
+Now what's interesting about Dropit is I'm gonna build
+
+37
+00:01:51,011 --> 00:01:55,380
+the entire user interface in code. So my story board all
+
+38
+00:01:55,382 --> 00:01:58,984
+it's gonna have is one custom view. Okay, and then I'm
+
+39
+00:01:58,986 --> 00:02:01,587
+gonna do all in code because we're gonna use the animator.
+
+40
+00:02:01,589 --> 00:02:03,722
+We're gonna have a lot of animated views going on.
+
+41
+00:02:03,724 --> 00:02:06,992
+That's what's gonna be the entire UI. So,um,
+
+42
+00:02:06,994 --> 00:02:09,428
+I don't really want this generic ViewController here.
+
+43
+00:02:09,430 --> 00:02:12,965
+So I'm just gonna take this generic ViewController and
+
+44
+00:02:12,967 --> 00:02:15,501
+delete it, okay, move it to the trash. And
+
+45
+00:02:15,503 --> 00:02:18,470
+then I'm going to do the thing we always do here where we
+
+46
+00:02:18,472 --> 00:02:21,306
+take these little guys and move them off into supporting
+
+47
+00:02:21,308 --> 00:02:26,111
+files because we don't need to do anything, supporting files,
+
+48
+00:02:26,113 --> 00:02:28,914
+because we don't really need to do anything with them. And
+
+49
+00:02:28,916 --> 00:02:32,284
+so I'm gonna right off the bat create a custom ViewController
+
+50
+00:02:32,286 --> 00:02:36,522
+for this view controller that I have here in my storyboard.
+
+51
+00:02:36,524 --> 00:02:38,323
+And I'm also gonna create a custom UIView.
+
+52
+00:02:38,325 --> 00:02:41,360
+And that UIView is really where the logic of my game is,
+
+53
+00:02:41,362 --> 00:02:43,862
+you can almost think of it as like a gameView. Right, and
+
+54
+00:02:43,864 --> 00:02:47,099
+I could actually put this view anywhere in any UI and
+
+55
+00:02:47,101 --> 00:02:47,332
+it would play this game,
+
+56
+00:02:47,334 --> 00:02:51,436
+the Tetris-like game we gonna call DropIt. So let's go and
+
+57
+00:02:51,438 --> 00:02:54,973
+create those two classes. The UI view controller and
+
+58
+00:02:54,975 --> 00:02:59,878
+UI view. So here's to UI view, we'll call it DropItView.
+
+59
+00:02:59,880 --> 00:03:00,879
+Okay, it's gonna be the DropItView.
+
+60
+00:03:00,881 --> 00:03:04,650
+I'll put it in the same place here not in supporting files.
+
+61
+00:03:04,652 --> 00:03:09,188
+I'm gonna put where all the rest of the things are. Hey,
+
+62
+00:03:09,190 --> 00:03:09,855
+there's my DropItView.
+
+63
+00:03:09,857 --> 00:03:13,625
+My DropItView actually is not gonna implement DrawRect,
+
+64
+00:03:13,627 --> 00:03:15,894
+okay, it's gonna implement its entire existence with
+
+65
+00:03:15,896 --> 00:03:20,098
+subviews. Okay, so it's not even gonna have, a DrawRect in
+
+66
+00:03:20,100 --> 00:03:24,836
+my DropItView. And then I also need, my controller, okay.
+
+67
+00:03:24,838 --> 00:03:27,873
+So same thing here. But this is gonna be UIViewController,
+
+68
+00:03:27,875 --> 00:03:30,909
+and I'm gonna call it my DropItViewController, okay.
+
+69
+00:03:30,911 --> 00:03:35,147
+Same place. Okay, there's my DropItViewController,
+
+70
+00:03:35,149 --> 00:03:40,152
+you're gonna clear all this stuff out. All right, now that
+
+71
+00:03:40,154 --> 00:03:42,754
+I have these two classes, I'm gonna make my storyboard
+
+72
+00:03:42,756 --> 00:03:46,458
+just make it so that this ViewController that I have,
+
+73
+00:03:46,460 --> 00:03:49,494
+I'm gonna go to the Identity Inspector over here and
+
+74
+00:03:49,496 --> 00:03:51,563
+instead of having it be just
+
+75
+00:03:51,565 --> 00:03:52,097
+plain ViewController,
+
+76
+00:03:52,099 --> 00:03:54,700
+it's gonna be a DropItViewController.
+
+77
+00:03:54,702 --> 00:03:58,870
+Okay, and same thing inside here I'm just gonna put a view
+
+78
+00:03:58,872 --> 00:04:02,441
+a generic UI view, so let's scroll down and find that,
+
+79
+00:04:02,443 --> 00:04:06,044
+where that is. Where is that? Right here it is. Okay,
+
+80
+00:04:06,046 --> 00:04:07,746
+generic UI view I'm gonna put in here and
+
+81
+00:04:07,748 --> 00:04:13,185
+I'm gonna change its identify to be DropItView. Okay.
+
+82
+00:04:13,187 --> 00:04:16,288
+Now I'm gonna have, use constraints here to have this
+
+83
+00:04:16,290 --> 00:04:20,025
+fill my entire view controller here. You're gonna put
+
+84
+00:04:20,027 --> 00:04:22,694
+it right there. Use the blue lines to put it on the edges
+
+85
+00:04:22,696 --> 00:04:27,399
+then we'll go down to here, oops, down to here,
+
+86
+00:04:27,401 --> 00:04:29,735
+and we'll say reset to suggested constraints.
+
+87
+00:04:29,737 --> 00:04:32,304
+I always like to look in the Size Inspector, make sure it
+
+88
+00:04:32,306 --> 00:04:36,074
+did what I wanted, which it looks like it did. Okay. So
+
+89
+00:04:36,076 --> 00:04:38,844
+I've got this DropItView in here inside my
+
+90
+00:04:38,846 --> 00:04:41,880
+DropItViewController. I'm also gonna create an outlet from
+
+91
+00:04:41,882 --> 00:04:45,050
+one to the other. Okay? Okay, so I'm just gonna control drag
+
+92
+00:04:45,052 --> 00:04:47,452
+into my DropItViewController to create this view.
+
+93
+00:04:47,454 --> 00:04:51,323
+I'm gonna call it my gameView. You can see there's of type
+
+94
+00:04:51,325 --> 00:04:54,393
+DropItView, which is good. It's what I want. Okay, so
+
+95
+00:04:54,395 --> 00:04:56,795
+I've got my gameView. So this is my basic setup of
+
+96
+00:04:56,797 --> 00:05:00,132
+my game, all right. And really all the controller's gonna do,
+
+97
+00:05:00,134 --> 00:05:02,968
+maybe set up some gestures, possibly a little bit
+
+98
+00:05:02,970 --> 00:05:05,370
+of ViewController life cycle here and there, but most
+
+99
+00:05:05,372 --> 00:05:10,075
+of the logic is going to be inside this DropItView class.
+
+100
+00:05:10,077 --> 00:05:16,148
+Okay. So Let's make our screen bigger here. All right.
+
+101
+00:05:16,150 --> 00:05:19,951
+So let's dive right in to this DropItView. I'm gonna have my
+
+102
+00:05:19,953 --> 00:05:24,489
+DropItView start by being able to put a little square. Okay,
+
+103
+00:05:24,491 --> 00:05:27,326
+these things that are gonna fall down like Tetric, Tetris,
+
+104
+00:05:27,328 --> 00:05:28,260
+except for there's gonna be squares.
+
+105
+00:05:28,262 --> 00:05:31,063
+I'm gonna have a little method that puts a square there.
+
+106
+00:05:31,065 --> 00:05:33,899
+Okay so I'm gonna need a little bit of some private
+
+107
+00:05:33,901 --> 00:05:39,438
+data here. How about Private let dropsPerRow = 10.
+
+108
+00:05:39,440 --> 00:05:42,941
+So this is how many of these little drops that are gonna
+
+109
+00:05:42,943 --> 00:05:45,577
+fall down will fit across the top of my view,
+
+110
+00:05:45,579 --> 00:05:47,846
+they're falling down from the top, right? So
+
+111
+00:05:47,848 --> 00:05:50,048
+this is how many. So ten across is a good number,
+
+112
+00:05:50,050 --> 00:05:53,752
+I think. And then I'm gonna have a dropSize, okay,
+
+113
+00:05:53,754 --> 00:05:56,888
+which is gonna be a CGSize. That's gonna be the size
+
+114
+00:05:56,890 --> 00:05:58,790
+of each of the little things that falls down.
+
+115
+00:05:58,792 --> 00:06:01,993
+And I'm gonna have that be calculated. Kay?
+
+116
+00:06:01,995 --> 00:06:03,628
+And I'm gonna calculate it by having the size,
+
+117
+00:06:03,630 --> 00:06:07,232
+have it be square. And we'll have the size be the width,
+
+118
+00:06:07,234 --> 00:06:10,168
+whatever our width is at the time we ask this,
+
+119
+00:06:10,170 --> 00:06:13,805
+divided by the number of drops per row. Right, so
+
+120
+00:06:13,807 --> 00:06:17,242
+I'm gonna have the size be so that they'll fit across
+
+121
+00:06:17,244 --> 00:06:20,011
+the width of our view. Now, by the way,
+
+122
+00:06:20,013 --> 00:06:22,714
+our app might rotate and this width might change, so
+
+123
+00:06:22,716 --> 00:06:25,317
+the drops might actually change as we rotate and stuff.
+
+124
+00:06:25,319 --> 00:06:28,453
+But we can decide if that's what we wanted or not, but
+
+125
+00:06:28,455 --> 00:06:29,421
+this is perfectly fine.
+
+126
+00:06:29,423 --> 00:06:32,891
+So, now I'm just gonna create a CG size here whose width
+
+127
+00:06:32,893 --> 00:06:36,328
+is the size and whose height is the size. So it's square,
+
+128
+00:06:36,330 --> 00:06:38,230
+basically. So this is gonna be the size of a drop,
+
+129
+00:06:38,232 --> 00:06:40,232
+a square that fits ten across the top.
+
+130
+00:06:40,234 --> 00:06:44,035
+Now I'm gonna have a function called addDrop, that just
+
+131
+00:06:44,037 --> 00:06:47,305
+adds one of these things. One of these little squares that's
+
+132
+00:06:47,307 --> 00:06:49,975
+gonna fall down from the top to the view. So, of course,
+
+133
+00:06:49,977 --> 00:06:53,078
+we need the size of this drop, to be put into a frame.
+
+134
+00:06:53,080 --> 00:06:56,782
+So I'm gonna create a frame which is CGRect. The origin
+
+135
+00:06:56,784 --> 00:07:00,752
+of the frame is gonna be at CGPoint.zero to start.
+
+136
+00:07:00,754 --> 00:07:02,287
+I'm gonna put it up in the upper left hand corner and
+
+137
+00:07:02,289 --> 00:07:05,023
+then I'm gonna move it over into one of the slots along
+
+138
+00:07:05,025 --> 00:07:08,894
+the top. And the size of course is the dropSize. So
+
+139
+00:07:08,896 --> 00:07:11,329
+let's do that frame movement. So I am gonna move
+
+140
+00:07:11,331 --> 00:07:16,435
+the origin.x = and really what I want here is a random
+
+141
+00:07:16,437 --> 00:07:21,373
+float somewhere between 0 and the drops per row. Okay,
+
+142
+00:07:21,375 --> 00:07:24,242
+that's pretty much where I am going to put it.
+
+143
+00:07:24,244 --> 00:07:27,512
+So, if I like to sometimes, if I want to have a function on
+
+144
+00:07:27,514 --> 00:07:30,816
+CG float called random I'll actually make extensions and
+
+145
+00:07:30,818 --> 00:07:34,119
+so I've made some extensions, here they are right here,
+
+146
+00:07:34,121 --> 00:07:38,089
+UIKitExtensions.swift which I'm gonna copy in here. And
+
+147
+00:07:38,091 --> 00:07:41,493
+these extensions are just kinda some convenient things
+
+148
+00:07:41,495 --> 00:07:43,929
+that I've created that are gonna help my demo go
+
+149
+00:07:43,931 --> 00:07:47,098
+quicker. So you can see I have created this random function
+
+150
+00:07:47,100 --> 00:07:50,302
+on CGFloat. I've created a random function on UIColor
+
+151
+00:07:50,304 --> 00:07:54,439
+which gives me a random color. Kind of fun, right?
+
+152
+00:07:54,441 --> 00:07:57,476
+And then some CGRect things here, other stuff,
+
+153
+00:07:57,478 --> 00:08:01,146
+so you can look through this later at your leisure.
+
+154
+00:08:01,148 --> 00:08:03,849
+But I'm going to use one of here,
+
+155
+00:08:03,851 --> 00:08:08,253
+which is this CGFloat.random That takes an int,
+
+156
+00:08:08,255 --> 00:08:13,325
+dropsPerRow. Okay, and so that's gonna create a random
+
+157
+00:08:13,327 --> 00:08:16,228
+float between 0 and dropsPerRow, and
+
+158
+00:08:16,230 --> 00:08:20,599
+then I'm going to multiply that times our dropSize width.
+
+159
+00:08:20,601 --> 00:08:25,070
+So I've picked a spot across the top a random spot across
+
+160
+00:08:25,072 --> 00:08:27,539
+the top there. So now, I'm gonna create the drop.
+
+161
+00:08:27,541 --> 00:08:31,309
+I'm just gonna say it's a UIView a generic UIView
+
+162
+00:08:31,311 --> 00:08:34,646
+whose frame is frame. Okay, that this frame I just created
+
+163
+00:08:34,648 --> 00:08:39,117
+right here. So I got the drop. And let's set the drops back
+
+164
+00:08:39,119 --> 00:08:42,254
+color to a random color equals UIColor, that random.
+
+165
+00:08:42,256 --> 00:08:44,589
+Yeah, that's one of my UI kit extensions that I created
+
+166
+00:08:44,591 --> 00:08:48,360
+there And then we're gonna add sub-view, the drop, okay?
+
+167
+00:08:48,362 --> 00:08:52,330
+Just put it, on screen, okay? Make sense? Now,
+
+168
+00:08:52,332 --> 00:08:56,835
+I'm gonna cause this add drop to happen whenever I tap, so
+
+169
+00:08:56,837 --> 00:08:58,870
+I'm gonna put a gesture recognizer back here at my
+
+170
+00:08:58,872 --> 00:09:01,273
+control. A lot of this, by the way, is review hopefully for
+
+171
+00:09:01,275 --> 00:09:05,544
+you guys, but I'm going to, when my game view gets set
+
+172
+00:09:05,546 --> 00:09:08,747
+here I'm gonna add a gesture recognizer. So
+
+173
+00:09:08,749 --> 00:09:12,551
+I'm just gonna say gameView.addGestureRecognizer.
+
+174
+00:09:12,553 --> 00:09:15,620
+It's gonna be a tap. UITapGestureRecognizer.
+
+175
+00:09:15,622 --> 00:09:19,658
+The target: is gonna be my self,
+
+176
+00:09:19,660 --> 00:09:22,827
+and the action: will be, let's say a #selector.
+
+177
+00:09:22,829 --> 00:09:25,997
+We'll call it addDrop. This one has an argument. Okay?
+
+178
+00:09:25,999 --> 00:09:29,434
+Cuz it's a gesture recognizer. Okay, so we'll just do that.
+
+179
+00:09:29,436 --> 00:09:33,104
+And then, I'm gonna have a little func here. Add drop,
+
+180
+00:09:33,106 --> 00:09:37,876
+which takes a recognizer which is a UITapGestureRecognizer.
+
+181
+00:09:37,878 --> 00:09:39,978
+What did I do here that's no good? That's good.
+
+182
+00:09:39,980 --> 00:09:43,949
+We fix that. All right, so when we have TapGesture
+
+183
+00:09:43,951 --> 00:09:47,352
+we basically wanna check to see if the recognizer state
+
+184
+00:09:47,354 --> 00:09:52,390
+has moved to ended if it does then there was a tap. And
+
+185
+00:09:52,392 --> 00:09:54,059
+now, I'm just gonna tell my game view,
+
+186
+00:09:54,061 --> 00:09:58,730
+okay go ahead and add one of those drops. Okay everybody
+
+187
+00:09:58,732 --> 00:10:01,666
+see what I did there? Just create a little tap gesture,
+
+188
+00:10:01,668 --> 00:10:05,136
+just gonna call this method addDrop over in my drop it
+
+189
+00:10:05,138 --> 00:10:08,273
+view. So let's switch over to the DropItView it again.
+
+190
+00:10:08,275 --> 00:10:11,076
+It's gonna call it, cause this add drop to happen right here.
+
+191
+00:10:11,078 --> 00:10:13,411
+All right, so let's go ahead and run,
+
+192
+00:10:13,413 --> 00:10:18,116
+we'll run on iPhone 6 here. So now, when we tap,
+
+193
+00:10:18,118 --> 00:10:24,422
+it should put a random color block along the top. Okay,
+
+194
+00:10:24,424 --> 00:10:28,293
+so tap, there it is, a green one, purple, okay, excellent.
+
+195
+00:10:28,295 --> 00:10:28,793
+You see, as I click,
+
+196
+00:10:28,795 --> 00:10:31,463
+it puts more along the top. Now of course, we want these
+
+197
+00:10:31,465 --> 00:10:34,366
+things to fall down. Okay, we want them to fall down to
+
+198
+00:10:34,368 --> 00:10:36,968
+the bottom and we know how to do that with Dynamic Animator.
+
+199
+00:10:36,970 --> 00:10:39,104
+We're just gonna create a gravity behavior, okay, and
+
+200
+00:10:39,106 --> 00:10:42,240
+the default gravity behavior is downward gravity at 1,000
+
+201
+00:10:42,242 --> 00:10:45,977
+points per second squared. So that's exactly what we want.
+
+202
+00:10:45,979 --> 00:10:48,913
+So that's all we need to do is create a gravity behavior and
+
+203
+00:10:48,915 --> 00:10:49,180
+add it to an animator.
+
+204
+00:10:49,182 --> 00:10:53,518
+So let's do that. Up here, we're gonna create a private
+
+205
+00:10:53,520 --> 00:10:58,990
+let gravity equal a ui gravity behavior, okay?
+
+206
+00:10:58,992 --> 00:11:01,760
+And of course, I also need an animator so I'm gonna say
+
+207
+00:11:01,762 --> 00:11:06,297
+private let animator which is gonna be a ui dynamic
+
+208
+00:11:06,299 --> 00:11:12,037
+animator. And actually, let's just create one right here.
+
+209
+00:11:12,039 --> 00:11:14,506
+You and I dynamic animator. And we know that when
+
+210
+00:11:14,508 --> 00:11:16,875
+we created dynamic animator that's gonna be animating
+
+211
+00:11:16,877 --> 00:11:20,712
+views. We wanna say what the reference view is. Okay. Which
+
+212
+00:11:20,714 --> 00:11:25,083
+in this case is, self. Okay. Where Drop it view is a view.
+
+213
+00:11:25,085 --> 00:11:28,486
+So referring to yourself. Now, we have an error here.
+
+214
+00:11:28,488 --> 00:11:33,091
+Anyone know what the problem here is? Okay,
+
+215
+00:11:33,093 --> 00:11:37,328
+what are we doing right here? Initializing, right?
+
+216
+00:11:37,330 --> 00:11:40,231
+We're initializing. Can we refer to self when we're
+
+217
+00:11:40,233 --> 00:11:44,669
+initializing? No, because self is not fully initialized yet.
+
+218
+00:11:44,671 --> 00:11:47,405
+So we can get around this though with our favorite
+
+219
+00:11:47,407 --> 00:11:51,943
+lazy var. Okay. So now, it's not gonna initialize this
+
+220
+00:11:51,945 --> 00:11:53,044
+until someone ask for the animator.
+
+221
+00:11:53,046 --> 00:11:54,879
+And that's not gonna happen until we're finish the slide.
+
+222
+00:11:54,881 --> 00:12:00,485
+So we're winning, right? Okay. So we got that. Now, I'm gonna
+
+223
+00:12:00,487 --> 00:12:04,589
+actually make a public var called here called animating,
+
+224
+00:12:04,591 --> 00:12:07,258
+which is gonna be a boll, and we start it out equal
+
+225
+00:12:07,260 --> 00:12:11,696
+to false. And this is gonna be basically how we turn on and
+
+226
+00:12:11,698 --> 00:12:13,465
+off the animating. If you say, animating = true,
+
+227
+00:12:13,467 --> 00:12:15,934
+then we're gonna have these blocks animating. If you say,
+
+228
+00:12:15,936 --> 00:12:18,770
+animating = false, they'll stop animating. Okay, so
+
+229
+00:12:18,772 --> 00:12:22,373
+it's kind of like the on/off switch for our DropItView. So
+
+230
+00:12:22,375 --> 00:12:25,910
+what are we gonna do here? I'm gonna say if someone sets
+
+231
+00:12:25,912 --> 00:12:30,982
+this, then if they set it to true, then I'm going
+
+232
+00:12:30,984 --> 00:12:34,619
+to animate this. Which all I need to do to animate, is
+
+233
+00:12:34,621 --> 00:12:38,423
+to take the animator and add the behavior of the gravity.
+
+234
+00:12:38,425 --> 00:12:40,959
+Okay? As soon as you add the behavior
+
+235
+00:12:40,961 --> 00:12:43,061
+to the animator it's going to start animating it.
+
+236
+00:12:43,063 --> 00:12:47,465
+Okay? And similarly if they turn animating off,
+
+237
+00:12:47,467 --> 00:12:50,135
+then I'm just going to do the opposite, I'm going to remove
+
+238
+00:12:50,137 --> 00:12:55,373
+That gravity behaviour. Okay, and that's going to stop
+
+239
+00:12:56,176 --> 00:13:01,446
+it animating. Okay, got that? Let's go ahead and set this.
+
+240
+00:13:01,448 --> 00:13:03,148
+We're going to set this in our controllers.
+
+241
+00:13:03,150 --> 00:13:05,817
+I'm going to go back to our controller right here, and
+
+242
+00:13:05,819 --> 00:13:07,819
+let's do this in our view controller live cycle. So
+
+243
+00:13:07,821 --> 00:13:11,556
+how about in View Did Appear? As soon as View Did Appear
+
+244
+00:13:11,558 --> 00:13:17,996
+happens, let's go ahead and set this gameView's animating
+
+245
+00:13:18,465 --> 00:13:21,933
+To true. Okay, so that's gonna start it animating.
+
+246
+00:13:21,935 --> 00:13:28,439
+And similarly, on viewWillDissapear, We
+
+247
+00:13:28,441 --> 00:13:31,943
+will turn the animation off. Cuz we really don't want this
+
+248
+00:13:31,945 --> 00:13:36,114
+thing animating while we're not even on screen. So. It's
+
+249
+00:13:36,116 --> 00:13:40,685
+a good place to turn it on and off. Everyone understand that?
+
+250
+00:13:40,687 --> 00:13:42,987
+Okay. If you don't understand anything I'm saying,
+
+251
+00:13:42,989 --> 00:13:45,824
+feel free to stop me. Okay? All right. So
+
+252
+00:13:45,826 --> 00:13:48,927
+that turns it on and off. We got this thing going. The only
+
+253
+00:13:48,929 --> 00:13:52,397
+thing we need to do here is this behavior, currently there
+
+254
+00:13:52,399 --> 00:13:54,599
+are no items that have been added to this behavior.
+
+255
+00:13:54,601 --> 00:13:57,268
+So nothing, this gravity is not affecting anything.
+
+256
+00:13:57,270 --> 00:14:00,572
+So of course, every time we add a br-, a drop down here,
+
+257
+00:14:00,574 --> 00:14:03,308
+we're gonna want to add it to the behavior,
+
+258
+00:14:03,310 --> 00:14:06,144
+gravity.addItem this (drop). Okay, and
+
+259
+00:14:06,146 --> 00:14:10,715
+that makes that gravity start affecting that drop.
+
+260
+00:14:11,184 --> 00:14:13,685
+We've got all that? So that's, we've seen all the steps now,
+
+261
+00:14:13,687 --> 00:14:15,353
+dynamic animation of making it work, right?
+
+262
+00:14:15,355 --> 00:14:18,156
+We created the animator, we created our behavior, we added
+
+263
+00:14:18,158 --> 00:14:20,425
+the behavior to the animator, and then we added items that
+
+264
+00:14:20,427 --> 00:14:22,694
+we wanted affected by that behavior to the behavior.
+
+265
+00:14:22,696 --> 00:14:26,231
+All right, so let's go see this work.
+
+266
+00:14:33,440 --> 00:14:35,406
+Okay, so here we go, let's run,
+
+267
+00:14:35,408 --> 00:14:36,307
+let's try tap this user or
+
+268
+00:14:36,309 --> 00:14:40,111
+tap just just to here, and look they're falling down.
+
+269
+00:14:40,113 --> 00:14:42,680
+See they all fall and we can click as many as we want and
+
+270
+00:14:42,682 --> 00:14:46,184
+they all fall. Now the problem with this from a Tetris point
+
+271
+00:14:46,186 --> 00:14:47,819
+of view is they just fall off the bottom and
+
+272
+00:14:47,821 --> 00:14:51,789
+we really want them to hit the bottom and stop, right? And
+
+273
+00:14:51,791 --> 00:14:53,324
+pile up so that they will make rows and
+
+274
+00:14:53,326 --> 00:14:56,427
+we can clear the rows out. Right? So the next thing we're
+
+275
+00:14:56,429 --> 00:14:58,396
+going to do is put a boundary and we're going to put
+
+276
+00:14:58,398 --> 00:15:01,065
+the boundary all the way around this thing. Okay.
+
+277
+00:15:01,067 --> 00:15:03,801
+It's a real simple way to create a collision boundary
+
+278
+00:15:03,803 --> 00:15:05,703
+all the way around this reference view right here.
+
+279
+00:15:05,705 --> 00:15:10,742
+So let's do that. All right? Go back over here.
+
+280
+00:15:10,744 --> 00:15:13,678
+So do that we need to create another behavior like
+
+281
+00:15:13,680 --> 00:15:17,749
+the gravity behavior. And this one I'm gonna call my collider
+
+282
+00:15:17,751 --> 00:15:22,420
+and it's gonna be UICollisionBehavior. Okay?
+
+283
+00:15:22,422 --> 00:15:25,290
+Now I could just do that. The problem is I need to
+
+284
+00:15:25,292 --> 00:15:28,092
+configure this, cuz I wanna tell this collision behavior,
+
+285
+00:15:28,094 --> 00:15:32,230
+make the bounds of the reference view be a boundary.
+
+286
+00:15:32,232 --> 00:15:34,599
+So I'm gonna create this in kind of a cool way,
+
+287
+00:15:34,601 --> 00:15:37,035
+hopefully you'll remember that you can do this.
+
+288
+00:15:37,037 --> 00:15:38,870
+I'm gonna do it with a closure.
+
+289
+00:15:38,872 --> 00:15:42,473
+I'm gonna initialize this variable by executing
+
+290
+00:15:42,475 --> 00:15:47,412
+this closure right here, and remember that we can do that.
+
+291
+00:15:47,414 --> 00:15:49,614
+So I'm going to create a little local variable here.
+
+292
+00:15:49,616 --> 00:15:51,015
+Happens to be called the same thing but
+
+293
+00:15:51,017 --> 00:15:54,185
+wouldn't have to be of the same thing as a variable.
+
+294
+00:15:54,187 --> 00:15:56,554
+This is just a local inside this enclosure. And
+
+295
+00:15:56,556 --> 00:16:02,060
+I'm gonna set the collider to translateReferenceBoundsIntoB-
+
+296
+00:16:02,062 --> 00:16:04,262
+oundary = true. And if you do that,
+
+297
+00:16:04,264 --> 00:16:08,132
+the UICollisionBehavior will automatically have the bounds
+
+298
+00:16:08,134 --> 00:16:11,035
+of the reference view be a collision boundary.
+
+299
+00:16:11,037 --> 00:16:14,706
+Then, we'll return the collider here, okay?
+
+300
+00:16:14,708 --> 00:16:17,041
+Make sense? Now, this collider,
+
+301
+00:16:17,043 --> 00:16:21,412
+just like the gravity, here, sorry. If you do this when you
+
+302
+00:16:21,414 --> 00:16:24,916
+make a closure, don't forget that you have to explicitly
+
+303
+00:16:24,918 --> 00:16:30,888
+type the var here, and that's because it wants to be
+
+304
+00:16:30,890 --> 00:16:34,225
+able to check to make sure the return value here matches what
+
+305
+00:16:34,227 --> 00:16:37,729
+you want it to assign to here. Okay, so
+
+306
+00:16:37,731 --> 00:16:39,197
+just like we added the gravity behavior,
+
+307
+00:16:39,199 --> 00:16:41,132
+we're gonna have to add the collider as well, so
+
+308
+00:16:41,134 --> 00:16:45,570
+just like, here's the gravity, we're gonna do collider, and
+
+309
+00:16:45,572 --> 00:16:47,538
+same thing obviously when we stop animating,
+
+310
+00:16:47,540 --> 00:16:50,975
+we want to remove the collider. Okay, and also down
+
+311
+00:16:50,977 --> 00:16:53,845
+here, we want gravity to work on the drops, we also want
+
+312
+00:16:53,847 --> 00:16:56,848
+the collider to work on the drops. If I didn't do this,
+
+313
+00:16:56,850 --> 00:17:00,385
+then the drops would still keep falling off the end,
+
+314
+00:17:00,387 --> 00:17:03,121
+because the collider would not be behaving,
+
+315
+00:17:03,123 --> 00:17:06,557
+the collider behavior would not apply to them, okay?
+
+316
+00:17:06,559 --> 00:17:13,564
+Everybody got that? So let's see if that works. All right,
+
+317
+00:17:13,566 --> 00:17:15,633
+here we go, drop, and, sure enough, look,
+
+318
+00:17:15,635 --> 00:17:21,039
+they're piling up. And here when, no, we're never gonna
+
+319
+00:17:21,041 --> 00:17:24,409
+get a completed row there, how are we gonna do that?
+
+320
+00:17:24,411 --> 00:17:28,546
+All right, well, we obviously need more behaviors here than
+
+321
+00:17:28,548 --> 00:17:31,349
+we have. And the next behavior we want to do is a behavior
+
+322
+00:17:31,351 --> 00:17:33,818
+that makes it so that those things don't rotate like that,
+
+323
+00:17:33,820 --> 00:17:37,021
+okay, they don't tip over and start piling on top of each
+
+324
+00:17:37,023 --> 00:17:40,258
+other right there. We want them to stay in nice rows, so
+
+325
+00:17:40,260 --> 00:17:42,560
+we want to turn rotation off. And to do that,
+
+326
+00:17:42,562 --> 00:17:45,029
+we need a dynamic item behavior, which I talked about
+
+327
+00:17:45,031 --> 00:17:47,632
+in lecture. But it's starting to get to a point where I've
+
+328
+00:17:47,634 --> 00:17:50,435
+kinda got a lot of messy code cuz I'm adding behavior,
+
+329
+00:17:50,437 --> 00:17:51,636
+behavior, behavior, another one.
+
+330
+00:17:51,638 --> 00:17:54,372
+I'm gonna add, add, add, remove, remove, add item,
+
+331
+00:17:54,374 --> 00:17:57,075
+add item. So, I'm gonna do the thing I talk about in lecture
+
+332
+00:17:57,077 --> 00:17:59,811
+where I create a new behavior which is all these other
+
+333
+00:17:59,813 --> 00:18:04,415
+behaviors combined, like a composite behavior, okay. So
+
+334
+00:18:04,417 --> 00:18:07,652
+let's go, File > New up here.
+
+335
+00:18:07,654 --> 00:18:11,923
+Okay, it's a Cocoa Touch Class. This one is a subclass
+
+336
+00:18:11,925 --> 00:18:16,861
+of UIDynamicBehavior, okay. And I'm gonna call this
+
+337
+00:18:16,863 --> 00:18:20,264
+the FallingObjectBehavior, okay, cuz that's what it is,
+
+338
+00:18:20,266 --> 00:18:24,502
+this is a a thing falling down, a FallingObjectBehavior.
+
+339
+00:18:24,504 --> 00:18:26,671
+Okay, I don't wanna put it in the top level,
+
+340
+00:18:26,673 --> 00:18:28,573
+drop it here, I wanna put it down here,
+
+341
+00:18:28,575 --> 00:18:30,007
+where all the rest of my classes are.
+
+342
+00:18:30,009 --> 00:18:32,510
+I notice some of you sometimes make that mistake in your
+
+343
+00:18:32,512 --> 00:18:36,247
+homework. Really nice to keep your files together there.
+
+344
+00:18:36,249 --> 00:18:38,116
+Okay, so here's my FallingObjectBehavior,
+
+345
+00:18:38,118 --> 00:18:42,253
+it's a UIDynamicBehavior. And I'm just gonna go and copy and
+
+346
+00:18:42,255 --> 00:18:45,123
+paste those two behaviors I already have,
+
+347
+00:18:45,125 --> 00:18:49,627
+these two guys right here, out of here, and over into here,
+
+348
+00:18:49,629 --> 00:18:52,763
+okay. Cuz now, cuz I want this falling object behavior to
+
+349
+00:18:52,765 --> 00:18:56,701
+have these two behaviors right here. The other thing
+
+350
+00:18:56,703 --> 00:18:59,036
+we do when we create a DynamicBehavior subclass is,
+
+351
+00:18:59,038 --> 00:19:02,607
+we're obviously going to have an init. So I'm gonna override
+
+352
+00:19:02,609 --> 00:19:05,443
+the init that comes with UIDynamicBehavior,
+
+353
+00:19:05,445 --> 00:19:08,646
+call super.init, okay, because I, I need to that, from
+
+354
+00:19:08,648 --> 00:19:10,615
+the rules of init. We haven't talked a lot about inits,
+
+355
+00:19:10,617 --> 00:19:13,918
+by the way. Again, hopefully you haven't needed them too
+
+356
+00:19:13,920 --> 00:19:17,054
+much in your, your homeworks. And hopefully you understood
+
+357
+00:19:17,056 --> 00:19:19,924
+what the reading assignment said about inits. But anyway,
+
+358
+00:19:19,926 --> 00:19:22,059
+you need to call super.init before you can do stuff.
+
+359
+00:19:22,061 --> 00:19:25,062
+So I'm going to then add a child behavior,
+
+360
+00:19:25,064 --> 00:19:29,867
+which is gravity, and I'm gonna add a child behavior,
+
+361
+00:19:29,869 --> 00:19:31,169
+which is the collider.
+
+362
+00:19:31,171 --> 00:19:33,971
+Okay, so this is how you build these composites.
+
+363
+00:19:33,973 --> 00:19:37,108
+You add children behavior, okay. Now,
+
+364
+00:19:37,110 --> 00:19:41,179
+another nice thing to do is to have a func addItem, okay,
+
+365
+00:19:41,181 --> 00:19:44,815
+which takes an item which would be a UIDynamicItem,
+
+366
+00:19:44,817 --> 00:19:47,885
+okay? Remember that UIView implements this protocol.
+
+367
+00:19:47,887 --> 00:19:51,088
+This is a protocol, okay, UIView implements it.
+
+368
+00:19:51,090 --> 00:19:53,891
+And here, I just want to make sure that I add this item to
+
+369
+00:19:53,893 --> 00:19:58,863
+all of my sub, my children, basically, behaviors. So
+
+370
+00:19:58,865 --> 00:20:04,802
+let's do that. And collider. Okay, and similarly,
+
+371
+00:20:04,804 --> 00:20:07,371
+we probably, we don't need it for this demo, but
+
+372
+00:20:07,373 --> 00:20:11,709
+to be complete, we probably want a removeItem as well.
+
+373
+00:20:13,379 --> 00:20:16,681
+Okay, so now, we've created this new behavior that
+
+374
+00:20:16,683 --> 00:20:19,884
+we can add items to and that this behavior can be added
+
+375
+00:20:19,886 --> 00:20:23,854
+to an animator to cause this group of behaviors to happen.
+
+376
+00:20:23,856 --> 00:20:26,657
+So now let's go back to our DropItView,
+
+377
+00:20:26,659 --> 00:20:30,094
+and instead having these individual behaviors,
+
+378
+00:20:30,096 --> 00:20:34,932
+let's create a new behavior, we'll call it dropBehavior,
+
+379
+00:20:34,934 --> 00:20:38,436
+which is a FallingObjectBehavior.
+
+380
+00:20:38,438 --> 00:20:41,105
+Okay, so this is one behavior encapsulate all those
+
+381
+00:20:41,107 --> 00:20:46,077
+behaviors. So now we can put that instead of all these
+
+382
+00:20:46,079 --> 00:20:50,348
+details. Okay, same thing down here.
+
+383
+00:20:52,218 --> 00:20:55,486
+All right? So see how this code has gotten so
+
+384
+00:20:55,488 --> 00:20:58,589
+simple now it fits on one page to do this. And
+
+385
+00:20:58,591 --> 00:21:01,359
+the actual behavior, the dynamic behavior is now
+
+386
+00:21:01,361 --> 00:21:05,663
+encapsulated over here in this FallingObjectBehavior instead.
+
+387
+00:21:05,965 --> 00:21:08,032
+All right? Okay, let's run this and
+
+388
+00:21:08,034 --> 00:21:10,301
+make sure we haven't broken anything by doing that.
+
+389
+00:21:10,303 --> 00:21:12,103
+Okay, haven't really changed anything,
+
+390
+00:21:12,105 --> 00:21:14,939
+I've just moved the code for a different encapsulation.
+
+391
+00:21:14,941 --> 00:21:17,575
+Here it is, we click, hopefully these things will
+
+392
+00:21:17,577 --> 00:21:21,112
+still hit the bottom, they do, okay? So all is well. Now,
+
+393
+00:21:21,114 --> 00:21:25,249
+they're still, can be tippy. See there, they're starting to
+
+394
+00:21:25,251 --> 00:21:26,450
+tip over. No, they're tipping over, okay.
+
+395
+00:21:26,452 --> 00:21:29,020
+So they're still tipping, so we need to fix the tippiness.
+
+396
+00:21:29,022 --> 00:21:31,355
+But now we're gonna fix this tippiness here in
+
+397
+00:21:31,357 --> 00:21:34,792
+our FallingObjectBehavior. And we're gonna do that by adding
+
+398
+00:21:34,794 --> 00:21:38,296
+another behavior, okay? This is gonna be the itemBehavior.
+
+399
+00:21:38,298 --> 00:21:41,599
+This is gonna describe how each of these items behaves
+
+400
+00:21:41,601 --> 00:21:45,870
+when it goes in all the other behaviors. And we do that with
+
+401
+00:21:45,872 --> 00:21:48,239
+a UIDynamicItemBehavior, okay, and
+
+402
+00:21:48,241 --> 00:21:52,643
+I'm gonna initialize this in the same way that I did here,
+
+403
+00:21:52,645 --> 00:21:57,248
+okay, with a closure. So let's let dib,
+
+404
+00:21:57,250 --> 00:22:03,120
+a dynamic item behavior, equal a UIDynamicItemBehavior.
+
+405
+00:22:03,122 --> 00:22:07,024
+And now we can set all kinds of things that dib, this dib,
+
+406
+00:22:07,026 --> 00:22:09,026
+UIDynamicItemBehavior, knows how to do.
+
+407
+00:22:09,028 --> 00:22:13,564
+For example, allows rotation? No, so now, our block won't
+
+408
+00:22:13,566 --> 00:22:17,268
+rotate. We could also do stuff like friction and
+
+409
+00:22:17,270 --> 00:22:21,238
+also elasticity. So I'm gonna do elasticity of 0.75.
+
+410
+00:22:21,240 --> 00:22:23,407
+Elasticity of 1 is perfect elasticity.
+
+411
+00:22:23,409 --> 00:22:26,677
+In other words, no energy is lost by the collision.
+
+412
+00:22:26,679 --> 00:22:26,977
+They bounce off each other.
+
+413
+00:22:26,979 --> 00:22:30,281
+So 0.75 is a little energy lost. But, you know, so
+
+414
+00:22:30,283 --> 00:22:33,417
+I'm not sure what the default elasticity is. But it was low,
+
+415
+00:22:33,419 --> 00:22:34,752
+because those things came down to the bottom,
+
+416
+00:22:34,754 --> 00:22:38,155
+they didn't bounce much. They kind of just sat there.
+
+417
+00:22:38,157 --> 00:22:40,691
+So I'll do that. And now let's return dib.
+
+418
+00:22:40,693 --> 00:22:44,061
+And of course we need to do the same thing here,
+
+419
+00:22:44,063 --> 00:22:48,933
+add this child behavior or item behavior. And
+
+420
+00:22:48,935 --> 00:22:53,270
+same thing here, we want to be able to add items to this. And
+
+421
+00:22:53,272 --> 00:23:01,011
+we want to be able to remove items as well, okay? So
+
+422
+00:23:01,013 --> 00:23:03,581
+we've just added this behavior now. These things are all
+
+423
+00:23:03,583 --> 00:23:06,751
+going to have this kind of behavior as they bounce and
+
+424
+00:23:06,753 --> 00:23:09,453
+are affected by gravity and things like that. And
+
+425
+00:23:09,455 --> 00:23:12,823
+notice that to add this stuff, we didn't touch DropItView.
+
+426
+00:23:12,825 --> 00:23:15,559
+DropItView has not changed, okay? We didn't change
+
+427
+00:23:15,561 --> 00:23:17,361
+anything there. We're only changing this in
+
+428
+00:23:17,363 --> 00:23:20,498
+this custom behavior that we've built. Okay, so let's go
+
+429
+00:23:20,500 --> 00:23:24,301
+ahead and run. See what those changes did, what having no
+
+430
+00:23:24,303 --> 00:23:26,771
+rotation elasticity did. So here it comes like this, so
+
+431
+00:23:26,773 --> 00:23:29,407
+here we go. Look, they're much bouncier. And
+
+432
+00:23:29,409 --> 00:23:31,742
+notice how they'll bounce into each other, okay?
+
+433
+00:23:31,744 --> 00:23:33,978
+They behave like real objects in the real world.
+
+434
+00:23:33,980 --> 00:23:36,747
+They're bouncing, and they're not rotating, so they're not
+
+435
+00:23:36,749 --> 00:23:39,016
+tipping over anymore. They're still bouncing up and down,
+
+436
+00:23:39,018 --> 00:23:41,619
+though, see? When something lands on a row, it causes them
+
+437
+00:23:41,621 --> 00:23:45,489
+to bounce up a little bit. But now we're on track for Tetris,
+
+438
+00:23:45,491 --> 00:23:49,527
+because now we're getting completed rows that we can
+
+439
+00:23:49,529 --> 00:23:51,529
+have them, have the rows remove.
+
+440
+00:23:51,531 --> 00:23:54,732
+Now, the code for removing, for kind of removing a row,
+
+441
+00:23:54,734 --> 00:23:57,802
+it's a little tedious for a demo here. I'm really just
+
+442
+00:23:57,804 --> 00:24:01,005
+gonna go across the row and do what's called a hit test.
+
+443
+00:24:01,007 --> 00:24:02,940
+In UI view, it has a hit test, which basically I'm
+
+444
+00:24:02,942 --> 00:24:04,375
+just looking to see if there's a view there.
+
+445
+00:24:04,377 --> 00:24:07,077
+So I'm gonna go all the way across each row looking to see
+
+446
+00:24:07,079 --> 00:24:09,547
+if they're view. And if there's a view in every single
+
+447
+00:24:09,549 --> 00:24:12,149
+spot, then I'm gonna assume that row is complete and
+
+448
+00:24:12,151 --> 00:24:14,752
+I'm gonna remove all those views. Okay, so
+
+449
+00:24:14,754 --> 00:24:18,889
+I wrote that code outside, let's go take a look at it.
+
+450
+00:24:18,891 --> 00:24:22,827
+We'll put it, let's put it right here. Okay,
+
+451
+00:24:22,829 --> 00:24:24,128
+it's called removeCompletedRow.
+
+452
+00:24:24,130 --> 00:24:28,232
+It's just this one method right here, okay?
+
+453
+00:24:28,234 --> 00:24:30,801
+You can see it goes through, it's doing this hit testing,
+
+454
+00:24:30,803 --> 00:24:33,571
+it's trying to find the drops to remove. If it finds
+
+455
+00:24:33,573 --> 00:24:36,974
+the whole row, then it goes through each of the drops and
+
+456
+00:24:36,976 --> 00:24:37,441
+the drops removed, and
+
+457
+00:24:37,443 --> 00:24:41,378
+look what it does. It removes it from the drop behavior and
+
+458
+00:24:41,380 --> 00:24:42,413
+then removes it from superview, so
+
+459
+00:24:42,415 --> 00:24:44,748
+it just takes that drop right out of there. Okay?
+
+460
+00:24:44,750 --> 00:24:48,652
+So we're literally just throwing it away, okay? Now,
+
+461
+00:24:48,654 --> 00:24:52,857
+the question is, when do we call remove completed row?
+
+462
+00:24:53,426 --> 00:24:56,760
+Okay, do we just kind of call it randomly with an NS timer
+
+463
+00:24:56,762 --> 00:25:00,831
+or something? No, we're gonna call remove completed row
+
+464
+00:25:00,833 --> 00:25:06,103
+when all the bouncing stops. Okay, when our
+
+465
+00:25:06,105 --> 00:25:09,807
+dynamic animation engine pauses, then we're gonna try
+
+466
+00:25:09,809 --> 00:25:12,376
+to remove a row. Cuz if things are still bouncing, you can't
+
+467
+00:25:12,378 --> 00:25:14,478
+really be removing rows while things are still bouncing.
+
+468
+00:25:14,480 --> 00:25:15,145
+So when things have settled down,
+
+469
+00:25:15,147 --> 00:25:18,148
+then we'll try and remove a complete row if we can.
+
+470
+00:25:18,150 --> 00:25:19,517
+So, if you remember from lecture,
+
+471
+00:25:19,519 --> 00:25:21,952
+how do we find out the things have stopped?
+
+472
+00:25:21,954 --> 00:25:25,656
+We use a dynamic animators delegate, the dynamic animator
+
+473
+00:25:25,658 --> 00:25:27,858
+will tell it's delegate when things have paused.
+
+474
+00:25:27,860 --> 00:25:30,928
+When things have stasis, okay? So we're gonna have to do
+
+475
+00:25:30,930 --> 00:25:34,298
+the same trick here that we did with these other ones, and
+
+476
+00:25:34,300 --> 00:25:37,001
+use a closure Create this because we just have
+
+477
+00:25:37,003 --> 00:25:39,670
+the delegates of it. So let's go here and
+
+478
+00:25:39,672 --> 00:25:43,607
+we'll create a little let animator equal this thing.
+
+479
+00:25:43,609 --> 00:25:48,846
+And we are just going to set the animator's delegate
+
+480
+00:25:48,848 --> 00:25:51,916
+to self and return animator.
+
+481
+00:25:53,686 --> 00:25:56,353
+Okay, and we can use self in here because this is lazy.
+
+482
+00:25:56,355 --> 00:26:00,190
+Okay. Eh, right? You do that but there is as error here.
+
+483
+00:26:00,192 --> 00:26:03,527
+What's this error? Can't assign the DropItView to
+
+484
+00:26:03,529 --> 00:26:06,630
+UIDynamicDeleg eh,DynamicAnimatorDelegate so
+
+485
+00:26:06,632 --> 00:26:09,366
+we need to go here and say we are a UIDynamic.
+
+486
+00:26:09,368 --> 00:26:13,504
+Animator delegate, okay? Say we implement this
+
+487
+00:26:13,506 --> 00:26:16,440
+protocol. Now they're all optional so we don't have to
+
+488
+00:26:16,442 --> 00:26:18,776
+actually implement any, there's no errors here, but
+
+489
+00:26:18,778 --> 00:26:21,045
+the one we want is that it will pause.
+
+490
+00:26:21,047 --> 00:26:23,781
+And that we'll just start typing dynamicAnimator, and
+
+491
+00:26:23,783 --> 00:26:25,182
+you can se it's actually the very first one.
+
+492
+00:26:25,184 --> 00:26:27,585
+Here's resume and here's pause. So let's go ahead and
+
+493
+00:26:27,587 --> 00:26:30,120
+do the pause. So this gets called whenever everything
+
+494
+00:26:30,122 --> 00:26:33,123
+reach stasis and I'm just going to removeCompletedRow.
+
+495
+00:26:33,125 --> 00:26:36,026
+If there are no completed rows removeCompletedRow does
+
+496
+00:26:36,028 --> 00:26:37,828
+nothing, it only removes completed rows
+
+497
+00:26:37,830 --> 00:26:42,333
+if there are some. Okay, so let's try it see if it works.
+
+498
+00:26:42,335 --> 00:26:47,371
+Could it really be that easy? Yes. All right here we go.
+
+499
+00:26:47,373 --> 00:26:49,306
+Drops them down here. Okay, we'll let it
+
+500
+00:26:49,308 --> 00:26:53,811
+reach stasis where there's no completed row. Okay,
+
+501
+00:26:53,813 --> 00:26:57,448
+nothing removed, okay, let's add a whole bunch more,
+
+502
+00:26:57,450 --> 00:27:03,253
+bad enough so that something becomes complete here. Okay,
+
+503
+00:27:03,255 --> 00:27:05,522
+oops, nope, still need one more,
+
+504
+00:27:05,524 --> 00:27:05,889
+this column right here, so
+
+505
+00:27:05,891 --> 00:27:08,926
+we'll keep clicking until we get something in that column.
+
+506
+00:27:09,261 --> 00:27:12,162
+There it is. Okay, here we go.
+
+507
+00:27:13,666 --> 00:27:18,402
+Cross your fingers. Boom. Now, notice that
+
+508
+00:27:18,404 --> 00:27:21,839
+when I remove those views, the animator leapt into action
+
+509
+00:27:21,841 --> 00:27:24,908
+again. Because it noticed, woah, gravity can now work on
+
+510
+00:27:24,910 --> 00:27:26,944
+these ones that are not blocked by the other ones.
+
+511
+00:27:26,946 --> 00:27:29,947
+Okay? And same thing here. And this will happen repeatedly.
+
+512
+00:27:29,949 --> 00:27:34,518
+Yeah, question. >> Yeah, so the last row or so
+
+513
+00:27:34,520 --> 00:27:37,755
+sometimes the bottom squares are like a little bit
+
+514
+00:27:37,757 --> 00:27:38,689
+off the ground. >> Mm-hm.
+
+515
+00:27:38,691 --> 00:27:39,390
+>> What's going on there?
+
+516
+00:27:39,392 --> 00:27:39,957
+>> Yeah, you see a little
+
+517
+00:27:39,959 --> 00:27:40,391
+>> Little bit of white in
+
+518
+00:27:40,393 --> 00:27:45,095
+there. I'm not 100% sure what that is, but I think
+
+519
+00:27:45,097 --> 00:27:48,866
+it's just an artifact that all this animation stuff happened,
+
+520
+00:27:48,868 --> 00:27:52,603
+is happening, in CGFloat space, right?
+
+521
+00:27:52,605 --> 00:27:54,538
+It's not happening on integer boundaries. And so
+
+522
+00:27:54,540 --> 00:27:57,675
+it might be that these things landing, maybe they're 0.01,
+
+523
+00:27:57,677 --> 00:28:00,711
+and so the, it's up enough, round enough so
+
+524
+00:28:00,713 --> 00:28:01,712
+that it shows the one pixel there.
+
+525
+00:28:01,714 --> 00:28:04,415
+I'm not really 100% sure why it's not exactly on there.
+
+526
+00:28:04,417 --> 00:28:06,917
+Remember that, you know, the physics you got a lot
+
+527
+00:28:06,919 --> 00:28:09,086
+of things bouncing here, off of each other.
+
+528
+00:28:09,088 --> 00:28:10,954
+Different, amounts and stuff like that.
+
+529
+00:28:10,956 --> 00:28:12,356
+And these things, and when they could rotate,
+
+530
+00:28:12,358 --> 00:28:14,958
+you saw, they started tipping over even, and nicking into
+
+531
+00:28:14,960 --> 00:28:17,895
+each other. So this stuff is not all happening on integer
+
+532
+00:28:17,897 --> 00:28:20,864
+boundaries, I think that's the bottom line on that.
+
+533
+00:28:20,866 --> 00:28:23,634
+But I'm not 100% certain. All right, so anyway, this
+
+534
+00:28:23,636 --> 00:28:27,871
+is working great, okay? We got our tetris engine really
+
+535
+00:28:27,873 --> 00:28:30,774
+ready to go here, if we just made these not be squares.
+
+536
+00:28:30,776 --> 00:28:35,245
+And I don't have time to make them be actual you know,
+
+537
+00:28:35,247 --> 00:28:35,713
+L shapes and all that stuff.
+
+538
+00:28:35,715 --> 00:28:38,515
+But you get the idea. And you understand how this works.
+
+539
+00:28:38,517 --> 00:28:42,953
+So, I'm going to Let's turn the rotation back on.
+
+540
+00:28:42,955 --> 00:28:46,423
+I want to show you something fun here.
+
+541
+00:28:46,425 --> 00:28:51,495
+Let's make the rotation be true again. Run.
+
+542
+00:28:54,834 --> 00:28:59,269
+Okay, so put it in here. And these things are gonna bounce
+
+543
+00:28:59,271 --> 00:29:00,537
+off each other. Uhp! No! No!. No! But, let's
+
+544
+00:29:00,539 --> 00:29:02,840
+see if removeCompletedRow can work here. Because, actually,
+
+545
+00:29:02,842 --> 00:29:05,843
+some of these rows still might have a in every slot.
+
+546
+00:29:05,845 --> 00:29:09,513
+Let's see. There we go! Remove that row. So
+
+547
+00:29:09,515 --> 00:29:16,186
+it doesn't work quite as well, but it can kind of work.
+
+548
+00:29:16,188 --> 00:29:19,857
+There we go. Okay? All right.
+
+549
+00:29:19,859 --> 00:29:23,060
+What's next? Next I'm gonna make it so
+
+550
+00:29:23,062 --> 00:29:26,463
+that just to show you how the collide, collisions work cuz w
+
+551
+00:29:26,465 --> 00:29:27,698
+only have collisions with the edges.
+
+552
+00:29:27,700 --> 00:29:31,401
+I'm gonna put a little round thing in the middle, okay?
+
+553
+00:29:31,403 --> 00:29:34,838
+That this squares are gonna collide against. Just a little
+
+554
+00:29:34,840 --> 00:29:36,940
+round circles. So the bottom, there's squeezing him down and
+
+555
+00:29:36,942 --> 00:29:39,710
+boop bounce of a bit. With just a little round boundary,
+
+556
+00:29:39,712 --> 00:29:42,279
+okay? Cuz you can put, with these, with the collision
+
+557
+00:29:42,281 --> 00:29:45,883
+behavior you can put any arbitrary Bezier path as a,
+
+558
+00:29:45,885 --> 00:29:46,617
+as a boundary anywhere.
+
+559
+00:29:46,619 --> 00:29:47,551
+And when you're doing your breakout game.
+
+560
+00:29:47,553 --> 00:29:49,486
+You know, you're probably gonna use those boundaries for
+
+561
+00:29:49,488 --> 00:29:52,923
+the bricks, for example, okay? And maybe for your paddle
+
+562
+00:29:52,925 --> 00:29:54,424
+even. You'll be moving the boundary constantly,
+
+563
+00:29:54,426 --> 00:29:56,593
+because the bricks and the paddle, they don't go flying
+
+564
+00:29:56,595 --> 00:29:58,896
+around when you hit them they disappear or whatever and
+
+565
+00:29:58,898 --> 00:30:00,998
+the paddle, when you hit it nothing happens to it,
+
+566
+00:30:01,000 --> 00:30:04,067
+it stays perfectly the same. Okay, so let's go ahead and
+
+567
+00:30:04,069 --> 00:30:06,069
+do that. We're just going to put a little round circle
+
+568
+00:30:06,071 --> 00:30:10,374
+here that is a collision. So, to do that I'm going to go
+
+569
+00:30:10,376 --> 00:30:12,676
+in my Falling Object behavior here.
+
+570
+00:30:12,678 --> 00:30:13,644
+And I'm going to make this,
+
+571
+00:30:13,646 --> 00:30:16,547
+unfortunately my collider is private. And I actually like
+
+572
+00:30:16,549 --> 00:30:19,683
+to keep it private in my little dynamic behavior here.
+
+573
+00:30:19,685 --> 00:30:21,985
+But I am going to allow people to add a barrier.
+
+574
+00:30:21,987 --> 00:30:25,756
+So, I'm gonna create a public function addBarrier. And
+
+575
+00:30:25,758 --> 00:30:29,126
+you can specify any path you want, a UIBezierPath, that you
+
+576
+00:30:29,128 --> 00:30:32,296
+want to be the barrier. And let's go ahead and you can
+
+577
+00:30:32,298 --> 00:30:35,866
+name it as well. So, it will let you give it a name.
+
+578
+00:30:35,868 --> 00:30:39,236
+And that's because when you put these barriers into
+
+579
+00:30:39,238 --> 00:30:41,238
+the collider, you name them there as well.
+
+580
+00:30:41,240 --> 00:30:44,141
+That's how you know which Barrier got hit, okay, and
+
+581
+00:30:44,143 --> 00:30:47,077
+which barrier you're gonna add or remove or change. So those
+
+582
+00:30:47,079 --> 00:30:51,982
+are all named. And you just do this with a collider, method.
+
+583
+00:30:51,984 --> 00:30:57,788
+AddBoundaryWithIdentifier. Okay, here it is, and
+
+584
+00:30:57,790 --> 00:31:00,757
+so the identifier is the name, and the path is the path that
+
+585
+00:31:00,759 --> 00:31:03,660
+was passed along in here. If someone calls us, by the way,
+
+586
+00:31:03,662 --> 00:31:08,665
+I'm also going to conveniently remove any old boundary with
+
+587
+00:31:08,667 --> 00:31:12,769
+that name. Okay? So if you call this repeatedly,
+
+588
+00:31:12,771 --> 00:31:17,174
+it'll move the barrier around, just for convenience here.
+
+589
+00:31:17,810 --> 00:31:19,743
+Okay? So this is a nice public function for
+
+590
+00:31:19,745 --> 00:31:23,113
+adding a barrier. Let's use that in our drop it view to
+
+591
+00:31:23,115 --> 00:31:28,518
+add a little barrier in the middle. Now, Where do I
+
+592
+00:31:28,520 --> 00:31:31,455
+want to put the code that adds that little thing? Well, I
+
+593
+00:31:31,457 --> 00:31:34,224
+don't know where the middle of my bounds are until my bounds
+
+594
+00:31:34,226 --> 00:31:37,494
+is set, so I certainly have to wait until my bounds are set,
+
+595
+00:31:37,496 --> 00:31:39,863
+and actually my bounds could change, right?
+
+596
+00:31:39,865 --> 00:31:42,432
+They could get rotated. Now my middle is in a different
+
+597
+00:31:42,434 --> 00:31:45,702
+place, and I want the barrier to always be in the middle. So
+
+598
+00:31:45,704 --> 00:31:46,737
+you'll remember from our last
+
+599
+00:31:46,739 --> 00:31:50,540
+demo That when a UI views bounds change,
+
+600
+00:31:50,542 --> 00:31:53,543
+what gets called? Layout subviews.
+
+601
+00:31:53,545 --> 00:31:55,846
+All right, it doesn't have a view did layout subviews, it
+
+602
+00:31:55,848 --> 00:31:58,248
+has the actual layout subviews that lays the subviews out.
+
+603
+00:31:58,250 --> 00:32:00,517
+So that's a good place to put this thing in the middle.
+
+604
+00:32:00,519 --> 00:32:03,553
+Because layout subviews gonna get called every single time.
+
+605
+00:32:03,555 --> 00:32:06,490
+The bounds change. So, that's layoutSubviews.
+
+606
+00:32:06,492 --> 00:32:11,161
+I'm just gonna subclass else. Super.layoutSubviews. And
+
+607
+00:32:11,163 --> 00:32:14,298
+all I'm gonna do here in layoutSubviews is to
+
+608
+00:32:14,300 --> 00:32:18,302
+create a round path, so let path equal UIBezierPath.
+
+609
+00:32:18,304 --> 00:32:22,739
+And there happens to be a BezierPath ovalInRect
+
+610
+00:32:22,741 --> 00:32:24,975
+thing to create them. And so
+
+611
+00:32:24,977 --> 00:32:28,712
+let's have this rect be a CGRect whose center,
+
+612
+00:32:28,714 --> 00:32:32,582
+this is one of my little UI kit extensions is a,
+
+613
+00:32:32,584 --> 00:32:35,552
+is a CGRect has a center initializer
+
+614
+00:32:35,554 --> 00:32:39,022
+will be bounds.mid. That's my mid point of my bounds,
+
+615
+00:32:39,024 --> 00:32:42,159
+that's also a little extension that I did there. And
+
+616
+00:32:42,161 --> 00:32:45,929
+we'll have the size of it be the dropSize. Okay so
+
+617
+00:32:45,931 --> 00:32:47,164
+we're gonna put a little round circle,
+
+618
+00:32:47,166 --> 00:32:50,367
+the same size as a drop right in the middle. So we have that
+
+619
+00:32:50,369 --> 00:32:53,737
+path. Let's just call on our drop behavior. We'll add
+
+620
+00:32:53,739 --> 00:32:57,841
+this barrier with this path. We need to give it a name.
+
+621
+00:32:57,843 --> 00:33:00,043
+So let's be good programmers here and
+
+622
+00:33:00,045 --> 00:33:03,046
+do private struct pathNames, we'll call it.
+
+623
+00:33:03,048 --> 00:33:06,883
+Static let this one we'll call our MiddleBarrier and
+
+624
+00:33:06,885 --> 00:33:11,121
+we can use any string we want here, just has to be unique so
+
+625
+00:33:11,123 --> 00:33:15,325
+we'll call it MiddleBarrier. Okay, so
+
+626
+00:33:15,327 --> 00:33:19,930
+this is PathNames.MiddleBarrier. Okay,
+
+627
+00:33:19,932 --> 00:33:25,202
+so I'm just adding this named barrier here, to my
+
+628
+00:33:25,204 --> 00:33:30,507
+to my collision behavior in my drop behavior. All right,
+
+629
+00:33:30,509 --> 00:33:36,980
+so let's go try it, see what this looks like. All right,
+
+630
+00:33:36,982 --> 00:33:40,751
+we're dropping them here. Whoop! See that? If we drop
+
+631
+00:33:40,753 --> 00:33:45,022
+one in the middle, right? Aah, give me a middle one.
+
+632
+00:33:45,024 --> 00:33:47,224
+There one, see? They're hitting off the middle.
+
+633
+00:33:47,226 --> 00:33:49,593
+Now this is a little hard to see. See,
+
+634
+00:33:49,595 --> 00:33:51,228
+you see that it's hitting the barrier, but
+
+635
+00:33:51,230 --> 00:33:53,096
+you can't actually see the barrier. So
+
+636
+00:33:53,098 --> 00:33:56,099
+how could we draw that barrier there? Well,
+
+637
+00:33:56,101 --> 00:34:00,070
+we could implement DrawRect, okay? Our own DrawRect and
+
+638
+00:34:00,072 --> 00:34:03,573
+draw it, okay, just using just stroke, stroking the thing.
+
+639
+00:34:03,575 --> 00:34:05,675
+But actually, I'm gonna do something kinda fun. And
+
+640
+00:34:05,677 --> 00:34:09,012
+this is, really I'm doing it this way to show you, always
+
+641
+00:34:09,014 --> 00:34:12,215
+think object-oriented when you're building an iOS, okay?
+
+642
+00:34:12,217 --> 00:34:14,985
+What I'm gonna do instead to draw all that little circle,
+
+643
+00:34:14,987 --> 00:34:17,854
+is I'm gonna create a new UIView okay,
+
+644
+00:34:17,856 --> 00:34:22,025
+a new UIView subclass. And all this UIView subclass I'm gonna
+
+645
+00:34:22,027 --> 00:34:26,663
+create does is it knows how to draw a Bezier Path in itself.
+
+646
+00:34:26,665 --> 00:34:29,800
+It's just a generic Bezier path-drawing view. And
+
+647
+00:34:29,802 --> 00:34:33,970
+I'm gonna call it what did I call it? NamedBezierPathsView,
+
+648
+00:34:33,972 --> 00:34:37,507
+okay, cuz that's what it does. It's gonna have
+
+649
+00:34:37,509 --> 00:34:40,210
+a dictionary of Bezier paths and it just draws them.
+
+650
+00:34:40,212 --> 00:34:42,979
+It's really generic. It has nothing to do with DropIt.
+
+651
+00:34:42,981 --> 00:34:45,849
+I could well end up using this in some other app. Okay, and
+
+652
+00:34:45,851 --> 00:34:49,686
+this is what this Named BezierPathsView is gonna have.
+
+653
+00:34:49,688 --> 00:34:54,357
+It's gonna have public var called bezierPaths, okay,
+
+654
+00:34:54,359 --> 00:34:56,660
+which is going to be a dictionary,
+
+655
+00:34:56,662 --> 00:35:00,931
+which is String as the key, which is an arbitrary name,
+
+656
+00:35:00,933 --> 00:35:06,369
+and a UIBezierPath as the value, okay? And that's public
+
+657
+00:35:06,371 --> 00:35:09,272
+and anybody who wants to use this can just add something to
+
+658
+00:35:09,274 --> 00:35:13,610
+that, and when they do I'm gonna watch didSet and
+
+659
+00:35:13,612 --> 00:35:17,114
+do setNeedsDisplay, okay?
+
+660
+00:35:17,116 --> 00:35:19,249
+So if anyone adds a Bezier path to this,
+
+661
+00:35:19,251 --> 00:35:22,252
+then I'm going to NeedsDisplay and in my drawRect I'm gonna
+
+662
+00:35:22,254 --> 00:35:25,689
+draw all these Bezier paths that are in this dictionary.
+
+663
+00:35:25,691 --> 00:35:29,159
+Which is super simple to do, okay? I'm just gonna say for
+
+664
+00:35:29,161 --> 00:35:32,863
+_, path) because I don't really care what the names of
+
+665
+00:35:32,865 --> 00:35:35,298
+them are where I'm drawing them. That's
+
+666
+00:35:35,300 --> 00:35:38,034
+only w, if someone who's using it wants to replace one that's
+
+667
+00:35:38,036 --> 00:35:41,938
+already there, they can use the same name. In bezierPaths,
+
+668
+00:35:41,940 --> 00:35:44,608
+so I'm just enumerating my bezierPath keys and
+
+669
+00:35:44,610 --> 00:35:47,377
+values, and I don't care about the keys. And I'm just gonna
+
+670
+00:35:47,379 --> 00:35:51,281
+say path.stroke. So here I've created the world's simplest
+
+671
+00:35:51,283 --> 00:35:54,084
+little class but it's very powerful drawing class, okay,
+
+672
+00:35:54,086 --> 00:35:57,287
+cuz it, it, it draws arbitrary Bezier paths. Now if I really
+
+673
+00:35:57,289 --> 00:35:59,589
+were creating this, I'd probably maybe let you
+
+674
+00:35:59,591 --> 00:36:02,926
+set the line width and color and other kinds of things, but
+
+675
+00:36:02,928 --> 00:36:05,061
+here we're just gonna do the, the bar,
+
+676
+00:36:05,063 --> 00:36:09,065
+bare bones of it here. Okay, now how can I use this
+
+677
+00:36:09,067 --> 00:36:13,270
+in my DropIt? Anyone have an idea how I could really easily
+
+678
+00:36:13,272 --> 00:36:17,374
+use this UIView to draw that circle in my DropIt?
+
+679
+00:36:20,512 --> 00:36:26,449
+How's about if we make DropItView inherit from it?
+
+680
+00:36:27,853 --> 00:36:31,521
+Now all of a sudden, DropItView has a new instance
+
+681
+00:36:31,523 --> 00:36:35,225
+variable called BezierPaths which it can set to any
+
+682
+00:36:35,227 --> 00:36:39,896
+BezierPaths it wants and it'll be drawn in itself, okay?
+
+683
+00:36:39,898 --> 00:36:42,999
+Everyone got that? So let's do that, okay?
+
+684
+00:36:43,001 --> 00:36:46,503
+When we set this barrier, let's go ahead and
+
+685
+00:36:46,505 --> 00:36:49,439
+set our own Bezier paths okay? This Bezier path is,
+
+686
+00:36:49,441 --> 00:36:53,143
+this is the dictionary that we inherited from that class we
+
+687
+00:36:53,145 --> 00:36:56,980
+just created. And let's call it middle barrier again.
+
+688
+00:36:56,982 --> 00:37:01,117
+PathNames.MiddleBarrier, okay, we can give any name we want.
+
+689
+00:37:01,119 --> 00:37:06,456
+And it's equal to that path we just created. Let's go
+
+690
+00:37:06,458 --> 00:37:14,064
+take a look at this. And sure enough, there it is. Okay,
+
+691
+00:37:14,066 --> 00:37:17,767
+now it's stroked with line with one black color fine, but
+
+692
+00:37:17,769 --> 00:37:19,569
+there it is. And we drop things now,
+
+693
+00:37:19,571 --> 00:37:23,139
+it's easier to see the things banging off of it.
+
+694
+00:37:24,009 --> 00:37:27,143
+Okay, and this barrier, of course, if we pile up enough
+
+695
+00:37:27,145 --> 00:37:30,780
+stuff, the things will start piling up around this barrier,
+
+696
+00:37:30,782 --> 00:37:33,817
+because everything bounces off of this barrier.
+
+697
+00:37:33,819 --> 00:37:35,885
+It's causes collision. By the way,
+
+698
+00:37:35,887 --> 00:37:37,721
+if we put something inside that barrier, okay,
+
+699
+00:37:37,723 --> 00:37:42,993
+it would bounce around in the inside of the barrier. Okay,
+
+700
+00:37:42,995 --> 00:37:46,363
+you got that? No remove completed?
+
+701
+00:37:46,365 --> 00:37:49,766
+Ruh, okay, there we go. There we go.
+
+702
+00:37:49,768 --> 00:37:52,535
+All right, so that's showing you a little bit there.
+
+703
+00:37:52,537 --> 00:37:56,640
+Okay the next one I'm gonna do is an attachment behavior. So
+
+704
+00:37:56,642 --> 00:38:00,677
+I'm gonna allow myself, when a thing drops here,
+
+705
+00:38:00,679 --> 00:38:03,747
+to grab onto a drop, okay, with my mouse,
+
+706
+00:38:03,749 --> 00:38:07,317
+or with my finger, if it was on a device and I'd make
+
+707
+00:38:07,319 --> 00:38:09,886
+an attachment to it. And remember an attachment is like
+
+708
+00:38:09,888 --> 00:38:13,990
+an iron bar that hooks up from either a point to an item or
+
+709
+00:38:13,992 --> 00:38:16,092
+between two items. In this case it's gonna be a point,
+
+710
+00:38:16,094 --> 00:38:19,796
+to point my finger is. And what also cool is, as my, I'm
+
+711
+00:38:19,798 --> 00:38:22,632
+gonna do a pan gesture and, as my finger moves around,
+
+712
+00:38:22,634 --> 00:38:24,934
+I'm gonna keep moving that attachment point. And
+
+713
+00:38:24,936 --> 00:38:28,638
+that bar is gonna be dragged around with it and
+
+714
+00:38:28,640 --> 00:38:30,507
+the item too, okay?
+
+715
+00:38:30,509 --> 00:38:33,343
+So that's what we're gonna do. Let's do that attachment
+
+716
+00:38:33,345 --> 00:38:36,179
+behavior. So, to do the attachment behavior,
+
+717
+00:38:36,181 --> 00:38:38,748
+I certainly need an attachment behavior.
+
+718
+00:38:38,750 --> 00:38:43,453
+So I'm gonna create a private var, which is attachment,
+
+719
+00:38:43,455 --> 00:38:47,624
+UIAttachmentBehavior, okay? Actually we'll have it be
+
+720
+00:38:47,626 --> 00:38:50,827
+an optional, because we might not have an attachment yet. We
+
+721
+00:38:50,829 --> 00:38:54,698
+don't have an attachment until we put our finger down on it,
+
+722
+00:38:54,700 --> 00:39:00,103
+to grab onto it. And when this attachment behavior
+
+723
+00:39:00,105 --> 00:39:04,674
+gets set to something we need to obviously add
+
+724
+00:39:04,676 --> 00:39:08,678
+the behavior to our animator, otherwise this attachment
+
+725
+00:39:08,680 --> 00:39:12,382
+won't do anything, okay? So what do we need to do that?
+
+726
+00:39:12,384 --> 00:39:16,319
+I'm just going to say if this attachment is not nil, okay,
+
+727
+00:39:16,321 --> 00:39:19,222
+if someone has set the attachment to be something
+
+728
+00:39:19,224 --> 00:39:24,728
+other than nil, then animator, addBehavior this attachment.
+
+729
+00:39:25,464 --> 00:39:27,230
+Okay, everyone understand that? Now, one thing,
+
+730
+00:39:27,232 --> 00:39:30,500
+by the way, I also am gonna do something we haven't done in
+
+731
+00:39:30,502 --> 00:39:34,437
+a demo, which is willSet. And willSet happens before the new
+
+732
+00:39:34,439 --> 00:39:36,973
+value gets set. And what do I wanna do here?
+
+733
+00:39:36,975 --> 00:39:40,143
+Here I wanna say if my current attachment,
+
+734
+00:39:40,145 --> 00:39:46,116
+before I've set it, is not nil, then I want to remove it.
+
+735
+00:39:48,787 --> 00:39:50,186
+Okay, you see why I'm doing this?
+
+736
+00:39:50,188 --> 00:39:52,789
+Right, if someone sets the attachment to something new,
+
+737
+00:39:52,791 --> 00:39:55,625
+if there was an old attachment I wanna remove it, okay? So,
+
+738
+00:39:55,627 --> 00:39:58,828
+here I'm just making sure that every time I set attachment,
+
+739
+00:39:58,830 --> 00:40:00,997
+the old one gets removed, a new one gets added.
+
+740
+00:40:00,999 --> 00:40:04,701
+All right with that. Okay, so we've got this attachment,how
+
+741
+00:40:04,703 --> 00:40:05,969
+are we gonna set this attachment?
+
+742
+00:40:05,971 --> 00:40:09,706
+We gonna set it to something. I am only gonna allow you to
+
+743
+00:40:09,708 --> 00:40:12,442
+grab onto the last drop that was dropped.
+
+744
+00:40:12,444 --> 00:40:15,278
+This cause that you can drop a lot of drops,only the last one
+
+745
+00:40:15,280 --> 00:40:18,681
+you dropped can you drag grab onto with this pan gesture.
+
+746
+00:40:18,683 --> 00:40:21,151
+So I'm gonna need a var for the last drop.
+
+747
+00:40:21,153 --> 00:40:23,853
+So let's go ahead and put a var, I don't know,
+
+748
+00:40:23,855 --> 00:40:29,692
+we'll put it down here. private var lastDrop, okay,
+
+749
+00:40:30,061 --> 00:40:33,930
+which is a UIView, okay, and it also could be null,
+
+750
+00:40:33,932 --> 00:40:35,465
+it might not have dropped anything. And
+
+751
+00:40:35,467 --> 00:40:39,869
+every time we add a drop, I'm just gonna set the lastDrop
+
+752
+00:40:39,871 --> 00:40:44,207
+equal to the drop. [INAUDIBLE] understand there, that's just
+
+753
+00:40:44,209 --> 00:40:47,143
+grabbing the last drop. So, now, I have the last drop,
+
+754
+00:40:47,145 --> 00:40:51,848
+okay? And I get my finger down, I need to grab onto it,
+
+755
+00:40:51,850 --> 00:40:52,949
+okay? And create this attachment behavior.
+
+756
+00:40:52,951 --> 00:40:56,252
+So, how am I gonna do that? All right, let's go here and
+
+757
+00:40:56,254 --> 00:41:00,557
+create a function called grabDrop which is going to be
+
+758
+00:41:00,559 --> 00:41:05,795
+a hand gesture Handler, okay. Cuz we're gonna have a pan
+
+759
+00:41:05,797 --> 00:41:10,967
+gesture be how we grab onto this following drop. Okay,
+
+760
+00:41:10,969 --> 00:41:13,937
+so first I'm just gonna get the point of the gesture, or
+
+761
+00:41:13,939 --> 00:41:19,042
+gesturePoint, that's the recognizer locationInView, or
+
+762
+00:41:19,044 --> 00:41:22,679
+self. Okay, so now we know where that hand gesture is,
+
+763
+00:41:22,681 --> 00:41:25,415
+either at the start or as we're moving around we know
+
+764
+00:41:25,417 --> 00:41:28,418
+where it is. So now let's handle these pan
+
+765
+00:41:28,420 --> 00:41:32,388
+gesture states, okay, recognizer.state.
+
+766
+00:41:32,390 --> 00:41:36,593
+If it's Began, right, if this thing just began,
+
+767
+00:41:36,595 --> 00:41:41,197
+then we need to, you know, create the attachment. Okay,
+
+768
+00:41:41,199 --> 00:41:44,767
+if it's C=changed, okay, person moved the attachment
+
+769
+00:41:44,769 --> 00:41:49,205
+around, now we need to change the attachments Anchor point.
+
+770
+00:41:49,207 --> 00:41:51,708
+Okay, cuz remember I said the attachment is gonna attach
+
+771
+00:41:51,710 --> 00:41:55,645
+a point to that drop and so as we pan around. We're gonna
+
+772
+00:41:55,647 --> 00:41:58,214
+keep moving the point that it's attached to and that's
+
+773
+00:41:58,216 --> 00:42:02,051
+gonna drag the trop around with it by the iron bar, okay,
+
+774
+00:42:02,053 --> 00:42:06,489
+by the stiff bar. Otherwise, I'm just gonna set
+
+775
+00:42:06,491 --> 00:42:11,327
+the attachment to nil. Okay, because if it's not begin or
+
+776
+00:42:11,329 --> 00:42:13,263
+change, then it's either ended or some failure,
+
+777
+00:42:13,265 --> 00:42:16,232
+something like that, I want this attachment to go away.
+
+778
+00:42:16,234 --> 00:42:16,933
+Okay. If there is an attachment,
+
+779
+00:42:16,935 --> 00:42:18,801
+I want it to go away so that's the end of the line.
+
+780
+00:42:18,803 --> 00:42:24,440
+All right. This one's easy, okay. Create the attachment's
+
+781
+00:42:24,442 --> 00:42:28,211
+anchor point. That's super easy. That's just attachments.
+
+782
+00:42:28,213 --> 00:42:32,849
+If we have one. AnchorPoint = gesturePoint, okay?
+
+783
+00:42:32,851 --> 00:42:36,452
+That's it. Okay? Remember, the attachment is just a behavior,
+
+784
+00:42:36,454 --> 00:42:38,388
+it's an object. It's got a var on it,
+
+785
+00:42:38,390 --> 00:42:41,524
+which is the anchor point. If it's a point to,
+
+786
+00:42:41,526 --> 00:42:43,993
+a point connection to a item, it's got an anchor point.
+
+787
+00:42:43,995 --> 00:42:45,795
+And then we're just gonna change, as you drag around
+
+788
+00:42:45,797 --> 00:42:47,730
+with the pan, we're just gonna keep changing that. And
+
+789
+00:42:47,732 --> 00:42:49,933
+the animation system's automatically gonna react to
+
+790
+00:42:49,935 --> 00:42:50,833
+that. We don't have to do anything.
+
+791
+00:42:50,835 --> 00:42:53,636
+Just automatically it's going to notice that change and
+
+792
+00:42:53,638 --> 00:42:57,507
+deal with it. How about creating the attachment? Well,
+
+793
+00:42:57,509 --> 00:43:01,044
+here we better make sure we have a drop to attach to.
+
+794
+00:43:01,046 --> 00:43:05,915
+So I'm gonna say if the drop to drop To
+
+795
+00:43:05,917 --> 00:43:09,886
+attachTo equals the lastDrop. Okay, so in other words,
+
+796
+00:43:09,888 --> 00:43:12,822
+if we have a lastDrop, cuz we might've just started and
+
+797
+00:43:12,824 --> 00:43:14,290
+obviously if we start panning when
+
+798
+00:43:14,292 --> 00:43:16,492
+there's nothing dropping, we can't do it. And
+
+799
+00:43:16,494 --> 00:43:22,999
+also wanna make sure that that dropToAttachTo is in the view
+
+800
+00:43:23,001 --> 00:43:29,205
+hierarchy. Okay? So I want to make sure it hasn't
+
+801
+00:43:29,207 --> 00:43:33,242
+been removed from super view by, remove completed row or
+
+802
+00:43:33,244 --> 00:43:37,013
+any other way. So if I got a draft drop, I'm just gonna
+
+803
+00:43:37,015 --> 00:43:42,285
+create an attachment by saying it equals a UI attachment.
+
+804
+00:43:44,155 --> 00:43:46,856
+Attachment behavior Oops,
+
+805
+00:43:46,858 --> 00:43:51,594
+we forget attach. Attachment,
+
+806
+00:43:51,596 --> 00:43:53,896
+UIAttachmentBehavior. And you can see,
+
+807
+00:43:53,898 --> 00:43:56,332
+here's the different kinds of attachments you can create,
+
+808
+00:43:56,334 --> 00:43:59,736
+attach to an anchor, an item attached to another item.
+
+809
+00:43:59,738 --> 00:44:01,671
+You can even attach items to anchors or
+
+810
+00:44:01,673 --> 00:44:03,606
+other items offsetFromCenter. In other words,
+
+811
+00:44:03,608 --> 00:44:05,875
+the attachment doesn't have to be in the center of the thing,
+
+812
+00:44:05,877 --> 00:44:08,645
+it could be on a corner. If you do that Then as you pull
+
+813
+00:44:08,647 --> 00:44:10,880
+it around that thing's gonna be spinning around because,
+
+814
+00:44:10,882 --> 00:44:12,849
+you know if you have the corner of a rectangle and you
+
+815
+00:44:12,851 --> 00:44:16,185
+pull on it its gonna rotate as long as you allow rotation.
+
+816
+00:44:16,187 --> 00:44:18,755
+Okay? But here I want attached to anchor obviously. I'm
+
+817
+00:44:18,757 --> 00:44:21,724
+gonna attach it to the anchor which is the pan. The item
+
+818
+00:44:21,726 --> 00:44:27,730
+is the droptoattachto and the anchor is the gesturePoint.
+
+819
+00:44:27,732 --> 00:44:30,667
+Okay where the pan gesture went on.
+
+820
+00:44:30,669 --> 00:44:33,836
+By the way I'm gonna make my game so that once you drab,
+
+821
+00:44:33,838 --> 00:44:36,706
+grab onto this thing, you can't grab onto it again.
+
+822
+00:44:36,708 --> 00:44:38,074
+If you grab on and you let it go,
+
+823
+00:44:38,076 --> 00:44:41,644
+you can't grab it again. So last drop to nil in the case
+
+824
+00:44:41,646 --> 00:44:46,482
+where I create an attachment. Okay? We have to obviously
+
+825
+00:44:46,484 --> 00:44:50,286
+add the GestureRecognizer that call this handler, so
+
+826
+00:44:50,288 --> 00:44:53,256
+we were gonna do that obviously in our controller.
+
+827
+00:44:53,258 --> 00:44:55,892
+Okay, just like we added this TapGesture, let's go
+
+828
+00:44:55,894 --> 00:45:01,731
+gameView.addGestureRecognizer, UIPanGesture this time.
+
+829
+00:45:01,733 --> 00:45:04,634
+The target this time is the gameView.
+
+830
+00:45:04,636 --> 00:45:11,607
+Okay, and the action is a selector which is
+
+831
+00:45:11,609 --> 00:45:18,881
+the DropItView.grabDrop with an argument.
+
+832
+00:45:18,883 --> 00:45:23,986
+Okay, everybody got that? All right, we'll go back here so
+
+833
+00:45:23,988 --> 00:45:26,422
+you can see this code on the screen at the same time.
+
+834
+00:45:26,424 --> 00:45:32,695
+To run that. All right, so here we drop it.
+
+835
+00:45:32,697 --> 00:45:34,997
+I didn't grab it. Okay. We're gonna drop another one.
+
+836
+00:45:34,999 --> 00:45:38,768
+I grabbed it. Okay, do you see what's happening? It's kind of
+
+837
+00:45:38,770 --> 00:45:42,004
+hard to see. Watch this. Boing! Okay? So this thing is
+
+838
+00:45:42,006 --> 00:45:46,776
+bouncing around. I'm dragging it around, ok, with my finger.
+
+839
+00:45:46,778 --> 00:45:49,579
+Look. I can even it bounce it on the iron bar.
+
+840
+00:45:49,581 --> 00:45:51,881
+Wooo. Now, it's kind of hard to see this.
+
+841
+00:45:51,883 --> 00:45:55,852
+Wouldn't it be cool if we could draw a line there?
+
+842
+00:45:55,854 --> 00:45:58,755
+Okay? So that we could see this iron bar,
+
+843
+00:45:58,757 --> 00:46:01,724
+that this attachment behavior is creating. And, of course,
+
+844
+00:46:01,726 --> 00:46:04,660
+we can do that because we inherit from a class that
+
+845
+00:46:04,662 --> 00:46:07,196
+knows how to draw arbitrary path. So
+
+846
+00:46:07,198 --> 00:46:09,766
+just like we drew this little one, let's draw that bar.
+
+847
+00:46:09,768 --> 00:46:13,269
+But it's a little tricky cuz that bar is always changing as
+
+848
+00:46:13,271 --> 00:46:16,205
+I drag it around with the pen, right? That think is always
+
+849
+00:46:16,207 --> 00:46:19,542
+changing. So how are we going to have a hook
+
+850
+00:46:19,544 --> 00:46:22,578
+to know when to draw it? This is where that really cool
+
+851
+00:46:22,580 --> 00:46:28,050
+UI dynamic behavior mechanism I was talking about is action.
+
+852
+00:46:28,052 --> 00:46:30,553
+All right. Action is a closure that you can set.
+
+853
+00:46:30,555 --> 00:46:34,323
+It could get called every time that behavior acts. Perfect.
+
+854
+00:46:34,325 --> 00:46:37,960
+So I'm gonna put that behavior on that attachment, so that
+
+855
+00:46:37,962 --> 00:46:41,664
+every time that attachment has any affect on something,
+
+856
+00:46:41,666 --> 00:46:44,066
+I'm gonna re-draw my line.
+
+857
+00:46:44,068 --> 00:46:47,136
+Okay. Perfect opportunity to do that. All right. So
+
+858
+00:46:47,138 --> 00:46:52,108
+I'm gonna do that. Where is a good place to put that?
+
+859
+00:46:52,110 --> 00:46:59,248
+Let's put it down in where we create the attachment I guess.
+
+860
+00:46:59,250 --> 00:47:00,183
+Or is that here it is.
+
+861
+00:47:00,185 --> 00:47:02,285
+Here is where we create the attachment.
+
+862
+00:47:02,287 --> 00:47:04,387
+This is where we are adding the behavior.
+
+863
+00:47:04,389 --> 00:47:07,323
+So I'm als, in addition to adding the behavior here, I'm
+
+864
+00:47:07,325 --> 00:47:12,328
+going to say the attachments. Attachment, I have trouble
+
+865
+00:47:12,330 --> 00:47:16,833
+typing that. The attachment to action equals some closure.
+
+866
+00:47:16,835 --> 00:47:21,270
+So in here this is where we wanna draw that line, okay. So
+
+867
+00:47:21,272 --> 00:47:23,506
+how are we gonna draw this line in here?
+
+868
+00:47:23,508 --> 00:47:26,409
+How about let's get the attach drop. Okay?
+
+869
+00:47:26,411 --> 00:47:29,779
+Cuz I wanna draw a line between the point, okay,
+
+870
+00:47:29,781 --> 00:47:33,482
+that the gestures out and where the attached drop is.
+
+871
+00:47:33,484 --> 00:47:35,518
+So I need to find that attached drop. So
+
+872
+00:47:35,520 --> 00:47:38,354
+how can I find the attached drop from the attachment.
+
+873
+00:47:38,356 --> 00:47:42,191
+Well, here' how we do that. We can get the attachments. Oops,
+
+874
+00:47:42,193 --> 00:47:47,697
+equals. Get the attach, attachments items.
+
+875
+00:47:47,699 --> 00:47:49,999
+Okay, that's all the items that it's attaching.
+
+876
+00:47:50,001 --> 00:47:52,835
+Now it's only gonna be having this one drop attached,
+
+877
+00:47:52,837 --> 00:47:55,905
+okay it only attaches one drop. But, so this is an array
+
+878
+00:47:55,907 --> 00:47:59,108
+of items, so I'm gonna get the first one out of there cuz
+
+879
+00:47:59,110 --> 00:48:02,378
+I know there's only gonna be one. So I've got this first
+
+880
+00:48:02,380 --> 00:48:05,281
+thing, and I'm gonna make sure it's a UIView, okay?
+
+881
+00:48:05,283 --> 00:48:08,651
+I just wanna be 100% sure it's a UIView, and I want this var
+
+882
+00:48:08,653 --> 00:48:11,754
+right here to be of type UIView. Here it's complaining
+
+883
+00:48:11,756 --> 00:48:14,390
+because this is a closure, and so we have to have self,
+
+884
+00:48:14,392 --> 00:48:16,092
+explicit self, cuz we're capturing self,
+
+885
+00:48:16,094 --> 00:48:18,828
+which is actually gonna be a huge problem here, by the way,
+
+886
+00:48:18,830 --> 00:48:21,330
+to capture self, we'll talk about that in a second,
+
+887
+00:48:21,332 --> 00:48:24,267
+all right? So now I've got the attached drop,
+
+888
+00:48:24,269 --> 00:48:30,907
+I just need to create a Bézier path, okay, UIBezierPath.
+
+889
+00:48:32,377 --> 00:48:36,812
+And I've got a nice lineFrom. Okay,
+
+890
+00:48:36,814 --> 00:48:42,184
+a UIBezierPath.lineFrom the attachment's anchor point.
+
+891
+00:48:42,186 --> 00:48:45,121
+Oops, not replacement,
+
+892
+00:48:45,123 --> 00:48:51,761
+anchorPoint to the attachedDrop.center.
+
+893
+00:48:52,797 --> 00:48:56,299
+Okay? See what I'm doing there? Okay, we also need some
+
+894
+00:48:56,301 --> 00:49:00,236
+self dot going on in here. We can do that,
+
+895
+00:49:00,238 --> 00:49:05,174
+cuz we know we're good on the attachment. What else do
+
+896
+00:49:05,176 --> 00:49:09,478
+we got here okay, and so we need to give this a name,
+
+897
+00:49:09,480 --> 00:49:11,247
+right, cuz bezierPath is a dictionary, so
+
+898
+00:49:11,249 --> 00:49:13,215
+we need give it a name. So let's go back down here and
+
+899
+00:49:13,217 --> 00:49:16,252
+create another named path, this one we'll call
+
+900
+00:49:16,254 --> 00:49:21,324
+Attachment. All right, so this is gonna be our
+
+901
+00:49:21,326 --> 00:49:25,795
+bezierPath[PathNames.Attachme- nt]. Maybe for
+
+902
+00:49:25,797 --> 00:49:28,631
+readability here, I'll put this on the next line.
+
+903
+00:49:28,633 --> 00:49:31,467
+Okay? So there, we've created the Bezier path
+
+904
+00:49:31,469 --> 00:49:35,438
+to show this attachment. Everybody cool with that? Now,
+
+905
+00:49:35,440 --> 00:49:37,306
+the other thing is, when we remove it,
+
+906
+00:49:37,308 --> 00:49:39,275
+we better remove that thing. So self dot,
+
+907
+00:49:39,277 --> 00:49:42,345
+we don't even need self here. We're not inside a closure.
+
+908
+00:49:42,347 --> 00:49:47,850
+BezierPaths[PathNames.Attachm- ent] = nil.
+
+909
+00:49:47,852 --> 00:49:51,153
+That's a way to remove something from a dictionary,
+
+910
+00:49:51,155 --> 00:49:52,989
+by the way, just set it to nil. Okay,
+
+911
+00:49:52,991 --> 00:49:57,593
+pretty cool with that? Now, as I mentioned we have a serious
+
+912
+00:49:57,595 --> 00:50:02,732
+problem here with self being captured. Okay, because this
+
+913
+00:50:02,734 --> 00:50:06,435
+cell, okay, this closure keeps self in the heap. And
+
+914
+00:50:06,437 --> 00:50:08,204
+self keeps the closure in the heap,
+
+915
+00:50:08,206 --> 00:50:12,108
+because self.attachment.action equals this closure. So
+
+916
+00:50:12,110 --> 00:50:13,676
+they each have strong pointers to each other,
+
+917
+00:50:13,678 --> 00:50:17,313
+they can never leave the heap. Now, this one we can fix with
+
+918
+00:50:17,315 --> 00:50:21,951
+unowned self. Because we know that this behavior
+
+919
+00:50:21,953 --> 00:50:26,022
+is gonna leave the heap as soon as self leaves the heap,
+
+920
+00:50:26,024 --> 00:50:29,759
+so it's perfectly safe here to say, unowned self to
+
+921
+00:50:29,761 --> 00:50:33,696
+break that loop. Okay, self will never be around when this
+
+922
+00:50:33,698 --> 00:50:39,068
+attachment behavior's around, still around. Okay, so
+
+923
+00:50:39,070 --> 00:50:44,340
+let's see if that works. All right,
+
+924
+00:50:44,342 --> 00:50:47,376
+let's drop a few down. Now I'm gonna grab the next one.
+
+925
+00:50:47,378 --> 00:50:48,677
+There it is. Okay, so
+
+926
+00:50:48,679 --> 00:50:52,281
+now we can see a lot better what we're doing here. So
+
+927
+00:50:52,283 --> 00:50:58,554
+we balance it. Okay? Got it. Make sense?
+
+928
+00:50:59,390 --> 00:51:03,659
+All right, so that is all I wanted to show you for
+
+929
+00:51:03,661 --> 00:51:06,529
+behaviors. Any questions about that stuff? I showed you
+
+930
+00:51:06,531 --> 00:51:08,564
+a lot of behaviors there, attachments, colliders,
+
+931
+00:51:08,566 --> 00:51:12,601
+item behaviors, gravity, okay, so that's plenty of stuff to
+
+932
+00:51:12,603 --> 00:51:17,106
+help you get started on your homework there. All right,
+
+933
+00:51:17,108 --> 00:51:20,676
+let's go back and look at some slides here. So
+
+934
+00:51:20,678 --> 00:51:24,480
+now I'm gonna talk about Core Motion, okay? Core Motion
+
+935
+00:51:24,482 --> 00:51:27,917
+is an object-oriented API to get at the motion
+
+936
+00:51:27,919 --> 00:51:29,285
+sensing hardware on your device.
+
+937
+00:51:29,287 --> 00:51:32,221
+So that's accelerometer, the gyro, magnetometer,
+
+938
+00:51:32,223 --> 00:51:36,025
+those kinds of things, all right? Not all devices have
+
+939
+00:51:36,027 --> 00:51:40,262
+all of this hardware, although in recent years they all do.
+
+940
+00:51:40,264 --> 00:51:43,499
+But if your app wants to run back on iPhone 4 or
+
+941
+00:51:43,501 --> 00:51:46,202
+something like that, it doesn't have a gyro, for
+
+942
+00:51:46,204 --> 00:51:49,839
+example, we kind of, for good programming technique,
+
+943
+00:51:49,841 --> 00:51:52,741
+wanna check to make sure that we have the hardware, and
+
+944
+00:51:52,743 --> 00:51:56,946
+you'll see that in a second. You get at all this stuff
+
+945
+00:51:56,948 --> 00:51:59,682
+via an instance of CMMotionManager.
+
+946
+00:51:59,684 --> 00:52:03,719
+Now, you really only wanna have one CMMotionManager in
+
+947
+00:52:03,721 --> 00:52:04,253
+your entire app,
+
+948
+00:52:04,255 --> 00:52:06,789
+because there's only one gyro in your entire
+
+949
+00:52:06,791 --> 00:52:09,792
+device, right? So it really makes no sense to have two
+
+950
+00:52:09,794 --> 00:52:12,228
+motion managers trying to, you know, cross over each
+
+951
+00:52:12,230 --> 00:52:14,930
+other. You need to coordinate it, so if you really had two
+
+952
+00:52:14,932 --> 00:52:18,300
+different places in your app where you were accessing
+
+953
+00:52:18,302 --> 00:52:21,871
+this hardware, then you would need to have a shared motion
+
+954
+00:52:21,873 --> 00:52:24,440
+manager either as a static on some class
+
+955
+00:52:24,442 --> 00:52:26,942
+somewhere or maybe part of your app delegate or something
+
+956
+00:52:26,944 --> 00:52:29,712
+like that, that is, you know, dealing with the fact that two
+
+957
+00:52:29,714 --> 00:52:33,315
+different people wanna look at the the hardware the same
+
+958
+00:52:33,317 --> 00:52:34,416
+time, okay?
+
+959
+00:52:34,418 --> 00:52:36,285
+So how do you use this motion manager to get this
+
+960
+00:52:36,287 --> 00:52:40,556
+information? Well, first it was two ways really, okay. One
+
+961
+00:52:40,558 --> 00:52:44,326
+way is by polling, and one way is by getting constant updates
+
+962
+00:52:44,328 --> 00:52:46,829
+about what's going on, okay. But in either case, first
+
+963
+00:52:46,831 --> 00:52:49,165
+you're gonna check to see if the hardware's available, and
+
+964
+00:52:49,167 --> 00:52:51,600
+I'll talk about how you do that. In the polling case,
+
+965
+00:52:51,602 --> 00:52:55,404
+you're then going to tell the motion manager, okay, I want
+
+966
+00:52:55,406 --> 00:52:59,275
+accelerometer updates. Okay, and that'll turn that on. And
+
+967
+00:52:59,277 --> 00:53:02,178
+then you just ask it, what's the current accelerometer,
+
+968
+00:53:02,180 --> 00:53:03,746
+what's the current accelerometer?
+
+969
+00:53:03,748 --> 00:53:04,680
+Any time, you can ask it, you want,
+
+970
+00:53:04,682 --> 00:53:08,117
+you're polling it, basically, asking it. So that's one way,
+
+971
+00:53:08,119 --> 00:53:11,453
+rare that you would do that way. The second way, again,
+
+972
+00:53:11,455 --> 00:53:13,088
+you check to see that hardware's available,
+
+973
+00:53:13,090 --> 00:53:15,758
+then you're gonna set the rate at which you want
+
+974
+00:53:15,760 --> 00:53:18,194
+the system to tell you about accelerometer or
+
+975
+00:53:18,196 --> 00:53:23,265
+gyro or magnetometer updates, okay. So five times a second,
+
+976
+00:53:23,267 --> 00:53:26,001
+30 times a second, probably not much more than that.
+
+977
+00:53:26,003 --> 00:53:28,771
+I mean, you can only draw it maybe 60 frames a second,
+
+978
+00:53:28,773 --> 00:53:31,974
+so you're probably not gonna need information much
+
+979
+00:53:31,976 --> 00:53:32,141
+But you're gonna tell it how often you want it, okay?
+
+980
+00:53:32,143 --> 00:53:34,910
+more than that.
+
+981
+00:53:34,912 --> 00:53:36,612
+Then you're gonna give it a closure, okay,
+
+982
+00:53:36,614 --> 00:53:39,381
+a block of code. And it's going to execute that closure
+
+983
+00:53:39,383 --> 00:53:42,017
+that many times. Five times a second, 30 times a second. And
+
+984
+00:53:42,019 --> 00:53:44,887
+that closure, the arguments to it are the current state of
+
+985
+00:53:44,889 --> 00:53:48,257
+the accelerometer or the current state of the gyro.
+
+986
+00:53:48,259 --> 00:53:51,794
+Okay, so those are the two ways to do it. So, let's fix,
+
+987
+00:53:51,796 --> 00:53:54,797
+see how all this works. Checking the availability. You
+
+988
+00:53:54,799 --> 00:53:58,367
+just ask the CMMotionManager accelerometer Available.
+
+989
+00:53:58,369 --> 00:54:00,736
+That's a Bool, okay, and it'll tell you yes or no,
+
+990
+00:54:00,738 --> 00:54:03,839
+or magnetometer available, and that's how you find out. Okay,
+
+991
+00:54:03,841 --> 00:54:06,475
+so it's as simple as that. So you always wanna check that,
+
+992
+00:54:06,477 --> 00:54:08,611
+though, because if it's not available and
+
+993
+00:54:08,613 --> 00:54:11,080
+you start asking for things, you're gonna get errors,
+
+994
+00:54:11,082 --> 00:54:14,750
+all right? Now, how do you, if you're doing the polling case,
+
+995
+00:54:14,752 --> 00:54:16,685
+how do you start this thing up? You just say,
+
+996
+00:54:16,687 --> 00:54:20,422
+start Accelerometer Updates, start Gyro Updates.
+
+997
+00:54:20,424 --> 00:54:22,424
+And it'll start looking at that hardware. Now,
+
+998
+00:54:22,426 --> 00:54:26,762
+this is not free. Okay, having this thing start listening to
+
+999
+00:54:26,764 --> 00:54:31,367
+these pieces of hardware costs battery especially, okay, and
+
+1000
+00:54:31,369 --> 00:54:33,068
+some CPU too, but it costs battery.
+
+1001
+00:54:33,070 --> 00:54:36,005
+So don't turn this on unless you're really ready to start
+
+1002
+00:54:36,007 --> 00:54:39,041
+getting the information, okay? You can ask
+
+1003
+00:54:39,043 --> 00:54:42,745
+the CMMotionManager whether it is currently, has that
+
+1004
+00:54:42,747 --> 00:54:46,015
+hardware fired up, basically, by saying, you know,
+
+1005
+00:54:46,017 --> 00:54:49,184
+Accelerometer active. And that's bool, yes or no. By
+
+1006
+00:54:49,186 --> 00:54:51,420
+the way, you're noticing all here, you see accelerometer,
+
+1007
+00:54:51,422 --> 00:54:54,623
+gyro, magnetometer. You also see this thing, deviceMotion.
+
+1008
+00:54:54,625 --> 00:54:58,761
+Okay, deviceMotion is kind of a special device.
+
+1009
+00:54:58,763 --> 00:55:01,730
+It's really a combination of the other three. Okay,
+
+1010
+00:55:01,732 --> 00:55:04,533
+an intelligent combination of the other three, and
+
+1011
+00:55:04,535 --> 00:55:08,437
+we'll talk about that in a moment here. And
+
+1012
+00:55:08,439 --> 00:55:09,338
+then to stop the hardware,
+
+1013
+00:55:09,340 --> 00:55:12,174
+to turn off the accelerometer, turn off the gyro, you just
+
+1014
+00:55:12,176 --> 00:55:16,845
+say stop whatever updates, okay, and that'll stop it. And
+
+1015
+00:55:16,847 --> 00:55:20,215
+you wanna do this as soon as you realize, I don't need it,
+
+1016
+00:55:20,217 --> 00:55:22,451
+even if you only don't need it for a little while and
+
+1017
+00:55:22,453 --> 00:55:24,887
+you're gonna go back and turn it back on, fine. But
+
+1018
+00:55:24,889 --> 00:55:26,755
+any time you don't need it, turn it off, okay,
+
+1019
+00:55:26,757 --> 00:55:29,258
+don't waste the user's battery by having this thing
+
+1020
+00:55:29,260 --> 00:55:32,861
+working when you're not actually using the data. Okay,
+
+1021
+00:55:32,863 --> 00:55:36,065
+so that's how you kind of control the hardware.
+
+1022
+00:55:36,067 --> 00:55:39,134
+Now, again, we're talking about polling here,
+
+1023
+00:55:39,136 --> 00:55:40,669
+how do I then say, okay, well,
+
+1024
+00:55:40,671 --> 00:55:42,371
+you got the accelerometer turned on,
+
+1025
+00:55:42,373 --> 00:55:45,474
+what is the current value of the accelerometer? And you
+
+1026
+00:55:45,476 --> 00:55:49,311
+just use this CMMotionManager var accelerometer data.
+
+1027
+00:55:49,313 --> 00:55:53,982
+And it gives you this struct, CMAccelerometerData struct,
+
+1028
+00:55:53,984 --> 00:55:57,219
+and it's got the acceleration data in x, y, and z, okay?
+
+1029
+00:55:57,221 --> 00:56:01,824
+So what is this x, y, and z? So here I have a device, okay,
+
+1030
+00:56:01,826 --> 00:56:05,561
+so, y Okay, y is this axis right here,
+
+1031
+00:56:05,563 --> 00:56:10,099
+pointing down through the home button, okay?
+
+1032
+00:56:10,101 --> 00:56:14,236
+So this is the y, okay? It's this vertical axis, okay?
+
+1033
+00:56:14,238 --> 00:56:18,440
+X is perpendicular to that, cross the device this way.
+
+1034
+00:56:18,442 --> 00:56:22,878
+So this is y, with the home button being down. This is x.
+
+1035
+00:56:22,880 --> 00:56:28,951
+Z is out the back. Okay, so if I put this on a table,
+
+1036
+00:56:28,953 --> 00:56:33,689
+z, what do, what do you think z value would be?
+
+1037
+00:56:33,691 --> 00:56:37,693
+1.0. Okay, why 1.0? Because x, y, and
+
+1038
+00:56:37,695 --> 00:56:41,029
+z here are in g. Everyone know what g is, right? 9.8 meters
+
+1039
+00:56:41,031 --> 00:56:43,966
+per second squared. That's what g is. So z would be 1
+
+1040
+00:56:43,968 --> 00:56:47,603
+g if I sit it right there, okay? Because the acceleration
+
+1041
+00:56:47,605 --> 00:56:51,407
+due to gravity is operating on it. And it does tell you
+
+1042
+00:56:51,409 --> 00:56:52,741
+the acceleration is due to gravity,
+
+1043
+00:56:52,743 --> 00:56:54,610
+in addition to the acceleration due to the user
+
+1044
+00:56:54,612 --> 00:56:56,845
+moving the thing around, okay. Acceleration going all
+
+1045
+00:56:56,847 --> 00:56:59,882
+over the place, okay? But the acceleration due to gravity
+
+1046
+00:56:59,884 --> 00:57:04,853
+also counts, so that would be x and y 0, z 1.0.
+
+1047
+00:57:04,855 --> 00:57:08,157
+Similarly if I do this, this would be y 1.0, x and
+
+1048
+00:57:08,159 --> 00:57:13,529
+z zero. Okay, so that's the acceleration there.
+
+1049
+00:57:13,898 --> 00:57:16,298
+You get similar information for gyro, okay.
+
+1050
+00:57:16,300 --> 00:57:21,870
+The gyro is the rotation of the device, okay. What, what,
+
+1051
+00:57:21,872 --> 00:57:26,141
+how it's rotating, okay. And this is gonna tell you this in
+
+1052
+00:57:26,143 --> 00:57:29,378
+radians per second, same axes, okay, radians per second,
+
+1053
+00:57:29,380 --> 00:57:32,414
+how this thing is rotating. Now there's a bias in here.
+
+1054
+00:57:32,416 --> 00:57:35,083
+I don't know if people know what a gyro bias is, but
+
+1055
+00:57:35,085 --> 00:57:36,385
+one simple way to think about it is,
+
+1056
+00:57:36,387 --> 00:57:40,088
+if I'm moving like this, what if I'm also moving like this?
+
+1057
+00:57:40,090 --> 00:57:42,658
+Okay, you can see how that might make the gyro think this
+
+1058
+00:57:42,660 --> 00:57:45,394
+is moving faster than it is, because it's moving this way
+
+1059
+00:57:45,396 --> 00:57:48,197
+in addition to this. So there's a bias in there. And
+
+1060
+00:57:48,199 --> 00:57:53,769
+also just the the gyro equipment has a bias built
+
+1061
+00:57:53,771 --> 00:57:55,637
+into it. Now I'm gonna show you in a way, in a second,
+
+1062
+00:57:55,639 --> 00:57:59,107
+a way to get this rotation as pure rotation without
+
+1063
+00:57:59,109 --> 00:58:02,277
+that bias, okay? And also a way to get the accelerometer
+
+1064
+00:58:02,279 --> 00:58:07,115
+data without gravity. The magnetometer is measuring
+
+1065
+00:58:07,117 --> 00:58:10,285
+magnetic field, right? This is a thing that can find, you can
+
+1066
+00:58:10,287 --> 00:58:13,689
+find true north. You can basically find out which way
+
+1067
+00:58:13,691 --> 00:58:17,526
+each of those axes is pointing relative to true north,
+
+1068
+00:58:17,528 --> 00:58:20,863
+by measuring the magnetic field around your device,
+
+1069
+00:58:20,865 --> 00:58:25,834
+okay. Now, I talked about the bias and acceleration due to
+
+1070
+00:58:25,836 --> 00:58:28,370
+gravity. Here's how you get that out of there.
+
+1071
+00:58:28,372 --> 00:58:31,974
+Instead of using CMAccelerometer, okay, or
+
+1072
+00:58:31,976 --> 00:58:36,645
+CMGyro, you use this device CMDeviceMotion.
+
+1073
+00:58:36,647 --> 00:58:38,313
+And that's the one that's the combination of the other
+
+1074
+00:58:38,315 --> 00:58:41,316
+three. And by combining them and using the data from all of
+
+1075
+00:58:41,318 --> 00:58:44,486
+them, it can tell you the part of the acceleration that is
+
+1076
+00:58:44,488 --> 00:58:48,123
+gravity, and the part of it is the user moving it. Okay,
+
+1077
+00:58:48,125 --> 00:58:52,928
+because it has the gyro, you see? So it knows from the gyro
+
+1078
+00:58:52,930 --> 00:58:57,132
+what's going on there. Similar, because it has
+
+1079
+00:58:57,134 --> 00:59:01,670
+the accelerometer, it can unbias the gyro and
+
+1080
+00:59:01,672 --> 00:59:06,275
+it reports the gyro to you like an airplane. Any of you
+
+1081
+00:59:06,277 --> 00:59:08,810
+pilots or anybody flown, piloting, know about it,
+
+1082
+00:59:08,812 --> 00:59:12,614
+okay. So imagine my iPad here is an airplane,
+
+1083
+00:59:12,616 --> 00:59:16,618
+okay. The way an airplane describes its motion is it
+
+1084
+00:59:16,620 --> 00:59:21,123
+has, roll. Roll is this, okay, this axis in the middle,
+
+1085
+00:59:21,125 --> 00:59:23,225
+how you're rolling. Okay, this is roll. So
+
+1086
+00:59:23,227 --> 00:59:25,994
+when airplanes turn, they roll and that causes them to turn,
+
+1087
+00:59:25,996 --> 00:59:29,765
+okay. Then there's pitch, that's up and down, right,
+
+1088
+00:59:29,767 --> 00:59:31,700
+airplane climbing and descending,
+
+1089
+00:59:31,702 --> 00:59:35,037
+okay. And then there's yaw. Yaw is when an airplane,
+
+1090
+00:59:35,039 --> 00:59:37,472
+let's say there's a fierce wind coming this way,
+
+1091
+00:59:37,474 --> 00:59:38,640
+the airplane wants to go that way but
+
+1092
+00:59:38,642 --> 00:59:42,644
+it actually has to turn this way to fight this wind. Okay,
+
+1093
+00:59:42,646 --> 00:59:45,647
+the amount it's turned along this axis is
+
+1094
+00:59:45,649 --> 00:59:50,552
+the yaw, okay. So you've got roll, pitch and yaw. Okay,
+
+1095
+00:59:50,554 --> 00:59:54,256
+so that's what we reported to you with CM device motion and
+
+1096
+00:59:54,258 --> 00:59:56,091
+that is independent of any motion,
+
+1097
+00:59:56,093 --> 00:59:58,460
+whether the airplane is going fast or sitting still,
+
+1098
+00:59:58,462 --> 01:00:01,129
+whatever, you're going to get that roll, pitch and yaw,
+
+1099
+01:00:01,131 --> 01:00:05,467
+okay. So that's device motion, really powerful mechanism.
+
+1100
+01:00:05,469 --> 01:00:07,302
+And if you're doing anything with a gyro you're probably
+
+1101
+01:00:07,304 --> 01:00:11,306
+gonna be using Device Motion instead of CM Gyro. Okay,
+
+1102
+01:00:11,308 --> 01:00:14,142
+magnetic field, with the CM Device Motion,
+
+1103
+01:00:14,144 --> 01:00:20,048
+it can tell you the accuracy of the magnetic field, okay.
+
+1104
+01:00:20,684 --> 01:00:23,485
+All right, so, that, we talked about how to poll.
+
+1105
+01:00:23,487 --> 01:00:25,988
+You just ask for the information you want.
+
+1106
+01:00:25,990 --> 01:00:28,890
+How about if you wanna be notified 5 times a second,
+
+1107
+01:00:28,892 --> 01:00:32,594
+or 30 times a second of what's going on, very easy.
+
+1108
+01:00:32,596 --> 01:00:35,230
+You just call startAccelerometer updates or
+
+1109
+01:00:35,232 --> 01:00:38,667
+startGyro updates or startdevicemotion updates to
+
+1110
+01:00:38,669 --> 01:00:39,901
+queue. And you give it a queue,
+
+1111
+01:00:39,903 --> 01:00:43,505
+this is not a dispatc_queueT, this is an nsoperation queue,
+
+1112
+01:00:43,507 --> 01:00:46,408
+the object oriented version I talked about. But
+
+1113
+01:00:46,410 --> 01:00:48,910
+probably you're gonna be passing NSoperationmainqueue,
+
+1114
+01:00:48,912 --> 01:00:51,546
+or maybe you'll use NSoperationcurrentqueue if
+
+1115
+01:00:51,548 --> 01:00:54,383
+you're on a different queue. You don't really wanna do this
+
+1116
+01:00:54,385 --> 01:00:56,618
+on the main queue if you're gonna be doing it at a very
+
+1117
+01:00:56,620 --> 01:00:59,554
+high rate, like 30 frames a sec, 30 calls a second unless
+
+1118
+01:00:59,556 --> 01:01:03,258
+you're doing something really simple. Just think about it,
+
+1119
+01:01:03,260 --> 01:01:05,227
+you don't want the main queue busy doing that.
+
+1120
+01:01:05,229 --> 01:01:08,296
+But if you're doing 4 or 5 frames a second, absolutely,
+
+1121
+01:01:08,298 --> 01:01:10,866
+doing something simple, you can do that.
+
+1122
+01:01:10,868 --> 01:01:13,268
+Then you give it a handler. This is just a block,
+
+1123
+01:01:13,270 --> 01:01:16,271
+a closure, and you can see that closure as two arguments.
+
+1124
+01:01:16,273 --> 01:01:18,840
+One is that same CMAccelerometerData we
+
+1125
+01:01:18,842 --> 01:01:22,811
+saw from before, the x, y and z, and g, that thing,
+
+1126
+01:01:22,813 --> 01:01:25,480
+okay, and also an error possibly.
+
+1127
+01:01:25,482 --> 01:01:26,448
+Okay, these are optionals,
+
+1128
+01:01:26,450 --> 01:01:29,551
+probably if one's nil the other one's not, vice-versa.
+
+1129
+01:01:29,553 --> 01:01:31,453
+Okay, so this is just closure and inside that closure,
+
+1130
+01:01:31,455 --> 01:01:34,489
+you can do anything you want with the AccelerometerData.
+
+1131
+01:01:34,491 --> 01:01:38,427
+All right, similar with the gyro, startGyroUpdatesToQueue,
+
+1132
+01:01:38,429 --> 01:01:40,495
+you're gonna get the gyro data.
+
+1133
+01:01:40,497 --> 01:01:43,498
+StartMagnetometerUpdatesToQu- eue, you're gonna get
+
+1134
+01:01:43,500 --> 01:01:45,600
+the magnetometer data. And of course,
+
+1135
+01:01:45,602 --> 01:01:49,471
+startDeviceMotionUpdatesToQu- eue, okay. You get the CM,
+
+1136
+01:01:49,473 --> 01:01:53,108
+CM button DeviceMotion, that's that thing that has vars like
+
+1137
+01:01:53,110 --> 01:01:57,713
+gravity and attitude for the roll, pitch and yaw, that kind
+
+1138
+01:01:57,715 --> 01:02:01,316
+of stuff. Just to talk a little bit about the errors,
+
+1139
+01:02:01,318 --> 01:02:03,251
+you're, of course, gonna want to look in the documentation,
+
+1140
+01:02:03,253 --> 01:02:06,788
+but some of the errors you can get are like you can't find
+
+1141
+01:02:06,790 --> 01:02:09,991
+true north maybe, too much interference.
+
+1142
+01:02:09,993 --> 01:02:12,394
+Maybe this activity's not authorized. Okay,
+
+1143
+01:02:12,396 --> 01:02:15,997
+maybe user, you're not authorized to actually measure
+
+1144
+01:02:15,999 --> 01:02:17,999
+the device's motion. Okay, that could be too.
+
+1145
+01:02:18,001 --> 01:02:20,068
+So you do wanna be able to check for these errors to make
+
+1146
+01:02:20,070 --> 01:02:24,940
+sure you're actually getting good data. All right, so
+
+1147
+01:02:24,942 --> 01:02:28,443
+how often you get these closures, called, is set with
+
+1148
+01:02:28,445 --> 01:02:31,513
+these vars in motion manager, okay. Update interval,
+
+1149
+01:02:31,515 --> 01:02:34,149
+this is just the number of seconds between calls.
+
+1150
+01:02:34,151 --> 01:02:38,854
+So like 0.25 would be four times a second, okay? It is
+
+1151
+01:02:38,856 --> 01:02:42,724
+okay to, to have multiple, closures registered. You could
+
+1152
+01:02:42,726 --> 01:02:46,328
+say startAccelerometer updates with handler and then call
+
+1153
+01:02:46,330 --> 01:02:48,029
+it again with another handler. But understand,
+
+1154
+01:02:48,031 --> 01:02:50,766
+they're all gonna be called at this same interval cuz there's
+
+1155
+01:02:50,768 --> 01:02:53,869
+only this one motion manager that you're gonna create for
+
+1156
+01:02:53,871 --> 01:02:54,503
+your whole app, okay.
+
+1157
+01:02:54,505 --> 01:02:56,505
+All right, so let's take a look at this.
+
+1158
+01:02:56,507 --> 01:02:59,641
+Let's take DropIt, and let's make the gravity that's in
+
+1159
+01:02:59,643 --> 01:03:03,979
+DropIt be real gravity, okay. Right now the gravity just
+
+1160
+01:03:03,981 --> 01:03:06,281
+goes down towards the home button, but let's make it so
+
+1161
+01:03:06,283 --> 01:03:08,683
+that it's actual gravity. So as I move my thing around,
+
+1162
+01:03:08,685 --> 01:03:12,921
+those blocks are gonna start swinging towards real gravity.
+
+1163
+01:03:13,357 --> 01:03:18,760
+All right, so how are we gonna do that? I'm going to
+
+1164
+01:03:18,762 --> 01:03:25,767
+go to my DropIt view right here, I'm gonna add a new var,
+
+1165
+01:03:25,769 --> 01:03:31,273
+public var called realGravity, and it's gonna be a Bool,
+
+1166
+01:03:31,275 --> 01:03:35,410
+okay? I'll start it out being false. And if this is on,
+
+1167
+01:03:35,412 --> 01:03:38,313
+then I'm gonna use real gravity in my DropIt.
+
+1168
+01:03:38,315 --> 01:03:40,515
+If it's off, I'm gonna use fake gravity,
+
+1169
+01:03:40,517 --> 01:03:44,452
+the gravity I already have basically, all right? And so
+
+1170
+01:03:44,454 --> 01:03:47,455
+let's go back to our controller and
+
+1171
+01:03:47,457 --> 01:03:48,824
+set this to be true, so
+
+1172
+01:03:48,826 --> 01:03:52,394
+I'm just gonna do it here in the didSet here,
+
+1173
+01:03:52,396 --> 01:03:57,599
+gameView.realgravity. Gravity and real,
+
+1174
+01:03:57,601 --> 01:04:01,870
+realGravity equals true. Okay, so
+
+1175
+01:04:01,872 --> 01:04:05,006
+we've got realGravity turned on. And how am I gonna make
+
+1176
+01:04:05,008 --> 01:04:08,743
+this real gravity work? Well anytime someone changes this,
+
+1177
+01:04:08,745 --> 01:04:11,446
+I'm gonna call some method update real gravity or
+
+1178
+01:04:11,448 --> 01:04:14,883
+something, and this is the method that's gonna have to
+
+1179
+01:04:14,885 --> 01:04:17,853
+turn the accelerometer on to start using it. Okay?
+
+1180
+01:04:17,855 --> 01:04:22,557
+So that's a private funk update real gravity.
+
+1181
+01:04:22,559 --> 01:04:23,625
+Okay, so this is going to be the guts.
+
+1182
+01:04:23,627 --> 01:04:26,494
+This is going to be the thing that's actually doing
+
+1183
+01:04:26,496 --> 01:04:27,729
+the work here. All right, so
+
+1184
+01:04:27,731 --> 01:04:30,465
+what do update real gravity going to do? Well,
+
+1185
+01:04:30,467 --> 01:04:32,434
+it's going to do something with the accelerometer. And
+
+1186
+01:04:32,436 --> 01:04:34,669
+we to use the accelerometer to get the gravity.
+
+1187
+01:04:34,671 --> 01:04:35,804
+I'm not going to use device motion,
+
+1188
+01:04:35,806 --> 01:04:40,075
+okay, just to make it simple, we'll use the accelerometer.
+
+1189
+01:04:40,077 --> 01:04:43,211
+We want the real gravity anyway so we'll use that. So I
+
+1190
+01:04:43,213 --> 01:04:46,281
+need a private var here which is that motion manager. As I
+
+1191
+01:04:46,283 --> 01:04:48,984
+told you, you need a motion manager to do any of this. So,
+
+1192
+01:04:48,986 --> 01:04:52,087
+we'll just say that equals CMMotionManager.
+
+1193
+01:04:52,089 --> 01:04:54,122
+I'm not using any of this in
+
+1194
+01:04:54,124 --> 01:04:56,391
+any other part of my app. So I'm putting it here.
+
+1195
+01:04:56,393 --> 01:04:59,227
+Again, if I was using it in two different places,
+
+1196
+01:04:59,229 --> 01:05:02,964
+I'd have to make this be some sort of shared resource.
+
+1197
+01:05:02,966 --> 01:05:04,699
+Notice it is complaining right here, okay?
+
+1198
+01:05:04,701 --> 01:05:05,934
+Does never heard of a CMMotionManager and
+
+1199
+01:05:05,936 --> 01:05:08,003
+it doesn't know what the heck we're talking about.
+
+1200
+01:05:08,005 --> 01:05:11,039
+This is because this is in a different framework,
+
+1201
+01:05:11,041 --> 01:05:15,677
+import,CcoreMotion, okay? All this CoreMotion stuff you have
+
+1202
+01:05:15,679 --> 01:05:19,848
+to import CoreMotion. All right, so we have our
+
+1203
+01:05:19,850 --> 01:05:22,450
+motion manager right here. How are we going to use our
+
+1204
+01:05:22,452 --> 01:05:25,987
+motion manager to grab that accelerometer, information?
+
+1205
+01:05:25,989 --> 01:05:31,226
+So if we want real gravity, then we're going to do that.
+
+1206
+01:05:31,228 --> 01:05:32,928
+By the way, if we don't want real gravity,
+
+1207
+01:05:32,930 --> 01:05:35,997
+then I'm going to tell the motion manager to stop
+
+1208
+01:05:35,999 --> 01:05:40,001
+accelerometer updates. Again, I always want to stop that
+
+1209
+01:05:40,003 --> 01:05:43,939
+updating happening any time I don't want the updates, okay.
+
+1210
+01:05:43,941 --> 01:05:46,741
+So we try to keep that off as much as possible. But if we do
+
+1211
+01:05:46,743 --> 01:05:51,579
+want real gravity, then first I'm gonna check to see, if
+
+1212
+01:05:51,581 --> 01:05:57,886
+the motionManager accelerometer is available.
+
+1213
+01:05:57,888 --> 01:06:02,257
+Okay, as promised, this is first thing we need to do.
+
+1214
+01:06:02,259 --> 01:06:03,758
+Actually I'm also going to see here if
+
+1215
+01:06:03,760 --> 01:06:06,628
+the accelerometer is already active. Cuz maybe I already
+
+1216
+01:06:06,630 --> 01:06:09,364
+called updateRealGravity and it's already running. So
+
+1217
+01:06:09,366 --> 01:06:14,903
+I'm gonna actually say and the motionManager.accelerometerAc-
+
+1218
+01:06:14,905 --> 01:06:19,607
+tive is false. Okay? So if the accelerometer is available and
+
+1219
+01:06:19,609 --> 01:06:20,075
+it's not already running,
+
+1220
+01:06:20,077 --> 01:06:24,079
+then I need to fire this thing up, okay? So let's fire it up.
+
+1221
+01:06:24,081 --> 01:06:27,949
+Let's start with our update interval. So I'm going to have
+
+1222
+01:06:27,951 --> 01:06:30,919
+the accelerometer update interval be, I,
+
+1223
+01:06:30,921 --> 01:06:35,090
+maybe 0.25, 0.2 is probably enough. You know, gravity
+
+1224
+01:06:35,092 --> 01:06:38,193
+doesn't really need to change that much more often than that
+
+1225
+01:06:38,195 --> 01:06:40,161
+as I am moving my device around. This is a number
+
+1226
+01:06:40,163 --> 01:06:43,031
+I could play with. Again, this should probably, not probably,
+
+1227
+01:06:43,033 --> 01:06:45,600
+definitely be a constant but we're time constrained here so
+
+1228
+01:06:45,602 --> 01:06:50,872
+I'm not gonna do that. So now I'm just gonna have the motion
+
+1229
+01:06:50,874 --> 01:06:54,309
+manager start giving me updates to queue,
+
+1230
+01:06:54,311 --> 01:06:57,612
+okay? So this is how I started updating. Now, what queue am I
+
+1231
+01:06:57,614 --> 01:06:59,581
+gonna use? I'm gonna use the main cue here cuz
+
+1232
+01:06:59,583 --> 01:07:01,916
+I'm only doing it four times a second and I'm only just
+
+1233
+01:07:01,918 --> 01:07:04,052
+gonna set that gravity thing, that's all I'm gonna do, so
+
+1234
+01:07:04,054 --> 01:07:07,222
+that's really lightweight so I can just use the main queue.
+
+1235
+01:07:07,224 --> 01:07:11,059
+So, enter operation queue main queue. Okay,
+
+1236
+01:07:11,061 --> 01:07:14,362
+here's the handler, the CM handler. I always recommend
+
+1237
+01:07:14,364 --> 01:07:17,098
+double clicking on these things because it fills
+
+1238
+01:07:17,100 --> 01:07:21,603
+out really nicely. Your arguments and
+
+1239
+01:07:21,605 --> 01:07:25,106
+stuff like that. I'm also going to use the closing or
+
+1240
+01:07:25,108 --> 01:07:29,911
+the trailing closure syntax here to do this, all right.
+
+1241
+01:07:29,913 --> 01:07:32,747
+So I'm going to start this accelerometer,
+
+1242
+01:07:32,749 --> 01:07:34,616
+here is my closure that I have to do,
+
+1243
+01:07:34,618 --> 01:07:39,621
+okay? So, this accelerometer data, I'll call it data. This
+
+1244
+01:07:39,623 --> 01:07:44,459
+error I'll call error. Okay, so, how am I gonna do this?
+
+1245
+01:07:44,461 --> 01:07:48,630
+Well, this data might be nil, it's an optional. So, I'm
+
+1246
+01:07:48,632 --> 01:07:51,132
+gonna see if I can get the accelerometer data first.
+
+1247
+01:07:51,134 --> 01:07:54,702
+So, let's say if I can let, we'll call the x,
+
+1248
+01:07:54,704 --> 01:07:57,539
+I'm only caring about x and y. Don't care about z, okay,
+
+1249
+01:07:57,541 --> 01:08:01,242
+because I'm gonna have the my little drop it is two
+
+1250
+01:08:01,244 --> 01:08:03,244
+dimensional so it doesn't care about z. So
+
+1251
+01:08:03,246 --> 01:08:07,582
+if I can let dx equal the data acceleration in x, and
+
+1252
+01:08:07,584 --> 01:08:12,020
+also we can let dy equal the data's acceleration in y so
+
+1253
+01:08:12,022 --> 01:08:16,124
+then I'm just getting simultaneously getting and
+
+1254
+01:08:16,126 --> 01:08:19,794
+checking to be sure the data is not nil, so
+
+1255
+01:08:19,796 --> 01:08:21,062
+I've got the dx a new y.
+
+1256
+01:08:21,064 --> 01:08:28,803
+Let's first try to just set the drop behaviors gravity's,
+
+1257
+01:08:28,805 --> 01:08:33,808
+gravity direction, to just be a CG vector
+
+1258
+01:08:33,810 --> 01:08:37,812
+which is dx and dy, okay? So we're gonna try this first.
+
+1259
+01:08:37,814 --> 01:08:41,483
+Now, this is not gonna work because gravity is private. So
+
+1260
+01:08:41,485 --> 01:08:44,285
+let's just go over to our behavior, falling object
+
+1261
+01:08:44,287 --> 01:08:47,655
+behaviour here. I'm gonna make this not be private. Okay,
+
+1262
+01:08:47,657 --> 01:08:50,191
+just for expediency. Maybe we wanna make some other public
+
+1263
+01:08:50,193 --> 01:08:53,128
+API like we did with Glider here. I'm just gonna make this
+
+1264
+01:08:53,130 --> 01:08:57,932
+public. Make it a little, go a little faster. All right, so
+
+1265
+01:08:57,934 --> 01:09:01,669
+here we are, we're saving this, gravity here.
+
+1266
+01:09:02,305 --> 01:09:05,206
+Yeah good one, that's what, okay got it.
+
+1267
+01:09:05,208 --> 01:09:09,511
+Very good catch, bonus points, all right, so right.
+
+1268
+01:09:09,513 --> 01:09:13,848
+So there's that, one other thing I wanna be careful of
+
+1269
+01:09:13,850 --> 01:09:17,986
+here is memory cycle. Okay I've got this accelerometer,
+
+1270
+01:09:17,988 --> 01:09:20,655
+cuz motion manager has accelerometer that that
+
+1271
+01:09:20,657 --> 01:09:23,925
+thing has a hold of this closure, I have a hold of it.
+
+1272
+01:09:23,927 --> 01:09:25,426
+Okay I have a hold the of motion manger. And
+
+1273
+01:09:25,428 --> 01:09:29,597
+Motion manager has a hold of me, okay? So that's not good.
+
+1274
+01:09:29,599 --> 01:09:33,268
+Again, we can do unowned to solve this one. Oops don't put
+
+1275
+01:09:33,270 --> 01:09:37,505
+it there. Unowned goes over here. We can do unowned
+
+1276
+01:09:37,507 --> 01:09:42,177
+self here because as soon as self leaves the heap,
+
+1277
+01:09:42,179 --> 01:09:44,512
+this motionManager is gonna leave the heap with it,
+
+1278
+01:09:44,514 --> 01:09:46,915
+which means this closure is gonna go out too.
+
+1279
+01:09:46,917 --> 01:09:49,417
+So this closure will never get executed with self not in
+
+1280
+01:09:49,419 --> 01:09:52,787
+the heap. Once self leaves the heap, this guy goes with it.
+
+1281
+01:09:52,789 --> 01:09:56,224
+So we can do unowned here, to do that. The only other
+
+1282
+01:09:56,226 --> 01:10:00,562
+thing I want to do here is if, I, I want to try and turn this
+
+1283
+01:10:00,564 --> 01:10:04,299
+accelerator updates off as much as possible. So another
+
+1284
+01:10:04,301 --> 01:10:08,436
+time I want to turn it off is if I'm not animating, right?
+
+1285
+01:10:08,438 --> 01:10:11,940
+If I have my dropBehavior, okay, and it's not currently
+
+1286
+01:10:11,942 --> 01:10:15,243
+animating, I do not want to be continuing to do this.
+
+1287
+01:10:15,245 --> 01:10:19,814
+So, I'm gonna say only do this if my dropBehavior,
+
+1288
+01:10:19,816 --> 01:10:24,185
+it's dynamic animator is not nil. That's how you can tell
+
+1289
+01:10:24,187 --> 01:10:25,887
+whether a behaviour is currently being animated.
+
+1290
+01:10:25,889 --> 01:10:29,490
+If it has a dynamic animator, it's being animated. If not,
+
+1291
+01:10:29,492 --> 01:10:34,028
+it's not. So, if it's not nil, then we'll do this. Otherwise,
+
+1292
+01:10:34,030 --> 01:10:38,099
+I'm going to stop this motion manager, okay?
+
+1293
+01:10:38,101 --> 01:10:41,703
+Stop accelerometer updates in this motion manager. You see
+
+1294
+01:10:41,705 --> 01:10:45,039
+how I'm trying to stop this thing as much as possible?
+
+1295
+01:10:45,041 --> 01:10:46,407
+The only thing about this, though,
+
+1296
+01:10:46,409 --> 01:10:49,310
+is if I do stop it because I stop animating, then I better
+
+1297
+01:10:49,312 --> 01:10:51,646
+be sure that when I start animating up again.
+
+1298
+01:10:51,648 --> 01:10:53,181
+Remember this is that animating bar,
+
+1299
+01:10:53,183 --> 01:10:54,782
+you set it to true to start animating.
+
+1300
+01:10:54,784 --> 01:10:58,152
+I better update my real gravity here to make sure that
+
+1301
+01:10:58,154 --> 01:11:01,556
+I start the accelerometer back up again, okay? So
+
+1302
+01:11:01,558 --> 01:11:03,124
+that allows me to start and stop animating.
+
+1303
+01:11:03,126 --> 01:11:06,394
+It stops the accelerometers, every time I restart it,
+
+1304
+01:11:06,396 --> 01:11:09,264
+it starts them again, okay? So let's try this and
+
+1305
+01:11:09,266 --> 01:11:11,299
+see if it works. Now, this is the first time in this
+
+1306
+01:11:11,301 --> 01:11:12,200
+class where I'm having to actually,
+
+1307
+01:11:12,202 --> 01:11:15,903
+I can't do it in a simulator because the simulator has no,
+
+1308
+01:11:15,905 --> 01:11:17,505
+accelerometer or anything like that, so
+
+1309
+01:11:17,507 --> 01:11:21,376
+we're gonna be doing it here on this other device.
+
+1310
+01:11:21,378 --> 01:11:26,147
+Let me run over here and show you this. All right, so
+
+1311
+01:11:26,149 --> 01:11:30,551
+let's run this on our device here, here we go,
+
+1312
+01:11:30,553 --> 01:11:33,187
+it's coming up here, there it is, we see our little circle,
+
+1313
+01:11:33,189 --> 01:11:38,793
+if I tap, it's not working. What's going on here?
+
+1314
+01:11:38,795 --> 01:11:41,396
+Why wouldn't that be working? I got the gravity going on
+
+1315
+01:11:41,398 --> 01:11:46,501
+there, hm. Maybe if I turn my thing upside down, woah!
+
+1316
+01:11:46,503 --> 01:11:48,703
+That worked, I turned my iPad upside down, and
+
+1317
+01:11:48,705 --> 01:11:52,874
+all of a sudden gravity seems to be backwards here, okay?
+
+1318
+01:11:52,876 --> 01:11:57,111
+Now why would gravity be backwards? The answer is,
+
+1319
+01:11:57,113 --> 01:12:01,282
+because our drawing coordinate system has 0,0 in the upper
+
+1320
+01:12:01,284 --> 01:12:04,752
+left. So this is working fine, it's falling down toward zero,
+
+1321
+01:12:04,754 --> 01:12:08,022
+it's just that's in the upper left. So we need to add some
+
+1322
+01:12:08,024 --> 01:12:12,126
+code here that knows what the orientation of our device is,
+
+1323
+01:12:12,128 --> 01:12:16,297
+and adjusts, okay, for the fact that it's upside down,
+
+1324
+01:12:16,299 --> 01:12:19,567
+basically. Also, when we turn sideways, and
+
+1325
+01:12:19,569 --> 01:12:21,369
+we're looking at landscape mode,
+
+1326
+01:12:21,371 --> 01:12:24,172
+we wanna make sure that's doing the right thing as well.
+
+1327
+01:12:24,174 --> 01:12:28,843
+So let's put that in here. Okay, that goes right, so
+
+1328
+01:12:28,845 --> 01:12:32,613
+let's put that right in here. Okay, we've got our dx and dy.
+
+1329
+01:12:32,615 --> 01:12:36,751
+All I'm gonna do here is I'm gonna switch on my device's,
+
+1330
+01:12:36,753 --> 01:12:40,621
+this is how you get the current device's orientation,
+
+1331
+01:12:40,623 --> 01:12:43,124
+okay. This will return the orientation of the current
+
+1332
+01:12:43,126 --> 01:12:48,196
+device. And so for example, in the case of portrait, okay,
+
+1333
+01:12:48,198 --> 01:12:51,666
+we know that portrait is upside down, so
+
+1334
+01:12:51,668 --> 01:12:54,535
+I'm gonna say dy = -dy in portrait.
+
+1335
+01:12:54,537 --> 01:12:58,639
+In the case of portrait upside down, everything's fine.
+
+1336
+01:12:58,641 --> 01:13:00,875
+We know that that works, okay. Portrait upside down,
+
+1337
+01:13:00,877 --> 01:13:03,611
+we've got the right thing. How about LandscapeLeft,
+
+1338
+01:13:03,613 --> 01:13:07,715
+or LandscapeRight, let's say. In LandscapeRight, x and
+
+1339
+01:13:07,717 --> 01:13:11,819
+y are swapped, right, because I've turned it sideways, so
+
+1340
+01:13:11,821 --> 01:13:14,789
+now it's the x of my device that's down. So
+
+1341
+01:13:14,791 --> 01:13:17,759
+I need to swap them. There's actually a nice method here or
+
+1342
+01:13:17,761 --> 01:13:21,496
+function called swap which will swap two variables, okay.
+
+1343
+01:13:21,498 --> 01:13:29,370
+And then in LandscapeLeft, not only are they swapped,
+
+1344
+01:13:29,372 --> 01:13:34,675
+but also dy has to be -dy, okay?
+
+1345
+01:13:34,677 --> 01:13:38,279
+In other cases, there are other cases like FaceUp and
+
+1346
+01:13:38,281 --> 01:13:41,816
+FaceDown. Those are orientations. In those cases,
+
+1347
+01:13:41,818 --> 01:13:45,119
+there should be no gravity going on. So I'm gonna say dx
+
+1348
+01:13:45,121 --> 01:13:49,323
+= 0, dy = 0. Okay, because my thing is flat or whatever.
+
+1349
+01:13:49,325 --> 01:13:52,827
+Now, notice I'm modifying dy and dx in here, but I said
+
+1350
+01:13:52,829 --> 01:13:57,298
+if let, just to remind you all you can change this to var,
+
+1351
+01:13:57,300 --> 01:14:01,502
+if var. Exactly the same as if let, it's just that
+
+1352
+01:14:01,504 --> 01:14:05,640
+these will now be vars that inside here you can modify.
+
+1353
+01:14:05,642 --> 01:14:10,545
+Okay, everybody got that? Okay, so
+
+1354
+01:14:10,547 --> 01:14:18,119
+let's try that. All right,
+
+1355
+01:14:18,121 --> 01:14:21,222
+here we go. Drop it, it's working! Look at this.
+
+1356
+01:14:21,224 --> 01:14:23,691
+Dropping some more things, I have my thing face up.
+
+1357
+01:14:23,693 --> 01:14:26,694
+Okay, now I'm going to turn my thing upside down.
+
+1358
+01:14:26,696 --> 01:14:30,531
+Let's see if they all fall down. And they do! Excellent.
+
+1359
+01:14:30,533 --> 01:14:36,003
+Okay, now I'm gonna turn it sideways. Bam. Okay,
+
+1360
+01:14:36,005 --> 01:14:41,042
+sideways around the other way. Okay. Now,
+
+1361
+01:14:41,044 --> 01:14:44,011
+one thing that's interesting about this is I actually have
+
+1362
+01:14:44,013 --> 01:14:47,648
+my rotation locked. If I unlock my rotation,
+
+1363
+01:14:47,650 --> 01:14:49,784
+then my view is gonna change. Watch this.
+
+1364
+01:14:49,786 --> 01:14:54,555
+See? So since it switched, all the views moved to the bottom.
+
+1365
+01:14:54,557 --> 01:14:57,291
+So it didn't actually do much. Now, I can try and
+
+1366
+01:14:57,293 --> 01:15:00,795
+move it around without changing my orientation, but
+
+1367
+01:15:00,797 --> 01:15:02,997
+as soon as my orientation changes,
+
+1368
+01:15:02,999 --> 01:15:07,368
+it's gonna jump around. Got that?
+
+1369
+01:15:07,370 --> 01:15:11,606
+Okay? All right, that's it for
+
+1370
+01:15:11,608 --> 01:15:14,342
+today. You have everything you need to know, I hope,
+
+1371
+01:15:14,344 --> 01:15:18,246
+to do your assignment six. If you have any questions,
+
+1372
+01:15:18,248 --> 01:15:20,781
+I'll be here as usual. >> For
+
+1373
+01:15:20,783 --> 01:15:20,814
+more, please visit us at Stanford.edu.
+

@@ -1,0 +1,6580 @@
+﻿1
+00:00:00,001 --> 00:00:08,173
+[SOUND] Stanford University. >> All right,
+
+2
+00:00:08,175 --> 00:00:13,145
+well welcome to lecture 15 CS193P Spring of 2016.
+
+3
+00:00:13,147 --> 00:00:16,915
+So today we have three major topics.
+
+4
+00:00:16,917 --> 00:00:18,350
+One is the Application Life Cycle.
+
+5
+00:00:18,352 --> 00:00:20,786
+Remember we talked about the View Controller Life Cycle.
+
+6
+00:00:20,788 --> 00:00:23,956
+How View Controller comes into existence and goes on and
+
+7
+00:00:23,958 --> 00:00:25,090
+off screen and all that stuff. Well,
+
+8
+00:00:25,092 --> 00:00:27,726
+an Application goes through a similar sort of life cycle.
+
+9
+00:00:27,728 --> 00:00:30,596
+And we're going to talk about that. And along the way I'm
+
+10
+00:00:30,598 --> 00:00:32,998
+also going to talk about NS Notification, which
+
+11
+00:00:33,000 --> 00:00:35,834
+is that radio station from the NBC that we talked about
+
+12
+00:00:35,836 --> 00:00:37,369
+at the very beginning of the Quarter.
+
+13
+00:00:37,371 --> 00:00:40,239
+And we're going to talk about alerts. And I'm going to
+
+14
+00:00:40,241 --> 00:00:41,974
+switch gears a little from what I had said and
+
+15
+00:00:41,976 --> 00:00:44,977
+talk today about Cloud Kit. Because quite a few of you
+
+16
+00:00:44,979 --> 00:00:46,645
+have come up to me in your final projects and said.
+
+17
+00:00:46,647 --> 00:00:50,582
+Well, I want to do a little light weight backend over
+
+18
+00:00:50,584 --> 00:00:50,716
+maybe something simple like, some sort of messaging or
+
+19
+00:00:50,718 --> 00:00:53,552
+the network,
+
+20
+00:00:53,554 --> 00:00:57,656
+something like that. and cloud kit is a pretty cool way and
+
+21
+00:00:57,658 --> 00:01:00,526
+pretty simple way, actually, to do that, especially for
+
+22
+00:01:00,528 --> 00:01:01,493
+something like your final project,
+
+23
+00:01:01,495 --> 00:01:07,199
+which is a proof of concept vehicle where you
+
+24
+00:01:07,201 --> 00:01:09,868
+just need something simple where you can make it work and
+
+25
+00:01:09,870 --> 00:01:11,103
+you can always replace it with something much
+
+26
+00:01:11,105 --> 00:01:13,605
+more powerful networking-wise later. All right.
+
+27
+00:01:13,607 --> 00:01:15,140
+So I'm gonna talk about those three things today. And
+
+28
+00:01:15,142 --> 00:01:20,579
+then on Wednesday I will demo all these things. All right?
+
+29
+00:01:20,581 --> 00:01:23,082
+All right. So let's talk about this in this notification
+
+30
+00:01:23,084 --> 00:01:25,851
+thing. If you remember back to the very first lecture or
+
+31
+00:01:25,853 --> 00:01:28,520
+the second lecture when I talked about MVC,
+
+32
+00:01:28,522 --> 00:01:31,924
+there was this little guy here on the model
+
+33
+00:01:31,926 --> 00:01:34,526
+that looked a little round thing right here.
+
+34
+00:01:34,528 --> 00:01:36,528
+Which I called a radio station model for
+
+35
+00:01:36,530 --> 00:01:40,499
+communication from the model to the controller usually.
+
+36
+00:01:40,501 --> 00:01:43,068
+Guess where it goes and so we're gonna talk about
+
+37
+00:01:43,070 --> 00:01:46,238
+actually how this little radio station works in code,
+
+38
+00:01:46,240 --> 00:01:47,973
+how we do this thing in code. Okay,
+
+39
+00:01:47,975 --> 00:01:51,376
+it's called NSNotification, all right? It's a radio
+
+40
+00:01:51,378 --> 00:01:54,113
+station, the radio station by the way is not only good for
+
+41
+00:01:54,115 --> 00:01:55,547
+the model communicating with the controller,
+
+42
+00:01:55,549 --> 00:01:59,084
+it's also good for the system IOS to communicate with your
+
+43
+00:01:59,086 --> 00:02:03,188
+app. So you'll see a lot of communication from IOS to your
+
+44
+00:02:03,190 --> 00:02:07,292
+app as a whole using these notifications as well. So
+
+45
+00:02:07,294 --> 00:02:09,995
+let's first of all talk about how you tune into a radio
+
+46
+00:02:09,997 --> 00:02:12,264
+station. In other words if you want to listen to what's being
+
+47
+00:02:12,266 --> 00:02:14,733
+broadcast on a radio station, how do you do that? It's
+
+48
+00:02:14,735 --> 00:02:17,970
+actually quite simple, you're gonna get this in instance of
+
+49
+00:02:17,972 --> 00:02:21,273
+this object right here the NS notification center by saying
+
+50
+00:02:21,275 --> 00:02:23,876
+NSNotificationCenter.defaultC- enter(), okay.
+
+51
+00:02:23,878 --> 00:02:27,379
+And this is gonna get to this shared NS notification center,
+
+52
+00:02:27,381 --> 00:02:28,680
+and then you're gonna send that
+
+53
+00:02:28,682 --> 00:02:33,485
+message right here addObserverForName, okay. So
+
+54
+00:02:33,487 --> 00:02:38,757
+addObserverForName Takes a string which is the name
+
+55
+00:02:38,759 --> 00:02:43,195
+of the radio station. And it takes a block down here,
+
+56
+00:02:43,197 --> 00:02:46,031
+the send this notification block which is the block
+
+57
+00:02:46,033 --> 00:02:49,067
+that's going to be executed when there are broadcasts on
+
+58
+00:02:49,069 --> 00:02:52,004
+the radio station. So it really couldn't be any
+
+59
+00:02:52,006 --> 00:02:56,642
+simpler. It returns something that's an NS object protocol.
+
+60
+00:02:56,644 --> 00:02:58,944
+Optional, okay, but basically it's just a cookie.
+
+61
+00:02:58,946 --> 00:03:01,914
+You can almost think of it as any object. You'll kind of
+
+62
+00:03:01,916 --> 00:03:06,418
+need the return value of this, so you can stop observing this
+
+63
+00:03:06,420 --> 00:03:08,820
+radio station because you're listening when you,
+
+64
+00:03:08,822 --> 00:03:11,156
+when you send this, to this default center there.
+
+65
+00:03:11,158 --> 00:03:12,824
+You start listening to the radio station, well,
+
+66
+00:03:12,826 --> 00:03:14,059
+you have to be able to stop listening and
+
+67
+00:03:14,061 --> 00:03:17,229
+to do that, you need this little return value of this
+
+68
+00:03:17,231 --> 00:03:18,163
+add observer. For
+
+69
+00:03:18,165 --> 00:03:21,767
+name, guy right there. Okay, what are the other two
+
+70
+00:03:21,769 --> 00:03:23,869
+arguments here besides the name of the radio station and
+
+71
+00:03:23,871 --> 00:03:28,040
+the block of code to execute? One is the senders,
+
+72
+00:03:28,042 --> 00:03:30,509
+okay, in other words, the broadcasters that you're
+
+73
+00:03:30,511 --> 00:03:32,911
+You're interested in. Now you can just specify nil here,
+
+74
+00:03:32,913 --> 00:03:35,714
+then you'll listen to any radio station with that name.
+
+75
+00:03:35,716 --> 00:03:38,784
+Anybody broadcasting on that radio station you're going to
+
+76
+00:03:38,786 --> 00:03:40,519
+listen to. But if you put an object here,
+
+77
+00:03:40,521 --> 00:03:43,188
+it would only be if that particular object is
+
+78
+00:03:43,190 --> 00:03:45,924
+broadcasting on that radio station.
+
+79
+00:03:45,926 --> 00:03:48,560
+Okay? So, it depends on the kind
+
+80
+00:03:48,562 --> 00:03:51,363
+of environment that you're listening here as to whether
+
+81
+00:03:51,365 --> 00:03:52,664
+it makes sense to put something there.
+
+82
+00:03:52,666 --> 00:03:53,799
+And I'll show you some examples.
+
+83
+00:03:53,801 --> 00:03:57,135
+It'll make more sense. Then there's this queue right here.
+
+84
+00:03:57,137 --> 00:03:59,137
+This queue is gonna be the queue,
+
+85
+00:03:59,139 --> 00:04:03,976
+that this closure is going to be executed on. Okay? So
+
+86
+00:04:03,978 --> 00:04:07,079
+often times if you're doing UI stuff in here you'll obviously
+
+87
+00:04:07,081 --> 00:04:09,982
+want to say NSOperationQueue.MainQueue.
+
+88
+00:04:09,984 --> 00:04:13,785
+Okay? You can also pass nil here. You can see the question
+
+89
+00:04:13,787 --> 00:04:16,355
+mark there, so this could be nil. If you pass mail here,
+
+90
+00:04:16,357 --> 00:04:20,058
+then it will execute this closure on the same queue
+
+91
+00:04:20,060 --> 00:04:23,061
+as the radio station broadcaster,
+
+92
+00:04:23,063 --> 00:04:24,062
+which is a little bit odd, okay,
+
+93
+00:04:24,064 --> 00:04:26,231
+because sometimes the radio station's broadcasting and
+
+94
+00:04:26,233 --> 00:04:28,767
+you're not really sure what queue they're on, but
+
+95
+00:04:28,769 --> 00:04:31,336
+that's what meant, so usually we're going to have NS
+
+96
+00:04:31,338 --> 00:04:34,806
+operation main queue in here when you're listening. Now,
+
+97
+00:04:34,808 --> 00:04:37,843
+inside this closure, you can see there is one argument.
+
+98
+00:04:37,845 --> 00:04:39,544
+The argument is an NSNotification. So,
+
+99
+00:04:39,546 --> 00:04:43,148
+an NSNotification encapsulates the data that's coming across
+
+100
+00:04:43,150 --> 00:04:46,418
+in a radio station broadcast. And, there's really only one
+
+101
+00:04:46,420 --> 00:04:48,620
+interesting thing inside, there's a few in here you
+
+102
+00:04:48,622 --> 00:04:51,356
+can look in the documentation, but the main interesting thing
+
+103
+00:04:51,358 --> 00:04:54,960
+in this notification, is this thing called it's userInfo,
+
+104
+00:04:54,962 --> 00:04:58,330
+notification.userInfo. That's a dictionary, okay,
+
+105
+00:04:58,332 --> 00:05:02,668
+keys are NSObjects the values are AnyObject, okay. And
+
+106
+00:05:02,670 --> 00:05:05,137
+in that dictionary is any information that the radio
+
+107
+00:05:05,139 --> 00:05:07,806
+station broadcaster wants you to have, okay. So they're
+
+108
+00:05:07,808 --> 00:05:10,609
+gonna have to let you know what the keys of this are so
+
+109
+00:05:10,611 --> 00:05:13,645
+you can look in there and then you can get certain values.
+
+110
+00:05:13,647 --> 00:05:16,181
+So everybody who broadcasts. On a radio station,
+
+111
+00:05:16,183 --> 00:05:17,983
+it's going to tell you the name of the radio station.
+
+112
+00:05:17,985 --> 00:05:20,819
+This string right here, addObserverForName(String.
+
+113
+00:05:20,821 --> 00:05:23,789
+And then they're going to tell you the keys that you can use
+
+114
+00:05:23,791 --> 00:05:27,225
+to look inside this notification.userinfo. Okay,
+
+115
+00:05:27,227 --> 00:05:29,394
+those are all things that the radio station broadcaster has
+
+116
+00:05:29,396 --> 00:05:32,564
+to tell you if you want to listen to that broadcast and
+
+117
+00:05:32,566 --> 00:05:36,068
+make any sense of it, okay. All right, so
+
+118
+00:05:36,070 --> 00:05:40,272
+here's an example of listening to a radio station. So
+
+119
+00:05:40,274 --> 00:05:43,775
+there happens to be a radio station that broadcasts
+
+120
+00:05:43,777 --> 00:05:46,712
+whenever the user goes into their setting and
+
+121
+00:05:46,714 --> 00:05:50,482
+sets their font size. This is, did you see on the right,
+
+122
+00:05:50,484 --> 00:05:52,484
+there's a screen in the general settings
+
+123
+00:05:52,486 --> 00:05:54,086
+app that's under accessibility I think,
+
+124
+00:05:54,088 --> 00:05:56,655
+font sizes or something like that. And you can see there's
+
+125
+00:05:56,657 --> 00:05:58,824
+this slider down here. You can make your fonts bigger or
+
+126
+00:05:58,826 --> 00:06:02,260
+smaller. Okay, well when you change this a radio station
+
+127
+00:06:02,262 --> 00:06:05,197
+broadcast goes out to all the apps saying the,
+
+128
+00:06:05,199 --> 00:06:08,734
+what's called, content size category did change.
+
+129
+00:06:08,736 --> 00:06:11,036
+So this is the name of the radio station,
+
+130
+00:06:11,038 --> 00:06:14,573
+UIContentSizeCategoryDidChang- eNotification. Okay,
+
+131
+00:06:14,575 --> 00:06:18,944
+that's a constant somewhere in IOS. And it is
+
+132
+00:06:18,946 --> 00:06:21,880
+a string that just finds the name of this radio station.
+
+133
+00:06:21,882 --> 00:06:24,983
+So if you wanted to find out when the user changes
+
+134
+00:06:24,985 --> 00:06:29,354
+their font size you would just do defaultcenter here,
+
+135
+00:06:29,356 --> 00:06:31,990
+addObserverForName listen to that radio station.
+
+136
+00:06:31,992 --> 00:06:35,260
+The sender is going to be the UI application when the system
+
+137
+00:06:35,262 --> 00:06:37,929
+talks to you it usually talks to you from UI application,
+
+138
+00:06:37,931 --> 00:06:41,266
+but you might put nill right here because if anybody wants
+
+139
+00:06:41,268 --> 00:06:43,969
+to tell you that the content size category did change,
+
+140
+00:06:43,971 --> 00:06:45,837
+you're probably interested so you might say nill for
+
+141
+00:06:45,839 --> 00:06:48,807
+the object there. And then main queue you're almost
+
+142
+00:06:48,809 --> 00:06:49,941
+certainly gonna be listening for
+
+143
+00:06:49,943 --> 00:06:52,778
+broadcast of this radio station, on your main queue,
+
+144
+00:06:52,780 --> 00:06:55,680
+because when the font size changes we are gonna do
+
+145
+00:06:55,682 --> 00:06:57,416
+some UI thing. You're gonna react to it and
+
+146
+00:06:57,418 --> 00:07:01,586
+of course we know you can only do UI on the main queue. Okay?
+
+147
+00:07:01,588 --> 00:07:04,656
+So here's my closure, and right here I see I'm getting
+
+148
+00:07:04,658 --> 00:07:08,093
+the notification user info, inside there is a key, again,
+
+149
+00:07:08,095 --> 00:07:12,297
+this broadcast that's, you know, in some IOS place there.
+
+150
+00:07:12,299 --> 00:07:15,767
+UI content size category new value key, and it'll tell you
+
+151
+00:07:15,769 --> 00:07:19,738
+the new value of this size category of the font,
+
+152
+00:07:19,740 --> 00:07:24,943
+okay? It could be for example, UIContentSizeCategorySmall.
+
+153
+00:07:24,945 --> 00:07:27,012
+That's one of the size categories. And
+
+154
+00:07:27,014 --> 00:07:29,548
+once you get that new category, then you can react
+
+155
+00:07:29,550 --> 00:07:33,952
+to it, okay. Redraw something, whatever you wanna do.
+
+156
+00:07:33,954 --> 00:07:35,854
+By the way, if you're using preferred font,
+
+157
+00:07:35,856 --> 00:07:39,391
+remember we switched to using system font in our early apps?
+
+158
+00:07:39,393 --> 00:07:42,294
+We started using preferred fonts like the body font and
+
+159
+00:07:42,296 --> 00:07:42,360
+You remember all that? Those fonts are really cool because
+
+160
+00:07:42,362 --> 00:07:45,096
+the headline font.
+
+161
+00:07:45,098 --> 00:07:48,900
+they automatically are going to adjust to this size change.
+
+162
+00:07:48,902 --> 00:07:50,802
+So if you have a UI label somewhere, and
+
+163
+00:07:50,804 --> 00:07:54,406
+you used a prefered body font, and the person cranks up their
+
+164
+00:07:54,408 --> 00:07:57,709
+size really big, cuz maybe their eyes are getting old,
+
+165
+00:07:57,711 --> 00:08:00,612
+age is getting up with, catching up with them Then
+
+166
+00:08:00,614 --> 00:08:03,949
+it's automatically going to change those for you.
+
+167
+00:08:03,951 --> 00:08:06,518
+So that's kind of cool feature. Okay, but
+
+168
+00:08:06,520 --> 00:08:08,820
+sometimes you might have something else that some other
+
+169
+00:08:08,822 --> 00:08:11,122
+part of the UI that depends on the size of font that you have
+
+170
+00:08:11,124 --> 00:08:13,825
+to adjust as well. And maybe I'll show that in a little bit
+
+171
+00:08:13,827 --> 00:08:18,864
+in my demo on Wednesday. Okay, now, what about broadcasting.
+
+172
+00:08:18,866 --> 00:08:21,500
+What if you want to be a radio station broadcaster?
+
+173
+00:08:21,502 --> 00:08:24,002
+How do youd do that? That's very easy too.
+
+174
+00:08:24,004 --> 00:08:26,238
+You just create one of these NSNotifications,
+
+175
+00:08:26,240 --> 00:08:29,307
+the same thing that is given to your closure when you're
+
+176
+00:08:29,309 --> 00:08:31,843
+a listener. You just create one of these things and
+
+177
+00:08:31,845 --> 00:08:34,513
+then you're gonna ask the NSNotification default center
+
+178
+00:08:34,515 --> 00:08:38,116
+to post that notification. Okay, and then it's going to
+
+179
+00:08:38,118 --> 00:08:40,585
+broadcast on that radio station. And the notification
+
+180
+00:08:40,587 --> 00:08:43,455
+of course has to have the name of the radio station. And
+
+181
+00:08:43,457 --> 00:08:44,823
+also, the object that is sending it.
+
+182
+00:08:44,825 --> 00:08:47,659
+That's usually gonna be self, right. Your post notification,
+
+183
+00:08:47,661 --> 00:08:49,427
+you're gonna usually have the self be the center.
+
+184
+00:08:49,429 --> 00:08:51,630
+And then here's that user info you get to provide,
+
+185
+00:08:51,632 --> 00:08:55,500
+okay. This is the information that's gonna go to people
+
+186
+00:08:55,502 --> 00:08:57,536
+who listen to your broadcast. Okay,
+
+187
+00:08:57,538 --> 00:08:58,904
+you just post this notification and
+
+188
+00:08:58,906 --> 00:09:02,007
+all the listeners will have their closures executed
+
+189
+00:09:02,009 --> 00:09:06,211
+with this notification object as the argument. Okay,
+
+190
+00:09:06,213 --> 00:09:09,180
+pretty simple, all right. Okay, so
+
+191
+00:09:09,182 --> 00:09:12,350
+that's it for notifications, now I'm gonna move on to, and
+
+192
+00:09:12,352 --> 00:09:14,152
+I'm gonna talk about notification more like in when
+
+193
+00:09:14,154 --> 00:09:15,554
+we talk about Cloud Kit a little later,
+
+194
+00:09:15,556 --> 00:09:17,589
+there's notifications involved there, so we'll talk about
+
+195
+00:09:17,591 --> 00:09:20,859
+this more that and then in the day we'll talk about this too
+
+196
+00:09:20,861 --> 00:09:22,460
+So now we're gonna do a little different topic here which
+
+197
+00:09:22,462 --> 00:09:26,698
+is the application lifecycle, okay. So this is what happens
+
+198
+00:09:26,700 --> 00:09:29,734
+to your application as it goes through its life, okay.
+
+199
+00:09:29,736 --> 00:09:32,737
+And it's really encapsulated in these boxes right here.
+
+200
+00:09:32,739 --> 00:09:37,642
+This green box right here is the kind of your application
+
+201
+00:09:37,644 --> 00:09:41,212
+when it's the user's focus of attention when they're running
+
+202
+00:09:41,214 --> 00:09:44,783
+your app. The blue box is your app is still around and
+
+203
+00:09:44,785 --> 00:09:47,352
+running but it's not the one the user's interacting with
+
+204
+00:09:47,354 --> 00:09:51,690
+right now. And then these other spaces are not that,
+
+205
+00:09:51,692 --> 00:09:54,859
+okay. It's not either of those cases. So let's look at this
+
+206
+00:09:54,861 --> 00:09:58,229
+green box this foreground box. Inside that green box there's
+
+207
+00:09:58,231 --> 00:10:00,932
+actually a little state here called inactive.
+
+208
+00:10:00,934 --> 00:10:05,036
+Okay that's when your app is running, it's the foreground,
+
+209
+00:10:05,038 --> 00:10:06,972
+but it's not receiving any UI events, okay.
+
+210
+00:10:06,974 --> 00:10:10,408
+So this is kind of like when it's just getting started up,
+
+211
+00:10:10,410 --> 00:10:13,411
+okay. And then it moves from there into this state
+
+212
+00:10:13,413 --> 00:10:17,215
+active where it's running and receiving events. Okay so
+
+213
+00:10:17,217 --> 00:10:19,751
+there are just two distinct states there, and you'll see
+
+214
+00:10:19,753 --> 00:10:23,855
+why we have those in a moment. And then down here, okay,
+
+215
+00:10:23,857 --> 00:10:26,891
+when you're in this background area, at the bottom,
+
+216
+00:10:26,893 --> 00:10:30,428
+your code might be running, for a short amount of time.
+
+217
+00:10:30,430 --> 00:10:33,565
+You don't usually run in the background for very long. Now,
+
+218
+00:10:33,567 --> 00:10:37,135
+there's a misconception that iOS, at least until recently,
+
+219
+00:10:37,137 --> 00:10:38,570
+is not a multitasking system. Because,
+
+220
+00:10:38,572 --> 00:10:41,306
+it seems like you only have one app running at a time.
+
+221
+00:10:41,308 --> 00:10:41,539
+in iOS nine, they introduced the ability to have two apps
+
+222
+00:10:41,541 --> 00:10:44,409
+Well of course,
+
+223
+00:10:44,411 --> 00:10:44,809
+running at the same time,
+
+224
+00:10:44,811 --> 00:10:47,979
+on the same screen at the same time. In on iPad,
+
+225
+00:10:47,981 --> 00:10:52,884
+side by side. But even before that, apps could run
+
+226
+00:10:52,886 --> 00:10:55,654
+at the same time. It just one would be or two or three would
+
+227
+00:10:55,656 --> 00:10:57,956
+be in the background and one would be in the foreground.
+
+228
+00:10:57,958 --> 00:11:00,759
+Of course, we know that iOS is just UNIX underneath and
+
+229
+00:11:00,761 --> 00:11:03,461
+UNIX is a complete multitasking operating
+
+230
+00:11:03,463 --> 00:11:03,528
+system so
+
+231
+00:11:03,530 --> 00:11:08,466
+The single tasking nature that it would appear that IOS had,
+
+232
+00:11:08,468 --> 00:11:12,504
+was more a UI decision for the user. The user could
+
+233
+00:11:12,506 --> 00:11:14,539
+concentrate on the one thing they're doing at the time and
+
+234
+00:11:14,541 --> 00:11:17,442
+I have a cluttered, trying to figure out what's going on,
+
+235
+00:11:17,444 --> 00:11:18,643
+which apps are running all the time.
+
+236
+00:11:18,645 --> 00:11:21,312
+So it's kind of a simplification of the UI.
+
+237
+00:11:21,314 --> 00:11:24,549
+Okay, but even then, apps were running in the background.
+
+238
+00:11:24,551 --> 00:11:27,152
+And we'll talk about why apps run in the back,
+
+239
+00:11:27,154 --> 00:11:30,388
+background and when and all that in a moment here,
+
+240
+00:11:30,390 --> 00:11:32,624
+okay. When you go down to the state
+
+241
+00:11:32,626 --> 00:11:36,127
+at the bottom, okay, your code, you are not running.
+
+242
+00:11:36,129 --> 00:11:39,664
+None of your, no code is being executed in your app at all.
+
+243
+00:11:39,666 --> 00:11:43,001
+You're in the suspended state. So your process still exists,
+
+244
+00:11:43,003 --> 00:11:44,369
+but it's not getting any cycles from the CPU.
+
+245
+00:11:44,371 --> 00:11:47,806
+It's just sitting there. So spend it. At any time in here,
+
+246
+00:11:47,808 --> 00:11:50,742
+you could be killed, okay, and you could be killed
+
+247
+00:11:50,744 --> 00:11:53,578
+without ever having a chance to run again. So
+
+248
+00:11:53,580 --> 00:11:54,279
+when you get into this state,
+
+249
+00:11:54,281 --> 00:11:57,949
+you wanna make sure you're ready to be killed, okay?
+
+250
+00:11:57,951 --> 00:12:00,585
+So that you don't have any data that's half written or
+
+251
+00:12:00,587 --> 00:12:03,555
+any kind of weird state, you have to be ready to be killed
+
+252
+00:12:03,557 --> 00:12:08,493
+down in this suspended state. Okay? And then of course,
+
+253
+00:12:08,495 --> 00:12:11,229
+y- you have the not running state at the top, and
+
+254
+00:12:11,231 --> 00:12:12,964
+how do we get out of this not running state?
+
+255
+00:12:12,966 --> 00:12:13,598
+So, the not running state, there's,
+
+256
+00:12:13,600 --> 00:12:16,534
+there's no process that's run in your app, and how do we get
+
+257
+00:12:16,536 --> 00:12:18,803
+out of that? Well, we getting out of it by launching.
+
+258
+00:12:18,805 --> 00:12:21,506
+And the launching process takes you from not running
+
+259
+00:12:21,508 --> 00:12:25,376
+into the foreground Thorough this inactive state and
+
+260
+00:12:25,378 --> 00:12:26,377
+then into active state.
+
+261
+00:12:26,379 --> 00:12:29,214
+Now it's also possible for you to be launched directly into
+
+262
+00:12:29,216 --> 00:12:32,517
+the background. Not really sure I am here but that's
+
+263
+00:12:32,519 --> 00:12:37,388
+possible as well. When you switch to another application.
+
+264
+00:12:37,390 --> 00:12:38,623
+So you are the primary application.
+
+265
+00:12:38,625 --> 00:12:40,592
+The user goes and switches to some other application.
+
+266
+00:12:40,594 --> 00:12:42,994
+Maybe by double clicking the home button or something like
+
+267
+00:12:42,996 --> 00:12:45,263
+that. Going back and picking something else.
+
+268
+00:12:45,265 --> 00:12:47,098
+What happens here is you go from the active state to
+
+269
+00:12:47,100 --> 00:12:50,568
+the inactive state and around to the background state. And
+
+270
+00:12:50,570 --> 00:12:53,905
+then after a little while, you moved to suspended, okay,
+
+271
+00:12:53,907 --> 00:12:56,374
+while this other app is running. Okay, so
+
+272
+00:12:56,376 --> 00:12:59,043
+if they go back to you, then you're gonna go back, okay,
+
+273
+00:12:59,045 --> 00:13:04,482
+the reverse here. Yes. I have mentioned this already.
+
+274
+00:13:04,484 --> 00:13:04,682
+When you're killed,
+
+275
+00:13:04,684 --> 00:13:06,217
+when you go through Suspended to Not running,
+
+276
+00:13:06,219 --> 00:13:09,387
+no code gets run in your app. So any preparation you have to
+
+277
+00:13:09,389 --> 00:13:11,990
+do for being killed has to happen before that. Now,
+
+278
+00:13:11,992 --> 00:13:14,692
+at each of these transitions happen, all these arrows,
+
+279
+00:13:14,694 --> 00:13:18,363
+okay, code gets executed in your application. Most notably
+
+280
+00:13:18,365 --> 00:13:21,366
+in your AppDelegate, okay? We know that AppDelegate file,
+
+281
+00:13:21,368 --> 00:13:24,469
+a file I always Move out of the way into supporting files
+
+282
+00:13:24,471 --> 00:13:28,339
+place that record data, and manage up the contexting was.
+
+283
+00:13:28,341 --> 00:13:30,875
+Okay, well, there's a bunch of methods in there since it is
+
+284
+00:13:30,877 --> 00:13:34,279
+the delegates UIApplication object not much methods
+
+285
+00:13:34,281 --> 00:13:36,481
+in there they're called as we transition through all
+
+286
+00:13:36,483 --> 00:13:38,783
+these states. So, we'll talk about those. So,
+
+287
+00:13:38,785 --> 00:13:42,453
+when you're going from not running to inactive, okay, or
+
+288
+00:13:42,455 --> 00:13:46,291
+this all time from not running into the background.
+
+289
+00:13:46,293 --> 00:13:49,060
+Okay, you could do this little path here
+
+290
+00:13:49,062 --> 00:13:53,198
+not running Inactive into the background. You get this
+
+291
+00:13:53,200 --> 00:13:55,066
+method right called in your AppDelegate called
+
+292
+00:13:55,068 --> 00:13:58,803
+ApplicationDidFinishLaunching- WithOption, okay, and
+
+293
+00:13:58,805 --> 00:14:01,840
+it's exactly what its sound. It's saying okay you have
+
+294
+00:14:01,842 --> 00:14:04,576
+launch, you're in the Inactive state, okay.
+
+295
+00:14:04,578 --> 00:14:08,079
+And here are some options and these options is a dictionary.
+
+296
+00:14:08,081 --> 00:14:09,380
+Okay and we'll talk about what's in the dictionary in
+
+297
+00:14:09,382 --> 00:14:12,951
+a second. You also are gonna get an NSNotification for
+
+298
+00:14:12,953 --> 00:14:15,820
+radio station broadcast on this radio station the
+
+299
+00:14:15,822 --> 00:14:19,057
+UIApplicationDidFinishLaunchi- ngNotification radio station.
+
+300
+00:14:19,059 --> 00:14:22,927
+And so if you observe on that you'll get your closer called
+
+301
+00:14:22,929 --> 00:14:26,397
+when the app reaches this inactive state right here.
+
+302
+00:14:26,399 --> 00:14:29,334
+Okay. Now, what's this dictionary all about right
+
+303
+00:14:29,336 --> 00:14:32,337
+here? Okay. So this dictionary is passed to you and
+
+304
+00:14:32,339 --> 00:14:34,939
+it tells you basically why you were launched.
+
+305
+00:14:34,941 --> 00:14:37,308
+Now, you always think of I get launched because someone
+
+306
+00:14:37,310 --> 00:14:40,311
+clicked on my icon. That's true. That's one way to get
+
+307
+00:14:40,313 --> 00:14:42,447
+launched but there's a lot other way to get launched. For
+
+308
+00:14:42,449 --> 00:14:45,950
+example, someone might want you to open URL. You might be
+
+309
+00:14:45,952 --> 00:14:50,421
+an app Like you're the Keynote app, okay, on iOS. And
+
+310
+00:14:50,423 --> 00:14:53,258
+you know how to open Keynote files. So when someone says,
+
+311
+00:14:53,260 --> 00:14:55,927
+I wanna open this Keynote file, the app is gonna launch
+
+312
+00:14:55,929 --> 00:14:59,264
+Keynote, okay. And so this is going to tell them
+
+313
+00:14:59,266 --> 00:15:03,601
+that that's why Keynote got launched. You might
+
+314
+00:15:03,603 --> 00:15:06,638
+do this because you enter a certain place in the world.
+
+315
+00:15:06,640 --> 00:15:06,871
+There's a way,
+
+316
+00:15:06,873 --> 00:15:09,607
+with core location which we haven't talked about,
+
+317
+00:15:09,609 --> 00:15:09,741
+to say hey,
+
+318
+00:15:09,743 --> 00:15:13,044
+if this person walks in this little area of the world,
+
+319
+00:15:13,046 --> 00:15:17,348
+these GPS coordinates, then wake my app up. Launch me,
+
+320
+00:15:17,350 --> 00:15:20,518
+because I want to do something when they walk into that area.
+
+321
+00:15:20,520 --> 00:15:23,154
+Okay? So you might get launched because of that. You
+
+322
+00:15:23,156 --> 00:15:25,957
+might be continuing activities started on another device.
+
+323
+00:15:25,959 --> 00:15:28,026
+How many people have used Da app
+
+324
+00:15:28,028 --> 00:15:30,828
+continuation where you start using an app like Safari or
+
+325
+00:15:30,830 --> 00:15:32,730
+something on your iPhone or something and
+
+326
+00:15:32,732 --> 00:15:34,632
+then you go over to your iPad and you just continue,
+
+327
+00:15:34,634 --> 00:15:36,401
+there's a little thing in the corner, okay,
+
+328
+00:15:36,403 --> 00:15:38,269
+only a couple of you are nodding your heads but
+
+329
+00:15:38,271 --> 00:15:40,438
+it's kind of a cool feature but if you go and
+
+330
+00:15:40,440 --> 00:15:43,074
+press that little continuation icon on your IOS and
+
+331
+00:15:43,076 --> 00:15:45,343
+of course it's going to launch you to continue what you were
+
+332
+00:15:45,345 --> 00:15:49,414
+doing on the device. Also a notification might have
+
+333
+00:15:49,416 --> 00:15:51,382
+arrived for you. Like push notification.
+
+334
+00:15:51,384 --> 00:15:54,652
+Who doesn't know what a push notification is?
+
+335
+00:15:54,654 --> 00:15:55,853
+Okay, so, everybody knows what that is.
+
+336
+00:15:55,855 --> 00:15:58,556
+It's little things that make the badges on your icon,
+
+337
+00:15:58,558 --> 00:16:01,059
+just basically when communication's coming from
+
+338
+00:16:01,061 --> 00:16:03,695
+servers out there in the world, things like that.
+
+339
+00:16:03,697 --> 00:16:07,065
+Well of course that might launch you. Maybe you have
+
+340
+00:16:07,067 --> 00:16:10,368
+some Bluetooth devi, Bluetooth device that is attached to
+
+341
+00:16:10,370 --> 00:16:13,771
+your computer and it wants to do something with your app,
+
+342
+00:16:13,773 --> 00:16:14,772
+it might launch your app to do that.
+
+343
+00:16:14,774 --> 00:16:17,408
+So you can see there's tons of examples and these,
+
+344
+00:16:17,410 --> 00:16:19,777
+this dictionary is gonna contain the information that
+
+345
+00:16:19,779 --> 00:16:23,915
+tells you For example, the URL it wants to open or that,
+
+346
+00:16:23,917 --> 00:16:26,718
+you know, that, you entered a certain place in the world or
+
+347
+00:16:26,720 --> 00:16:28,286
+things like that. So it's gonna give you information
+
+348
+00:16:28,288 --> 00:16:32,724
+about what happened that caused you to launch, okay.
+
+349
+00:16:33,893 --> 00:16:35,560
+One thing about this application to finish
+
+350
+00:16:35,562 --> 00:16:37,395
+launching with options. It used to be
+
+351
+00:16:37,397 --> 00:16:41,332
+that you actually built you UI here. Okay your primary UI.
+
+352
+00:16:41,334 --> 00:16:44,268
+Like a split view controller with a navigation controller
+
+353
+00:16:44,270 --> 00:16:46,471
+in the master with this view controller in it. And you
+
+354
+00:16:46,473 --> 00:16:50,942
+would actually build that in code inside of this. A method,
+
+355
+00:16:50,944 --> 00:16:54,145
+we no longer do that anymore, we use storyboards. But,
+
+356
+00:16:54,147 --> 00:16:55,913
+when you are doing your final project you are going to be
+
+357
+00:16:55,915 --> 00:16:59,417
+out searching on the internet for things and you are going
+
+358
+00:16:59,419 --> 00:17:01,152
+to find something and someone is going to say, Yeah,
+
+359
+00:17:01,154 --> 00:17:03,454
+you do this by putting code in your application to finish
+
+360
+00:17:03,456 --> 00:17:05,289
+launching with options. You create your split view there
+
+361
+00:17:05,291 --> 00:17:08,826
+and you set the delegates. Whoa don't do that That's old.
+
+362
+00:17:08,828 --> 00:17:12,063
+That's old IOS 7 kind of behavior but
+
+363
+00:17:12,065 --> 00:17:13,598
+you know sometimes on the internet when you're searching
+
+364
+00:17:13,600 --> 00:17:16,000
+you can't tell what's new and what's old. The good thing for
+
+365
+00:17:16,002 --> 00:17:19,370
+you guys is, if you search for Swift stuff, you're likely
+
+366
+00:17:19,372 --> 00:17:21,973
+gonna get new stuff. Swift's only been around since IOS 8 I
+
+367
+00:17:21,975 --> 00:17:27,045
+guess, maybe it was 9 I guess. I was eight,
+
+368
+00:17:27,047 --> 00:17:30,014
+I don't remember, whichever. So, so, it's new.
+
+369
+00:17:30,016 --> 00:17:32,717
+So you're not likely to see this stuff when you're looking
+
+370
+00:17:32,719 --> 00:17:37,255
+for Swift-based code. So that's good. Okay. All right,
+
+371
+00:17:37,257 --> 00:17:40,491
+so what about this transition right here? Okay. So you
+
+372
+00:17:40,493 --> 00:17:45,897
+are going out of the inactive of this, Active state into
+
+373
+00:17:45,899 --> 00:17:49,700
+inactive. So you were active, user was interacting with you.
+
+374
+00:17:49,702 --> 00:17:52,703
+And now you have been moved into the inactive state.
+
+375
+00:17:52,705 --> 00:17:55,239
+Now why is it important to know this state.
+
+376
+00:17:55,241 --> 00:18:01,245
+This I like to talk, about as the 'app is paused' state.
+
+377
+00:18:01,247 --> 00:18:04,082
+Okay? So for example, let's imagine a match in breakout.
+
+378
+00:18:04,084 --> 00:18:07,919
+Okay? This would be the you want to
+
+379
+00:18:07,921 --> 00:18:09,120
+pause the motion of the ball.
+
+380
+00:18:09,122 --> 00:18:12,757
+Remember it's Linear Velocity and Stop it. Okay,
+
+381
+00:18:12,759 --> 00:18:16,861
+in here. Now, you haven't gone to any of this other state,
+
+382
+00:18:16,863 --> 00:18:19,730
+you just move from Active to Inactive. Now,
+
+383
+00:18:19,732 --> 00:18:22,800
+why might you move from Active to Inactive? Well, you might
+
+384
+00:18:22,802 --> 00:18:25,670
+be in your way to being thrown in to the background and
+
+385
+00:18:25,672 --> 00:18:28,639
+then suspend it but maybe just a phone call came in.,
+
+386
+00:18:28,641 --> 00:18:31,242
+Okay,if a phone call comes in you move to
+
+387
+00:18:31,244 --> 00:18:34,846
+the inactive foreground state. The phone call gets possessed.
+
+388
+00:18:34,848 --> 00:18:37,682
+When the person hangs up you go back to active. So,
+
+389
+00:18:37,684 --> 00:18:39,383
+if you had the bouncing ball in Breakout and
+
+390
+00:18:39,385 --> 00:18:41,719
+a phone call comes in, you wanna stop the ball.
+
+391
+00:18:41,721 --> 00:18:44,021
+When the call's over you wanna continue the ball right?
+
+392
+00:18:44,023 --> 00:18:46,757
+So this is the pause. Think about it as pause.
+
+393
+00:18:46,759 --> 00:18:50,027
+So, that's what you're gonna do in will resign active. And
+
+394
+00:18:50,029 --> 00:18:53,464
+again, there's a, radio station for it as well, okay,
+
+395
+00:18:53,466 --> 00:18:56,033
+as you can find out. The radio station is nice because
+
+396
+00:18:56,035 --> 00:18:59,137
+you can find out anywhere in your application if you just
+
+397
+00:18:59,139 --> 00:19:00,471
+went to this resign, okay?
+
+398
+00:19:00,473 --> 00:19:03,241
+You don't have to implement some method in app delegate,
+
+399
+00:19:03,243 --> 00:19:04,976
+you can find out anywhere in any view controller,
+
+400
+00:19:04,978 --> 00:19:10,915
+just sign up to listen to this radio station, okay. Now,
+
+401
+00:19:10,917 --> 00:19:13,050
+when you come back active again, okay,
+
+402
+00:19:13,052 --> 00:19:16,120
+maybe the phone call was over or maybe you're launching and
+
+403
+00:19:16,122 --> 00:19:19,457
+got to here. Okay or maybe you came out of the background.
+
+404
+00:19:19,459 --> 00:19:21,225
+For whatever reason when you come back here,
+
+405
+00:19:21,227 --> 00:19:21,926
+that's kind of the unpause.
+
+406
+00:19:21,928 --> 00:19:24,695
+Okay, that's where you're gonna put the ball back and
+
+407
+00:19:24,697 --> 00:19:29,000
+resume it's linear velocity to what it was. Okay? So this is
+
+408
+00:19:29,002 --> 00:19:32,069
+the pause and unpause capping between these two states right
+
+409
+00:19:32,071 --> 00:19:35,473
+here. And the great thing is, if you paused the ball and
+
+410
+00:19:35,475 --> 00:19:38,876
+you went to background, that's fine, it would be paused. And
+
+411
+00:19:38,878 --> 00:19:38,910
+when you come back,
+
+412
+00:19:38,912 --> 00:19:41,279
+whether it's come back from background or whatever reason,
+
+413
+00:19:41,281 --> 00:19:45,149
+you unpause and move the ball again. That's fine too.
+
+414
+00:19:45,151 --> 00:19:48,986
+All right? Now what about this state right here. Okay,
+
+415
+00:19:48,988 --> 00:19:51,189
+so here you were in the inactive state and
+
+416
+00:19:51,191 --> 00:19:53,090
+now you're moved into the background. Okay,
+
+417
+00:19:53,092 --> 00:19:55,826
+this is an important one right here, because when you move
+
+418
+00:19:55,828 --> 00:19:58,362
+into the background, you're only gonna get to run for
+
+419
+00:19:58,364 --> 00:20:00,398
+a short amount of time, about 30 seconds or so,
+
+420
+00:20:00,400 --> 00:20:02,767
+it's not actually guaranteed how long you get to run,
+
+421
+00:20:02,769 --> 00:20:06,304
+but practical matter, it's around 30 seconds. and
+
+422
+00:20:06,306 --> 00:20:08,606
+you'd better, in 30 seconds, you'd better hurry up,
+
+423
+00:20:08,608 --> 00:20:11,075
+and clean up. Because, after this,
+
+424
+00:20:11,077 --> 00:20:13,144
+you're probably gonna move down to the state suspended,
+
+425
+00:20:13,146 --> 00:20:16,714
+and then you can be killed at any time, okay? So, background
+
+426
+00:20:16,716 --> 00:20:19,550
+is really where you wanna batten down the hatches, okay?
+
+427
+00:20:19,552 --> 00:20:24,956
+Close files, you know, get rid of any stuff you're not using.
+
+428
+00:20:24,958 --> 00:20:28,926
+Things like that. Get your network state into the state
+
+429
+00:20:28,928 --> 00:20:31,162
+you want things like that because you might be,
+
+430
+00:20:31,164 --> 00:20:33,197
+this might be a prelude to being killed.
+
+431
+00:20:33,199 --> 00:20:34,098
+Maybe not but it might be so
+
+432
+00:20:34,100 --> 00:20:37,868
+you really wanna ask that here. Now it's possible to ask
+
+433
+00:20:37,870 --> 00:20:41,339
+the system for more time more if 30 seconds is not quite
+
+434
+00:20:41,341 --> 00:20:43,174
+enough, you can ask for a little bit more time but
+
+435
+00:20:43,176 --> 00:20:45,109
+eventually the system will get tired of you asking for
+
+436
+00:20:45,111 --> 00:20:48,613
+more time and they'll stop giving you more time. Okay.
+
+437
+00:20:48,615 --> 00:20:53,918
+Now, other applications, run in the background as well.
+
+438
+00:20:54,120 --> 00:20:56,988
+If not coming into this situation from here.
+
+439
+00:20:56,990 --> 00:20:59,890
+Whereas, user went to a different app or whatever. But
+
+440
+00:20:59,892 --> 00:21:02,026
+you can actually do things in the background.
+
+441
+00:21:02,028 --> 00:21:05,997
+And we'll talk about that in a second too. Okay.
+
+442
+00:21:05,999 --> 00:21:09,033
+Now when you come back okay, so you were in the background
+
+443
+00:21:09,035 --> 00:21:10,868
+okay or even suspended and then you went back
+
+444
+00:21:10,870 --> 00:21:13,070
+to the background and then the user made you active again.
+
+445
+00:21:13,072 --> 00:21:15,873
+Of course you come back up around here and you find out
+
+446
+00:21:15,875 --> 00:21:18,476
+here that application will enter foreground. You see
+
+447
+00:21:18,478 --> 00:21:20,945
+how you're coming out of the background into the green box
+
+448
+00:21:20,947 --> 00:21:24,382
+foreground there. Will tell you that you're back alive.
+
+449
+00:21:24,384 --> 00:21:26,150
+And now you can un-batten down the hatchets.
+
+450
+00:21:26,152 --> 00:21:29,453
+Undo what you did when you got into the background here.
+
+451
+00:21:29,455 --> 00:21:31,722
+You can open things back up.
+
+452
+00:21:32,258 --> 00:21:36,627
+All right, now, what other things can you do in
+
+453
+00:21:36,629 --> 00:21:40,064
+the AppDelegate besides these lifecycle methods? Tons of
+
+454
+00:21:40,066 --> 00:21:43,734
+things, okay. So not only can you handle push notifications
+
+455
+00:21:43,736 --> 00:21:46,771
+here, okay. You also have a local notification, which
+
+456
+00:21:46,773 --> 00:21:50,541
+are notification that you set to go up at a certain time.
+
+457
+00:21:50,543 --> 00:21:54,445
+Like reminders, okay, it's at 10:00pm every day,
+
+458
+00:21:54,447 --> 00:21:57,581
+have this local notification go up and wake my app up, and
+
+459
+00:21:57,583 --> 00:22:03,354
+go do something. Well, all that handled through the Also,
+
+460
+00:22:03,356 --> 00:22:05,589
+data protection, okay.
+
+461
+00:22:05,591 --> 00:22:09,593
+When your, when your app or your device is locked,
+
+462
+00:22:09,595 --> 00:22:12,663
+then a lot of the data, pretty much by default,
+
+463
+00:22:12,665 --> 00:22:15,166
+all of the data on your phone is encrypted. Okay.
+
+464
+00:22:15,168 --> 00:22:18,302
+That's why a locked phone, no one can get in there to your
+
+465
+00:22:18,304 --> 00:22:20,671
+data cuz it's encrypted, okay? And so
+
+466
+00:22:20,673 --> 00:22:24,208
+all the locking and unlocking and giving you access of files
+
+467
+00:22:24,210 --> 00:22:26,677
+where they're not encrypted when you're unlocked and
+
+468
+00:22:26,679 --> 00:22:27,611
+encrypted when they're locked,
+
+469
+00:22:27,613 --> 00:22:31,982
+that's all the AppDelegate. The AppDelegate also would get
+
+470
+00:22:31,984 --> 00:22:33,351
+called if you were already running and
+
+471
+00:22:33,353 --> 00:22:35,386
+someone said open this URL, like your keynote,
+
+472
+00:22:35,388 --> 00:22:38,589
+and someone said open this keynote file. You can also do
+
+473
+00:22:38,591 --> 00:22:41,359
+what's called background fetching which is kinda cool.
+
+474
+00:22:41,361 --> 00:22:41,592
+Let's say your some
+
+475
+00:22:41,594 --> 00:22:43,260
+social media app or something like that.
+
+476
+00:22:43,262 --> 00:22:47,832
+A news app and you want to kinda through out the day,
+
+477
+00:22:47,834 --> 00:22:49,433
+go often fetch the latest news.
+
+478
+00:22:49,435 --> 00:22:51,902
+So when the app runs you got the latest news right there.
+
+479
+00:22:51,904 --> 00:22:54,972
+You don't have to go fetch on the network at that time. And
+
+480
+00:22:54,974 --> 00:22:56,207
+you are actually allowed to do that,
+
+481
+00:22:56,209 --> 00:22:59,677
+so this background fetching Let your app launch and
+
+482
+00:22:59,679 --> 00:23:02,713
+run in the background for the little while again not too
+
+483
+00:23:02,715 --> 00:23:05,783
+long okay this is another one too many apps stealing cycles
+
+484
+00:23:05,785 --> 00:23:08,753
+from the foreground app but it will run in the background and
+
+485
+00:23:08,755 --> 00:23:10,020
+you can go do some network activity.
+
+486
+00:23:10,022 --> 00:23:10,855
+Pull down your data or whatever and
+
+487
+00:23:10,857 --> 00:23:14,525
+then go back to sleep and the system manages that and
+
+488
+00:23:14,527 --> 00:23:15,659
+you can go look at the documentation for
+
+489
+00:23:15,661 --> 00:23:19,597
+UI application to find out how you set this up. You have to
+
+490
+00:23:19,599 --> 00:23:22,533
+enable something in the capabilities of your app.
+
+491
+00:23:22,535 --> 00:23:22,900
+You set this up and
+
+492
+00:23:22,902 --> 00:23:25,369
+you can say kinda how often you wanna be woken up and
+
+493
+00:23:25,371 --> 00:23:28,873
+all those kinda things. If you abuse this, of course this so
+
+494
+00:23:28,875 --> 00:23:32,243
+we'll stop waking you up in the background. Other Other
+
+495
+00:23:32,245 --> 00:23:34,245
+reasons that you might wake up in the background.
+
+496
+00:23:34,247 --> 00:23:38,416
+You might be a VOIP app, right. A voice over IP app and
+
+497
+00:23:38,418 --> 00:23:41,218
+so you're using some other application in the foreground,
+
+498
+00:23:41,220 --> 00:23:43,954
+but you're talking on over VOIP to someone else.
+
+499
+00:23:43,956 --> 00:23:45,956
+Or you're a music playing app, okay.
+
+500
+00:23:45,958 --> 00:23:47,324
+And the person's got their headphones on, they're
+
+501
+00:23:47,326 --> 00:23:49,693
+listening to your music while they're using some other app.
+
+502
+00:23:49,695 --> 00:23:51,529
+Of course you're of course running in the background in
+
+503
+00:23:51,531 --> 00:23:53,864
+that case. So there are a lot of cases where you can run in
+
+504
+00:23:53,866 --> 00:23:56,100
+the background and you can look it all this up in your UI
+
+505
+00:23:56,102 --> 00:23:59,503
+application. Unfortunately, again from time constraints,
+
+506
+00:23:59,505 --> 00:24:00,538
+I don't have time to go thru and
+
+507
+00:24:00,540 --> 00:24:03,674
+show you all the Cool thing to know in the background but
+
+508
+00:24:03,676 --> 00:24:04,475
+these are some of them, and
+
+509
+00:24:04,477 --> 00:24:08,012
+almost all of this stuff happens with your AppDelegate.
+
+510
+00:24:08,014 --> 00:24:10,448
+Okay the methods in the AppDelegate.
+
+511
+00:24:11,117 --> 00:24:14,518
+All right, let's talk about UIApplication. The actual
+
+512
+00:24:14,520 --> 00:24:16,754
+object UIApplication is only one instance,
+
+513
+00:24:16,756 --> 00:24:19,957
+obviously in your app. You get it by calling this method
+
+514
+00:24:19,959 --> 00:24:24,328
+UIApplication.sharedapplica- tion Right there. Okay.
+
+515
+00:24:24,330 --> 00:24:28,666
+And it manages all the global behavior in your app. Mostly
+
+516
+00:24:28,668 --> 00:24:31,302
+it delegates things to its delegate, the app delegate,
+
+517
+00:24:31,304 --> 00:24:34,071
+so that's good, that's why we see so much behavior there.
+
+518
+00:24:34,073 --> 00:24:36,841
+But it does have some useful functionality of it's own.
+
+519
+00:24:36,843 --> 00:24:39,376
+For example, it has a method called openURL.
+
+520
+00:24:39,378 --> 00:24:41,645
+You saw this in your smashtag. Right,
+
+521
+00:24:41,647 --> 00:24:44,181
+this is how you could click on a URL and open it up.
+
+522
+00:24:44,183 --> 00:24:47,618
+You call this application method openURL okay.
+
+523
+00:24:47,620 --> 00:24:51,121
+You can register here for scheduling these
+
+524
+00:24:51,123 --> 00:24:53,591
+notifications. These local notifications, right, those
+
+525
+00:24:53,593 --> 00:24:56,427
+things I was telling you wake up every day at 10 o'clock and
+
+526
+00:24:56,429 --> 00:24:59,296
+run my app kind of things. You actually register and
+
+527
+00:24:59,298 --> 00:25:02,800
+schedule them here in UIApplication If
+
+528
+00:25:02,802 --> 00:25:05,202
+you are doing the background fetching thing I talked about.
+
+529
+00:25:05,204 --> 00:25:08,672
+You can set the minimum fetch interval. Okay,
+
+530
+00:25:08,674 --> 00:25:09,607
+so how often your background,
+
+531
+00:25:09,609 --> 00:25:12,243
+things gonna open up in the background in run? Here is
+
+532
+00:25:12,245 --> 00:25:15,713
+how you ask for more time if you're in the background.
+
+533
+00:25:15,715 --> 00:25:20,251
+Background task with expiration handler. Okay,
+
+534
+00:25:20,253 --> 00:25:23,153
+there's a little spinning wheel on the upper left
+
+535
+00:25:23,155 --> 00:25:26,023
+corner in the status bar of your iOS device.
+
+536
+00:25:26,025 --> 00:25:26,624
+I'm sure you've seen it, right,
+
+537
+00:25:26,626 --> 00:25:29,159
+that's supposed to represent network activity. You can turn
+
+538
+00:25:29,161 --> 00:25:32,563
+that on and off with this bool right here in UIApplication.
+
+539
+00:25:32,565 --> 00:25:34,798
+networkActivityIndicatorVis- ible equals true and
+
+540
+00:25:34,800 --> 00:25:38,702
+it'll on start spinning. Say false, it'll turn off.
+
+541
+00:25:38,704 --> 00:25:41,539
+Okay, and you generally should do this anytime you're
+
+542
+00:25:41,541 --> 00:25:45,009
+doing any network activity so that the user knows, app is
+
+543
+00:25:45,011 --> 00:25:49,046
+accessing the network right now. You can also find out
+
+544
+00:25:49,048 --> 00:25:51,582
+a lot of things, like remember that content sides category,
+
+545
+00:25:51,584 --> 00:25:54,051
+the fonts, big fonts on, you can find that out,
+
+546
+00:25:54,053 --> 00:25:55,786
+you can poll it, of course, you could also listen
+
+547
+00:25:55,788 --> 00:25:57,821
+to the radio station that tells you when it changes, but
+
+548
+00:25:57,823 --> 00:26:00,224
+you can poll it. You can also find out how much time
+
+549
+00:26:00,226 --> 00:26:03,160
+you've got remaining until you're gonna be suspended
+
+550
+00:26:03,162 --> 00:26:06,497
+from the background state. And you can even find out
+
+551
+00:26:06,499 --> 00:26:07,998
+what state you're in. Am I in the foreground?
+
+552
+00:26:08,000 --> 00:26:11,835
+Am I in the background etc. With this guy right there.
+
+553
+00:26:12,305 --> 00:26:15,639
+Okay? Now let's talk about Info.plist.
+
+554
+00:26:15,641 --> 00:26:16,941
+We've actually seen Info.plist.
+
+555
+00:26:16,943 --> 00:26:21,345
+Remember, that's where we went when we tried to access URLs,
+
+556
+00:26:21,347 --> 00:26:23,948
+and they were HTTP not HTTPS, right? And
+
+557
+00:26:23,950 --> 00:26:27,384
+we had to go in here and add something to our Info.plist
+
+558
+00:26:27,386 --> 00:26:32,957
+that allowed us to kind of unsecurely access URLs and
+
+559
+00:26:32,959 --> 00:26:35,593
+in general Info.plist is for things like that.
+
+560
+00:26:35,595 --> 00:26:38,262
+Little settings that you're gonna set to do things like
+
+561
+00:26:38,264 --> 00:26:41,599
+that. You can see that there's an, kind of a property list
+
+562
+00:26:41,601 --> 00:26:45,536
+editor right here. Lets you go through and edit values and
+
+563
+00:26:45,538 --> 00:26:48,973
+even you know, if the values are arrays okay, you can
+
+564
+00:26:48,975 --> 00:26:52,409
+edit that in there. You can also right-click on it and
+
+565
+00:26:52,411 --> 00:26:56,246
+change it to be an XML view, okay? I don't really recommend
+
+566
+00:26:56,248 --> 00:26:58,849
+this, cuz it's easy to make a syntax error in here, and
+
+567
+00:26:58,851 --> 00:27:00,050
+now your Info.plist can't be read.
+
+568
+00:27:00,052 --> 00:27:02,720
+So I'd stick with the other view. But actually, most of
+
+569
+00:27:02,722 --> 00:27:06,924
+the things in Info.plist you set In the general settings of
+
+570
+00:27:06,926 --> 00:27:09,994
+your project. Right? All these places where we said
+
+571
+00:27:09,996 --> 00:27:13,931
+things like, portrait upside down or landscape left.
+
+572
+00:27:13,933 --> 00:27:14,431
+Which one of those are allowed?
+
+573
+00:27:14,433 --> 00:27:17,301
+Those are info.p list things but we edit them here.
+
+574
+00:27:17,303 --> 00:27:21,805
+It's just nicer. And most of the common ones we can find in
+
+575
+00:27:22,241 --> 00:27:27,678
+here. Okay? Now, in addition to all, all the settings there
+
+576
+00:27:27,680 --> 00:27:31,982
+there's also some capabilities in your app that you have to
+
+577
+00:27:31,984 --> 00:27:35,719
+explicitly enable if you wanna use them, okay? And you do
+
+578
+00:27:35,721 --> 00:27:38,622
+this in the Capabilities tab in your Project Setting,
+
+579
+00:27:38,624 --> 00:27:39,690
+it looks like this. Okay.
+
+580
+00:27:39,692 --> 00:27:41,425
+This list is always always changing. But
+
+581
+00:27:41,427 --> 00:27:43,961
+you can see a lot of cool features in here like iCloud,
+
+582
+00:27:43,963 --> 00:27:47,031
+wich I'm gonna talk about a little later in this lecture,
+
+583
+00:27:47,033 --> 00:27:47,598
+and the Game Centre,
+
+584
+00:27:47,600 --> 00:27:51,201
+Apple Pay, here the background fetching thing,
+
+585
+00:27:51,203 --> 00:27:55,873
+right here, Data Protection down here, Home Kit and
+
+586
+00:27:55,875 --> 00:27:58,909
+Health Kit down at the bottom. If you wanna use any of these,
+
+587
+00:27:58,911 --> 00:28:01,812
+you have to turn it on by just going to this capabilities
+
+588
+00:28:01,814 --> 00:28:04,181
+tab in your project settings. And just clicking this
+
+589
+00:28:04,183 --> 00:28:07,184
+from off to on. And when you click it to on, there's going
+
+590
+00:28:07,186 --> 00:28:08,986
+to be various settings for that thing. Okay and
+
+591
+00:28:08,988 --> 00:28:12,222
+we'll see this all in detail when we do Cloud Kit. Okay,
+
+592
+00:28:12,224 --> 00:28:15,092
+you can also see from this how much stuff I just can't cover
+
+593
+00:28:15,094 --> 00:28:17,094
+in this class. In fact, of this whole list.
+
+594
+00:28:17,096 --> 00:28:19,863
+Only thing I'm gonna cover is the first one, I cloud.
+
+595
+00:28:19,865 --> 00:28:22,499
+Okay? The rest of the stuff, I just don't have time to get to
+
+596
+00:28:22,501 --> 00:28:25,803
+it all. When you go start looking through the doc and
+
+597
+00:28:25,805 --> 00:28:27,371
+you start looking at some of the things you might do,
+
+598
+00:28:27,373 --> 00:28:29,940
+you can know that you have to go here to turn things on.
+
+599
+00:28:29,942 --> 00:28:33,877
+Okay? All right, so
+
+600
+00:28:33,879 --> 00:28:36,580
+that's pretty much it for your application lifestyle,
+
+601
+00:28:36,582 --> 00:28:40,050
+life cycle, and kind of overall settings in your app.
+
+602
+00:28:40,052 --> 00:28:44,722
+The next topic I'm gonna do is alerts and action sheets okay.
+
+603
+00:28:44,724 --> 00:28:46,056
+So these are the pop up and
+
+604
+00:28:46,058 --> 00:28:49,793
+ask the user something UI okay. And they're very,
+
+605
+00:28:49,795 --> 00:28:54,965
+very similar the API for them is almost identical okay but
+
+606
+00:28:54,967 --> 00:28:56,066
+their UI is slightly different so
+
+607
+00:28:56,068 --> 00:28:58,702
+let's take a look at these alerts and action sheets. So
+
+608
+00:28:58,704 --> 00:29:01,138
+alerts, always pop up in the middle of the screen.
+
+609
+00:29:01,140 --> 00:29:03,474
+They grey out everything else behind it. Okay.
+
+610
+00:29:03,476 --> 00:29:05,476
+On this little screen. Both an iPad and iPhone.
+
+611
+00:29:05,478 --> 00:29:10,748
+*swallow* And, it usually asks a question that has
+
+612
+00:29:10,750 --> 00:29:11,582
+usually one or two answers.
+
+613
+00:29:11,584 --> 00:29:15,219
+Either you just click 'okay' or maybe 'okay, cancel' or
+
+614
+00:29:15,221 --> 00:29:19,156
+'yes, no'. Possibly a third answer. But usually it's only
+
+615
+00:29:19,158 --> 00:29:23,494
+two. Answers. This thing is very modal,
+
+616
+00:29:23,496 --> 00:29:24,995
+it kind of takes over your whole UI and
+
+617
+00:29:24,997 --> 00:29:26,430
+just puts up this little box, so you know,
+
+618
+00:29:26,432 --> 00:29:29,066
+you don't wanna use it unless you really can't proceed
+
+619
+00:29:29,068 --> 00:29:33,704
+without the user acknowledging this information or whatever.
+
+620
+00:29:33,706 --> 00:29:36,206
+Usually it's used when there are asynchronous problems,
+
+621
+00:29:36,208 --> 00:29:40,878
+some network connection fails. There's no place in the UI to
+
+622
+00:29:40,880 --> 00:29:43,347
+tell them that, so you kinda have to Take over for
+
+623
+00:29:43,349 --> 00:29:47,017
+a moment and say the network connection failed click OK or
+
+624
+00:29:47,019 --> 00:29:51,288
+click here to retry or whatever. Okay, this alerts
+
+625
+00:29:51,290 --> 00:29:56,293
+can have text fields in it as well. Okay, and the condition
+
+626
+00:29:56,295 --> 00:29:57,895
+just OK or cancel or whatever you cannot type full.
+
+627
+00:29:57,897 --> 00:30:01,899
+So you could use it for you know, access tonight. Enter
+
+628
+00:30:01,901 --> 00:30:05,903
+password Okay, you can use it for things like that. Okay?
+
+629
+00:30:05,905 --> 00:30:10,674
+I wouldn't use it as a general text of obtaining UI, however.
+
+630
+00:30:10,676 --> 00:30:13,677
+Okay? Again, it's only for exceptional circumstances.
+
+631
+00:30:13,679 --> 00:30:16,747
+Now an action sheet is very similar to an alert, but
+
+632
+00:30:16,749 --> 00:30:19,183
+it has more than two choices, usually three or
+
+633
+00:30:19,185 --> 00:30:22,886
+four choices. Okay? Instead of appearing in the middle,
+
+634
+00:30:22,888 --> 00:30:25,689
+it slides up from the bottom, on an iPhone, or
+
+635
+00:30:25,691 --> 00:30:30,994
+it appears in a popover on an iPad, okay? And you kind of
+
+636
+00:30:30,996 --> 00:30:34,798
+would think of, action sheet as a branching decision UI.
+
+637
+00:30:34,800 --> 00:30:37,968
+Okay, the user has reached a place in there Point in their
+
+638
+00:30:37,970 --> 00:30:41,004
+use of the UI where they have to branch and go do a certain
+
+639
+00:30:41,006 --> 00:30:42,673
+task, and go a different direction, they have two,
+
+640
+00:30:42,675 --> 00:30:46,877
+or three, or four different ways that they can go. Okay?
+
+641
+00:30:46,879 --> 00:30:50,047
+Now you've seen all these UI, these things in your app,
+
+642
+00:30:50,049 --> 00:30:51,515
+so I don't want to go too much into it,
+
+643
+00:30:51,517 --> 00:30:54,418
+but let's look a little bit about how we
+
+644
+00:30:54,420 --> 00:30:57,621
+do the code behind it. So Here is what they look like.
+
+645
+00:30:57,623 --> 00:30:59,923
+An action sheet comes up from the bottom. right.
+
+646
+00:30:59,925 --> 00:31:03,560
+It's got a tile right here and then also a little commentary
+
+647
+00:31:03,562 --> 00:31:06,997
+in there some explanation. And then it's got the buttons.
+
+648
+00:31:06,999 --> 00:31:11,602
+And alert is, comes up in the middle of the screen.
+
+649
+00:31:11,604 --> 00:31:13,670
+It's, you got one or two buttons usually and
+
+650
+00:31:13,672 --> 00:31:16,974
+possibly. Text, so here for example I've got
+
+651
+00:31:16,976 --> 00:31:21,178
+a Login Required to control my Cassini I guess here and
+
+652
+00:31:21,180 --> 00:31:23,881
+you got to type your guided system password to
+
+653
+00:31:23,883 --> 00:31:25,883
+be able to get control of Cassini.
+
+654
+00:31:25,885 --> 00:31:28,485
+While over in the Action Sheet I'm kind of
+
+655
+00:31:28,487 --> 00:31:31,288
+Cassini wants to go somewhere and we're picking a branch in
+
+656
+00:31:31,290 --> 00:31:33,190
+decision whether we're gonna Orbit Saturn or
+
+657
+00:31:33,192 --> 00:31:36,293
+E=xplore Titan, get a Closeup of the Sun. Or just cancel
+
+658
+00:31:36,295 --> 00:31:40,264
+that branching decision. Okay? So, how's the code for
+
+659
+00:31:40,266 --> 00:31:45,535
+this look? Well these things, like action sheet, are just
+
+660
+00:31:45,537 --> 00:31:48,572
+UI view controllers. Okay? They're presented motilly,
+
+661
+00:31:48,574 --> 00:31:50,974
+they just instead of taking over the whole screen,
+
+662
+00:31:50,976 --> 00:31:52,342
+they just get drawn like this, or
+
+663
+00:31:52,344 --> 00:31:53,777
+as a little square in the middle.
+
+664
+00:31:53,779 --> 00:31:55,379
+But they're basically just UI view controllers
+
+665
+00:31:55,381 --> 00:31:57,681
+presented motilly. I haven't really talked about motile
+
+666
+00:31:57,683 --> 00:32:00,484
+presentation. I hope to get that on Wednesday, but
+
+667
+00:32:00,486 --> 00:32:03,520
+modal just means you can't do anything else in that app
+
+668
+00:32:03,522 --> 00:32:07,391
+until you deal with this view controller. K, so these
+
+669
+00:32:07,393 --> 00:32:09,293
+are modal view controllers so you create them but
+
+670
+00:32:09,295 --> 00:32:11,828
+they are initially initialized to UI alert controller,
+
+671
+00:32:11,830 --> 00:32:14,131
+gonna create you one of these UI view controllers.
+
+672
+00:32:14,133 --> 00:32:16,600
+It's a sub class of UI view controller. All you need to
+
+673
+00:32:16,602 --> 00:32:19,770
+specify is this title right here like Redeploy Cassini.
+
+674
+00:32:19,772 --> 00:32:21,972
+And the message that goes in here
+
+675
+00:32:21,974 --> 00:32:24,107
+Issue commands to Cassini's guidance system.
+
+676
+00:32:24,109 --> 00:32:26,176
+Right here. And then, the style you want,
+
+677
+00:32:26,178 --> 00:32:29,646
+either action sheet or alert. Okay, so that's it,
+
+678
+00:32:29,648 --> 00:32:32,182
+that's how you create one of these view controllers.
+
+679
+00:32:32,184 --> 00:32:34,318
+The next step is we're gonna configure it and
+
+680
+00:32:34,320 --> 00:32:35,919
+then we're going to present it modally.
+
+681
+00:32:35,921 --> 00:32:38,355
+So let's do the configuration part.
+
+682
+00:32:38,357 --> 00:32:42,726
+Obviously configuring it, we need to add actions to it,
+
+683
+00:32:42,728 --> 00:32:45,295
+okay, these various buttons and we do that by sending
+
+684
+00:32:45,297 --> 00:32:50,033
+the method addAction, okay, to the alert and the addAction
+
+685
+00:32:50,035 --> 00:32:54,805
+takes one argument which is a UIAlertAction, okay.
+
+686
+00:32:54,807 --> 00:32:57,341
+They UIAlertAction has the following
+
+687
+00:32:57,343 --> 00:33:00,110
+initializer arguments The title that's gonna be
+
+688
+00:33:00,112 --> 00:33:02,713
+the title on the button okay like Orbit Saturn or
+
+689
+00:33:02,715 --> 00:33:05,449
+Explore Titan whatever. The style we'll talk about what
+
+690
+00:33:05,451 --> 00:33:08,118
+that style is in a second and then a handler and
+
+691
+00:33:08,120 --> 00:33:11,054
+this is just a closure that's gonna get executed when
+
+692
+00:33:11,056 --> 00:33:15,392
+this button gets pressed. Got it? So could be simpler. Okay
+
+693
+00:33:15,394 --> 00:33:18,662
+that's all there is. So let's look at some examples of this.
+
+694
+00:33:18,664 --> 00:33:19,997
+Here's orbit Saturn right here.
+
+695
+00:33:19,999 --> 00:33:23,433
+The title is Orbit Saturn, the style is the default style,
+
+696
+00:33:23,435 --> 00:33:26,370
+orbit Saturn explore Titan or default style buttons. We'll
+
+697
+00:33:26,372 --> 00:33:29,373
+talk about the other styles in a second. And in the closure,
+
+698
+00:33:29,375 --> 00:33:32,209
+obviously we're going to go into orbit around Saturn.
+
+699
+00:33:32,211 --> 00:33:33,010
+That's what we're going to do and
+
+700
+00:33:33,012 --> 00:33:36,446
+we'll do whatever code is necessary to do that there.
+
+701
+00:33:36,448 --> 00:33:38,048
+Okay, so here is Explore TItan,
+
+702
+00:33:38,050 --> 00:33:42,686
+almost exactly the same. Okay. Just that the, closure here is
+
+703
+00:33:42,688 --> 00:33:45,789
+a little different. Notice this closure says, okay,
+
+704
+00:33:45,791 --> 00:33:48,759
+if I'm going to Explorer TItan that's not part of Cassini's
+
+705
+00:33:48,761 --> 00:33:50,427
+mission, then, so I'm going to log,
+
+706
+00:33:50,429 --> 00:33:53,230
+make the person log in. Okay you can send him to Saturn,
+
+707
+00:33:53,232 --> 00:33:56,299
+send Cassini to Saturn evidently without a password.
+
+708
+00:33:56,301 --> 00:33:58,668
+But you need to enter a password for Titan.
+
+709
+00:33:58,670 --> 00:34:01,705
+So just has a little different action there, that's all.
+
+710
+00:34:01,707 --> 00:34:06,243
+Okay and these are both normal default style buttons.
+
+711
+00:34:06,245 --> 00:34:09,713
+Now let's take a look at closing, closer, go closeup to
+
+712
+00:34:09,715 --> 00:34:12,482
+the sun here, okay. Closeup to the sun's a little different.
+
+713
+00:34:12,484 --> 00:34:17,821
+Its style is not default, it's Destructive. So if you have a,
+
+714
+00:34:17,823 --> 00:34:20,924
+action sheet button that is of style of destructive,
+
+715
+00:34:20,926 --> 00:34:24,227
+it's gonna appear red, okay. Now you should always
+
+716
+00:34:24,229 --> 00:34:27,064
+pick destructive if the thing the users gonna do with this
+
+717
+00:34:27,066 --> 00:34:30,167
+button is going to do something permanent like
+
+718
+00:34:30,169 --> 00:34:30,500
+delete something,
+
+719
+00:34:30,502 --> 00:34:33,303
+delete an entry from a database that can't be undone,
+
+720
+00:34:33,305 --> 00:34:36,606
+or something like that. Okay so that is a destructive here.
+
+721
+00:34:36,608 --> 00:34:39,743
+A close up of the sun is probably destroy Cassini so
+
+722
+00:34:39,745 --> 00:34:41,978
+we made that destructive, alright but
+
+723
+00:34:41,980 --> 00:34:46,583
+otherwise it is still going to perform this action. Okay,
+
+724
+00:34:46,585 --> 00:34:50,020
+and what about cancel so cancel you notice it looks
+
+725
+00:34:50,022 --> 00:34:52,756
+a little different it is kind of separated. You see that?
+
+726
+00:34:52,758 --> 00:34:57,360
+Otherwise it looks the same. Maybe the font might be bold?
+
+727
+00:34:57,362 --> 00:35:01,331
+Hard to tell there, I think so. But otherwise, it's just
+
+728
+00:35:01,333 --> 00:35:03,934
+a normal button, okay? But it's of style cancel.
+
+729
+00:35:03,936 --> 00:35:06,369
+When we get to iPad, you're gonna see why it's very
+
+730
+00:35:06,371 --> 00:35:09,706
+important that we make our Cancel button be style. Cancel
+
+731
+00:35:09,708 --> 00:35:14,478
+be a different style than the other thing. Okay. So you add
+
+732
+00:35:14,480 --> 00:35:18,215
+all your actions there to do all the things you want to do.
+
+733
+00:35:18,217 --> 00:35:21,351
+And then you simply call this view controller method,
+
+734
+00:35:21,353 --> 00:35:23,854
+present view controller. Present view controller is
+
+735
+00:35:23,856 --> 00:35:27,757
+the Normal modal presentation method in view controller.
+
+736
+00:35:27,759 --> 00:35:30,594
+When I get talk, give you the lecture on mobile view
+
+737
+00:35:30,596 --> 00:35:32,529
+controllers, this is the method I'm gonna talk about.
+
+738
+00:35:32,531 --> 00:35:35,198
+You call this method, it takes a view controller, that's what
+
+739
+00:35:35,200 --> 00:35:38,335
+an alert is, right? Alert is alert controller which is
+
+740
+00:35:38,337 --> 00:35:39,202
+subclass UIController.
+
+741
+00:35:39,204 --> 00:35:42,639
+Takes one of these and it presents is modally. Okay,
+
+742
+00:35:42,641 --> 00:35:46,276
+this is whether it's going to animate the presentation. And
+
+743
+00:35:46,278 --> 00:35:48,044
+this is just a completion handler, they call it,
+
+744
+00:35:48,046 --> 00:35:51,381
+it gets called when it has finished presenting it.
+
+745
+00:35:51,383 --> 00:35:54,284
+Now when it goes away but when it finishes presenting so it's
+
+746
+00:35:54,286 --> 00:35:57,154
+on screen. Okay, we almost never use that, by the way.
+
+747
+00:35:57,156 --> 00:36:00,223
+All right, so the view controller, you do that, okay.
+
+748
+00:36:00,225 --> 00:36:03,426
+It puts the thing up, now when these buttons get pressed,
+
+749
+00:36:03,428 --> 00:36:05,262
+their closures get called. Okay,
+
+750
+00:36:05,264 --> 00:36:09,466
+when cancel gets pressed, it goes away, it dismisses.
+
+751
+00:36:10,102 --> 00:36:13,637
+That's it, that's how you use the Action sheet. Alright,
+
+752
+00:36:13,639 --> 00:36:18,608
+now, let's talk a little bit about iPad, okay. Because,
+
+753
+00:36:18,610 --> 00:36:22,679
+an iPad, this thing would look ridiculous if it came up from
+
+754
+00:36:22,681 --> 00:36:25,115
+the bottom. Either it would just be a tiny thing here, or
+
+755
+00:36:25,117 --> 00:36:28,151
+if it was as wide as the whole screen It will be gigantic,
+
+756
+00:36:28,153 --> 00:36:32,556
+okay? So we don't have these things come up from the bottom
+
+757
+00:36:32,558 --> 00:36:37,093
+on an iPad, instead we have them come up as pop-overs,
+
+758
+00:36:37,095 --> 00:36:40,197
+okay. See how this is the same thing, but it's over pop-over.
+
+759
+00:36:40,199 --> 00:36:43,733
+Notice, no cancel button, okay? Why do we
+
+760
+00:36:43,735 --> 00:36:45,302
+have no cancel button on iPad?
+
+761
+00:36:45,304 --> 00:36:48,572
+Because when a pop-over comes up, you click anywhere else,
+
+762
+00:36:48,574 --> 00:36:53,176
+it dismisses it. That's just like hitting cancel, okay.
+
+763
+00:36:53,178 --> 00:36:58,181
+In fact your cancel closure will get there, okay. So what
+
+764
+00:36:58,183 --> 00:37:03,353
+do we need to do to make this appear in a pop over, on iPad,
+
+765
+00:37:03,355 --> 00:37:05,522
+okay. Well we do need to do a little bit different code.
+
+766
+00:37:05,524 --> 00:37:08,024
+So here's our code from the iPhone. Okay.
+
+767
+00:37:08,026 --> 00:37:11,628
+First we're gonna add a little thing in here, which is,
+
+768
+00:37:11,630 --> 00:37:12,162
+we're gonna set the,
+
+769
+00:37:12,164 --> 00:37:16,700
+a View Controller's modal Presentation Style to Popover.
+
+770
+00:37:16,702 --> 00:37:18,368
+Okay, that says present this modally,
+
+771
+00:37:18,370 --> 00:37:22,639
+but in a Popover style, instead of up from the bottom
+
+772
+00:37:22,641 --> 00:37:27,177
+there. Okay? Then we just need to get the popover
+
+773
+00:37:27,179 --> 00:37:30,447
+Presentation Controller, which is just It's a class.
+
+774
+00:37:30,449 --> 00:37:31,681
+We're not gonna talk too much about it,
+
+775
+00:37:31,683 --> 00:37:34,718
+but it's the thing that controls presentation.
+
+776
+00:37:34,720 --> 00:37:37,554
+Okay? All view controllers, when they're presented,
+
+777
+00:37:37,556 --> 00:37:39,856
+have a presentation controller that presents them.
+
+778
+00:37:39,858 --> 00:37:42,559
+Well, pop-over ones have one called pop-over presentation
+
+779
+00:37:42,561 --> 00:37:45,295
+controller. You're just gonna get this thing if you look for
+
+780
+00:37:45,297 --> 00:37:47,364
+the UI for a pop-over presentation controller,
+
+781
+00:37:47,366 --> 00:37:50,767
+you'll see that it has. An argument bar button item,
+
+782
+00:37:50,769 --> 00:37:52,902
+it also has another argument wrecked.
+
+783
+00:37:52,904 --> 00:37:56,706
+Okay, and if you set the bar button item this just tells
+
+784
+00:37:56,708 --> 00:38:02,112
+the system where this pop over pops up from. So
+
+785
+00:38:02,114 --> 00:38:05,115
+here this redeploy bar button item is this little bar button
+
+786
+00:38:05,117 --> 00:38:07,651
+item in the upper right. And so we're just telling
+
+787
+00:38:07,653 --> 00:38:09,786
+the presentation controller that's gonna pop over,
+
+788
+00:38:09,788 --> 00:38:12,455
+pop this thing over, that this is the button that it
+
+789
+00:38:12,457 --> 00:38:15,759
+pops over from. And that's how it knows to put it up near it,
+
+790
+00:38:15,761 --> 00:38:17,460
+and to put that little triangle up there,
+
+791
+00:38:17,462 --> 00:38:20,196
+you see the triangle pointing to, to redeploy. We could of
+
+792
+00:38:20,198 --> 00:38:24,868
+said PPC question mark dot wrecked equals whatever.
+
+793
+00:38:24,870 --> 00:38:25,802
+And view equals whatever and
+
+794
+00:38:25,804 --> 00:38:28,204
+then it could pop over from any arbitrary rectangle,
+
+795
+00:38:28,206 --> 00:38:31,875
+anywhere in a view, okay. So you can do that as well.
+
+796
+00:38:31,877 --> 00:38:33,143
+So that's all we're doing here.
+
+797
+00:38:33,145 --> 00:38:36,880
+All we've added to this whole thing for pop over's just
+
+798
+00:38:36,882 --> 00:38:38,548
+made our presentation saw a pop over and
+
+799
+00:38:38,550 --> 00:38:42,252
+told the control, the pop over presentation controller, where
+
+800
+00:38:42,254 --> 00:38:45,322
+we want it to pop over from. That's all we've done. Okay,
+
+801
+00:38:45,324 --> 00:38:49,959
+now cool thing about this is this will work on iPhone 2.
+
+802
+00:38:49,961 --> 00:38:53,830
+So you can put this code in here. It will do this but
+
+803
+00:38:53,832 --> 00:38:55,799
+iPhone will continue to do this. And
+
+804
+00:38:55,801 --> 00:38:59,636
+why is that? That because of this adaptive presentation
+
+805
+00:38:59,638 --> 00:39:01,571
+style mechanism we talk about early in the core.
+
+806
+00:39:01,573 --> 00:39:04,341
+You might have forgot it by now. But it's the mechanism
+
+807
+00:39:04,343 --> 00:39:06,943
+that says if I try to put something up as a pop-over
+
+808
+00:39:06,945 --> 00:39:10,280
+on an iPhone, it says op, can't, we don't do pop-overs
+
+809
+00:39:10,282 --> 00:39:12,916
+on an iPhone so we're gonna present this thing modally.
+
+810
+00:39:12,918 --> 00:39:15,652
+So it presents it modally and this is what an action sheet
+
+811
+00:39:15,654 --> 00:39:18,288
+looks like, one presented modally, okay, versus
+
+812
+00:39:18,290 --> 00:39:22,792
+pop-over style So it's back to presenting the same way. Now,
+
+813
+00:39:22,794 --> 00:39:24,494
+of course, it doesn't even look at
+
+814
+00:39:24,496 --> 00:39:26,429
+this pop over presentation controller because
+
+815
+00:39:26,431 --> 00:39:29,432
+it didn't end up presenting it with the pop over style.
+
+816
+00:39:29,434 --> 00:39:31,901
+It adapted and presented it with a normal modal style.
+
+817
+00:39:31,903 --> 00:39:35,038
+So this is great. You can write this one code and
+
+818
+00:39:35,040 --> 00:39:37,841
+it'll work on both devices. Okay.
+
+819
+00:39:37,843 --> 00:39:42,412
+All right, what about alerts? Okay,
+
+820
+00:39:42,414 --> 00:39:45,181
+so alerts are almost exactly the same as Action Cheat. You
+
+821
+00:39:45,183 --> 00:39:49,152
+just say the style is Alert here instead of Action Cheat.
+
+822
+00:39:49,154 --> 00:39:53,590
+You still do all the same thing with Add Action, okay,
+
+823
+00:39:53,592 --> 00:39:56,659
+your Cancel Button and Add Action for
+
+824
+00:39:56,661 --> 00:39:57,861
+the login button. Okay?
+
+825
+00:39:57,863 --> 00:40:00,530
+So just like same thing we did with the cl, closures and
+
+826
+00:40:00,532 --> 00:40:03,166
+all that stuff right here. One thing that's different about
+
+827
+00:40:03,168 --> 00:40:05,802
+the alert, of course, you've got this text field. So how do
+
+828
+00:40:05,804 --> 00:40:08,371
+you deal with the fact there's text fields in an alert but
+
+829
+00:40:08,373 --> 00:40:11,174
+not an action sheet? And the answer is
+
+830
+00:40:11,176 --> 00:40:15,011
+AlertController has a method addTextFieldWithConfiguration-
+
+831
+00:40:15,013 --> 00:40:18,047
+Handler. This only does something on alerts,
+
+832
+00:40:18,049 --> 00:40:19,916
+it doesn't do anything if it's an action sheet. And
+
+833
+00:40:19,918 --> 00:40:23,787
+this closure will be called with the text field that
+
+834
+00:40:23,789 --> 00:40:27,457
+you're adding, and allow you to configure it in here.
+
+835
+00:40:27,459 --> 00:40:28,825
+So that's all this little closure does,
+
+836
+00:40:28,827 --> 00:40:31,027
+is just configuring the text field. So for example,
+
+837
+00:40:31,029 --> 00:40:34,097
+I want guidance system password as my placeholder
+
+838
+00:40:34,099 --> 00:40:36,766
+text in this text field, so I've just set textfield's
+
+839
+00:40:36,768 --> 00:40:40,804
+placeholder to be Guidance System Password there, okay.
+
+840
+00:40:40,806 --> 00:40:43,940
+So this adds a text field to the alert, and
+
+841
+00:40:43,942 --> 00:40:46,075
+this closure just lets you configure it.
+
+842
+00:40:46,077 --> 00:40:49,345
+Now, what happens when someone types in here? How do you get
+
+843
+00:40:49,347 --> 00:40:53,283
+the text out of there? Well in the action, like for
+
+844
+00:40:53,285 --> 00:40:56,352
+cancel, we went away, we, we don't even look at the text.
+
+845
+00:40:56,354 --> 00:40:58,955
+But for log in, I wanna look at this password.
+
+846
+00:40:58,957 --> 00:41:00,523
+So in the action closure here for
+
+847
+00:41:00,525 --> 00:41:03,092
+login, you see that right there, the action closure?
+
+848
+00:41:03,094 --> 00:41:09,232
+I'm going to say, if I can let tf = self.alert.textFields?,
+
+849
+00:41:09,234 --> 00:41:12,435
+is option because you don't always have text field .first.
+
+850
+00:41:12,437 --> 00:41:15,004
+Okay, I only have one text field so I want the first one.
+
+851
+00:41:15,006 --> 00:41:17,807
+Then, I've got the text field and I could, for example,
+
+852
+00:41:17,809 --> 00:41:21,044
+log in with the password tf.text. Okay, so
+
+853
+00:41:21,046 --> 00:41:24,380
+the answer is I use this text field's bar which is an array
+
+854
+00:41:24,382 --> 00:41:29,018
+of all the text fields that are in this alert. Okay,
+
+855
+00:41:29,020 --> 00:41:32,655
+so that's it, that's it for action alert.
+
+856
+00:41:32,657 --> 00:41:32,922
+Pretty easy to use,
+
+857
+00:41:32,924 --> 00:41:35,425
+you're almost certain to use them in your final project.
+
+858
+00:41:35,427 --> 00:41:38,394
+That's why I'm covering them early in the final project
+
+859
+00:41:38,396 --> 00:41:43,233
+period here. So hopefully that gives you all the things,
+
+860
+00:41:43,235 --> 00:41:48,104
+everything you need to know to do that. All right, and
+
+861
+00:41:48,106 --> 00:41:51,975
+of course, we present this thing exact same way,
+
+862
+00:41:51,977 --> 00:41:53,209
+presentViewController, okay.
+
+863
+00:41:53,211 --> 00:41:55,778
+It's just modally presented, happens to draw in this way,
+
+864
+00:41:55,780 --> 00:41:58,648
+but it's still just modally presented, so we use the same
+
+865
+00:41:58,650 --> 00:42:02,752
+presentViewController there, okay. And
+
+866
+00:42:02,754 --> 00:42:08,124
+it looks the same both on iPad and iPhone. All right, so
+
+867
+00:42:08,126 --> 00:42:10,593
+Cloud Kit. So I'm covering Cloud Kit,
+
+868
+00:42:10,595 --> 00:42:12,128
+again I don't usually cover Cloud Kit. But
+
+869
+00:42:12,130 --> 00:42:14,330
+I'm covering it this quarter because I think it's gonna be
+
+870
+00:42:14,332 --> 00:42:17,767
+something really cool and powerful for you to use for
+
+871
+00:42:17,769 --> 00:42:21,271
+your final projects, okay. So what is Cloud Kit?
+
+872
+00:42:21,273 --> 00:42:24,340
+Cloud Kit is a database in the cloud, okay.
+
+873
+00:42:24,342 --> 00:42:28,545
+It's a feature of iCloud and it's very simple to use, okay.
+
+874
+00:42:28,547 --> 00:42:31,614
+And it has very basic database operations,
+
+875
+00:42:31,616 --> 00:42:34,751
+okay. It's over the network, so everything that you're
+
+876
+00:42:34,753 --> 00:42:36,719
+doing is happening real time on the network, so
+
+877
+00:42:36,721 --> 00:42:40,189
+it's all asynchronous, of course. Because the network
+
+878
+00:42:40,191 --> 00:42:42,258
+could be slow or even not available, okay.
+
+879
+00:42:42,260 --> 00:42:44,794
+That requires you to do some thoughtful programing,
+
+880
+00:42:44,796 --> 00:42:47,363
+as you have learned with everything is asynchronous,
+
+881
+00:42:47,365 --> 00:42:49,766
+you kinda have to like, think about what it means for
+
+882
+00:42:49,768 --> 00:42:52,869
+these methods to, not call you back until much later, okay.
+
+883
+00:42:52,871 --> 00:42:56,272
+So, otherwise, it's really nice simple, database
+
+884
+00:42:56,274 --> 00:42:59,075
+mechanism to use. Here are the important concepts,
+
+885
+00:42:59,077 --> 00:43:02,745
+okay, that you need to know. One is record type.
+
+886
+00:43:02,747 --> 00:43:05,448
+Record type is like an entity in core data.
+
+887
+00:43:05,450 --> 00:43:07,517
+We're gonna do a lot of parallels to core data,
+
+888
+00:43:07,519 --> 00:43:11,387
+cuz you know core data so well so know that terminology, so
+
+889
+00:43:11,389 --> 00:43:14,023
+record type is kind of like entity.
+
+890
+00:43:14,025 --> 00:43:17,994
+Fields are like attributes. Okay, so fields
+
+891
+00:43:17,996 --> 00:43:21,497
+are the data that's stored in a record, type record.
+
+892
+00:43:21,499 --> 00:43:26,603
+A record is an instance of a record type. So I've got,
+
+893
+00:43:26,605 --> 00:43:31,207
+just like, it's like, sort of like NSManageObject in,
+
+894
+00:43:31,209 --> 00:43:34,377
+core data. But of course it's so much more lightweight,
+
+895
+00:43:34,379 --> 00:43:36,179
+there isn't any of that infrastructure.
+
+896
+00:43:36,181 --> 00:43:36,579
+But it's kind of like that, so
+
+897
+00:43:36,581 --> 00:43:40,283
+it's an instance of a certain record. A reference is kinda
+
+898
+00:43:40,285 --> 00:43:45,588
+like a relationship to another entity or another record type
+
+899
+00:43:45,590 --> 00:43:48,725
+there, okay reference. A database is a place where you
+
+900
+00:43:48,727 --> 00:43:53,529
+store your records. A zone is a sub-area of a database.
+
+901
+00:43:53,531 --> 00:43:54,864
+I'm not gonna talk about zones, but
+
+902
+00:43:54,866 --> 00:43:58,067
+if you divide your database up into zones you can do cool
+
+903
+00:43:58,069 --> 00:43:59,602
+things like, do efficient queries,
+
+904
+00:43:59,604 --> 00:44:02,171
+where you're only querying over a subset of your data,
+
+905
+00:44:02,173 --> 00:44:05,141
+like this in-sum zone. Okay, I'm not gonna talk about that,
+
+906
+00:44:05,143 --> 00:44:06,309
+but that's what a zone is all about,
+
+907
+00:44:06,311 --> 00:44:08,277
+it's a subarea of a database for searching and
+
+908
+00:44:08,279 --> 00:44:12,582
+stuff. A container is a collection of databases, we'll
+
+909
+00:44:12,584 --> 00:44:17,420
+talk about that. A query, is a NSPredicate based search.
+
+910
+00:44:17,422 --> 00:44:20,123
+Of course, NSPredicates can be quite a bit simpler,
+
+911
+00:44:20,125 --> 00:44:21,424
+because it's a simpler database,
+
+912
+00:44:21,426 --> 00:44:24,627
+but, it's still, similar to core data. You're gonna use,
+
+913
+00:44:24,629 --> 00:44:27,130
+actually use the class and its predicate to make '.
+
+914
+00:44:27,132 --> 00:44:31,734
+And then a subscription is a standing query, okay.
+
+915
+00:44:31,736 --> 00:44:34,837
+It's, basically an NSPredicate, you can upload to
+
+916
+00:44:34,839 --> 00:44:37,674
+the database, and any time it changes it will send you
+
+917
+00:44:37,676 --> 00:44:41,844
+a push notification, which is fantastic. This is the coolest
+
+918
+00:44:41,846 --> 00:44:45,014
+feature of all in Cloud Kit, is that it will send you push
+
+919
+00:44:45,016 --> 00:44:46,949
+notifications when the database changes, okay.
+
+920
+00:44:46,951 --> 00:44:49,786
+And then all you need to do is just, give it a standing
+
+921
+00:44:49,788 --> 00:44:52,855
+query, called a subscription, and it'll do that, okay.
+
+922
+00:44:52,857 --> 00:44:55,858
+All right, so let's talk about how all this works,
+
+923
+00:44:55,860 --> 00:44:59,562
+how do we make this Cloud Kit thing happen. First thing you
+
+924
+00:44:59,564 --> 00:45:02,298
+have to understand about Cloud Kit is a very important thing
+
+925
+00:45:02,300 --> 00:45:05,902
+here called the Cloud Kit Dashboard. This is a website,
+
+926
+00:45:05,904 --> 00:45:09,672
+okay. You get to it by going to your project, okay,
+
+927
+00:45:09,674 --> 00:45:11,541
+click on your project. Actually,
+
+928
+00:45:11,543 --> 00:45:13,476
+I'll show in a second how you can get to this. But
+
+929
+00:45:13,478 --> 00:45:14,844
+you can click somewhere in your project, and
+
+930
+00:45:14,846 --> 00:45:16,379
+it's gonna take you to this website.
+
+931
+00:45:16,381 --> 00:45:18,848
+This is gonna have all your record types,
+
+932
+00:45:18,850 --> 00:45:19,882
+all your entities, and
+
+933
+00:45:19,884 --> 00:45:22,118
+all of their fields, all their attributes.
+
+934
+00:45:22,120 --> 00:45:25,722
+So here's an entity called QandA, it's a question and
+
+935
+00:45:25,724 --> 00:45:27,824
+answer thing. Here's, it's got answers,
+
+936
+00:45:27,826 --> 00:45:30,526
+which is a list of strings, an array of strings,
+
+937
+00:45:30,528 --> 00:45:33,463
+and it's got a question, which is a single string. And
+
+938
+00:45:33,465 --> 00:45:36,766
+these are all indexed, both for querying and searching and
+
+939
+00:45:36,768 --> 00:45:39,769
+even sorting, okay. Here's another one,
+
+940
+00:45:39,771 --> 00:45:42,538
+response, it's got some things. Over here, okay,
+
+941
+00:45:42,540 --> 00:45:46,209
+you can actually go to default zone right here, you'll
+
+942
+00:45:46,211 --> 00:45:50,213
+be able to actually see the data stored in these records,
+
+943
+00:45:50,215 --> 00:45:53,883
+which is kinda cool. And then it's got some other
+
+944
+00:45:53,885 --> 00:45:57,153
+things here like the subscriptions that you have
+
+945
+00:45:57,155 --> 00:45:58,921
+outstanding out there.
+
+946
+00:45:58,923 --> 00:46:01,324
+Maybe any users that are using the database etc.
+
+947
+00:46:01,326 --> 00:46:03,960
+So this is kind of your place where you're gonna go to find
+
+948
+00:46:03,962 --> 00:46:06,729
+out everything that's going on in your database in real time,
+
+949
+00:46:06,731 --> 00:46:11,934
+'kay. The dashboard also has interesting
+
+950
+00:46:11,936 --> 00:46:14,837
+metadata indexes, and I'm putting a slide on this,
+
+951
+00:46:14,839 --> 00:46:18,274
+cuz this is easy to forget. Okay, because, of course,
+
+952
+00:46:18,276 --> 00:46:21,210
+the QandA thing has answers and question fields, but
+
+953
+00:46:21,212 --> 00:46:24,380
+it also has these fields like the record ID which is
+
+954
+00:46:24,382 --> 00:46:28,785
+a unique ID for this QandA record. Also, created by,
+
+955
+00:46:28,787 --> 00:46:32,421
+that's the user who created it, that's very interesting.
+
+956
+00:46:32,423 --> 00:46:33,689
+The date it was created.
+
+957
+00:46:33,691 --> 00:46:36,392
+So these are all kind of fields you always get, and
+
+958
+00:46:36,394 --> 00:46:39,529
+by default none of them are index however. So if you
+
+959
+00:46:39,531 --> 00:46:42,732
+wanted to search and say show me all the QandA's that were
+
+960
+00:46:42,734 --> 00:46:45,668
+created by a certain user, that wouldn't work, unless you
+
+961
+00:46:45,670 --> 00:46:50,439
+go in here in the dashboard and turn on query index for
+
+962
+00:46:50,441 --> 00:46:53,142
+created by. Okay, so don't forget about this. This is
+
+963
+00:46:53,144 --> 00:46:56,045
+something easy to forget to do cuz they're automatic off and
+
+964
+00:46:56,047 --> 00:46:59,882
+you're like how come that they won't show me all the QandA's
+
+965
+00:46:59,884 --> 00:47:00,683
+by this user,
+
+966
+00:47:00,685 --> 00:47:04,187
+it's because it's not indexed, okay. So that,
+
+967
+00:47:04,189 --> 00:47:05,721
+you need to click on this little guy here,
+
+968
+00:47:05,723 --> 00:47:09,425
+metadata indexes, to show this. Okay now,
+
+969
+00:47:09,427 --> 00:47:14,130
+that schema that we're talking about there, the entities and
+
+970
+00:47:14,132 --> 00:47:16,566
+the attributes okay, the record types and the fields,
+
+971
+00:47:16,568 --> 00:47:20,536
+you can create it all in the dashboard if you want, but
+
+972
+00:47:20,538 --> 00:47:21,204
+you don't have to.
+
+973
+00:47:21,206 --> 00:47:23,940
+You can just start creating them in your code and
+
+974
+00:47:23,942 --> 00:47:26,209
+it'll automatically create the schema for you. Every time
+
+975
+00:47:26,211 --> 00:47:28,644
+you will reference an entity that wasn't there before,
+
+976
+00:47:28,646 --> 00:47:31,347
+it's gonna create a new entity for it. Every time you access
+
+977
+00:47:31,349 --> 00:47:35,051
+a field on a certain entity, you know, record type,
+
+978
+00:47:35,053 --> 00:47:37,720
+it's gonna create an attribute automatically. Now,
+
+979
+00:47:37,722 --> 00:47:40,122
+you're still gonna have to go to dashboard and turn on or
+
+980
+00:47:40,124 --> 00:47:43,159
+off any indexes and things like that, but
+
+981
+00:47:43,161 --> 00:47:45,761
+it's just gonna create it all for you on the fly.
+
+982
+00:47:45,763 --> 00:47:48,231
+That only happens though during development,
+
+983
+00:47:48,233 --> 00:47:50,867
+once you deploy your app over at the app store,
+
+984
+00:47:50,869 --> 00:47:52,535
+now that's not true anymore, okay.
+
+985
+00:47:52,537 --> 00:47:56,572
+So your app has to have its schema built in development
+
+986
+00:47:56,574 --> 00:48:00,476
+and then you export that schema. When you run in
+
+987
+00:48:00,478 --> 00:48:05,214
+deployment environment, okay? So this is really cool for
+
+988
+00:48:05,216 --> 00:48:07,884
+development because you don't have to do a lot of tedious
+
+989
+00:48:07,886 --> 00:48:12,154
+creating of things in your in your dashboard.
+
+990
+00:48:12,156 --> 00:48:14,657
+And you can always go in the dashboard and delete things.
+
+991
+00:48:14,659 --> 00:48:18,060
+And it's really actually quite flexible and cool.
+
+992
+00:48:18,062 --> 00:48:22,031
+Now none of this will work until you unable Cloud Kit
+
+993
+00:48:22,033 --> 00:48:24,800
+in your capabilities. Remember I'd show you the capabilities
+
+994
+00:48:24,802 --> 00:48:28,337
+earlier. You go to the very top one here iCloud and
+
+995
+00:48:28,339 --> 00:48:30,072
+you're gonna click this from off to on.
+
+996
+00:48:30,074 --> 00:48:32,975
+Okay if you don't do that none of this works. So
+
+997
+00:48:32,977 --> 00:48:36,746
+when you click it to on. You get this settings right here.
+
+998
+00:48:36,748 --> 00:48:40,316
+You're gonna wanna click this switch right here Cloud Kit.
+
+999
+00:48:40,318 --> 00:48:41,884
+That's all this stuff I'm gonna be talking about here in
+
+1000
+00:48:41,886 --> 00:48:45,454
+this lecture, okay? Cloud Kit. There's also Key Value Storage
+
+1001
+00:48:45,456 --> 00:48:49,125
+which is kind of cool, you can store like an NS user defaults
+
+1002
+00:48:49,127 --> 00:48:50,893
+on the Cloud. That's kind of cool features.
+
+1003
+00:48:50,895 --> 00:48:53,262
+Well, I'm not gonna talk about that. It's there if you wanna
+
+1004
+00:48:53,264 --> 00:48:56,766
+do it and of course you can store documents in the Cloud.
+
+1005
+00:48:56,768 --> 00:48:59,268
+Manage document Remember that from core data?
+
+1006
+00:48:59,270 --> 00:49:02,905
+It stores all the core data stuff in the cloud, okay?
+
+1007
+00:49:02,907 --> 00:49:04,440
+So, so you could have that as well.
+
+1008
+00:49:04,442 --> 00:49:08,644
+But today, we're talking about this Cloud Kit right here,
+
+1009
+00:49:08,646 --> 00:49:11,047
+all right? This button right here,
+
+1010
+00:49:11,049 --> 00:49:12,715
+is how you get to that Cloud Kit dashboard.
+
+1011
+00:49:12,717 --> 00:49:16,786
+This will open up your browser and take you to that thing,
+
+1012
+00:49:16,788 --> 00:49:22,725
+for you. Kay? This right here is the containers. Remember I
+
+1013
+00:49:22,727 --> 00:49:25,895
+said a container is a thing that contains databases.
+
+1014
+00:49:25,897 --> 00:49:29,198
+We're only gonna talk about use default container here.
+
+1015
+00:49:29,200 --> 00:49:32,201
+But you're gonna actually create your custom containers.
+
+1016
+00:49:32,203 --> 00:49:35,771
+And what's cool about these containers is these containers
+
+1017
+00:49:35,773 --> 00:49:39,809
+can be used across different kinds of apps. Okay?
+
+1018
+00:49:39,811 --> 00:49:41,544
+In other words, you might be a company in
+
+1019
+00:49:41,546 --> 00:49:43,779
+your shipment four different apps, and
+
+1020
+00:49:43,781 --> 00:49:45,314
+they wanted to share data.
+
+1021
+00:49:45,316 --> 00:49:49,085
+They can do that by creating a shared container, okay?
+
+1022
+00:49:49,087 --> 00:49:52,521
+The default container is just to use by your one app, okay?
+
+1023
+00:49:52,523 --> 00:49:56,225
+I'm shipping to my app, all my users of that one app can use
+
+1024
+00:49:56,227 --> 00:49:59,295
+this default container. Okay, and that's what I'm gonna
+
+1025
+00:49:59,297 --> 00:50:01,764
+talk about today, but you can just know that this custom
+
+1026
+00:50:01,766 --> 00:50:04,900
+container feature is available for your final project,
+
+1027
+00:50:04,902 --> 00:50:07,103
+the default container's gonna be plenty, okay?
+
+1028
+00:50:07,105 --> 00:50:10,339
+All right, so let's talk about these containers and
+
+1029
+00:50:10,341 --> 00:50:13,542
+what's in them, okay? And because we need to know that,
+
+1030
+00:50:13,544 --> 00:50:15,411
+so we can create records in the database,
+
+1031
+00:50:15,413 --> 00:50:19,115
+okay? So we get a database from the container.
+
+1032
+00:50:19,117 --> 00:50:21,884
+Remember, I said container contains databases.
+
+1033
+00:50:21,886 --> 00:50:25,855
+And the default container actually has two databases,
+
+1034
+00:50:25,857 --> 00:50:28,858
+a public database and a private database.
+
+1035
+00:50:28,860 --> 00:50:31,260
+The difference between these two is that the private
+
+1036
+00:50:31,262 --> 00:50:35,564
+database can only be looked at by the currently logged in
+
+1037
+00:50:35,566 --> 00:50:39,902
+iCloud user. Okay, so you know how on your phone, hopefully,
+
+1038
+00:50:39,904 --> 00:50:42,338
+you're logged into iCloud, right? Okay, so,
+
+1039
+00:50:42,340 --> 00:50:46,409
+whatever that login is, only the person logged in as that
+
+1040
+00:50:46,411 --> 00:50:49,612
+iCloud can see the private database for that iCloud view.
+
+1041
+00:50:49,614 --> 00:50:50,346
+So, it is exactly what it sounds like,
+
+1042
+00:50:50,348 --> 00:50:53,449
+it is private information. The public database can be seen by
+
+1043
+00:50:53,451 --> 00:50:58,988
+anybody, okay, anybody who is running your app. Can see
+
+1044
+00:50:58,990 --> 00:51:02,324
+this public database. Got the difference between public and
+
+1045
+00:51:02,326 --> 00:51:05,094
+private? So public is where you're gonna have data that's
+
+1046
+00:51:05,096 --> 00:51:08,130
+shared between your users, private data is where you're
+
+1047
+00:51:08,132 --> 00:51:11,200
+gonna have data that the user sees on all their devices but
+
+1048
+00:51:11,202 --> 00:51:15,404
+the other users can't see. All right. So that's how you
+
+1049
+00:51:15,406 --> 00:51:17,406
+get the database. Once you have the database.
+
+1050
+00:51:17,408 --> 00:51:18,441
+You can do all kinds of things.
+
+1051
+00:51:18,443 --> 00:51:20,609
+Create records query all kinds of stuff.
+
+1052
+00:51:20,611 --> 00:51:24,180
+So let's starts with how to create record on the database.
+
+1053
+00:51:24,182 --> 00:51:27,583
+Okay. You create a record first of all by distributing
+
+1054
+00:51:27,585 --> 00:51:31,320
+CKRecord, Cloud Kit record and all you do is specified
+
+1055
+00:51:31,322 --> 00:51:34,190
+the record type. Okay, that's like the entity name,
+
+1056
+00:51:34,192 --> 00:51:37,560
+like tweet or Twitter user, whatever, it's just a string,
+
+1057
+00:51:37,562 --> 00:51:40,396
+okay. If that entity doesn't exist in the database when you
+
+1058
+00:51:40,398 --> 00:51:45,301
+save this record, it'll create that entity, okay? Make sense?
+
+1059
+00:51:45,303 --> 00:51:48,170
+All right, so now you have this record, okay?
+
+1060
+00:51:48,172 --> 00:51:51,474
+How do you put information into the record? Well, you use
+
+1061
+00:51:51,476 --> 00:51:55,177
+a dictionary-like syntax. So here I've got a record,
+
+1062
+00:51:55,179 --> 00:52:00,015
+right here. And I'm adding some fields to it by saying,
+
+1063
+00:52:00,017 --> 00:52:03,219
+records of text equals something, records of created
+
+1064
+00:52:03,221 --> 00:52:05,754
+equals something, records of items equals something, So,
+
+1065
+00:52:05,756 --> 00:52:07,490
+you see how ithat looks a dictionary? It looks like
+
+1066
+00:52:07,492 --> 00:52:10,526
+records is almost a dictionary right there And so
+
+1067
+00:52:10,528 --> 00:52:13,462
+that's actually use it, now what are these values,
+
+1068
+00:52:13,464 --> 00:52:15,564
+these things that I have dot, dot, dot right here,
+
+1069
+00:52:15,566 --> 00:52:18,267
+what are these? Well, these can only be things
+
+1070
+00:52:18,269 --> 00:52:22,338
+that implement the protocol CKRecordValue, okay? And
+
+1071
+00:52:22,340 --> 00:52:24,874
+the only things the implement that protocol are these seven
+
+1072
+00:52:24,876 --> 00:52:29,178
+things in green. Strings, numbers, arrays and dates.
+
+1073
+00:52:29,180 --> 00:52:32,148
+And of course, we get the bridged Swift types, so
+
+1074
+00:52:32,150 --> 00:52:36,352
+that means doubles, ints, string, array, okay? And
+
+1075
+00:52:36,354 --> 00:52:39,989
+then also these three special things, CKReference,
+
+1076
+00:52:39,991 --> 00:52:42,758
+CKAssett and CLLocation, okay?
+
+1077
+00:52:42,760 --> 00:52:47,930
+Now array can be array of any of the other types. Okay?
+
+1078
+00:52:47,932 --> 00:52:49,865
+The array of any of these other green things.
+
+1079
+00:52:49,867 --> 00:52:52,268
+So you can have an array of numbers, array of strings,
+
+1080
+00:52:52,270 --> 00:52:56,305
+array of dates,
+
+1081
+00:52:56,307 --> 00:53:00,643
+CKReference is a reference to another record. Okay, so this
+
+1082
+00:53:00,645 --> 00:53:03,712
+is how you do relationships, okay? So you have a record.
+
+1083
+00:53:03,714 --> 00:53:09,318
+So again, if you had tweeter, and the tweets, okay?
+
+1084
+00:53:09,320 --> 00:53:12,955
+The tweet record type would have a field
+
+1085
+00:53:12,957 --> 00:53:18,861
+that is a CKReference to a Twitter user, okay?
+
+1086
+00:53:18,863 --> 00:53:23,599
+CKAsset is for storing big things, like images, sounds,
+
+1087
+00:53:23,601 --> 00:53:28,370
+video, okay, files basically. Now, This cloud kit does
+
+1088
+00:53:28,372 --> 00:53:31,507
+a really cool job of when you put something in the cloud it
+
+1089
+00:53:31,509 --> 00:53:34,376
+doesn't immediately just start cranking on the network piling
+
+1090
+00:53:34,378 --> 00:53:37,813
+that thing up on the net, it stores it locally and
+
+1091
+00:53:37,815 --> 00:53:40,182
+when it wants to, when there's good network connection,
+
+1092
+00:53:40,184 --> 00:53:44,386
+whatever, it's uploading it to the cloud. And vice versa. So
+
+1093
+00:53:44,388 --> 00:53:46,021
+It's doing all this behind the scenes and
+
+1094
+00:53:46,023 --> 00:53:46,388
+being very efficient and
+
+1095
+00:53:46,390 --> 00:53:50,092
+caching it etc. CL location, we're gonna talk about next
+
+1096
+00:53:50,094 --> 00:53:52,394
+week when we talk about maps and locations.
+
+1097
+00:53:52,396 --> 00:53:55,831
+It's just a GPS coordinate, okay, someplace on earth,
+
+1098
+00:53:55,833 --> 00:54:00,102
+so you can store something as a GPS coordinate. Okay, so
+
+1099
+00:54:00,104 --> 00:54:02,938
+that's it, it's super. Easy to create these records. Again as
+
+1100
+00:54:02,940 --> 00:54:05,608
+you put these field names in here if that doesn't exist in
+
+1101
+00:54:05,610 --> 00:54:08,677
+the schema it's just gonna add that field okay as soon as you
+
+1102
+00:54:08,679 --> 00:54:11,614
+store this to the database. So here we've created the record
+
+1103
+00:54:11,616 --> 00:54:13,749
+but we haven't stored it yet okay it's not it hasn't been
+
+1104
+00:54:13,751 --> 00:54:16,585
+uploaded to the network we've only created it locally.
+
+1105
+00:54:16,587 --> 00:54:21,590
+So how do we get the information. So we
+
+1106
+00:54:21,592 --> 00:54:24,927
+saw how to put the information record how do we get it out
+
+1107
+00:54:24,929 --> 00:54:26,395
+You again use dictionary syntax,
+
+1108
+00:54:26,397 --> 00:54:29,965
+so recor|"text| to get the text out of the record. But
+
+1109
+00:54:29,967 --> 00:54:34,737
+you have to cast, because all of these things come back as
+
+1110
+00:54:34,739 --> 00:54:38,274
+CKRecordValues. Okay? Cuz I told you, the only things that
+
+1111
+00:54:38,276 --> 00:54:40,943
+can go in are things that implement that protocol.
+
+1112
+00:54:40,945 --> 00:54:42,511
+So when you get it out, it comes out,
+
+1113
+00:54:42,513 --> 00:54:44,346
+it's a thing that implements that protocol.
+
+1114
+00:54:44,348 --> 00:54:45,180
+So you have to cast it.
+
+1115
+00:54:45,182 --> 00:54:49,251
+To the thing it actually is, okay. Make sense? That's why
+
+1116
+00:54:49,253 --> 00:54:52,254
+even like records of items. That's an array of strings.
+
+1117
+00:54:52,256 --> 00:54:56,292
+You have to say as array of string, okay, got it.
+
+1118
+00:54:56,294 --> 00:54:58,827
+And of course, these all will be optional because as
+
+1119
+00:54:58,829 --> 00:55:03,432
+question mark. So I might wanna say if let on all these.
+
+1120
+00:55:03,434 --> 00:55:08,070
+Okay. Now, I've got the record creator, how do I put it into
+
+1121
+00:55:08,072 --> 00:55:11,707
+the database? It's, actually, the real answer is, or
+
+1122
+00:55:11,709 --> 00:55:15,010
+the full answer is you're gonna create an NSOperation,
+
+1123
+00:55:15,012 --> 00:55:17,680
+okay? Do you remember NSOperation, NSOperationQueue?
+
+1124
+00:55:17,682 --> 00:55:21,450
+That's the object-oriented version of the GCD, right?
+
+1125
+00:55:21,452 --> 00:55:22,251
+Dispatch async and
+
+1126
+00:55:22,253 --> 00:55:26,155
+all that stuff So the way you actually create
+
+1127
+00:55:26,157 --> 00:55:28,757
+records in the database is you create a special kind of
+
+1128
+00:55:28,759 --> 00:55:33,529
+NS operation called CKModifyRecordsOperation and
+
+1129
+00:55:33,531 --> 00:55:36,365
+you can give it a bunch of records and you create and
+
+1130
+00:55:36,367 --> 00:55:40,369
+NS or operation cue, okay. You could use the main cue, okay,
+
+1131
+00:55:40,371 --> 00:55:43,405
+or you can create you're own cue. Those cues are just like
+
+1132
+00:55:43,407 --> 00:55:45,774
+threads, okay, they're like Not like threads,
+
+1133
+00:55:45,776 --> 00:55:48,010
+they're cues, just like dispatch under bar cue,
+
+1134
+00:55:48,012 --> 00:55:51,847
+under bar tee things. And then you just tell that, if you put
+
+1135
+00:55:51,849 --> 00:55:55,617
+this ModifyRecordsOperation on a cue it'll go and
+
+1136
+00:55:55,619 --> 00:55:56,318
+execute it and
+
+1137
+00:55:56,320 --> 00:55:57,219
+update the database. But
+
+1138
+00:55:57,221 --> 00:56:00,422
+that's a little bit of a pain in the neck to go do all that,
+
+1139
+00:56:00,424 --> 00:56:04,159
+okay. So there's a nice little convenience method right in
+
+1140
+00:56:04,161 --> 00:56:08,397
+database called save record. And it just takes a record and
+
+1141
+00:56:08,399 --> 00:56:10,666
+a completion handler. And it saves the record and
+
+1142
+00:56:10,668 --> 00:56:12,935
+calls your completion handler when it's done. Okay, and
+
+1143
+00:56:12,937 --> 00:56:15,571
+remember that can be quite a ways later because this is
+
+1144
+00:56:15,573 --> 00:56:17,506
+happening over the network. Your network might be slow,
+
+1145
+00:56:17,508 --> 00:56:19,942
+you might be out of range of network, whatever. So
+
+1146
+00:56:19,944 --> 00:56:22,745
+it can take a very, very long time for this to come back.
+
+1147
+00:56:22,747 --> 00:56:27,116
+It could even possibly time out but this is how it works.
+
+1148
+00:56:27,118 --> 00:56:28,283
+S this is on the database.
+
+1149
+00:56:28,285 --> 00:56:29,051
+Remember the public database or
+
+1150
+00:56:29,053 --> 00:56:32,087
+the private database that you got from the container?
+
+1151
+00:56:32,089 --> 00:56:34,556
+That's where you send this method. Okay?
+
+1152
+00:56:34,558 --> 00:56:37,292
+Now this thing cant do everything that this whole
+
+1153
+00:56:37,294 --> 00:56:42,765
+NSoperationQ can write multiple records at once.
+
+1154
+00:56:42,767 --> 00:56:45,200
+It also knows how to overwrite a newer version.
+
+1155
+00:56:45,202 --> 00:56:47,703
+Okay, this does optimistic locking right here, the save
+
+1156
+00:56:47,705 --> 00:56:50,906
+record one. So if it tries to write something and there's
+
+1157
+00:56:50,908 --> 00:56:54,076
+a newer version of that thing it's just gonna fail.
+
+1158
+00:56:54,078 --> 00:56:54,510
+Report an error.
+
+1159
+00:56:54,512 --> 00:56:58,747
+It'll come back with an error here in the handler whereas
+
+1160
+00:56:58,749 --> 00:57:01,683
+the modify records operation knows how to
+
+1161
+00:57:01,685 --> 00:57:05,421
+overwrite what's in there. But save record for
+
+1162
+00:57:05,423 --> 00:57:07,923
+the most part does what you want most of the time. And for
+
+1163
+00:57:07,925 --> 00:57:10,559
+your final project this is gonna be plenty probably.
+
+1164
+00:57:10,561 --> 00:57:13,996
+Okay, but you're not gonna need this operation thing.
+
+1165
+00:57:14,365 --> 00:57:16,999
+All right, this happens all asychronously.
+
+1166
+00:57:17,001 --> 00:57:19,768
+Be very careful specially be careful with the fact
+
+1167
+00:57:19,770 --> 00:57:23,439
+that your closure they gets cold when they save record is
+
+1168
+00:57:23,441 --> 00:57:27,109
+finished Happens on another thread besides the main queue.
+
+1169
+00:57:27,111 --> 00:57:28,510
+Okay, it's not in the main queue.
+
+1170
+00:57:28,512 --> 00:57:31,413
+So you need to dispatch async back to the main queue from
+
+1171
+00:57:31,415 --> 00:57:33,849
+there if you want to do some UI stuff when
+
+1172
+00:57:33,851 --> 00:57:37,486
+that record is saved. It make sense? Okay, and
+
+1173
+00:57:37,488 --> 00:57:39,388
+you also just need an architecture code properly.
+
+1174
+00:57:39,390 --> 00:57:42,524
+You need to think about the whole design of your app
+
+1175
+00:57:42,526 --> 00:57:45,093
+when the data that's appearing in it
+
+1176
+00:57:45,095 --> 00:57:46,962
+might be coming asychronously. So
+
+1177
+00:57:46,964 --> 00:57:50,098
+you need to know how to have apps that have basically blank
+
+1178
+00:57:50,100 --> 00:57:52,935
+UIs with either spinning wheels or Loading or
+
+1179
+00:57:52,937 --> 00:57:55,471
+something on there, so the user knows what's going on.
+
+1180
+00:57:55,473 --> 00:57:57,673
+And, when the data comes, it populates it. Okay?
+
+1181
+00:57:57,675 --> 00:58:00,008
+It's very similar to, you do the smash tag where
+
+1182
+00:58:00,010 --> 00:58:02,544
+you have the little profile images, and they come up and
+
+1183
+00:58:02,546 --> 00:58:06,148
+they were blank. And then they just started filling in. Same
+
+1184
+00:58:06,150 --> 00:58:08,517
+kind of thing here, you have data in your database that
+
+1185
+00:58:08,519 --> 00:58:11,119
+starts out, you don't have it and then it starts filling in.
+
+1186
+00:58:11,121 --> 00:58:14,389
+And what does that mean for the user? Means things should
+
+1187
+00:58:14,391 --> 00:58:17,259
+start appearing over time. So you gotta think about how to
+
+1188
+00:58:17,261 --> 00:58:21,730
+architect your app to use asyncronity. All right, so
+
+1189
+00:58:21,732 --> 00:58:22,664
+here's what it looks like to create
+
+1190
+00:58:22,666 --> 00:58:24,867
+a record in the database all put together here.
+
+1191
+00:58:24,869 --> 00:58:26,435
+So I'm going to create a tweet right here.
+
+1192
+00:58:26,437 --> 00:58:29,404
+So here I'm letting tweet equal ckrecord.
+
+1193
+00:58:29,406 --> 00:58:29,972
+Just created a record.
+
+1194
+00:58:29,974 --> 00:58:32,908
+I'm gonna have the Tweets text to be 140 characters of pure
+
+1195
+00:58:32,910 --> 00:58:35,811
+joy. Then I'm gonna get my database by saying
+
+1196
+00:58:35,813 --> 00:58:38,380
+CKContainer.defaultContainer publicCloudDatabase. So I'm
+
+1197
+00:58:38,382 --> 00:58:40,949
+gonna put this in the public database that all users of my
+
+1198
+00:58:40,951 --> 00:58:44,219
+app can see. Then I'm just gonna ask the database to save
+
+1199
+00:58:44,221 --> 00:58:47,322
+the record Tweet, right. Here's that record Tweet and
+
+1200
+00:58:47,324 --> 00:58:49,591
+it's gonna call this closure, this big thing,
+
+1201
+00:58:49,593 --> 00:58:53,195
+when it's done. And this closure test two arguments,
+
+1202
+00:58:53,197 --> 00:58:55,264
+the record that it saved or
+
+1203
+00:58:55,266 --> 00:59:00,068
+nil if it failed to save it and an error, okay.
+
+1204
+00:59:00,070 --> 00:59:05,073
+Again, nil if it saved it, not nil if it failed to save it,
+
+1205
+00:59:05,075 --> 00:59:07,476
+okay. It doesn't return anything and so here's why
+
+1206
+00:59:07,478 --> 00:59:10,345
+doing my closure almost all of the time first I'm gonna say,
+
+1207
+00:59:10,347 --> 00:59:12,748
+if the error equals nil Hooray okay,
+
+1208
+00:59:12,750 --> 00:59:15,684
+it saved it successfully, so now I do whatever I do when
+
+1209
+00:59:15,686 --> 00:59:19,421
+it was successfully saved. Maybe nothing okay? Maybe I do
+
+1210
+00:59:19,423 --> 00:59:23,592
+something else, I don't know, but here's success. Sometimes
+
+1211
+00:59:23,594 --> 00:59:27,362
+there are 29 different errors in ck error code, so
+
+1212
+00:59:27,364 --> 00:59:31,300
+a lot of things can go wrong. Network unavailable, all kinds
+
+1213
+00:59:31,302 --> 00:59:35,003
+of things I just showed you how you handle these by
+
+1214
+00:59:35,005 --> 00:59:37,439
+picking one at random, which is not authenticated.
+
+1215
+00:59:37,441 --> 00:59:40,008
+Okay? Let's say the person is not logged into iCloud.
+
+1216
+00:59:40,010 --> 00:59:42,578
+Kay? They just never went to their settings and
+
+1217
+00:59:42,580 --> 00:59:43,545
+logged into iCloud. Okay? So
+
+1218
+00:59:43,547 --> 00:59:46,515
+you're gonna get this error, CKErrorCode.NotAuthenticated.
+
+1219
+00:59:46,517 --> 00:59:49,017
+Don't forget put, to put .rawValue so you get it as
+
+1220
+00:59:49,019 --> 00:59:51,753
+an integer because this error code is an integer. And
+
+1221
+00:59:51,755 --> 00:59:54,456
+so if there's that then I'm gonna maybe put up an alert
+
+1222
+00:59:54,458 --> 00:59:58,360
+code that "Please log in to iCloud" or something, right?
+
+1223
+00:59:58,362 --> 01:00:02,664
+And there's 29 other errors and so doing this programming
+
+1224
+01:00:02,666 --> 01:00:07,336
+really right, is a lot of error handling code. Okay, so
+
+1225
+01:00:07,338 --> 01:00:10,472
+in your final project You know the more you do of
+
+1226
+01:00:10,474 --> 01:00:13,275
+this the more it's kind of like you can get forming
+
+1227
+01:00:13,277 --> 01:00:15,877
+a one-point use of Cloud kit to a two-point use if you
+
+1228
+01:00:15,879 --> 01:00:18,413
+actually handle the error, you see what I'm saying?
+
+1229
+01:00:18,415 --> 01:00:20,983
+I don't expect you to handle every single error and
+
+1230
+01:00:20,985 --> 01:00:23,485
+uh-uh you get zero points, okay. Of course not, okay,
+
+1231
+01:00:23,487 --> 01:00:26,521
+the more error you handle, the more robust you are,
+
+1232
+01:00:26,523 --> 01:00:27,723
+the better you're a synchronize use,
+
+1233
+01:00:27,725 --> 01:00:30,859
+the more depth point you might get working in Cloud,
+
+1234
+01:00:30,861 --> 01:00:34,062
+Cloud kit Okay, but there's lots of other errors here.
+
+1235
+01:00:34,064 --> 01:00:35,597
+I'll show you some other errors that were going to
+
+1236
+01:00:35,599 --> 01:00:38,033
+handle in some other, ones in a second here.
+
+1237
+01:00:38,035 --> 01:00:39,868
+But this is how you're going to do it. Else if, else if,
+
+1238
+01:00:39,870 --> 01:00:43,572
+else if, or you could just switch on the error code,
+
+1239
+01:00:43,574 --> 01:00:46,375
+to go to handling errors. Okay.
+
+1240
+01:00:46,377 --> 01:00:49,945
+I mean, at worst, you could just either put an alert up,
+
+1241
+01:00:49,947 --> 01:00:52,748
+because the user is saying unknown error or something, or
+
+1242
+01:00:52,750 --> 01:00:55,150
+you could print something on the console. I don't know.
+
+1243
+01:00:55,152 --> 01:00:58,120
+But it's usually you want to try and collect
+
+1244
+01:00:58,122 --> 01:01:01,990
+all the errors that you can do something about, okay?
+
+1245
+01:01:01,992 --> 01:01:06,361
+Now again if tweet the entity doesn't exist in the database
+
+1246
+01:01:06,363 --> 01:01:10,265
+it's gonna create it, okay? If text field doesn't exist on
+
+1247
+01:01:10,267 --> 01:01:12,834
+this it's gonna create that attribute automatically for
+
+1248
+01:01:12,836 --> 01:01:16,405
+me. Okay, so that's it. That's how you put a record in
+
+1249
+01:01:16,407 --> 01:01:20,909
+the database real easy. Okay? Now, there's
+
+1250
+01:01:20,911 --> 01:01:24,613
+a special kind of error, that you can get sometimes,
+
+1251
+01:01:24,615 --> 01:01:30,318
+where, it will actually give you a retry time interval. So,
+
+1252
+01:01:30,320 --> 01:01:34,790
+not all errors have this, but some errors when you get them,
+
+1253
+01:01:34,792 --> 01:01:35,724
+Cloud Kit is basically saying hey,
+
+1254
+01:01:35,726 --> 01:01:38,627
+you know this is the kinda area you probably wanna retry,
+
+1255
+01:01:38,629 --> 01:01:41,329
+and here's a good amount of time to try, okay.
+
+1256
+01:01:41,331 --> 01:01:44,866
+So it's basically telling you what an appropriate retry
+
+1257
+01:01:44,868 --> 01:01:45,300
+interval would be.
+
+1258
+01:01:45,302 --> 01:01:49,171
+And I believe if things continue to fail it, you know,
+
+1259
+01:01:49,173 --> 01:01:51,473
+adds, makes the retry interval a little bit longer,
+
+1260
+01:01:51,475 --> 01:01:54,242
+until it just gives up and says don't retry anymore.
+
+1261
+01:01:54,244 --> 01:01:55,944
+More, but here is how you get it.
+
+1262
+01:01:55,946 --> 01:01:59,114
+Error the NSError that you get back here in addition I have
+
+1263
+01:01:59,116 --> 01:02:02,284
+an error it also has a user info dictionary and
+
+1264
+01:02:02,286 --> 01:02:07,055
+in that dictionary is a key CKError retry after key and
+
+1265
+01:02:07,057 --> 01:02:10,559
+it's an NS time interval okay it's actually an NS number but
+
+1266
+01:02:10,561 --> 01:02:13,328
+you're gonna cast it to an NS time interval there And
+
+1267
+01:02:13,330 --> 01:02:16,298
+then you gonna wanna dispatch back to the main queue because
+
+1268
+01:02:16,300 --> 01:02:17,365
+you gonna wanna have do a timer and
+
+1269
+01:02:17,367 --> 01:02:20,102
+we know that we do our timers on the main queue. And so I'm
+
+1270
+01:02:20,104 --> 01:02:23,505
+gonna schedule a timer with that retry interval I'm just
+
+1271
+01:02:23,507 --> 01:02:27,609
+gonna call some method but will probably try this again.
+
+1272
+01:02:27,611 --> 01:02:30,846
+Okay maybe calls a method that this is in in fact.
+
+1273
+01:02:31,081 --> 01:02:35,817
+Okay I found So basically something might put in
+
+1274
+01:02:35,819 --> 01:02:38,453
+any kind of error that you'd be willing to retry.
+
+1275
+01:02:38,455 --> 01:02:41,590
+Just check to see if there's a retry interval, there's is.
+
+1276
+01:02:41,592 --> 01:02:43,992
+Give it a go. Try it again. Okay,
+
+1277
+01:02:43,994 --> 01:02:46,762
+and if there is no retry interval then of course,
+
+1278
+01:02:46,764 --> 01:02:51,266
+this won't happen. You won't be doing this timer thing.
+
+1279
+01:02:51,268 --> 01:02:55,403
+Got it? Okay, now we've got the records stored.
+
+1280
+01:02:55,405 --> 01:02:58,406
+Now we want to get them, okay? So we basically want a query
+
+1281
+01:02:58,408 --> 01:03:02,577
+to get them. And querying is also super, super simple here.
+
+1282
+01:03:02,579 --> 01:03:05,347
+You're just gonna do performQuery on the database.
+
+1283
+01:03:05,349 --> 01:03:07,549
+Just like you did saveRecord on the database you're gonna
+
+1284
+01:03:07,551 --> 01:03:09,184
+do performQuery and give it a query.
+
+1285
+01:03:09,186 --> 01:03:11,920
+I'll talk about in a second. This inZoneWithID,
+
+1286
+01:03:11,922 --> 01:03:15,724
+remember I've told you there were zones, subdatabase zones,
+
+1287
+01:03:15,726 --> 01:03:19,161
+okay. So you can specify a zone there, or nil, actually
+
+1288
+01:03:19,163 --> 01:03:24,232
+that's an optional string, so that could be nil. But if you
+
+1289
+01:03:24,234 --> 01:03:27,068
+specify a zone, it will put, it will search only in zone,
+
+1290
+01:03:27,070 --> 01:03:29,971
+so you can limit your search and be more efficient, okay,
+
+1291
+01:03:29,973 --> 01:03:33,408
+if you can sensibly Divide your database into little
+
+1292
+01:03:33,410 --> 01:03:36,678
+zones. To keep your searches smaller it's a good idea.
+
+1293
+01:03:36,680 --> 01:03:38,180
+That's what that inZoneWithID is.
+
+1294
+01:03:38,182 --> 01:03:40,115
+For your final project, again you could say nil and
+
+1295
+01:03:40,117 --> 01:03:43,752
+just put everything in one big zone, default zone. And
+
+1296
+01:03:43,754 --> 01:03:46,121
+then of course you're gonna call a completion handler, and
+
+1297
+01:03:46,123 --> 01:03:47,789
+look what the completion handler has.
+
+1298
+01:03:47,791 --> 01:03:51,126
+An array of the records that you searched for, couldn't be
+
+1299
+01:03:51,128 --> 01:03:55,330
+simpler. Okay? Possibly an error. Okay, so this is just
+
+1300
+01:03:55,332 --> 01:03:57,732
+really straightforward. You give it a query.
+
+1301
+01:03:57,734 --> 01:04:00,802
+It just calls your handler with the records that matched.
+
+1302
+01:04:00,804 --> 01:04:03,638
+Or nil if there was an error, okay?
+
+1303
+01:04:03,640 --> 01:04:07,309
+Now what about this CKQuery, that's also trivial.
+
+1304
+01:04:07,311 --> 01:04:10,078
+It's initializer is just the entity, okay?
+
+1305
+01:04:10,080 --> 01:04:14,549
+So you wanna search for tweets and then an NSPredicate, okay?
+
+1306
+01:04:14,551 --> 01:04:17,719
+And so this NSPredicate is gonna specify which things you
+
+1307
+01:04:17,721 --> 01:04:21,423
+want in your database. And this NSPredicate is
+
+1308
+01:04:21,425 --> 01:04:24,726
+obviously much simpler than Core Data because there
+
+1309
+01:04:24,728 --> 01:04:28,430
+are just fewer things that you can do, fewer data type,
+
+1310
+01:04:28,432 --> 01:04:31,900
+fewer, the relationships aren't as complicated,
+
+1311
+01:04:31,902 --> 01:04:35,604
+there's just that reference thing etc. But
+
+1312
+01:04:35,606 --> 01:04:37,672
+you can look in the documentation for CKQuery,
+
+1313
+01:04:37,674 --> 01:04:40,976
+it has a very good description of all the things you can do
+
+1314
+01:04:40,978 --> 01:04:43,278
+with NSPredicate for CKQuery. It's, you know,
+
+1315
+01:04:43,280 --> 01:04:46,114
+all the things you might think like equals equals.
+
+1316
+01:04:46,116 --> 01:04:48,650
+But also it has some cool things like in, okay?
+
+1317
+01:04:48,652 --> 01:04:50,352
+Where you check whether something is in and
+
+1318
+01:04:50,354 --> 01:04:53,588
+array of other things for example. And so like that,
+
+1319
+01:04:53,590 --> 01:04:56,725
+it also has a special field name by the way, self, and
+
+1320
+01:04:56,727 --> 01:04:59,327
+you know, cuz you should, could have a field name like
+
+1321
+01:04:59,329 --> 01:05:03,265
+text if there's a tweet, text contains some word.
+
+1322
+01:05:03,267 --> 01:05:05,834
+That's perfectly valid predicate. But you can also
+
+1323
+01:05:05,836 --> 01:05:09,604
+have self as a keyword, not just tech, but self. And if I
+
+1324
+01:05:09,606 --> 01:05:13,541
+say self contains whatever, it'll look in all the fields,
+
+1325
+01:05:13,543 --> 01:05:16,978
+okay, that are index, not just text but all the tweets.
+
+1326
+01:05:16,980 --> 01:05:20,248
+So maybe you have a tweet that has text, it has hashtags,
+
+1327
+01:05:20,250 --> 01:05:23,952
+it has you know URLs as different fields. If you'd say
+
+1328
+01:05:23,954 --> 01:05:26,922
+self-contained something, it'll look in all the fields,
+
+1329
+01:05:26,924 --> 01:05:28,523
+all the indexed fields to find it, okay?
+
+1330
+01:05:28,525 --> 01:05:33,528
+So it's kind of a search text over all the index field,
+
+1331
+01:05:33,530 --> 01:05:35,730
+okay? So this is really, couldn't be simpler,
+
+1332
+01:05:35,732 --> 01:05:38,333
+they couldn't have made this any simpler. This is as simple
+
+1333
+01:05:38,335 --> 01:05:41,136
+a kind of queries you can possibly imagine. Okay, so
+
+1334
+01:05:41,138 --> 01:05:43,371
+here's an example. Here I'm looking for
+
+1335
+01:05:43,373 --> 01:05:46,741
+a tweet that's text contains some search string so
+
+1336
+01:05:46,743 --> 01:05:47,742
+I've a predicate which is
+
+1337
+01:05:47,744 --> 01:05:51,479
+text contains %@ which is the search string there.
+
+1338
+01:05:51,481 --> 01:05:54,549
+Otherwise, it looks just like NSPredicate of core data.
+
+1339
+01:05:54,551 --> 01:05:57,018
+Okay, I'm gonna create this query which is looking for
+
+1340
+01:05:57,020 --> 01:06:00,422
+Tweets without predicate. I'm gonna perform the query
+
+1341
+01:06:00,424 --> 01:06:04,159
+some time later. It's gonna call my closure right here.
+
+1342
+01:06:04,161 --> 01:06:07,629
+It's gonna give me a list of all the Tweets, okay,
+
+1343
+01:06:07,631 --> 01:06:10,598
+that contain that. That's what this records thing is right
+
+1344
+01:06:10,600 --> 01:06:13,969
+here. Again, I'm checking for errors. Here, I've checked for
+
+1345
+01:06:13,971 --> 01:06:17,939
+that not authenticated error again. But,
+
+1346
+01:06:17,941 --> 01:06:22,143
+it's as simple as that, okay? Now,
+
+1347
+01:06:22,145 --> 01:06:25,146
+one thing, if you're gonna search on any of these things,
+
+1348
+01:06:25,148 --> 01:06:28,116
+any field that you're gonna search on, make sure you go to
+
+1349
+01:06:28,118 --> 01:06:30,986
+your dashboard and make sure that the checkbox query for
+
+1350
+01:06:30,988 --> 01:06:34,856
+indexes is set, otherwise you can't query on it. Okay,
+
+1351
+01:06:34,858 --> 01:06:38,159
+now when you create new fields automatically on
+
+1352
+01:06:38,161 --> 01:06:40,128
+the fly like this, it automatically sets those.
+
+1353
+01:06:40,130 --> 01:06:42,430
+it automatically turns on indexes for all of them.
+
+1354
+01:06:42,432 --> 01:06:44,966
+It doesn't turn on the indexes for created by and
+
+1355
+01:06:44,968 --> 01:06:47,736
+created date and all that, but it does do it for
+
+1356
+01:06:47,738 --> 01:06:51,106
+the new field that you add. And in fact,
+
+1357
+01:06:51,108 --> 01:06:52,440
+when you go to deploy, you probably wanna turn
+
+1358
+01:06:52,442 --> 01:06:54,843
+some of those off if you know you never search on it.
+
+1359
+01:06:54,845 --> 01:06:59,047
+Don't waste the database's time creating indexes that
+
+1360
+01:06:59,049 --> 01:07:03,018
+it doesn't use. Now, there's a special kind of record
+
+1361
+01:07:03,020 --> 01:07:06,354
+though that you get with the special method here which
+
+1362
+01:07:06,356 --> 01:07:10,392
+is the recordID of the user, okay, the currently logged in
+
+1363
+01:07:10,394 --> 01:07:12,460
+iCloud user. Now why would you ever want this?
+
+1364
+01:07:12,462 --> 01:07:14,662
+Well, because you might wanna look in the database and
+
+1365
+01:07:14,664 --> 01:07:17,632
+find records created by that user. And to do that,
+
+1366
+01:07:17,634 --> 01:07:21,169
+you need the user. You need the user's RecordID so
+
+1367
+01:07:21,171 --> 01:07:24,706
+that you can make a query that says user, or
+
+1368
+01:07:24,708 --> 01:07:28,309
+createdBy, let's say, which is a built in one. User, creator,
+
+1369
+01:07:28,311 --> 01:07:30,445
+something. Actually I'll talk about in the next slide. You
+
+1370
+01:07:30,447 --> 01:07:32,881
+want to be able to set that. Well, to do that, you need it.
+
+1371
+01:07:32,883 --> 01:07:35,216
+And you do this with a fetchUserRecordIDWithCompleti-
+
+1372
+01:07:35,218 --> 01:07:38,520
+onHandler. That is not sent to the database, though.
+
+1373
+01:07:38,522 --> 01:07:40,488
+That is sent to the container. Okay,
+
+1374
+01:07:40,490 --> 01:07:43,691
+because the container, all the databases in the container,
+
+1375
+01:07:43,693 --> 01:07:46,528
+the, I currently logged in iCloud user, is the user for
+
+1376
+01:07:46,530 --> 01:07:50,498
+them. So you actually go up to CKContainer to do this,
+
+1377
+01:07:50,500 --> 01:07:51,699
+CKContainer default container,
+
+1378
+01:07:51,701 --> 01:07:54,736
+fetch record user record with completion handler, and
+
+1379
+01:07:54,738 --> 01:07:57,372
+it just returns you the RecordID of the user.
+
+1380
+01:07:57,374 --> 01:08:00,842
+Now, notice this is the RecordID, not the CKRecord,
+
+1381
+01:08:00,844 --> 01:08:03,912
+you almost never need the actual record of the user.
+
+1382
+01:08:03,914 --> 01:08:05,380
+You could get the record of the user, and
+
+1383
+01:08:05,382 --> 01:08:07,348
+you could even add fields to it if you wanted,
+
+1384
+01:08:07,350 --> 01:08:10,485
+but it's rare to do that. Usually, you just need
+
+1385
+01:08:10,487 --> 01:08:13,621
+the RecordID because you're going to be querying on it,
+
+1386
+01:08:13,623 --> 01:08:17,125
+you're gonna be making queries to find out if this user was
+
+1387
+01:08:17,127 --> 01:08:19,828
+the person who created it or whatever, okay?
+
+1388
+01:08:19,830 --> 01:08:22,797
+The RecordID has a property record name,
+
+1389
+01:08:22,799 --> 01:08:26,935
+which is just some randomly created string that you
+
+1390
+01:08:26,937 --> 01:08:29,270
+can use as kind of a blind username.
+
+1391
+01:08:29,272 --> 01:08:31,973
+It's not gonna be the person's actual iCloud name, it's just
+
+1392
+01:08:31,975 --> 01:08:35,877
+some gobbledygook. But inside of your implementation,
+
+1393
+01:08:35,879 --> 01:08:40,048
+you can use it as a string key that means this user if you
+
+1394
+01:08:40,050 --> 01:08:43,818
+want, okay? I'm gonna combine the two things,
+
+1395
+01:08:43,820 --> 01:08:48,356
+the fetchUserRecord with the query here. I'm gonna find all
+
+1396
+01:08:48,358 --> 01:08:51,493
+the tweets that were created by the currently logged in
+
+1397
+01:08:51,495 --> 01:08:55,630
+user. Okay, so first I get the container,
+
+1398
+01:08:55,632 --> 01:08:58,800
+I fetch the user in the completion handler for
+
+1399
+01:08:58,802 --> 01:09:01,903
+that right here. I have the user. Now I'm gonna create
+
+1400
+01:09:01,905 --> 01:09:05,540
+a new predicate which is the creatorUserRecordID.
+
+1401
+01:09:05,542 --> 01:09:09,711
+Which is a built in field on all record types.
+
+1402
+01:09:09,713 --> 01:09:14,616
+Equals the UserRecordID, a thing I got from fetchRecord.
+
+1403
+01:09:14,618 --> 01:09:15,416
+See that thing right there.
+
+1404
+01:09:15,418 --> 01:09:17,619
+And them I'm gonna create a query which is for
+
+1405
+01:09:17,621 --> 01:09:20,155
+tweets that uses that predicate. Now I'm gonna
+
+1406
+01:09:20,157 --> 01:09:22,991
+get the public database and perform the query, okay?
+
+1407
+01:09:22,993 --> 01:09:26,761
+In zone nil, and I'm gonna get the record in error as
+
+1408
+01:09:26,763 --> 01:09:29,764
+a return value. And so now I have this records containing
+
+1409
+01:09:29,766 --> 01:09:32,767
+all the tweets created by the currently logged in user.
+
+1410
+01:09:32,769 --> 01:09:34,602
+See how I chained those two? And
+
+1411
+01:09:34,604 --> 01:09:37,872
+remember, this fetch record, UserRecordID,
+
+1412
+01:09:37,874 --> 01:09:38,606
+that's gonna take a little while.
+
+1413
+01:09:38,608 --> 01:09:41,109
+And when it returns, it's gonna do another query.
+
+1414
+01:09:41,111 --> 01:09:44,045
+That's gonna take a little while, so it's gonna chain.
+
+1415
+01:09:44,047 --> 01:09:47,549
+But since this call is inside of this other closure,
+
+1416
+01:09:47,551 --> 01:09:52,253
+it chains them nicely there. Okay, again
+
+1417
+01:09:52,255 --> 01:09:55,423
+you have to create, turn that Created By metadata index on
+
+1418
+01:09:55,425 --> 01:09:57,792
+that I showed you right at the beginning for this to work or
+
+1419
+01:09:57,794 --> 01:10:03,198
+you can't search on user. Okay, by the way,
+
+1420
+01:10:03,200 --> 01:10:06,901
+if you ever have a RecordID and you wanna get the record,
+
+1421
+01:10:06,903 --> 01:10:09,637
+okay, the CKRecord, you can use databases
+
+1422
+01:10:09,639 --> 01:10:12,240
+fetchRecordWithID and that will search and
+
+1423
+01:10:12,242 --> 01:10:16,311
+get the actual record, okay? The RecordID, though,
+
+1424
+01:10:16,313 --> 01:10:18,846
+on its own has some interesting things
+
+1425
+01:10:18,848 --> 01:10:22,850
+like the creator, the creation date, the record type,
+
+1426
+01:10:22,852 --> 01:10:26,321
+and all that stuff, so that's kind of fun. All right,
+
+1427
+01:10:26,323 --> 01:10:30,158
+deleting records from the database couldn't be easier.
+
+1428
+01:10:30,160 --> 01:10:30,658
+Just say to the database,
+
+1429
+01:10:30,660 --> 01:10:33,361
+deleteRecordWithID. You have to have the record ID, you can
+
+1430
+01:10:33,363 --> 01:10:35,230
+of course get the record ID from a record easily,
+
+1431
+01:10:35,232 --> 01:10:38,066
+there's a bar for it. And then completionHandler when it's
+
+1432
+01:10:38,068 --> 01:10:42,237
+done, okay? Okay, now let's talk about references, okay?
+
+1433
+01:10:42,239 --> 01:10:44,038
+I wanna, I want to store a reference. So this is
+
+1434
+01:10:44,040 --> 01:10:46,908
+like the Twitter user as the tweeter for a tweet.
+
+1435
+01:10:46,910 --> 01:10:50,278
+You cannot do this code right here. twitterUser equals
+
+1436
+01:10:50,280 --> 01:10:54,549
+a recordType TwitterUser. Tweet equals a record Tweet.
+
+1437
+01:10:54,551 --> 01:10:58,052
+Tweet, subTweeter equals TwitterUser. [SOUND] Okay,
+
+1438
+01:10:58,054 --> 01:11:02,490
+can't do it. This thing has to be a CKReference.
+
+1439
+01:11:02,492 --> 01:11:04,993
+So you just have to say TweetSubTweeter equals
+
+1440
+01:11:04,995 --> 01:11:07,996
+CKReference with the record. And then you specify this
+
+1441
+01:11:07,998 --> 01:11:10,431
+action which is interesting, it's either deletes itself or
+
+1442
+01:11:10,433 --> 01:11:16,504
+not. This action says what to do if this thing is deleted.
+
+1443
+01:11:16,506 --> 01:11:20,308
+Okay, when we cascade. So if I say the action is DeleteSelf,
+
+1444
+01:11:20,310 --> 01:11:23,811
+this reference to twitterUser is DeleteSelf reference.
+
+1445
+01:11:23,813 --> 01:11:26,948
+Then if the twitterUser is deleted, then the Tweet is
+
+1446
+01:11:26,950 --> 01:11:29,984
+deleted as well. It cascades the delete. That's why it's
+
+1447
+01:11:29,986 --> 01:11:35,089
+saying delete myself, okay, if this reference gets deleted.
+
+1448
+01:11:35,091 --> 01:11:37,525
+None means don't do it. When you delete,
+
+1449
+01:11:37,527 --> 01:11:41,829
+don't do any cascading, just delete this one thing, okay?
+
+1450
+01:11:41,831 --> 01:11:44,399
+By the way, when you're creating a predicate,
+
+1451
+01:11:44,401 --> 01:11:45,900
+you don't have to do that CKReference thing.
+
+1452
+01:11:45,902 --> 01:11:47,969
+If I wanna create a predicate which is tweeter equals
+
+1453
+01:11:47,971 --> 01:11:50,938
+something, I can actually pass the twitterUser, I don't have
+
+1454
+01:11:50,940 --> 01:11:56,978
+to say CKReference twitterUser there. Okay, standing queries,
+
+1455
+01:11:56,980 --> 01:12:00,315
+the last thing we're talking about, subscriptions, okay? So
+
+1456
+01:12:00,317 --> 01:12:02,950
+sometimes it's nice to not have to be constantly
+
+1457
+01:12:02,952 --> 01:12:06,454
+querying, you just want iCloud to tell you when a new Thing
+
+1458
+01:12:06,456 --> 01:12:09,657
+appears in the database that you're interested in.
+
+1459
+01:12:09,659 --> 01:12:12,794
+And that's really, really easy to do. So for
+
+1460
+01:12:12,796 --> 01:12:15,596
+an example here, I'm going to set up a subscription so
+
+1461
+01:12:15,598 --> 01:12:18,866
+that I get notified by a push notification any time that
+
+1462
+01:12:18,868 --> 01:12:19,600
+a Tweet is created or
+
+1463
+01:12:19,602 --> 01:12:22,737
+deleted. So I'm gonna create a predicate which is
+
+1464
+01:12:22,739 --> 01:12:25,373
+true predicate which means all Tweets. Okay,
+
+1465
+01:12:25,375 --> 01:12:28,009
+this is a special predicate, that means all.
+
+1466
+01:12:28,011 --> 01:12:31,145
+And in core dating, you have the predicate nil, means all.
+
+1467
+01:12:31,147 --> 01:12:32,814
+Here you have to create a predicate,
+
+1468
+01:12:32,816 --> 01:12:33,147
+it's true predicate.
+
+1469
+01:12:33,149 --> 01:12:36,084
+And then you create this thing called a CKSubscription
+
+1470
+01:12:36,086 --> 01:12:39,120
+with the record type that you're interested in, Tweets,
+
+1471
+01:12:39,122 --> 01:12:42,657
+the predicate you want, all of the them. A subscriptionID,
+
+1472
+01:12:42,659 --> 01:12:45,893
+this is an English language string that should
+
+1473
+01:12:45,895 --> 01:12:48,996
+very uniquely describe what you're looking for. Okay,
+
+1474
+01:12:48,998 --> 01:12:51,833
+because this is gonna identify this subscription in
+
+1475
+01:12:51,835 --> 01:12:54,335
+the database so you can delete it later for an example.
+
+1476
+01:12:54,337 --> 01:12:57,939
+Okay so here I called it "All Tweet Creation and Deletion".
+
+1477
+01:12:57,941 --> 01:13:02,510
+And then options is what kinds of actions of those tweets,
+
+1478
+01:13:02,512 --> 01:13:05,446
+for example, do you wanna know when the tweets are created?
+
+1479
+01:13:05,448 --> 01:13:07,115
+Do you wanna know when tweets are deleted?
+
+1480
+01:13:07,117 --> 01:13:08,883
+You can also find out when tweets are updated,
+
+1481
+01:13:08,885 --> 01:13:12,019
+their fields change. And you can also have FiresOnce
+
+1482
+01:13:12,021 --> 01:13:15,289
+in here which means that this subscription only works once.
+
+1483
+01:13:15,291 --> 01:13:16,391
+It sends you one push notification and
+
+1484
+01:13:16,393 --> 01:13:20,128
+then gets deleted. Okay, so it's like a one time standing
+
+1485
+01:13:20,130 --> 01:13:23,564
+query. It also has this thing called a notifcationInfo.
+
+1486
+01:13:23,566 --> 01:13:25,466
+Okay, this is gonna send a push notification.
+
+1487
+01:13:25,468 --> 01:13:28,536
+So this can help you configure that push notification right
+
+1488
+01:13:28,538 --> 01:13:32,039
+here. And then you just say, database.saveSubscription.
+
+1489
+01:13:32,041 --> 01:13:34,208
+Okay, and it'll call you back when it's done.
+
+1490
+01:13:34,210 --> 01:13:36,110
+And that puts this subscription in the database.
+
+1491
+01:13:36,112 --> 01:13:39,580
+And now the database is gonna send you a push notification
+
+1492
+01:13:39,582 --> 01:13:42,884
+whenever this is changing. Okay, creation or deletion of
+
+1493
+01:13:42,886 --> 01:13:46,254
+tweets, in this case. Okay, now I have to tell you how to
+
+1494
+01:13:46,256 --> 01:13:49,624
+deal with push notifications, okay. How to turn them on,
+
+1495
+01:13:49,626 --> 01:13:53,761
+and how to get them. So, to turn on a push notification,
+
+1496
+01:13:53,763 --> 01:13:56,030
+you actually need to in your application,
+
+1497
+01:13:56,032 --> 01:13:59,333
+didFinishLaunchingWithOptions is usually where you would put
+
+1498
+01:13:59,335 --> 01:14:02,003
+this code, you have to put these yellow lines here.
+
+1499
+01:14:02,005 --> 01:14:04,939
+Which is, you have to call this method
+
+1500
+01:14:04,941 --> 01:14:06,908
+registerUserNotificationSetti- ngs.
+
+1501
+01:14:06,910 --> 01:14:09,844
+Okay, the user notification settings just say what kind
+
+1502
+01:14:09,846 --> 01:14:13,714
+of push notifications you're willing to receive like,
+
+1503
+01:14:13,716 --> 01:14:16,150
+alerts, badges, or sounds.
+
+1504
+01:14:16,152 --> 01:14:19,220
+If you're just alerting to let the code know, you don't have
+
+1505
+01:14:19,222 --> 01:14:21,989
+to send off any of those three, okay? Alert badge and
+
+1506
+01:14:21,991 --> 01:14:24,425
+sound means it's gonna put an alert up when things come,
+
+1507
+01:14:24,427 --> 01:14:27,562
+okay, or a badge. It's gonna put a little red badge
+
+1508
+01:14:27,564 --> 01:14:30,331
+on your icon, your app icon which is kinda cool maybe,
+
+1509
+01:14:30,333 --> 01:14:32,033
+you might want that actually.
+
+1510
+01:14:32,035 --> 01:14:36,270
+You get to specify the, what happens when the push
+
+1511
+01:14:36,272 --> 01:14:39,073
+notification comes from Cloud Kit back in that notification
+
+1512
+01:14:39,075 --> 01:14:41,776
+info thing that I was telling you about in the previous
+
+1513
+01:14:41,778 --> 01:14:43,644
+slide. Subscription.notificationInfo,
+
+1514
+01:14:43,646 --> 01:14:46,981
+one of the things in there is whether to alert badge or
+
+1515
+01:14:46,983 --> 01:14:51,052
+sound when the subscription fires. Okay. So
+
+1516
+01:14:51,054 --> 01:14:54,622
+anyway you register what your kind of settings you want, and
+
+1517
+01:14:54,624 --> 01:14:56,791
+then you have to register for remote notifications.
+
+1518
+01:14:56,793 --> 01:14:59,327
+That means I wanna hear about remote notifications.
+
+1519
+01:14:59,329 --> 01:15:00,728
+If you don't do this, you won't get any push
+
+1520
+01:15:00,730 --> 01:15:04,298
+notifications of any kind, let alone these Cloud Kit ones.
+
+1521
+01:15:04,300 --> 01:15:06,634
+Okay. So now once you've done that okay,
+
+1522
+01:15:06,636 --> 01:15:08,936
+you need to receive them. And you do that with this
+
+1523
+01:15:08,938 --> 01:15:12,673
+application delegate method didReceiveRemoteNotification.
+
+1524
+01:15:12,675 --> 01:15:15,376
+So this will get called any time a push notification comes
+
+1525
+01:15:15,378 --> 01:15:19,380
+to your app, okay. When you get it there's user info
+
+1526
+01:15:19,382 --> 01:15:22,950
+right here, okay. And inside that userInfo is a dictionary
+
+1527
+01:15:22,952 --> 01:15:26,587
+that Cloud Kit's gonna send. And you're gonna use this
+
+1528
+01:15:26,589 --> 01:15:30,658
+CKNotification class, right here, call it initializer,
+
+1529
+01:15:30,660 --> 01:15:34,195
+with that dictionary to create a CKNotification.
+
+1530
+01:15:34,197 --> 01:15:37,532
+That CKNotification, Cloud Kit notification, represents
+
+1531
+01:15:37,534 --> 01:15:40,001
+the push notification that was sent to you. It's got all the
+
+1532
+01:15:40,003 --> 01:15:43,104
+information you need to know about the push notification
+
+1533
+01:15:43,106 --> 01:15:46,574
+that got sent because you're subscription. Okay? And
+
+1534
+01:15:46,576 --> 01:15:49,176
+it's got things in there like the recordID that change
+
+1535
+01:15:49,178 --> 01:15:53,748
+that cause it. Why the notification is happening s
+
+1536
+01:15:53,750 --> 01:15:54,782
+it because something was created,
+
+1537
+01:15:54,784 --> 01:15:56,717
+or something was deleted, or something was updated?
+
+1538
+01:15:56,719 --> 01:15:59,687
+Okay, will tell you which of those things went on that
+
+1539
+01:15:59,689 --> 01:16:02,790
+caused this notification to be sent to you and
+
+1540
+01:16:02,792 --> 01:16:04,258
+which record was affected by it.
+
+1541
+01:16:04,260 --> 01:16:07,094
+You can even, in the subscription notificationInfo,
+
+1542
+01:16:07,096 --> 01:16:10,031
+you can set certain fields to be prefetched and
+
+1543
+01:16:10,033 --> 01:16:12,733
+come along with. Okay, cuz normally it only sends you
+
+1544
+01:16:12,735 --> 01:16:15,269
+the recordID of what changed in the database.
+
+1545
+01:16:15,271 --> 01:16:16,938
+You might wanna actually sum of the fields, so
+
+1546
+01:16:16,940 --> 01:16:20,675
+you don't have to go get, fetch the record itself, okay?
+
+1547
+01:16:20,677 --> 01:16:23,477
+So that's great. Now that you've got this notification,
+
+1548
+01:16:23,479 --> 01:16:27,181
+what do you do with it. Okay, you really need to get it
+
+1549
+01:16:27,183 --> 01:16:29,750
+to the part of your UI, if you control it or
+
+1550
+01:16:29,752 --> 01:16:33,287
+whatever, that's going to do something with this data
+
+1551
+01:16:33,289 --> 01:16:35,756
+that has changed, okay. And the best way,
+
+1552
+01:16:35,758 --> 01:16:37,425
+this is all coming to your AppDelegate, right?
+
+1553
+01:16:37,427 --> 01:16:39,694
+Is your AppDelegate getting this push notification?
+
+1554
+01:16:39,696 --> 01:16:41,829
+That's not that useful because usually it's some view
+
+1555
+01:16:41,831 --> 01:16:44,265
+controller somewhere that really wants the information.
+
+1556
+01:16:44,267 --> 01:16:46,734
+So what we're gonna do is we're gonna forward it
+
+1557
+01:16:46,736 --> 01:16:49,770
+using the radio station model, okay?
+
+1558
+01:16:49,772 --> 01:16:52,106
+That's is real simple way to get this thing to came to
+
+1559
+01:16:52,108 --> 01:16:54,809
+AppDelegate and get it out to who really wants it. So
+
+1560
+01:16:54,811 --> 01:16:57,078
+I'm just gonna create a local notification here I'm gonna
+
+1561
+01:16:57,080 --> 01:16:59,880
+become a radio station broadcaster see in this
+
+1562
+01:16:59,882 --> 01:17:00,047
+notification.
+
+1563
+01:17:00,049 --> 01:17:03,417
+Here's my radio station name MyCloudKitNotificationName or
+
+1564
+01:17:03,419 --> 01:17:07,388
+whatever. Self is this is in AppDelegate so self is gonna
+
+1565
+01:17:07,390 --> 01:17:09,790
+be my AppDelegate but it probably doesn't matter what I
+
+1566
+01:17:09,792 --> 01:17:12,393
+pass here as the sender of the radio station. And
+
+1567
+01:17:12,395 --> 01:17:15,863
+then here in the userInfo, I'm gonna put that ckn,
+
+1568
+01:17:15,865 --> 01:17:18,666
+this notification right here that I created, okay,
+
+1569
+01:17:18,668 --> 01:17:21,335
+from the dictionary that came in the push notification.
+
+1570
+01:17:21,337 --> 01:17:23,704
+I'm gonna put that in the dictionary
+
+1571
+01:17:23,706 --> 01:17:25,873
+under some key name, ckn or
+
+1572
+01:17:25,875 --> 01:17:30,011
+whatever, CKNKey, so that the people who are listening to my
+
+1573
+01:17:30,013 --> 01:17:33,080
+radio station can get this CKNotification. By the way,
+
+1574
+01:17:33,082 --> 01:17:36,517
+these two strings wanna be global constant somewhere.
+
+1575
+01:17:36,519 --> 01:17:40,254
+So that the listeners and the sender are using the same keys
+
+1576
+01:17:40,256 --> 01:17:46,394
+and radio station names, okay? And then I just post it, okay.
+
+1577
+01:17:46,396 --> 01:17:48,329
+DefaultCenter postNotification disNotification.
+
+1578
+01:17:48,331 --> 01:17:51,098
+And now everybody's listening to this radio station gonna
+
+1579
+01:17:51,100 --> 01:17:52,967
+find out about all the push notifications coming
+
+1580
+01:17:52,969 --> 01:17:56,737
+from Cloud Kit. Cause they're getting forwarded out to them.
+
+1581
+01:17:56,739 --> 01:18:00,708
+Okay, now, if I'm an observer, what do I do? I just
+
+1582
+01:18:00,710 --> 01:18:04,111
+do this addObserverForName, okay. So now I'm some view
+
+1583
+01:18:04,113 --> 01:18:06,380
+controller that wants to hear this push notification, so
+
+1584
+01:18:06,382 --> 01:18:09,784
+I do addObserveForName, I use the radio station name there,
+
+1585
+01:18:09,786 --> 01:18:12,319
+I don't care who sends it to me, I'm going to do it on
+
+1586
+01:18:12,321 --> 01:18:14,889
+the same queue because I know my AppDelegate runs on
+
+1587
+01:18:14,891 --> 01:18:18,926
+the main queue, but I could put main queue here also. And
+
+1588
+01:18:18,928 --> 01:18:20,027
+then using block right here.
+
+1589
+01:18:20,029 --> 01:18:20,995
+This is the block that gets called.
+
+1590
+01:18:20,997 --> 01:18:24,432
+Here's the notification that came over the radio station.
+
+1591
+01:18:24,434 --> 01:18:26,467
+I'm gonna look in the notification look at that
+
+1592
+01:18:26,469 --> 01:18:30,905
+user interface, user info, get that key and cast it
+
+1593
+01:18:30,907 --> 01:18:34,608
+to be a CKQueryNotification by the way. There's another kind
+
+1594
+01:18:34,610 --> 01:18:39,113
+of thing it could be which is a zone oriented notification,
+
+1595
+01:18:39,115 --> 01:18:41,115
+I'm not talking about zones but most of the times it's
+
+1596
+01:18:41,117 --> 01:18:43,651
+gonna be a query notification cuz it's a subscription.
+
+1597
+01:18:43,653 --> 01:18:45,886
+So you can do this as query notification.
+
+1598
+01:18:45,888 --> 01:18:50,591
+Now you're gonna check to see if the subscriptionID of this
+
+1599
+01:18:50,593 --> 01:18:54,862
+query notification is the same as your subscriptionID because
+
+1600
+01:18:54,864 --> 01:18:56,230
+there might be other view controllers
+
+1601
+01:18:56,232 --> 01:18:57,698
+who have subscriptions in Cloud Kit and
+
+1602
+01:18:57,700 --> 01:18:59,700
+they're getting notified by push notifications.
+
+1603
+01:18:59,702 --> 01:19:02,002
+You don't want theirs, you want yours. And
+
+1604
+01:19:02,004 --> 01:19:04,839
+you can tell it's yours because you can look in this
+
+1605
+01:19:04,841 --> 01:19:08,275
+CKQueryNotification and find the subscriptionID that caused
+
+1606
+01:19:08,277 --> 01:19:12,046
+this push notification to get pushed, got it? And
+
+1607
+01:19:12,048 --> 01:19:15,249
+once I'm sure it's for me now I can go react to it.
+
+1608
+01:19:15,251 --> 01:19:15,416
+The data's available.
+
+1609
+01:19:15,418 --> 01:19:18,519
+Maybe I'll put it in my table view or whatever I do with
+
+1610
+01:19:18,521 --> 01:19:20,921
+it cuz the data is here, okay? Maybe I'll query for
+
+1611
+01:19:20,923 --> 01:19:24,959
+more information, whatever. But now I can get going.
+
+1612
+01:19:24,961 --> 01:19:28,262
+Make sense? By the way, notice that when did out observe for
+
+1613
+01:19:28,264 --> 01:19:31,198
+name I grabbed the return value that cookie I told you
+
+1614
+01:19:31,200 --> 01:19:34,468
+and in this object protocol thing we did and why do I want
+
+1615
+01:19:34,470 --> 01:19:37,271
+that, because later on when I'm done listening
+
+1616
+01:19:37,273 --> 01:19:40,641
+to further push notifications via this radio station.
+
+1617
+01:19:40,643 --> 01:19:44,278
+I'm gonna call removeObserver to remove this observer so
+
+1618
+01:19:44,280 --> 01:19:46,947
+I no longer get these local notifications.
+
+1619
+01:19:46,949 --> 01:19:51,051
+So this is something might do in our view did disappear.
+
+1620
+01:19:51,053 --> 01:19:54,922
+And we might do this in our view will appear or view did
+
+1621
+01:19:54,924 --> 01:19:58,192
+appear. Right, cuz only when we're on screen do we maybe
+
+1622
+01:19:58,194 --> 01:20:00,528
+want these notifications. When we go off we don't
+
+1623
+01:20:00,530 --> 01:20:01,796
+want them any more. When we come back on we wanna
+
+1624
+01:20:01,798 --> 01:20:06,500
+keep getting them again. Okay? You definitely wanna do this,
+
+1625
+01:20:06,502 --> 01:20:11,005
+by the way you never want your view controller to go away and
+
+1626
+01:20:11,007 --> 01:20:16,143
+still be here because this closure will keep your
+
+1627
+01:20:16,145 --> 01:20:18,746
+view controller in memory. And you don't wanna really do
+
+1628
+01:20:18,748 --> 01:20:21,282
+weakSelf and all that because you actually wanna explicitly
+
+1629
+01:20:21,284 --> 01:20:23,350
+remove it otherwise the NotificationCenter's gonna
+
+1630
+01:20:23,352 --> 01:20:27,555
+always be holding onto you, okay?
+
+1631
+01:20:27,557 --> 01:20:31,158
+So, make sure you do this, somewhere, removeObserver
+
+1632
+01:20:31,160 --> 01:20:33,828
+somewhere. Okay, that's it for Cloud Kit. Now you know
+
+1633
+01:20:33,830 --> 01:20:36,096
+everything about how to create records, query for
+
+1634
+01:20:36,098 --> 01:20:38,399
+them, and even sign up to get notified.
+
+1635
+01:20:38,401 --> 01:20:40,434
+I'm gonna do a big demo on this on Wednesday, so you can
+
+1636
+01:20:40,436 --> 01:20:45,172
+see it all in action. Friday, No Section again. Next week,
+
+1637
+01:20:45,174 --> 01:20:48,876
+still kinda deciding how or what works to do things.
+
+1638
+01:20:48,878 --> 01:20:49,743
+I really wanna make to sure you get
+
+1639
+01:20:49,745 --> 01:20:54,215
+this Segues covered right here but maps are also really cool.
+
+1640
+01:20:54,217 --> 01:20:56,450
+I won't get to all of these next week but I'll do as much
+
+1641
+01:20:56,452 --> 01:20:59,353
+as I can. Okay, if you have by the way something you really
+
+1642
+01:20:59,355 --> 01:21:01,355
+like to see me do because you find a project wants to
+
+1643
+01:21:01,357 --> 01:21:06,794
+do it. Like Cloud Kit was, let me know. Okay, that's it.
+
+1644
+01:21:06,796 --> 01:21:08,696
+See you next time. >> For
+
+1645
+01:21:08,698 --> 01:21:08,729
+more please visit us at stanford.edu.
+
