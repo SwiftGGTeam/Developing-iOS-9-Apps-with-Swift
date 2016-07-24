@@ -5,642 +5,802 @@
 2
 00:00:03,804 --> 00:00:08,040
 Standford University. >> All right,
+斯坦福大学
 
 3
 00:00:08,042 --> 00:00:13,746
 welcome then to lecture number eight. I think it's eight,
+欢迎参加第八讲。好像是第八讲。
 
 4
 00:00:13,748 --> 00:00:18,083
 yes, of CS193P Spring of 2016. So today, we start off
+是的，2016 春季 CS193P 课程。今天，我们将
 
 5
 00:00:18,085 --> 00:00:21,020
 by continuing that demo that we were doing last time.
+继续完成上一次的 demo
 
 6
 00:00:21,022 --> 00:00:24,423
 Remember we had the demo, Cassini demo with the, scroll
+今天用到之前 scroll view 写的 Cassini
 
 7
 00:00:24,425 --> 00:00:27,693
 view in there. And so I'm gonna make it more powerful,
+让它功能更加强大.
 
 8
 00:00:27,695 --> 00:00:30,262
 we're gonna get multiple MVCs going in there.
+我们将会用到多个 MVC 的结构.
 
 9
 00:00:30,264 --> 00:00:34,533
 We'll start doing some zooming in the scroll view.
+会用到 scroll view 的缩放属性.
 
 10
 00:00:34,535 --> 00:00:37,703
 Depending on how the time goes I might actually show you some
+如果有时间，我会通过实际案例来
 
 11
 00:00:37,705 --> 00:00:40,406
 things that couple of you have asked about on Piazza.
+解答有些同学对 Piazza 项目的疑问.
 
 12
 00:00:40,408 --> 00:00:44,009
 Like, how to when I launch my calculator app can I have it
+例如，在启动我的计算器 app 的时候，
 
 13
 00:00:44,011 --> 00:00:46,311
 not launch and show a blank graph, right,
+因为没有启动图而显示空白的情况.
 
 14
 00:00:46,313 --> 00:00:49,314
 how can I have it launch and show the calculator for
+怎样才能在在第一次启动计算器时，
 
 15
 00:00:49,316 --> 00:00:52,651
 the very first time, okay, those kinds of things.
+显示启动页等，诸如此类的问题.
 
 16
 00:00:52,653 --> 00:00:53,652
 So we'll see how the time goes and
+最后，我们会根据时间安排
 
 17
 00:00:53,654 --> 00:00:56,121
 decide on the fly whether to do that stuff.
+来决定是否要解答这些.
 
 18
 00:00:56,123 --> 00:00:57,623
 Then we're gonna dive back into the slides.
+让我们回到幻灯片上.
 
 19
 00:00:57,625 --> 00:00:59,358
 I'm gonna talk about multi-threading, okay?
+我之后还会讲到多线程.
 
 20
 00:00:59,360 --> 00:01:04,029
 Very, very important thing in iOS is how to multithread
+在 iOS 上，多线程的处理是非常非常重要的内容.
 
 21
 00:01:04,031 --> 00:01:06,799
 your execution. And then I'll go back to the demo, and
+然后我们会回到 Cassini demo,
 
 22
 00:01:06,801 --> 00:01:10,436
 we'll multithread this Cassini thing we're working on, okay?
+为它加上多线程支持.
 
 23
 00:01:10,438 --> 00:01:12,104
 And then time permitting at the end I'll go back to
+在时间允许的情况下, 最后还会回到幻灯片
 
 24
 00:01:12,106 --> 00:01:14,673
 the slides and I'm gonna talk about text fields. And
+讲一下 text field. 然后
 
 25
 00:01:14,675 --> 00:01:19,511
 then, next week we have table views, databases, etc. And
+下周会讲 table view，database 等内容.
 
 26
 00:01:19,513 --> 00:01:21,947
 again, remember, no assignment going out today.
+今天不会布置作业.
 
 27
 00:01:21,949 --> 00:01:24,283
 The assignment is gonna be a table view based thing, so
+作业是基于 table view 的,
 
 28
 00:01:24,285 --> 00:01:27,986
 it will go out after Monday's lecture, all right? So,
+所以我们会在下周一课程之后再布置, 没问题吧.
 
 29
 00:01:27,988 --> 00:01:30,589
 let's dive back into this Cassini demo. Okay,
+那么, 让我们回到 Cassini demo.
 
 30
 00:01:30,591 --> 00:01:36,762
 we'll start off just exactly where we left off before. So
+接着上一次的内容继续完善.
 
 31
 00:01:36,764 --> 00:01:41,100
 we'll go to Xcode here. So I'm just gonna open Cassini,
+启动 Xcode, 打开 Cassini
 
 32
 00:01:41,102 --> 00:01:42,868
 here it is. I'm just gonna run it real quick just
+我先来带大家快速过一遍
 
 33
 00:01:42,870 --> 00:01:47,139
 to remind you where we were for those with short memories.
+回忆下之前的内容.
 
 34
 00:01:47,141 --> 00:01:53,812
 Even though it's only two days ago. All right,
+虽然是两天前才讲的.
 
 35
 00:01:53,814 --> 00:01:56,915
 here it is. So we've got, our image view, right?
+好的, 我们有一个 image view.
 
 36
 00:01:56,917 --> 00:02:00,285
 We have an ImageView and it's inside a UIScrollView, and so
+这个 ImageView 嵌套在 UIScrollView 中,
 
 37
 00:02:00,287 --> 00:02:03,922
 we're able to scroll around, okay, just by panning with our
+所以我们可以进行滚动, 用手指滑动就行
 
 38
 00:02:03,924 --> 00:02:06,291
 finger. My mouse is like a finger there, so
+这光标就是手指
 
 39
 00:02:06,293 --> 00:02:10,262
 I'm just panning around, and that's all we can do, okay?
+目前就只能随意滑动
 
 40
 00:02:10,264 --> 00:02:11,997
 But we've created this nice UI, or
+但是我们这个漂亮的界面
 
 41
 00:02:11,999 --> 00:02:15,734
 this nice ImageViewController, which is an MVC that lets you
+或者说, 漂亮的 ImageViewController 所用的 MVC 模式,
 
 42
 00:02:15,736 --> 00:02:19,371
 take any image and put it on screen inside the scroll view,
+能任意将图片加入到 scroll view 中, 并显示出来
 
 43
 00:02:19,373 --> 00:02:23,108
 that's kind of a nice reusable, reusable MVC, right?
+有很好的重用性, 重用 MVC, 对吧
 
 44
 00:02:23,110 --> 00:02:26,378
 So now we're going to make this a multi-MVC app, okay,
+接下来, 我们会做一个多 MVC 的 app
 
 45
 00:02:26,380 --> 00:02:28,213
 and I'm gonna reuse this ImageViewController
+重用的 ImageViewController
 
 46
 00:02:28,215 --> 00:02:31,450
 as one of the MVCs. So let's go right to our storyboard,
+也是其中之一. 让我们打开 storyboard.
 
 47
 00:02:31,452 --> 00:02:32,117
 see what this is gonna look like.
+来看看里面都有什么内容
 
 48
 00:02:32,119 --> 00:02:34,419
 This is where the Cassini part of this whole thing is gonna
+Cassini 所展示的内容都从这里得到.
 
 49
 00:02:34,421 --> 00:02:37,589
 come in. All right, I'm gonna create a new View Controller,
+现在, 我准备创建一个新的 View Controller
 
 50
 00:02:37,591 --> 00:02:39,224
 just gonna drag it out right here. Again,
+将它拖到这里就可以了
 
 51
 00:02:39,226 --> 00:02:41,693
 I'm gonna go fairly quickly, cuz I've done this all before,
+之前我们已经做过了, 所以这一步操作有点快
 
 52
 00:02:41,695 --> 00:02:44,630
 so this is almost like a review, for you here.
+更像是在帮大家复习
 
 53
 00:02:44,632 --> 00:02:45,397
 So, I have this controller.
+好, controller 创建好了
 
 54
 00:02:45,399 --> 00:02:48,700
 It needs to have a custom subclass of UIViewController
+因为需要自定义 UIViewController
 
 55
 00:02:48,702 --> 00:02:51,904
 so I'm going to create such a thing. Go here to New File,
+所以要做接下来的这些操作. 创建一个新文件
 
 56
 00:02:51,906 --> 00:02:55,274
 it's iOS source, it's a Cocoa Touch Class. Cuz it's
+选择 iOS source, Cocoa Touch Class, 因为
 
 57
 00:02:55,276 --> 00:02:58,210
 a subclass of an iOS class, which is a UIViewController in
+要子类化的类属于 iOS, 这里是 UIViewController
 
 58
 00:02:58,212 --> 00:03:01,647
 this case. I'm going to call this CassiniViewController,
+类名就叫 CassiniViewController 吧
 
 59
 00:03:01,649 --> 00:03:04,149
 cuz it's gonna let us look at some Cassini images.
+这个类会展示更多 Cassini 的图片
 
 60
 00:03:04,151 --> 00:03:08,587
 That's what our app is gonna do. But just in the same place
+也是这个 app 的需求. 存放路径和之前一样
 
 61
 00:03:08,589 --> 00:03:11,523
 as always here is our CassiniViewController,
+CassiniViewController 创建好了
 
 62
 00:03:11,525 --> 00:03:15,327
 I'm gonna remove the view controller lifecycle methods
+暂时先删除模板给出的 view controller
 
 63
 00:03:15,329 --> 00:03:18,630
 that it gives me right here just for now anyway.
+生命周期方法
 
 64
 00:03:18,632 --> 00:03:22,067
 And I'm actually gonna uncomment this prepareForSegue
+然后打开 prepareForSegue 的注释
 
 65
 00:03:22,069 --> 00:03:24,002
 because my CassiniViewController is
+因为 CassiniViewController 会
 
 66
 00:03:24,004 --> 00:03:27,005
 definitely going to be doing, some segueing.
+用到这个方法, 一些 segue
 
 67
 00:03:27,007 --> 00:03:29,341
 So let's now go back to our storyboard,
+现在让我们回到 storyboard
 
 68
 00:03:29,343 --> 00:03:32,744
 now that we have this ImageViewController class, and
+我们已经有了 ImageViewController
 
 69
 00:03:32,746 --> 00:03:36,315
 I'm gonna change the class of this controller right here
+再通过 identity inspector, 将这个
 
 70
 00:03:36,317 --> 00:03:40,452
 with the identity inspector, to be a CassiniViewController,
+controller 改为 CassiniViewController
 
 71
 00:03:40,454 --> 00:03:45,724
 okay. Everybody got that? I'm going to put this whole
+好的, 都能跟上吧? 接下来, 我会将整个
 
 72
 00:03:45,726 --> 00:03:49,494
 MVC structure into that split view with navigation that's
+MVC 结构装到 split view 中
 
 73
 00:03:49,496 --> 00:03:52,331
 over in there, the thing that will work in both iPad and
+这样就能同时用 iPad 和
 
 74
 00:03:52,333 --> 00:03:55,300
 iPhone, exact same thing we did for,
+iPhone 上, 这种处理方式我们在
 
 75
 00:03:55,302 --> 00:03:57,869
 the emotions view controller. So, let's do that.
+emotions view controller 上也做过. 下面来实现吧.
 
 76
 00:03:57,871 --> 00:04:00,939
 I'm going to start by dragging out the split view controller,
+接下来需要拖一个 split view controller
 
 77
 00:04:00,941 --> 00:04:02,007
 I'm gonna zoom way out here.
+先缩小画板
 
 78
 00:04:02,009 --> 00:04:04,810
 Let's go get a Split View Controller, here it is. I'll
+然后找到 Split View Controller
 
 79
 00:04:04,812 --> 00:04:09,781
 drag it out. I'll get rid of these extra things that came
+拖拽出来. 删掉除了
 
 80
 00:04:09,783 --> 00:04:12,551
 along here with the Split View Controller because I already
+Split View Controller 的其他内容, 因为我们已经
 
 81
 00:04:12,553 --> 00:04:15,153
 have my master and detail right here. The Cassini's
+有自己的 master 和 detail 了. Cassini 是
 
 82
 00:04:15,155 --> 00:04:17,956
 gonna be my master and this ImageViewController's gonna be
+master, ImageViewController 是 detail.
 
 83
 00:04:17,958 --> 00:04:21,260
 my detail right there. So I'm just gonna Control drag, hook
+按住 Control 并拖拽到 master
 
 84
 00:04:21,262 --> 00:04:25,197
 up my master. And a Control drag, hook up my detail.
+然后按住 Control 并拖拽到 detail
 
 85
 00:04:25,199 --> 00:04:28,400
 I'm also gonna take my little entry arrow and make it so
+接下来, 将入口箭头移动到
 
 86
 00:04:28,402 --> 00:04:31,136
 that it enters on the Split View Controller. Right,
+Split View Controller
 
 87
 00:04:31,138 --> 00:04:32,738
 instead of entering on my Image View Controller,
+Image View Controller 不再是入口
 
 88
 00:04:32,740 --> 00:04:37,376
 obviously. And, I want this to work on both iPhone and iPad,
+我想要在 iPhone 和 iPad 上使用
 
 89
 00:04:37,378 --> 00:04:41,013
 so I'm gonna take my master and put it embedded inside
+所以, 我准备将 master 嵌入到 
 
 90
 00:04:41,015 --> 00:04:45,917
 of a navigation controller, okay? And maybe I can even go
+navigation controller 中, 然后我能在这
 
 91
 00:04:45,919 --> 00:04:50,589
 in here and put a nice title here, right here. Cassini,
+给它加上 title. Cassini.
 
 92
 00:04:50,591 --> 00:04:54,626
 okay? All right now, what is this UI going to do?
+跟上了吗? 最终, 这个界面到底有什么作用?
 
 93
 00:04:54,628 --> 00:04:57,029
 What's it going to look like? How's it gonna function?
+长什么样呢? 怎样触发一些功能?
 
 94
 00:04:57,031 --> 00:04:59,598
 Well, I'm just gonna have three buttons here.
+好的, 我会在这里放 3 个按钮
 
 95
 00:04:59,600 --> 00:05:01,500
 Similar to how I had in emotions view controller.
+和之前的 emotions view controller 很像
 
 96
 00:05:01,502 --> 00:05:04,102
 In a demo I can only do, I can't do a nice complicated
+在 demo 中也只能这样了, 不能像计算器
 
 97
 00:05:04,104 --> 00:05:07,172
 MVC like a calculator and then another complicated one like
+一样有复杂的 MVC 结构, 也不能像
 
 98
 00:05:07,174 --> 00:05:09,808
 a graph view. I have to do a simple one. So I'm gonna do
+graph view 那样复杂. 只能做个简单的界面了. 所以我也只好
 
 99
 00:05:09,810 --> 00:05:11,877
 a simple one here. Where I'm gonna put three buttons and
+这样了. 之所以我要放三个按钮,
 
 100
 00:05:11,879 --> 00:05:15,180
 those three buttons are just going to cause three different
+是因为要展示三张
 
 101
 00:05:15,182 --> 00:05:20,285
 images from NASA, okay, about Cassini which is a little
+NASA 的图片. 至于 Cassini, 它是被
 
 102
 00:05:20,287 --> 00:05:22,988
 thing sent out into space to take pictures. I'm gonna put
+发送到太空来拍摄图片的. 我会把
 
 103
 00:05:22,990 --> 00:05:25,223
 those three buttons here and then were just gonna segue,
+三个按钮放到这, 然后我们处理 segue,
 
 104
 00:05:25,225 --> 00:05:27,826
 as we know how to do, down to here,
+大家应该知道怎么做. 将 ImageViewController
 
 105
 00:05:27,828 --> 00:05:29,194
 which is gonna be our ImageViewController,
+放到下面来
 
 106
 00:05:29,196 --> 00:05:30,662
 all right. So the Image View Controller's just gonna show
+Image View Controller 会用来显示图片
 
 107
 00:05:30,664 --> 00:05:33,065
 the image, and we already know that the Image View Controller
+我们已经知道展示图片的 Image View Controller 是一个
 
 108
 00:05:33,067 --> 00:05:35,901
 is a nice, little, reasonable MVC that shows an image.
+优雅的, 小巧的, 合理的 MVC 结构.
 
 109
 00:05:35,903 --> 00:05:37,836
 So it's perfect, exactly what I want. So
+如此完美, 正是我们想要的
 
 110
 00:05:37,838 --> 00:05:39,871
 I'm gonna go down here and get the buttons. So it's this
+向下滚动, 找到按钮.
 
 111
 00:05:39,873 --> 00:05:44,343
 button right here. Let's go ahead and make it bigger,
+将按钮放在这. 继续, 把它放大点,
 
 112
 00:05:44,345 --> 00:05:48,580
 I'll say 40 point would be a pretty good size here.
+设置为 40 点看起来比较好
 
 113
 00:05:48,582 --> 00:05:52,417
 And, make three of them, copy, paste so
+然后创建三个这样按钮, 复制, 粘贴
 
 114
 00:05:52,419 --> 00:05:56,154
 I get that. Okay, one of them is gonna be called Earth,
+好了, 一个叫做 Earth
 
 115
 00:05:56,156 --> 00:05:59,291
 another one is gonna be called Cassini.
+一个叫做 Cassini.
 
 116
 00:05:59,293 --> 00:06:02,194
 And another one is gonna be called Saturn, okay?
+剩下的一个叫 Saturn, 好了吗?
 
 117
 00:06:02,196 --> 00:06:04,262
 And then I'm just gonna take these three things.
+然后, 将这三个按钮
 
 118
 00:06:04,264 --> 00:06:06,031
 Of course it put them in a stack view.
+放到 stack view 中
 
 119
 00:06:06,033 --> 00:06:11,903
 Okay, we'll go ahead and have the stack view be fill.
+ok, 将 stack view 对齐方式设置为 fill.
 
 120
 00:06:11,905 --> 00:06:13,338
 And we'll also do again fill equally.
+然后将分布设置为 fill equally.
 
 121
 00:06:13,340 --> 00:06:15,474
 It doesn't really matter because they're all identical,
+这些都无关紧要, 它们都是相同的
 
 122
 00:06:15,476 --> 00:06:17,909
 they're all buttons. We'll put a little spacing in there,
+都是按钮. 然后给它们加一些间隙
 
 123
 00:06:17,911 --> 00:06:21,179
 maybe. 20 points something like that. Then I'm gonna drag
+20 点之类的. 接下来将它拖到
 
 124
 00:06:21,181 --> 00:06:24,082
 this into the middle use my blue lines right there so that
+视图中间, 有蓝色对齐线这里
 
 125
 00:06:24,084 --> 00:06:27,152
 I can go here and say Reset to suggested constraints.
+点击这里, 选择 Reset to suggested constraints (重置为建议约束).
 
 126
 00:06:27,154 --> 00:06:29,588
 And then I'm gonna go over to my size inspector and
+接着看到 size inspector
 
 127
 00:06:29,590 --> 00:06:32,224
 double check that it did the kind of constraints I want.
+再次确认约束是否正确添加
 
 128
 00:06:32,226 --> 00:06:35,227
 Which that looks good to me it's gonna align these things
+看来这些约束能正确将
 
 129
 00:06:35,229 --> 00:06:39,030
 in the center, okay? So, here's our UI right here.
+视图居中, 好了吗? 这就是我们的 UI 了.
 
 130
 00:06:39,032 --> 00:06:43,802
 Now, all we need to do is have these three things segue down
+现在, 就只需要将这三个按钮的事件和下面
 
 131
 00:06:43,804 --> 00:06:47,472
 to here to fill these images. Now, I'll show you where these
+这个关联, 来显示图片了. 之后, 我会展示这些
 
 132
 00:06:47,474 --> 00:06:49,841
 images come from in a minute here, but let's just create
+图片从哪来, 现在先来创建 segue.
 
 133
 00:06:49,843 --> 00:06:52,110
 the segue. Now, I'm gonna do something a little different
+这次我们处理 segue 的方式和之前不一样.
 
 134
 00:06:52,112 --> 00:06:55,847
 with this segue. In our last one I, each segue had
+之前, 每个 segue 都有
 
 135
 00:06:55,849 --> 00:06:57,816
 its own identifier that was different, and
+自己的 identifier, 每一个都不同
 
 136
 00:06:57,818 --> 00:07:00,619
 it was the identifier that let us know which emotion to
+这些 identifier 使我们知道应该
 
 137
 00:07:00,621 --> 00:07:03,488
 show in the emotions one. Here I'm gonna have them all have
+显示哪个表情. 这一次, 它们只有
 
 138
 00:07:03,490 --> 00:07:06,591
 the same identifier, and I'm gonna use the title of
+一个相同的 identifier, 我将使用按钮的 title
 
 139
 00:07:06,593 --> 00:07:09,628
 the button to decide which image, okay? So it's kind of
+来决定显示的图片. 所以, 
 
 140
 00:07:09,630 --> 00:07:11,897
 a cross between what we did in the calculator and
+这和我们之前做计算器,
 
 141
 00:07:11,899 --> 00:07:14,666
 what we did in emotions, all right? So, let's go ahead and
+做表情的处理不一样.
 
 142
 00:07:14,668 --> 00:07:17,969
 create these things. So, I'm gonna, Control drag, okay,
+下面我们来创建 segue 吧. 按钮 Contorl 并拖拽,
 
 143
 00:07:17,971 --> 00:07:21,540
 from Saturn down to here. This is in a split view, right,
+从 Saturn 到这里. 他们都在 split view 中.
 
 144
 00:07:21,542 --> 00:07:22,374
 so I'm gonna do Show Detail, right?
+选择 Show Detail.
 
 145
 00:07:22,376 --> 00:07:25,143
 That's the kind of segue I want, not show. The same thing
+这才是我想要的 segue, 而不是 Show.
 
 146
 00:07:25,145 --> 00:07:29,514
 with Cassini right here, Show Detail. And then up here to
+Cassini 也是同样, ShowDetail. 接着是
 
 147
 00:07:29,516 --> 00:07:34,486
 Earth, Show Detail. Whoops, not Present Modally, undo,
+Earch, Show Detail. 噢, 不是 Present Modally, 撤销,
 
 148
 00:07:34,488 --> 00:07:38,990
 let's try that again. Show Detail. Okay, so
+重新来一次, Show Detail.
 
 149
 00:07:38,992 --> 00:07:41,092
 we've got these three things here. Let's go ahead and
+这三个就关联好了. 然后来检查下.
 
 150
 00:07:41,094 --> 00:07:43,662
 inspect them. I'm gonna put an identifier on them but
+我准备给它们设置 identifier, 但
 
 151
 00:07:43,664 --> 00:07:45,163
 they're all gonna have the same identifier.
+它们的 identifier 都相同.
 
 152
 00:07:45,165 --> 00:07:48,266
 And what that means is when prepareForSegue gets called,
+那么, 这在调用 prepareForSegue 时意味着什么呢
 
 153
 00:07:48,268 --> 00:07:51,169
 it's gonna be called, and the same thing is gonna happen for
+调用时, 他们所触发的事件都是相同的.
 
 154
 00:07:51,171 --> 00:07:53,505
 each one. Again I'm gonna look at the sender in
+不过, 可以通过
 
 155
 00:07:53,507 --> 00:07:54,706
 prepareForSegue to know which button,
+prepareForSegue 的 sender 来区别按钮,
 
 156
 00:07:54,708 --> 00:07:57,175
 but we're gonna use the same code. So I'm gonna call this
+但是它们的代码是共用的. 所以, 就命名为
 
 157
 00:07:57,177 --> 00:08:00,345
 Show Image, cuz that's what it does, okay, when you click On
+Show Image 吧, 见名知意.
 
 158
 00:08:00,347 --> 00:08:03,381
 here to segue, it segues to this image view controller and
+点击 Segue, 跳转到 image view controller
 
 159
 00:08:03,383 --> 00:08:06,585
 shows an image. Okay, so let's make sure all three of
+显示图片. 确保三个按钮都
 
 160
 00:08:06,587 --> 00:08:10,755
 them are doing that. Okay, so everybody cool with this?
+设置好. 好了, 大家对这一步有疑问吗?
 
 161
 00:08:10,757 --> 00:08:14,092
 This is all just review, I haven't done anything new, yet
+
 
 162
 00:08:14,094 --> 00:08:17,829
