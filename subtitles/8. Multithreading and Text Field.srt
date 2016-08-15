@@ -800,439 +800,547 @@ them are doing that. Okay, so everybody cool with this?
 161
 00:08:10,757 --> 00:08:14,092
 This is all just review, I haven't done anything new, yet
-
+以上是对之前的回顾，还没添加新的知识点
 
 162
 00:08:14,094 --> 00:08:17,829
 here. K, now of course we know if we want these
+如果想要这些 segue 生效
 
 163
 00:08:17,831 --> 00:08:21,366
 little segues here to work, we need to prepare them, so
+还需要准备 segue
 
 164
 00:08:21,368 --> 00:08:25,003
 let's go back to our Cassini View Controller right here and
+接下来回到 Cassini View Controller，
 
 165
 00:08:25,005 --> 00:08:27,973
 do our prepare for segue. I'm gonna show you something
+准备 segue. 接下来我会演示如何
 
 166
 00:08:27,975 --> 00:08:31,109
 that's kind of nice to do from a clean coding mechanism,
+在用纯代码来实现
 
 167
 00:08:31,111 --> 00:08:35,747
 which is I like to create a private struct here to
+我比较喜欢创建一个私有 struct
 
 168
 00:08:35,749 --> 00:08:38,750
 store my constants that are strings in the storyboard.
+来存放 storyboard 中 string 类型的常量
 
 169
 00:08:38,752 --> 00:08:42,754
 So I usually call this thing storyboard okay? And then I
+所以命名为 storyboard
 
 170
 00:08:42,756 --> 00:08:47,225
 just put these static lets inside. So the ShowImageSegue
+然后将这些静态常量放到 struct 中. ShowImageSegue
 
 171
 00:08:47,227 --> 00:08:51,296
 = "Show Image". So that this string, and basically any
+= "Show Image". 就是这样. 在
 
 172
 00:08:51,298 --> 00:08:55,400
 string that I put anywhere in my story board, like in these,
+storyboard 中的其他 string 也都和这个类似，
 
 173
 00:08:55,402 --> 00:08:58,236
 when I inspect these things down here like this string.
+比如看到的这个下面这个 string
 
 174
 00:08:58,238 --> 00:09:02,440
 Okay? That's all collected here into this nice struct.
+将这些都添加到 struct 中
 
 175
 00:09:02,442 --> 00:09:03,208
 Okay? So
+到此，
 
 176
 00:09:03,210 --> 00:09:05,644
 we already know that this is what we do to do constants,
+我们已经知道怎样处理这些常量了
 
 177
 00:09:05,646 --> 00:09:08,113
 okay? I'm just calling this group of constants storyboard.
+我暂且把这个集合称为 storyboard 常量集吧
 
 178
 00:09:08,115 --> 00:09:10,882
 They're my storyboard constants, all right?
+这就是我的 storyboard 常量集了
 
 179
 00:09:10,884 --> 00:09:14,252
 All right, so let's do prepare for segue right here.
+然后在这里准备 segue
 
 180
 00:09:14,254 --> 00:09:15,820
 What do we need to do in prepare for segue?
+我们需要在 prepareForsSegue 中做哪些处理？
 
 181
 00:09:15,822 --> 00:09:19,324
 Well first of all, we probably want to make sure that this is
+首先，我们要确保 segue 是
 
 182
 00:09:19,326 --> 00:09:23,194
 the show image segue, so I'm going to say if the segue's
+show image segue，所以先进行判断
 
 183
 00:09:23,196 --> 00:09:28,366
 identifier = the storyboard.ShowImageSegue.
+segue 的 identifier 是否等于 Storyboard.ShowImageSegue
 
 184
 00:09:28,368 --> 00:09:31,469
 Okay? Then we know this is what we're preparing for.
+这一步是保证我们处理的是正确的 segue
 
 185
 00:09:31,471 --> 00:09:34,539
 And remember,
+记住，在一个复杂的 app 中，可能会有很多不同的
 
 186
 00:09:34,541 --> 00:09:37,309
 of segues, like we have in emotions actually, with
+segue，就像我们有不同的情绪一样，它们有
 
 187
 00:09:37,311 --> 00:09:39,911
 different identifiers going off. So that's why we almost
+不同的标识. 所以我们
 
 188
 00:09:39,913 --> 00:09:43,114
 always check the identifier first just to make sure
+通常使用 identifier 来确保
 
 189
 00:09:43,116 --> 00:09:44,583
 that we are doing the right thing, and
+处理方式是对的
 
 190
 00:09:44,585 --> 00:09:48,153
 usually we'll try and spell identifier properly. Okay.
+当然，还需要正确的拼写 identifier
 
 191
 00:09:48,155 --> 00:09:52,157
 So now, we know this is the right segue. We need to get
+现在，我们知道这里就是想要的 segue 了. 还需要
 
 192
 00:09:52,159 --> 00:09:55,293
 the MVC that we're segueing to so we can prepare it.
+有一个 MVC 结构来准备 segue
 
 193
 00:09:55,295 --> 00:09:57,662
 So we know that's supposed to be an Image View Controller so
+假设需要的是 Image View Controller
 
 194
 00:09:57,664 --> 00:10:00,999
 I'm going to say if I can let IVC, short for
+所以定义一个叫做 ivc 的常量
 
 195
 00:10:01,001 --> 00:10:01,900
 Image View Controller,
+ImageViewController 的简写
 
 196
 00:10:01,902 --> 00:10:07,772
 equal the segue's destination view controller as
+等于 segue 的 destinationViewController
 
 197
 00:10:07,774 --> 00:10:11,843
 an image view controller. Okay.
+转换为 ImageViewController
 
 198
 00:10:11,845 --> 00:10:15,513
 So if I, I don't even need the parentheses there, sorry. So
+这里不需要大括号，不好意思
 
 199
 00:10:15,515 --> 00:10:19,217
 if I can get that destination view controller as an image
+如果能正确将 destinationViewController 转为
 
 200
 00:10:19,219 --> 00:10:24,122
 view controller then now I'm ready to prepare this thing.
+ImageViewController，那么就可以开始做一些准备了
 
 201
 00:10:24,124 --> 00:10:26,024
 So, how do I need to prepare it? Well,
+怎样去准备呢？
 
 202
 00:10:26,026 --> 00:10:29,828
 it depends on which button Is doing this show image, okay.
+这要取决于哪个按钮触发显示图片事件
 
 203
 00:10:29,830 --> 00:10:32,564
 So, I'm actually gonna look back at the button. Now,
+所以，回头看看这些按钮
 
 204
 00:10:32,566 --> 00:10:34,966
-here's the button. Remember it prepares for seque.
+here's the button. Remember it prepares for segue.
+这个参数就是按钮，并且是谁触发的 segue，
 
 205
 00:10:34,968 --> 00:10:38,970
 The sender is the button or the line in a table or
+那这个 sender 就是谁，可能是按钮或者 table 的某一行
 
 206
 00:10:38,972 --> 00:10:40,772
 something like that that caused it to happen.
+或者其他触发事件的对象
 
 207
 00:10:40,774 --> 00:10:43,108
 So, I need to convert this into a button. So
+所以，我需要将它强转为 button
 
 208
 00:10:43,110 --> 00:10:46,411
 I could actually do this like this. I could say, if I can
+我可以这样做，如果 sender
 
 209
 00:10:46,413 --> 00:10:52,017
 let the sending button equal the sender as a UI button,
+是 UIButton，并解包给 sendingButton 不为空
 
 210
 00:10:52,019 --> 00:10:55,887
 then I can go forward here and say let's let the image name,
+那么就可以定义一个 imageName
 
 211
 00:10:55,889 --> 00:10:57,822
 that's the name of the image we wanna show,
+代表我们想要显示的图片名称
 
 212
 00:10:57,824 --> 00:11:02,827
 equal the sending button's current title. Oops,
+并将 sendingButton 的当前图片，哦，不
 
 213
 00:11:02,829 --> 00:11:05,363
 not current image, current title. All right, so
+当前标题. 
 
 214
 00:11:05,365 --> 00:11:06,531
 this'll be one way to do this,
+这是一种处理方式
 
 215
 00:11:06,533 --> 00:11:11,603
 okay, but kind of a cool way here is, this is this, right?
+但是还有一种更好的方法，看这个和这个
 
 216
 00:11:11,605 --> 00:11:14,205
 So what if I took this, cut and
+如果我将这个
 
 217
 00:11:14,207 --> 00:11:17,375
 put it in here like that. Okay, so
+剪切到这里
 
 218
 00:11:17,377 --> 00:11:21,479
 I don't need this except for this is If, let. So, if I put
+那就不再需要这个 if let 了，但如果
 
 219
 00:11:21,481 --> 00:11:24,616
 this in here, this is going to be an optional. I can't send
+将它放到这里，那这就会是个可选值，不能从可选值
 
 220
 00:11:24,618 --> 00:11:28,053
 current title to an optional. So, how can I deal with that?
+中直接访问 currentTitle 属性. 该怎么办呢？
 
 221
 00:11:28,055 --> 00:11:33,124
 Let's use optional chaining. Okay? So it's perfectly legal
+让我们试试可选链. 在表达式返回可选值的时候
 
 222
 00:11:33,126 --> 00:11:36,494
 to use the optional chaining stuff on the end of some,
+使用可选链来操作
 
 223
 00:11:36,496 --> 00:11:39,898
 some other expression that returns a possible optional.
+是完全合法的
 
 224
 00:11:39,900 --> 00:11:42,400
 And remember, if this is nil right here,
+如果这里是 nil
 
 225
 00:11:42,402 --> 00:11:43,868
 then this whole thing's just gonna be ignored.
+那么之后的都会被忽略
 
 226
 00:11:43,870 --> 00:11:46,571
 That's what the question mark means, it means if it's nil,
+这个问号就是表示可能为 nil
 
 227
 00:11:46,573 --> 00:11:48,206
 nil then just return nil and ignore it.
+遇到 nil 会返回 nil，然后忽略掉
 
 228
 00:11:48,208 --> 00:11:52,677
 That means imageName is gonna be returned to nil. Okay.
+也就是说 imageName 可能为 nil
 
 229
 00:11:52,679 --> 00:11:55,947
 See how I did that? This cleans up our code a little
+接下来做什么呢？先把代码
 
 230
 00:11:55,949 --> 00:11:58,616
 bit, to do that. Less if then, if thens and
+整理一下. 减少分支语句
 
 231
 00:11:58,618 --> 00:12:02,554
 all that, business around there. Okay? Now I'm going
+接下来，要根据
 
 232
 00:12:02,556 --> 00:12:06,291
 to go get the image that goes with this button's title.
+按钮的 title 来获取图片
 
 233
 00:12:06,293 --> 00:12:07,659
 Now let me show you how we're gonna do that.
+让我来演示一下
 
 234
 00:12:07,661 --> 00:12:10,462
 This DemoURL class, remember the one that had that little
+这个 DemoURL 类，有一个 Stanford 的 URL
 
 235
 00:12:10,464 --> 00:12:14,165
 Stanford URL in there? Well it also had these NASA URLs,
+还有 NASA 的 URL
 
 236
 00:12:14,167 --> 00:12:16,568
 one for Cassini, one for Earth, and one for Saturn.
+里面包含 Cassini，Earth 和 Saturn
 
 237
 00:12:16,570 --> 00:12:17,802
 Those are the three buttons we have. And
+对应着我们的三个按钮
 
 238
 00:12:17,804 --> 00:12:20,939
 I have a little function right here that just gets the name
+这还有个简单的方法，接收图片名称
 
 239
 00:12:20,941 --> 00:12:24,676
 of the image and looks it up in that dictionary right here,
+然后在字典中查找
 
 240
 00:12:24,678 --> 00:12:27,979
 okay, and returns it. So this a little function called
+并返回，所以这个方法叫
 
 241
 00:12:27,981 --> 00:12:30,815
 NASA Image Named. So let's use this NASA Image Named.
+NASAImageNamed. 来调用下这个方法
 
 242
 00:12:30,817 --> 00:12:35,520
 I'm just gonna say right here that the IVC's image URL
+在这里写 ivc 的 imageURL
 
 243
 00:12:35,522 --> 00:12:41,326
 equals the NASAImageNamed this imageName. Okay?
+等于 NASAImageNamed 的这个 imageNames
 
 244
 00:12:41,328 --> 00:12:46,731
 This thing I got right here. >> [COUGH]
+就这样
 
 245
 00:12:46,733 --> 00:12:47,398
 >> All right.
+能跟上吗
 
 246
 00:12:47,400 --> 00:12:50,502
 And then, oops, sorry, this has gotta be DemoURL.,
+接下来，哦，不好意思，要加上 DemoURL. 
 
 247
 00:12:50,504 --> 00:12:52,670
 because it's over here in this DemoURL.
+因为这个方法在 DemoURL 中
 
 248
 00:12:52,672 --> 00:12:55,306
 Notice this is a static function, right?
+注意这是个静态方法
 
 249
 00:12:55,308 --> 00:12:56,341
 NASAImageNamed is static function.
+NASAImageNamed 是个静态方法
 
 250
 00:12:56,343 --> 00:12:59,611
 So, we send it to the class DemoURL, that's why I had to
+所以应该用 DemoURL 类来调用，所以
 
 251
 00:12:59,613 --> 00:13:05,116
 put DemoURL here. Okay, just kind of a utility function for
+应该加上 DemoURL. 这只是 DemoURL 中
 
 252
 00:13:05,118 --> 00:13:08,820
 that little DemoURL class. And while we're at it,
+的一个工具方法而已. 接下来，
 
 253
 00:13:08,822 --> 00:13:12,323
 you know what, let's set the title of that MVC to be that
+将 MVC 结构的 title 设置为
 
 254
 00:13:12,325 --> 00:13:15,527
 image name as well. So that way we'll Earth or Cassini or
+图片名字吧. 这样 MVC 的 title 会是 Earth 或 Cassini
 
 255
 00:13:15,529 --> 00:13:21,766
 whatever as the title of that MVC. Okay so this make sense?
+或者其他的名字. 这就是这段代码的作用
 
 256
 00:13:22,068 --> 00:13:25,203
 Everybody okay now? Let's go ahead and run this and
+都能跟上吗？运行程序
 
 257
 00:13:25,205 --> 00:13:30,141
 see if this is working. Here we go.
+看看效果
 
 258
 00:13:33,380 --> 00:13:37,081
 Okay, there we go. So here's Cassini right here, and
+运行起来了，这是 Cassini，
 
 259
 00:13:37,083 --> 00:13:41,686
 if I click Earth, okay, whoa. So it worked. I clicked Earth
+如果我点击 Earth，有点击效果. 点击了 Earth
 
 260
 00:13:41,688 --> 00:13:44,923
 but nothing's happening in my app. Wait, no there,
+但是 app 却没做出响应. 等下，不对啊
 
 261
 00:13:44,925 --> 00:13:47,358
 it's showing Stanford. Why is is showing Stanford here?
+这展示的是斯坦福，为什么会这样？
 
 262
 00:13:47,360 --> 00:13:50,361
 Well, that's because our nice reusable image view controller
+那是因为我们重用的 ImageViewController
 
 263
 00:13:50,363 --> 00:13:54,732
 we have over here, it's view did load smashes Stanford on
+的 viewDidLoad 方法中，将斯坦福盖在了
 
 264
 00:13:54,734 --> 00:13:57,435
 top of everything. So, that we only put that in there as
+所有视图的顶部. 这只是之前的 demo
 
 265
 00:13:57,437 --> 00:14:01,105
 a demo. Right, so I'm taking that out, sorry about that.
+把它提出来，不好意思
 
 266
 00:14:01,107 --> 00:14:02,707
 Makes everyone see what happened there. So
+现在来看看都发生了什么
 
 267
 00:14:02,709 --> 00:14:05,143
 now let's go back here. It won't be slamming a Stanford
+重新运行一次，这下我们的重用 ImageViewController
 
 268
 00:14:05,145 --> 00:14:08,880
 in there in our reusable image view controller. Okay? So
+应该不会被斯坦福盖住了
 
 269
 00:14:08,882 --> 00:14:11,182
 now we'll go back to Cassini. We'll pick Earth this time.
+回到 Cassini 界面，选择 Earth
 
 270
 00:14:11,184 --> 00:14:15,119
