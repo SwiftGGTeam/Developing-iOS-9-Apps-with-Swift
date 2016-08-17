@@ -1345,434 +1345,542 @@ now we'll go back to Cassini. We'll pick Earth this time.
 270
 00:14:11,184 --> 00:14:15,119
 Again it seems like it's kinda stuck. I can't click on any of
+又卡住了. 所有按钮都
 
 271
 00:14:15,121 --> 00:14:17,989
 these buttons. I can't, actually I can't do anything.
+无法点击. 点不了，什么都做不了
 
 272
 00:14:17,991 --> 00:14:21,025
 There it is. Okay. So that must have been a really big
+进来了，真是一张大图
 
 273
 00:14:21,027 --> 00:14:24,462
 image. It took a very long time to load and here it is.
+需要这么长的时间加载，终于显示出来了
 
 274
 00:14:24,464 --> 00:14:27,131
 It doesn't really look like Earth, but
+看起来不怎么像是地球，
 
 275
 00:14:27,133 --> 00:14:29,634
 pictures of people on Earth, hm. That's interesting.,
+倒像是地球上的人，有意思.
 
 276
 00:14:29,636 --> 00:14:32,503
 Let's try one of these others. Let's try Cassini here. Okay,
+再试试别的，试试 Cassini
 
 277
 00:14:32,505 --> 00:14:35,106
 what happening? This is, basically, just blank.
+怎么回事，怎么只有一个白板
 
 278
 00:14:35,108 --> 00:14:39,310
 What's going on here? How about Saturn? Again,
+怎么回事？再试试 Saturn 呢？又来了
 
 279
 00:14:39,312 --> 00:14:41,312
 taking a really long time, you can see why we're gonna talk
+又要等很久，这就是为什么之后我们要讲
 
 280
 00:14:41,314 --> 00:14:45,583
 about multi-threading a little later. Okay, and here it is,
+多线程. 好，进来了
 
 281
 00:14:45,585 --> 00:14:47,385
 okay that's not good either. All right, so
+看起来也不怎么像. 好吧，
 
 282
 00:14:47,387 --> 00:14:50,722
 we gotta start here. We know the Cassini's not working.
+刚才发现 Cassini 没能正常显示
 
 283
 00:14:50,724 --> 00:14:53,258
 It comes up blank. So why might Cassini not be working.
+看到一片空白，为什么会这样
 
 284
 00:14:53,260 --> 00:14:56,027
 Let's go back here and check for example to make sure that
+回到这里，检查下 segue 有没有什么问题
 
 285
 00:14:56,029 --> 00:14:59,030
 our segue is good. Okay, the Earth's segue. Here's
+这是 Earth 的 segue，这是
 
 286
 00:14:59,032 --> 00:15:02,667
 the Cassini segue. Let';s go look at its identifier.
+Cassini 的 segue. 来检查下它的 identifier
 
 287
 00:15:02,669 --> 00:15:06,905
 Look at that. This Cassini identifier, no identifier.
+看到没，Cassini 的 identifier 是空的
 
 288
 00:15:06,907 --> 00:15:08,940
 So let's put show image in here. Okay?
+设置为 Show Image
 
 289
 00:15:08,942 --> 00:15:11,743
 So when you have a segue and it doesn't seem to be working,
+所以，如果你有一个segue，但是没能正常响应
 
 290
 00:15:11,745 --> 00:15:12,877
 like it segues to the new MVC but
+比如想推出一个新的 MVC，但是
 
 291
 00:15:12,879 --> 00:15:15,346
 the prepared doesn't happen, often you want to go back and
+prepare 中的代码没有运行，通常需要回头
 
 292
 00:15:15,348 --> 00:15:17,715
 look at your identifier, make sure it's set properly or
+检查下 identifier，确保它正确的
 
 293
 00:15:17,717 --> 00:15:21,419
 set in there. Okay, so now, if we go back here.
+赋了值. 现在重新运行
 
 294
 00:15:25,458 --> 00:15:27,558
 All right, we have Cassini here. Let's click on it.
+找到 Cassini 并点击
 
 295
 00:15:27,560 --> 00:15:30,728
 Again, it's loading. That one must be a smaller image.
+再次等待加载，这图片应该不大
 
 296
 00:15:30,730 --> 00:15:32,797
 It loaded pretty quick. And here it is.
+加载起来很快，显示出来了
 
 297
 00:15:32,799 --> 00:15:36,234
 It looks like it's just a bunch of outer space. Okay, so
+看起来就只是外太空而已
 
 298
 00:15:36,236 --> 00:15:36,935
 we've got a problem here,
+现在有一个问题
 
 299
 00:15:36,937 --> 00:15:39,637
 which is that these images that I loaded are huge. That's
+当我们加载一些大图的时候
 
 300
 00:15:39,639 --> 00:15:44,008
 created two problems for us. One, our app get's blocked.
+有两个问题摆在了面前. 一个是 app 被卡死了
 
 301
 00:15:44,010 --> 00:15:46,878
 See I can't click on anything else. I can't even rotate or
+任何东西都没办法点击. 连旋转都不行
 
 302
 00:15:46,880 --> 00:15:49,547
 anything here. My app is just completely stuck.
+app 完完全全卡住
 
 303
 00:15:49,549 --> 00:15:51,916
 You never want your app in that circumstance.
+你肯定不想你的 app 出现这样的情况
 
 304
 00:15:51,918 --> 00:15:54,652
 Never should your app be stuck like that. Users will just,
+你们的 app 绝不能出现这样的情况. 用户发现，
 
 305
 00:15:54,654 --> 00:15:56,988
 basically, double click on the home button and
+就会双击 home 键
 
 306
 00:15:56,990 --> 00:15:58,456
 kill your app and never run it again.
+然后杀死进程，再也不会用了
 
 307
 00:15:58,458 --> 00:16:00,925
 They'll think your app is totally hosed. And it is,
+他们会觉得你的 app 太烂了，这就是
 
 308
 00:16:00,927 --> 00:16:04,228
 if it behaves that way, okay, so we really need to fix that.
+界面卡死的后果，所以我们需要修复下
 
 309
 00:16:04,230 --> 00:16:06,197
 The other thing is, this image is so
+另外一个问题就是，图片太大
 
 310
 00:16:06,199 --> 00:16:09,500
 huge that we can't really see it. So we'd like to be able to
+无法直观的展示. 所以我们要添加
 
 311
 00:16:09,502 --> 00:16:11,936
 zoom in on it, right. So let's go ahead and
+缩放功能. 先来处理
 
 312
 00:16:11,938 --> 00:16:17,508
 do the zooming, okay? How do we do the zooming in our,
+缩放吧. 怎么在 ImageViewController 中
 
 313
 00:16:18,178 --> 00:16:19,844
 back here in our image view controller, right?
+做缩放呢？
 
 314
 00:16:19,846 --> 00:16:22,146
 So our image view controller has this scroll view,
+ImageViewController 有一个 scrollView
 
 315
 00:16:22,148 --> 00:16:24,983
 right? That we dragged into the storyboard. It's got this
+我们拖到 storyboard 中的. 并将 imageView 添加
 
 316
 00:16:24,985 --> 00:16:28,453
 image view as the subview of the scroll view. Okay, and
+到了 scrollView 上
 
 317
 00:16:28,455 --> 00:16:31,556
 we set our content size, so it's working nicely. And
+我们还设置了 contentSize，看起来非常棒
 
 318
 00:16:31,558 --> 00:16:32,857
 we know from the slides last time that
+从之前的幻灯片我们知道了
 
 319
 00:16:32,859 --> 00:16:37,495
 to make zooming work. Okay, we need to set some other things.
+缩放的原理. 那这里还需要处理一些东西
 
 320
 00:16:37,497 --> 00:16:39,364
 What are some of the things we need to do? Well,
+需要怎么做呢？
 
 321
 00:16:39,366 --> 00:16:42,600
 the most important thing is we need to set ourselves
+最重要的一点，就是要将我们自己设置为
 
 322
 00:16:42,602 --> 00:16:44,135
 as the scrollView's delegate. Okay, so
+scrollView 的 delegate.
 
 323
 00:16:44,137 --> 00:16:48,373
 this is the first time you're seeing delegation demoed here.
+这是我们在 demo 中第一次用到 delegate
 
 324
 00:16:48,375 --> 00:16:48,773
 And the way we do that,
+我的做法是
 
 325
 00:16:48,775 --> 00:16:52,844
 I'd probably do it here in my scrollView didSet here, right?
+在 scrollView 的 didSet 方法中来设置
 
 326
 00:16:52,846 --> 00:16:55,680
 The didSet for my scrollView. Probably just say that Mr.
+这就是 scrollView 的 didSet 方法. 这样说，
 
 327
 00:16:55,682 --> 00:17:00,084
 scrollView, please set your delegate to be self. In other
+亲爱的 scrollView，让我成为你的代理吧！换句话说，
 
 328
 00:17:00,086 --> 00:17:04,856
 words, send me any questions you have about how to operate.
+就是把你的问题抛给我来处理吧
 
 329
 00:17:04,858 --> 00:17:07,125
 Now when I put that in there I have a error,
+照我这样设置出现了一个错误
 
 330
 00:17:07,127 --> 00:17:11,796
 anyone guess what this error is? Okay,
+有谁知道这是什么错误吗？
 
 331
 00:17:11,798 --> 00:17:14,699
 it's going to say that these types, this and
+错误是说，他们的类型，这个和
 
 332
 00:17:14,701 --> 00:17:18,870
 this do not match. Okay, and why is that? The type of this
+这个不匹配. 为什么呢？这个的类型是...
 
 333
 00:17:18,872 --> 00:17:22,006
 is, well the type of this, not showing, but the type of this
+好吧，看不到，但是这个的类型是
 
 334
 00:17:22,008 --> 00:17:27,211
 is UI scrollView delegate. Which is a protocol, okay.
+UIScrollViewDelegate. 是个协议
 
 335
 00:17:27,213 --> 00:17:31,883
 The type of this is UI or image view controller.
+这个类型是 UI...哦，是ImageViewController
 
 336
 00:17:31,885 --> 00:17:34,652
 That's its type. Those don't match. Okay, so
+这就是它们的类型，并不匹配. 难怪
 
 337
 00:17:34,654 --> 00:17:38,523
 that's why this says cannot assign value of type image
+报错说不能将 ImageViewController
 
 338
 00:17:38,525 --> 00:17:42,260
 view controller to UI scroll view delegate, optional.
+赋值给可选的 UIScrollViewDelegate
 
 339
 00:17:42,262 --> 00:17:46,230
 Okay, so we need to say that this image view controller is
+所以，我们要先让 ImageViewController 遵循
 
 340
 00:17:46,232 --> 00:17:51,736
 a UI scroll view delegate. And we do that by just putting
+UIScrollViewDelegate. 需要做的是，将 UIScrollViewDelegate 声明在
 
 341
 00:17:51,738 --> 00:17:54,672
 that right after our super class there, a little comma,
+父类的右边，逗号分隔
 
 342
 00:17:54,674 --> 00:17:57,642
 UIScrollViewDelegate, and that says we are scroll view
+这表明我们就是 scrollView
 
 343
 00:17:57,644 --> 00:18:00,178
 delegate, and all of a sudden this works.
+的代理，这样就没问题了
 
 344
 00:18:00,180 --> 00:18:03,047
 Now UIScrollViewDelegate has no methods or
+UIScrollViewDelegate 没有方法或
 
 345
 00:18:03,049 --> 00:18:05,950
 vars in there that are not optional. In other words
+变量是不可选的，换句话说，
 
 346
 00:18:05,952 --> 00:18:08,853
 they're all optional, so we've successfully implemented so
+它们都是可选的，所以，遵循以后
 
 347
 00:18:08,855 --> 00:18:10,688
 the compiler's not complaining. Okay,
+编译器并没有报错
 
 348
 00:18:10,690 --> 00:18:14,725
 cuz none of them are required. But, we still wanna implement
+因为没有必须实现的方法. 不过我们还是需要实现
 
 349
 00:18:14,727 --> 00:18:17,995
 one, that zooming one, which is called
+其中一个方法，缩放的那个，叫做
 
 350
 00:18:17,997 --> 00:18:19,363
 viewForZoomingInScrollView. Now, one
+viewForZoomingInScrollView. 在你
 
 351
 00:18:19,365 --> 00:18:21,632
 thing that's cool is once you say that you're a ScrollView
+成为 ScrollView 的代理之后，
 
 352
 00:18:21,634 --> 00:18:24,735
 delegate, look what happens when I start typing view
+在最新的 Xcode 键入字母时
 
 353
 00:18:24,737 --> 00:18:26,971
 in Xcode. It knows I'm a ScrollView delegate, so
+它就知道你已经是 ScrollView 的代理了，所以
 
 354
 00:18:26,973 --> 00:18:30,308
 the very first thing it offers me is viewForScroll,
+提供的首个联想方法就是 viewForScroll
 
 355
 00:18:30,310 --> 00:18:33,177
 ScrollingInScrollView. For
+ZoomingInScrollView（白胡子口误了）
 
 356
 00:18:33,179 --> 00:18:36,981
-zooming in scrollView. Right? So that's kind of cool. And
+zooming in scrollView.、 Right? So that's kind of cool. And
+用做 scrollView 的缩放. 这真的非常棒
 
 357
 00:18:36,983 --> 00:18:40,017
 what view, which of the scrollView subviews do we want
+那个视图？我们想让 scrollView 的哪个子视图
 
 358
 00:18:40,019 --> 00:18:44,622
 to zoom in on? Well, of course, the image view. This
+做缩放？当然是 imageView. 这是
 
 359
 00:18:44,624 --> 00:18:48,159
 is our image view right here that we store our image in.
+我们的 imageView，里面存储了相应图片
 
 360
 00:18:48,161 --> 00:18:49,494
 That's of course the thing we want
+很明显我们是想
 
 361
 00:18:49,496 --> 00:18:54,599
 to have its transform modified when we pinch in there. Okay?
+在手指捏合的时候，对图片做对应的缩放
 
 362
 00:18:54,601 --> 00:18:56,400
 Now you might think okay, that's good.
+你可能会想，那已经完成了，
 
 363
 00:18:56,402 --> 00:19:00,505
 Got it all ready to go. Let's go start zooming, and
+可以运行了. 让我来看看缩放效果吧
 
 364
 00:19:00,507 --> 00:19:03,341
 we'll go over here. Let's get Cassini, kinda small.
+到这个界面，打开 Cassini，一张小图
 
 365
 00:19:03,343 --> 00:19:06,277
 Let's start zooming. Now how do I zoom? It's with Pinch, so
+试试缩放. 怎么进行缩放呢？需要捏合手势，所以
 
 366
 00:19:06,279 --> 00:19:08,913
 I'm gonna hold down the Option key right here and
+按住 Option 键，然后
 
 367
 00:19:08,915 --> 00:19:11,048
 start pinching. And it's not working.
+进行捏合. 但并没有效果
 
 368
 00:19:11,050 --> 00:19:14,085
 It's not doing anything. Okay, I can still scroll but
+完全没有效果. 依然可以滚动，但是
 
 369
 00:19:14,087 --> 00:19:18,990
 I can't zoom in. Anyone know why? Say
+不能缩放. 有人知道为什么吗？大点声.
 
 370
 00:19:18,992 --> 00:19:25,396
 it louder. I think I might have heard it back there.
+我刚才好像听到那有人回答.
 
 371
 00:19:25,398 --> 00:19:28,065
 Yeah, this right now, our scrollView by default,
+是的，没错，现在 scrollView 的默认值是
 
 372
 00:19:28,067 --> 00:19:31,836
 it's maximum zoom and its minimum zoom is 1.0.
+放大倍数和缩小倍数都是 1.0
 
 373
 00:19:31,838 --> 00:19:33,738
 So it is zooming to the maximum,
+所以我们放大
 
 374
 00:19:33,740 --> 00:19:36,974
 minimum extent we allow which is none, 1.0. So
+和缩小的效果根本看不出来，都是 1.0，所以
 
 375
 00:19:36,976 --> 00:19:41,779
 we need to set the maximum and minimum scrolling factor or
+我们需要给 scrollView 的范围因子，或叫做
 
 376
 00:19:41,781 --> 00:19:45,583
 zooming factor on this scrollView. So let's do that.
+缩放因子赋值. 回到代码.
 
 377
 00:19:45,585 --> 00:19:48,386
 Let's do that also right here when we're setting our
+
 
 378
 00:19:48,388 --> 00:19:50,254
