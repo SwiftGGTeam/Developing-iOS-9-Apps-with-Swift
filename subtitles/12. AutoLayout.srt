@@ -1,0 +1,3264 @@
+﻿1
+00:00:00,001 --> 00:00:03,702
+[MUSIC]
+
+2
+00:00:03,704 --> 00:00:07,973
+Stanford University. >> Welcome to
+
+3
+00:00:07,975 --> 00:00:12,945
+Lecture 12 of Stanford CS193P, spring of 2016. Today
+
+4
+00:00:12,947 --> 00:00:15,647
+we have Autolayout, which we've actually been doing
+
+5
+00:00:15,649 --> 00:00:18,550
+quite a bit of Autolayout, so far, but we're gonna talk
+
+6
+00:00:18,552 --> 00:00:21,353
+a lot more in detail about the concepts of Autolayout and
+
+7
+00:00:21,355 --> 00:00:25,491
+things like that. And we're gonna introduce an important
+
+8
+00:00:25,493 --> 00:00:28,460
+Autolayout feature called Size Classes, okay?
+
+9
+00:00:28,462 --> 00:00:30,129
+All right, so let's dive in to Autolayout.
+
+10
+00:00:30,131 --> 00:00:32,798
+So you already know a lot about Autolayout, right? For
+
+11
+00:00:32,800 --> 00:00:36,235
+example, you know you can use those dashed blue lines when
+
+12
+00:00:36,237 --> 00:00:38,871
+you drag things in and move things around to kinda tell
+
+13
+00:00:38,873 --> 00:00:42,441
+Xcode what you intend about how things are laid out, okay?
+
+14
+00:00:42,443 --> 00:00:45,444
+But you know that those blue lines are really only just
+
+15
+00:00:45,446 --> 00:00:48,247
+kind of a hint, right? But you can say reset to
+
+16
+00:00:48,249 --> 00:00:51,016
+suggest a constraints. And it'll use the dashed blue line
+
+17
+00:00:51,018 --> 00:00:54,753
+information to try and guess, what constraints you want.
+
+18
+00:00:54,755 --> 00:00:58,590
+And sometimes that's what you want, sometimes not. Really
+
+19
+00:00:58,592 --> 00:01:03,228
+that's just minimal help from the system to do Autolayout.
+
+20
+00:01:03,230 --> 00:01:04,663
+It's kinda maybe to get you started,
+
+21
+00:01:04,665 --> 00:01:06,865
+or to get some initial constraints or
+
+22
+00:01:06,867 --> 00:01:08,200
+something like that, okay? And
+
+23
+00:01:08,202 --> 00:01:11,136
+you know that you can look in the Size Inspector, okay?
+
+24
+00:01:11,138 --> 00:01:12,304
+You can click, click on any view and
+
+25
+00:01:12,306 --> 00:01:13,505
+look in the Size Inspector, and now,
+
+26
+00:01:13,507 --> 00:01:16,075
+now, down there you'll see all of the constraints.
+
+27
+00:01:16,077 --> 00:01:20,612
+We've looked at those before that are on a particular view.
+
+28
+00:01:20,614 --> 00:01:24,716
+Okay, you also know that you can click on a constraint
+
+29
+00:01:24,718 --> 00:01:27,619
+itself and look at it in the Attributes Inspector.
+
+30
+00:01:27,621 --> 00:01:29,988
+So just like we click on a view and inspect that,
+
+31
+00:01:29,990 --> 00:01:31,757
+you can click on any constraint,
+
+32
+00:01:31,759 --> 00:01:33,692
+like a little i-beam or, you know, some bar,
+
+33
+00:01:33,694 --> 00:01:36,628
+something that's connecting something to an edge or
+
+34
+00:01:36,630 --> 00:01:38,630
+something. You can click on those things.
+
+35
+00:01:38,632 --> 00:01:40,099
+You can even double-click on them and
+
+36
+00:01:40,101 --> 00:01:41,733
+edit them kind of in a little window.
+
+37
+00:01:41,735 --> 00:01:42,768
+But you can single-click on them and
+
+38
+00:01:42,770 --> 00:01:46,271
+then edit them in the Attributes Inspector as well.
+
+39
+00:01:47,108 --> 00:01:50,509
+Now we know that the other way, another way we can set,
+
+40
+00:01:50,511 --> 00:01:53,212
+constraints is to control drag like we control drag to
+
+41
+00:01:53,214 --> 00:01:56,515
+the edge and say, you know, make it be a certain distance
+
+42
+00:01:56,517 --> 00:01:58,750
+from this edge. Okay, we saw that quite a bit.
+
+43
+00:01:58,752 --> 00:02:01,720
+That Ctrl-dragging can also be done between views.
+
+44
+00:02:01,722 --> 00:02:04,123
+So you can Ctrl-drag between two views and then say,
+
+45
+00:02:04,125 --> 00:02:08,227
+make these two be the same with, okay? Things like that.
+
+46
+00:02:08,229 --> 00:02:10,529
+And we'll see a little bit of that today in the demo. So
+
+47
+00:02:10,531 --> 00:02:14,299
+that Ctrl-dragging is probably the number one way you do
+
+48
+00:02:14,301 --> 00:02:18,036
+Autolayout, okay? But there's also a couple of menus down in
+
+49
+00:02:18,038 --> 00:02:21,106
+the bottom right corner where that menu that you bring up
+
+50
+00:02:21,108 --> 00:02:25,110
+that says reset to suggested constraints or update frames.
+
+51
+00:02:25,112 --> 00:02:25,244
+You know that thing,
+
+52
+00:02:25,246 --> 00:02:27,846
+there's two other little menus right by it. Okay the pin and
+
+53
+00:02:27,848 --> 00:02:31,717
+arrange menus, and they also let you say things like
+
+54
+00:02:31,719 --> 00:02:34,720
+make these. You can select five views, and then bring up
+
+55
+00:02:34,722 --> 00:02:37,990
+the arrange menu and say, make all of these equal widths.
+
+56
+00:02:37,992 --> 00:02:39,992
+And now we have a constraint on all five of the views to
+
+57
+00:02:39,994 --> 00:02:44,830
+make them equal widths. So, those menus, frankly
+
+58
+00:02:44,832 --> 00:02:47,833
+you don't use them that much because the Ctrl-drag is so
+
+59
+00:02:47,835 --> 00:02:49,968
+incredibly convenient for doing that, but
+
+60
+00:02:49,970 --> 00:02:56,241
+sometimes we will. You can look at your constraints by
+
+61
+00:02:56,243 --> 00:02:59,378
+inspecting things, but really the way to see a big picture
+
+62
+00:02:59,380 --> 00:03:02,648
+of all of the constraints is in the document outline, okay?
+
+63
+00:03:02,650 --> 00:03:04,950
+Remember the document outline? That's the thing on the left
+
+64
+00:03:04,952 --> 00:03:06,251
+in the storyboard that you can kinda
+
+65
+00:03:06,253 --> 00:03:07,953
+bring out with the little button on the bottom and
+
+66
+00:03:07,955 --> 00:03:11,123
+it shows you all your views and the hierarchy of it and
+
+67
+00:03:11,125 --> 00:03:11,156
+all that stuff.
+
+68
+00:03:11,158 --> 00:03:14,059
+Well it'll also show all your constraints in there. Okay,
+
+69
+00:03:14,061 --> 00:03:15,994
+a big long list of your constraints.
+
+70
+00:03:15,996 --> 00:03:19,331
+And, that's a good place where you can go to see them.
+
+71
+00:03:19,333 --> 00:03:22,734
+It also has a constraint resolution
+
+72
+00:03:22,736 --> 00:03:25,337
+UI which I might have brief, briefly shown but
+
+73
+00:03:25,339 --> 00:03:28,340
+I'll certainly show today. Where it'll actually tell you
+
+74
+00:03:28,342 --> 00:03:30,642
+all the constraints that are conflicting or
+
+75
+00:03:30,644 --> 00:03:33,378
+not fully specifying things, that kind of stuff.
+
+76
+00:03:33,380 --> 00:03:36,148
+So it's kind of, Document Outline is your constraint
+
+77
+00:03:36,150 --> 00:03:39,484
+headquarters to go try and fix things with constraints and
+
+78
+00:03:39,486 --> 00:03:42,454
+understand what's going on with your constraints. Now
+
+79
+00:03:42,456 --> 00:03:45,624
+mastering Autolayout requires experience. I can tell you all
+
+80
+00:03:45,626 --> 00:03:49,194
+these things what the, what the things you can do are, but
+
+81
+00:03:49,196 --> 00:03:52,231
+until you get in there and start trying to lay things out
+
+82
+00:03:52,233 --> 00:03:55,801
+and make things line up, and do things like that,
+
+83
+00:03:55,803 --> 00:03:57,536
+you really won't be able to master it, okay?
+
+84
+00:03:57,538 --> 00:03:59,571
+So it requires experience. So hopefully in your final
+
+85
+00:03:59,573 --> 00:04:02,241
+project you'll have some UIs that require quite a bit of
+
+86
+00:04:02,243 --> 00:04:04,977
+Autolayout. You know the UIs we've had so far have not
+
+87
+00:04:04,979 --> 00:04:07,079
+required that much Autolayout because I haven't gotten to
+
+88
+00:04:07,081 --> 00:04:09,781
+this lecture yet. So you know we've been using StatView
+
+89
+00:04:09,783 --> 00:04:12,317
+a lot, okay? We're heavily relying on StatView to make it
+
+90
+00:04:12,319 --> 00:04:15,187
+so we don't have to do so much Autolayout, cuz StatView kind
+
+91
+00:04:15,189 --> 00:04:18,457
+of is a thing for doing Autolayout in a very simple
+
+92
+00:04:18,459 --> 00:04:22,361
+way when you want to line things up in grids, okay? So
+
+93
+00:04:22,363 --> 00:04:26,498
+there's no, no substitute for experience in Autolayout. It
+
+94
+00:04:26,500 --> 00:04:29,868
+is possible to do Autolayout constraints from code, okay?
+
+95
+00:04:29,870 --> 00:04:33,272
+There is a class called ns layout constraint. And
+
+96
+00:04:33,274 --> 00:04:36,041
+it does all the things you can do in the storyboard and
+
+97
+00:04:36,043 --> 00:04:38,277
+possibly even a little bit more.
+
+98
+00:04:38,279 --> 00:04:40,078
+Actually definitely a little bit more.
+
+99
+00:04:40,080 --> 00:04:41,913
+I'm not gonna teach that in this course.
+
+100
+00:04:41,915 --> 00:04:44,549
+If you wanna learn about it, you might think about trying
+
+101
+00:04:44,551 --> 00:04:48,987
+to do something in your final project, maybe. It requires
+
+102
+00:04:48,989 --> 00:04:51,923
+a certain understanding of mathematics and
+
+103
+00:04:51,925 --> 00:04:54,259
+really understanding relationships between things,
+
+104
+00:04:54,261 --> 00:04:56,962
+to really set things up and make things work. It's a heck
+
+105
+00:04:56,964 --> 00:04:59,631
+of a lot easier just to do it all in the story board. So
+
+106
+00:04:59,633 --> 00:05:02,067
+unless you wanna kinda make that one of your investigative
+
+107
+00:05:02,069 --> 00:05:04,303
+things for your final project, which you're gonna see
+
+108
+00:05:04,305 --> 00:05:06,104
+is required that you go investigate something that I
+
+109
+00:05:06,106 --> 00:05:09,541
+don't teach in lecture. You're probably gonna wanna try and
+
+110
+00:05:09,543 --> 00:05:12,711
+do Autolayout from the story board, okay. And
+
+111
+00:05:12,713 --> 00:05:15,814
+you can certainly do everything you need to do
+
+112
+00:05:15,816 --> 00:05:19,251
+almost all the time in your story board. Okay,
+
+113
+00:05:19,253 --> 00:05:24,656
+so, let's see what's next here. Let's talk about,
+
+114
+00:05:24,658 --> 00:05:30,195
+rotation, okay? So sometimes, when you rotate your UI,
+
+115
+00:05:30,197 --> 00:05:33,098
+the geometry of it changes so drastically that
+
+116
+00:05:33,100 --> 00:05:36,668
+Autolayout is not enough to reposition everything, okay?
+
+117
+00:05:36,670 --> 00:05:39,738
+A great example of this is our calculator, okay? Our
+
+118
+00:05:39,740 --> 00:05:43,775
+calculator had five across, five buttons across and
+
+119
+00:05:43,777 --> 00:05:47,913
+four buttons down, I think, okay? And that looked fine.
+
+120
+00:05:47,915 --> 00:05:49,948
+Or it was four across and five down, I guess.
+
+121
+00:05:49,950 --> 00:05:50,982
+And that looks fine in portrait.
+
+122
+00:05:50,984 --> 00:05:53,552
+All the buttons were almost square. They were rectangular,
+
+123
+00:05:53,554 --> 00:05:55,420
+but they were close to being square. But
+
+124
+00:05:55,422 --> 00:05:56,121
+when we went into landscape,
+
+125
+00:05:56,123 --> 00:05:58,390
+all of our buttons got really squished down, okay.
+
+126
+00:05:58,392 --> 00:06:01,393
+They're really wide and really short. Okay, and really, it
+
+127
+00:06:01,395 --> 00:06:04,363
+would have been a lot better if we had gone five across and
+
+128
+00:06:04,365 --> 00:06:06,832
+four down. Because we'd have more space
+
+129
+00:06:06,834 --> 00:06:09,735
+across than we do have down in landscape. Okay, well there's
+
+130
+00:06:09,737 --> 00:06:13,238
+no way to do Autolayout. No way so that that would happen.
+
+131
+00:06:13,240 --> 00:06:16,675
+Okay, there's no way to put any relationships between them
+
+132
+00:06:16,677 --> 00:06:18,210
+so that they would just somehow flip over.
+
+133
+00:06:18,212 --> 00:06:20,979
+Some of the buttons would flip over from being along the top,
+
+134
+00:06:20,981 --> 00:06:23,448
+for example, to being along the left, okay? So you can't
+
+135
+00:06:23,450 --> 00:06:26,051
+do it that way. So what would you do if you wanted to build
+
+136
+00:06:26,053 --> 00:06:29,588
+a calculator that repositioned the buttons when you flipped
+
+137
+00:06:29,590 --> 00:06:32,424
+it over? Because it's not just the calculate,
+
+138
+00:06:32,426 --> 00:06:35,327
+the calculator that might want to do this. For
+
+139
+00:06:35,329 --> 00:06:39,297
+you example you know when you're in the master of
+
+140
+00:06:39,299 --> 00:06:43,101
+a split view okay it's not you're not in portrait.
+
+141
+00:06:43,103 --> 00:06:44,236
+You're probably on an iPad or
+
+142
+00:06:44,238 --> 00:06:47,973
+at least you might be on an iPhone 6+. In that master,
+
+143
+00:06:47,975 --> 00:06:51,309
+you also want it to be the right arrangement of buttons.
+
+144
+00:06:51,311 --> 00:06:54,513
+Okay, more like iPhone portrait, okay, than iPad.
+
+145
+00:06:54,515 --> 00:06:58,784
+Okay, so the solution to doing this is called size classes.
+
+146
+00:06:58,786 --> 00:07:00,685
+Okay, so your view controllers,
+
+147
+00:07:00,687 --> 00:07:02,020
+any view controller that you're doing,
+
+148
+00:07:02,022 --> 00:07:02,988
+like the calculator view controller,
+
+149
+00:07:02,990 --> 00:07:06,691
+always lives in a size class environment, okay, for
+
+150
+00:07:06,693 --> 00:07:10,896
+its width and its height. Okay, and that size class is
+
+151
+00:07:10,898 --> 00:07:14,466
+either compact or regular. Regular means
+
+152
+00:07:14,468 --> 00:07:18,270
+it's not compact, okay? So your view controller for each,
+
+153
+00:07:18,272 --> 00:07:21,206
+for horizontally and vertically, will get something
+
+154
+00:07:21,208 --> 00:07:25,177
+told to it, okay you are in a compact vertical environment,
+
+155
+00:07:25,179 --> 00:07:28,680
+or you are in a compact horizontal environment. And
+
+156
+00:07:28,682 --> 00:07:31,983
+you can react to that, okay? So in the calculator's case,
+
+157
+00:07:31,985 --> 00:07:34,352
+if we're in a compact vertical environment,
+
+158
+00:07:34,354 --> 00:07:38,256
+let's put five across and four down, because we're squi,
+
+159
+00:07:38,258 --> 00:07:40,192
+you know, squished down vertically so
+
+160
+00:07:40,194 --> 00:07:43,228
+we'll spread them out a little bit. And if we're not,
+
+161
+00:07:43,230 --> 00:07:46,498
+then we'll go ahead and use the vertical space and make it
+
+162
+00:07:46,500 --> 00:07:50,001
+be four across and five down, okay? So getting all this,
+
+163
+00:07:50,003 --> 00:07:53,405
+kind of all the different kinds of aspect ratios, and
+
+164
+00:07:53,407 --> 00:07:56,942
+things for all the devices to fit into this compact in
+
+165
+00:07:56,944 --> 00:07:59,277
+regular. You know it's not a perfect fit, but
+
+166
+00:07:59,279 --> 00:08:02,380
+here's a kind of general idea of how these fit, all right?
+
+167
+00:08:02,382 --> 00:08:06,651
+So the iPhone 6 Plus in Portrait, right when it's,
+
+168
+00:08:06,653 --> 00:08:09,855
+it's stand, standing upright basically.
+
+169
+00:08:09,857 --> 00:08:14,025
+That is compact width, regular height. Makes perfect sense,
+
+170
+00:08:14,027 --> 00:08:15,894
+right? Okay, compact width, regular height.
+
+171
+00:08:15,896 --> 00:08:18,697
+When you go to Landscape, now it's compact height,
+
+172
+00:08:18,699 --> 00:08:22,801
+regular width. Okay. So iPhone 6 Plus makes the most sense of
+
+173
+00:08:22,803 --> 00:08:28,240
+all of the devices. Okay? Now iPhone non-plus,
+
+174
+00:08:28,242 --> 00:08:32,944
+okay, is compact, in width.
+
+175
+00:08:32,946 --> 00:08:35,413
+Sorry, in Portrait, it's compact in width and
+
+176
+00:08:35,415 --> 00:08:37,649
+regular in height. But in Landscaped, okay,
+
+177
+00:08:37,651 --> 00:08:39,885
+non 6 Plus now I'm talking about here, it's
+
+178
+00:08:39,887 --> 00:08:44,422
+compact in both directions. So on a normal iPhone, non plus
+
+179
+00:08:44,424 --> 00:08:47,726
+iPhone, in width, you would think it would be regular
+
+180
+00:08:47,728 --> 00:08:50,495
+cuz it was regular when it was in Portrait in height, but no,
+
+181
+00:08:50,497 --> 00:08:53,431
+it's compact. So you can actually tell the difference
+
+182
+00:08:53,433 --> 00:08:57,736
+between whether you're on a 6 Plus or a regular iPhone 4 or
+
+183
+00:08:57,738 --> 00:09:00,705
+S or 5 or 6 or whatever, non Plus because you'll
+
+184
+00:09:00,707 --> 00:09:03,241
+be compact in both directions in Landscape. Okay?
+
+185
+00:09:03,243 --> 00:09:06,011
+So it's just kinda weird gotta be used to that.
+
+186
+00:09:06,013 --> 00:09:10,015
+iPad is always regular in both directions. Cuz it£s so big,
+
+187
+00:09:10,017 --> 00:09:13,351
+it£s not compact in any way, in any direction. However,
+
+188
+00:09:13,353 --> 00:09:16,821
+if you£re an MVC that is in the master of a split view,
+
+189
+00:09:16,823 --> 00:09:21,226
+you£ll be compact in width. Okay, understandably right cuz
+
+190
+00:09:21,228 --> 00:09:27,265
+you're kinda, jammed in there. This whole system,
+
+191
+00:09:27,267 --> 00:09:31,136
+by the way, is extensible. It's not just rock solid,
+
+192
+00:09:31,138 --> 00:09:34,372
+you know, hooked up to whether you're on a 6 Plus or
+
+193
+00:09:34,374 --> 00:09:36,474
+an iPhone or in a split view master or
+
+194
+00:09:36,476 --> 00:09:38,476
+a whatever. It has a whole mechanism for
+
+195
+00:09:38,478 --> 00:09:42,781
+an MVC to find out what size class it's in. It can even say
+
+196
+00:09:42,783 --> 00:09:45,650
+based on its environment I wanna be in this size class.
+
+197
+00:09:45,652 --> 00:09:48,687
+And then if it has MVCs inside of it like it's a navigation
+
+198
+00:09:48,689 --> 00:09:49,354
+controller or something like that.
+
+199
+00:09:49,356 --> 00:09:52,724
+Then they would inherit that size class information, okay.
+
+200
+00:09:52,726 --> 00:09:56,328
+Now I'm not gonna talk about that all the code side of it.
+
+201
+00:09:56,330 --> 00:09:59,097
+The only code you're probably gonna be interested
+
+202
+00:09:59,099 --> 00:10:01,232
+in is this method here in view controller,
+
+203
+00:10:01,234 --> 00:10:04,736
+Self traitCollection. Horizontal size class and
+
+204
+00:10:04,738 --> 00:10:05,503
+vertical size class and
+
+205
+00:10:05,505 --> 00:10:07,672
+it's gonna give you back compact irregular.
+
+206
+00:10:07,674 --> 00:10:09,641
+Okay? So that's how you'll know if you're compact
+
+207
+00:10:09,643 --> 00:10:12,844
+irregular. Now, that's only if you wanted to react
+
+208
+00:10:12,846 --> 00:10:15,947
+to your compactness in code. A lot of times we're gonna
+
+209
+00:10:15,949 --> 00:10:19,217
+be doing this in our story board. Okay? And I'm gonna
+
+210
+00:10:19,219 --> 00:10:21,686
+show you how in the story board we'll react to that. So
+
+211
+00:10:21,688 --> 00:10:24,589
+in summary it looks like this, okay? You got compact width
+
+212
+00:10:24,591 --> 00:10:26,491
+and regular width. Compact height and regular height.
+
+213
+00:10:26,493 --> 00:10:30,462
+So, iPhones (non-Plus) in Landscape are here. Compact,
+
+214
+00:10:30,464 --> 00:10:35,567
+compact. Regular width compact is iPhone 6 Plus in Landscape.
+
+215
+00:10:35,569 --> 00:10:36,234
+Regular height and
+
+216
+00:10:36,236 --> 00:10:38,470
+compact width is iPhones in Portrait or
+
+217
+00:10:38,472 --> 00:10:40,772
+you're the Master of the Split View. And
+
+218
+00:10:40,774 --> 00:10:44,009
+then iPads are regular in both. Okay. So,
+
+219
+00:10:44,011 --> 00:10:45,443
+if you want to look at the calculator, for example,
+
+220
+00:10:45,445 --> 00:10:49,180
+it would look something like this, all right. Now here is,
+
+221
+00:10:49,182 --> 00:10:53,718
+I'm drawing my UI here as if I've adapted to this. In
+
+222
+00:10:53,720 --> 00:10:57,255
+in this case right here, I've decided to go four across and
+
+223
+00:10:57,257 --> 00:11:00,191
+five down because I gotta lot of down, a lot of vertical
+
+224
+00:11:00,193 --> 00:11:02,761
+space. Whereas here I've gone five across and
+
+225
+00:11:02,763 --> 00:11:04,663
+four down cuz I'm kinda compact in height,
+
+226
+00:11:04,665 --> 00:11:07,699
+you see. Even here I've done the same thing.
+
+227
+00:11:07,701 --> 00:11:09,200
+I've decided here, compact and
+
+228
+00:11:09,202 --> 00:11:11,970
+regular width to go five across and four down. And
+
+229
+00:11:11,972 --> 00:11:14,539
+down here, in regular both directions I decided it
+
+230
+00:11:14,541 --> 00:11:19,244
+looks a little better to have the four across and five down.
+
+231
+00:11:19,246 --> 00:11:24,015
+Okay? Now you would imagine if I wanted my calculator to work
+
+232
+00:11:24,017 --> 00:11:27,318
+this way I might have to build fi, four different UIs, one,
+
+233
+00:11:27,320 --> 00:11:30,321
+two, three, four. For all four of these. Okay, and
+
+234
+00:11:30,323 --> 00:11:32,657
+that would normally be the way it is.
+
+235
+00:11:32,659 --> 00:11:35,760
+Except for that, we actually do size classes with a little
+
+236
+00:11:35,762 --> 00:11:38,797
+more subtlety than that. Because if you look here,
+
+237
+00:11:38,799 --> 00:11:41,866
+compact height always is five across and
+
+238
+00:11:41,868 --> 00:11:43,968
+four down. Whether it's compact width or
+
+239
+00:11:43,970 --> 00:11:45,303
+regular width, doesn't matter. And
+
+240
+00:11:45,305 --> 00:11:48,573
+here, in regular height, it's always four across,
+
+241
+00:11:48,575 --> 00:11:50,542
+five down, no matter what the width. So
+
+242
+00:11:50,544 --> 00:11:52,343
+really I should only have to do two things here,
+
+243
+00:11:52,345 --> 00:11:55,413
+okay, based on the height. I shouldn't have to do anything
+
+244
+00:11:55,415 --> 00:11:59,851
+different based on the width. And that's why the whole size
+
+245
+00:11:59,853 --> 00:12:03,388
+class thing is actually treated as a grid like this.
+
+246
+00:12:03,390 --> 00:12:05,790
+With nine things in it and in the middle you
+
+247
+00:12:05,792 --> 00:12:09,894
+have this special width and height called any. Okay. So
+
+248
+00:12:09,896 --> 00:12:11,996
+now if I want what I had on the previous screen,
+
+249
+00:12:11,998 --> 00:12:15,900
+all I have to do is two UIs. One for regular height,
+
+250
+00:12:15,902 --> 00:12:19,571
+any width, and one for compact height, any width. And
+
+251
+00:12:19,573 --> 00:12:23,842
+even better than that, I can actually put some of my UI
+
+252
+00:12:23,844 --> 00:12:27,312
+here in the middle, any height, any width. And
+
+253
+00:12:27,314 --> 00:12:31,483
+only put the differences out here in these other two. So
+
+254
+00:12:31,485 --> 00:12:34,352
+this the part of the UI that's the same on both right,
+
+255
+00:12:34,354 --> 00:12:36,855
+I got the display and I've got this part of the keypad.
+
+256
+00:12:36,857 --> 00:12:39,424
+It's the same on both. And it's only that piece that's
+
+257
+00:12:39,426 --> 00:12:42,527
+either gonna be here or here okay that is different.
+
+258
+00:12:42,529 --> 00:12:45,864
+And that's all I'm gonna have to do in these two things. All
+
+259
+00:12:45,866 --> 00:12:49,434
+right? So, we just add this idea of this any width and
+
+260
+00:12:49,436 --> 00:12:53,738
+any height to make a nine way thing. And I, in your story
+
+261
+00:12:53,740 --> 00:12:56,908
+board, you can actually go to any of these nine squares and
+
+262
+00:12:56,910 --> 00:13:00,411
+edit the UI. Okay? And that's what we're gonna show in our
+
+263
+00:13:00,413 --> 00:13:03,148
+demo here. Okay? So, I'm gonna do this calculator thing,
+
+264
+00:13:03,150 --> 00:13:05,850
+exactly what I just showed there. And
+
+265
+00:13:05,852 --> 00:13:09,521
+we'll see what it looks like to the size class business
+
+266
+00:13:09,523 --> 00:13:12,857
+in Xcode. Okay so here we are in calculator.
+
+267
+00:13:12,859 --> 00:13:15,326
+This is how we left off in calculator.
+
+268
+00:13:15,328 --> 00:13:16,761
+Actually it's a little different cuz I this is
+
+269
+00:13:16,763 --> 00:13:18,863
+the version before we did that save restore. So
+
+270
+00:13:18,865 --> 00:13:21,733
+I don't have save restore. So otherwise it's just a normal
+
+271
+00:13:21,735 --> 00:13:24,702
+calculator thing here. I'm gonna start right off
+
+272
+00:13:24,704 --> 00:13:28,173
+by noticing that I have this warning up here. You see this,
+
+273
+00:13:28,175 --> 00:13:30,708
+this yellow triangle that's all over the place here.
+
+274
+00:13:30,710 --> 00:13:32,977
+Telling me about warnings. What are this warnings?
+
+275
+00:13:32,979 --> 00:13:36,181
+If I click them, it's the old frame will be different at
+
+276
+00:13:36,183 --> 00:13:40,018
+run time. You guys, I'm sure, are well acquainted with that.
+
+277
+00:13:40,020 --> 00:13:43,188
+That you get it all the time, when you're doing auto layout
+
+278
+00:13:43,190 --> 00:13:45,824
+stuff. And you know the fix to this? Anyone wanna tell me
+
+279
+00:13:45,826 --> 00:13:50,461
+what the fix for this is? What do I do? Go down here,
+
+280
+00:13:50,463 --> 00:13:54,899
+right. Select this view controller. Go down here and
+
+281
+00:13:54,901 --> 00:13:59,637
+say update frames, right. Okay let's try it.
+
+282
+00:14:00,373 --> 00:14:04,676
+No. It didn't work. What's going on here? Okay, so
+
+283
+00:14:04,678 --> 00:14:06,978
+have you seen this? Where you do this update frames and
+
+284
+00:14:06,980 --> 00:14:09,347
+it doesn't work. I'm sure some of you have seen that as well.
+
+285
+00:14:09,349 --> 00:14:12,150
+Okay, well I'm gonna show you another way to fix this, okay,
+
+286
+00:14:12,152 --> 00:14:15,253
+which is also not going to work. In the document outline,
+
+287
+00:14:15,255 --> 00:14:16,921
+so here's our document outline right here.
+
+288
+00:14:16,923 --> 00:14:19,524
+You see this? I told you the document outline is
+
+289
+00:14:19,526 --> 00:14:22,393
+kinda the headquarters for constraints. In fact,
+
+290
+00:14:22,395 --> 00:14:25,396
+here's all my constraints, okay?
+
+291
+00:14:25,398 --> 00:14:27,966
+Look at this little guy right here, this little button.
+
+292
+00:14:27,968 --> 00:14:31,069
+This is telling me there's a problem with your constraints.
+
+293
+00:14:31,071 --> 00:14:32,871
+And you can actually click on this little button,
+
+294
+00:14:32,873 --> 00:14:36,140
+which I'm going to do. And it'll show you all the places,
+
+295
+00:14:36,142 --> 00:14:38,076
+all the misplaced views in this case.
+
+296
+00:14:38,078 --> 00:14:38,810
+It's going around showing them,
+
+297
+00:14:38,812 --> 00:14:41,813
+I can even highlight them as I mouse over them.
+
+298
+00:14:41,815 --> 00:14:44,582
+And you can even fix them, if you click on this little
+
+299
+00:14:44,584 --> 00:14:46,818
+triangle, right here. It'll come up and
+
+300
+00:14:46,820 --> 00:14:49,787
+you can do update frames to fix this. You can try and
+
+301
+00:14:49,789 --> 00:14:52,090
+update the constraints to match what's here.
+
+302
+00:14:52,092 --> 00:14:55,093
+I recommend against that, generally Because it's gonna
+
+303
+00:14:55,095 --> 00:14:56,728
+put hardwired constraints in there to try and
+
+304
+00:14:56,730 --> 00:14:59,964
+hold that thing in position. That's usually not what you
+
+305
+00:14:59,966 --> 00:15:03,201
+want. You can also reset to suggested constraints here.
+
+306
+00:15:03,203 --> 00:15:06,070
+That might be something you want sometimes if you know
+
+307
+00:15:06,072 --> 00:15:07,305
+that you put it on the blue lines,
+
+308
+00:15:07,307 --> 00:15:09,307
+but usually you want to try and update frames.
+
+309
+00:15:09,309 --> 00:15:11,309
+And you can even apply it too all the views in
+
+310
+00:15:11,311 --> 00:15:14,145
+the container, cuz we know we got five problems right here.
+
+311
+00:15:14,147 --> 00:15:17,849
+So, I can click those and hit fix displacement here, and
+
+312
+00:15:17,851 --> 00:15:22,253
+that should fix it. Nope, it didn't, okay. Now, I'm not
+
+313
+00:15:22,255 --> 00:15:25,723
+exactly sure why those either of those things didn't fix it.
+
+314
+00:15:25,725 --> 00:15:29,027
+It should've. But I'm gonna show you a tricky way,
+
+315
+00:15:29,029 --> 00:15:31,496
+to fix this misplacement problem.
+
+316
+00:15:31,498 --> 00:15:34,032
+Would you just pick up something, okay,
+
+317
+00:15:34,034 --> 00:15:37,368
+that's misplaced like this, and just put it back down
+
+318
+00:15:37,370 --> 00:15:42,507
+where you think it's supposed to be. Okay? Voila, okay?
+
+319
+00:15:42,509 --> 00:15:42,674
+some reason that causes the entire constraint system to
+
+320
+00:15:42,676 --> 00:15:45,610
+Because for
+
+321
+00:15:45,612 --> 00:15:48,746
+reevaluate everything's in the right spot, no issues, see?
+
+322
+00:15:48,748 --> 00:15:52,450
+No auto layout issues here, no yellow buttons up here. Okay?
+
+323
+00:15:52,452 --> 00:15:55,019
+So that's a real nice little trick to know, okay?
+
+324
+00:15:55,021 --> 00:15:59,657
+Just pick the thing up and put it back down in the right
+
+325
+00:15:59,659 --> 00:16:03,861
+place, might fix everything All right, okay.
+
+326
+00:16:03,863 --> 00:16:07,432
+So let's talk about our calculator here.
+
+327
+00:16:07,434 --> 00:16:10,868
+Our calculator wants to use size classes so that instead
+
+328
+00:16:10,870 --> 00:16:14,072
+of being four across and five down like this, okay, in
+
+329
+00:16:14,074 --> 00:16:18,209
+compact situations, it's gonna be five across and four down.
+
+330
+00:16:18,211 --> 00:16:21,512
+So I told you there's those nine little spots?
+
+331
+00:16:21,514 --> 00:16:23,214
+Here they are, right here, right down at the bottom.
+
+332
+00:16:23,216 --> 00:16:27,552
+See this W Any H Any? That tells you you're editing with
+
+333
+00:16:27,554 --> 00:16:30,455
+any height, any. And if you click on this,
+
+334
+00:16:30,457 --> 00:16:33,524
+it'll show you all nine of those areas, okay?
+
+335
+00:16:33,526 --> 00:16:37,328
+Just mouse over them. So the middle one is any, any, okay.
+
+336
+00:16:37,330 --> 00:16:41,199
+Up here, this is compact height, any width.
+
+337
+00:16:41,201 --> 00:16:45,336
+This down here is regular height, any width, okay?
+
+338
+00:16:45,338 --> 00:16:48,072
+Here is compact width, compact height.
+
+339
+00:16:48,074 --> 00:16:50,341
+So if I were to click on this and
+
+340
+00:16:50,343 --> 00:16:56,014
+go edit that UI, what device would this, that ui be on?
+
+341
+00:16:56,016 --> 00:16:56,781
+>> iPhone 6.
+
+342
+00:16:56,783 --> 00:16:56,848
+>> iPhone 6,
+
+343
+00:16:56,850 --> 00:17:00,852
+in landscape, right? Or iPhone 5 in landscape also, okay?
+
+344
+00:17:00,854 --> 00:17:01,853
+Cuz that's the only one that's compact. So
+
+345
+00:17:01,855 --> 00:17:06,557
+this is actually specifically choosing a non-plus iPhone,
+
+346
+00:17:06,559 --> 00:17:09,527
+okay? So you can pick any of these positions that you want.
+
+347
+00:17:09,529 --> 00:17:13,931
+Now we know in our calculator that the compact height, one,
+
+348
+00:17:13,933 --> 00:17:18,036
+okay, is the one that we wanna move these buttons down to
+
+349
+00:17:18,038 --> 00:17:21,172
+the side over here. Okay, here's a compact height.
+
+350
+00:17:21,174 --> 00:17:24,409
+Now, I'm gonna show you a feature here that you might
+
+351
+00:17:24,411 --> 00:17:26,577
+be inclined to use with size classes,
+
+352
+00:17:26,579 --> 00:17:28,079
+but it's not gonna work for us.
+
+353
+00:17:28,081 --> 00:17:31,215
+Okay, but I wanna show you how it works, which is,
+
+354
+00:17:31,217 --> 00:17:34,786
+I might just start by saying let's at first, at least get
+
+355
+00:17:34,788 --> 00:17:38,856
+rid of these four buttons when we're in this compact version,
+
+356
+00:17:38,858 --> 00:17:41,659
+okay? See here we're in width any, height compact. We're
+
+357
+00:17:41,661 --> 00:17:45,296
+editing this UI. Changes that we make in here are only going
+
+358
+00:17:45,298 --> 00:17:49,700
+to apply to this size class, okay, which is compact height.
+
+359
+00:17:49,702 --> 00:17:51,035
+Any time we're in a compact height.
+
+360
+00:17:51,037 --> 00:17:53,538
+Now, we can only make certain changes in here, like,
+
+361
+00:17:53,540 --> 00:17:56,040
+we couldn't inspect objects and change their color.
+
+362
+00:17:56,042 --> 00:17:59,143
+That's not gonna work. But we can remove and add views,
+
+363
+00:17:59,145 --> 00:18:03,247
+and most importantly, we can change constraints, okay?
+
+364
+00:18:03,249 --> 00:18:03,881
+Those are the things we can do.
+
+365
+00:18:03,883 --> 00:18:06,484
+So I said we can remove and add views, how would we remove
+
+366
+00:18:06,486 --> 00:18:09,320
+this stack view? Let's say we don't want this x divide plus
+
+367
+00:18:09,322 --> 00:18:11,522
+minus stack here, we just don't want it in there.
+
+368
+00:18:11,524 --> 00:18:13,291
+Well, we can go over to the Inspector, okay, and
+
+369
+00:18:13,293 --> 00:18:16,294
+inspect this thing. And look down at the very bottom, okay?
+
+370
+00:18:16,296 --> 00:18:18,029
+This is just the Inspector for the stack view.
+
+371
+00:18:18,031 --> 00:18:21,599
+And the bottom, it says right here, Installed with a check.
+
+372
+00:18:21,601 --> 00:18:26,070
+That means it's installed in all size classes.
+
+373
+00:18:26,072 --> 00:18:28,973
+And if we didn't want it installed in this one,
+
+374
+00:18:28,975 --> 00:18:31,375
+we can actually click this little plus, and
+
+375
+00:18:31,377 --> 00:18:34,812
+pick this size class, which is with any height compact,
+
+376
+00:18:34,814 --> 00:18:38,549
+or we could actually pick any other one we wanted, okay?
+
+377
+00:18:38,551 --> 00:18:41,185
+So we can pick any combination we want.
+
+378
+00:18:41,187 --> 00:18:42,687
+Since this is the one we're editing, it's,
+
+379
+00:18:42,689 --> 00:18:44,455
+the kind of the first choice right here, any width,
+
+380
+00:18:44,457 --> 00:18:47,692
+compact, height. So I'm gonna pick that. And when I pick
+
+381
+00:18:47,694 --> 00:18:50,795
+that, it breaks that one out. It's still installed, but
+
+382
+00:18:50,797 --> 00:18:52,830
+it breaks that one out with any height compact.
+
+383
+00:18:52,832 --> 00:18:56,868
+But if I click this off, it will no longer install this
+
+384
+00:18:56,870 --> 00:19:00,371
+view in this size class. So now anytime I'm running in
+
+385
+00:19:00,373 --> 00:19:03,407
+a modern environment where it's compact, that view,
+
+386
+00:19:03,409 --> 00:19:06,444
+that stack view's not even gonna be there. Okay,
+
+387
+00:19:06,446 --> 00:19:11,015
+if I go back to any any here, it's still there,
+
+388
+00:19:11,017 --> 00:19:15,753
+okay. It's only in this compact height that it's gone.
+
+389
+00:19:15,755 --> 00:19:20,758
+So let's go run and see if this is working for us.
+
+390
+00:19:26,900 --> 00:19:29,167
+All right, here we go. It's five high and
+
+391
+00:19:29,169 --> 00:19:32,603
+four wide in portrait. Looks good, okay. Hopefully,
+
+392
+00:19:32,605 --> 00:19:35,506
+if we go to landscape, which we know is compact height,
+
+393
+00:19:35,508 --> 00:19:39,243
+it should get rid of those four buttons, right? It did!
+
+394
+00:19:39,245 --> 00:19:41,712
+Excellent, see, this size class stuff works.
+
+395
+00:19:41,714 --> 00:19:45,683
+And now we'll just go back over to portrait. Oops, okay,
+
+396
+00:19:45,685 --> 00:19:49,720
+look what happened there. When I went back to portrait,
+
+397
+00:19:49,722 --> 00:19:53,124
+it tried to put that stack view back, but the size class
+
+398
+00:19:53,126 --> 00:19:57,128
+system can't put things back into other view hierarchies,
+
+399
+00:19:57,130 --> 00:19:59,430
+you can only put it back at the top level.
+
+400
+00:19:59,432 --> 00:20:02,934
+So it couldn't do that, so it decided to put it back, and
+
+401
+00:20:02,936 --> 00:20:05,436
+just put it back as 0,0 up there, okay?
+
+402
+00:20:05,438 --> 00:20:07,338
+So that's clearly not what we want,
+
+403
+00:20:07,340 --> 00:20:08,673
+that's clearly not gonna work. So
+
+404
+00:20:08,675 --> 00:20:12,276
+we need a different strategy, but I just wanted to show you
+
+405
+00:20:12,278 --> 00:20:15,713
+there is this feature where you can use this mechanism to
+
+406
+00:20:15,715 --> 00:20:19,417
+decide that certain views exist in certain places, okay?
+
+407
+00:20:19,419 --> 00:20:21,919
+And you're gonna see this is gonna automatically happen
+
+408
+00:20:21,921 --> 00:20:24,855
+when we start putting views in different kinds of views,
+
+409
+00:20:24,857 --> 00:20:26,591
+vertical stack views and things like that.
+
+410
+00:20:26,593 --> 00:20:29,193
+You'll see that this will automatically be happening for
+
+411
+00:20:29,195 --> 00:20:32,930
+us. So I'm gonna undo here, get that thing back, okay?
+
+412
+00:20:32,932 --> 00:20:38,302
+So let's get this back in our width any horizontal compact.
+
+413
+00:20:38,304 --> 00:20:38,769
+So that's not gonna work.
+
+414
+00:20:38,771 --> 00:20:42,807
+So what could we do instead? All right, well, since I
+
+415
+00:20:42,809 --> 00:20:46,310
+know I can't have this thing inside this stack view, right,
+
+416
+00:20:46,312 --> 00:20:49,380
+working, I'm gonna have to pull it out. I'm gonna have to
+
+417
+00:20:49,382 --> 00:20:51,916
+pull all of these things out of the stack view. So let's
+
+418
+00:20:51,918 --> 00:20:55,353
+just do that, okay? I'm just going to move this thing. And
+
+419
+00:20:55,355 --> 00:20:57,588
+actually, you know what? I'm gonna do all this in any any.
+
+420
+00:20:57,590 --> 00:21:01,158
+Because when I think about it, I can't have this here in any
+
+421
+00:21:01,160 --> 00:21:04,195
+any, otherwise, it's always gonna appear there.
+
+422
+00:21:04,197 --> 00:21:07,531
+Okay, in other ones, and I don't want it there,
+
+423
+00:21:07,533 --> 00:21:08,466
+on the top in compact, so
+
+424
+00:21:08,468 --> 00:21:12,036
+I'm gonna take this whole stack view right here, okay?
+
+425
+00:21:12,038 --> 00:21:14,905
+This one, the one that I don't want here, and
+
+426
+00:21:14,907 --> 00:21:18,976
+I'm going to just delete it, hit cut to delete it. Okay, so
+
+427
+00:21:18,978 --> 00:21:21,779
+now in the any any, that means on all size classes,
+
+428
+00:21:21,781 --> 00:21:25,616
+that thing is gone. It's not there. And what's more,
+
+429
+00:21:25,618 --> 00:21:28,252
+I'm going to take this stack view right here, and
+
+430
+00:21:28,254 --> 00:21:29,687
+I'm gonna pull the things out of it.
+
+431
+00:21:29,689 --> 00:21:33,491
+So for example, I'm gonna pull the display out of it, okay,
+
+432
+00:21:33,493 --> 00:21:36,460
+I'm gonna take this inner stack view right here and
+
+433
+00:21:36,462 --> 00:21:39,897
+pull it out, leaving this empty stack view, okay? Which
+
+434
+00:21:39,899 --> 00:21:43,668
+we don't even need anymore, so I'm gonna delete it, okay?
+
+435
+00:21:43,670 --> 00:21:48,539
+So now, this is all part of all size classes,
+
+436
+00:21:48,541 --> 00:21:52,643
+right? This is in all size classes. In the compact case,
+
+437
+00:21:52,645 --> 00:21:57,048
+it's this with buttons down here. And in the regular case,
+
+438
+00:21:57,050 --> 00:22:00,851
+it's this with some buttons along here. We all agree with
+
+439
+00:22:00,853 --> 00:22:04,789
+that? So in any any, we always wanna build as much of the UI
+
+440
+00:22:04,791 --> 00:22:08,859
+as we can that we know applies to all size classes, okay?
+
+441
+00:22:08,861 --> 00:22:11,696
+So this one, we know that this is gonna go
+
+442
+00:22:11,698 --> 00:22:14,732
+in the corner down here, right? And
+
+443
+00:22:14,734 --> 00:22:19,103
+we also know that this goes up at the top,
+
+444
+00:22:19,105 --> 00:22:23,107
+right? And we can even do the constraints here, or at
+
+445
+00:22:23,109 --> 00:22:26,877
+least some of the constraints. I'm gonna go down here and
+
+446
+00:22:26,879 --> 00:22:30,381
+reset all of our constraints by picking Clear Constraints
+
+447
+00:22:30,383 --> 00:22:33,084
+in the same place you Update Frames and all that.
+
+448
+00:22:33,086 --> 00:22:36,120
+I'm gonna Clear Constraints to get all these constraints out
+
+449
+00:22:36,122 --> 00:22:38,656
+of here, and now I'm gonna put new constraints in.
+
+450
+00:22:38,658 --> 00:22:41,258
+Now this part is exactly what you're used to,
+
+451
+00:22:41,260 --> 00:22:44,128
+I'm just going to Ctrl + Drag to the edge here and
+
+452
+00:22:44,130 --> 00:22:47,832
+hook up that trailing space. I'm gonna Ctrl + Drag to
+
+453
+00:22:47,834 --> 00:22:50,801
+the bottom down here, okay, at the bottom.
+
+454
+00:22:50,803 --> 00:22:55,573
+I'm gonna, for the display up here, Ctrl + Drag to the top,
+
+455
+00:22:55,575 --> 00:22:58,142
+Ctrl + Drag to the leading edge, okay?
+
+456
+00:22:58,144 --> 00:23:03,013
+Ctrl + Drag to the right edge, okay? So look, no errors,
+
+457
+00:23:03,015 --> 00:23:06,016
+no auto-layout issues over here in my document outline.
+
+458
+00:23:06,018 --> 00:23:08,919
+No little yellow thing, so everything is perfectly fine.
+
+459
+00:23:08,921 --> 00:23:10,588
+I can even run right now. Let's run and
+
+460
+00:23:10,590 --> 00:23:17,495
+see what happens. Okay, so here it is in portrait. Okay,
+
+461
+00:23:17,497 --> 00:23:20,398
+it's doing what we want, which is this down in the corner,
+
+462
+00:23:20,400 --> 00:23:20,998
+this up here. Of course,
+
+463
+00:23:21,000 --> 00:23:23,868
+I haven't added the buttons that I want right here.
+
+464
+00:23:23,870 --> 00:23:26,470
+And how about in landscape? It's working here too.
+
+465
+00:23:26,472 --> 00:23:29,140
+Of course, I haven't added the buttons here, all right?
+
+466
+00:23:29,142 --> 00:23:31,275
+So it's putting the display in the right space.
+
+467
+00:23:31,277 --> 00:23:33,010
+It's keeping these buttons over in the corner.
+
+468
+00:23:33,012 --> 00:23:37,882
+So this is great, okay? It's all working fine so far.
+
+469
+00:23:37,884 --> 00:23:41,385
+Now let's go and fix the two size classes. So let's start
+
+470
+00:23:41,387 --> 00:23:44,422
+with compact height, okay. In compact type, actually let's
+
+471
+00:23:44,424 --> 00:23:46,290
+start with regular height cuz it's the similar,
+
+472
+00:23:46,292 --> 00:23:47,725
+the most similar to the other one we have.
+
+473
+00:23:47,727 --> 00:23:50,227
+So here's regular height. Unfortunately, it's so
+
+474
+00:23:50,229 --> 00:23:52,730
+big I have to scroll up and down, but in this one,
+
+475
+00:23:52,732 --> 00:23:55,266
+we basically just want to put, take these things.
+
+476
+00:23:55,268 --> 00:23:57,435
+I just pasted them back, I had cut them before, and
+
+477
+00:23:57,437 --> 00:24:01,972
+we just to put it right here. Okay, right along the top.
+
+478
+00:24:01,974 --> 00:24:03,274
+Now the problem here though,
+
+479
+00:24:03,276 --> 00:24:06,243
+is that we need to put some constraints to make it be
+
+480
+00:24:06,245 --> 00:24:10,114
+the same as the rest of those buttons in the stack view.
+
+481
+00:24:10,116 --> 00:24:13,317
+Right? So, how are we gonna do that? Well there's a couple
+
+482
+00:24:13,319 --> 00:24:14,752
+of different ways that we can do it.
+
+483
+00:24:14,754 --> 00:24:16,954
+1. Is with these menus down here I told you about so
+
+484
+00:24:16,956 --> 00:24:22,126
+I'm gonna select this one so these two views are selected,
+
+485
+00:24:22,128 --> 00:24:24,228
+this whole big stack view here, and
+
+486
+00:24:24,230 --> 00:24:26,163
+this stack view here. And we're gonna go down here, and
+
+487
+00:24:26,165 --> 00:24:29,967
+we're gonna look at these alignment and pin menus. So
+
+488
+00:24:29,969 --> 00:24:33,938
+here's an alignment one. We can do thing here to, for
+
+489
+00:24:33,940 --> 00:24:37,842
+example, align the edges of these things. So it might make
+
+490
+00:24:37,844 --> 00:24:41,412
+a lot of sense to take this guy and have his leading and
+
+491
+00:24:41,414 --> 00:24:44,949
+trailing edges aligned with this one, right? So
+
+492
+00:24:44,951 --> 00:24:47,284
+let's try that I'm just going to turn on leading and
+
+493
+00:24:47,286 --> 00:24:48,986
+trailing edges here to align those.
+
+494
+00:24:48,988 --> 00:24:51,155
+I could also align things like the horizontal center,
+
+495
+00:24:51,157 --> 00:24:55,926
+vertical centers, I could horizontally in the containers
+
+496
+00:24:55,928 --> 00:24:58,929
+centered in the container etcetera. But I'm going to do
+
+497
+00:24:58,931 --> 00:25:01,799
+it, but also notice it's going to align the leading edges
+
+498
+00:25:01,801 --> 00:25:05,369
+with no delta. It's just like right along the leading edge.
+
+499
+00:25:05,371 --> 00:25:07,705
+So I'm going to add those two constraints. Okay.
+
+500
+00:25:07,707 --> 00:25:08,439
+It's added the constraints.
+
+501
+00:25:08,441 --> 00:25:11,275
+Now what's interesting here is now these
+
+502
+00:25:11,277 --> 00:25:14,545
+constraint complaints are red not yellow red.
+
+503
+00:25:14,547 --> 00:25:17,381
+And why is that? Okay, let's go over here and look at this.
+
+504
+00:25:17,383 --> 00:25:20,217
+And it says vertical position is ambiguous for
+
+505
+00:25:20,219 --> 00:25:24,488
+stack view, okay? It says it over here as well in my docu-,
+
+506
+00:25:24,490 --> 00:25:24,655
+no-, outline.
+
+507
+00:25:24,657 --> 00:25:28,125
+It's saying this guy has no vertical position to find. And
+
+508
+00:25:28,127 --> 00:25:30,995
+in fact, that's true. There, it's just floating there.
+
+509
+00:25:30,997 --> 00:25:33,063
+There's nothing that says where it is vertically.
+
+510
+00:25:33,065 --> 00:25:34,598
+We've defined where it is horizontally,
+
+511
+00:25:34,600 --> 00:25:36,834
+but we haven't defined where it is vertically. So
+
+512
+00:25:36,836 --> 00:25:40,838
+to do that, I'm gonna re-, go back to our Ctrl-drag, okay?
+
+513
+00:25:40,840 --> 00:25:43,107
+So I'm just gonna Ctrl-drag from this one to this one,
+
+514
+00:25:43,109 --> 00:25:46,977
+and this time, I'm gonna put Vertical spacing, okay?
+
+515
+00:25:46,979 --> 00:25:50,114
+Now he's got vertical spacing, so now his problem's right
+
+516
+00:25:50,116 --> 00:25:53,684
+here, are just the frames are not, are wrong, okay. And
+
+517
+00:25:53,686 --> 00:25:56,954
+again, I could pick up this thing right here and try and
+
+518
+00:25:56,956 --> 00:26:00,324
+put it there. I can take this, put it down here, you know,
+
+519
+00:26:00,326 --> 00:26:01,125
+try and move things back or
+
+520
+00:26:01,127 --> 00:26:04,161
+I could do update frames, but we're not done yet
+
+521
+00:26:04,163 --> 00:26:08,299
+either with this. Because there we fix the width
+
+522
+00:26:08,301 --> 00:26:11,268
+to be the same width as this cuz we align the edges but
+
+523
+00:26:11,270 --> 00:26:14,572
+what about the height, okay. We need the height of this row
+
+524
+00:26:14,574 --> 00:26:17,241
+to be exactly the same height as all these rows. And
+
+525
+00:26:17,243 --> 00:26:21,378
+it's perfectly legal for us to do that by going control drag,
+
+526
+00:26:21,380 --> 00:26:24,515
+okay, from this guy down to this guy. And
+
+527
+00:26:24,517 --> 00:26:28,118
+then saying that we want them to be equal heights.
+
+528
+00:26:28,120 --> 00:26:31,589
+Okay? See that Equal Heights? Okay, so
+
+529
+00:26:31,591 --> 00:26:36,060
+now they're gonna be equal heights. So you see how we've
+
+530
+00:26:36,062 --> 00:26:38,996
+put this thing basically and really stack view does a very
+
+531
+00:26:38,998 --> 00:26:41,131
+similar thing to what we're doing right here, okay,.
+
+532
+00:26:41,133 --> 00:26:43,367
+When you said all things like fill and fill equally,
+
+533
+00:26:43,369 --> 00:26:45,502
+it's making equal heights and all that stuff.
+
+534
+00:26:45,504 --> 00:26:45,736
+But unfortunately,
+
+535
+00:26:45,738 --> 00:26:49,206
+we had to move this stack view out because it doesn't exist,
+
+536
+00:26:49,208 --> 00:26:52,843
+in some of the size classes. All right, so
+
+537
+00:26:52,845 --> 00:26:53,143
+we're not quite done,
+
+538
+00:26:53,145 --> 00:26:55,713
+because we still want this thing to fill the whole space,
+
+539
+00:26:55,715 --> 00:26:59,116
+right? We want this nice block that we've built to fill this
+
+540
+00:26:59,118 --> 00:27:02,219
+whole space. So I'm gonna do exact same thing we did
+
+541
+00:27:02,221 --> 00:27:05,389
+before which is control drag okay from the edge of this.
+
+542
+00:27:05,391 --> 00:27:08,025
+And make it leading space, right be fixed here.
+
+543
+00:27:08,027 --> 00:27:10,728
+I'm gonna double click on it, try to make it standard.
+
+544
+00:27:10,730 --> 00:27:15,332
+That's not available so I'll go zero. Okay, makes it wide.
+
+545
+00:27:15,334 --> 00:27:15,666
+And same thing here.
+
+546
+00:27:15,668 --> 00:27:17,134
+I wanna make the distance between here and
+
+547
+00:27:17,136 --> 00:27:20,838
+here be a standard distance so let's do that. Control drag.
+
+548
+00:27:20,840 --> 00:27:24,308
+And down to here and this is the vertical spacing right
+
+549
+00:27:24,310 --> 00:27:27,544
+here. Okay, which makes this beam. Double click on that
+
+550
+00:27:27,546 --> 00:27:30,481
+and of course when we click on it it's also showing over here
+
+551
+00:27:30,483 --> 00:27:31,382
+not just in this little window, but
+
+552
+00:27:31,384 --> 00:27:35,285
+it's over here as well. And here standard is available.
+
+553
+00:27:35,287 --> 00:27:38,689
+Okay, so we can do standard height. Okay, so
+
+554
+00:27:38,691 --> 00:27:42,393
+this looks pretty good. In the regular height situation,
+
+555
+00:27:42,395 --> 00:27:45,129
+we've got four wide and five high.
+
+556
+00:27:45,131 --> 00:27:52,703
+So let's go into run, see if it worked. All right,
+
+557
+00:27:52,705 --> 00:27:54,371
+here it is, four wide and five high. Okay,
+
+558
+00:27:54,373 --> 00:27:58,208
+let's go to landscape. Perfect we don't want four wide and
+
+559
+00:27:58,210 --> 00:28:00,844
+five high there so we're just getting the any any
+
+560
+00:28:00,846 --> 00:28:05,516
+situation right back to here and is back. Okay so
+
+561
+00:28:05,518 --> 00:28:08,318
+it's working fine. And now, what we need to do is the same
+
+562
+00:28:08,320 --> 00:28:11,488
+thing we just did for regular for compact. Okay so
+
+563
+00:28:11,490 --> 00:28:15,426
+let's go to that we do that by going to this little nine grid
+
+564
+00:28:15,428 --> 00:28:18,862
+here we're going up to compact height any width. And
+
+565
+00:28:18,864 --> 00:28:22,099
+here we want that same thing right here,
+
+566
+00:28:22,101 --> 00:28:24,435
+but this time this has to be vertical. Okay.
+
+567
+00:28:24,437 --> 00:28:26,870
+So I'm just gonna go to the stack views inspector.
+
+568
+00:28:26,872 --> 00:28:27,871
+Here's the stack view inspecting it.
+
+569
+00:28:27,873 --> 00:28:31,275
+And I'm gonna make it vertical this time. Okay?
+
+570
+00:28:31,277 --> 00:28:34,278
+And I want to put it along here. Okay?
+
+571
+00:28:34,280 --> 00:28:36,847
+So I'm gonna use control drag to do it this time and
+
+572
+00:28:36,849 --> 00:28:40,784
+I can actually set up most of this using shift in here.
+
+573
+00:28:40,786 --> 00:28:43,420
+I think I told you before when this comes up You can actually
+
+574
+00:28:43,422 --> 00:28:47,024
+click multiple things, okay, with shift. So I can make it,
+
+575
+00:28:47,026 --> 00:28:51,495
+for example, the horizontal spacing, the top, the bottom.
+
+576
+00:28:51,497 --> 00:28:53,697
+I can line those all up. Okay? Now,
+
+577
+00:28:53,699 --> 00:28:55,899
+I don't actually want this to be equal widths, because I
+
+578
+00:28:55,901 --> 00:28:58,335
+don't want this to be the same width as this whole thing.
+
+579
+00:28:58,337 --> 00:29:00,170
+So, I'm going to have to do equal widths,
+
+580
+00:29:00,172 --> 00:29:03,540
+by making this the same width as one of these buttons. Okay.
+
+581
+00:29:03,542 --> 00:29:06,110
+So we do that to set those. So I'm gonna Control drag
+
+582
+00:29:06,112 --> 00:29:07,711
+from here to one of these buttons and
+
+583
+00:29:07,713 --> 00:29:11,181
+do Equal Widths, okay, so that this will be the same width.
+
+584
+00:29:11,183 --> 00:29:14,718
+Of course, we've got this whole frames are wrong,
+
+585
+00:29:14,720 --> 00:29:16,086
+so this time, just to be different,
+
+586
+00:29:16,088 --> 00:29:17,955
+I'll go up here and click one of these and
+
+587
+00:29:17,957 --> 00:29:22,292
+apply to all views in container. Fix it. Okay. So
+
+588
+00:29:22,294 --> 00:29:24,194
+now, we've got it there where we want it. Again,
+
+589
+00:29:24,196 --> 00:29:28,465
+same thing here. We want to put a vertical spacing
+
+590
+00:29:28,467 --> 00:29:32,970
+constraint here. Okay, we'll do standard if available,
+
+591
+00:29:32,972 --> 00:29:37,841
+yep. Okay, and same thing over here. We will put this to
+
+592
+00:29:37,843 --> 00:29:43,113
+the leading edge and again, no standard. Sorry,
+
+593
+00:29:43,115 --> 00:29:49,186
+so we'll do zero. Okay, there we go. We've got five wide,
+
+594
+00:29:49,188 --> 00:29:53,590
+four high in this compact situation, all right?
+
+595
+00:29:53,592 --> 00:29:59,596
+So let's run that. Okay,
+
+596
+00:29:59,598 --> 00:30:02,499
+here it is, portrait, looking good, landscape,
+
+597
+00:30:02,501 --> 00:30:07,037
+looking good. Okay,
+
+598
+00:30:07,606 --> 00:30:11,809
+any questions about that? Make sense? All right, now I wanna
+
+599
+00:30:11,811 --> 00:30:15,012
+show you a couple of things about what we've wrought here.
+
+600
+00:30:15,014 --> 00:30:18,182
+One thing is let's look at this stack view right here.
+
+601
+00:30:18,184 --> 00:30:21,285
+Look at it's installed state down there. See that?
+
+602
+00:30:21,287 --> 00:30:25,823
+It's not installed in any any. It's only installed in any
+
+603
+00:30:25,825 --> 00:30:28,559
+with compact height. That's exactly what we want. So
+
+604
+00:30:28,561 --> 00:30:31,862
+see how it automatically did this when we pasted this one
+
+605
+00:30:31,864 --> 00:30:35,132
+in? Any time we add a view to the size class, it's going to
+
+606
+00:30:35,134 --> 00:30:39,036
+automatically do this install magic for you here. Okay?
+
+607
+00:30:39,038 --> 00:30:42,472
+Now another think I told you was that the document outline
+
+608
+00:30:42,474 --> 00:30:44,942
+is kind of your constraint central. Okay?
+
+609
+00:30:44,944 --> 00:30:47,711
+So let's understand what the document outline is telling us
+
+610
+00:30:47,713 --> 00:30:52,649
+about constraints here okay? Here's all our constraints and
+
+611
+00:30:52,651 --> 00:30:54,985
+notice that some of them are grayed out and
+
+612
+00:30:54,987 --> 00:30:57,654
+some of them are dark blue. See that?
+
+613
+00:30:57,656 --> 00:31:00,157
+Well, as you might imagine the grayed out ones
+
+614
+00:31:00,159 --> 00:31:03,327
+are constraints that only apply in other size classes.
+
+615
+00:31:03,329 --> 00:31:06,363
+That don't apply here. So since this is any width
+
+616
+00:31:06,365 --> 00:31:09,499
+compact height, we're not seeing any of the constraints
+
+617
+00:31:09,501 --> 00:31:12,870
+that have to do with any width regular heigth.
+
+618
+00:31:12,872 --> 00:31:13,136
+if I switch over okay watch these carefully right here.
+
+619
+00:31:13,138 --> 00:31:14,972
+Okay? But,
+
+620
+00:31:14,974 --> 00:31:17,174
+You're gonna see some of these are gonna go like right and
+
+621
+00:31:17,176 --> 00:31:19,309
+some of these are gonna go dark blue. Okay.
+
+622
+00:31:19,311 --> 00:31:23,780
+So I'm gonna switch down here to any width, regular height.
+
+623
+00:31:23,782 --> 00:31:25,215
+Which has different constraints.
+
+624
+00:31:25,217 --> 00:31:27,651
+You see how this changed? So you can always tell
+
+625
+00:31:27,653 --> 00:31:31,421
+which ones apply to you, okay, by which ones are dark.
+
+626
+00:31:31,423 --> 00:31:35,025
+Now another thing you wanna do when you are using constraints
+
+627
+00:31:35,027 --> 00:31:39,296
+is to go magic number hunting. Okay. You want to look at
+
+628
+00:31:39,298 --> 00:31:41,732
+these constraints and hunt for magic numbers and
+
+629
+00:31:41,734 --> 00:31:45,802
+get rid of them. Unless you really mean to have one. Okay,
+
+630
+00:31:45,804 --> 00:31:49,640
+very important. So in here let's find some magic numbers.
+
+631
+00:31:49,642 --> 00:31:53,610
+Okay. Here's one, 8, here's 282, 82,
+
+632
+00:31:53,612 --> 00:31:58,181
+88 and 20. So those are all of our magic numbers right there.
+
+633
+00:31:58,183 --> 00:32:01,118
+First thing you wanna do is, only you can only hunt for
+
+634
+00:32:01,120 --> 00:32:04,321
+magic numbers in the ones that are dark blue. Okay,
+
+635
+00:32:04,323 --> 00:32:08,725
+you can£t, these 282 is in some other constraint in some
+
+636
+00:32:08,727 --> 00:32:12,396
+other size class, so just ignore it here. It£s like
+
+637
+00:32:12,398 --> 00:32:15,966
+you£re not even seeing it. But this eight right here, okay?
+
+638
+00:32:15,968 --> 00:32:19,236
+This is the one we do need to look at, okay? Cuz we just
+
+639
+00:32:19,238 --> 00:32:21,905
+don't want this magic number here. So what is this one?
+
+640
+00:32:21,907 --> 00:32:25,976
+This is the display's top to the top layout guide's bottom.
+
+641
+00:32:25,978 --> 00:32:28,812
+It's this one right here. Okay, so that's eight.
+
+642
+00:32:28,814 --> 00:32:32,783
+Okay, let's go ahead and inspect this. We're inspecting
+
+643
+00:32:32,785 --> 00:32:35,452
+this constraint. And you can see that it's 8 and
+
+644
+00:32:35,454 --> 00:32:38,522
+really what you wanna change that to is standard value.
+
+645
+00:32:38,524 --> 00:32:40,590
+And when you change that to standard value, look.
+
+646
+00:32:40,592 --> 00:32:43,894
+The eight's gone, okay? Now you might ask,
+
+647
+00:32:43,896 --> 00:32:45,362
+where did that eight come in in the first place?
+
+648
+00:32:45,364 --> 00:32:48,899
+Well probably we dragged that thing to, and used a blue line
+
+649
+00:32:48,901 --> 00:32:52,736
+to do, to put it there. And it was eight points from the top.
+
+650
+00:32:52,738 --> 00:32:54,871
+And so when we added constraint,
+
+651
+00:32:54,873 --> 00:32:58,075
+it added it as eight. But what we really wanted was standard
+
+652
+00:32:58,077 --> 00:33:00,510
+distance. Okay, how about this one right here?
+
+653
+00:33:00,512 --> 00:33:03,313
+This is the stack view's top to the stack view bottom.
+
+654
+00:33:03,315 --> 00:33:06,984
+That's this one right here. Okay, uh-oh, [LAUGH] that one
+
+655
+00:33:06,986 --> 00:33:11,655
+is a magic number, but that's the wrong magic number.
+
+656
+00:33:11,657 --> 00:33:14,558
+Because what is the distance in all these other things.
+
+657
+00:33:14,560 --> 00:33:16,860
+In this stack view, what's the spacing?
+
+658
+00:33:16,862 --> 00:33:20,464
+It's ten, remember that? Okay? So, we want the space in
+
+659
+00:33:20,466 --> 00:33:24,001
+between these two stack views to also be ten. Okay? So
+
+660
+00:33:24,003 --> 00:33:26,169
+this constant wants to be a magic number and
+
+661
+00:33:26,171 --> 00:33:29,406
+it wants to be ten, and it truly is a magic number. Okay?
+
+662
+00:33:29,408 --> 00:33:30,140
+So we want that magic number,
+
+663
+00:33:30,142 --> 00:33:33,377
+because we intended it to be a magic number.
+
+664
+00:33:33,379 --> 00:33:36,179
+All right? How about this one? 20.
+
+665
+00:33:36,181 --> 00:33:38,782
+Okay, stack view bottom right here. That one also,
+
+666
+00:33:38,784 --> 00:33:42,386
+we probably don't want that to be a non-standard value, so
+
+667
+00:33:42,388 --> 00:33:45,689
+I'm just gonna pick Standard Value, okay?
+
+668
+00:33:45,691 --> 00:33:49,726
+And we'll do the same thing in our other size classes,
+
+669
+00:33:49,728 --> 00:33:52,195
+so we'll go here. This one right here has
+
+670
+00:33:52,197 --> 00:33:54,297
+this Stack View.leading to Stack View.trailing,
+
+671
+00:33:54,299 --> 00:33:56,600
+that's right here, see it highlighted right there?
+
+672
+00:33:56,602 --> 00:34:00,437
+That wants to be ten. What else have we got here?
+
+673
+00:34:00,439 --> 00:34:02,773
+Anything else? No? All the rest of these are good?
+
+674
+00:34:02,775 --> 00:34:05,842
+And don't forget any any when you do these things.
+
+675
+00:34:05,844 --> 00:34:07,044
+So go to any any. Now it looks good.
+
+676
+00:34:07,046 --> 00:34:11,248
+They're all good. Okay, so I have no magic numbers now. So
+
+677
+00:34:11,250 --> 00:34:13,083
+my UI is all nice and arranged.
+
+678
+00:34:13,085 --> 00:34:15,118
+Now why do we wanna get rid of these magic numbers?
+
+679
+00:34:15,120 --> 00:34:18,889
+Because the built-in numbers, the standard numbers,
+
+680
+00:34:18,891 --> 00:34:20,090
+are gonna be the same in every single app,
+
+681
+00:34:20,092 --> 00:34:22,492
+not just your app. So when people are running other apps,
+
+682
+00:34:22,494 --> 00:34:25,028
+things are gonna look similar, similar spacing, etc. And
+
+683
+00:34:25,030 --> 00:34:27,564
+that's what you want, cuz you want a consistent experience,
+
+684
+00:34:27,566 --> 00:34:31,001
+not just inside your own app, but within you know,
+
+685
+00:34:31,003 --> 00:34:36,940
+two other apps, as well. What else did I want to show here?
+
+686
+00:34:36,942 --> 00:34:41,945
+We talked about insufficient constraints,
+
+687
+00:34:41,947 --> 00:34:47,084
+we talked about, okay. Conflicting constraints.
+
+688
+00:34:47,086 --> 00:34:49,086
+Sometimes you'll have conflicting constraints, like
+
+689
+00:34:49,088 --> 00:34:51,488
+two different constraints that are trying to constrain the
+
+690
+00:34:51,490 --> 00:34:55,525
+same two things and they'll be across size classes.
+
+691
+00:34:55,527 --> 00:34:58,061
+Those can be sometimes hard to find. Okay,
+
+692
+00:34:58,063 --> 00:35:00,497
+let's say I have my calculator app here. Okay,
+
+693
+00:35:00,499 --> 00:35:02,699
+I'm looking at any any here and I go away for
+
+694
+00:35:02,701 --> 00:35:05,268
+a few months and I come back and I look at this, and
+
+695
+00:35:05,270 --> 00:35:08,305
+I forget the fact that I had these other side classes over
+
+696
+00:35:08,307 --> 00:35:12,042
+here. And I look at this and I'm like, my gosh, I forgot to
+
+697
+00:35:12,044 --> 00:35:15,712
+control drag this up to the top. No, I better do that.
+
+698
+00:35:15,714 --> 00:35:18,381
+Okay vertical spacing and I better put this thing over
+
+699
+00:35:18,383 --> 00:35:22,919
+here my lead spacing. Yeah, well have to fix that let's
+
+700
+00:35:22,921 --> 00:35:27,958
+make this be zero and we'll fix this and we'll
+
+701
+00:35:27,960 --> 00:35:32,529
+make this one be a standard. Okay whew, I fixed it. Okay,
+
+702
+00:35:32,531 --> 00:35:36,500
+everything's good. Look I have no conflicting constraints.
+
+703
+00:35:36,502 --> 00:35:38,435
+I must have fixed my app, it's in good shape.
+
+704
+00:35:38,437 --> 00:35:41,805
+So let's go ahead and run it. I'm sure it looks really good.
+
+705
+00:35:45,844 --> 00:35:49,980
+What the, okay, that one's okay but what a mess.
+
+706
+00:35:49,982 --> 00:35:51,014
+What the heck happened here? And look,
+
+707
+00:35:51,016 --> 00:35:53,083
+I'm getting all kinds of warnings on my console,
+
+708
+00:35:53,085 --> 00:35:56,853
+conflicting constraints. You know what, so I've totally
+
+709
+00:35:56,855 --> 00:35:59,623
+broken the world, even though when I go back into my app,
+
+710
+00:35:59,625 --> 00:36:02,726
+it looks like everything fine. That's because when you change
+
+711
+00:36:02,728 --> 00:36:04,861
+constraints, especially when you change any any,
+
+712
+00:36:04,863 --> 00:36:08,265
+you wanna go take a look at your other size classes. Now,
+
+713
+00:36:08,267 --> 00:36:11,768
+when we look at that. [SOUND] Two views are horizontally
+
+714
+00:36:11,770 --> 00:36:15,739
+ambiguous. Three conflicting constraints. If we go down
+
+715
+00:36:15,741 --> 00:36:20,477
+to this one down here, we got four conflicting constraints.
+
+716
+00:36:20,479 --> 00:36:23,580
+When you have conflicting constraints, this little
+
+717
+00:36:23,582 --> 00:36:26,616
+yellow thing up here will actually turn red, okay? And
+
+718
+00:36:26,618 --> 00:36:28,952
+then you can click on that and see all the conflicts.
+
+719
+00:36:28,954 --> 00:36:30,687
+So these things are all conflicting, and
+
+720
+00:36:30,689 --> 00:36:32,322
+of course these conflict, okay?
+
+721
+00:36:32,324 --> 00:36:33,356
+We know why these conflict.
+
+722
+00:36:33,358 --> 00:36:37,394
+Because in any any, we've fixed the edges of this stack
+
+723
+00:36:37,396 --> 00:36:40,797
+view to some things. And in the other size classes, we've
+
+724
+00:36:40,799 --> 00:36:45,468
+also fixed the edges of these, this thing to other things.
+
+725
+00:36:45,470 --> 00:36:49,272
+Okay, like to this thing over here, for example. So
+
+726
+00:36:49,274 --> 00:36:54,744
+be careful about that when you have, when you're putting your
+
+727
+00:36:54,746 --> 00:36:57,080
+constraints in there, it might look like everything's fine,
+
+728
+00:36:57,082 --> 00:36:58,248
+but you could have conflicts across.
+
+729
+00:36:58,250 --> 00:37:03,186
+So I'm gonna undo all this. To go back here. All right,
+
+730
+00:37:03,188 --> 00:37:06,590
+another thing I want to show you is
+
+731
+00:37:06,592 --> 00:37:09,159
+just to kind of prove to you what we were talking
+
+732
+00:37:09,161 --> 00:37:12,229
+about with the compact width being on some platforms
+
+733
+00:37:12,231 --> 00:37:15,232
+not others, I'm actually gonna go up here to a different one
+
+734
+00:37:15,234 --> 00:37:18,802
+which is this guy right here. This is compact width
+
+735
+00:37:18,804 --> 00:37:21,905
+any height. That's what this square is. I'm gonna click on
+
+736
+00:37:21,907 --> 00:37:23,406
+that. So here's compact width any height.
+
+737
+00:37:23,408 --> 00:37:25,742
+Notice that it looks like any any because we haven't done
+
+738
+00:37:25,744 --> 00:37:28,845
+anything special in here. And I'm actually gonna drag
+
+739
+00:37:28,847 --> 00:37:32,115
+a button out. Okay, here's a button. I'm gonna drag it.
+
+740
+00:37:32,117 --> 00:37:34,384
+I'm gonna call this button, actually, we'll just do it
+
+741
+00:37:34,386 --> 00:37:36,920
+with a label. We don't need a button, this label here,
+
+742
+00:37:36,922 --> 00:37:40,323
+and we'll call this thing Compact Width.
+
+743
+00:37:40,325 --> 00:37:42,659
+Cuz we're putting this in the compact width any,
+
+744
+00:37:42,661 --> 00:37:46,830
+right? Then I'll even put it right here in the middle.
+
+745
+00:37:46,832 --> 00:37:49,032
+I'll do another control drag so you can see constraints.
+
+746
+00:37:49,034 --> 00:37:52,402
+So, I'm gonna control drag to my super view, okay, and
+
+747
+00:37:52,404 --> 00:37:56,806
+say center this vertically in the container. So
+
+748
+00:37:56,808 --> 00:37:58,742
+now it's gonna center this. So now when I run,
+
+749
+00:37:58,744 --> 00:38:03,346
+okay, any time I'm appearing on a compact width situation,
+
+750
+00:38:03,348 --> 00:38:04,547
+it's gonna say compact width. So
+
+751
+00:38:04,549 --> 00:38:07,250
+sure enough, this one, that's compact width, right?
+
+752
+00:38:07,252 --> 00:38:09,452
+We know iPhone 6 and portrait is compact width.
+
+753
+00:38:09,454 --> 00:38:13,056
+And here, this is also compact width cuz this is iPhone 6 not
+
+754
+00:38:13,058 --> 00:38:17,427
+6 Plus, iPhone 6 in landscape is also compact width, okay?
+
+755
+00:38:17,429 --> 00:38:19,329
+Now we know this is compact height, because look,
+
+756
+00:38:19,331 --> 00:38:23,633
+our times divide plus minus are not along the sides so
+
+757
+00:38:23,635 --> 00:38:23,967
+it's compact height. And
+
+758
+00:38:23,969 --> 00:38:26,836
+we know this is regular height because those things are on
+
+759
+00:38:26,838 --> 00:38:30,440
+the top. Okay, now let's go look at this on 6 Plus.
+
+760
+00:38:38,583 --> 00:38:42,719
+All right, so 6 Plus portrait is compact width,
+
+761
+00:38:42,721 --> 00:38:46,089
+okay. In landscape, not compact width.
+
+762
+00:38:46,091 --> 00:38:51,261
+It's regular width. All right? But this height is the same.
+
+763
+00:38:51,263 --> 00:38:54,397
+This is compact height because these are not along the top.
+
+764
+00:38:54,399 --> 00:38:58,068
+And this is regular height because these are the top.
+
+765
+00:38:58,270 --> 00:39:01,371
+Okay, let's take a look at iPad.
+
+766
+00:39:12,417 --> 00:39:16,186
+All right, so iPad, not compact width in portrait,
+
+767
+00:39:16,188 --> 00:39:20,423
+also not compact width in landscape. And it's
+
+768
+00:39:20,425 --> 00:39:24,194
+regular in height because, see these buttons on the top?
+
+769
+00:39:24,196 --> 00:39:27,931
+In landscape and it's regular in height in portrait as well.
+
+770
+00:39:27,933 --> 00:39:31,134
+So regular in both directions. Both landscape and portrait.
+
+771
+00:39:31,136 --> 00:39:32,369
+Okay now I'm gonna do something here,
+
+772
+00:39:32,371 --> 00:39:34,971
+I'm gonna go back to the calculator here and
+
+773
+00:39:34,973 --> 00:39:38,575
+I'm gonna put it in a split view. Okay?
+
+774
+00:39:38,577 --> 00:39:40,610
+So this is my calculator here, I'm gonna pop this thing into
+
+775
+00:39:40,612 --> 00:39:43,613
+split view,so let's grab a split view. I'm gonna make
+
+776
+00:39:43,615 --> 00:39:45,915
+this calculator be the master of the split view.
+
+777
+00:39:45,917 --> 00:39:50,186
+There is the split view. I'm to, delete this and this.
+
+778
+00:39:50,188 --> 00:39:53,189
+And I'm just gonna make this be the entry point, right?
+
+779
+00:39:53,191 --> 00:39:55,325
+This split view is gonna be the entry point. And then I'll
+
+780
+00:39:55,327 --> 00:39:59,763
+make this be the master. Okay? So now let's run on iPad and
+
+781
+00:39:59,765 --> 00:40:05,402
+see what we got. Okay.
+
+782
+00:40:05,404 --> 00:40:08,738
+Here we go. This is portrait. Here's landscape.
+
+783
+00:40:08,740 --> 00:40:12,142
+Okay notice or my calculator is compact width
+
+784
+00:40:12,144 --> 00:40:14,711
+when it's even if it's on iPad. But it's still compact
+
+785
+00:40:14,713 --> 00:40:17,180
+width because it's in the master here. Here's a really
+
+786
+00:40:17,182 --> 00:40:20,016
+interesting one. What happens if I'm in portrait and
+
+787
+00:40:20,018 --> 00:40:25,588
+I pull the master out? Not compact width. Okay
+
+788
+00:40:25,590 --> 00:40:29,426
+not compact width, even though it's the exact same width
+
+789
+00:40:29,428 --> 00:40:32,362
+okay as in landscape. It's not compact width, and that's
+
+790
+00:40:32,364 --> 00:40:34,397
+because there's actually API in the split view what when
+
+791
+00:40:34,399 --> 00:40:37,267
+you put that thing out it can pull out different distances.
+
+792
+00:40:37,269 --> 00:40:40,437
+And rather than have them try to be changing the size class
+
+793
+00:40:40,439 --> 00:40:43,706
+on the fly, sometimes it's compact, sometimes regular.
+
+794
+00:40:43,708 --> 00:40:45,442
+They just said, okay,
+
+795
+00:40:45,444 --> 00:40:49,412
+because it lets you tell these two different states, okay?
+
+796
+00:40:49,414 --> 00:40:52,682
+Whether you're in the landscape as the master or
+
+797
+00:40:52,684 --> 00:40:55,218
+you're pulled out as the master, okay?
+
+798
+00:40:55,220 --> 00:41:00,056
+Everyone got that? Okay, so that's it, for size classes,
+
+799
+00:41:00,058 --> 00:41:04,394
+that's it for auto layout. Again, only experience will
+
+800
+00:41:04,396 --> 00:41:06,362
+really teach you auto layout in the long run,
+
+801
+00:41:06,364 --> 00:41:08,031
+but you know where all the pieces of it are now,
+
+802
+00:41:08,033 --> 00:41:10,166
+and you know how to do control drag.
+
+803
+00:41:10,168 --> 00:41:12,735
+That's probably the main thing you're gonna be doing.
+
+804
+00:41:12,737 --> 00:41:14,270
+And maybe you'll be doing these menus down here,
+
+805
+00:41:14,272 --> 00:41:20,477
+possibly. Okay, Friday, no section again on this Friday.
+
+806
+00:41:20,479 --> 00:41:22,912
+Monday your current assignment is coordinate a smash tag
+
+807
+00:41:22,914 --> 00:41:27,116
+is due. There will be another assignment, Assignment 6 going
+
+808
+00:41:27,118 --> 00:41:30,787
+out next week. Not sure, probably gonna go out on
+
+809
+00:41:30,789 --> 00:41:33,756
+Wednesday. It might go out on Wednesday, not 100% sure.
+
+810
+00:41:33,758 --> 00:41:36,125
+I'll think about it over the week can't okay but
+
+811
+00:41:36,127 --> 00:41:38,728
+the topic of that assignment and in the topic of next
+
+812
+00:41:38,730 --> 00:41:41,598
+week's lectures is gonna be animation. Okay, a very
+
+813
+00:41:41,600 --> 00:41:45,101
+important part obviously building an app on iOS and
+
+814
+00:41:45,103 --> 00:41:49,939
+that's it. So I'll be here I'm here if you have questions as
+
+815
+00:41:49,941 --> 00:41:53,710
+usual, that kind of business. >> For
+
+816
+00:41:53,712 --> 00:41:53,743
+more please visit us at Stanford.edu.
+
