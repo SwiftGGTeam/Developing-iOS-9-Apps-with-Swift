@@ -2511,10 +2511,12 @@ a bunch of things lined up to do something.
 503
 00:26:48,975 --> 00:26:54,912
 All right. And these queues contained an iOS functions.
+这些队列包含了 iOS 的方法.
 
 504
 00:26:54,914 --> 00:26:58,482
 Okay? Most of the time these functions are closures. Okay?
+绝大多数方法都是闭包. 好吧？
 
 505
 00:26:58,484 --> 00:27:02,052
