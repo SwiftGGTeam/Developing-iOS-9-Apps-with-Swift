@@ -1870,7 +1870,7 @@ minimum extent we allow which is none, 1.0. So
 375
 00:19:36,976 --> 00:19:41,779
 we need to set the maximum and minimum scrolling factor or
-我们需要给 scrollView 的范围因子，或叫做
+我们需要给 scrollView 的范围因子，或叫做给
 
 376
 00:19:41,781 --> 00:19:45,583
@@ -1880,507 +1880,633 @@ zooming factor on this scrollView. So let's do that.
 377
 00:19:45,585 --> 00:19:48,386
 Let's do that also right here when we're setting our
-
+在这里进行设置，在
 
 378
 00:19:48,388 --> 00:19:50,254
 scrollView from our storyboard. So
+scrollView 在 storyboard 中被赋值时调用的方法
 
 379
 00:19:50,256 --> 00:19:52,924
 we just say that the scrollView's minimum zoom
+键入 scrollView 的 minimumZoomScale
 
 380
 00:19:52,926 --> 00:19:57,962
 scale. I'm gonna have this minimum zoom scale.
+来设置最小缩放因子
 
 381
 00:19:57,964 --> 00:20:02,433
 What did I think that worked well here? 0.03.
+设成多少效果比较好呢？0.03 吧
 
 382
 00:20:02,435 --> 00:20:04,735
 So we're gonna zoom- allowed to zoom way out.
+我们可以进行缩放
 
 383
 00:20:04,737 --> 00:20:07,205
 So it will make the image really small, okay?
+图片会缩小到很小
 
 384
 00:20:07,207 --> 00:20:10,975
 Three one-hundredths of it's size.
+是原图的百分之三
 
 385
 00:20:10,977 --> 00:20:13,844
 3% of its size. And then the maximum,
+也就是 3% 的大小，接下来设置最大因子
 
 386
 00:20:13,846 --> 00:20:16,480
 it is perfectly fine for us to say the maximum is 1.0.
+这个值设为 1.0 就好了
 
 387
 00:20:16,482 --> 00:20:20,318
 Maybe we never want the thing to be zoomed out any bigger
+可能我们永远不会将该图片放大
 
 388
 00:20:20,320 --> 00:20:23,020
 than it already is, especially there are huge images already.
+毕竟它已经是一张很大的图片了
 
 389
 00:20:23,022 --> 00:20:26,190
 So we can set the maximum to zoom scale. We don't even need
+其实我们完全可以不用设置放大因子，这条
 
 390
 00:20:26,192 --> 00:20:29,060
 to put this. Cuz by default, it's 1.0. But we'll put it
+语句可以不用谢，因为默认值就是 1.0. 这里就不删了，
 
 391
 00:20:29,062 --> 00:20:32,430
 in here just to kinda be very clear about what we're doing.
+看着更清晰一点
 
 392
 00:20:32,432 --> 00:20:39,737
 All right, so now lets try it. All right,
+再来看看效果
 
 393
 00:20:39,739 --> 00:20:44,542
 so lets go get Cassini right here. All right, here it is.
+点击 Cassini，然后
 
 394
 00:20:44,544 --> 00:20:48,212
 Lets zoom in on it, right. I'm pinching. Yeah, look at that,
+进行缩放，捏合一下，看到了吧
 
 395
 00:20:48,214 --> 00:20:50,314
 it's zooming. And sure enough, look,
+缩小了. 效果很好
 
 396
 00:20:50,316 --> 00:20:54,352
 there's Cassini. Taking a little trip by Saturn, okay,
+这是 Cassini，在围着 Saturn 兜风
 
 397
 00:20:54,354 --> 00:20:57,021
 let's zip it around here so we can see a little better. Okay,
+旋转一下屏幕，就能看到更多内容
 
 398
 00:20:57,023 --> 00:21:00,324
 how about some of these other images, go look at the Earth,
+来看看其他图片呢，看看 Earch
 
 399
 00:21:00,493 --> 00:21:03,861
 didn't look like much like Earth. Now if we zoom,
+之前看着并不像 Earth. 这次缩小试试
 
 400
 00:21:03,863 --> 00:21:07,131
 we'll see something here. All right, so here it is,
+说不定能看到更多东西. 好了，加载出来了
 
 401
 00:21:07,133 --> 00:21:11,802
 scrolling around, I'm gonna pinch, pinch some more.
+滚动看看，然后捏合，再缩小点
 
 402
 00:21:11,804 --> 00:21:17,675
 Look at this Earth, okay? Same thing with Saturn.
+啊哈，这就是 Earch. 在看看 Saturn 呢
 
 403
 00:21:18,111 --> 00:21:20,244
 Okay, everyone see what we do with the zooming?
+每个人都知道怎么实现缩放了吗？
 
 404
 00:21:20,246 --> 00:21:21,279
 Zooming quite simple
+实现起来真的很简单
 
 405
 00:21:21,281 --> 00:21:22,847
 in terms of the code you have to write, but
+就那么几句代码
 
 406
 00:21:22,849 --> 00:21:24,882
 you have to understand that delegation piece for
+这全都要靠 delegate
 
 407
 00:21:24,884 --> 00:21:28,152
 it to really, to make it work. And you'll see Saturn,
+那才是真谛. 来看看 Saturn
 
 408
 00:21:28,154 --> 00:21:34,325
 there's Saturn. Okay? Now let's try this on iPad,
+这是 Saturn. 没问题，运行在 iPad 上试试，
 
 409
 00:21:34,327 --> 00:21:37,528
 okay? Let's see what it looks like here.
+看看显示效果
 
 410
 00:21:47,373 --> 00:21:48,906
 All right, so here is our master and
+这是 master
 
 411
 00:21:48,908 --> 00:21:51,542
 our detail right here. So if I click on Cassini,
+这是 detail，点击 Cassini，
 
 412
 00:21:51,544 --> 00:21:54,912
 hopefully Cassini will eventually really slow,
+加载起来确实很慢
 
 413
 00:21:54,914 --> 00:21:57,315
 appear right here. Okay? And we can zoom in here, okay?
+显示出来了，缩放试试呢
 
 414
 00:21:57,317 --> 00:22:02,119
 Now, what would be really cool here is if we could have
+如果在这里能有个标题
 
 415
 00:22:02,121 --> 00:22:05,856
 a title up here that said this was Cassini,
+告诉我们这是 Cassini，
 
 416
 00:22:05,858 --> 00:22:09,560
 or Earth, or Saturn, right? So remember
+还是是 Earth，是 Saturn，就更好了
 
 417
 00:22:09,562 --> 00:22:12,863
 the tricky way we did that, is we went to our storyboard, and
+其实有一个很取巧的方式，打开 storyboard
 
 418
 00:22:12,865 --> 00:22:17,201
 we just put this one down here. Also in the scrollView.
+将下面的这个包含 scrollView 的控制器
 
 419
 00:22:17,203 --> 00:22:19,704
 So we said embed in navigation control.
+加上 navigation
 
 420
 00:22:19,706 --> 00:22:21,872
 Or not in a scrollView, in a navigation controller. So
+或者嵌入到 navigation controller 中
 
 421
 00:22:21,874 --> 00:22:25,910
 I embed it in there, so that now I have a title. Right? And
+嵌入之后，就可以设置标题了
 
 422
 00:22:25,912 --> 00:22:26,644
 we know that if we can go and
+如果现在运行
 
 423
 00:22:26,646 --> 00:22:29,547
 run this, it's not going to work, right? Because these
+不会有任何效果，因为
 
 424
 00:22:29,549 --> 00:22:33,984
 segues are segueing now to a navigation controller. And
+现在这个 segue 是 navigation controller 了.
 
 425
 00:22:33,986 --> 00:22:36,687
 so our prepare is not gonna work,
+所以 prepare 方法不会有效
 
 426
 00:22:36,689 --> 00:22:40,124
 cuz this line of code is going to fail. Right,
+这句代码代码判断失败了
 
 427
 00:22:40,126 --> 00:22:43,394
 because the destination view controller is now a navigation
+现在这个 destinationViewController 是 navigationController
 
 428
 00:22:43,396 --> 00:22:43,594
 controller. Of course,
+显然，
 
 429
 00:22:43,596 --> 00:22:46,063
 a navigation controller is not an image view controller.
+navigationController 不是 imageViewController
 
 430
 00:22:46,065 --> 00:22:48,165
 This is the exact same problem we had before. So
+这种问题我们之前遇到过
 
 431
 00:22:48,167 --> 00:22:51,869
 I'm gonna show you now how to use that extensions mechanism
+下面我将演示如何使用 extension 来
 
 432
 00:22:51,871 --> 00:22:54,805
 to fix this. So I'm gonna create an extension. This is
+解决这个问题. 先创建一个 extension. 
 
 433
 00:22:54,807 --> 00:22:59,143
 exactly what I did in the slides of UIViewController.
+这是给 UIViewController 的 extension.
 
 434
 00:23:00,012 --> 00:23:03,481
 Okay, and in this extension, like to scroll up a little so
+好的，在 extension 中，好像往下滚动一点
 
 435
 00:23:03,483 --> 00:23:07,351
 you can see it better. Okay, inside this extension,
+更方便你们看. 好的，在这个 extension 中，
 
 436
 00:23:07,353 --> 00:23:11,689
 I'm gonna add the var contentViewController.
+我准备添加一个 contentViewController 变量.
 
 437
 00:23:11,691 --> 00:23:14,525
 Which is a UIViewController, okay?
+类型是 UIViewController
 
 438
 00:23:14,527 --> 00:23:17,862
 I'm adding this var to the class UIViewController.
+这是给 UIViewController 添加的变量
 
 439
 00:23:17,864 --> 00:23:21,232
 So, all UIViewControllers will now respond to this property
+所以所有的 UIViewController 都有一个叫做
 
 440
 00:23:21,234 --> 00:23:24,568
 contentViewController. Okay? It's gonna be get only.
+contentViewController 的属性了. 将它声明为只读属性.
 
 441
 00:23:24,570 --> 00:23:27,171
 It's gonna get it. And what I'm gonna put in here is
+直接就能获取值. 这里的代码和
 
 442
 00:23:27,173 --> 00:23:29,907
 basically that same code I had in prepareforSegue,
+motion view controller 中的 prepareforSegue 方法
 
 443
 00:23:29,909 --> 00:23:32,309
 in a motionview controller. I'm gonna say,
+代码相同，这样写，
 
 444
 00:23:32,311 --> 00:23:37,915
 if I can let navcon = self as a UINavigationController,
+if let navcon = self as? UINavigationController，
 
 445
 00:23:37,917 --> 00:23:43,120
 so in otherwords, if I am a navigation controller,
+意思是，如果 self 是 UINaviagtionController，
 
 446
 00:23:43,122 --> 00:23:47,858
 then return navcon.visibleViewController.
+就返回 navcon.visibleViewController.
 
 447
 00:23:47,860 --> 00:23:50,594
 Okay? The only problem with this is this is
+这里唯一的问题就是
 
 448
 00:23:50,596 --> 00:23:53,631
 an optional view controller, because the navigation
+这个 view controller 是可选值，因为 navigation
 
 449
 00:23:53,633 --> 00:23:56,700
 controller might not have anything showing. Okay, so
+controller 可能不会展示任何信息，所以
 
 450
 00:23:56,702 --> 00:24:00,237
 I need to return something because contentViewController
+这里必须要返回一个确切的值，因为 contentViewController
 
 451
 00:24:00,239 --> 00:24:02,940
 does not return an optional So I'm gonna use this
+不是一个可选类型. 所以我准备用 ?? 将默认值
 
 452
 00:24:02,942 --> 00:24:06,210
 defaulting to say if I have a NavigationController and
+设置为 self，如果有 NavigationController
 
 453
 00:24:06,212 --> 00:24:08,779
 it has no visible ViewController, just return
+但是 visibleViewController 为空的话，就返回
 
 454
 00:24:08,781 --> 00:24:12,082
 self, which is to say the NavigationController itself,
+self，也就是 NavigationController
 
 455
 00:24:12,084 --> 00:24:14,819
 okay? Otherwise, we can just return self. So if it's not
+其他情况，就返回 self. 即如果不是
 
 456
 00:24:14,821 --> 00:24:17,655
 a NavigationController, then the content is myself.
+NavigationController，就返回 self 作为 content
 
 457
 00:24:17,657 --> 00:24:22,293
 Everyone understand that code right there? Okay? Good.
+大家对这段代码有疑问吗？没有？好的. 
 
 458
 00:24:22,295 --> 00:24:25,296
 So, now that we have this, we can just use that method right
+有了这个以后，我们在这里直接调方法就可以了.
 
 459
 00:24:25,298 --> 00:24:29,400
 here. Okay? Instead of asking if the destination can view
+这里还要把之前判断的 destination view 
 
 460
 00:24:29,402 --> 00:24:31,535
 controller is an image view controller, I'm gonna ask if
+controller 是 imageViewController 改为判断
 
 461
 00:24:31,537 --> 00:24:36,240
 the destination controller's content view controller, and
+destination controller 的 content view controller 是否是 
 
 462
 00:24:36,242 --> 00:24:38,742
 I can escape complete, cuz now that's a method on U, I,
+imageViewController. 现在这个方法，哦，这个
+
 
 463
 00:24:38,744 --> 00:24:41,579
 this is a UI view controller. This is a method on UI view
+就是 UIViewController 了，这个方法就是 UIViewController 的
 
 464
 00:24:41,581 --> 00:24:44,381
 controller. I'm just gonna ask if the content view controller
+只需要判断 content view controller 是否
 
 465
 00:24:44,383 --> 00:24:49,954
 is an image view controller. Okay? So now we should be able
+是 image view controller 就行了. 现在在 iPad 上跑起来
 
 466
 00:24:49,956 --> 00:24:54,825
 to run an iPad and get some nice titles. All right.
+应该就可以看到标题了.
 
 467
 00:24:54,827 --> 00:24:58,162
 Cassini again. We've got the navigation controller up here.
+依然打开 Cassini，能看到这里有个 navigation controller
 
 468
 00:24:58,164 --> 00:25:00,297
 There's Cassini. Sure enough, there's the title, right.
+这是 Cassini，没问题，这是标题
 
 469
 00:25:00,299 --> 00:25:04,568
 We set the title right here. Ivc.title = imageName, okay?
+我们在这里加上了标题，ivc.title = imageName
 
 470
 00:25:04,570 --> 00:25:11,275
 And of course, we can zoom around, okay?
+当然，我们还可以进行缩放
 
 471
 00:25:11,277 --> 00:25:13,310
 All right, any questions about that before I go back to
+讲到这里，大家有什么问题吗？
 
 472
 00:25:13,312 --> 00:25:18,449
 the slides? All right. Let's hit the slides here.
+好的，再回到讲义.
 
 473
 00:25:23,689 --> 00:25:26,524
 Okay, so now we're gonna talk about multithreading, so
+接下来，我会讲讲多线程
 
 474
 00:25:26,526 --> 00:25:28,592
 we can fix that problem where our Cassini app,
+这样就能修复 Cassini app 中，当我们加载大图时
 
 475
 00:25:28,594 --> 00:25:31,962
 when we click on the big image, it just froze. Okay.
+导致的界面卡死问题了.
 
 476
 00:25:31,964 --> 00:25:36,033
 When you build an app, never have it freeze like that ever.
+当你做一款 app 时，千万不要出现界面卡死的情况
 
 477
 00:25:36,035 --> 00:25:38,435
 In fact, if it freezes like that, probably you won't get
+事实上，出现界面卡死的情况，
 
 478
 00:25:38,437 --> 00:25:41,605
 through the app store approval process. Okay. So the only
+还会影响你上架 app store. 解决界面卡死的
 
 479
 00:25:41,607 --> 00:25:44,808
 way to stop it from freezing is to use multithreading.
+唯一方式，就是使用多线程.
 
 480
 00:25:44,810 --> 00:25:48,646
 Okay. So, multithreading just means we're going to
+多线程意味着我们会在
 
 481
 00:25:48,648 --> 00:25:50,781
 have different threads of execution,
+不同的线程中执行任务
 
 482
 00:25:50,783 --> 00:25:54,118
 okay? Different places in, in our iPhone or
+在，在 iPhone 或 iPad 的不同的地方
 
 483
 00:25:54,120 --> 00:25:56,887
 our iPad where code is running, okay?
+执行代码
 
 484
 00:25:56,889 --> 00:26:00,090
 And these, these appear to run simultaneously, but
+这些代码，几乎是同时运行的，
 
 485
 00:26:00,092 --> 00:26:03,227
 it'll even work on a single core processor, okay,
+即使在单核处理器上，也没问题
 
 486
 00:26:03,229 --> 00:26:07,231
 not a multiprocessor. It works, then, by timesharing.
+虽然不是多核处理，但是运用了分时操作手段
 
 487
 00:26:07,233 --> 00:26:08,399
 Okay. And so you got one thing running,
+所以，一个事件在执行，
 
 488
 00:26:08,401 --> 00:26:09,867
 another thing running and it's kinda going back and
+然后再切换到另一个事件，执行后又切回刚才的事件
 
 489
 00:26:09,869 --> 00:26:13,304
 forth. Letting them each run a little bit and maybe if one of
+继续执行. 每个事件都能执行一段时间，如果某个事件
 
 490
 00:26:13,306 --> 00:26:15,573
 them's more important than the other, it gets run a lot and
+在其中比较重要，那么就会停留得就一些，
 
 491
 00:26:15,575 --> 00:26:18,576
 the other one doesn't get to run so much. Okay? But
+次要的事件就不会占用那么长事件.
 
 492
 00:26:18,578 --> 00:26:21,545
 that's basically what multithreading is all about.
+这就是多线程最基础的部分.
 
 493
 00:26:21,547 --> 00:26:22,079
 So how many people have,
+在做的有同学已经，
 
 494
 00:26:22,081 --> 00:26:25,583
 have done any multithreading programming of any kind? Okay,
+已经做过多线程的项目了？好吧，
 
 495
 00:26:25,585 --> 00:26:28,586
 so some of you have, okay. About a little less than half
+一部分同学，大概不到一半的人吧。
 
 496
 00:26:28,588 --> 00:26:31,722
 of you. Okay, good. So in iOS multithreading is about
+谈到 iOS 上的多线程，其实都是
 
 497
 00:26:31,724 --> 00:26:35,859
 queues, okay? Queue meaning like, if you go to the movies
+队列. 队列就像是...如果你在 England 去
 
 498
 00:26:35,861 --> 00:26:37,895
 maybe in England [LAUGH] they would say, well,
+看电影，那么他们会说，
 
 499
 00:26:37,897 --> 00:26:40,664
 get in the queue, meaning the line to get into the movie,
+排队去，意思是，排队依次进电影院.
 
 500
 00:26:40,666 --> 00:26:43,901
 okay? So same thing here, and it's the same thing as queue
+这里的队列和计算机科学中队列
 
 501
 00:26:43,903 --> 00:26:46,971
 in the computer science sense, right? A queue is a thing,
+的含义是一样的. 队列其实就是一个东西，
 
 502
 00:26:46,973 --> 00:26:48,973
 a bunch of things lined up to do something.
+一个有先后顺序的东西.
 
 503
 00:26:48,975 --> 00:26:54,912
