@@ -2521,718 +2521,897 @@ Okay? Most of the time these functions are closures. Okay?
 505
 00:26:58,484 --> 00:27:02,052
 That you've put in there. Okay? Blocks of code that you
+然后加入到队列中. 就是闭包中的代码，
 
 506
 00:27:02,054 --> 00:27:06,824
 put in this queue. Okay? And then, the system simply runs
+加入到队列中. 接着，系统会单独运行
 
 507
 00:27:06,826 --> 00:27:09,693
 along this queue, pulls the next thing off the queue and
+这个队列，将队列中的任务取出，
 
 508
 00:27:09,695 --> 00:27:13,430
 starts it running in a separate thread, okay?
+然后在独立的线程中运行.
 
 509
 00:27:13,432 --> 00:27:16,100
 And you can have multiple of these queues and the system is
+你也可以有很多个队列，然后系统便会
 
 510
 00:27:16,102 --> 00:27:18,602
 pulling them off each one and running them un, in their
+分别取出，然后...在各自的线程中
 
 511
 00:27:18,604 --> 00:27:21,705
 own threads, simple as that, you just got multithreading.
+执行，就这么简单的用上了多线程.
 
 512
 00:27:21,707 --> 00:27:24,642
 Okay. Now there's a little bit of trickiness
+那么现在有个问题，
 
 513
 00:27:24,644 --> 00:27:25,909
 here of what are these queues and
+队列是什么，
 
 514
 00:27:25,911 --> 00:27:27,444
 how do you put things on the queues, but
+怎么将任务加入到队列中，
 
 515
 00:27:27,446 --> 00:27:30,180
 that's the fundamental way these work. Now queues can
+这属于队列运行原理. 队列可以是
 
 516
 00:27:30,182 --> 00:27:34,118
 either be serial, which means the function that's on the top
+串行的，意思是只有当上一个任务执行完后，
 
 517
 00:27:34,120 --> 00:27:37,154
 of the queue gets pulled off, it runs to completion, and
+新的队首元素才会出队
 
 518
 00:27:37,156 --> 00:27:40,824
 then the next one gets pulled off. That's serial queues. Or
+接着执行. 这就是串行队列.
 
 519
 00:27:40,826 --> 00:27:43,494
 they can be concurrent, where the system pulls the top
+队列也可以是并行的，意思是系统出队
 
 520
 00:27:43,496 --> 00:27:46,130
 one off the queue, starts it running in a thread. If it's
+一个队首元素，就立即在一个线程中执行. 如果是这样，
 
 521
 00:27:46,132 --> 00:27:48,599
 got more thread resources, it takes the next one off,
+就会占用更多的资源，下一个任务出队以后
 
 522
 00:27:48,601 --> 00:27:51,402
 starts it running in another thread while the first one's
+就会在另一个线程中进行执行，此时，第一个出队的任务
 
 523
 00:27:51,404 --> 00:27:51,502
 still running, and
+仍在执行，
 
 524
 00:27:51,504 --> 00:27:55,873
 it might keep pulling a whole bunch of them off. Okay, so
+这种队列甚至可以直接将整个队列元素出队执行. 
 
 525
 00:27:55,875 --> 00:27:57,775
 that's a concurrent queue.
+这就是并行队列.
 
 526
 00:27:57,777 --> 00:28:00,544
 All right, so let's talk about the queues, how we get them,
+接下来，再来看看队列的其他知识. 我们怎么获得队列，
 
 527
 00:28:00,546 --> 00:28:03,781
 what, what we call them, etc. The most important queue,
+怎样调用它们，等等. 对重要的队列，
 
 528
 00:28:03,783 --> 00:28:06,717
 it's a serial queue called the main queue, okay?
+就是一个称为主队列的串行队列.
 
 529
 00:28:06,719 --> 00:28:10,554
 The main queue is where all UI activity has to happen. And
+主队列是刷新 UI 控件的队列. 
 
 530
 00:28:10,556 --> 00:28:14,658
 this is super important for you to understand. That if you
+大家一定要着重理解这个知识点. 如果你在
 
 531
 00:28:14,660 --> 00:28:19,063
 want to do anything where you call something a UI kit, okay,
+做一些和 UIKit 相关的动作，比如
 
 532
 00:28:19,065 --> 00:28:21,331
 UI button, UI anything, all right,
+UIButton，或其他 UI 元素，
 
 533
 00:28:21,333 --> 00:28:24,334
 with a couple of exceptions which I'll talk about later.
+包括之后我们还会学到的其他 UI 控件. 
 
 534
 00:28:24,336 --> 00:28:27,104
 You need to be making those calls on the main queue.
+它们都必须要在主队列中进行操作.
 
 535
 00:28:27,106 --> 00:28:31,241
 In other words, you can't put those calls in a closure that
+换句话说，它们不能再其他队列的闭包
 
 536
 00:28:31,243 --> 00:28:34,378
 you put on some other queue. Okay, it has to be on the main
+中执行. 必须在主队列中执行》 
 
 537
 00:28:34,380 --> 00:28:39,149
 queue, all right? Now conversely, all non-UI
+记住了吗？相反，所有和 UI 控件
 
 538
 00:28:39,151 --> 00:28:42,519
 activity that's gonna take any amount of time or resources,
+无关的操作，可能会耗时，或耗资源的操作，
 
 539
 00:28:42,521 --> 00:28:45,589
 probably wants to be off the main queue. So it never blocks
+就不要放到主队列中. 千万不要阻塞
 
 540
 00:28:45,591 --> 00:28:48,092
 the main queue. We want the main queue reserved for
+主队列. 我们应该尽可能的将主队列的资源
 
 541
 00:28:48,094 --> 00:28:51,562
 doing our UI stuff as much as possible. Okay, now this is
+用来调度 UI 元素. 当然，希望 UI 控件能及时响应
 
 542
 00:28:51,564 --> 00:28:55,799
 not only cuz we want our main queue UI to be responsive,
+只是其中一个原因，
 
 543
 00:28:55,801 --> 00:28:56,767
 okay, that's the main reason, but
+也是最主要的原因，另外
 
 544
 00:28:56,769 --> 00:29:00,671
 also it serializes the activity on the main queue so
+一个原因，是因为主队列是串行队列，所以
 
 545
 00:29:00,673 --> 00:29:03,907
 that our UI is presented in an orderly fashion. If,
+UI 元素能按照我们给的顺序来执行. 如果，
 
 546
 00:29:03,909 --> 00:29:06,343
 if we allowed our UI to be on all these different queues, it
+如果允许在不同的队列中操作 UI，实际上却是是
 
 547
 00:29:06,345 --> 00:29:08,912
 could, things would be drawing at all different rates and
+可以的，但是绘制速度就会不同，从而出现
 
 548
 00:29:08,914 --> 00:29:09,480
 overlapping, it would be
+重叠，预测不了
 
 549
 00:29:09,482 --> 00:29:11,882
 unpredictable as to what happened on screen. Okay, so
+界面效果. 所以
 
 550
 00:29:11,884 --> 00:29:15,285
 we use the main queue as kind of a synchronization point
+我们需要要利用主队列的同步性，
 
 551
 00:29:15,287 --> 00:29:18,522
 where everybody comes back to draw on the main queue,
+保证所有的绘制都在主队列中进行，
 
 552
 00:29:18,524 --> 00:29:22,259
 all right? Now the main queue can only pull a closure or
+明白了吗？主队列每次会出队一个闭包或
 
 553
 00:29:22,261 --> 00:29:24,294
 a function off of the main queue and
+一个方法，
 
 554
 00:29:24,296 --> 00:29:26,630
 work on it when it's quiet. In other words,
+在静默时，执行它. 换句话说，
 
 555
 00:29:26,632 --> 00:29:28,532
 it's not off doing something else, like drawing or
+它一直都是执行状态，比如在绘制，或
 
 556
 00:29:28,534 --> 00:29:31,835
 something like, like that. Now the system is using the main
+在执行和绘制差不多的任务. 主队列会一直在
 
 557
 00:29:31,837 --> 00:29:33,403
 queue behind the scenes all the time.
+系统后台运行着.
 
 558
 00:29:33,405 --> 00:29:35,572
 For example, you know about draw req. Right.
+比如，你知道绘制操作吧.
 
 559
 00:29:35,574 --> 00:29:38,342
 I told you draw req gets called by the system and
+我之前说过，绘制是系统在调用，
 
 560
 00:29:38,344 --> 00:29:40,277
 it doesn't get called, you don't call it,
+你并没有手动去调用，
 
 561
 00:29:40,279 --> 00:29:42,913
 you don't tell it to, you just set needs display.
+并没有让系统去调，只是告诉系统它需要显示.
 
 562
 00:29:42,915 --> 00:29:44,348
 Well, you set needs display and
+设置在主线程空闲的时候
 
 563
 00:29:44,350 --> 00:29:48,585
 as soon as the main queue gets quiet, it goes and runs some
+进行显示，系统会运行或调用某些
 
 564
 00:29:48,587 --> 00:29:51,555
 function that causes that draw req to be called. So
+方法来进行绘制. 这便是
 
 565
 00:29:51,557 --> 00:29:54,525
 you see how that works, okay? So that's what's going on in
+绘制的工作原理. 这便是主队列
 
 566
 00:29:54,527 --> 00:29:57,294
 the main queue. What about other queues? Okay, so
+在处理的东西. 那么其他队列呢？看
 
 567
 00:29:57,296 --> 00:30:00,030
 there's, I'm, in the next slide I'm gonna talk about
+这里，下个话题便会讲讲
 
 568
 00:30:00,032 --> 00:30:02,800
 two different kinds of other queues that you can use to run
+其他两种不同的队列，能用来处理
 
 569
 00:30:02,802 --> 00:30:06,236
 all your non-UI stuff. All right? So the first,
+所有和 UI 无关的队列. 目前，
 
 570
 00:30:06,238 --> 00:30:09,039
 not gonna talk about this now, that'll be on the next slide.
+我们暂时不谈这个，这是下个话题.
 
 571
 00:30:09,041 --> 00:30:12,142
 So on this slide I'm gonna talk a little bit about how we
+这张幻灯片还有一点东西没讲完，关于如何
 
 572
 00:30:12,144 --> 00:30:14,845
 put something on a queue and the main way we do it is
+将任务放到队列中，最常见的做法是
 
 573
 00:30:14,847 --> 00:30:17,981
-with this function right here called dispatc_async.
+with this function right here called dispatch_async.
+调用一个叫 dispatch_async 的方法.
 
 574
 00:30:17,983 --> 00:30:22,986
-Dispatc_async takes two arguments. One is the queue to
+Dispatch_async takes two arguments. One is the queue to
+Dispatch_async 有两个参数. 一个是要加入的
 
 575
 00:30:22,988 --> 00:30:25,455
 put it on, like the main queue or one of these other queues,
+队列，可以是主队列，或者其他队列，
 
 576
 00:30:25,457 --> 00:30:29,760
 and the second argument is the function to put on the queue,
+第二个参数是，要加入队列的方法，
 
 577
 00:30:29,762 --> 00:30:32,963
 again, usually it's a closure. You see how I'm using trailing
+当然，通常是闭包. 我这里简单写了一个
 
 578
 00:30:32,965 --> 00:30:35,933
 closure syntax right there? Okay. This is two arguments.
+闭包的语法. 这有两个参数，
 
 579
 00:30:35,935 --> 00:30:39,002
 One argument. Two arguments. So this is the closure you're
+一个参数. 两个参数. 这就是加入到队列中的
 
 580
 00:30:39,004 --> 00:30:41,605
 gonna put on there. What's cool about these closures,
+闭包. 看起来很不错吧，
 
 581
 00:30:41,607 --> 00:30:43,607
 they take no arguments and then return no arguments.
+闭包没有参数，也没有返回值.
 
 582
 00:30:43,609 --> 00:30:46,910
 So they're really easy to, to [LAUGH] put into your code.
+所以，非常容易嵌到你的代码中（笑~
 
 583
 00:30:46,912 --> 00:30:50,180
 Okay? And you can put anything you want in here. Okay?
+你可以将任何想执行的代码扔到里面.
 
 584
 00:30:50,182 --> 00:30:53,884
 But if this gonna do UI, you better not put it on anything
+当然，最好是将 UI 操作扔进去，而不是别的操作，
 
 585
 00:30:53,886 --> 00:30:58,388
 but the main queue. All right, so how do you get the queue?
+毕竟这是主线程. 所以，怎样获得一个队列呢？
 
 586
 00:30:58,390 --> 00:30:59,823
 How do you get this little queue argument?
+怎样传入这个队列参数？
 
 587
 00:30:59,825 --> 00:31:02,993
 Well, for the main queue, you call this function,
+对于主队列来说，可以通过调用
 
 588
 00:31:02,995 --> 00:31:05,963
-dispatc_ge_mai_queue. Now, you might ask,
+dispatch_get_main_queue. Now, you might ask,
+dispatch_get_main_queue 来获得. 你或许会问，
 
 589
 00:31:05,965 --> 00:31:10,100
 why is all these underbars and why does this look like this?
+为什么这么多下划线，为什么这个方法长这样？
 
 590
 00:31:10,102 --> 00:31:15,339
 This is basically a CAPI, okay, from iOS before Swift,
+因为这是基于 CAPI 的，属于 iOS，而不是 Swift 的语法，
 
 591
 00:31:15,341 --> 00:31:18,008
 and so it comes into swift looking like a CAPI.
+所以这使得 Swift 看起来像 CAPI 一样.
 
 592
 00:31:18,010 --> 00:31:21,011
 These are Swift, these are just Swift global functions.
+在 Swift 中，这是个全局方法.
 
 593
 00:31:21,013 --> 00:31:23,413
 But the reason this is not object oriented, for
+它不是面向对象的，因为
 
 594
 00:31:23,415 --> 00:31:26,083
 example is because this is a CAPI.
+它是 CAPI.
 
 595
 00:31:26,085 --> 00:31:28,852
 This, this is called grand central dispatch actually,
+实际上，它被称为 GCD（大中枢派发）
 
 596
 00:31:28,854 --> 00:31:30,454
 that's why they all start with dispatch,
+所以这个方法以 dispatch 开头，
 
 597
 00:31:30,456 --> 00:31:33,290
 all this multithreading stuff, and that's why it looks like
+这就是为什么，所有这类多线程接口，都和这个类似.
 
 598
 00:31:33,292 --> 00:31:37,094
 this. I'm gonna show you the object-oriented way to do
+之后我会介绍怎么用面向对象的方式使用
 
 599
 00:31:37,096 --> 00:31:40,764
 this in a minute, but actually we're gonna end up using these
+这些接口，在此之前，你还会继续
 
 600
 00:31:40,766 --> 00:31:44,768
 C-like ones more often, all right? So, again, all UI stuff
+使用 C 语言的风格的接口. 再次强调，所有 UI 的操作
 
 601
 00:31:44,770 --> 00:31:49,039
 have to be on this main queue. It's a serial queue, okay, so
+都必须在主队列中进行. 这是个串行队列，
 
 602
 00:31:49,041 --> 00:31:51,608
 nothing happens concurrently on this queue,
+所以这个队列中不可能有并行的操作出现，
 
 603
 00:31:51,610 --> 00:31:55,112
 things happen in order in the order they go in, okay?
+入队是什么顺序，出队就是什么顺序，有问题吗？
 
 604
 00:31:55,114 --> 00:31:57,381
 And, but all time-consuming stuff,
+所有耗时的操作，
 
 605
 00:31:57,383 --> 00:31:59,750
 okay, or even worse stuff that might block,
+或其他耗资源的操作，都可能造成阻塞，
 
 606
 00:31:59,752 --> 00:32:02,786
 like you're going out to the network to get an image,
+就像网络请求图片这类的操作，
 
 607
 00:32:02,788 --> 00:32:05,555
 like we are doing where that block's waiting for
+或者其他因等待网络响应，
 
 608
 00:32:05,557 --> 00:32:07,958
 the Web server on the other side to respond,
+而导致阻塞的操作，
 
 609
 00:32:07,960 --> 00:32:10,794
 all that wants to happen off the main queue.
+这些操作，都不应该出现在主队列中.
 
 610
 00:32:10,796 --> 00:32:15,032
-Now you still dispatch to that queue using dispatc_async.
+Now you still dispatch to that queue using dispatch_async.
+目前我们在使用 dispatch_async 来派发队列.
 
 611
 00:32:15,034 --> 00:32:17,367
 You go down here and you say look at the bottom,
+看到讲义的底部，
 
 612
 00:32:17,369 --> 00:32:20,170
 it says dispatc_async, not the main queue in here.
+参数这里写到，不一定非要传入主队列.
 
 613
 00:32:20,172 --> 00:32:22,973
 And I'll talk about where you get that queue in a second.
+之后会讲到如何获得其他队列.
 
 614
 00:32:22,975 --> 00:32:24,007
 And then open curly brace,
+接着，代码包含在大括号中，
 
 615
 00:32:24,009 --> 00:32:27,644
 so this is a closure, inside that closure you do the non-UI
+所以这是一个闭包，在闭包中，执行的是和 UI 无关的
 
 616
 00:32:27,646 --> 00:32:31,081
 thing that takes a long time or blocks. And then still
+操作，它可能会花很长时间，或者发生阻塞. 接着又是一个
 
 617
 00:32:31,083 --> 00:32:35,485
-inside this closure, you dispatc_async again. This
+inside this closure, you dispatch_async again. This
+闭包，再次 dispatch_async. 这次
 
 618
 00:32:35,487 --> 00:32:39,990
 time back to the main queue to do the UI stuff that you need,
+回到了主队列中，处理和 UI 相关的操作，
 
 619
 00:32:39,992 --> 00:32:43,160
 maybe that the image you got from doing this, you now put
+可能是你请求完了图片，需要
 
 620
 00:32:43,162 --> 00:32:47,064
 this in the UI here. So look how I'm dispatching within
+扔到 UI 上进行显示. 所以来看看如何通过闭包
 
 621
 00:32:47,066 --> 00:32:50,567
 a closure. So can you imagine this outer closure
+来派发它们. 你能想象外部闭包
 
 622
 00:32:50,569 --> 00:32:53,770
 is off running on some other thread in some other queue and
+在其他队列的其他线程上运行，
 
 623
 00:32:53,772 --> 00:32:57,908
 in the middle of it, it puts a block of code,
+然后在其中，又有一个代码块，
 
 624
 00:32:57,910 --> 00:32:58,508
 this block right here,
+就是这个代码块，
 
 625
 00:32:58,510 --> 00:33:02,279
 this closure. It puts it back on the main queue, this one
+这个闭包. 又回到了主队列，
 
 626
 00:33:02,281 --> 00:33:05,315
 continues to run after that in fact dispatc_async,
+继续通过 dispatch_async 方法执行操作，
 
 627
 00:33:05,317 --> 00:33:08,418
 that function always returns immediately. Because all it
+这个方法会立即返回. 因为它是将任务
 
 628
 00:33:08,420 --> 00:33:11,655
 does is put things on queues, it doesn't actually execute
+扔到队列中，而没有真正执行
 
 629
 00:33:11,657 --> 00:33:13,490
 any of the code inside the block.
+代码块中的代码.
 
 630
 00:33:13,492 --> 00:33:16,827
 It just puts that block of code onto the queue. Okay, and
+只是将代码块扔到了队列中. 
 
 631
 00:33:16,829 --> 00:33:20,397
 then this outer closure just happily runs to completion and
+接着，这个外部闭包就
 
 632
 00:33:20,399 --> 00:33:23,500
 it's done. Meanwhile, that inner block has been posted
+执行完了. 与此同时，内部闭包也扔到了
 
 633
 00:33:23,502 --> 00:33:24,868
 on the main queue and it's just waiting for
+主队列中，等待
 
 634
 00:33:24,870 --> 00:33:27,637
 the main queue, for it to be first in line and
+主队列执行. 排到主队列中，
 
 635
 00:33:27,639 --> 00:33:28,405
 for the main queue to be quiet, and
+当主队列空闲下来，
 
 636
 00:33:28,407 --> 00:33:33,143
 then it'll pick it up and run it. You got it? So this is why
+便会出队并执行. 这就是为什么
 
 637
 00:33:33,145 --> 00:33:36,680
 we use the C function notation because it reads really cool,
+我们会用 C 函数，因为看起来真的挺酷的.
 
 638
 00:33:36,682 --> 00:33:39,816
 okay? Dispatch off the queue this, then dispatch the main
+先派发这个队列，然后派发
 
 639
 00:33:39,818 --> 00:33:44,087
 queue this, okay? It reads very clearly to the person
+主队列. 很容易让阅读代码的人
 
 640
 00:33:44,089 --> 00:33:46,790
 who's reading your code what you intend. Okay, but
+明白你的意图. 但是
 
 641
 00:33:46,792 --> 00:33:49,192
 you do have to remember that this is async,
+注意这些都是异步的，
 
 642
 00:33:49,194 --> 00:33:53,163
 it's out of sync. Just because you say to execute this code,
+不是同步的. 因为我们并不需要显性调用这些代码，
 
 643
 00:33:53,165 --> 00:33:53,997
 it's not gonna happen right away.
+这些代码不会立刻执行.
 
 644
 00:33:53,999 --> 00:33:56,099
 It's just being put on that queue, it'll happen sometime
+只是将它们加入到队列中，它们会在
 
 645
 00:33:56,101 --> 00:34:00,037
 in the future when that queue is ready, okay? When it rises
+队列空闲下来的时候自己执行. 当它们是队列
 
 646
 00:34:00,039 --> 00:34:04,975
 to the top of that queue and the main queue is quiet, okay?
+的队首元素，并且主队列闲下来的时候，就会执行.
 
 647
 00:34:04,977 --> 00:34:08,111
 So how do we get these not the main queue queues?
+那么，怎么获得除了主队列以外的队列呢？
 
 648
 00:34:08,113 --> 00:34:10,313
 Okay, that we want to run something else on.
+比如我们想要执行其他的一些操作.
 
 649
 00:34:10,315 --> 00:34:11,415
 Well there's really two ways to do it.
+这有两种方式可用.
 
 650
 00:34:11,417 --> 00:34:15,552
 The most common way is to use one of the concurrent queues
+最常见的直接使用系统提供的
 
 651
 00:34:15,554 --> 00:34:18,121
 provided by the system, okay? Now these
+并行队列. 这四种队列
 
 652
 00:34:18,123 --> 00:34:21,758
 queues provided by the system there's four of them, okay?
+就是系统提供的.
 
 653
 00:34:21,760 --> 00:34:25,295
 They each have what's called a quality of service and
+它们有着不同的优先级的服务，
 
 654
 00:34:25,297 --> 00:34:28,165
 the quality of service is really how
+服务的优先级其实就是
 
 655
 00:34:28,167 --> 00:34:31,668
 much attention the system gives to them.
+系统会给予多少的关注度.
 
 656
 00:34:31,670 --> 00:34:34,304
 You can think of it as their priority. High-priority queues
+你可以顺着优先级来认识它们. 高优先级队列
 
 657
 00:34:34,306 --> 00:34:37,174
 get a high quality of service. They get serviced a lot, okay?
+拥有最高优先级的服务. 它们能获得较多的服务.
 
 658
 00:34:37,176 --> 00:34:41,111
 But it's not purely that, but it's generally that. So
+但也不是绝对的，只是大致上来说而已.
 
 659
 00:34:41,113 --> 00:34:43,513
 what are the four qualities of service here?
+来看看这四种优先级的服务吧.
 
 660
 00:34:43,515 --> 00:34:46,817
-One is USE_INTERACTIVE. So, you can get a queue, you
+One is USER_INTERACTIVE. So, you can get a queue, you
+一种是 USER_INTERACTIVE. 所以，你可以通过调用
 
 661
 00:34:46,819 --> 00:34:49,753
 can call this dispatch, get global queue right here. And
+get_global_queue 方法来获得一个队列.
 
 662
 00:34:49,755 --> 00:34:52,589
 you can say give me the user interactive queue. Again, it's
+然后给它 USER_INTERACTIVE 优先级. 这是个
 
 663
 00:34:52,591 --> 00:34:54,925
 a concurrent queue, so it's doing things concurrently,
+并行队列，所以会并行处理操作，
 
 664
 00:34:54,927 --> 00:34:58,495
 it's not serial. And user interactive means
+这就不像串行了. USER_INTERACTIVE 意味着
 
 665
 00:34:58,497 --> 00:35:01,398
 the user just asked to do something.
+这是用户要求处理的事情.
 
 666
 00:35:01,400 --> 00:35:03,066
 It's gonna take a little bit of time,
+可能会花一些时间，
 
 667
 00:35:03,068 --> 00:35:04,801
 so I don't want to do it on the main queue,
+虽然我不想再主队列中进行处理，
 
 668
 00:35:04,803 --> 00:35:07,604
 but I need this done as soon as possible because the user
+但是我仍然希望能进行执行，毕竟这是用户
 
 669
 00:35:07,606 --> 00:35:09,673
 is interacting with me right now, okay?
+希望立马响应的操作.
 
 670
 00:35:09,675 --> 00:35:11,641
 So, this is very high priority, but
+所以它拥有最高优先级，
 
 671
 00:35:11,643 --> 00:35:15,345
 lower priority than the main queue, okay? So, this might be
+但这仍然要比主队列的优先级低. 这可能是
 
 672
 00:35:15,347 --> 00:35:18,081
 something where the user is dragging with their finger,
+用户在拖拽手指时，
 
 673
 00:35:18,083 --> 00:35:21,218
 and you're having to calculate something to make the image
+你需要同时计算一些数据并
 
 674
 00:35:21,220 --> 00:35:23,220
 that's pretty intensive, time wise, and so
+立即给出反馈，这时就应该将任务扔到
 
 675
 00:35:23,222 --> 00:35:26,089
 you put it off on the thread. The user continues to drag,
+这种队列中. 用户继续手指继续拖拽，
 
 676
 00:35:26,091 --> 00:35:27,390
 they're not seeing the result and
+但是没有看到数据显示，
 
 677
 00:35:27,392 --> 00:35:28,558
 then the result comes back in and
+等数据计算完成时，
 
 678
 00:35:28,560 --> 00:35:30,393
 then the user gets to see the result. So
+用户才能看到数据. 所以，
 
 679
 00:35:30,395 --> 00:35:32,362
 the results a little bit behind their finger,
+数据会比用户的手势慢一步，
 
 680
 00:35:32,364 --> 00:35:33,196
 because it takes so much time, but
+因为计算会花一些时间，
 
 681
 00:35:33,198 --> 00:35:35,799
 at least as their finger tracks the main queue is still
+但至少主线程一直在监听
 
 682
 00:35:35,801 --> 00:35:39,870
 listening to their finger, okay, and responding, okay?
+手指的轨迹，并且响应还是有的，
 
 683
 00:35:39,872 --> 00:35:42,005
 So that's what USE_INTERACTIVE is for.
+这就是 USER_INTERACTIVE 优先级.
 
 684
 00:35:42,007 --> 00:35:45,675
