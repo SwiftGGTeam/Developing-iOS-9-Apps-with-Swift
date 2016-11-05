@@ -1288,7 +1288,7 @@ You can move things around wherever you want. Okay, so
 
 323
 00:16:03,630 --> 00:16:07,098
-now I have to NVCs in here. One really interesting thing
+now I have two MVCs in here. One really interesting thing
 
 324
 00:16:07,100 --> 00:16:12,704
