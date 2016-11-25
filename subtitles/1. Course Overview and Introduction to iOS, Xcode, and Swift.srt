@@ -5050,7 +5050,7 @@ s digit. Comma digit.
 1013
 00:50:25,256 --> 00:50:27,790
 This is what it would look like in C. For example,
-这就看起来像是C语音
+这就看起来像是C语言
 
 1014
 00:50:27,792 --> 00:50:31,327
@@ -6851,7 +6851,7 @@ Okay, why don't we need that? Because false can only be
 1374
 01:09:09,613 --> 01:09:15,750
 a Bool, so Swift can infer that the type of this is Bool.
-因为 false 只能是个 Bool 类型。所以 Swift 可以推倒它就是个 Bool 类型
+因为false 只能是个Bool 型。所以Swift 可以推导它就是个Bool 型
 
 1375
 01:09:15,886 --> 01:09:19,821
