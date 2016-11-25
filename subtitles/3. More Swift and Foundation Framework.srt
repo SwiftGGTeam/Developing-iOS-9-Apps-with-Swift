@@ -1,4 +1,4 @@
-﻿1
+1
 00:00:06,000 --> 00:00:09,060
 Stanford University. >> Okay,
 斯坦福大学
@@ -660,8 +660,8 @@ It's type is a tuple, with a string, int, and
 
 132
 00:07:09,950 --> 00:07:14,020
-double. So, even though tuple has the sound, two, in it,
-尽管元组听起来有two 的声音
+double. So, even though tuple has the sound, to, in it,
+尽管元组听起来有 two 的声音
 
 133
 00:07:14,020 --> 00:07:17,190
@@ -761,7 +761,7 @@ and value would be of type double. Okay,
 152
 00:08:18,120 --> 00:08:22,090
 another way to do it is when you create the tuple, okay,
-另一种这么做的方法是，当你在生成元组时
+另一种这么做的方法是，当你在生成元组时，好的。
 
 153
 00:08:22,090 --> 00:08:24,830
@@ -776,7 +776,7 @@ here I'm letting x, this time be w: String i: Int v: Double.
 155
 00:08:31,070 --> 00:08:34,640
 I'm giving the names w, i and v to the things inside
-我在元组里面分别起了几个名字叫w，i 和 v
+我在元组里面分别起了几个名字叫 w，i 和 v
 
 156
 00:08:34,640 --> 00:08:37,240
@@ -906,7 +906,7 @@ So tuples are perfectly valid return values, okay? So
 181
 00:09:50,010 --> 00:09:52,910
 you can return multiple things from functions. All right,
-所以你可以从这可方法返回多个值
+所以你可以从函数返回多个值
 
 182
 00:09:52,920 --> 00:09:56,850
@@ -1381,7 +1381,7 @@ it doesn't want to actually make a copy. Okay?
 276
 00:15:08,430 --> 00:15:11,430
 It gets another pointer to it but as soon as you try to
-在你视图去改变它的时候
+在你试图去改变它的时候
 
 277
 00:15:11,430 --> 00:15:15,370
@@ -1661,7 +1661,7 @@ you're gonna choose classes, okay? Anything big is almost
 332
 00:17:45,090 --> 00:17:50,660
 certainly gonna use the class, all right? Okay.
-任何大型的东西坑定会使用类，对吗？
+任何大型的东西肯定会使用类，对吗？
 
 333
 00:17:50,660 --> 00:17:53,730
@@ -1958,7 +1958,7 @@ possible to mark a method or a property final in which case
 392
 00:21:18,200 --> 00:21:21,270
 no one can subclasses. Okay, there won't be a list,
-一个子类不能再类前放 override
+一个子类不能在类前放 override
 
 393
 00:21:21,270 --> 00:21:24,740
@@ -2248,7 +2248,7 @@ In Swift we're only just scratching the surface so
 450
 00:24:27,890 --> 00:24:31,220
 far of what they can do. But one really cool thing about
-但是有一件关于它的很酷低是
+但是有一件关于它的很酷的是
 
 451
 00:24:31,230 --> 00:24:35,830

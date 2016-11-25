@@ -1,4 +1,4 @@
-﻿1
+1
 00:00:00,001 --> 00:00:03,769
 [MUSIC]
 
@@ -9,98 +9,122 @@ Stanford University. Okay,
 3
 00:00:07,575 --> 00:00:11,910
 well welcome to Lecture four of Stanford's CS193P,
+欢迎来到2016春季Stanford CS193P 第四讲
 
 4
 00:00:11,912 --> 00:00:16,682
 spring of 2016. Today our topic is views. Okay,
+我们今天的主题是Views
 
 5
 00:00:16,684 --> 00:00:19,485
 views are the rectangular areas on screen that we draw
+view就是我们在屏幕上绘画的矩形区域
 
 6
 00:00:19,487 --> 00:00:22,821
 in. Its also the places where we handle multi-touch,
+它也是我们处理多点触摸的地方
 
 7
 00:00:22,823 --> 00:00:26,392
 we'll be talking about that next week. So today is,
+我们将在下周讨论这个
 
 8
 00:00:26,394 --> 00:00:28,560
 it's all about the drawing side and I have, of course,
+所以今天我们只讨论绘图方面
 
 9
 00:00:28,562 --> 00:00:32,765
 have a demo where we're gonna draw a custom view, okay? So
+当然,我们有一个将绘出自定义view的Demo
 
 10
 00:00:32,767 --> 00:00:35,634
 let's talk about views. The view is that rectangular area,
+所以让我们来讨论一下views,View是一块矩形的区域
 
 11
 00:00:35,636 --> 00:00:39,104
 as I said. It defines a coordinate space, okay?
+正如我所说,它定义了一块坐标空间
 
 12
 00:00:39,106 --> 00:00:42,041
 So, any time you're drawing or handling input, or whatever,
+所以,任何时候你需要绘图、处理输入或者其他的事情时
 
 13
 00:00:42,043 --> 00:00:45,010
 you need a coordinate space to be defined for you. And,
+你需要一块定义好的坐标空间
 
 14
 00:00:45,012 --> 00:00:49,581
 use that space to draw and to handle touch events. This kind
+并且利用这块空间来绘图和处理触摸事件
 
 15
 00:00:49,583 --> 00:00:53,886
 of view setup is hierarchical, as you might imagine, so,
+这种view是分层的，如你所想
 
 16
 00:00:53,888 --> 00:00:58,824
 you can imagine that you have some view, like maybe this is
+你可以想象你拥有一个view，也许
 
 17
 00:00:58,826 --> 00:01:01,960
 the view that contains your entire UI for an MVC.
+包含了你的MVC中全部UI的view
 
 18
 00:01:01,962 --> 00:01:05,130
 And then, you've got some sub views maybe they're buttons,
+随后你得到了一些子view，比如按钮
 
 19
 00:01:05,132 --> 00:01:08,233
 or whatever, and they might be inside a view,
+或是其他什么东西。他们可能在一个view的内部
 
 20
 00:01:08,235 --> 00:01:10,602
 like let's say a stack view or something like that.
+比如我们说过的StackView或是其他类似的东西
 
 21
 00:01:10,604 --> 00:01:13,172
 And, maybe those are in another view, okay? So,
+这些可能都在另外的一个view之中,okay?
 
 22
 00:01:13,174 --> 00:01:16,075
 you can see how these things are hierarchical, right?
+你们能够看出这些东西的层级结构吗对吗？
 
 23
 00:01:16,077 --> 00:01:19,311
 You're building your views in a hierarchy,
+你们将一层一层的来构建你的视图
 
 24
 00:01:19,313 --> 00:01:22,848
 a view hierarchy we call it, okay? Now,
+我们称作视图的层级, okay?
 
 25
 00:01:22,850 --> 00:01:26,752
 these views can overlap, obviously.
+显然，view是可以部分重叠的
 
 26
 00:01:26,754 --> 00:01:30,089
 And, they also, even if you have a view inside a view, so
+view也可以在另外的view之中
 
 27
 00:01:30,091 --> 00:01:31,657
