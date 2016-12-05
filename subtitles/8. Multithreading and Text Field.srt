@@ -2521,2022 +2521,2527 @@ Okay? Most of the time these functions are closures. Okay?
 505
 00:26:58,484 --> 00:27:02,052
 That you've put in there. Okay? Blocks of code that you
+然后加入到队列中. 就是闭包中的代码，
 
 506
 00:27:02,054 --> 00:27:06,824
 put in this queue. Okay? And then, the system simply runs
+加入到队列中. 接着，系统会单独运行
 
 507
 00:27:06,826 --> 00:27:09,693
 along this queue, pulls the next thing off the queue and
+这个队列，将队列中的任务取出，
 
 508
 00:27:09,695 --> 00:27:13,430
 starts it running in a separate thread, okay?
+然后在独立的线程中运行.
 
 509
 00:27:13,432 --> 00:27:16,100
 And you can have multiple of these queues and the system is
+你也可以有很多个队列，然后系统便会
 
 510
 00:27:16,102 --> 00:27:18,602
 pulling them off each one and running them un, in their
+分别取出，然后...在各自的线程中
 
 511
 00:27:18,604 --> 00:27:21,705
 own threads, simple as that, you just got multithreading.
+执行，就这么简单的用上了多线程.
 
 512
 00:27:21,707 --> 00:27:24,642
 Okay. Now there's a little bit of trickiness
+那么现在有个问题，
 
 513
 00:27:24,644 --> 00:27:25,909
 here of what are these queues and
+队列是什么，
 
 514
 00:27:25,911 --> 00:27:27,444
 how do you put things on the queues, but
+怎么将任务加入到队列中，
 
 515
 00:27:27,446 --> 00:27:30,180
 that's the fundamental way these work. Now queues can
+这属于队列运行原理. 队列可以是
 
 516
 00:27:30,182 --> 00:27:34,118
 either be serial, which means the function that's on the top
+串行的，意思是只有当上一个任务执行完后，
 
 517
 00:27:34,120 --> 00:27:37,154
 of the queue gets pulled off, it runs to completion, and
+新的队首元素才会出队
 
 518
 00:27:37,156 --> 00:27:40,824
 then the next one gets pulled off. That's serial queues. Or
+接着执行. 这就是串行队列.
 
 519
 00:27:40,826 --> 00:27:43,494
 they can be concurrent, where the system pulls the top
+队列也可以是并行的，意思是系统出队
 
 520
 00:27:43,496 --> 00:27:46,130
 one off the queue, starts it running in a thread. If it's
+一个队首元素，就立即在一个线程中执行. 如果是这样，
 
 521
 00:27:46,132 --> 00:27:48,599
 got more thread resources, it takes the next one off,
+就会占用更多的资源，下一个任务出队以后
 
 522
 00:27:48,601 --> 00:27:51,402
 starts it running in another thread while the first one's
+就会在另一个线程中进行执行，此时，第一个出队的任务
 
 523
 00:27:51,404 --> 00:27:51,502
 still running, and
+仍在执行，
 
 524
 00:27:51,504 --> 00:27:55,873
 it might keep pulling a whole bunch of them off. Okay, so
+这种队列甚至可以直接将整个队列元素出队执行. 
 
 525
 00:27:55,875 --> 00:27:57,775
 that's a concurrent queue.
+这就是并行队列.
 
 526
 00:27:57,777 --> 00:28:00,544
 All right, so let's talk about the queues, how we get them,
+接下来，再来看看队列的其他知识. 我们怎么获得队列，
 
 527
 00:28:00,546 --> 00:28:03,781
 what, what we call them, etc. The most important queue,
+怎样调用它们，等等. 对重要的队列，
 
 528
 00:28:03,783 --> 00:28:06,717
 it's a serial queue called the main queue, okay?
+就是一个称为主队列的串行队列.
 
 529
 00:28:06,719 --> 00:28:10,554
 The main queue is where all UI activity has to happen. And
+主队列是刷新 UI 控件的队列. 
 
 530
 00:28:10,556 --> 00:28:14,658
 this is super important for you to understand. That if you
+大家一定要着重理解这个知识点. 如果你在
 
 531
 00:28:14,660 --> 00:28:19,063
 want to do anything where you call something a UI kit, okay,
+做一些和 UIKit 相关的动作，比如
 
 532
 00:28:19,065 --> 00:28:21,331
 UI button, UI anything, all right,
+UIButton，或其他 UI 元素，
 
 533
 00:28:21,333 --> 00:28:24,334
 with a couple of exceptions which I'll talk about later.
+包括之后我们还会学到的其他 UI 控件. 
 
 534
 00:28:24,336 --> 00:28:27,104
 You need to be making those calls on the main queue.
+它们都必须要在主队列中进行操作.
 
 535
 00:28:27,106 --> 00:28:31,241
 In other words, you can't put those calls in a closure that
+换句话说，它们不能再其他队列的闭包
 
 536
 00:28:31,243 --> 00:28:34,378
 you put on some other queue. Okay, it has to be on the main
+中执行. 必须在主队列中执行》 
 
 537
 00:28:34,380 --> 00:28:39,149
 queue, all right? Now conversely, all non-UI
+记住了吗？相反，所有和 UI 控件
 
 538
 00:28:39,151 --> 00:28:42,519
 activity that's gonna take any amount of time or resources,
+无关的操作，可能会耗时，或耗资源的操作，
 
 539
 00:28:42,521 --> 00:28:45,589
 probably wants to be off the main queue. So it never blocks
+就不要放到主队列中. 千万不要阻塞
 
 540
 00:28:45,591 --> 00:28:48,092
 the main queue. We want the main queue reserved for
+主队列. 我们应该尽可能的将主队列的资源
 
 541
 00:28:48,094 --> 00:28:51,562
 doing our UI stuff as much as possible. Okay, now this is
+用来调度 UI 元素. 当然，希望 UI 控件能及时响应
 
 542
 00:28:51,564 --> 00:28:55,799
 not only cuz we want our main queue UI to be responsive,
+只是其中一个原因，
 
 543
 00:28:55,801 --> 00:28:56,767
 okay, that's the main reason, but
+也是最主要的原因，另外
 
 544
 00:28:56,769 --> 00:29:00,671
 also it serializes the activity on the main queue so
+一个原因，是因为主队列是串行队列，所以
 
 545
 00:29:00,673 --> 00:29:03,907
 that our UI is presented in an orderly fashion. If,
+UI 元素能按照我们给的顺序来执行. 如果，
 
 546
 00:29:03,909 --> 00:29:06,343
 if we allowed our UI to be on all these different queues, it
+如果允许在不同的队列中操作 UI，实际上却是是
 
 547
 00:29:06,345 --> 00:29:08,912
 could, things would be drawing at all different rates and
+可以的，但是绘制速度就会不同，从而出现
 
 548
 00:29:08,914 --> 00:29:09,480
 overlapping, it would be
+重叠，预测不了
 
 549
 00:29:09,482 --> 00:29:11,882
 unpredictable as to what happened on screen. Okay, so
+界面效果. 所以
 
 550
 00:29:11,884 --> 00:29:15,285
 we use the main queue as kind of a synchronization point
+我们需要要利用主队列的同步性，
 
 551
 00:29:15,287 --> 00:29:18,522
 where everybody comes back to draw on the main queue,
+保证所有的绘制都在主队列中进行，
 
 552
 00:29:18,524 --> 00:29:22,259
 all right? Now the main queue can only pull a closure or
+明白了吗？主队列每次会出队一个闭包或
 
 553
 00:29:22,261 --> 00:29:24,294
 a function off of the main queue and
+一个方法，
 
 554
 00:29:24,296 --> 00:29:26,630
 work on it when it's quiet. In other words,
+在静默时，执行它. 换句话说，
 
 555
 00:29:26,632 --> 00:29:28,532
 it's not off doing something else, like drawing or
+它一直都是执行状态，比如在绘制，或
 
 556
 00:29:28,534 --> 00:29:31,835
 something like, like that. Now the system is using the main
+在执行和绘制差不多的任务. 主队列会一直在
 
 557
 00:29:31,837 --> 00:29:33,403
 queue behind the scenes all the time.
+系统后台运行着.
 
 558
 00:29:33,405 --> 00:29:35,572
 For example, you know about draw req. Right.
+比如，你知道绘制操作吧.
 
 559
 00:29:35,574 --> 00:29:38,342
 I told you draw req gets called by the system and
+我之前说过，绘制是系统在调用，
 
 560
 00:29:38,344 --> 00:29:40,277
 it doesn't get called, you don't call it,
+你并没有手动去调用，
 
 561
 00:29:40,279 --> 00:29:42,913
 you don't tell it to, you just set needs display.
+并没有让系统去调，只是告诉系统它需要显示.
 
 562
 00:29:42,915 --> 00:29:44,348
 Well, you set needs display and
+设置在主线程空闲的时候
 
 563
 00:29:44,350 --> 00:29:48,585
 as soon as the main queue gets quiet, it goes and runs some
+进行显示，系统会运行或调用某些
 
 564
 00:29:48,587 --> 00:29:51,555
 function that causes that draw req to be called. So
+方法来进行绘制. 这便是
 
 565
 00:29:51,557 --> 00:29:54,525
 you see how that works, okay? So that's what's going on in
+绘制的工作原理. 这便是主队列
 
 566
 00:29:54,527 --> 00:29:57,294
 the main queue. What about other queues? Okay, so
+在处理的东西. 那么其他队列呢？看
 
 567
 00:29:57,296 --> 00:30:00,030
 there's, I'm, in the next slide I'm gonna talk about
+这里，下个话题便会讲讲
 
 568
 00:30:00,032 --> 00:30:02,800
 two different kinds of other queues that you can use to run
+其他两种不同的队列，能用来处理
 
 569
 00:30:02,802 --> 00:30:06,236
 all your non-UI stuff. All right? So the first,
+所有和 UI 无关的队列. 目前，
 
 570
 00:30:06,238 --> 00:30:09,039
 not gonna talk about this now, that'll be on the next slide.
+我们暂时不谈这个，这是下个话题.
 
 571
 00:30:09,041 --> 00:30:12,142
 So on this slide I'm gonna talk a little bit about how we
+这张幻灯片还有一点东西没讲完，关于如何
 
 572
 00:30:12,144 --> 00:30:14,845
 put something on a queue and the main way we do it is
+将任务放到队列中，最常见的做法是
 
 573
 00:30:14,847 --> 00:30:17,981
-with this function right here called dispatc_async.
+with this function right here called dispatch_async.
+调用一个叫 dispatch_async 的方法.
 
 574
 00:30:17,983 --> 00:30:22,986
-Dispatc_async takes two arguments. One is the queue to
+Dispatch_async takes two arguments. One is the queue to
+Dispatch_async 有两个参数. 一个是要加入的
 
 575
 00:30:22,988 --> 00:30:25,455
 put it on, like the main queue or one of these other queues,
+队列，可以是主队列，或者其他队列，
 
 576
 00:30:25,457 --> 00:30:29,760
 and the second argument is the function to put on the queue,
+第二个参数是，要加入队列的方法，
 
 577
 00:30:29,762 --> 00:30:32,963
 again, usually it's a closure. You see how I'm using trailing
+当然，通常是闭包. 我这里简单写了一个
 
 578
 00:30:32,965 --> 00:30:35,933
 closure syntax right there? Okay. This is two arguments.
+闭包的语法. 这有两个参数，
 
 579
 00:30:35,935 --> 00:30:39,002
 One argument. Two arguments. So this is the closure you're
+一个参数. 两个参数. 这就是加入到队列中的
 
 580
 00:30:39,004 --> 00:30:41,605
 gonna put on there. What's cool about these closures,
+闭包. 看起来很不错吧，
 
 581
 00:30:41,607 --> 00:30:43,607
 they take no arguments and then return no arguments.
+闭包没有参数，也没有返回值.
 
 582
 00:30:43,609 --> 00:30:46,910
 So they're really easy to, to [LAUGH] put into your code.
+所以，非常容易嵌到你的代码中（笑~
 
 583
 00:30:46,912 --> 00:30:50,180
 Okay? And you can put anything you want in here. Okay?
+你可以将任何想执行的代码扔到里面.
 
 584
 00:30:50,182 --> 00:30:53,884
 But if this gonna do UI, you better not put it on anything
+当然，最好是将 UI 操作扔进去，而不是别的操作，
 
 585
 00:30:53,886 --> 00:30:58,388
 but the main queue. All right, so how do you get the queue?
+毕竟这是主线程. 所以，怎样获得一个队列呢？
 
 586
 00:30:58,390 --> 00:30:59,823
 How do you get this little queue argument?
+怎样传入这个队列参数？
 
 587
 00:30:59,825 --> 00:31:02,993
 Well, for the main queue, you call this function,
+对于主队列来说，可以通过调用
 
 588
 00:31:02,995 --> 00:31:05,963
-dispatc_ge_mai_queue. Now, you might ask,
+dispatch_get_main_queue. Now, you might ask,
+dispatch_get_main_queue 来获得. 你或许会问，
 
 589
 00:31:05,965 --> 00:31:10,100
 why is all these underbars and why does this look like this?
+为什么这么多下划线，为什么这个方法长这样？
 
 590
 00:31:10,102 --> 00:31:15,339
 This is basically a CAPI, okay, from iOS before Swift,
+因为这是基于 CAPI 的，属于 iOS，而不是 Swift 的语法，
 
 591
 00:31:15,341 --> 00:31:18,008
 and so it comes into swift looking like a CAPI.
+所以这使得 Swift 看起来像 CAPI 一样.
 
 592
 00:31:18,010 --> 00:31:21,011
 These are Swift, these are just Swift global functions.
+在 Swift 中，这是个全局方法.
 
 593
 00:31:21,013 --> 00:31:23,413
 But the reason this is not object oriented, for
+它不是面向对象的，因为
 
 594
 00:31:23,415 --> 00:31:26,083
 example is because this is a CAPI.
+它是 CAPI.
 
 595
 00:31:26,085 --> 00:31:28,852
 This, this is called grand central dispatch actually,
+实际上，它被称为 GCD（大中枢派发）
 
 596
 00:31:28,854 --> 00:31:30,454
 that's why they all start with dispatch,
+所以这个方法以 dispatch 开头，
 
 597
 00:31:30,456 --> 00:31:33,290
 all this multithreading stuff, and that's why it looks like
+这就是为什么，所有这类多线程接口，都和这个类似.
 
 598
 00:31:33,292 --> 00:31:37,094
 this. I'm gonna show you the object-oriented way to do
+之后我会介绍怎么用面向对象的方式使用
 
 599
 00:31:37,096 --> 00:31:40,764
 this in a minute, but actually we're gonna end up using these
+这些接口，在此之前，你还会继续
 
 600
 00:31:40,766 --> 00:31:44,768
 C-like ones more often, all right? So, again, all UI stuff
+使用 C 语言的风格的接口. 再次强调，所有 UI 的操作
 
 601
 00:31:44,770 --> 00:31:49,039
 have to be on this main queue. It's a serial queue, okay, so
+都必须在主队列中进行. 这是个串行队列，
 
 602
 00:31:49,041 --> 00:31:51,608
 nothing happens concurrently on this queue,
+所以这个队列中不可能有并行的操作出现，
 
 603
 00:31:51,610 --> 00:31:55,112
 things happen in order in the order they go in, okay?
+入队是什么顺序，出队就是什么顺序，有问题吗？
 
 604
 00:31:55,114 --> 00:31:57,381
 And, but all time-consuming stuff,
+所有耗时的操作，
 
 605
 00:31:57,383 --> 00:31:59,750
 okay, or even worse stuff that might block,
+或其他耗资源的操作，都可能造成阻塞，
 
 606
 00:31:59,752 --> 00:32:02,786
 like you're going out to the network to get an image,
+就像网络请求图片这类的操作，
 
 607
 00:32:02,788 --> 00:32:05,555
 like we are doing where that block's waiting for
+或者其他因等待网络响应，
 
 608
 00:32:05,557 --> 00:32:07,958
 the Web server on the other side to respond,
+而导致阻塞的操作，
 
 609
 00:32:07,960 --> 00:32:10,794
 all that wants to happen off the main queue.
+这些操作，都不应该出现在主队列中.
 
 610
 00:32:10,796 --> 00:32:15,032
-Now you still dispatch to that queue using dispatc_async.
+Now you still dispatch to that queue using dispatch_async.
+目前我们在使用 dispatch_async 来派发队列.
 
 611
 00:32:15,034 --> 00:32:17,367
 You go down here and you say look at the bottom,
+看到讲义的底部，
 
 612
 00:32:17,369 --> 00:32:20,170
 it says dispatc_async, not the main queue in here.
+参数这里写到，不一定非要传入主队列.
 
 613
 00:32:20,172 --> 00:32:22,973
 And I'll talk about where you get that queue in a second.
+之后会讲到如何获得其他队列.
 
 614
 00:32:22,975 --> 00:32:24,007
 And then open curly brace,
+接着，代码包含在大括号中，
 
 615
 00:32:24,009 --> 00:32:27,644
 so this is a closure, inside that closure you do the non-UI
+所以这是一个闭包，在闭包中，执行的是和 UI 无关的
 
 616
 00:32:27,646 --> 00:32:31,081
 thing that takes a long time or blocks. And then still
+操作，它可能会花很长时间，或者发生阻塞. 接着又是一个
 
 617
 00:32:31,083 --> 00:32:35,485
-inside this closure, you dispatc_async again. This
+inside this closure, you dispatch_async again. This
+闭包，再次 dispatch_async. 这次
 
 618
 00:32:35,487 --> 00:32:39,990
 time back to the main queue to do the UI stuff that you need,
+回到了主队列中，处理和 UI 相关的操作，
 
 619
 00:32:39,992 --> 00:32:43,160
 maybe that the image you got from doing this, you now put
+可能是你请求完了图片，需要
 
 620
 00:32:43,162 --> 00:32:47,064
 this in the UI here. So look how I'm dispatching within
+扔到 UI 上进行显示. 所以来看看如何通过闭包
 
 621
 00:32:47,066 --> 00:32:50,567
 a closure. So can you imagine this outer closure
+来派发它们. 你能想象外部闭包
 
 622
 00:32:50,569 --> 00:32:53,770
 is off running on some other thread in some other queue and
+在其他队列的其他线程上运行，
 
 623
 00:32:53,772 --> 00:32:57,908
 in the middle of it, it puts a block of code,
+然后在其中，又有一个代码块，
 
 624
 00:32:57,910 --> 00:32:58,508
 this block right here,
+就是这个代码块，
 
 625
 00:32:58,510 --> 00:33:02,279
 this closure. It puts it back on the main queue, this one
+这个闭包. 又回到了主队列，
 
 626
 00:33:02,281 --> 00:33:05,315
 continues to run after that in fact dispatc_async,
+继续通过 dispatch_async 方法执行操作，
 
 627
 00:33:05,317 --> 00:33:08,418
 that function always returns immediately. Because all it
+这个方法会立即返回. 因为它是将任务
 
 628
 00:33:08,420 --> 00:33:11,655
 does is put things on queues, it doesn't actually execute
+扔到队列中，而没有真正执行
 
 629
 00:33:11,657 --> 00:33:13,490
 any of the code inside the block.
+代码块中的代码.
 
 630
 00:33:13,492 --> 00:33:16,827
 It just puts that block of code onto the queue. Okay, and
+只是将代码块扔到了队列中. 
 
 631
 00:33:16,829 --> 00:33:20,397
 then this outer closure just happily runs to completion and
+接着，这个外部闭包就
 
 632
 00:33:20,399 --> 00:33:23,500
 it's done. Meanwhile, that inner block has been posted
+执行完了. 与此同时，内部闭包也扔到了
 
 633
 00:33:23,502 --> 00:33:24,868
 on the main queue and it's just waiting for
+主队列中，等待
 
 634
 00:33:24,870 --> 00:33:27,637
 the main queue, for it to be first in line and
+主队列执行. 排到主队列中，
 
 635
 00:33:27,639 --> 00:33:28,405
 for the main queue to be quiet, and
+当主队列空闲下来，
 
 636
 00:33:28,407 --> 00:33:33,143
 then it'll pick it up and run it. You got it? So this is why
+便会出队并执行. 这就是为什么
 
 637
 00:33:33,145 --> 00:33:36,680
 we use the C function notation because it reads really cool,
+我们会用 C 函数，因为看起来真的挺酷的.
 
 638
 00:33:36,682 --> 00:33:39,816
 okay? Dispatch off the queue this, then dispatch the main
+先派发这个队列，然后派发
 
 639
 00:33:39,818 --> 00:33:44,087
 queue this, okay? It reads very clearly to the person
+主队列. 很容易让阅读代码的人
 
 640
 00:33:44,089 --> 00:33:46,790
 who's reading your code what you intend. Okay, but
+明白你的意图. 但是
 
 641
 00:33:46,792 --> 00:33:49,192
 you do have to remember that this is async,
+注意这些都是异步的，
 
 642
 00:33:49,194 --> 00:33:53,163
 it's out of sync. Just because you say to execute this code,
+不是同步的. 因为我们并不需要显性调用这些代码，
 
 643
 00:33:53,165 --> 00:33:53,997
 it's not gonna happen right away.
+这些代码不会立刻执行.
 
 644
 00:33:53,999 --> 00:33:56,099
 It's just being put on that queue, it'll happen sometime
+只是将它们加入到队列中，它们会在
 
 645
 00:33:56,101 --> 00:34:00,037
 in the future when that queue is ready, okay? When it rises
+队列空闲下来的时候自己执行. 当它们是队列
 
 646
 00:34:00,039 --> 00:34:04,975
 to the top of that queue and the main queue is quiet, okay?
+的队首元素，并且主队列闲下来的时候，就会执行.
 
 647
 00:34:04,977 --> 00:34:08,111
 So how do we get these not the main queue queues?
+那么，怎么获得除了主队列以外的队列呢？
 
 648
 00:34:08,113 --> 00:34:10,313
 Okay, that we want to run something else on.
+比如我们想要执行其他的一些操作.
 
 649
 00:34:10,315 --> 00:34:11,415
 Well there's really two ways to do it.
+这有两种方式可用.
 
 650
 00:34:11,417 --> 00:34:15,552
 The most common way is to use one of the concurrent queues
+最常见的直接使用系统提供的
 
 651
 00:34:15,554 --> 00:34:18,121
 provided by the system, okay? Now these
+并行队列. 这四种队列
 
 652
 00:34:18,123 --> 00:34:21,758
 queues provided by the system there's four of them, okay?
+就是系统提供的.
 
 653
 00:34:21,760 --> 00:34:25,295
 They each have what's called a quality of service and
+它们有着不同的优先级的服务，
 
 654
 00:34:25,297 --> 00:34:28,165
 the quality of service is really how
+服务的优先级其实就是
 
 655
 00:34:28,167 --> 00:34:31,668
 much attention the system gives to them.
+系统会给予多少的关注度.
 
 656
 00:34:31,670 --> 00:34:34,304
 You can think of it as their priority. High-priority queues
+你可以顺着优先级来认识它们. 高优先级队列
 
 657
 00:34:34,306 --> 00:34:37,174
 get a high quality of service. They get serviced a lot, okay?
+拥有最高优先级的服务. 它们能获得较多的服务.
 
 658
 00:34:37,176 --> 00:34:41,111
 But it's not purely that, but it's generally that. So
+但也不是绝对的，只是大致上来说而已.
 
 659
 00:34:41,113 --> 00:34:43,513
 what are the four qualities of service here?
+来看看这四种优先级的服务吧.
 
 660
 00:34:43,515 --> 00:34:46,817
-One is USE_INTERACTIVE. So, you can get a queue, you
+One is USER_INTERACTIVE. So, you can get a queue, you
+一种是 USER_INTERACTIVE. 所以，你可以通过调用
 
 661
 00:34:46,819 --> 00:34:49,753
 can call this dispatch, get global queue right here. And
+get_global_queue 方法来获得一个队列.
 
 662
 00:34:49,755 --> 00:34:52,589
 you can say give me the user interactive queue. Again, it's
+然后给它 USER_INTERACTIVE 优先级. 这是个
 
 663
 00:34:52,591 --> 00:34:54,925
 a concurrent queue, so it's doing things concurrently,
+并行队列，所以会并行处理操作，
 
 664
 00:34:54,927 --> 00:34:58,495
 it's not serial. And user interactive means
+这就不像串行了. USER_INTERACTIVE 意味着
 
 665
 00:34:58,497 --> 00:35:01,398
 the user just asked to do something.
+这是用户要求处理的事情.
 
 666
 00:35:01,400 --> 00:35:03,066
 It's gonna take a little bit of time,
+可能会花一些时间，
 
 667
 00:35:03,068 --> 00:35:04,801
 so I don't want to do it on the main queue,
+虽然我不想再主队列中进行处理，
 
 668
 00:35:04,803 --> 00:35:07,604
 but I need this done as soon as possible because the user
+但是我仍然希望能进行执行，毕竟这是用户
 
 669
 00:35:07,606 --> 00:35:09,673
 is interacting with me right now, okay?
+希望立马响应的操作.
 
 670
 00:35:09,675 --> 00:35:11,641
 So, this is very high priority, but
+所以它拥有最高优先级，
 
 671
 00:35:11,643 --> 00:35:15,345
 lower priority than the main queue, okay? So, this might be
+但这仍然要比主队列的优先级低. 这可能是
 
 672
 00:35:15,347 --> 00:35:18,081
 something where the user is dragging with their finger,
+用户在拖拽手指时，
 
 673
 00:35:18,083 --> 00:35:21,218
 and you're having to calculate something to make the image
+你需要同时计算一些数据并
 
 674
 00:35:21,220 --> 00:35:23,220
 that's pretty intensive, time wise, and so
+立即给出反馈，这时就应该将任务扔到
 
 675
 00:35:23,222 --> 00:35:26,089
 you put it off on the thread. The user continues to drag,
+这种队列中. 用户继续手指继续拖拽，
 
 676
 00:35:26,091 --> 00:35:27,390
 they're not seeing the result and
+但是没有看到数据显示，
 
 677
 00:35:27,392 --> 00:35:28,558
 then the result comes back in and
+等数据计算完成时，
 
 678
 00:35:28,560 --> 00:35:30,393
 then the user gets to see the result. So
+用户才能看到数据. 所以，
 
 679
 00:35:30,395 --> 00:35:32,362
 the results a little bit behind their finger,
+数据会比用户的手势慢一步，
 
 680
 00:35:32,364 --> 00:35:33,196
 because it takes so much time, but
+因为计算会花一些时间，
 
 681
 00:35:33,198 --> 00:35:35,799
 at least as their finger tracks the main queue is still
+但至少主线程一直在监听
 
 682
 00:35:35,801 --> 00:35:39,870
 listening to their finger, okay, and responding, okay?
+手指的轨迹，并且响应还是有的，
 
 683
 00:35:39,872 --> 00:35:42,005
 So that's what USE_INTERACTIVE is for.
+这就是 USER_INTERACTIVE 优先级.
 
 684
 00:35:42,007 --> 00:35:45,675
 USE_INITIATED means the user just asked me to do this, but
+USE_INITIATED 意思是，用户让我处理这个，但是不需要在
 
 685
 00:35:45,677 --> 00:35:48,812
 it's not in the middle of an interactive event so, you can
+用户交互的时候去处理，所以允许事件
 
 686
 00:35:48,814 --> 00:35:51,181
 take a little bit of time but get back to me right away,
+等待一些事件，但一旦处理完一定要有反馈
 
 687
 00:35:51,183 --> 00:35:53,950
 cuz the user just asked for this, right now, okay?
+因为这是用户要求处理的
 
 688
 00:35:53,952 --> 00:35:58,255
 So, that's lower priority, than an interactive thing.
+所以，它的优先级要比交互事件低一等
 
 689
 00:35:58,257 --> 00:36:02,626
 UTILITY is something that usually runs in the background
+UTILITY 一般用于在后台处理
 
 690
 00:36:02,628 --> 00:36:06,796
 for a long time, okay? Maybe it's fetching data.
+一些耗时操作，比如获取数据什么的.
 
 691
 00:36:06,798 --> 00:36:09,633
 It's cleaning up some database somewhere. It's doing
+也可以用于清理数据库，或者
 
 692
 00:36:09,635 --> 00:36:12,569
 something that the user didn't ask to do, but that needs to
+处理一些程序必须要处理，
 
 693
 00:36:12,571 --> 00:36:15,305
 be done for this program. It's that kind of thing. And
+而用户又没有要求处理的事件. 大致就是这一类事件. 
 
 694
 00:36:15,307 --> 00:36:17,941
 then BACKGROUND is even lower priority. This is the kind of
+BACKGROUND 的优先级最低. 一般将一些可
 
 695
 00:36:17,943 --> 00:36:22,078
 thing well it could run today or tomorrow. But you know,
+今天，可明天处理的事件加到里面. 也就是，
 
 696
 00:36:22,080 --> 00:36:24,247
 it's really not something that I need done right away,
+没必要立马处理，
 
 697
 00:36:24,249 --> 00:36:26,516
 I don't really care. So, it's kind of just a,
+不需要过于关注的事件. 就好比是，
 
 698
 00:36:26,518 --> 00:36:28,318
 something that runs along in the background.
+在后台默默执行的事件. 
 
 699
 00:36:28,320 --> 00:36:30,253
 It's only gonna happen when things are really quiet,
+在没有其他事件需要占用资源的时候，
 
 700
 00:36:30,255 --> 00:36:34,991
 when nobody wants any other service, okay? So, you get one
+它才执行. 到此，你就已经学习了
 
 701
 00:36:34,993 --> 00:36:37,594
-of these four queues by saying dispatc_ge_globa_queue,
+of these four queues by saying dispatch_get_global_queue,
+dispatch_get_global_queue 包含的四种优先级. 
 
 702
 00:36:37,596 --> 00:36:40,430
 you specify which one you want. Then this has this
+可根据需要选择. 除此之外，
 
 703
 00:36:40,432 --> 00:36:44,768
 extra argument ,0 which is reserved for future use, so
+还有一个参数 0，这将在之后用到，
 
 704
 00:36:44,770 --> 00:36:45,602
 you just always put ,0 there.
+现在就简单的传 0 就可以了.
 
 705
 00:36:45,604 --> 00:36:48,505
-And that's gonna give you back a queue, a dispatc_queu_t
+And that's gonna give you back a queue, a dispatch_queue_t
+这样函数就会返回 dispatch_queue_t 类型的队列，
 
 706
 00:36:48,507 --> 00:36:51,942
 that you can then use as your first argument to dispatch
+它可以作为 dispatch_async 的第一个参数.
 
 707
 00:36:51,944 --> 00:36:55,645
 async, okay. So these are the, this is the cues,
+那么，这就是，
 
 708
 00:36:55,647 --> 00:36:57,514
 these are the cues you're most often going to
+这就是在你要处理后台事件时，
 
 709
 00:36:57,516 --> 00:37:00,383
 put this work that needs to be done in the background onto.
+最为常用的队列了.
 
 710
 00:37:00,385 --> 00:37:03,720
 Now, its also possible for you to create your own
+当然，你也可以创建自己的
 
 711
 00:37:03,722 --> 00:37:07,023
-serial queue. You call dispatc_queu_create.
+serial queue. You call dispatch_queue_create.
+串行队列. 通过调用 dispatch_queue_create 函数，
 
 712
 00:37:07,025 --> 00:37:09,626
 You give it a name. This can be any name you want, okay?
+并给队列一个名字，任何名字都可以，
 
 713
 00:37:09,628 --> 00:37:12,028
 This is usually just so you can see it in the debugger,
+这在调试的时候经常看到，
 
 714
 00:37:12,030 --> 00:37:14,297
 okay, this name is gonna appear in the debugger.
+队列名称会出现在调试界面中.
 
 715
 00:37:14,299 --> 00:37:16,366
-And then you say DISPATC_QUEU_SERIAL,
+And then you say DISPATC_QUEUE_SERIAL,
+第二个参数是 DISPATC_QUEUE_SERIAL，
 
 716
 00:37:16,368 --> 00:37:17,500
 saying you want a serial queue.
+表示你需要创建串行队列.
 
 717
 00:37:17,502 --> 00:37:20,737
 Now you will get a serial queue of your own.
+这样就能获得一个自己的串行队列了.
 
 718
 00:37:20,739 --> 00:37:22,672
 And it's gonna be a pretty high priority queue,
+这是一个优先级相当高的队列，
 
 719
 00:37:22,674 --> 00:37:25,742
 nothing like the main queue, but pretty high priority.
+虽然不像主队列那么高，但也算是万人之上了.
 
 720
 00:37:25,744 --> 00:37:27,644
 Why would you ever want a serial queue?
+什么时候需要创建串行队列呢？
 
 721
 00:37:27,646 --> 00:37:31,581
 Let's say you had a big table that you wanna download
+假设你有一个长长的列表，想要下载
 
 722
 00:37:31,583 --> 00:37:34,351
 a thousand images to put in that table.
+一千张图片扔到列表中
 
 723
 00:37:34,353 --> 00:37:37,754
 Small little images, okay? Well you could do it on
+都是些小图标. 你可以
 
 724
 00:37:37,756 --> 00:37:40,290
 one of these user initiated queues or something like that.
+在 USER_INITIATED 队列中或者其他队列中下载.
 
 725
 00:37:40,292 --> 00:37:42,225
 But it's gonna fork off a whole bunch of threads and
+但是这样系统就会创建一大串线程，
 
 726
 00:37:42,227 --> 00:37:45,128
 try to download as many as it can concurrently.
+而且尽可能多的进行并发下载.
 
 727
 00:37:45,130 --> 00:37:46,663
 Open a whole bunch of network connections.
+同时发起一堆网络请求.
 
 728
 00:37:46,665 --> 00:37:50,800
 Whereas if you do is serially it will do it one by one,
+但如果你在串行队列中处理，就会一个一个按秩序下载，
 
 729
 00:37:50,802 --> 00:37:53,837
 okay? So it kind of throttles, it's a throttling,
+就像是限流的阀门，
 
 730
 00:37:53,839 --> 00:37:55,872
 a way of throttling your access to the network,
+有限制的去访问网络.
 
 731
 00:37:55,874 --> 00:37:59,109
 all right? You usually don't need this.
+不过通常不需要这个.
 
 732
 00:37:59,111 --> 00:38:02,212
 These are usually what you're gonna use for that not main
+这些通常会在其他队列中处理，而不是主队列.
 
 733
 00:38:02,214 --> 00:38:06,449
 queue queue, okay? Now, we're only seeing the absolute
+到此，你已学习了多线程必备的一些知识，
 
 734
 00:38:06,451 --> 00:38:09,219
 tip of the iceberg on multithreading here,
+当然这只是冰山一角.
 
 735
 00:38:09,221 --> 00:38:13,323
 okay? There's a lot more to GCD, Grand Central Dispatch.
+更多关于 GCD，Grand Central Dispatch 的内容，
 
 736
 00:38:13,325 --> 00:38:14,557
 You can look in the documentation for
+可以查看文档，
 
 737
 00:38:14,559 --> 00:38:16,660
 all the functions that start with dispatch underbar and
+所有方法都以 dispatch_ 开头，
 
 738
 00:38:16,662 --> 00:38:20,263
 you'll get an idea, there's at least a couple dozen in there.
+至少有一打这样的方法.
 
 739
 00:38:20,265 --> 00:38:24,034
 I don't have time to cover it in this class.
+我没办法在课堂上依次为大家介绍.
 
 740
 00:38:24,036 --> 00:38:24,100
 You won't need it,
+其他方法你也不需要，
 
 741
 00:38:24,102 --> 00:38:26,102
 you won't need anything more than I just showed you for
+除了我介绍给大家的这些方法外，你暂时还用不到别的
 
 742
 00:38:26,104 --> 00:38:28,371
 the work that you're gonna be doing in your assignments.
+包括课后作业也不会用到.
 
 743
 00:38:28,373 --> 00:38:31,007
 In your final project, you probably also won't need
+甚至是最终考核项目，你都可能用不上
 
 744
 00:38:31,009 --> 00:38:33,910
 anymore than that, but at least you know where to look,
+别的方法，但至少要知道用的时候，
 
 745
 00:38:33,912 --> 00:38:38,214
 if you might need more. There is an object-oriented
+能在哪里查到. 这是面向对象的
 
 746
 00:38:38,216 --> 00:38:40,850
 way of doing all this called, there's two classes,
+调用方式，提供了两个类，
 
 747
 00:38:40,852 --> 00:38:43,853
 NSOperationQueue, which is kind of like dispatch queues.
+NSOperationQueue，和 dispatch queue 很像.
 
 748
 00:38:43,855 --> 00:38:47,824
 And NSOperation, which is kinda like those closures,
+还有 NSOperation，和闭包类似，
 
 749
 00:38:47,826 --> 00:38:52,929
 right, those little functions. Why would you ever want this?
+包含要处理的事件. 为什么我们需要这个两个类呢？
 
 750
 00:38:52,931 --> 00:38:56,132
 These do have a little bit of extra functionality,
+因为它们在 GCD 基础上，
 
 751
 00:38:56,134 --> 00:38:59,069
 that they wrap from GCD, things like, hey,
+还提供了一些额外的功能，比如，
 
 752
 00:38:59,071 --> 00:39:00,704
 I have these two operations and
+两个事件(operation)，
 
 753
 00:39:00,706 --> 00:39:04,441
 this one depends on this one finishing, okay. And so
+一个要在另一个结束之后发起.
 
 754
 00:39:04,443 --> 00:39:06,076
 I'm gonna put them in a concurrent queue, but
+把它们扔在并发队列中，
 
 755
 00:39:06,078 --> 00:39:08,845
 don't let this other one go until the first one finishes,
+也能保证一个在另一个结束之后发起.
 
 756
 00:39:08,847 --> 00:39:11,047
 right. So dependencies, you can have dependencies and
+这就是依赖，你能对事件添加依赖.
 
 757
 00:39:11,049 --> 00:39:14,417
 things like that. We're not gonna talk about that.
+课堂上不讲，
 
 758
 00:39:14,419 --> 00:39:16,553
 You can look at the documentation if you want.
+你可以在文档中看到.
 
 759
 00:39:16,555 --> 00:39:20,690
 You can do, I think almost everything here with GCD.
+我们需要的处理，GCD 已经足够了.
 
 760
 00:39:20,692 --> 00:39:23,259
 This would be more if you actually are building
+如果你是在创建一个
 
 761
 00:39:23,261 --> 00:39:26,029
 something where there's queue are doing queues and
+有很多队列，而且
 
 762
 00:39:26,031 --> 00:39:29,299
 these operations are doing the actual calculation. Like as
+operation 都在处理相关运算. 就像
 
 763
 00:39:29,301 --> 00:39:31,568
 your model is doing, you're doing some scientific app and
+建模一样，做一个科学相关的 app，
 
 764
 00:39:31,570 --> 00:39:33,803
 it's actually doing all this complex calculation where
+并且在处理一些非常复杂的计算，
 
 765
 00:39:33,805 --> 00:39:35,372
 things depend on each other and all that stuff.
+每个计算都相互依赖.
 
 766
 00:39:35,374 --> 00:39:38,441
 And so it has a lot of queues and a lot of operations going.
+这样，就需要很多队列和操作了.
 
 767
 00:39:38,443 --> 00:39:40,910
 You wouldn't use it as much for things like, I'm fetching
+也就这个时候，你需要使用到依赖，如果只是
 
 768
 00:39:40,912 --> 00:39:42,879
 something from the network and I need to put it in the UI,
+需要从网络上拉取数据，然后在 UI 上展示，
 
 769
 00:39:42,881 --> 00:39:45,181
 and I want that fetched to happen in another queue.
+即使想要在其他队列中发起请求，
 
 770
 00:39:45,183 --> 00:39:47,317
 That kind of stuff you're just going to use the dispatch
+dispatch_ 相关方法已经够用了.
 
 771
 00:39:47,319 --> 00:39:53,156
 underbar, okay. Now, in addition to dispatch underbar,
+作为 dispatch_ 的补充，
 
 772
 00:39:53,158 --> 00:39:55,625
 you have to understand multithreading from
+你还需要从 iOS 的 API 中
 
 773
 00:39:55,627 --> 00:39:57,827
 the perspective of how iOS's API uses it.
+理解多线程该如何使用.
 
 774
 00:39:57,829 --> 00:40:00,997
 Because there are plenty of methods all throughout
+因为关于异步线程的方法，
 
 775
 00:40:00,999 --> 00:40:05,168
 iOS that do what they do asynchronously, using threads.
+实在是太多了.
 
 776
 00:40:05,170 --> 00:40:08,438
 Okay? And the way you see this in the API, is that one of
+你在看 API 的时候，其中一个
 
 777
 00:40:08,440 --> 00:40:11,941
 the arguments to these methods is a block, is a closure,
+参数是 block，一个闭包，
 
 778
 00:40:11,943 --> 00:40:14,477
 right? It's gonna be a closure you provide, and
+闭包内容由你提供，
 
 779
 00:40:14,479 --> 00:40:16,980
 the documentation for that function will say your
+文档的解释是，你的闭包
 
 780
 00:40:16,982 --> 00:40:21,084
 closure's executed off the main cue, asynchronously.
+会异步的在主队中执行.
 
 781
 00:40:21,086 --> 00:40:23,753
 So what kind of methods are we talking about here that do
+这就是能解决我们之前问题的方法.
 
 782
 00:40:23,755 --> 00:40:27,690
 that? Here's one that goes and fetches a URL. Okay,
+可以用它来拉取网络数据.
 
 783
 00:40:27,692 --> 00:40:30,794
 from the internet. Downloads it from the internet. And
+进行网络数据下载.
 
 784
 00:40:30,796 --> 00:40:32,595
 when it, and it does it asynchronously obviously.
+它会在异步中处理.
 
 785
 00:40:32,597 --> 00:40:34,798
 You wouldn't wanna block the main queue waiting for
+你也不想要它因为加载 url，而阻塞主队列吧.
 
 786
 00:40:34,800 --> 00:40:37,233
 this URL to load. And when it comes back,
+在响应回来后，
 
 787
 00:40:37,235 --> 00:40:39,936
 it calls this closure right here, okay? Now
+它救护调用这个闭包.
 
 788
 00:40:39,938 --> 00:40:44,040
 inside this closure, you might want to do some UI things.
+在这个闭包中，你就可以做一些 UI 操作了.
 
 789
 00:40:44,042 --> 00:40:46,543
 Like maybe you downloaded an image and you wanna put it.
+比如显示刚下载完成的图片.
 
 790
 00:40:46,545 --> 00:40:49,078
 But you can't put that code right inside here.
+但是你不能直接将 UI 代码写在这，
 
 791
 00:40:49,080 --> 00:40:52,015
 Because this closure is executed on a different
+因为这个闭包会在
 
 792
 00:40:52,017 --> 00:40:54,818
 thread and on a different queue than the main queue. So
+另一个队列的线程中执行，而不是在主队列中执行. 所以
 
 793
 00:40:54,820 --> 00:40:56,886
 what you would have to do in here is the same thing
+这里你还需要
 
 794
 00:40:56,888 --> 00:40:57,720
-you have to do with the dispatc_async,
+you have to do with the dispatch_async,
+像之前创建 dispatch_async 一样，
 
 795
 00:40:57,722 --> 00:41:03,560
 which is you have to wrap dispatc_async ge_mai_queue
+用一个主队列的异步线程去包裹它.
 
 796
 00:41:03,562 --> 00:41:07,464
 around it, okay? So here's the method. This is an iOS method
+就像这样写. 这是个 iOS 的
 
 797
 00:41:07,466 --> 00:41:10,333
 downloadTaskWithRequest. It takes this last argument,
+downloadTaskWithRequest 方法. 最后一个参数，
 
 798
 00:41:10,335 --> 00:41:12,836
 which is a closure. And inside there you're gonna have to
+是一个闭包. 在闭包中，
 
 799
 00:41:12,838 --> 00:41:15,572
 do this dispatch to the main queue. Because if you wanna do
+你需要回到主队列. 因为你要处理
 
 800
 00:41:15,574 --> 00:41:18,107
 something to the UI, because this is not happening,
+UI 相关操作，就不能直接写，
 
 801
 00:41:18,109 --> 00:41:21,911
 this closure will not be executed on the main queue.
+这个闭包不会在主队列中执行.
 
 802
 00:41:22,047 --> 00:41:25,982
 Got it? So we will talk a little bit about, you're just
+明白吗？所以建议大家
 
 803
 00:41:25,984 --> 00:41:29,919
 gonna run into occasional iOS APIs that take these closures,
+可以查查 iOS API 中，异步操作时，
 
 804
 00:41:29,921 --> 00:41:32,455
 and they're asynchronous. And you just have to know that if
+关于这个闭包的描述. 你需要知道，要处理任何
 
 805
 00:41:32,457 --> 00:41:33,957
 you wanna do anything in the UI, you're gonna have
+与 UI 相关的操作，都必须要
 
 806
 00:41:33,959 --> 00:41:38,628
 to dispatch async back to the main queue. All right, so
+先回到主队列. 行，接下来
 
 807
 00:41:38,630 --> 00:41:41,364
 let's do a demo of this where let's fix Cassini.
+我们来完善 Cassini demo 中的问题.
 
 808
 00:41:41,366 --> 00:41:44,934
 Okay, let's make Cassini so that it's UI's always
+优化一下 Cassini 的 UI，
 
 809
 00:41:44,936 --> 00:41:49,606
 responsive even while it's off downloading these things.
+使之在有下载任务的时候，也能及时响应事件.
 
 810
 00:41:49,608 --> 00:41:53,376
 All right lets go over here.
+那么从这里开始吧.
 
 811
 00:41:53,378 --> 00:41:55,445
 Okay, all this is gonna be, all this code that we're going
+先处理这些，这些在 ImageViewController
 
 812
 00:41:55,447 --> 00:41:57,514
 to have to do is going to be in our ImageViewController.
+中的代码.
 
 813
 00:41:57,516 --> 00:41:59,916
 We're going to make our ImageViewController, so
+先要将 ImageViewController 改为
 
 814
 00:41:59,918 --> 00:42:02,952
 that it is asynchronous, right? That it can load things
+异步处理，这样就能异步
 
 815
 00:42:02,954 --> 00:42:05,522
 asynchronously. Before I do that actually though,
+加载数据. 在实际操作之前，
 
 816
 00:42:05,524 --> 00:42:07,524
 I wanna talk one other thing we should be doing here,
+我还要讲到一件事，
 
 817
 00:42:07,526 --> 00:42:08,958
 probably, in ImageViewController.
+需要在 ImageViewController 中注意的事.
 
 818
 00:42:08,960 --> 00:42:12,495
 Notice that if someone sets our model, we immediately go
+注意这里有一段设置模型的代码，我们在里面
 
 819
 00:42:12,497 --> 00:42:17,133
 off and fetch it, okay? Now what if we never appeared on
+获取数据. 但如果我们从未将它展示在
 
 820
 00:42:17,135 --> 00:42:21,437
 screen? Okay, what if this or something that's in a,
+屏幕上呢？如果这是个，
 
 821
 00:42:21,439 --> 00:42:24,207
 gonna be in a navigation controller, it got created,
+这是个 navigation controller 之类的，虽然创建了，
 
 822
 00:42:24,209 --> 00:42:27,710
 but no one ever clicked to cause it to happen on screen,
+并且进行了模型设置，
 
 823
 00:42:27,712 --> 00:42:28,311
 but someone set our model.
+但是从来没有经过点击事件展示到屏幕上.
 
 824
 00:42:28,313 --> 00:42:30,980
 Then this wouldn't happen in Cassini, this app, but imagine
+虽然这问题不会出现在 Cassini 中，但是要小心在
 
 825
 00:42:30,982 --> 00:42:35,418
 an app where you've got this image MVC and some incentive.
+其他 app 中重用这个 image 的 MVC 结构或逻辑的情况.
 
 826
 00:42:35,420 --> 00:42:37,186
 Really we really wouldn't want to do this
+千万不要出现这种额外的资源消耗，
 
 827
 00:42:37,188 --> 00:42:39,789
 fetch cuz it could be very expensive as we've seen,
+这种资源占用非常昂贵.
 
 828
 00:42:39,791 --> 00:42:40,623
 right? It goes on the network,
+明白吗？这需要用到网络，
 
 829
 00:42:40,625 --> 00:42:42,292
 it's pulling down this thing if I'm paying for
+要从网络上拉去数据，而如果我允许
 
 830
 00:42:42,294 --> 00:42:44,928
 cellular data, it's costing me money! Okay,
+蜂窝数据，这会产生费用的！
 
 831
 00:42:44,930 --> 00:42:47,931
 to get that Cassini image, so I probably don't want to do
+所以，除非是在显示到屏幕上时，
 
 832
 00:42:47,933 --> 00:42:51,968
 this fetch image unless I'm on screen. If I'm on screen,
+我才会去获取 Cassini 的图片数据. 只有在屏幕上时，
 
 833
 00:42:51,970 --> 00:42:55,004
 I definitely want to do this. So here I'm going to say how
+我才需要这样做. 那么，如何判断是否在
 
 834
 00:42:55,006 --> 00:42:58,341
 can I tell if I'm on screen? If my view, okay,
+屏幕上呢？如果这个 view，
 
 835
 00:42:58,343 --> 00:43:03,913
 this is my MVC's view the top level, if it's window
+即 MVC 结构中最顶层的 view，它的 window 
 
 836
 00:43:03,915 --> 00:43:08,618
 is not nil. Okay, that's a pretty reliable way to tell,
+不是 nil. 则说明视图在屏幕上，
 
 837
 00:43:08,620 --> 00:43:12,989
 sorry, that you are on screen, right? Because your view,
+这种验证方式很靠谱. 因为你的 view，
 
 838
 00:43:12,991 --> 00:43:15,692
-your nbc's view will not be in a window unless it's on
+your mvc's view will not be in a window unless it's on
+你的 mvc view 不在屏幕上，才获取不到 window.
 
 839
 00:43:15,694 --> 00:43:19,529
 screen. Make sense? We haven't talked about window much.
+明白吗？我们目前还没讲到太多 window 的知识.
 
 840
 00:43:19,531 --> 00:43:22,765
 It's that UI Window class I told you that you really never
+它就是之前我告诉你们的，
 
 841
 00:43:22,767 --> 00:43:23,299
 use it, and you don't.
+永远不要用，并且你们也没有用的那个 UIWindow 类.
 
 842
 00:43:23,301 --> 00:43:26,436
 You're not going to send any messages to it here. But
+这里不需要调 window 的方法，
 
 843
 00:43:26,438 --> 00:43:26,569
 whether it's nil or
+直接判断它是否是 nil，
 
 844
 00:43:26,571 --> 00:43:29,105
 not will tell you whether your view is on screen.
+就能告诉你 view 是否在屏幕上.
 
 845
 00:43:29,107 --> 00:43:32,342
 Now what happens though if someone sets my image URL like
+那么，现在如果有人在 prepareForSegue 或者
 
 846
 00:43:32,344 --> 00:43:36,713
 in a prepare for segue and then I do go on screen later?
+视图展示在屏幕上时，设置了图片 URL，
 
 847
 00:43:36,982 --> 00:43:39,349
 Now I have to fetch that image, okay? Cuz now I
+我就回去获取图片数据. 因为下一步肯定能
 
 848
 00:43:39,351 --> 00:43:41,918
 am going to go on screen. So how can I find out in my view
+展示到屏幕上. 那么如何得知 view controller 
 
 849
 00:43:41,920 --> 00:43:44,487
 controller lifecycle that now I'm gonna go on screen,
+生命周期中，何时展示到屏幕上呢？
 
 850
 00:43:44,489 --> 00:43:49,993
 which method? Which method in my view controller lifecycle?
+哪个方法？view controller 生命周期中的哪个方法？
 
 851
 00:43:49,995 --> 00:43:54,497
 Do you remember? It called. I'll put it down here
+还记得吗？它叫做...
 
 852
 00:43:54,499 --> 00:43:59,302
 next to this viewDidLoad one. ViewWillAppear. Okay, so
+和 viewDidLoad 写在一起吧. 叫做，viewWillAppear.
 
 853
 00:43:59,304 --> 00:44:02,071
 viewWillAppear is sent to you when you're about to appear on
+在即将展示到屏幕上时，会调用 viewWillAppear 方法.
 
 854
 00:44:02,073 --> 00:44:06,509
 screen. Okay and we always do super.viewWillAppear in
+对于 view controller 声明周期的方法，
 
 855
 00:44:06,511 --> 00:44:10,146
 all these view controller life cycles, all right. So,
+我们通常会先调用父类的方法，super.viewWillAppear.
 
 856
 00:44:10,148 --> 00:44:14,050
 here I'm going to say if my image is nil,
+在这里判断，如果 image 是 nil，
 
 857
 00:44:14,052 --> 00:44:19,255
 then I better go fetch it, okay? So, this is one
+那么就获取它，这样处理
 
 858
 00:44:19,257 --> 00:44:22,692
 thing I've done to increase my performance a little bit. But
+能提升一点点性能. 但是
 
 859
 00:44:22,694 --> 00:44:24,794
 it's still not going to stop things from blocking,
+依然没能解决阻塞问题，
 
 860
 00:44:24,796 --> 00:44:26,562
 because as soon as viewWillAppear happens,
+因为当 viewWillAppear 调用时，
 
 861
 00:44:26,564 --> 00:44:27,597
 and I'm just about to go on screen,
+并且视图在屏幕上，
 
 862
 00:44:27,599 --> 00:44:30,900
 my whole app is going to freeze while I'm out fetching.
+整个 app 都被阻塞了，需要去获取数据.
 
 863
 00:44:30,902 --> 00:44:32,268
 Those big huge images, right?
+去获取一张很大的图片.
 
 864
 00:44:32,270 --> 00:44:34,437
 So I haven't really fixed the problem. I need multithreading
+所以我们还没解决这个问题，我需要用到多线程.
 
 865
 00:44:34,439 --> 00:44:36,506
 for that. But I just wanted to show you to be a little bit
+我将会演示如何小心翼翼的
 
 866
 00:44:36,508 --> 00:44:40,009
 careful about when you fire off an expensive operation.
+开启这一昂贵操作的技能.
 
 867
 00:44:40,011 --> 00:44:42,178
 That's what viewWillAppare, Appear is for.
+这也是 viewWillAppear 的作用.
 
 868
 00:44:42,180 --> 00:44:44,080
 That's really where you wanna fire off things like going
+你需要在这里发起所有的操作，
 
 869
 00:44:44,082 --> 00:44:48,084
 out on the network and stuff, okay? All right, so now let's
+例如网络请求什么的. 那么现在就
 
 870
 00:44:48,086 --> 00:44:50,620
 do our multi guiding and fix this. We're gonna do this here
+遵循着多线程规则，来解决阻塞问题吧. 我们需要对
 
 871
 00:44:50,622 --> 00:44:53,389
 in fetchImage. We're gonna make it so that fetchImage
+fetchImage 进行处理. 我们需要使 fetchImage
 
 872
 00:44:53,391 --> 00:44:57,126
 does the actual fetching in another thread. All right, so
+真正的获取事件发生在另一个线程中. 
 
 873
 00:44:57,128 --> 00:45:00,997
 how are we gonna do this? It's pretty simple actually.
+那么怎么实现呢？其实很简单.
 
 874
 00:45:00,999 --> 00:45:05,968
 We're just going to take this code right here which blocks.
+只需要将这段代码，这个 block，
 
 875
 00:45:05,970 --> 00:45:07,937
 This blocks the main queue while it goes out
+这个 block 是在主线程进行
 
 876
 00:45:07,939 --> 00:45:10,640
 on the network, to forget the contents of this URL.
+网络请求来获取 url 内容的.
 
 877
 00:45:10,642 --> 00:45:13,843
 And we're going to use the GCD to
+我们使用 GCD 来
 
 878
 00:45:13,845 --> 00:45:16,846
 put it on a different thread, okay? So I'm just going to
+将操作扔到不同的线程中. 所以，代码应该是，
 
 879
 00:45:16,848 --> 00:45:21,718
 say, dispatch, async, okay? Remember, dispatch async
+dispatch_async，记得吗，dispatch_async
 
 880
 00:45:21,720 --> 00:45:26,122
 takes two arguments. A queue and a block here, a closure or
+有两个参数，一个队列和一个 block，即一个闭包或
 
 881
 00:45:26,124 --> 00:45:31,194
 a function do that. So I'm going to put on one of those,
+一个方法. 我准备将处理扔到
 
 882
 00:45:31,196 --> 00:45:34,497
 concurrent cues. And I'm gonna put it on the one where
+并行队列中. 优先级是
 
 883
 00:45:34,499 --> 00:45:36,733
 the user initiated it but it's not interactive.
+user initiated，而不是 interactive.
 
 884
 00:45:36,735 --> 00:45:38,634
 The user's not in the middle of dragging or something.
+因为处理中，用户不会进行拖拽等交互.
 
 885
 00:45:38,636 --> 00:45:40,536
 They initiated it so it's pretty high priority and
+initiated 的优先级已经很高了，
 
 886
 00:45:40,538 --> 00:45:45,208
-so I get that by saying dispatc_ge_globa_queue and
+so I get that by saying dispatch_get_global_queue and
+调用 dispatch_get_global_queue 来获得队列，
 
 887
 00:45:45,210 --> 00:45:47,477
 the one I want is
+这个参数是
 
 888
 00:45:47,479 --> 00:45:54,083
-QO_CLASS USE_INITIATED. This one right here, okay?
+QOS_CLASS_USE_INITIATED. This one right here, okay?
+QOS_CLASS_USE_INITIATED. 第一个参数搞定，
 
 889
 00:45:54,085 --> 00:45:58,287
 This flags is always zero, right? And now I have this
+这个标识直接填 0. 接下来配置 block，
 
 890
 00:45:58,289 --> 00:46:00,423
 block here, so I'm gonna double-click on that.
+双击代码提示，
 
 891
 00:46:00,425 --> 00:46:00,957
 It's really nice, by the way,
+就自动补全了，另外，
 
 892
 00:46:00,959 --> 00:46:04,193
 you can double-click on these things to expand the block.
+除了能双击展开 block 以外，
 
 893
 00:46:04,195 --> 00:46:06,829
 I'm gonna use the clay trailing,
+我使用的的是尾闭包的形式，
 
 894
 00:46:06,831 --> 00:46:11,400
 closure syntax here. Okay for my block, this block, you'll
+完善闭包语法. 这里就是我的 block 了，
 
 895
 00:46:11,402 --> 00:46:13,836
 notice it takes no arguments, returns no arguments.
+你可以看到这个 block 没有参数，也没有返回值.
 
 896
 00:46:13,838 --> 00:46:18,941
 I'm just going to put all this blocking junk inside here,
+然后将这一大段 block 代码，扔到尾闭包中.
 
 897
 00:46:18,943 --> 00:46:23,012
 okay. So this is going to fix my problem, okay.
+这样就能解决我们的问题了.
 
 898
 00:46:23,014 --> 00:46:28,217
 Except that it probably gonna make my app go all strange
+不过这样写可能会导致 app 出现以下莫名其妙的问题，
 
 899
 00:46:28,219 --> 00:46:32,155
 because I'm gonna be trying to do this inside
+因为我在
 
 900
 00:46:32,157 --> 00:46:36,459
 a non-main queue. All right, cuz this queue, this block
+非主队列做了这个操作. 因为这个 block 
 
 901
 00:46:36,461 --> 00:46:40,329
 right here is gonna be put on this queue, and so I can't do
+会在这个队列中执行，所以我们不能在 block 里面
 
 902
 00:46:40,331 --> 00:46:43,933
 this inside of here. Question? >> Can you explain
+做这个操作. 什么问题？能讲一下
 
 903
 00:46:43,935 --> 00:46:44,867
 the trailing, the plot,
+尾闭包吗？
 
 904
 00:46:44,869 --> 00:46:47,804
 the trailing plot where you added the parenthesis and
+应该在哪添加括弧，它是怎样
 
 905
 00:46:47,806 --> 00:46:49,438
 what it does? >> Yeah, okay, so
+执行的？行，好的，
 
 906
 00:46:49,440 --> 00:46:55,511
 this used to look like this. Okay, so this is normal.
+闭包以前是长这样的，这是一个普通的闭包.
 
 907
 00:46:55,513 --> 00:46:57,947
 I'm calling this function right here, okay? Sorry,
+我在调用这个方法时，哦，不好意思，
 
 908
 00:46:57,949 --> 00:47:00,750
 this function right here. Here is its first arguments,
+这个方法. 这是第一个参数，
 
 909
 00:47:00,752 --> 00:47:05,388
 see that? Here its second argument, okay.
+这是第二个参数.
 
 910
 00:47:05,390 --> 00:47:09,158
 If the sec, if the last argument of any function is
+如果第二个参数，如果最后一个参数接收的是
 
 911
 00:47:09,160 --> 00:47:14,697
 a closure, then you can put it outside of the parenthesis.
+闭包，那么就可以将其写在参数列表以外.
 
 912
 00:47:14,699 --> 00:47:17,466
-See this dispatc_async parentheses starts here? So
+See this dispatch_async parentheses starts here? So
+这个 dispatch_async 方法括号从这里开始，
 
 913
 00:47:17,468 --> 00:47:20,603
 I just took this parentheses off of here and
+我只是将这里的反括弧，
 
 914
 00:47:20,605 --> 00:47:26,475
 I put it over here. Okay, so now this is the first
+移到了这里. 所以，现在这里是函数的
 
 915
 00:47:26,477 --> 00:47:29,812
 argument to this function, inside these parenthesis. And
+第一个参数，在参数列表的括号内.
 
 916
 00:47:29,814 --> 00:47:33,149
 here's the closure which is outside the parenthesis, okay.
+而这个闭包，在括号外面.
 
 917
 00:47:33,151 --> 00:47:36,185
 You definitely wanna get used to that cuz we're almost
+这种写法你一定会熟悉的，因为之后我们
 
 918
 00:47:36,187 --> 00:47:39,155
 always gonna do it that way. And when people design APIs
+都会这样写. 当开发者在设计 API 的时候，
 
 919
 00:47:39,157 --> 00:47:41,390
 they almost always put the closure at the end so
+他们尽量将闭包扔到最后，这样
 
 920
 00:47:41,392 --> 00:47:44,560
 people can do this. All right, so
+使用者就可以用尾闭包了.
 
 921
 00:47:44,562 --> 00:47:45,595
 what am I gonna do about this,
+所以我也这样去使用它.
 
 922
 00:47:45,597 --> 00:47:49,332
 okay? I need this to be back on the main queue. Well,
+现在我需要回到主队列.
 
 923
 00:47:49,334 --> 00:47:52,902
 very simple here. I'm just going to dispatch it back to
+非常简单，只需要将它派发回
 
 924
 00:47:52,904 --> 00:47:57,707
 the main queue. Now, another thing I'm gonna do here,
+主队列即可. 除此之外，还有一件事需要处理，
 
 925
 00:47:57,709 --> 00:48:02,278
-while I'm kinda at it is, let's get this NS data right
+while I'm kinda at it is, let's get this NSData right
+先这样，先将这里获取的 NSData 
 
 926
 00:48:02,280 --> 00:48:06,082
 here. I'm gonna assign that to a local variable
+使用临时变量接受一下，
 
 927
 00:48:06,084 --> 00:48:10,519
 here called content of URL, okay? And then I'm gonna put,
+叫 contentsOfURL，
 
 928
 00:48:10,521 --> 00:48:12,922
 so that's gonna be happening in my other queue.
+这一部分是发生在另一个队列中的.
 
 929
 00:48:12,924 --> 00:48:17,960
 And then I'm gonna dispatch async back to the main queue,
+然后，调用 dispatch_async 回到主队列，
 
 930
 00:48:17,962 --> 00:48:21,597
-which I get by dispatc_ge_mai_queue.
+which I get by dispatch_get_main_queue.
+传入 dispatch_get_main_queue.
 
 931
 00:48:21,599 --> 00:48:24,901
 Okay, same exact thing here, okay, here's the block,
+这个是一样的，这个 block，
 
 932
 00:48:24,903 --> 00:48:28,604
 I'm gonna do the same thing. Click trailing, close your
+和之前一样. 改为尾闭包，
 
 933
 00:48:28,606 --> 00:48:33,376
 notation, and now I'm gonna put this inside here, okay.
+然后将代码扔进去，
 
 934
 00:48:33,378 --> 00:48:37,413
 But now the image data is this thing that I got right there,
+现在 imageData 应该是这个，我将它放在这，
 
 935
 00:48:37,415 --> 00:48:41,317
 so that's content of URL.
+所以是 contentsOfURL.
 
 936
 00:48:41,319 --> 00:48:46,188
 Okay, now this happening on the main queue, all is well.
+现在，这就在主队列中执行了，全部搞定.
 
 937
 00:48:46,190 --> 00:48:50,459
 This image=UIImage, the UI kit thing. This is a UI kit thing,
+这个 image 是 UIImage，UIKit 中的那个. 这个 UIKit 元素，
 
 938
 00:48:50,461 --> 00:48:52,795
 by the way, no, not actually because of the UIImage.
+准确的说不是严格是，因为它是 UIImage，
 
 939
 00:48:52,797 --> 00:48:55,898
 That is the one UI thing you can do on a different thread.
+而 UIImage 可以在不同的线程中处理，
 
 940
 00:48:55,900 --> 00:48:58,367
 But it's because when we say image= down here,
+这只是进行了图片下载，
 
 941
 00:48:58,369 --> 00:49:01,904
 it's gonna do something like imageview.image=new value.
+因为我们之后要将 image 赋值给 imageView.image.
 
 942
 00:49:01,906 --> 00:49:03,439
 Okay, well that's the UI kit right there, so
+而 UIImageView 是 UIKit 元素，所以
 
 943
 00:49:03,441 --> 00:49:06,575
 that has to be on the main thread. So that's why I have
+必须要在主线程在中处理. 这才是我们要回到主线程的原因.
 
 944
 00:49:06,577 --> 00:49:08,878
 to do that. Now notice we still have an error here.
+注意我们这里还在报错.
 
 945
 00:49:08,880 --> 00:49:11,814
 Anyone know what this error is? It's pointing right here.
+有人知道这个错误原因吗？有人知道吗？
 
 946
 00:49:11,816 --> 00:49:17,987
 What do you think it wants there? No idea?
+知道编译器想要我们怎么做吗？没人知道？
 
 947
 00:49:21,059 --> 00:49:26,128
 It wants self there, because this is a closure. Okay,
+它想要加上 self，因为这是一个闭包，
 
 948
 00:49:26,130 --> 00:49:27,697
 this is inside a closure. And remember,
+这段代码在闭包中，记住，
 
 949
 00:49:27,699 --> 00:49:32,702
 whenever we have a closure and we use a property on our
+无论何时，在闭包中访问属性或成员变量，
 
 950
 00:49:32,704 --> 00:49:36,472
 object, we need to put self in there to make it
+都需要使用 self 调用，
 
 951
 00:49:36,474 --> 00:49:39,342
 clear that we understand this is being captured and
+以此指明变量值快照，
 
 952
 00:49:39,344 --> 00:49:44,480
 kept in the heap. So as long as this closure right here,
+并将它存到堆中. 所以，无论是这个闭包，
 
 953
 00:49:44,482 --> 00:49:46,749
 which it's got this closure inside of it.
+还是这个包含在闭包内的闭包，
 
 954
 00:49:46,751 --> 00:49:49,385
 As long as this is out there fetching,
+只要是在函数作用域外了，
 
 955
 00:49:49,387 --> 00:49:54,190
 it's going to keep this view controller in the heap, okay?
+都需要将 view controller 保存在堆上.
 
 956
 00:49:54,192 --> 00:49:58,194
 Now if we wanted to here, we could do the week self thing
+如果我们要在这里使用，还需要用 weak 修饰 self，
 
 957
 00:49:58,196 --> 00:50:02,398
 and have week self question mark and that way if the image
+防止在图片数据回来的时候，self 已经被释放，
 
 958
 00:50:02,400 --> 00:50:06,469
 came back and our MVC had been thrown out of the heap,
+导致 MVC 抛出的堆内存异常.
 
 959
 00:50:06,471 --> 00:50:09,405
 it would be fine, we would just ignore it.
+这样就能避免了，就能忽略掉异常了.
 
 960
 00:50:09,407 --> 00:50:11,841
 Okay, but I'm pressed for time so I'm not gonna do that but
+因为时间原因，我就不演示了，
 
 961
 00:50:11,843 --> 00:50:15,277
 you could hopefully imagine doing that. Okay, so
+不过你们应该能想象出来. 
 
 962
 00:50:15,279 --> 00:50:17,179
 everyone see what we've done here?
+每个人都能理解了吗？
 
 963
 00:50:17,181 --> 00:50:20,883
 So that's really all we need to do. One thing that it's
+这就是我们需要的全部处理. 对了，
 
 964
 00:50:20,885 --> 00:50:24,053
 a little, now, I told you that multithreading, it's pretty
+还有一小点，现在我讲解了多线程，
 
 965
 00:50:24,055 --> 00:50:26,522
 easy to read this code and understand what's going on.
+非常简单，一看代码就能明白.
 
 966
 00:50:26,524 --> 00:50:29,725
 But you've got to think of the bigger picture of what's
+但是你想想，如果是在用多线程
 
 967
 00:50:29,727 --> 00:50:32,962
 happening with multithreading here. For example,
+加载一张很大的图片呢，会怎样. 比如，
 
 968
 00:50:32,964 --> 00:50:37,500
 what happens in Cassini if I click on the Cassini,
+在点击 Cassini 按钮时，Cassini 会怎样，
 
 969
 00:50:37,502 --> 00:50:40,236
 which is a kind of a small image, and
+这还是张小图，
 
 970
 00:50:40,238 --> 00:50:43,305
 then I change my mind and click on Earth.
+如果我临时改变主意，点击了 Earch.
 
 971
 00:50:43,307 --> 00:50:48,377
 Okay, so Cassini, which is small, comes back, okay?
+现在，Cassini 这张小图加载完成，
 
 972
 00:50:48,379 --> 00:50:51,280
 This code is gonna put Cassini on screen. But then the Earth
+那么 Cassini 就会渲染在界面上，这时候，Earth 
 
 973
 00:50:51,282 --> 00:50:53,883
 is gonna come back and this code's gonna put the Earth on
+加载完了，Earth 就会覆盖在 Cassini 上，
 
 974
 00:50:53,885 --> 00:50:55,951
 top of it, okay? So I'm gonna get this flashing thing,
+所以就会导致 Cassini 图片闪一下，
 
 975
 00:50:55,953 --> 00:50:58,788
 Cassini, Earth. Or worse, if I clicked Earth first and
+接着显示 Earth. 更糟的是，如果我先点击的 Earth，
 
 976
 00:50:58,790 --> 00:51:01,057
 then clicked Cassini, it would show Cassini and
+之后再点击 Cassini，万一先展示 Cassini，
 
 977
 00:51:01,059 --> 00:51:03,359
 then later Earth would come in and it would be showing Earth,
+之后再展示 Earth，然后 Earth 就是最终渲染的图片，
 
 978
 00:51:03,361 --> 00:51:04,693
 even though I clicked on Cassini.
+即使我最后点击的是 Cassini.
 
 979
 00:51:04,695 --> 00:51:07,830
 Okay, do you see the problem, is that I'm firing off these
+能明白这个问题吗？我在不同的线程中，
 
 980
 00:51:07,832 --> 00:51:09,265
 network things in other threads.
+发起的网络请求，
 
 981
 00:51:09,267 --> 00:51:11,767
 They're coming back at different times. So
+他们的响应时间可能会不同.
 
 982
 00:51:11,769 --> 00:51:12,435
 really I want to,
+所以，
 
 983
 00:51:12,437 --> 00:51:14,870
 If I'm gonna be a good programmer here,
+如果我是一个优秀的开发者，
 
 984
 00:51:14,872 --> 00:51:16,172
 multithreaded, I need to check and
+在多线程中，我需要检查响应的
 
 985
 00:51:16,174 --> 00:51:19,208
 make sure that the URL that I'm fetching,
+URL，是否是我之前获取的那个，
 
 986
 00:51:19,210 --> 00:51:24,480
 that's this URL right here, is still equal to the image URL
+即这个 URL，是否匹配这个 imageURL.
 
 987
 00:51:24,482 --> 00:51:29,618
 that I ask for. Okay, then I'll do this. If it's not,
+如果匹配，才赋值. 如果不匹配，
 
 988
 00:51:29,620 --> 00:51:34,156
 then maybe I could print something like ignored data
+那么就输出 ignore data，
 
 989
 00:51:34,158 --> 00:51:39,061
 returned from URL, and then we'll put the URL in here,
+returned from URL，然后将 url 拼在后面.
 
 990
 00:51:39,063 --> 00:51:43,232
 okay? And that needs self here, of course, cuz that's
+这里也需要加上 self，毕竟
 
 991
 00:51:43,234 --> 00:51:47,002
 inside this closure as well, all right? Everybody got that?
+这也是在闭包中. 都懂了吗？
 
 992
 00:51:47,004 --> 00:51:50,439
 So let's go ahead and run, see if this works. So
+那我们来运行下，看看效果.
 
 993
 00:51:50,441 --> 00:51:54,110
 what we should have now is a very responsive UI, okay,
+所以，现在拿到的是一个丝滑的 UI，
 
 994
 00:51:54,112 --> 00:51:56,412
 all the time, no matter what we click on, so let's try it.
+整个程序都是，无论是点击哪个按钮，试试，
 
 995
 00:51:56,414 --> 00:51:59,482
 Earth, Cassini, see I'm able to click on different things.
+Earth，Cassini，看见了吗，都没有被阻塞.
 
 996
 00:51:59,484 --> 00:52:04,587
 I can still rotate, okay. Whoops, wrong way around. And,
+还可以进行旋转. 噢喔...旋转方式错了.
 
 997
 00:52:04,589 --> 00:52:09,125
 the it's gonna pick whichever the last one that I asked for.
+无论我最后请求的是哪个，
 
 998
 00:52:09,127 --> 00:52:11,060
 It's still fetching right here. It's gonna eventually,
+都会获取到争取的图片. 最终，
 
 999
 00:52:11,062 --> 00:52:17,633
 hopefully, get one. And maybe it's even easier to see this,
+都会获取到一张. 可能要等会才能请求完，
 
 1000
 00:52:17,635 --> 00:52:20,402
 maybe. Let's stop this action, go look on our iPhone, cuz you
+停止这个程序，重新跑在 iPhone 上看看，
 
 1001
 00:52:20,404 --> 00:52:23,172
 can really see it happening on iPhone because when we click
+因为这个过程在 iPhone 上更清晰，
 
 1002
 00:52:23,174 --> 00:52:26,142
 on them, it actually segues and comes back.
+它会有视图的转场效果.
 
 1003
 00:52:26,144 --> 00:52:31,881
 So watch this. Are we running here?
+来看看. 跑起来了吗？
 
 1004
 00:52:31,883 --> 00:52:37,887
 Oops, no, we want iPhone.
+哦，不对，我们需要的是 iPhone.
 
 1005
 00:52:40,491 --> 00:52:43,759
 Okay, so we go back here. Now I click Cassini,
+好了，回到这个界面，点击 Cassini，
 
 1006
 00:52:43,761 --> 00:52:46,228
 it's loading it, but I can go back, okay.
+程序正在加载，这时我点击返回，
 
 1007
 00:52:46,230 --> 00:52:48,197
 While this is still loading, I can go back and
+但其实加载还在继续，
 
 1008
 00:52:48,199 --> 00:52:51,634
 change my mind because my UI is highly responsive,
+我能临时改变主意，能点击返回，因为 UI 并未被阻塞，
 
 1009
 00:52:51,636 --> 00:52:53,636
 even though it's loading those things in the background.
+即使图片在后台加载.
 
 1010
 00:52:53,638 --> 00:52:56,705
