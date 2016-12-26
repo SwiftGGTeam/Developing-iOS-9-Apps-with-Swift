@@ -5676,7 +5676,7 @@ doing empty string to mean a button without a title?
 1139
 00:57:05,122 --> 00:57:10,492
 Or maybe for an int minus 1. I don't know. Or for a point or
-或者是一个最小为 1 的 int
+或者是一个 -1 的 int
 
 1140
 00:57:10,494 --> 00:57:14,463
@@ -5706,7 +5706,7 @@ For an int, if you wanted an optional int, is it minus 1 or
 1145
 00:57:28,078 --> 00:57:31,280
 0, max int? What is it, it don't know what it is.
-它到底是 1？是 0？还是别的什么？他不知道应该是多少。
+它到底是 -1？是 0？还是别的什么？他不知道应该是多少。
 
 1146
 00:57:31,282 --> 00:57:34,817
