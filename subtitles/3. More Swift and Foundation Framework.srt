@@ -241,7 +241,7 @@ unwrapping an Optional that's not said is supposed to do,
 49
 00:02:35,550 --> 00:02:40,450
 it's supposed to crash, okay? And of course, in the case
-它应该让程序奔溃。
+它应该让程序崩溃。
 
 50
 00:02:40,450 --> 00:02:44,420
@@ -440,8 +440,8 @@ x is right there? >> [INAUDIBLE].
 
 88
 00:04:46,980 --> 00:04:48,780
->> Int, almost.
-[大概是 Int]
+>> Int? almost.
+Int? 差不多。
 
 89
 00:04:48,780 --> 00:04:51,780
@@ -901,7 +901,7 @@ height, obviously straight forward how we do that.
 180
 00:09:47,210 --> 00:09:50,010
 So tuples are perfectly valid return values, okay? So
-所以tuople 用来返回值是非常有效的，好的。
+所以tuple 用来返回值是非常有效的，好的。
 
 181
 00:09:50,010 --> 00:09:52,910
@@ -936,7 +936,7 @@ so you can have a range of ints. You can have
 187
 00:10:13,240 --> 00:10:16,900
 a range of indexes into something or whatever it
-你可以有一个莫些东西内部的索引范围
+你可以有一个某些东西内部的索引范围
 
 188
 00:10:16,910 --> 00:10:20,240
@@ -1170,8 +1170,8 @@ properties. Only structs and classes can have stored
 
 234
 00:12:46,160 --> 00:12:50,160
-properties but enums can have computer properties. Okay?
-但是枚举可以计算属性
+properties but enums can have computed properties. Okay?
+但是枚举可以包含计算属性
 
 235
 00:12:50,160 --> 00:12:52,830
@@ -1261,11 +1261,11 @@ as argument to a function, that's kind of obvious. But
 252
 00:13:45,980 --> 00:13:50,480
 it also copies when you assign it to another variable.
-当你把他分配个另一个变量时它也会拷贝
+当你把它分配个另一个变量时它也会拷贝
 
 253
 00:13:50,490 --> 00:13:54,250
-If I say varx=y if y is a value type,
+If I say var x = y if y is a value type,
 如果我说var x = y 如果y 是一个值类型
 
 254
@@ -1316,7 +1316,7 @@ Okay? So if you have an array okay,
 263
 00:14:24,490 --> 00:14:26,990
 since that value symmentic cuz an array is a struct.
-因为array 是一个 strut
+因为array 是一个 struct
 
 264
 00:14:26,990 --> 00:14:30,220
@@ -1331,7 +1331,7 @@ append things on to that array cuz it is immutable. Okay,
 266
 00:14:33,930 --> 00:14:38,170
 same thing with the dictionary or whatever. Okay. Remember
-dictrionary 或者其它东西在这一点上也是相同的
+dictionary 或者其它东西在这一点上也是相同的
 
 267
 00:14:38,170 --> 00:14:40,300
@@ -1386,7 +1386,7 @@ It gets another pointer to it but as soon as you try to
 277
 00:15:11,430 --> 00:15:15,370
 mutate it then it's gonna have to copy it. You see? So
-会用一个指正指向它并拷贝这个指针
+会用一个指针指向它并拷贝这个指针
 
 278
 00:15:15,370 --> 00:15:17,640
@@ -1411,7 +1411,7 @@ you have to put mutating in front so Swift knows
 282
 00:15:25,580 --> 00:15:30,220
 that you're doing that. Okay, reference types, okay.
-好的，参考类型
+好的，引用类型
 
 283
 00:15:30,220 --> 00:15:30,850
@@ -1456,7 +1456,7 @@ it keeps incrementing a count. And when that count goes down
 291
 00:15:49,970 --> 00:15:53,070
 to zero because maybe the last pointer that's pointing to it
-可能是最后一个指针不在指向它了
+可能是最后一个指针不再指向它了
 
 292
 00:15:53,080 --> 00:15:56,140
@@ -1466,7 +1466,7 @@ goes out of scope or maybe you assign that last pointer to
 293
 00:15:56,150 --> 00:15:58,910
 point to something else. Nothing points to it.
-这块内存不在被指向的时候
+这块内存不再被指向的时候
 
 294
 00:15:58,910 --> 00:16:00,510
@@ -1666,7 +1666,7 @@ certainly gonna use the class, all right? Okay.
 333
 00:17:50,660 --> 00:17:53,730
 On the methods. So now we are gonna talk about the syntax
-好的。这这些方法里，我们要来说说这些方法的语法
+好的。在这些方法里，我们要来说说这些方法的语法
 
 334
 00:17:53,730 --> 00:17:57,360
@@ -1760,7 +1760,7 @@ Don't appear anywhere here. Notice first and
 352
 00:18:53,090 --> 00:18:56,660
 second do not appear in the funk bar call. Okay,
-注意第一个和第二够不在方法块后面出现
+注意第一个和第二个不在方法块后面出现
 
 353
 00:18:56,660 --> 00:19:00,190
@@ -1770,7 +1770,7 @@ cuz those are the internal names. The external name
 354
 00:19:00,200 --> 00:19:04,760
 is what the caller uses when they call this method. Okay,
-当这个方法被调用的时候这个方法会被使用
+外部名字是这个方法的调用者使用的。
 
 355
 00:19:04,770 --> 00:19:09,200
@@ -1784,13 +1784,13 @@ externalSecond: 5.5, right? Okay, it's using the external
 
 357
 00:19:14,180 --> 00:19:16,110
-names first and second never appear but
-第一个和第二个名字并没有出现
+names. first and second never appear but
+first和second并没有出现
 
 358
 00:19:16,110 --> 00:19:19,480
 first and second are still used in the implementation,
-但它们仍然能够被实现别使用
+但first和second在代码实现中仍然被使用了，
 
 359
 00:19:19,480 --> 00:19:22,850
@@ -1890,7 +1890,7 @@ that the second one has no name, okay?
 378
 00:20:32,320 --> 00:20:35,690
 But don't do this, okay? It's very anti Swift
-当时不要这样做，好吗？
+但是不要这样做，好吗？
 
 379
 00:20:35,690 --> 00:20:39,890
@@ -1968,7 +1968,7 @@ a subclass can't say override that thing. The compiler won't
 394
 00:21:24,740 --> 00:21:29,110
 let them. Okay, you can also mark an entire class final,
-你也可以在类的最后标记一个入口
+你也可以标记整个类为final
 
 395
 00:21:29,110 --> 00:21:33,980
@@ -2078,7 +2078,7 @@ actually. Instance property on D, where I'm asking
 416
 00:22:38,380 --> 00:22:41,380
 if it's signed is the minus sign, I'm just making this up,
-我就把他变成正数
+我就把它变成正数
 
 417
 00:22:41,380 --> 00:22:43,820
@@ -2093,7 +2093,7 @@ But that would be an instance property or method and
 419
 00:22:47,920 --> 00:22:48,760
 I would be sending it to D,
-并且我会把他发给D
+并且我会把它发给D
 
 420
 00:22:48,760 --> 00:22:52,260
@@ -2183,7 +2183,7 @@ they're really strongly associated with the class. So
 437
 00:23:52,820 --> 00:23:54,350
 we put them as class methods, okay?
-所以我们把他们放到类方法里面，好吗？
+所以我们把它们放到类方法里面，好吗？
 
 438
 00:23:54,360 --> 00:23:58,090
@@ -4465,7 +4465,7 @@ Okay. So that's a very open-ended type. [LAUGH] Okay,
 
 992
 00:54:04,200 --> 00:54:07,400
-Swyft doesn't do things that way. Swyft is strongly typed.
+Swift doesn't do things that way. Swift is strongly typed.
 
 993
 00:54:07,400 --> 00:54:12,140
@@ -4473,7 +4473,7 @@ Okay, it infers types but it's strongly typed. However,
 
 994
 00:54:12,140 --> 00:54:15,310
-Swyft has to work with all those IOSAPIs, so
+Swift has to work with all those IOSAPIs, so
 
 995
 00:54:15,310 --> 00:54:17,080
@@ -4481,7 +4481,7 @@ it introduced this type called AnyObject.
 
 996
 00:54:17,080 --> 00:54:21,680
-So AnyObject in Swyft means A point or two an object of
+So AnyObject in Swift means A point or two an object of
 
 997
 00:54:21,680 --> 00:54:24,680
@@ -4489,7 +4489,7 @@ unknown class, okay? It only works for objects for
 
 998
 00:54:24,680 --> 00:54:29,350
-classes not for. So it means the same thing as objective C.
+classes not for structs. So it means the same thing as objective C.
 
 999
 00:54:29,360 --> 00:54:33,560
