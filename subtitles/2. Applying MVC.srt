@@ -609,7 +609,7 @@ I was touched or something like that. Okay. For example,
 
 123
 00:05:59,920 --> 00:06:03,554
-it might be a school view, that's a generic view minion.
+it might be a scroll view, that's a generic view minion.
 例如一个通用的滚动视图,
 
 124
