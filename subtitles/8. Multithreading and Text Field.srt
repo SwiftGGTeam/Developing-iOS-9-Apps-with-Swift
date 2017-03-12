@@ -5046,770 +5046,963 @@ even though it's loading those things in the background.
 1010
 00:52:53,638 --> 00:52:56,705
 When they eventually arrive, it's gonna put them in the UI,
+当图片下载完成后，便会在 UI 上显示，
 
 1011
 00:52:56,707 --> 00:53:00,109
 okay. But while they're out there fetching I can do things
+但在下载过程中，
 
 1012
 00:53:00,111 --> 00:53:06,882
 like go back in my navigation controller. Make sense,
+我可以做其他的操作，比如点击返回按钮等。看吧，
 
 1013
 00:53:06,884 --> 00:53:13,522
 see that? >> [INAUDIBLE]
+没问题。[清不清楚]
 
 1014
 00:53:13,524 --> 00:53:14,056
 >> What happens, what?
+什么事？怎么？
 
 1015
 00:53:14,058 --> 00:53:14,857
 >> [INAUDIBLE] Image each time
+[听不清] 假设每次
 
 1016
 00:53:14,859 --> 00:53:17,560
 you click out. >> So the question is, if I
+都快速返回。那么，每次返回后，
 
 1017
 00:53:17,562 --> 00:53:20,596
 click out, and then click back in, does it reload the image?
+再点进去，会重新下载图片吗？
 
 1018
 00:53:20,598 --> 00:53:22,831
 And the answer is absolutely, because when I click out,
+答案显而易见，因为再返回后，
 
 1019
 00:53:22,833 --> 00:53:26,068
-it throws that NBC out of the heap. Okay, it's gone.
+it throws that MVC out of the heap. Okay, it's gone.
+MVC 的堆内存就被销毁了，也就不存在了。
 
 1020
 00:53:26,070 --> 00:53:28,103
-Now actually, that NBC is not gonna immediately leave
+Now actually, that MVC is not gonna immediately leave
+但这次，MVC 却没有立即销毁，
 
 1021
 00:53:28,105 --> 00:53:30,773
 the heap, cuz that closure that's doing the fetching is
+因为闭包还在执行下载，
 
 1022
 00:53:30,775 --> 00:53:33,108
 still holding it in the heap. But once that fetch comes
+持有了该内存。当数据下载完成后，
 
 1023
 00:53:33,110 --> 00:53:36,779
 back, then it'll leave the heap and the image with it. So
+堆内存便销毁了，下载的图片也是。
 
 1024
 00:53:36,781 --> 00:53:40,583
 yeah, every time we're re-fetching, okay?
+所以，每次都是重新下载的，明白？
 
 1025
 00:53:41,552 --> 00:53:41,684
 So see how we built this nice responsive UI right now, okay?
+这就是我们讲到的快速响应 UI。
 
 1026
 00:53:41,686 --> 00:53:45,221
 Everybody got that?
+大家都明白吗？
 
 1027
 00:53:45,223 --> 00:53:48,090
 Even though it's still taking a long time to fetch things,
+即使数据下载依然需要很长时间，
 
 1028
 00:53:48,092 --> 00:53:51,493
 we can still navigate. Now, what's a little weird about
+但并不影响跳转。但是，UI 还有些
 
 1029
 00:53:51,495 --> 00:53:54,330
 this UI, though, is that while it's fetching,
+不足，在数据下载时，
 
 1030
 00:53:54,332 --> 00:53:57,633
 like when I'm here, it's not clear what's going on.
+比如这个界面，并不知道它在处理什么。
 
 1031
 00:53:57,635 --> 00:53:59,168
 It looks like there's just no Earth image,
+这里好像并没有 Earth 的图片，
 
 1032
 00:53:59,170 --> 00:54:02,171
 I guess. I don't know, I guess not, I don't see it. Wouldn't
+我也不知道，可能是吧，什么都看不见。如果
 
 1033
 00:54:02,173 --> 00:54:04,840
 it be cool if we could give some feedback to the user?
+能给用户一个标识不是更好吗？
 
 1034
 00:54:04,842 --> 00:54:08,544
 Hey, I'm working on it, okay, this image is big.
+Hey，我正在努力加载呢，图片太大了。
 
 1035
 00:54:08,546 --> 00:54:09,545
 All right, and we can do that.
+是的，我们可以处理。
 
 1036
 00:54:09,547 --> 00:54:12,414
 And the cool way to do that is with a little spinner, okay,
+可以在这里加个指示器，
 
 1037
 00:54:12,416 --> 00:54:15,651
 a little animating. You see them all in apps little thing
+一个小动画。在很多 app 中都能看到
 
 1038
 00:54:15,653 --> 00:54:17,886
 that spins around basically telling him yeah, yeah,
+指示器，告知系统收到了交互，
 
 1039
 00:54:17,888 --> 00:54:20,789
 I know, I'm working on it. So let's put a spinner in there.
+正在进行处理。那么，让我们在这里加上指示器吧。
 
 1040
 00:54:20,791 --> 00:54:24,059
 Turns out to be really easy to put, do spinners in iOS.
+在 iOS 中加指示器，真的非常简单。
 
 1041
 00:54:24,061 --> 00:54:26,395
 We're just gonna go to the storyboard, okay.
+打开 storyboard，
 
 1042
 00:54:26,397 --> 00:54:30,232
 I'm gonna put the spinner here in this view. Now when I put
+将指示器加到这个 view 中。但注意，
 
 1043
 00:54:30,234 --> 00:54:32,167
 it in there, I'm gonna have to be very careful.
+加进去要非常小心。
 
 1044
 00:54:32,169 --> 00:54:32,501
 And this is a good chance for
+正好给大家
 
 1045
 00:54:32,503 --> 00:54:35,004
 me to show you more about the document outline. But
+详细演示下 document outline。
 
 1046
 00:54:35,006 --> 00:54:38,140
 watch this, so I'm gonna go down here. The spinner is just
+看这里，滚到这里，有个可以直接
 
 1047
 00:54:38,142 --> 00:54:40,509
 a thing you can drag out. You see it right here.
+进行拖拽的指示器。就是这个。
 
 1048
 00:54:40,511 --> 00:54:42,544
 Now watch what happens when I drag this out, okay, and
+将它拖到界面中，
 
 1049
 00:54:42,546 --> 00:54:46,215
 I try to use the blue lines to put it in the middle, drop it.
+蓝色辅助线可帮助居中，就扔到这。
 
 1050
 00:54:46,217 --> 00:54:48,784
 It looks like, okay, that worked, that's nice.
+看起来不错，正是我们需要的。
 
 1051
 00:54:48,786 --> 00:54:50,786
 I can even go here and inspect it up here.
+还可以打开上面的 inspect，
 
 1052
 00:54:50,788 --> 00:54:54,123
 You see, I can make a nice larger one. Maybe I'll even
+这里，可以选择更大的样式。也可以
 
 1053
 00:54:54,125 --> 00:54:58,594
 make it blue instead of white. Let's have it hide itself
+将其改为蓝色。还可以设置
 
 1054
 00:54:58,596 --> 00:54:59,595
 when it stops animating.
+动画停止时，自动隐藏。
 
 1055
 00:54:59,597 --> 00:55:01,597
 We can do all kinds of cool stuff here. But
+这里可以设置很多属性。
 
 1056
 00:55:01,599 --> 00:55:04,400
 actually something terrible has happened,
+但同时引发了一个问题，
 
 1057
 00:55:04,535 --> 00:55:06,869
 which is that when I dragged that thing out and
+在我将控件拖出来，
 
 1058
 00:55:06,871 --> 00:55:08,037
 dropped it in the middle there,
+然后放置到中间时，
 
 1059
 00:55:08,039 --> 00:55:11,173
 it made it a subview of the Scroll View, okay?
+这个控件变成了 Scroll View 的子视图。
 
 1060
 00:55:11,175 --> 00:55:14,877
 In the interface builder when you drag a view out on top of
+在 interface builder 中，如果将一个控件拖到
 
 1061
 00:55:14,879 --> 00:55:16,578
 another view, it makes it a subview of that.
+另一个控件上，那该控件就成了另一个的子视图。
 
 1062
 00:55:16,580 --> 00:55:19,148
 Now you can't really tell that here, but that's what this
+直接从这里不大看的出来，
 
 1063
 00:55:19,150 --> 00:55:21,483
 little guy over in the corner, the document outline,
+要点击角落里的这个小按钮，打开 document outline，
 
 1064
 00:55:21,485 --> 00:55:24,353
 is really great at. If you look at the document outline,
+这非常棒，在 document outline 中，
 
 1065
 00:55:24,355 --> 00:55:27,189
 do you see how the activity indicator is indented
+能看到 activity indicator 在
 
 1066
 00:55:27,191 --> 00:55:30,893
 from the Scroll View? Okay, that means it's a subview
+Scroll View 中吗？这就意味着，它成为了
 
 1067
 00:55:30,895 --> 00:55:34,496
 of the Scroll View. Now, if you don't want that, okay,
+Scroll View 的子视图。如果你不想这样，
 
 1068
 00:55:34,498 --> 00:55:36,665
 no problem. You can just drag it up above.
+没问题，将它拖到上面。
 
 1069
 00:55:36,667 --> 00:55:39,568
 Now, it's not a subview of the Scroll View. Now, of course,
+现在，它就不再是 Scroll View 的子视图了。当然，
 
 1070
 00:55:39,570 --> 00:55:41,804
 it's not in the right order right now, because I want this
+这还不是正确的视图层级，因为我想要指示器
 
 1071
 00:55:41,806 --> 00:55:44,340
 thing to be in front of the Scroll View. So, I'm gonna put
+放在 Scroll View 前面。所以，要把
 
 1072
 00:55:44,342 --> 00:55:47,643
 the Scroll View on top of it. So, now they're siblings, and
+Scroll View 移到指示器上面。现在，它们就在一个层级了，并且
 
 1073
 00:55:47,645 --> 00:55:51,447
 this one is in front, because remember, the subview is list,
+这个再上面，记住，子视图是链表，
 
 1074
 00:55:51,449 --> 00:55:52,681
 the top ones are in the back.
+越在后面，层级越高。
 
 1075
 00:55:52,683 --> 00:55:54,650
 The other ones go towards the front. So,
+升序排列。所以，
 
 1076
 00:55:54,652 --> 00:55:58,020
 now we have this thing in the front, okay? Now,
+现在这个就在前面了。
 
 1077
 00:55:58,022 --> 00:56:00,522
 another thing is, what if I wanna have,
+还有个问题，如果我想，
 
 1078
 00:56:00,524 --> 00:56:03,359
 constraints on this to keep this in the middle?
+想要给该空间加约束，是它一直居中，该怎么办？
 
 1079
 00:56:03,361 --> 00:56:05,060
 Well, I have to be very careful here too,
+这一步同样需要仔细。
 
 1080
 00:56:05,062 --> 00:56:08,230
 cuz those dashed lines. We're referring to the scroll view.
+因为这里的约束，都是与 scroll view 关联的。 
 
 1081
 00:56:08,232 --> 00:56:11,033
 So if I tried to do reset to suggested constraints here,
+所以，先要重置默认的约束，
 
 1082
 00:56:11,035 --> 00:56:13,869
 I'm gonna get constraints that constrain the activity
+会发现现在 activity indicator
 
 1083
 00:56:13,871 --> 00:56:16,205
 indicator to the scroll view. I don't want that.
+的约束都是基于 scroll view 的，我可不想这样。
 
 1084
 00:56:16,207 --> 00:56:19,575
 I want the activity indicator to be in the middle of its
+我希望 activity indicator 相对其父视图
 
 1085
 00:56:19,577 --> 00:56:19,842
 superview.
+居中。
 
 1086
 00:56:19,844 --> 00:56:23,612
 And watch this, you can do control drag in the document
+看仔细了。你可以在 document outline 中，
 
 1087
 00:56:23,614 --> 00:56:26,782
 outline. So I'm gonna control drag from my activity
+按住 control。从 activity indicator 这里，
 
 1088
 00:56:26,784 --> 00:56:30,919
 indicator to its superview in the document outline,
+按住 control，拖到 document outline 中的父视图上，
 
 1089
 00:56:30,921 --> 00:56:33,255
 not over here, but in the document outline.
+不是这，是在 document outline 中。
 
 1090
 00:56:33,257 --> 00:56:35,758
 And when I let go, I can do things like, yeah,
+松开鼠标，可以看到这个，是的，
 
 1091
 00:56:35,760 --> 00:56:41,764
 please center it vertically and horizontally in yourself.
+请在水平与竖直方向都居中。
 
 1092
 00:56:41,766 --> 00:56:46,568
 Okay? So now this thing is centered and middle. Okay?
+那么，现在就居中了。
 
 1093
 00:56:46,570 --> 00:56:50,939
 So, now we've got the spinner, how do we do anything with it?
+至此指示器就创建好了，那应该怎么处理逻辑呢？
 
 1094
 00:56:50,941 --> 00:56:51,440
 Well, we need an outlet to it.
+现在需要一个它的 outlet。
 
 1095
 00:56:51,442 --> 00:56:55,511
 So, I'm going to bring out my code over here, okay?
+把代码显示出来，
 
 1096
 00:56:55,513 --> 00:56:56,712
 Do it automatic.
+自动关联文件。
 
 1097
 00:56:56,714 --> 00:56:59,681
 Got our image view controller here, let's give it to this,
+这是 image view controller。关掉这个，
 
 1098
 00:56:59,683 --> 00:57:02,851
 give it to that, give it some room. Okay so
+关掉这个，腾点空间出来。好的，
+
 
 1099
 00:57:02,853 --> 00:57:05,721
 I'm just going to create an outlet from this little
+将指示器从这拖到这，
 
 1100
 00:57:05,723 --> 00:57:10,125
 spinner right here, over here. See it make sure that it's
+创建 outlet。注意这里的类型
 
 1101
 00:57:10,127 --> 00:57:13,796
 type is activity indicator view not something else, and
+是 activity indicator，而不是别的。
 
 1102
 00:57:13,798 --> 00:57:14,730
 I'm just going to call it spinner,
+名字就叫 spinner 吧，
 
 1103
 00:57:14,732 --> 00:57:17,499
 I like spinner as my name. And it's just an outlet,
+我喜欢 spinner 这个名字，这是个 outlet，
 
 1104
 00:57:17,501 --> 00:57:20,769
 it's a normal outlet just like our scroll view or anything
+非常普通的 outlet，和 scroll view 或其他 outlet
 
 1105
 00:57:20,771 --> 00:57:23,272
 else is an outlet. Okay just like your display was in your
+没区别。就像计算器能显示一样，
 
 1106
 00:57:23,274 --> 00:57:27,643
 calculator there's nothing particularly special about it.
+没什么特别的。
 
 1107
 00:57:27,645 --> 00:57:31,413
 So now that we have this nice spinner right here,
+现在，我们拿到了指示器变量，
 
 1108
 00:57:31,415 --> 00:57:34,450
 we just need to turn it on and turn it off. So where are we
+只需要控制它的开始与结束。那什么时候开始呢？
 
 1109
 00:57:34,452 --> 00:57:37,352
 gonna turn it on? Well, I'm gonna turn it on right before
+我觉得它应该在其他线程开始
 
 1110
 00:57:37,354 --> 00:57:41,023
 I start doing something on that other thread, okay. So
+处理事情的时候开始。
 
 1111
 00:57:41,025 --> 00:57:44,493
 right here when I dispatch onto this other thread to go
+就是这里，在将处理 NSData 的 block 派发到
 
 1112
 00:57:44,495 --> 00:57:47,629
 do this NSData, which is gonna block, I'm just gonna say
+其他线程的时候，让
 
 1113
 00:57:47,631 --> 00:57:53,435
 spinner startAnimating. And I'm gonna be even trickier and
+spinner startAnimating。我准备在这里增加点难度，
 
 1114
 00:57:53,437 --> 00:57:56,972
 go spinner?.startAnimating just in case
+改为 spinner?startAnimating，防止
 
 1115
 00:57:56,974 --> 00:58:00,776
 I'm fetching my image like as a result of prepare for
+在 prepare for segue 的时候
 
 1116
 00:58:00,778 --> 00:58:03,846
 segue, okay, because there my outlets aren't set.
+调用该方法获取图片，而这个时候，outlet 还未创建。
 
 1117
 00:58:03,848 --> 00:58:05,747
 So even if my app spinner's not set,
+这样的话，在 spinner 还没创建时，
 
 1118
 00:58:05,749 --> 00:58:09,751
 I'll just do nothing. Now where do I wanna turn it off?
+没有任何响应就行。那应该在何时停止呢？
 
 1119
 00:58:09,753 --> 00:58:11,954
 Its actually two places that you can turn this off.
+应该有两处地方需要停止。
 
 1120
 00:58:11,956 --> 00:58:16,892
 One good place might be down here when your image gets set.
+一处是在图片加载完成后。
 
 1121
 00:58:16,894 --> 00:58:18,994
 Okay? Cuz if someone sets your image,
+在图片加载完成后，
 
 1122
 00:58:18,996 --> 00:58:23,198
 then you don't need to be spending anymore.
+spinner 就没必要显示了。
 
 1123
 00:58:23,367 --> 00:58:25,434
 By definition, you're showing the image.
+理论上，这里图片都已经展示了。
 
 1124
 00:58:25,436 --> 00:58:29,004
 So, it will make no sense to be spinning such a good place.
+所以，spinner 已经完成使命了。
 
 1125
 00:58:29,006 --> 00:58:31,106
 Got to be a little careful though here because,
+另外一个地方需要特别小心，
 
 1126
 00:58:31,108 --> 00:58:34,109
 what happens when we get in here, okay?
+这里会出现什么情况呢，
 
 1127
 00:58:34,111 --> 00:58:36,378
 And you get to the URL here, and
+这里是获得 URL，
 
 1128
 00:58:36,380 --> 00:58:38,647
 the image data wasn't able to be found, so
+如果 URL 未找到图片数据，
 
 1129
 00:58:38,649 --> 00:58:41,583
 you never call set image, so it's never going to stop.
+图片就无法创建，那指示器就一直没停止。
 
 1130
 00:58:41,585 --> 00:58:45,387
 So you probably want to put in else spinner stop animating
+所以这里也需要加上 spinner 停止的代码。
 
 1131
 00:58:45,389 --> 00:58:48,490
 here as well. Okay so this is gonna stop the spinner in
+所以， spinner 就会在
 
 1132
 00:58:48,492 --> 00:58:52,094
 the case where it went off to the Internet to get something,
+无网络，或者未找到数据的情况下，
 
 1133
 00:58:52,096 --> 00:58:55,030
 and it couldn't find it. Okay, eh,
+停止。哦，
 
 1134
 00:58:55,032 --> 00:59:00,969
 little tricky. Okay, so let's see how that works.
+小失误。好，运行看看效果。
 
 1135
 00:59:06,644 --> 00:59:08,810
 Alright, here we go, let's try Earth, there it is,
+跑起来了，打开 Earth，对，没错，
 
 1136
 00:59:08,812 --> 00:59:11,513
 it's spinning, and we can go back, let's try Cassini, it's
+有指示器了，点击返回，打开 Cassini，也有
 
 1137
 00:59:11,515 --> 00:59:15,484
 spinning. Now when Cassini appears it stops spinning, and
+指示器。在 Cassini 加载完后，指示器停止，
 
 1138
 00:59:15,486 --> 00:59:19,354
 so it hides because we had, we set this switch over here
+并且自动消失，因为我们之前字 inspect 中，
 
 1139
 00:59:19,356 --> 00:59:23,158
 on this one we inspected it called hides when stopped,
+将它设置为停止就自动隐藏，
 
 1140
 00:59:23,160 --> 00:59:28,196
 right. And so since it hides when stopped, it's not here
+没问题。所以，在停止后，指示器
 
 1141
 00:59:28,198 --> 00:59:32,734
 anymore okay. [INAUDIBLE] Saturn,
+就不见了。[听不清] Saturn，
 
 1142
 00:59:32,736 --> 00:59:38,974
 spins okay then we can rotate. Big image, taking a long time.
+旋转屏幕。是个大图，需要更长的时间。
 
 1143
 00:59:38,976 --> 00:59:43,312
 There it is, okay? So see how we turn this into an app, it's
+完成，没问题。这就是在 app 中的运用，
 
 1144
 00:59:43,314 --> 00:59:45,948
 really responsive and really nice and it's being as fast as
+非常友好，非常漂亮，说多快有多快。
 
 1145
 00:59:45,950 --> 00:59:47,983
 it can. It's getting those images as fast as it can,
+图片现在说多快有多快，
 
 1146
 00:59:47,985 --> 00:59:51,153
 but from the user standpoint, it's very responsive.
+从用户的角度来说，也非常友好。
 
 1147
 00:59:51,155 --> 00:59:53,288
 You really wanna go with that way.
+大家以后也应该这样做。
 
 1148
 00:59:53,290 --> 00:59:57,326
 Okay, so now I'm gonna show two unrelated to this, okay?
+接下来，我将提到两个不相关的东西。
 
 1149
 00:59:57,328 --> 01:00:01,697
 But did you've asked about in Piazza. One is notice that
+大家对 Piazza 有以为吗。在运行的时候，
 
 1150
 01:00:01,699 --> 01:00:07,235
 when we run this, let's run again, watch what happens.
+重新运行下，看看出了什么问题。
 
 1151
 01:00:07,972 --> 01:00:14,009
 When we run, we get an empty image view controller
+在运行起来时，image view controller 是空的，
 
 1152
 01:00:14,011 --> 01:00:17,012
 which really doesn't make any sense. What we'd
+而这不应该出现才对。我们想要的是，
 
 1153
 01:00:17,014 --> 01:00:19,848
 really want it to, when we first run and this is empty,
+在第一次运行的时候，这是空的，
 
 1154
 01:00:19,850 --> 01:00:23,251
 we want it to come up showing this view controller. So
+而我们想要的是展示这个 controller。
 
 1155
 01:00:23,253 --> 01:00:24,152
 this is like with your calculator,
+这和之前的计算器项目类似，
 
 1156
 01:00:24,154 --> 01:00:25,921
 you don't want it to come up showing empty graph.
+我们不想展示空的界面。
 
 1157
 01:00:25,923 --> 01:00:28,857
 You want it to come up showing the calculator because
+空界面什么用都没有，应该展示
 
 1158
 01:00:28,859 --> 01:00:29,391
 the empty graph is useless,
+计算器界面才对。
 
 1159
 01:00:29,393 --> 01:00:32,394
 it just forces them to do that back thing right here for
+这个还必须要手动返回，而且
 
 1160
 01:00:32,396 --> 01:00:35,931
 no good reason. Okay, so how do we do that, okay this is
+还不知道为什么要这样。那么，该怎么处理呢，
 
 1161
 01:00:35,933 --> 01:00:38,367
 another case where we need to use delegation.
+这是另个需要用到 delegation 的原因。
 
 1162
 01:00:38,369 --> 01:00:43,105
-In this case it's the split fuse delegate. Okay, split
+In this case it's the split view delegate. Okay, split
+这里要用到的是 split view delegate。split
 
 1163
 01:00:43,107 --> 01:00:45,407
 view controller's delegate. So what does this code look like?
+view controller 的 delegate。那代码该怎么写呢？
 
 1164
 01:00:45,409 --> 01:00:48,143
 I'm gonna put this in Cassini, view controller right here.
+我准备把代码放在 Cassiini view controller 的这个地方。
 
 1165
 01:00:48,145 --> 01:00:51,113
 The first thing I need to do is I need to make the Cassini
+首先，我准备，我准备将 Cassini view controller 设为
 
 1166
 01:00:51,115 --> 01:00:55,150
 view controller be its own split view's delegate.
+split view 的 delegate。
 
 1167
 01:00:55,152 --> 01:00:57,052
 In other words, it needs to be the delegate of
+也就是说，它需要成为
 
 1168
 01:00:57,054 --> 01:00:57,319
 the split view it's in.
+split view 的代理。
 
 1169
 01:00:57,321 --> 01:01:01,156
 So I'm gonna do this in viewDidLoad. Okay sometimes
+我准备在 viewDidLoad 里面处理。
 
 1170
 01:01:01,158 --> 01:01:03,525
 viewDidLoad is not quite early enough to do things for
+在 viewDidLoad 中，获取 split view 才
 
 1171
 01:01:03,527 --> 01:01:07,462
 split views. We might have to do it in a wait for even. But
+不算太早。别的方法可能还要判断时机，而
 
 1172
 01:01:07,464 --> 01:01:10,165
-this will work in beaded load. And I'm just going to set
+this will work in viewDidLoad. And I'm just going to set
+viewDidLoad 就不用。我准备在这里设置
 
 1173
 01:01:10,167 --> 01:01:14,136
 my split view controllers remember MVC knows the split
+split view controller，每个 MVC 能拿到 split
 
 1174
 01:01:14,138 --> 01:01:16,872
 view controller its in. Or the navigation controller its in,
+view controller 变量。Navigation controller 也可以，
 
 1175
 01:01:16,874 --> 01:01:18,106
 or the tab bar controller its in. So
+tab bar controller 也行。
 
 1176
 01:01:18,108 --> 01:01:22,611
 SplitViewController says what it is, might be nil, okay? But
+而 splitViewController 也可能为空，
 
 1177
 01:01:22,613 --> 01:01:25,514
 if it's not I'm gonna set its delegate to be myself.
+如果不为空，则设置 self 为 delegate。
 
 1178
 01:01:25,516 --> 01:01:29,284
 Of course as soon as I do this I'm getting an error because
+当然，这样处理会出现错误，
 
 1179
 01:01:29,286 --> 01:01:32,954
 I didn't say that I was a UI SplitViewController delegate.
+因为 self 还未遵循 UISplitViewControllerDelegate。
 
 1180
 01:01:32,956 --> 01:01:33,822
 So I need to go up here and
+滚动到顶部，
 
 1181
 01:01:33,824 --> 01:01:37,793
 say that I'm a UI SplitViewController delegate.
+声明 self 遵循 UISplitViewControllerDelegate。
 
 1182
 01:01:39,096 --> 01:01:43,365
 All right that satisfies that error. All is good. Now which
+好的，错误解决了。没问题，那么，
 
 1183
 01:01:43,367 --> 01:01:46,668
 split view controller method am I going to implement?
+应该实现 split view controller 的哪个方法呢？
 
 1184
 01:01:46,670 --> 01:01:49,538
 Okay hold on your chairs for this one, okay
+抓紧椅子，别被吓到了。
 
 1185
 01:01:49,540 --> 01:01:52,007
 by the way again on the split view controller delegate so
+因为已经遵循 split view controller delegate，所以
 
 1186
 01:01:52,009 --> 01:01:54,142
 I can just start typing split view and you can see it
+键入 split view 就可以索引出方法，看吧，
 
 1187
 01:01:54,144 --> 01:01:56,678
 shows me all the split view controller delegate methods.
+这些，全都是 split view controller delegate 的方法。
 
 1188
 01:01:56,680 --> 01:01:59,781
 There's quite a few. Okay about a dozen of them.
+有很多方法，大概十多个。
 
 1189
 01:01:59,783 --> 01:02:02,918
 And the one I want is the one that controls
+而我需要的那个，
 
 1190
 01:02:02,920 --> 01:02:07,222
 the collapsing of the detail on top of the master.
+是可以控制 detail 压缩的方法。
 
 1191
 01:02:07,224 --> 01:02:10,058
 Because I don't want it to collapse that detail on top of
+因为在 detail 没有数据时，不需要将
 
 1192
 01:02:10,060 --> 01:02:13,595
 the master if the detail is empty, okay?
+detail 显示出来。
 
 1193
 01:02:13,597 --> 01:02:14,429
 If it doesn't have an image in there,
+如果没有图片，
 
 1194
 01:02:14,431 --> 01:02:17,666
 I don't want it to do that. So this thing that controls that
+就不需要显示。这个方法叫做，
 
 1195
 01:02:17,668 --> 01:02:22,738
-it's called, collab secondary view controller,
+it's called, called secondary view controller,
+叫做 secondary view controller，
 
 1196
 01:02:22,740 --> 01:02:26,708
-on to primary compute controller. Okay, collab
+on to primary view controller. Okay, called
+on to primary view controller。
 
 1197
 01:02:26,710 --> 01:02:29,511
-secondary view controller, on to primary compute controller.
+secondary view controller, on to primary view controller.
+secondary view controller，on to primary view controller。
 
 1198
 01:02:29,513 --> 01:02:32,748
 Now, notice it returns a Bool, this Bool
+注意，返回值为 Bool，如果
 
 1199
 01:02:32,750 --> 01:02:35,650
 you return true if you took care of this.
+返回 true，就是自行处理。
 
 1200
 01:02:35,652 --> 01:02:40,589
 Return false if you want the system to do the collapse.
+如果返回 false，表示交由系统处理。
 
 1201
 01:02:40,591 --> 01:02:43,492
 Okay, so this is a way where the delegate can do this
+
 
 1202
 01:02:43,494 --> 01:02:44,726
