@@ -6002,587 +6002,732 @@ Return false if you want the system to do the collapse.
 1201
 01:02:40,591 --> 01:02:43,492
 Okay, so this is a way where the delegate can do this
-
+那么，这个代理方法就是用来处理
 
 1202
 01:02:43,494 --> 01:02:44,726
 collapse if it wants, or not, and
+是否需要压缩的，
 
 1203
 01:02:44,728 --> 01:02:47,629
 it just lets the split view know whether it did it or not.
+而且，只是告知 split view 是否需要。
 
 1204
 01:02:47,631 --> 01:02:50,232
 So that's what the bool is, let it know when it did it.
+这就是这个 bool 值的作用，用于告知 split 的。
 
 1205
 01:02:50,234 --> 01:02:53,568
 So, this is actually quite simple right here.
+那这样就非常简单了。
 
 1206
 01:02:53,570 --> 01:02:56,738
 We just want to get the image view controller,
+我么只想获得 image view controller，
 
 1207
 01:02:56,740 --> 01:03:00,675
 okay? Well first of all let's make sure that the primary
+首先判断 primary view controller
 
 1208
 01:03:00,677 --> 01:03:05,881
 view controller, content view controller, is ourself.
+的 content view controller 是 self。
 
 1209
 01:03:05,883 --> 01:03:08,083
 Now it should be, because we're setting ourselves
+这个应该是没问题的，因为我们之前将 self
 
 1210
 01:03:08,085 --> 01:03:09,718
 as our own split view delegate, so we should be
+设为了 split view controller 的 delegate，所以
 
 1211
 01:03:09,720 --> 01:03:13,188
 the primary view controllers, the masters content Okay?
+self 应该是 primary view controller 的 master content。
 
 1212
 01:03:13,190 --> 01:03:16,658
 So we showed you that, that should not be a problem. But
+所以写的这个判断，是能成功的。
 
 1213
 01:03:16,660 --> 01:03:20,896
 now I'm gonna say, on top of that, if I can let ivc =
+接下来，在括号中写，if let ivc = 
 
 1214
 01:03:20,898 --> 01:03:24,633
 the secondaryViewController, that's the detail.
+secondaryViewController，即 detail 页面，
 
 1215
 01:03:24,635 --> 01:03:30,238
 It contentViewController as an ImageViewController. Okay? So,
+的 contentViewController，并强转为 ImageViewController。也就是说，
 
 1216
 01:03:30,240 --> 01:03:36,011
 if have a ImageViewController as my detail, and
+如果 detail 是 ImageViewController，然后
 
 1217
 01:03:36,013 --> 01:03:39,281
 where, everyone know about where, right? You did your
+where，where 大家应该都知道吧？如果做了
 
 1218
 01:03:39,283 --> 01:03:41,783
 reading assignments, you know about where. Where is
+预习，那应该是没问题的。 Where 是
 
 1219
 01:03:41,785 --> 01:03:44,686
 an additional clause that you can add onto an if, okay?
+可以加载 if 之后的从句。
 
 1220
 01:03:44,688 --> 01:03:47,856
 So I'm gonna say where the image view controllers
+继续写，wherer image view controller
 
 1221
 01:03:47,858 --> 01:03:52,828
 image URL is nil. So if I have an image view controller as
+的 image URL 是 nil。也就是说，如果 image view controller 是
 
 1222
 01:03:52,830 --> 01:03:58,166
 my detail and it's, image url is nil, then it's empty.
+detail，并且图片的 url 为 nil，那界面就是空的。
 
 1223
 01:03:58,168 --> 01:03:59,968
 There's nothing in there. There's no Saturn or
+什么内容都没有，没有 Satrun 图片或
 
 1224
 01:03:59,970 --> 01:04:03,638
 anything else. So in this case I'm going to return true,
+别的内容。这种情况下，就返回 true，
 
 1225
 01:04:03,640 --> 01:04:05,874
 which is me telling the system, yeah,
+即告知系统，
 
 1226
 01:04:05,876 --> 01:04:08,710
 I took care of that. Okay, I put that detail, I collapsed
+我自己处理。我自己设置 detail，自己对
 
 1227
 01:04:08,712 --> 01:04:11,079
 that detail on top of the master, don't worry about it.
+master 上的 detail 进行处理，你不用管。
 
 1228
 01:04:11,081 --> 01:04:13,982
 Now I didn't, didn't actually do anything, that's good,
+而在这里，我什么都没做，这很好，
 
 1229
 01:04:13,984 --> 01:04:16,017
 cuz that's what I want. I don't want that
+我就想这样。因为我并不想
 
 1230
 01:04:16,019 --> 01:04:18,753
 detail to be collapsed on top of the master if the thing is
+在内容是空时，master 顶部的 detail 被压缩。
 
 1231
 01:04:18,755 --> 01:04:22,357
 nil. All right, so I just kind of lied to the system and told
+所以，这里是在骗系统，说
 
 1232
 01:04:22,359 --> 01:04:26,328
 them I handled it when in fact I didn't. Okay, otherwise,
+我要自行处理，但实际上，我什么都没做。好的，除此之外，
 
 1233
 01:04:26,330 --> 01:04:29,431
 we're just gonna let the system do whatever it does,
+别的情况就需要系统处理了。
 
 1234
 01:04:29,433 --> 01:04:33,902
 okay. Return false, we did not handle this so you handle it.
+返回 false，表示我自己不处理，你来处理吧。
 
 1235
 01:04:33,904 --> 01:04:41,543
 Okay, so let's see if that works. Okay, so here it is,
+接下来，看看效果吧。好的，
 
 1236
 01:04:41,545 --> 01:04:46,615
 look at that. It came up, didn't show me a blank thing,
+你看，没有再展示空白的页面了，
 
 1237
 01:04:46,617 --> 01:04:51,319
 so it worked. Now let's click on one of these. Woop, okay,
+成功了。点击其中一个，
 
 1238
 01:04:51,321 --> 01:04:51,486
 it worked. So
+没问题。
 
 1239
 01:04:51,488 --> 01:04:54,789
 it collapsed the secondary on top of the primary when I
+能在我需要的时候，将 primary 顶部的 secondary 
 
 1240
 01:04:54,791 --> 01:04:58,026
 wanted it too, okay? But if it came up nil,
+压缩。当回来为空的时候，
 
 1241
 01:04:58,028 --> 01:05:01,229
 then it didn't show it. Everyone understand that? I
+就不会再显示。都能听懂吗？
 
 1242
 01:05:01,231 --> 01:05:03,899
 know it seems a little, a lot of long words in here [LAUGH]
+我知道这个方法很长 「笑」
 
 1243
 01:05:03,901 --> 01:05:06,501
 like primary view controller, secondary view controller, but
+又是 primary view controller，又是 secondary view controller 的，
 
 1244
 01:05:06,503 --> 01:05:09,871
 this is just master in detail, that's all this is. And
+其实就是 master 和 detail，没什么奇怪的。
 
 1245
 01:05:09,873 --> 01:05:12,040
 we're just checking where the image URL's nil and just
+而这里是检查 image 的 URL 是否为空，然后
 
 1246
 01:05:12,042 --> 01:05:14,809
 returning that, we handled it when we really didn't handle
+返回这个，理论上需要我们处理，但实际没有，
 
 1247
 01:05:14,811 --> 01:05:18,013
 it because we don't want it handled. Okay. One other
+因为这本身就不需要处理什么。另外一个问题是，
 
 1248
 01:05:18,015 --> 01:05:24,252
 thing I want to show you is reusing the detail in iPad.
+在 iPad 上重用 detail 的情况。
 
 1249
 01:05:25,856 --> 01:05:31,326
 Look at iPad. And we have the master detail right here.
+看看 iPad。这是 master detail。
 
 1250
 01:05:31,328 --> 01:05:35,363
 Every time we click on this thing, it's creating a new MVC
+每次点击的时候，会创建新的 MVC。
 
 1251
 01:05:35,365 --> 01:05:39,334
 here. Okay? Creating a brand new MVC. And if there,
+创建一个全新的 MVC。但对此，
 
 1252
 01:05:39,336 --> 01:05:41,102
 there's really no reason for that. Okay?
+其实完全没必要。
 
 1253
 01:05:41,104 --> 01:05:45,373
 We could absolutely just reuse this MVC right here.
+完全可以对 MVC 进行重用。
 
 1254
 01:05:45,375 --> 01:05:47,842
 Okay, we don't have to create a new one every time.
+我们不需要每次都创建新的。
 
 1255
 01:05:47,844 --> 01:05:50,979
 So, how would we do that? How would we reuse this?
+那么，该怎么办呢？如何重用呢？
 
 1256
 01:05:50,981 --> 01:05:54,182
 Well, if we're gonna reuse this, we can't use
+如果想要重用这个，就不能用
 
 1257
 01:05:54,184 --> 01:05:57,385
 segues because segues always create a new MVC.
+segue，因为 segue 每次都会创建新的 MVC。
 
 1258
 01:05:57,387 --> 01:05:59,254
 That's what segues do, they create a new MVC.
+这就是 segue 在做的事情，创建新的 MVC。
 
 1259
 01:05:59,256 --> 01:06:02,390
 So, we can't use segues, okay, to do that in that case. So,
+所以，这种情况下，我们不能用 segue。那么，
 
 1260
 01:06:02,392 --> 01:06:06,761
 lets go back to our Cassini right here. Our, storyboard.
+回到 Cassini 项目。看到 storyboard。
 
 1261
 01:06:06,763 --> 01:06:11,800
 And we're not going to use these segues over here. Okay,
+我们不再使用这里的 segue。
 
 1262
 01:06:11,802 --> 01:06:14,069
 see these three segues? I'm gonna get rid of them.
+看到这三个 segue 了吗？我准备把它们去掉。
 
 1263
 01:06:14,071 --> 01:06:16,671
 Get rid of, oops, not that. Click here,
+都去掉，哦，点错了。点这个，
 
 1264
 01:06:16,673 --> 01:06:16,738
 get rid of that one,
+去掉它。
 
 1265
 01:06:16,740 --> 01:06:18,940
 I'm gonna get rid of that one, I'm gonna get rid of that one.
+去掉这个，去掉这个。
 
 1266
 01:06:18,942 --> 01:06:20,442
 Cuz I cannot segue from these buttons or
+我不打算将 button 与 segue 关联了，
 
 1267
 01:06:20,444 --> 01:06:24,446
 it will constantly create a new one of these details.
+因为它每次都会创建新的 detail。
 
 1268
 01:06:24,448 --> 01:06:26,781
 Instead, what I'm gonna do is to use target action.
+而我准备用 target-action 来实现。
 
 1269
 01:06:26,783 --> 01:06:30,952
 So I'm just gonna bring up my code here, some space,
+接着，打开 diamante，腾点空间，
 
 1270
 01:06:30,954 --> 01:06:34,289
 all right, and I'm gonna do a target action message from
+好的，我会给每个按钮都添加
 
 1271
 01:06:34,291 --> 01:06:38,626
 each of these that reuses the detail to show the image.
+target-action，用于重用显示 image 的 detial。
 
 1272
 01:06:38,628 --> 01:06:41,529
 So let's do that. Let's just go Ctrl+drag here.
+那么，开始吧。按住 Ctrl 并拖到这里，
 
 1273
 01:06:41,531 --> 01:06:44,332
 I'm gonna call this show image, that's a good name for
+名字就叫 showimage，作为事件的名字
 
 1274
 01:06:44,334 --> 01:06:47,602
 this action right here, and I'm gonna have UI button
+还挺合适， 事件的 sender 是
 
 1275
 01:06:47,604 --> 01:06:50,505
-be the center, cuz I'm gonna know which one to show because
+be the sender, cuz I'm gonna know which one to show because
+UIButton，因为我需要通过按钮
 
 1276
 01:06:50,507 --> 01:06:52,640
 I'm gonna look at the sender. Okay. So,
+判断应该显示哪一个。Okay，
 
 1277
 01:06:52,642 --> 01:06:54,909
 I got show image right here. So, let's go ahead and
+showimage 方法创建好了。接下来，
 
 1278
 01:06:54,911 --> 01:06:56,978
 put the code here. So, show image is a lot like,
+就是填充代码了。showimage 的处理，
 
 1279
 01:06:56,980 --> 01:07:00,448
 looks a lot like prepare for seg, segue. We can only do
+和 prepareforsegue 中的代码类似。只能在
 
 1280
 01:07:00,450 --> 01:07:04,119
 this if we're in a split view. Right, we can only do the show
+split view 中这样做，这样来
 
 1281
 01:07:04,121 --> 01:07:07,555
 image thing here, this trick, if we are in a split view,
+显示 image，如果在 split view 中，
 
 1282
 01:07:07,557 --> 01:07:11,192
 sorry, let me, just so we can see what's going on here.
+啊，不好意思，这里可以看到。
 
 1283
 01:07:11,194 --> 01:07:14,129
 All right. Okay, we can only do a split view so
+因为只能在 split view 中使用，
 
 1284
 01:07:14,131 --> 01:07:17,098
 I'm gonna first check to see that. I'm gonna say,
+所以首先判断，
 
 1285
 01:07:17,100 --> 01:07:21,836
 if I can let the ivc = splitViewControllers,
+if let ivc = splitViewController，
 
 1286
 01:07:21,838 --> 01:07:24,773
 if I have one, view Controller,
+如果存在，viewcontrollers，
 
 1287
 01:07:24,775 --> 01:07:29,110
 controller[1]. We know that's the detail, right.
+controller[1]，我们知道这个是 detail，
 
 1288
 01:07:29,112 --> 01:07:30,478
 And actually I don't wanna use sub one
+但这里我不想用下标取值，
 
 1289
 01:07:30,480 --> 01:07:33,248
 because if for some reason my split view controller
+如果某些情况下，split view controller
 
 1290
 01:07:33,250 --> 01:07:36,217
 doesn't have a detail, then view controllers only have one
+没有 detail，那么 viewcontrollers 就只有
 
 1291
 01:07:36,219 --> 01:07:39,721
 thing so I'm actually gonna use ViewController.last.
+一个值，所以我准备用 viewcontroller.last 取值。
 
 1292
 01:07:39,723 --> 01:07:43,258
 Okay, because last returns nil if there's no such thing.
+如果 last 返回空，则说明什么都没有。
 
 1293
 01:07:43,260 --> 01:07:46,227
 Okay, and then I'm gonna grab the content view controller as
+接下来，判断 content view controller
 
 1294
 01:07:46,229 --> 01:07:49,264
 always and I'm gonna check to see if that's an image view
+是否是 image view controller，这和之前差不多，
 
 1295
 01:07:49,266 --> 01:07:50,765
 controller. So in other words,
+也就是说，
 
 1296
 01:07:50,767 --> 01:07:53,134
 if I can get my detail as an image view controller,
+如果 detail 是 image view controller，
 
 1297
 01:07:53,136 --> 01:07:56,271
 then I'm basically gonna do this right here,
+就可以走这段逻辑，拷贝过来，
 
 1298
 01:07:56,273 --> 01:07:59,507
 in here, but here I don't have to say sender as UI button
+这里并不需要将 sender 转换为 UIButton，
 
 1299
 01:07:59,509 --> 01:08:00,008
 because the sender is
+因为 sender 本来就是
 
 1300
 01:08:00,010 --> 01:08:02,177
 a UI button so I can just say sender and
+UIButton，而且 sender 在这里
 
 1301
 01:08:02,179 --> 01:08:06,614
 it's never gonna be nil there. Okay? And do that. So see,
+也不可能为空。Okay？就这样。
 
 1302
 01:08:06,616 --> 01:08:09,384
 see what's going on here? So no segueing,
+这里在干嘛呢？没有了 segue，
 
 1303
 01:08:09,386 --> 01:08:16,825
 I'm not doing any segueing. So when I go over here, Okay,
+不再需要 segue 了。继续运行，
 
 1304
 01:08:16,827 --> 01:08:20,762
 and I pick something, like Cassini, or Earth, okay,
+点击按钮，比如 Cassini，或者 Earch，
 
 1305
 01:08:20,764 --> 01:08:25,767
 we'll say. It loads it up. Actually,
+就可以看到，正在加载。实际上，
 
 1306
 01:08:25,769 --> 01:08:28,236
 we got to do one other thing, sorry. Back here, in our
+我们忘了点东西，不好意思，回到程序，
 
 1307
 01:08:28,238 --> 01:08:31,673
 storyboard, let's wire up all these buttons to do that.
+在 storyboard 中，应该给所有 button 添加事件。
 
 1308
 01:08:31,675 --> 01:08:35,977
 [LAUGH] Okay, we only wired up earth to do this show image so
+[笑] Okay，现在只是给 earth 关联了 showimage，所以，
 
 1309
 01:08:35,979 --> 01:08:39,080
 let's do that. Let's go to automatic.
+来处理其余的，选择 automatic。
 
 1310
 01:08:39,583 --> 01:08:40,415
 All right, so let's control,
+关联这个，
 
 1311
 01:08:40,417 --> 01:08:42,750
 so this one here and let's wire up this one here. Okay,
+关联这个。Okay，
 
 1312
 01:08:42,752 --> 01:08:46,354
 so now all three buttons are sending that same show image.
+现在三个按钮都和同一个 showimage 关联了。
 
 1313
 01:08:46,356 --> 01:08:49,057
 So now we can actually demonstrate this. So let's
+这次演示应该没问题。点击
 
 1314
 01:08:49,059 --> 01:08:53,094
 do Cassini. Here it is showing this and once this appears, or
+Cassini，会在这里展示，在展示出来后，
 
 1315
 01:08:53,096 --> 01:08:55,930
 even before it appeared, I could hit Earth and
+或者还没展示的时候，就可以点击 Earth，
 
 1316
 01:08:55,932 --> 01:08:59,000
-it just reusing this. No seugues, so there's no way I'm
+it just reusing this. No seuges, so there's no way I'm
+而且这是重用的。没有 segue，所以不会
 
 1317
 01:08:59,002 --> 01:09:02,837
 creating a new MVC here. It's just reloading it, okay,
+创建新的 MVC。只是在进行刷新，
 
 1318
 01:09:02,839 --> 01:09:07,842
 just by setting the image URL on the image there. Got it?
+只是重新设置了 image 的 URL。明白？
 
 1319
 01:09:08,178 --> 01:09:11,813
 Okay. Now, what about back on iPhone, though?
+那在 iPhone 上会怎样呢？
 
 1320
 01:09:11,815 --> 01:09:13,815
 Let's go back to iPhone.
+让我们回到 iphone。
 
 1321
 01:09:13,817 --> 01:09:18,286
 Is this going to work over here? No, it's not
+依然会有效吗？不，不行，
 
 1322
 01:09:18,288 --> 01:09:21,422
 because it only does that thing if it's in split view.
+因为这只能在 split view 的情况下可以。
 
 1323
 01:09:21,424 --> 01:09:24,759
 Remember I said if split view controller, so if I hit Earth,
+我记得我说过要 split view controller，所以这里点击 Earth，
 
 1324
 01:09:24,761 --> 01:09:28,163
 it's not working at all now, cuz it's not segueing here. So
+没有任何响应，因为根本没有 segue。
 
 1325
 01:09:28,165 --> 01:09:31,699
 really what I need to do back here in Cassini is I need to
+所以，回到 Cassini 项目，需要加上
 
 1326
 01:09:31,701 --> 01:09:35,904
 say [COUGH] if I'm in a split view controller, then do this.
+[咳嗽]，如果是 split view controller，处理这个。
 
 1327
 01:09:35,906 --> 01:09:39,107
 Otherwise, I basically want to segue. Okay, so
+否则，应该处理 segue 逻辑。
 
 1328
 01:09:39,109 --> 01:09:44,078
 now I'm gonna show you how to segue from code. Okay,
+所以我会演示如何用代码实现 segue。
 
 1329
 01:09:44,080 --> 01:09:46,147
 you've only learned how to segue from,
+因为之前只讲过从，
 
 1330
 01:09:46,149 --> 01:09:46,981
 by dragging in Storyboard.
+从 storyboard 中拖拽。
 
 1331
 01:09:46,983 --> 01:09:50,018
 And now I'm gonna show you how to do it in code,
+现在我会将如何使用代码，
 
 1332
 01:09:50,020 --> 01:09:53,788
 which is you just say performSegueWithIdentifier.
+只需要调用 performSegueWithIdentifier。
 
 1333
 01:09:53,790 --> 01:09:55,490
 And you give it the identifier. So
+给一个 identifier。
 
 1334
 01:09:55,492 --> 01:10:00,094
 we'll use the Storyboard ShowImageSegue,
+可以使用 StoryBoard.ShowImageSegue，
 
 1335
 01:10:00,096 --> 01:10:01,930
 and the sender can be whatever you want,
+sender 这个可以随便填，
 
 1336
 01:10:01,932 --> 01:10:05,200
 I'm gonna have the sender be this sender button right here,
+这里我希望 sender 就是按钮事件的 sender，
 
 1337
 01:10:05,202 --> 01:10:06,868
 this button that's asking us to show image, so
+就是这样按钮触发的 showimage，
 
 1338
 01:10:06,870 --> 01:10:09,137
 it's gonna be one of those Earth things or whatever.
+可能是 Earth，也可能是别的。
 
 1339
 01:10:09,139 --> 01:10:11,839
 Now this, perform segue with identifier,
+performSegueWithIdentifier 方法，
 
 1340
 01:10:11,841 --> 01:10:16,477
 requires that such a segue exist in the storyboard. Okay,
+要求传入的 segue 必须在 storyboard 中存在。
 
 1341
 01:10:16,479 --> 01:10:17,545
 and we got rid of all those segues.
+但我们之前删掉了所有 segue。
 
 1342
 01:10:17,547 --> 01:10:20,915
 So that's not gonna work. We need to have a storyboard with
+所以代码不会生效。我们需要 storyboard 中，
 
 1343
 01:10:20,917 --> 01:10:24,252
 this identifier, and the way you do this is, you actually
+有这些 identifier，实现方式是，
 
 1344
 01:10:24,254 --> 01:10:27,622
 segue from the view controller itself. Instead of seguing
+从 view controller 自己发起 segue，而不是
 
 1345
 01:10:27,624 --> 01:10:30,792
 from one of the buttons, when you wanna segue in code,
+从 button 发起 segue。如果需要用代码实现 segue，
 
 1346
 01:10:30,794 --> 01:10:32,527
 you segue from the view controller itself,
+那就需要 view controller 发起。
 
 1347
 01:10:32,529 --> 01:10:35,930
