@@ -5046,1996 +5046,2496 @@ even though it's loading those things in the background.
 1010
 00:52:53,638 --> 00:52:56,705
 When they eventually arrive, it's gonna put them in the UI,
+当图片下载完成后，便会在 UI 上显示，
 
 1011
 00:52:56,707 --> 00:53:00,109
 okay. But while they're out there fetching I can do things
+但在下载过程中，
 
 1012
 00:53:00,111 --> 00:53:06,882
 like go back in my navigation controller. Make sense,
+我可以做其他的操作，比如点击返回按钮等。看吧，
 
 1013
 00:53:06,884 --> 00:53:13,522
 see that? >> [INAUDIBLE]
+没问题。[清不清楚]
 
 1014
 00:53:13,524 --> 00:53:14,056
 >> What happens, what?
+什么事？怎么？
 
 1015
 00:53:14,058 --> 00:53:14,857
 >> [INAUDIBLE] Image each time
+[听不清] 假设每次
 
 1016
 00:53:14,859 --> 00:53:17,560
 you click out. >> So the question is, if I
+都快速返回。那么，每次返回后，
 
 1017
 00:53:17,562 --> 00:53:20,596
 click out, and then click back in, does it reload the image?
+再点进去，会重新下载图片吗？
 
 1018
 00:53:20,598 --> 00:53:22,831
 And the answer is absolutely, because when I click out,
+答案显而易见，因为再返回后，
 
 1019
 00:53:22,833 --> 00:53:26,068
-it throws that NBC out of the heap. Okay, it's gone.
+it throws that MVC out of the heap. Okay, it's gone.
+MVC 的堆内存就被销毁了，也就不存在了。
 
 1020
 00:53:26,070 --> 00:53:28,103
-Now actually, that NBC is not gonna immediately leave
+Now actually, that MVC is not gonna immediately leave
+但这次，MVC 却没有立即销毁，
 
 1021
 00:53:28,105 --> 00:53:30,773
 the heap, cuz that closure that's doing the fetching is
+因为闭包还在执行下载，
 
 1022
 00:53:30,775 --> 00:53:33,108
 still holding it in the heap. But once that fetch comes
+持有了该内存。当数据下载完成后，
 
 1023
 00:53:33,110 --> 00:53:36,779
 back, then it'll leave the heap and the image with it. So
+堆内存便销毁了，下载的图片也是。
 
 1024
 00:53:36,781 --> 00:53:40,583
 yeah, every time we're re-fetching, okay?
+所以，每次都是重新下载的，明白？
 
 1025
 00:53:41,552 --> 00:53:41,684
 So see how we built this nice responsive UI right now, okay?
+这就是我们讲到的快速响应 UI。
 
 1026
 00:53:41,686 --> 00:53:45,221
 Everybody got that?
+大家都明白吗？
 
 1027
 00:53:45,223 --> 00:53:48,090
 Even though it's still taking a long time to fetch things,
+即使数据下载依然需要很长时间，
 
 1028
 00:53:48,092 --> 00:53:51,493
 we can still navigate. Now, what's a little weird about
+但并不影响跳转。但是，UI 还有些
 
 1029
 00:53:51,495 --> 00:53:54,330
 this UI, though, is that while it's fetching,
+不足，在数据下载时，
 
 1030
 00:53:54,332 --> 00:53:57,633
 like when I'm here, it's not clear what's going on.
+比如这个界面，并不知道它在处理什么。
 
 1031
 00:53:57,635 --> 00:53:59,168
 It looks like there's just no Earth image,
+这里好像并没有 Earth 的图片，
 
 1032
 00:53:59,170 --> 00:54:02,171
 I guess. I don't know, I guess not, I don't see it. Wouldn't
+我也不知道，可能是吧，什么都看不见。如果
 
 1033
 00:54:02,173 --> 00:54:04,840
 it be cool if we could give some feedback to the user?
+能给用户一个标识不是更好吗？
 
 1034
 00:54:04,842 --> 00:54:08,544
 Hey, I'm working on it, okay, this image is big.
+Hey，我正在努力加载呢，图片太大了。
 
 1035
 00:54:08,546 --> 00:54:09,545
 All right, and we can do that.
+是的，我们可以处理。
 
 1036
 00:54:09,547 --> 00:54:12,414
 And the cool way to do that is with a little spinner, okay,
+可以在这里加个指示器，
 
 1037
 00:54:12,416 --> 00:54:15,651
 a little animating. You see them all in apps little thing
+一个小动画。在很多 app 中都能看到
 
 1038
 00:54:15,653 --> 00:54:17,886
 that spins around basically telling him yeah, yeah,
+指示器，告知系统收到了交互，
 
 1039
 00:54:17,888 --> 00:54:20,789
 I know, I'm working on it. So let's put a spinner in there.
+正在进行处理。那么，让我们在这里加上指示器吧。
 
 1040
 00:54:20,791 --> 00:54:24,059
 Turns out to be really easy to put, do spinners in iOS.
+在 iOS 中加指示器，真的非常简单。
 
 1041
 00:54:24,061 --> 00:54:26,395
 We're just gonna go to the storyboard, okay.
+打开 storyboard，
 
 1042
 00:54:26,397 --> 00:54:30,232
 I'm gonna put the spinner here in this view. Now when I put
+将指示器加到这个 view 中。但注意，
 
 1043
 00:54:30,234 --> 00:54:32,167
 it in there, I'm gonna have to be very careful.
+加进去要非常小心。
 
 1044
 00:54:32,169 --> 00:54:32,501
 And this is a good chance for
+正好给大家
 
 1045
 00:54:32,503 --> 00:54:35,004
 me to show you more about the document outline. But
+详细演示下 document outline。
 
 1046
 00:54:35,006 --> 00:54:38,140
 watch this, so I'm gonna go down here. The spinner is just
+看这里，滚到这里，有个可以直接
 
 1047
 00:54:38,142 --> 00:54:40,509
 a thing you can drag out. You see it right here.
+进行拖拽的指示器。就是这个。
 
 1048
 00:54:40,511 --> 00:54:42,544
 Now watch what happens when I drag this out, okay, and
+将它拖到界面中，
 
 1049
 00:54:42,546 --> 00:54:46,215
 I try to use the blue lines to put it in the middle, drop it.
+蓝色辅助线可帮助居中，就扔到这。
 
 1050
 00:54:46,217 --> 00:54:48,784
 It looks like, okay, that worked, that's nice.
+看起来不错，正是我们需要的。
 
 1051
 00:54:48,786 --> 00:54:50,786
 I can even go here and inspect it up here.
+还可以打开上面的 inspect，
 
 1052
 00:54:50,788 --> 00:54:54,123
 You see, I can make a nice larger one. Maybe I'll even
+这里，可以选择更大的样式。也可以
 
 1053
 00:54:54,125 --> 00:54:58,594
 make it blue instead of white. Let's have it hide itself
+将其改为蓝色。还可以设置
 
 1054
 00:54:58,596 --> 00:54:59,595
 when it stops animating.
+动画停止时，自动隐藏。
 
 1055
 00:54:59,597 --> 00:55:01,597
 We can do all kinds of cool stuff here. But
+这里可以设置很多属性。
 
 1056
 00:55:01,599 --> 00:55:04,400
 actually something terrible has happened,
+但同时引发了一个问题，
 
 1057
 00:55:04,535 --> 00:55:06,869
 which is that when I dragged that thing out and
+在我将控件拖出来，
 
 1058
 00:55:06,871 --> 00:55:08,037
 dropped it in the middle there,
+然后放置到中间时，
 
 1059
 00:55:08,039 --> 00:55:11,173
 it made it a subview of the Scroll View, okay?
+这个控件变成了 Scroll View 的子视图。
 
 1060
 00:55:11,175 --> 00:55:14,877
 In the interface builder when you drag a view out on top of
+在 interface builder 中，如果将一个控件拖到
 
 1061
 00:55:14,879 --> 00:55:16,578
 another view, it makes it a subview of that.
+另一个控件上，那该控件就成了另一个的子视图。
 
 1062
 00:55:16,580 --> 00:55:19,148
 Now you can't really tell that here, but that's what this
+直接从这里不大看的出来，
 
 1063
 00:55:19,150 --> 00:55:21,483
 little guy over in the corner, the document outline,
+要点击角落里的这个小按钮，打开 document outline，
 
 1064
 00:55:21,485 --> 00:55:24,353
 is really great at. If you look at the document outline,
+这非常棒，在 document outline 中，
 
 1065
 00:55:24,355 --> 00:55:27,189
 do you see how the activity indicator is indented
+能看到 activity indicator 在
 
 1066
 00:55:27,191 --> 00:55:30,893
 from the Scroll View? Okay, that means it's a subview
+Scroll View 中吗？这就意味着，它成为了
 
 1067
 00:55:30,895 --> 00:55:34,496
 of the Scroll View. Now, if you don't want that, okay,
+Scroll View 的子视图。如果你不想这样，
 
 1068
 00:55:34,498 --> 00:55:36,665
 no problem. You can just drag it up above.
+没问题，将它拖到上面。
 
 1069
 00:55:36,667 --> 00:55:39,568
 Now, it's not a subview of the Scroll View. Now, of course,
+现在，它就不再是 Scroll View 的子视图了。当然，
 
 1070
 00:55:39,570 --> 00:55:41,804
 it's not in the right order right now, because I want this
+这还不是正确的视图层级，因为我想要指示器
 
 1071
 00:55:41,806 --> 00:55:44,340
 thing to be in front of the Scroll View. So, I'm gonna put
+放在 Scroll View 前面。所以，要把
 
 1072
 00:55:44,342 --> 00:55:47,643
 the Scroll View on top of it. So, now they're siblings, and
+Scroll View 移到指示器上面。现在，它们就在一个层级了，并且
 
 1073
 00:55:47,645 --> 00:55:51,447
 this one is in front, because remember, the subview is list,
+这个再上面，记住，子视图是链表，
 
 1074
 00:55:51,449 --> 00:55:52,681
 the top ones are in the back.
+越在后面，层级越高。
 
 1075
 00:55:52,683 --> 00:55:54,650
 The other ones go towards the front. So,
+升序排列。所以，
 
 1076
 00:55:54,652 --> 00:55:58,020
 now we have this thing in the front, okay? Now,
+现在这个就在前面了。
 
 1077
 00:55:58,022 --> 00:56:00,522
 another thing is, what if I wanna have,
+还有个问题，如果我想，
 
 1078
 00:56:00,524 --> 00:56:03,359
 constraints on this to keep this in the middle?
+想要给该空间加约束，是它一直居中，该怎么办？
 
 1079
 00:56:03,361 --> 00:56:05,060
 Well, I have to be very careful here too,
+这一步同样需要仔细。
 
 1080
 00:56:05,062 --> 00:56:08,230
 cuz those dashed lines. We're referring to the scroll view.
+因为这里的约束，都是与 scroll view 关联的。 
 
 1081
 00:56:08,232 --> 00:56:11,033
 So if I tried to do reset to suggested constraints here,
+所以，先要重置默认的约束，
 
 1082
 00:56:11,035 --> 00:56:13,869
 I'm gonna get constraints that constrain the activity
+会发现现在 activity indicator
 
 1083
 00:56:13,871 --> 00:56:16,205
 indicator to the scroll view. I don't want that.
+的约束都是基于 scroll view 的，我可不想这样。
 
 1084
 00:56:16,207 --> 00:56:19,575
 I want the activity indicator to be in the middle of its
+我希望 activity indicator 相对其父视图
 
 1085
 00:56:19,577 --> 00:56:19,842
 superview.
+居中。
 
 1086
 00:56:19,844 --> 00:56:23,612
 And watch this, you can do control drag in the document
+看仔细了。你可以在 document outline 中，
 
 1087
 00:56:23,614 --> 00:56:26,782
 outline. So I'm gonna control drag from my activity
+按住 control。从 activity indicator 这里，
 
 1088
 00:56:26,784 --> 00:56:30,919
 indicator to its superview in the document outline,
+按住 control，拖到 document outline 中的父视图上，
 
 1089
 00:56:30,921 --> 00:56:33,255
 not over here, but in the document outline.
+不是这，是在 document outline 中。
 
 1090
 00:56:33,257 --> 00:56:35,758
 And when I let go, I can do things like, yeah,
+松开鼠标，可以看到这个，是的，
 
 1091
 00:56:35,760 --> 00:56:41,764
 please center it vertically and horizontally in yourself.
+请在水平与竖直方向都居中。
 
 1092
 00:56:41,766 --> 00:56:46,568
 Okay? So now this thing is centered and middle. Okay?
+那么，现在就居中了。
 
 1093
 00:56:46,570 --> 00:56:50,939
 So, now we've got the spinner, how do we do anything with it?
+至此指示器就创建好了，那应该怎么处理逻辑呢？
 
 1094
 00:56:50,941 --> 00:56:51,440
 Well, we need an outlet to it.
+现在需要一个它的 outlet。
 
 1095
 00:56:51,442 --> 00:56:55,511
 So, I'm going to bring out my code over here, okay?
+把代码显示出来，
 
 1096
 00:56:55,513 --> 00:56:56,712
 Do it automatic.
+自动关联文件。
 
 1097
 00:56:56,714 --> 00:56:59,681
 Got our image view controller here, let's give it to this,
+这是 image view controller。关掉这个，
 
 1098
 00:56:59,683 --> 00:57:02,851
 give it to that, give it some room. Okay so
+关掉这个，腾点空间出来。好的，
+
 
 1099
 00:57:02,853 --> 00:57:05,721
 I'm just going to create an outlet from this little
+将指示器从这拖到这，
 
 1100
 00:57:05,723 --> 00:57:10,125
 spinner right here, over here. See it make sure that it's
+创建 outlet。注意这里的类型
 
 1101
 00:57:10,127 --> 00:57:13,796
 type is activity indicator view not something else, and
+是 activity indicator，而不是别的。
 
 1102
 00:57:13,798 --> 00:57:14,730
 I'm just going to call it spinner,
+名字就叫 spinner 吧，
 
 1103
 00:57:14,732 --> 00:57:17,499
 I like spinner as my name. And it's just an outlet,
+我喜欢 spinner 这个名字，这是个 outlet，
 
 1104
 00:57:17,501 --> 00:57:20,769
 it's a normal outlet just like our scroll view or anything
+非常普通的 outlet，和 scroll view 或其他 outlet
 
 1105
 00:57:20,771 --> 00:57:23,272
 else is an outlet. Okay just like your display was in your
+没区别。就像计算器能显示一样，
 
 1106
 00:57:23,274 --> 00:57:27,643
 calculator there's nothing particularly special about it.
+没什么特别的。
 
 1107
 00:57:27,645 --> 00:57:31,413
 So now that we have this nice spinner right here,
+现在，我们拿到了指示器变量，
 
 1108
 00:57:31,415 --> 00:57:34,450
 we just need to turn it on and turn it off. So where are we
+只需要控制它的开始与结束。那什么时候开始呢？
 
 1109
 00:57:34,452 --> 00:57:37,352
 gonna turn it on? Well, I'm gonna turn it on right before
+我觉得它应该在其他线程开始
 
 1110
 00:57:37,354 --> 00:57:41,023
 I start doing something on that other thread, okay. So
+处理事情的时候开始。
 
 1111
 00:57:41,025 --> 00:57:44,493
 right here when I dispatch onto this other thread to go
+就是这里，在将处理 NSData 的 block 派发到
 
 1112
 00:57:44,495 --> 00:57:47,629
 do this NSData, which is gonna block, I'm just gonna say
+其他线程的时候，让
 
 1113
 00:57:47,631 --> 00:57:53,435
 spinner startAnimating. And I'm gonna be even trickier and
+spinner startAnimating。我准备在这里增加点难度，
 
 1114
 00:57:53,437 --> 00:57:56,972
 go spinner?.startAnimating just in case
+改为 spinner?startAnimating，防止
 
 1115
 00:57:56,974 --> 00:58:00,776
 I'm fetching my image like as a result of prepare for
+在 prepare for segue 的时候
 
 1116
 00:58:00,778 --> 00:58:03,846
 segue, okay, because there my outlets aren't set.
+调用该方法获取图片，而这个时候，outlet 还未创建。
 
 1117
 00:58:03,848 --> 00:58:05,747
 So even if my app spinner's not set,
+这样的话，在 spinner 还没创建时，
 
 1118
 00:58:05,749 --> 00:58:09,751
 I'll just do nothing. Now where do I wanna turn it off?
+没有任何响应就行。那应该在何时停止呢？
 
 1119
 00:58:09,753 --> 00:58:11,954
 Its actually two places that you can turn this off.
+应该有两处地方需要停止。
 
 1120
 00:58:11,956 --> 00:58:16,892
 One good place might be down here when your image gets set.
+一处是在图片加载完成后。
 
 1121
 00:58:16,894 --> 00:58:18,994
 Okay? Cuz if someone sets your image,
+在图片加载完成后，
 
 1122
 00:58:18,996 --> 00:58:23,198
 then you don't need to be spending anymore.
+spinner 就没必要显示了。
 
 1123
 00:58:23,367 --> 00:58:25,434
 By definition, you're showing the image.
+理论上，这里图片都已经展示了。
 
 1124
 00:58:25,436 --> 00:58:29,004
 So, it will make no sense to be spinning such a good place.
+所以，spinner 已经完成使命了。
 
 1125
 00:58:29,006 --> 00:58:31,106
 Got to be a little careful though here because,
+另外一个地方需要特别小心，
 
 1126
 00:58:31,108 --> 00:58:34,109
 what happens when we get in here, okay?
+这里会出现什么情况呢，
 
 1127
 00:58:34,111 --> 00:58:36,378
 And you get to the URL here, and
+这里是获得 URL，
 
 1128
 00:58:36,380 --> 00:58:38,647
 the image data wasn't able to be found, so
+如果 URL 未找到图片数据，
 
 1129
 00:58:38,649 --> 00:58:41,583
 you never call set image, so it's never going to stop.
+图片就无法创建，那指示器就一直没停止。
 
 1130
 00:58:41,585 --> 00:58:45,387
 So you probably want to put in else spinner stop animating
+所以这里也需要加上 spinner 停止的代码。
 
 1131
 00:58:45,389 --> 00:58:48,490
 here as well. Okay so this is gonna stop the spinner in
+所以， spinner 就会在
 
 1132
 00:58:48,492 --> 00:58:52,094
 the case where it went off to the Internet to get something,
+无网络，或者未找到数据的情况下，
 
 1133
 00:58:52,096 --> 00:58:55,030
 and it couldn't find it. Okay, eh,
+停止。哦，
 
 1134
 00:58:55,032 --> 00:59:00,969
 little tricky. Okay, so let's see how that works.
+小失误。好，运行看看效果。
 
 1135
 00:59:06,644 --> 00:59:08,810
 Alright, here we go, let's try Earth, there it is,
+跑起来了，打开 Earth，对，没错，
 
 1136
 00:59:08,812 --> 00:59:11,513
 it's spinning, and we can go back, let's try Cassini, it's
+有指示器了，点击返回，打开 Cassini，也有
 
 1137
 00:59:11,515 --> 00:59:15,484
 spinning. Now when Cassini appears it stops spinning, and
+指示器。在 Cassini 加载完后，指示器停止，
 
 1138
 00:59:15,486 --> 00:59:19,354
 so it hides because we had, we set this switch over here
+并且自动消失，因为我们之前字 inspect 中，
 
 1139
 00:59:19,356 --> 00:59:23,158
 on this one we inspected it called hides when stopped,
+将它设置为停止就自动隐藏，
 
 1140
 00:59:23,160 --> 00:59:28,196
 right. And so since it hides when stopped, it's not here
+没问题。所以，在停止后，指示器
 
 1141
 00:59:28,198 --> 00:59:32,734
 anymore okay. [INAUDIBLE] Saturn,
+就不见了。[听不清] Saturn，
 
 1142
 00:59:32,736 --> 00:59:38,974
 spins okay then we can rotate. Big image, taking a long time.
+旋转屏幕。是个大图，需要更长的时间。
 
 1143
 00:59:38,976 --> 00:59:43,312
 There it is, okay? So see how we turn this into an app, it's
+完成，没问题。这就是在 app 中的运用，
 
 1144
 00:59:43,314 --> 00:59:45,948
 really responsive and really nice and it's being as fast as
+非常友好，非常漂亮，说多快有多快。
 
 1145
 00:59:45,950 --> 00:59:47,983
 it can. It's getting those images as fast as it can,
+图片现在说多快有多快，
 
 1146
 00:59:47,985 --> 00:59:51,153
 but from the user standpoint, it's very responsive.
+从用户的角度来说，也非常友好。
 
 1147
 00:59:51,155 --> 00:59:53,288
 You really wanna go with that way.
+大家以后也应该这样做。
 
 1148
 00:59:53,290 --> 00:59:57,326
 Okay, so now I'm gonna show two unrelated to this, okay?
+接下来，我将提到两个不相关的东西。
 
 1149
 00:59:57,328 --> 01:00:01,697
 But did you've asked about in Piazza. One is notice that
+大家对 Piazza 有以为吗。在运行的时候，
 
 1150
 01:00:01,699 --> 01:00:07,235
 when we run this, let's run again, watch what happens.
+重新运行下，看看出了什么问题。
 
 1151
 01:00:07,972 --> 01:00:14,009
 When we run, we get an empty image view controller
+在运行起来时，image view controller 是空的，
 
 1152
 01:00:14,011 --> 01:00:17,012
 which really doesn't make any sense. What we'd
+而这不应该出现才对。我们想要的是，
 
 1153
 01:00:17,014 --> 01:00:19,848
 really want it to, when we first run and this is empty,
+在第一次运行的时候，这是空的，
 
 1154
 01:00:19,850 --> 01:00:23,251
 we want it to come up showing this view controller. So
+而我们想要的是展示这个 controller。
 
 1155
 01:00:23,253 --> 01:00:24,152
 this is like with your calculator,
+这和之前的计算器项目类似，
 
 1156
 01:00:24,154 --> 01:00:25,921
 you don't want it to come up showing empty graph.
+我们不想展示空的界面。
 
 1157
 01:00:25,923 --> 01:00:28,857
 You want it to come up showing the calculator because
+空界面什么用都没有，应该展示
 
 1158
 01:00:28,859 --> 01:00:29,391
 the empty graph is useless,
+计算器界面才对。
 
 1159
 01:00:29,393 --> 01:00:32,394
 it just forces them to do that back thing right here for
+这个还必须要手动返回，而且
 
 1160
 01:00:32,396 --> 01:00:35,931
 no good reason. Okay, so how do we do that, okay this is
+还不知道为什么要这样。那么，该怎么处理呢，
 
 1161
 01:00:35,933 --> 01:00:38,367
 another case where we need to use delegation.
+这是另个需要用到 delegation 的原因。
 
 1162
 01:00:38,369 --> 01:00:43,105
-In this case it's the split fuse delegate. Okay, split
+In this case it's the split view delegate. Okay, split
+这里要用到的是 split view delegate。split
 
 1163
 01:00:43,107 --> 01:00:45,407
 view controller's delegate. So what does this code look like?
+view controller 的 delegate。那代码该怎么写呢？
 
 1164
 01:00:45,409 --> 01:00:48,143
 I'm gonna put this in Cassini, view controller right here.
+我准备把代码放在 Cassiini view controller 的这个地方。
 
 1165
 01:00:48,145 --> 01:00:51,113
 The first thing I need to do is I need to make the Cassini
+首先，我准备，我准备将 Cassini view controller 设为
 
 1166
 01:00:51,115 --> 01:00:55,150
 view controller be its own split view's delegate.
+split view 的 delegate。
 
 1167
 01:00:55,152 --> 01:00:57,052
 In other words, it needs to be the delegate of
+也就是说，它需要成为
 
 1168
 01:00:57,054 --> 01:00:57,319
 the split view it's in.
+split view 的代理。
 
 1169
 01:00:57,321 --> 01:01:01,156
 So I'm gonna do this in viewDidLoad. Okay sometimes
+我准备在 viewDidLoad 里面处理。
 
 1170
 01:01:01,158 --> 01:01:03,525
 viewDidLoad is not quite early enough to do things for
+在 viewDidLoad 中，获取 split view 才
 
 1171
 01:01:03,527 --> 01:01:07,462
 split views. We might have to do it in a wait for even. But
+不算太早。别的方法可能还要判断时机，而
 
 1172
 01:01:07,464 --> 01:01:10,165
-this will work in beaded load. And I'm just going to set
+this will work in viewDidLoad. And I'm just going to set
+viewDidLoad 就不用。我准备在这里设置
 
 1173
 01:01:10,167 --> 01:01:14,136
 my split view controllers remember MVC knows the split
+split view controller，每个 MVC 能拿到 split
 
 1174
 01:01:14,138 --> 01:01:16,872
 view controller its in. Or the navigation controller its in,
+view controller 变量。Navigation controller 也可以，
 
 1175
 01:01:16,874 --> 01:01:18,106
 or the tab bar controller its in. So
+tab bar controller 也行。
 
 1176
 01:01:18,108 --> 01:01:22,611
 SplitViewController says what it is, might be nil, okay? But
+而 splitViewController 也可能为空，
 
 1177
 01:01:22,613 --> 01:01:25,514
 if it's not I'm gonna set its delegate to be myself.
+如果不为空，则设置 self 为 delegate。
 
 1178
 01:01:25,516 --> 01:01:29,284
 Of course as soon as I do this I'm getting an error because
+当然，这样处理会出现错误，
 
 1179
 01:01:29,286 --> 01:01:32,954
 I didn't say that I was a UI SplitViewController delegate.
+因为 self 还未遵循 UISplitViewControllerDelegate。
 
 1180
 01:01:32,956 --> 01:01:33,822
 So I need to go up here and
+滚动到顶部，
 
 1181
 01:01:33,824 --> 01:01:37,793
 say that I'm a UI SplitViewController delegate.
+声明 self 遵循 UISplitViewControllerDelegate。
 
 1182
 01:01:39,096 --> 01:01:43,365
 All right that satisfies that error. All is good. Now which
+好的，错误解决了。没问题，那么，
 
 1183
 01:01:43,367 --> 01:01:46,668
 split view controller method am I going to implement?
+应该实现 split view controller 的哪个方法呢？
 
 1184
 01:01:46,670 --> 01:01:49,538
 Okay hold on your chairs for this one, okay
+抓紧椅子，别被吓到了。
 
 1185
 01:01:49,540 --> 01:01:52,007
 by the way again on the split view controller delegate so
+因为已经遵循 split view controller delegate，所以
 
 1186
 01:01:52,009 --> 01:01:54,142
 I can just start typing split view and you can see it
+键入 split view 就可以索引出方法，看吧，
 
 1187
 01:01:54,144 --> 01:01:56,678
 shows me all the split view controller delegate methods.
+这些，全都是 split view controller delegate 的方法。
 
 1188
 01:01:56,680 --> 01:01:59,781
 There's quite a few. Okay about a dozen of them.
+有很多方法，大概十多个。
 
 1189
 01:01:59,783 --> 01:02:02,918
 And the one I want is the one that controls
+而我需要的那个，
 
 1190
 01:02:02,920 --> 01:02:07,222
 the collapsing of the detail on top of the master.
+是可以控制 detail 压缩的方法。
 
 1191
 01:02:07,224 --> 01:02:10,058
 Because I don't want it to collapse that detail on top of
+因为在 detail 没有数据时，不需要将
 
 1192
 01:02:10,060 --> 01:02:13,595
 the master if the detail is empty, okay?
+detail 显示出来。
 
 1193
 01:02:13,597 --> 01:02:14,429
 If it doesn't have an image in there,
+如果没有图片，
 
 1194
 01:02:14,431 --> 01:02:17,666
 I don't want it to do that. So this thing that controls that
+就不需要显示。这个方法叫做，
 
 1195
 01:02:17,668 --> 01:02:22,738
-it's called, collab secondary view controller,
+it's called, called secondary view controller,
+叫做 secondary view controller，
 
 1196
 01:02:22,740 --> 01:02:26,708
-on to primary compute controller. Okay, collab
+on to primary view controller. Okay, called
+on to primary view controller。
 
 1197
 01:02:26,710 --> 01:02:29,511
-secondary view controller, on to primary compute controller.
+secondary view controller, on to primary view controller.
+secondary view controller，on to primary view controller。
 
 1198
 01:02:29,513 --> 01:02:32,748
 Now, notice it returns a Bool, this Bool
+注意，返回值为 Bool，如果
 
 1199
 01:02:32,750 --> 01:02:35,650
 you return true if you took care of this.
+返回 true，就是自行处理。
 
 1200
 01:02:35,652 --> 01:02:40,589
 Return false if you want the system to do the collapse.
+如果返回 false，表示交由系统处理。
 
 1201
 01:02:40,591 --> 01:02:43,492
 Okay, so this is a way where the delegate can do this
+那么，这个代理方法就是用来处理
 
 1202
 01:02:43,494 --> 01:02:44,726
 collapse if it wants, or not, and
+是否需要压缩的，
 
 1203
 01:02:44,728 --> 01:02:47,629
 it just lets the split view know whether it did it or not.
+而且，只是告知 split view 是否需要。
 
 1204
 01:02:47,631 --> 01:02:50,232
 So that's what the bool is, let it know when it did it.
+这就是这个 bool 值的作用，用于告知 split 的。
 
 1205
 01:02:50,234 --> 01:02:53,568
 So, this is actually quite simple right here.
+那这样就非常简单了。
 
 1206
 01:02:53,570 --> 01:02:56,738
 We just want to get the image view controller,
+我么只想获得 image view controller，
 
 1207
 01:02:56,740 --> 01:03:00,675
 okay? Well first of all let's make sure that the primary
+首先判断 primary view controller
 
 1208
 01:03:00,677 --> 01:03:05,881
 view controller, content view controller, is ourself.
+的 content view controller 是 self。
 
 1209
 01:03:05,883 --> 01:03:08,083
 Now it should be, because we're setting ourselves
+这个应该是没问题的，因为我们之前将 self
 
 1210
 01:03:08,085 --> 01:03:09,718
 as our own split view delegate, so we should be
+设为了 split view controller 的 delegate，所以
 
 1211
 01:03:09,720 --> 01:03:13,188
 the primary view controllers, the masters content Okay?
+self 应该是 primary view controller 的 master content。
 
 1212
 01:03:13,190 --> 01:03:16,658
 So we showed you that, that should not be a problem. But
+所以写的这个判断，是能成功的。
 
 1213
 01:03:16,660 --> 01:03:20,896
 now I'm gonna say, on top of that, if I can let ivc =
+接下来，在括号中写，if let ivc = 
 
 1214
 01:03:20,898 --> 01:03:24,633
 the secondaryViewController, that's the detail.
+secondaryViewController，即 detail 页面，
 
 1215
 01:03:24,635 --> 01:03:30,238
 It contentViewController as an ImageViewController. Okay? So,
+的 contentViewController，并强转为 ImageViewController。也就是说，
 
 1216
 01:03:30,240 --> 01:03:36,011
 if have a ImageViewController as my detail, and
+如果 detail 是 ImageViewController，然后
 
 1217
 01:03:36,013 --> 01:03:39,281
 where, everyone know about where, right? You did your
+where，where 大家应该都知道吧？如果做了
 
 1218
 01:03:39,283 --> 01:03:41,783
 reading assignments, you know about where. Where is
+预习，那应该是没问题的。 Where 是
 
 1219
 01:03:41,785 --> 01:03:44,686
 an additional clause that you can add onto an if, okay?
+可以加载 if 之后的从句。
 
 1220
 01:03:44,688 --> 01:03:47,856
 So I'm gonna say where the image view controllers
+继续写，wherer image view controller
 
 1221
 01:03:47,858 --> 01:03:52,828
 image URL is nil. So if I have an image view controller as
+的 image URL 是 nil。也就是说，如果 image view controller 是
 
 1222
 01:03:52,830 --> 01:03:58,166
 my detail and it's, image url is nil, then it's empty.
+detail，并且图片的 url 为 nil，那界面就是空的。
 
 1223
 01:03:58,168 --> 01:03:59,968
 There's nothing in there. There's no Saturn or
+什么内容都没有，没有 Satrun 图片或
 
 1224
 01:03:59,970 --> 01:04:03,638
 anything else. So in this case I'm going to return true,
+别的内容。这种情况下，就返回 true，
 
 1225
 01:04:03,640 --> 01:04:05,874
 which is me telling the system, yeah,
+即告知系统，
 
 1226
 01:04:05,876 --> 01:04:08,710
 I took care of that. Okay, I put that detail, I collapsed
+我自己处理。我自己设置 detail，自己对
 
 1227
 01:04:08,712 --> 01:04:11,079
 that detail on top of the master, don't worry about it.
+master 上的 detail 进行处理，你不用管。
 
 1228
 01:04:11,081 --> 01:04:13,982
 Now I didn't, didn't actually do anything, that's good,
+而在这里，我什么都没做，这很好，
 
 1229
 01:04:13,984 --> 01:04:16,017
 cuz that's what I want. I don't want that
+我就想这样。因为我并不想
 
 1230
 01:04:16,019 --> 01:04:18,753
 detail to be collapsed on top of the master if the thing is
+在内容是空时，master 顶部的 detail 被压缩。
 
 1231
 01:04:18,755 --> 01:04:22,357
 nil. All right, so I just kind of lied to the system and told
+所以，这里是在骗系统，说
 
 1232
 01:04:22,359 --> 01:04:26,328
 them I handled it when in fact I didn't. Okay, otherwise,
+我要自行处理，但实际上，我什么都没做。好的，除此之外，
 
 1233
 01:04:26,330 --> 01:04:29,431
 we're just gonna let the system do whatever it does,
+别的情况就需要系统处理了。
 
 1234
 01:04:29,433 --> 01:04:33,902
 okay. Return false, we did not handle this so you handle it.
+返回 false，表示我自己不处理，你来处理吧。
 
 1235
 01:04:33,904 --> 01:04:41,543
 Okay, so let's see if that works. Okay, so here it is,
+接下来，看看效果吧。好的，
 
 1236
 01:04:41,545 --> 01:04:46,615
 look at that. It came up, didn't show me a blank thing,
+你看，没有再展示空白的页面了，
 
 1237
 01:04:46,617 --> 01:04:51,319
 so it worked. Now let's click on one of these. Woop, okay,
+成功了。点击其中一个，
 
 1238
 01:04:51,321 --> 01:04:51,486
 it worked. So
+没问题。
 
 1239
 01:04:51,488 --> 01:04:54,789
 it collapsed the secondary on top of the primary when I
+能在我需要的时候，将 primary 顶部的 secondary 
 
 1240
 01:04:54,791 --> 01:04:58,026
 wanted it too, okay? But if it came up nil,
+压缩。当回来为空的时候，
 
 1241
 01:04:58,028 --> 01:05:01,229
 then it didn't show it. Everyone understand that? I
+就不会再显示。都能听懂吗？
 
 1242
 01:05:01,231 --> 01:05:03,899
 know it seems a little, a lot of long words in here [LAUGH]
+我知道这个方法很长 「笑」
 
 1243
 01:05:03,901 --> 01:05:06,501
 like primary view controller, secondary view controller, but
+又是 primary view controller，又是 secondary view controller 的，
 
 1244
 01:05:06,503 --> 01:05:09,871
 this is just master in detail, that's all this is. And
+其实就是 master 和 detail，没什么奇怪的。
 
 1245
 01:05:09,873 --> 01:05:12,040
 we're just checking where the image URL's nil and just
+而这里是检查 image 的 URL 是否为空，然后
 
 1246
 01:05:12,042 --> 01:05:14,809
 returning that, we handled it when we really didn't handle
+返回这个，理论上需要我们处理，但实际没有，
 
 1247
 01:05:14,811 --> 01:05:18,013
 it because we don't want it handled. Okay. One other
+因为这本身就不需要处理什么。另外一个问题是，
 
 1248
 01:05:18,015 --> 01:05:24,252
 thing I want to show you is reusing the detail in iPad.
+在 iPad 上重用 detail 的情况。
 
 1249
 01:05:25,856 --> 01:05:31,326
 Look at iPad. And we have the master detail right here.
+看看 iPad。这是 master detail。
 
 1250
 01:05:31,328 --> 01:05:35,363
 Every time we click on this thing, it's creating a new MVC
+每次点击的时候，会创建新的 MVC。
 
 1251
 01:05:35,365 --> 01:05:39,334
 here. Okay? Creating a brand new MVC. And if there,
+创建一个全新的 MVC。但对此，
 
 1252
 01:05:39,336 --> 01:05:41,102
 there's really no reason for that. Okay?
+其实完全没必要。
 
 1253
 01:05:41,104 --> 01:05:45,373
 We could absolutely just reuse this MVC right here.
+完全可以对 MVC 进行重用。
 
 1254
 01:05:45,375 --> 01:05:47,842
 Okay, we don't have to create a new one every time.
+我们不需要每次都创建新的。
 
 1255
 01:05:47,844 --> 01:05:50,979
 So, how would we do that? How would we reuse this?
+那么，该怎么办呢？如何重用呢？
 
 1256
 01:05:50,981 --> 01:05:54,182
 Well, if we're gonna reuse this, we can't use
+如果想要重用这个，就不能用
 
 1257
 01:05:54,184 --> 01:05:57,385
 segues because segues always create a new MVC.
+segue，因为 segue 每次都会创建新的 MVC。
 
 1258
 01:05:57,387 --> 01:05:59,254
 That's what segues do, they create a new MVC.
+这就是 segue 在做的事情，创建新的 MVC。
 
 1259
 01:05:59,256 --> 01:06:02,390
 So, we can't use segues, okay, to do that in that case. So,
+所以，这种情况下，我们不能用 segue。那么，
 
 1260
 01:06:02,392 --> 01:06:06,761
 lets go back to our Cassini right here. Our, storyboard.
+回到 Cassini 项目。看到 storyboard。
 
 1261
 01:06:06,763 --> 01:06:11,800
 And we're not going to use these segues over here. Okay,
+我们不再使用这里的 segue。
 
 1262
 01:06:11,802 --> 01:06:14,069
 see these three segues? I'm gonna get rid of them.
+看到这三个 segue 了吗？我准备把它们去掉。
 
 1263
 01:06:14,071 --> 01:06:16,671
 Get rid of, oops, not that. Click here,
+都去掉，哦，点错了。点这个，
 
 1264
 01:06:16,673 --> 01:06:16,738
 get rid of that one,
+去掉它。
 
 1265
 01:06:16,740 --> 01:06:18,940
 I'm gonna get rid of that one, I'm gonna get rid of that one.
+去掉这个，去掉这个。
 
 1266
 01:06:18,942 --> 01:06:20,442
 Cuz I cannot segue from these buttons or
+我不打算将 button 与 segue 关联了，
 
 1267
 01:06:20,444 --> 01:06:24,446
 it will constantly create a new one of these details.
+因为它每次都会创建新的 detail。
 
 1268
 01:06:24,448 --> 01:06:26,781
 Instead, what I'm gonna do is to use target action.
+而我准备用 target-action 来实现。
 
 1269
 01:06:26,783 --> 01:06:30,952
 So I'm just gonna bring up my code here, some space,
+接着，打开 diamante，腾点空间，
 
 1270
 01:06:30,954 --> 01:06:34,289
 all right, and I'm gonna do a target action message from
+好的，我会给每个按钮都添加
 
 1271
 01:06:34,291 --> 01:06:38,626
 each of these that reuses the detail to show the image.
+target-action，用于重用显示 image 的 detial。
 
 1272
 01:06:38,628 --> 01:06:41,529
 So let's do that. Let's just go Ctrl+drag here.
+那么，开始吧。按住 Ctrl 并拖到这里，
 
 1273
 01:06:41,531 --> 01:06:44,332
 I'm gonna call this show image, that's a good name for
+名字就叫 showimage，作为事件的名字
 
 1274
 01:06:44,334 --> 01:06:47,602
 this action right here, and I'm gonna have UI button
+还挺合适， 事件的 sender 是
 
 1275
 01:06:47,604 --> 01:06:50,505
-be the center, cuz I'm gonna know which one to show because
+be the sender, cuz I'm gonna know which one to show because
+UIButton，因为我需要通过按钮
 
 1276
 01:06:50,507 --> 01:06:52,640
 I'm gonna look at the sender. Okay. So,
+判断应该显示哪一个。Okay，
 
 1277
 01:06:52,642 --> 01:06:54,909
 I got show image right here. So, let's go ahead and
+showimage 方法创建好了。接下来，
 
 1278
 01:06:54,911 --> 01:06:56,978
 put the code here. So, show image is a lot like,
+就是填充代码了。showimage 的处理，
 
 1279
 01:06:56,980 --> 01:07:00,448
 looks a lot like prepare for seg, segue. We can only do
+和 prepareforsegue 中的代码类似。只能在
 
 1280
 01:07:00,450 --> 01:07:04,119
 this if we're in a split view. Right, we can only do the show
+split view 中这样做，这样来
 
 1281
 01:07:04,121 --> 01:07:07,555
 image thing here, this trick, if we are in a split view,
+显示 image，如果在 split view 中，
 
 1282
 01:07:07,557 --> 01:07:11,192
 sorry, let me, just so we can see what's going on here.
+啊，不好意思，这里可以看到。
 
 1283
 01:07:11,194 --> 01:07:14,129
 All right. Okay, we can only do a split view so
+因为只能在 split view 中使用，
 
 1284
 01:07:14,131 --> 01:07:17,098
 I'm gonna first check to see that. I'm gonna say,
+所以首先判断，
 
 1285
 01:07:17,100 --> 01:07:21,836
 if I can let the ivc = splitViewControllers,
+if let ivc = splitViewController，
 
 1286
 01:07:21,838 --> 01:07:24,773
 if I have one, view Controller,
+如果存在，viewcontrollers，
 
 1287
 01:07:24,775 --> 01:07:29,110
 controller[1]. We know that's the detail, right.
+controller[1]，我们知道这个是 detail，
 
 1288
 01:07:29,112 --> 01:07:30,478
 And actually I don't wanna use sub one
+但这里我不想用下标取值，
 
 1289
 01:07:30,480 --> 01:07:33,248
 because if for some reason my split view controller
+如果某些情况下，split view controller
 
 1290
 01:07:33,250 --> 01:07:36,217
 doesn't have a detail, then view controllers only have one
+没有 detail，那么 viewcontrollers 就只有
 
 1291
 01:07:36,219 --> 01:07:39,721
 thing so I'm actually gonna use ViewController.last.
+一个值，所以我准备用 viewcontroller.last 取值。
 
 1292
 01:07:39,723 --> 01:07:43,258
 Okay, because last returns nil if there's no such thing.
+如果 last 返回空，则说明什么都没有。
 
 1293
 01:07:43,260 --> 01:07:46,227
 Okay, and then I'm gonna grab the content view controller as
+接下来，判断 content view controller
 
 1294
 01:07:46,229 --> 01:07:49,264
 always and I'm gonna check to see if that's an image view
+是否是 image view controller，这和之前差不多，
 
 1295
 01:07:49,266 --> 01:07:50,765
 controller. So in other words,
+也就是说，
 
 1296
 01:07:50,767 --> 01:07:53,134
 if I can get my detail as an image view controller,
+如果 detail 是 image view controller，
 
 1297
 01:07:53,136 --> 01:07:56,271
 then I'm basically gonna do this right here,
+就可以走这段逻辑，拷贝过来，
 
 1298
 01:07:56,273 --> 01:07:59,507
 in here, but here I don't have to say sender as UI button
+这里并不需要将 sender 转换为 UIButton，
 
 1299
 01:07:59,509 --> 01:08:00,008
 because the sender is
+因为 sender 本来就是
 
 1300
 01:08:00,010 --> 01:08:02,177
 a UI button so I can just say sender and
+UIButton，而且 sender 在这里
 
 1301
 01:08:02,179 --> 01:08:06,614
 it's never gonna be nil there. Okay? And do that. So see,
+也不可能为空。Okay？就这样。
 
 1302
 01:08:06,616 --> 01:08:09,384
 see what's going on here? So no segueing,
+这里在干嘛呢？没有了 segue，
 
 1303
 01:08:09,386 --> 01:08:16,825
 I'm not doing any segueing. So when I go over here, Okay,
+不再需要 segue 了。继续运行，
 
 1304
 01:08:16,827 --> 01:08:20,762
 and I pick something, like Cassini, or Earth, okay,
+点击按钮，比如 Cassini，或者 Earch，
 
 1305
 01:08:20,764 --> 01:08:25,767
 we'll say. It loads it up. Actually,
+就可以看到，正在加载。实际上，
 
 1306
 01:08:25,769 --> 01:08:28,236
 we got to do one other thing, sorry. Back here, in our
+我们忘了点东西，不好意思，回到程序，
 
 1307
 01:08:28,238 --> 01:08:31,673
 storyboard, let's wire up all these buttons to do that.
+在 storyboard 中，应该给所有 button 添加事件。
 
 1308
 01:08:31,675 --> 01:08:35,977
 [LAUGH] Okay, we only wired up earth to do this show image so
+[笑] Okay，现在只是给 earth 关联了 showimage，所以，
 
 1309
 01:08:35,979 --> 01:08:39,080
 let's do that. Let's go to automatic.
+来处理其余的，选择 automatic。
 
 1310
 01:08:39,583 --> 01:08:40,415
 All right, so let's control,
+关联这个，
 
 1311
 01:08:40,417 --> 01:08:42,750
 so this one here and let's wire up this one here. Okay,
+关联这个。Okay，
 
 1312
 01:08:42,752 --> 01:08:46,354
 so now all three buttons are sending that same show image.
+现在三个按钮都和同一个 showimage 关联了。
 
 1313
 01:08:46,356 --> 01:08:49,057
 So now we can actually demonstrate this. So let's
+这次演示应该没问题。点击
 
 1314
 01:08:49,059 --> 01:08:53,094
 do Cassini. Here it is showing this and once this appears, or
+Cassini，会在这里展示，在展示出来后，
 
 1315
 01:08:53,096 --> 01:08:55,930
 even before it appeared, I could hit Earth and
+或者还没展示的时候，就可以点击 Earth，
 
 1316
 01:08:55,932 --> 01:08:59,000
-it just reusing this. No seugues, so there's no way I'm
+it just reusing this. No seuges, so there's no way I'm
+而且这是重用的。没有 segue，所以不会
 
 1317
 01:08:59,002 --> 01:09:02,837
 creating a new MVC here. It's just reloading it, okay,
+创建新的 MVC。只是在进行刷新，
 
 1318
 01:09:02,839 --> 01:09:07,842
 just by setting the image URL on the image there. Got it?
+只是重新设置了 image 的 URL。明白？
 
 1319
 01:09:08,178 --> 01:09:11,813
 Okay. Now, what about back on iPhone, though?
+那在 iPhone 上会怎样呢？
 
 1320
 01:09:11,815 --> 01:09:13,815
 Let's go back to iPhone.
+让我们回到 iphone。
 
 1321
 01:09:13,817 --> 01:09:18,286
 Is this going to work over here? No, it's not
+依然会有效吗？不，不行，
 
 1322
 01:09:18,288 --> 01:09:21,422
 because it only does that thing if it's in split view.
+因为这只能在 split view 的情况下可以。
 
 1323
 01:09:21,424 --> 01:09:24,759
 Remember I said if split view controller, so if I hit Earth,
+我记得我说过要 split view controller，所以这里点击 Earth，
 
 1324
 01:09:24,761 --> 01:09:28,163
 it's not working at all now, cuz it's not segueing here. So
+没有任何响应，因为根本没有 segue。
 
 1325
 01:09:28,165 --> 01:09:31,699
 really what I need to do back here in Cassini is I need to
+所以，回到 Cassini 项目，需要加上
 
 1326
 01:09:31,701 --> 01:09:35,904
 say [COUGH] if I'm in a split view controller, then do this.
+[咳嗽]，如果是 split view controller，处理这个。
 
 1327
 01:09:35,906 --> 01:09:39,107
 Otherwise, I basically want to segue. Okay, so
+否则，应该处理 segue 逻辑。
 
 1328
 01:09:39,109 --> 01:09:44,078
 now I'm gonna show you how to segue from code. Okay,
+所以我会演示如何用代码实现 segue。
 
 1329
 01:09:44,080 --> 01:09:46,147
 you've only learned how to segue from,
+因为之前只讲过从，
 
 1330
 01:09:46,149 --> 01:09:46,981
 by dragging in Storyboard.
+从 storyboard 中拖拽。
 
 1331
 01:09:46,983 --> 01:09:50,018
 And now I'm gonna show you how to do it in code,
+现在我会将如何使用代码，
 
 1332
 01:09:50,020 --> 01:09:53,788
 which is you just say performSegueWithIdentifier.
+只需要调用 performSegueWithIdentifier。
 
 1333
 01:09:53,790 --> 01:09:55,490
 And you give it the identifier. So
+给一个 identifier。
 
 1334
 01:09:55,492 --> 01:10:00,094
 we'll use the Storyboard ShowImageSegue,
+可以使用 StoryBoard.ShowImageSegue，
 
 1335
 01:10:00,096 --> 01:10:01,930
 and the sender can be whatever you want,
+sender 这个可以随便填，
 
 1336
 01:10:01,932 --> 01:10:05,200
 I'm gonna have the sender be this sender button right here,
+这里我希望 sender 就是按钮事件的 sender，
 
 1337
 01:10:05,202 --> 01:10:06,868
 this button that's asking us to show image, so
+就是这样按钮触发的 showimage，
 
 1338
 01:10:06,870 --> 01:10:09,137
 it's gonna be one of those Earth things or whatever.
+可能是 Earth，也可能是别的。
 
 1339
 01:10:09,139 --> 01:10:11,839
 Now this, perform segue with identifier,
+performSegueWithIdentifier 方法，
 
 1340
 01:10:11,841 --> 01:10:16,477
 requires that such a segue exist in the storyboard. Okay,
+要求传入的 segue 必须在 storyboard 中存在。
 
 1341
 01:10:16,479 --> 01:10:17,545
 and we got rid of all those segues.
+但我们之前删掉了所有 segue。
 
 1342
 01:10:17,547 --> 01:10:20,915
 So that's not gonna work. We need to have a storyboard with
+所以代码不会生效。我们需要 storyboard 中，
 
 1343
 01:10:20,917 --> 01:10:24,252
 this identifier, and the way you do this is, you actually
+有这些 identifier，实现方式是，
 
 1344
 01:10:24,254 --> 01:10:27,622
 segue from the view controller itself. Instead of seguing
+从 view controller 自己发起 segue，而不是
 
 1345
 01:10:27,624 --> 01:10:30,792
 from one of the buttons, when you wanna segue in code,
+从 button 发起 segue。如果需要用代码实现 segue，
 
 1346
 01:10:30,794 --> 01:10:32,527
 you segue from the view controller itself,
+那就需要 view controller 发起，
 
 1347
 01:10:32,529 --> 01:10:35,930
 from this little icon right here down to wherever you want
+从这个小图标拖到需要创建的
 
 1348
 01:10:35,932 --> 01:10:39,234
 to segue to. So we want to segue to this, right here,
+segue 上。我们需要 segue 这个，
 
 1349
 01:10:39,236 --> 01:10:42,537
 put these close to each other. Okay, so I'm just gonna Ctrl +
+把它们放到一起。Okay，按住 Ctrl 
 
 1350
 01:10:42,539 --> 01:10:47,242
 drag from here to here. It's gonna be, it can be show,
+拖到，从这里到这里。选择 show，
 
 1351
 01:10:47,244 --> 01:10:50,178
 because we're never doing this in a split view controller cuz
+因为这个不会对 split view controller 中处理，
 
 1352
 01:10:50,180 --> 01:10:52,313
 split view controller we're doing the other thing. So
+split view controller 会有其他的处理逻辑。所以，
 
 1353
 01:10:52,315 --> 01:10:55,750
 we do show. We've got this thing here now, this one
+这里选择 show。这就完成了，这就是一个
 
 1354
 01:10:55,752 --> 01:10:59,387
 segue, this segue sets up the whole view controller to here.
+segue，这个 segue 包含了整个 view controller。
 
 1355
 01:10:59,389 --> 01:11:03,992
 We still need to set its identifier to ShowImage. Okay?
+我们还需要将 identifier 设为 ShowImage。Okay？
 
 1356
 01:11:03,994 --> 01:11:07,996
 And now, back here in this code, when we do perform segue
+现在，回到代码中，当 preform segue
 
 1357
 01:11:07,998 --> 01:11:11,399
 with identifier, it's going to do that segue. And
+with identifier 时，就会处理 segue。
 
 1358
 01:11:11,401 --> 01:11:13,368
 we're seguing from the view controller to the other one,
+segue 就会从一个 view controller 跳转另一个，
 
 1359
 01:11:13,370 --> 01:11:15,470
 not with the buttons anymore, from the view controller, so
+而不是从按钮，是从 view controller，
 
 1360
 01:11:15,472 --> 01:11:22,977
 let's see if that works now on iPhone All right, Cassini.
+来看看 Cassini 在 iPhone 上能成功吗。
 
 1361
 01:11:22,979 --> 01:11:24,279
 Sure enough it's working. Okay, so
+当然没问题。Okay，
 
 1362
 01:11:24,281 --> 01:11:26,481
 it's doing that segue, it's back to doing the segues.
+能跳转过去，也能回来。
 
 1363
 01:11:26,483 --> 01:11:29,417
 So this is a new MVC. Go back. This is a new MVC.
+这是一个新的 MVC，返回，这又是一个新的 MVC。
 
 1364
 01:11:29,419 --> 01:11:33,054
 But it's only doing it on iPhone because if you look at
+但这只在 iPhone 上是这样，如果在代码的
 
 1365
 01:11:33,056 --> 01:11:35,089
 our code over here in the showImage,
+showImage 方法中，
 
 1366
 01:11:35,091 --> 01:11:38,159
 if it's in a split view controller, it just reuses
+我们判断了如果是 split view controller，而且
 
 1367
 01:11:38,161 --> 01:11:41,863
 the image view controller that's already in the split,
+image view controller 是 split 的 detail 时，
 
 1368
 01:11:41,865 --> 01:11:46,234
 in the detail. Okay? Got all that? All right,
+才进行重用。明白吗？好的。
 
 1369
 01:11:46,236 --> 01:11:48,670
 I think I have time to do the last bit of slides here,
+应该还有时间讲最后一部分讲义，
 
 1370
 01:11:48,672 --> 01:11:54,242
 oops, which is on text field, go through it pretty quickly.
+oops，是关于 text field 的，很快过一遍。
 
 1371
 01:11:54,911 --> 01:11:56,878
 All right, so UITextField. I haven't been able to show
+好的，UITextField。我现在还没办法展示，
 
 1372
 01:11:56,880 --> 01:11:59,714
 it to you right now because it requires delegation to work.
+因为它需要 delegation。
 
 1373
 01:11:59,716 --> 01:12:01,683
 Without delegation, text fields don't work. So
+没有 delegation，text field 就没反应。
 
 1374
 01:12:01,685 --> 01:12:04,585
 UITextField is like UILabel but it's editable.
+UITextField 和 UILabel 差不多，但它可编辑。
 
 1375
 01:12:04,587 --> 01:12:08,089
 Users can touch on it and then a keyboard comes up and
+用户点击它，键盘就会弹出，
 
 1376
 01:12:08,091 --> 01:12:09,424
 they can start typing in it.
+然后可以进行输入。
 
 1377
 01:12:09,426 --> 01:12:11,926
 UITextField is not really a very main stream
+UITextField 的输入方式
 
 1378
 01:12:11,928 --> 01:12:15,530
 input mechanism on the iPhone because the keyboard is very
+在 iPhone 上并不主流，因为键盘实在
 
 1379
 01:12:15,532 --> 01:12:18,700
 small, okay? So, you only want to use UITextField when you
+太小了，所以除非必要要用户
 
 1380
 01:12:18,702 --> 01:12:21,836
 absolutely can't get the text from the user in any other
+用键盘，否则不要使用这种方式。
 
 1381
 01:12:21,838 --> 01:12:23,705
 way. You can't offer them a choice
+别让他们从清单
 
 1382
 01:12:23,707 --> 01:12:26,708
 from a list of the things, they have to actually type it
+中选择，这也是需要输入的。
 
 1383
 01:12:26,710 --> 01:12:29,477
 in, okay? So, be careful, this is not a desktop app that you
+所以，要时刻谨记，你开发的不是桌面应用，
 
 1384
 01:12:29,479 --> 01:12:33,214
 are building. It's a mobile app. All right so,
+而是手机应用。所以说，
 
 1385
 01:12:33,216 --> 01:12:35,416
 TextField is not a primary input source. Now,
+textfield 不是主要的输入源。
 
 1386
 01:12:35,418 --> 01:12:39,354
 the keyboard appears whenever a TextField becomes
+如果 textfild 是第一响应者，
 
 1387
 01:12:39,356 --> 01:12:41,989
 the first responder, and you can make a TextField the first
+键盘就会弹出，要让 textfield 成为第一响应者，可调用
 
 1388
 01:12:41,991 --> 01:12:44,792
 responder by sending it the message, becomeFirstResponder.
+becomeFirstResponder 方法。
 
 1389
 01:12:44,794 --> 01:12:46,761
 And then it will become the first responder.
+然后它就成为第一响应者了。
 
 1390
 01:12:46,763 --> 01:12:48,529
 You can make it stop being the first responder,
+可通过调用 resignFirstResponder，
 
 1391
 01:12:48,531 --> 01:12:51,299
 in which case the keyboard will go away, by saying,
+来取消是第一响应者，如此，
 
 1392
 01:12:51,301 --> 01:12:54,202
 resignFirstResponder, okay?
+键盘就会消失，okay？
 
 1393
 01:12:54,204 --> 01:12:54,669
 So, the keyboard appears and
+所以，键盘的弹出与
 
 1394
 01:12:54,671 --> 01:12:57,905
 disappears purely if there's something on the screen
+消失，是有屏幕上是否有第一响应者
 
 1395
 01:12:57,907 --> 01:13:00,641
 that wants to be the first responder. Okay, simple as
+而决定的。就这样简单。
 
 1396
 01:13:00,643 --> 01:13:06,981
 that. Now, delegation is used here primarily with the return
+delegation 在这里可以用于处理返回按钮的事件。
 
 1397
 01:13:06,983 --> 01:13:09,951
 key. So, if you bring up that little software keyboard
+如果你打开键盘，在它角落里的
 
 1398
 01:13:09,953 --> 01:13:11,919
 in the corner, there's a button called Return.
+那个按钮，就叫做返回按钮。
 
 1399
 01:13:11,921 --> 01:13:15,256
 And if you click return the TextField's delegate will
+如果点击返回按钮，textfield 的 delegate 方法 
 
 1400
 01:13:15,258 --> 01:13:17,892
 be sent this message textFieldShouldReturn. It's
+textFieldShouldReturn 就会被调用。之所以
 
 1401
 01:13:17,894 --> 01:13:20,762
 called ShouldReturn because it returns a Bool about whether
+叫做 ShouldReturn，是因为需要返回一个 bool 值，
 
 1402
 01:13:20,764 --> 01:13:23,631
 it should do target/action when that return happens.
+用于告知是否应该响应按钮的 target/action。
 
 1403
 01:13:23,633 --> 01:13:26,534
 Because a TextField is like a button, if someone types in
+因为 textfield 就像是按钮，如果有键入值，
 
 1404
 01:13:26,536 --> 01:13:29,904
 there and hits Return, it'll do target/action, okay?
+并且点击了返回，就会触发 target/action。
 
 1405
 01:13:29,906 --> 01:13:30,405
 You can control drag and
+你可以通过按住 control 并拖拽
 
 1406
 01:13:30,407 --> 01:13:32,407
 it'll target/action just like a button. But
+来创建 target/action，这和 button 差不多。
 
 1407
 01:13:32,409 --> 01:13:35,476
 this text field should return, either has to return true or
+对于 textfield 的 should return 来说，返回 true，
 
 1408
 01:13:35,478 --> 01:13:37,278
 it has to not be implemented by the delegate for
+或者不实现这个代理方法，
 
 1409
 01:13:37,280 --> 01:13:41,182
 that to work. But one thing, so usually do implement this,
+都是一样的效果。不过通常这个方法都是实现了的，
 
 1410
 01:13:41,184 --> 01:13:43,818
 because one thing you wanna do in here is resign first
+因为需要在这个方法中，取消第一响应者。
 
 1411
 01:13:43,820 --> 01:13:47,155
 responder. A lot of times when the user hits return,
+绝大多数时候，在用户点击返回时，
 
 1412
 01:13:47,157 --> 01:13:48,656
 you do the target/action, but
+都会相应 target/action，
 
 1413
 01:13:48,658 --> 01:13:51,259
 you want the keyboard to go away. So, a lot of times
+需要隐藏键盘。所以，一般情况下，
 
 1414
 01:13:51,261 --> 01:13:52,660
 you'll do that here and TextField should return. So,
+都会在 should return 里面处理。
 
 1415
 01:13:52,662 --> 01:13:55,663
 you just need to set yourself as the UITextField delegate,
+只需要将自己设置 UITextField 的代理，
 
 1416
 01:13:55,665 --> 01:13:58,466
 you've got to save it to the UITextField delegate, and
+声明自己是 UITextField 的协议，并且
 
 1417
 01:13:58,468 --> 01:14:01,369
 then you implement this method and inside just say sender,
+实现该方法，然后方法中的 sender
 
 1418
 01:14:01,371 --> 01:14:03,805
 which is the text field that's sending this to you,
+就是 text field，
 
 1419
 01:14:03,807 --> 01:14:08,342
-design first responder. You can also find out when editing
+resign first responder. You can also find out when editing
+resign first responder。除此之外，也有其他地方需要
 
 1420
 01:14:08,344 --> 01:14:11,446
 has ended in your TextField, meaning that the user
+结束编辑，比如用户在
 
 1421
 01:14:11,448 --> 01:14:14,682
 clicked on another TextField usually and you've resigned
+点击另外一个 textfield 时，通常也需要取消当前的
 
 1422
 01:14:14,684 --> 01:14:17,285
 first responder. Okay, any time you resign first
+第一响应者。在取消第一响应者时，
 
 1423
 01:14:17,287 --> 01:14:19,787
 responder you'll get sent this and you can ask the TextField,
+就会调用这个方法，可以在方法中获取 textfield
 
 1424
 01:14:19,789 --> 01:14:23,758
 ok, what text is in you. Okay, so that's another interesting
+的 text 是什么。这也是有趣的方法。
 
 1425
 01:14:23,760 --> 01:14:26,360
 one. And as I said, TextField's UIControl,
+正如我所说，textfield 是 UIControl，
 
 1426
 01:14:26,362 --> 01:14:28,529
 you can do target/action, just control, drag.
+你可以添加 target/action，只需要 control 并拖拽。
 
 1427
 01:14:28,531 --> 01:14:32,600
 The keyboard, you configure the keyboard actually by
+对于键盘来说，其实配置键盘是和
 
 1428
 01:14:32,602 --> 01:14:33,401
 talking to the TextField.
+textfield 打交道的。
 
 1429
 01:14:33,403 --> 01:14:37,905
 There's no UI keyboard object that you talk to in iOS, okay?
+iOS 中并没有 UIKeyboard 这样的对象，okay？
 
 1430
 01:14:37,907 --> 01:14:39,407
 When you wanna configure your keyboard,
+要配置键盘时，
 
 1431
 01:14:39,409 --> 01:14:42,343
 you talk to the thing that's bringing the keyboard up.
+就是在和唤起键盘的那个对象打交道。
 
 1432
 01:14:42,345 --> 01:14:43,411
 In this case, the TextField. And
+比如，textfield。
 
 1433
 01:14:43,413 --> 01:14:45,913
 there's all kinds of methods in here you could look at.
+大家可以看到，这里有一堆方法。
 
 1434
 01:14:45,915 --> 01:14:48,950
 This is the UITextInputTraits protocol, so
+这些都定义在 UITextInputTraits 协议中，
 
 1435
 01:14:48,952 --> 01:14:51,085
 that's where you wanna look in the documentation, for
+如果要在文档中查看，就要查
 
 1436
 01:14:51,087 --> 01:14:51,519
 this protocol. Remember,
+这个协议。记住，
 
 1437
 01:14:51,521 --> 01:14:54,088
 a protocol is just a bunch of methods and bars, that's all
+协议就是一堆方法的定义，
 
 1438
 01:14:54,090 --> 01:14:57,825
 these are. And these will set what kind of keyboard it is,
+这就是协议。而这些就决定了键盘的属性，
 
 1439
 01:14:57,827 --> 01:15:00,895
 you're entering a URL? Is it a password thing,
+如果在输入 URL？如果在输入密码，
 
 1440
 01:15:00,897 --> 01:15:04,999
 where you can't see the text? All that stuff Is part of that
+那就是不可见的文本。这些都是这个协议的
 
 1441
 01:15:05,001 --> 01:15:07,702
 protocol, so you wanna look that up. One thing about
+一部分，所以你应该好好看看。关于键盘，
 
 1442
 01:15:07,704 --> 01:15:11,806
 the keyboard, it comes up over your UI so it might block.
+还有一个问题，它弹起是，可能会挡住界面。
 
 1443
 01:15:11,808 --> 01:15:14,141
 It might even block the TextField that you're
+如果没小心处理，也有可能正在输入时，
 
 1444
 01:15:14,143 --> 01:15:16,744
 editing in, if you're not careful about how you layer UI
+界面就被挡住了。
 
 1445
 01:15:16,746 --> 01:15:19,680
 out. And we are gonna talk later into the quarter about
+这个会在之后的
 
 1446
 01:15:19,682 --> 01:15:23,017
 this NSNotification center. It's a way to get notified
+NSNotificationCenter 中谈到。这是得知这类事件的渠道。
 
 1447
 01:15:23,019 --> 01:15:25,920
 when things happened and when a keyboard comes up and
+当键盘弹起，可能挡住界面时，
 
 1448
 01:15:25,922 --> 01:15:28,789
 blocks your UI, you will get notified, okay?
+可以收到通知，
 
 1449
 01:15:28,791 --> 01:15:29,423
 And when we talk about this,
+在我们具体介绍的时候，
 
 1450
 01:15:29,425 --> 01:15:32,593
 you'll understand what you can do. You could move your UI
+你就知道该怎么做了。你可以把界面
 
 1451
 01:15:32,595 --> 01:15:35,129
 up from out underneath it, or maybe it's in scroll view,
+移上去，如果是 scroll view，
 
 1452
 01:15:35,131 --> 01:15:37,265
 you could scroll up or something like that, but
+可以滚上去之类的，
 
 1453
 01:15:37,267 --> 01:15:38,966
 you have to be careful about this. They keyboard,
+但处理的时候要小心。键盘真的是
 
 1454
 01:15:38,968 --> 01:15:40,835
 just boom, comes up right on top of your UI and
+一下子就弹起来了，盖在界面上，
 
 1455
 01:15:40,837 --> 01:15:42,803
 it can really block things, okay? So,
+还挡住界面。
 
 1456
 01:15:42,805 --> 01:15:45,940
 you'll need to eventually learn how to respond to this
+所以你必须要学会如何接收这个
 
 1457
 01:15:45,942 --> 01:15:49,443
 notification. There's lots of other TextField properties
+通知。这些是 textfield 的另外一些属性，
 
 1458
 01:15:49,445 --> 01:15:53,447
 that are interesting here. You can actually put a little
+也挺有趣的。这个可以给它
 
 1459
 01:15:53,449 --> 01:15:55,683
 button on the side. You can decide where,
+在边上加上小按钮，位置由你定，
 
 1460
 01:15:55,685 --> 01:15:58,920
 when the user touches it, does it clear out what's in there?
+当用户点击这个按钮时，可以清空输入。
 
 1461
 01:15:58,922 --> 01:16:00,855
 You can have a place holder in there, so
+你也可以加 place holder，
 
 1462
 01:16:00,857 --> 01:16:02,189
 that when there's nothing in the field,
+在 textfield 上什么都没有时，
 
 1463
 01:16:02,191 --> 01:16:03,457
 there's a kind of a light gray text.
+可以展示一行浅灰色的文本。
 
 1464
 01:16:03,459 --> 01:16:05,626
 Kind of telling the user what's supposed to be there,
+比如告诉用户这文本框支持什么，
 
 1465
 01:16:05,628 --> 01:16:06,994
 that kind of thing.
+之类的。
 
 1466
 01:16:06,996 --> 01:16:09,430
 Anytime I show you anything in this class,
+每次我给大家展示类的信息是，
 
 1467
 01:16:09,432 --> 01:16:12,066
 like UITextField or UIButton or anything, of course I'm
+比如 UITextField，UIButton 这类，都是
 
 1468
 01:16:12,068 --> 01:16:15,069
 expecting you to go read the documentation, okay. Otherwise
+希望大家能去查阅文档。否则，
 
 1469
 01:16:15,071 --> 01:16:17,271
 you're just not gonna know how to use these things.
+你无法知道这些该怎么使用。
 
 1470
 01:16:17,273 --> 01:16:18,306
 I only have a minute or
+课堂上，我只有
 
 1471
 01:16:18,308 --> 01:16:20,007
 two in these classes, in the lectures to
+几分钟时间，只够
 
 1472
 01:16:20,009 --> 01:16:22,610
 kind of tell you these exist. If you need to be able to go,
+告诉大家里面有什么。如果要弄清楚，
 
 1473
 01:16:22,612 --> 01:16:24,345
 use the documentation to figure them out, okay?
+还是需要从文档中学习。
 
 1474
 01:16:24,347 --> 01:16:27,148
 And this is a classic example figuring out how to
+这是学习 textfield 最好的
 
 1475
 01:16:27,150 --> 01:16:30,184
 use TextField here, Okay? Yeah, they have these left and
+方式了。这里的 left 和
 
 1476
 01:16:30,186 --> 01:16:33,120
 right overlays are kind of fun. You control the layout
+right 覆盖视图也挺有趣，你可以通过布局
 
 1477
 01:16:33,122 --> 01:16:35,890
 all this all kinds of stuff. The keyboard has
+来控制它们。键盘有
 
 1478
 01:16:35,892 --> 01:16:39,093
 an interesting bar in it which is sorry the input
+一个 bar，哦不，一个输入协议，
 
 1479
 01:16:39,095 --> 01:16:42,263
 trait protocol. Called input accessory view you can
+名为 input accessory view，你可以将这个视图
 
 1480
 01:16:42,265 --> 01:16:44,131
 actually put a little view on top of your keyboard.
+放在键盘的顶部。
 
 1481
 01:16:44,133 --> 01:16:45,833
 You've probably seen that in some apps. Right,
+你可能在其他的 app 中看见过。对吧，
 
 1482
 01:16:45,835 --> 01:16:48,436
 has kind of like a little view has custom stuff,
+一个很小的，有些自定义控件的视图，
 
 1483
 01:16:48,438 --> 01:16:50,871
 you can put your own view just by setting this bar.
+你可以通过配置这个 bar 来创建自己的视图。
 
 1484
 01:16:50,873 --> 01:16:54,308
 It's kinda fun. All right, so that's it. On Friday,
+这倒是挺有趣的。好的，这就是全部内容。本周五，
 
 1485
 01:16:54,310 --> 01:16:56,377
 we do have a section. It's on UI Testing,
+我们还有一个小节，关于 UITesting，
 
 1486
 01:16:56,379 --> 01:17:00,147
 which is literally being able to record the UI being
+它可以详尽的记录 UI 交互，
 
 1487
 01:17:00,149 --> 01:17:02,049
 interacted with and then writing code that tests,
+还可以写代码进行测试，
 
 1488
 01:17:02,051 --> 01:17:03,484
 to make sure it's doing what it's supposed to be doing.
+以确保操作都是正确的。
 
 1489
 01:17:03,486 --> 01:17:06,921
-That's really cool. A feature in x code. And then next week,
+That's really cool. A feature in xcode. And then next week,
+这是 xcode 中非常棒的特性。下一周，
 
 1490
 01:17:06,923 --> 01:17:08,823
 we're going to talk about Table View and
+我们会讲解 tableview，
 
 1491
 01:17:08,825 --> 01:17:09,190
 Core Data, okay?
+还有 core data。
 
 1492
 01:17:09,192 --> 01:17:11,892
 Table View is a way of showing big huge amounts of data.
+table view 用于展示一系列数据，
 
 1493
 01:17:11,894 --> 01:17:15,563
 And Core Data is a database to store big huge amounts of
+而 core data 则是用于存储
 
 1494
 01:17:15,565 --> 01:17:17,164
 data in. Assignment four.
+一系列数据。关于作业，
 
 1495
 01:17:17,166 --> 01:17:18,399
 Since it's a table view based assignment,
+既然都是关于 table view 的作业，
 
 1496
 01:17:18,401 --> 01:17:21,869
 we'll go out at the end of the next lecture, and it'll be due
+所以也会在下一讲结束，也就是
 
 1497
 01:17:21,871 --> 01:17:24,772
 a week later. And there are no more reading assignments.
+一周以后。今天没有额外的阅读任务。
 
 1498
 01:17:24,774 --> 01:17:27,408
 I can tell some of you haven't done your reading assignment
+我知道一部分同学没有完成阅读任务，
 
 1499
 01:17:27,410 --> 01:17:29,777
 because you don't know some of the questions I'm asking.
+因为今天我提的好几个问题都没回答上来。
 
 1500
 01:17:29,779 --> 01:17:30,778
 Go back and read that stuff, really.
+记得之后要去看，真的，
 
 1501
 01:17:30,780 --> 01:17:34,348
 it's not that much stuff, you should really understand all
+这又没多少东西，而且这些知识你必须要知道，
 
 1502
 01:17:34,350 --> 01:17:36,350
 these things, like the where clause,
+比如闭包，
 
 1503
 01:17:36,352 --> 01:17:37,718
 or you're going to be writing weird code.
+否则写出的代码就很奇怪。
 
 1504
 01:17:37,720 --> 01:17:40,154
 Because people say, why didn't they just use where there,
+因为大家会说，你为什么不用这个，
 
 1505
 01:17:40,156 --> 01:17:40,588
 why did they put another if?.
+为什么这里要加上判断。
 
 1506
 01:17:40,590 --> 01:17:44,525
-Okay? So, you don't want to be that guy, okay? Al lright,
+Okay? So, you don't want to be that guy, okay? Allright,
+Okay？你不会想被这样对待的，好吗？
 
 1507
 01:17:44,527 --> 01:17:47,228
 I'll see you guys next week. >> For
+同学们，下周见。
 
 1508
 01:17:47,230 --> 01:17:47,261
 more, please visit us at Stanford.edu
+更多信息，请访问 Stanford.edu
 
